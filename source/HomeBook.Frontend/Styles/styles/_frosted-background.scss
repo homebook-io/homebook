@@ -1,23 +1,22 @@
 @use "sass:math";
 
 $frosted-color: rgb(255, 255, 255); // Base color (RGB)
-$frosted-alpha-min: 0.05;           // Alpha for b1
-$frosted-alpha-step: 0.05;          // Fixed alpha step per class
-$frosted-blur: 6px;                 // Blur strength
-$frosted-steps: 10;                 // Number of classes
-$frosted-border-alpha: 0.05;        // Extra alpha for border
-$frosted-gradient-deg: 160deg;      // Gradient angle
-$frosted-gradient-add: 0.25;        // Extra alpha at gradient end
-$frosted-inner-shadow-alpha: 0.3;   // Strength of the white inner shadow
+$frosted-alpha-min: 0.05; // Alpha for b1
+$frosted-alpha-step: 0.05; // Fixed alpha step per class
+$frosted-blur: 6px; // Blur strength
+$frosted-steps: 10; // Number of classes
+$frosted-border-alpha: 0.05; // Extra alpha for border
+$frosted-gradient-deg: 160deg; // Gradient angle
+$frosted-gradient-add: 0.25; // Extra alpha at gradient end
+$frosted-inner-shadow-alpha: 0.3; // Strength of the white inner shadow
 
 @mixin frosted-base($alpha) {
-    $alpha-end: min($alpha + $frosted-gradient-add, 1);     // Cap gradient end
-    $border-alpha: min($alpha + $frosted-border-alpha, 1);  // Cap border alpha
+    $alpha-end: min($alpha + $frosted-gradient-add, 1); // Cap gradient end
+    $border-alpha: min($alpha + $frosted-border-alpha, 1); // Cap border alpha
 
     position: relative; // Required for ::before positioning
 
-    background:
-        // Top dent / subtle highlight
+    background: // Top dent / subtle highlight
         radial-gradient(
                 ellipse 80% 30% at top center,
                 rgba(255, 255, 255, 0.15) 0%,

@@ -39,35 +39,20 @@ public partial class DatabaseFormSetupStep : ComponentBase, ISetupStep
 
         try
         {
-            await Task.Delay(2000); // Simulate connection test
+            CancellationToken cancellationToken = CancellationToken.None;
 
-            // TODO: Implement actual database connection test
-            bool connectionSuccessful = await TestDatabaseConnection();
-
-            _connectionResult = connectionSuccessful
-                ? new ConnectionResult { IsSuccess = true, Message = "Database connection successful!" }
-                : new ConnectionResult { IsSuccess = false, Message = "Failed to connect to database. Please check your settings." };
-        }
-        catch (Exception ex)
-        {
-            _connectionResult = new ConnectionResult
-            {
-                IsSuccess = false,
-                Message = $"Connection error: {ex.Message}"
-            };
+            bool databaseConnected = await DatabaseSetupService.CheckConnectionAsync(
+                _databaseConfig.Host,
+                _databaseConfig.Port,
+                _databaseConfig.DatabaseName,
+                _databaseConfig.Username,
+                _databaseConfig.Password,
+                cancellationToken);
         }
         finally
         {
             _isProcessing = false;
         }
-    }
-
-    private async Task<bool> TestDatabaseConnection()
-    {
-        // TODO: Implement actual database connection logic here
-        // This should use the database configuration to test the connection
-        await Task.Delay(1000);
-        return true; // Mock successful connection for now
     }
 
     private void ClearForm()

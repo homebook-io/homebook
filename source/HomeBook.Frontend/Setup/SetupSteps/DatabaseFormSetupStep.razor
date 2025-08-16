@@ -1,3 +1,8 @@
+@using HomeBook.Client
+@using HomeBook.Frontend.Abstractions.Contracts
+
+@inject IDatabaseSetupService DatabaseSetupService
+
 <MudCard Class="frosted-b3 mud-elevation-6">
 
     <MudCardHeader>
@@ -8,32 +13,37 @@
 
     <MudCardContent>
 
-        <EditForm Model="@_databaseConfig" OnValidSubmit="OnValidSubmit">
+        <EditForm Model="@_databaseConfig"
+                  OnValidSubmit="OnValidSubmit">
+
             <DataAnnotationsValidator/>
 
             <MudGrid>
-                <MudItem xs="12" md="6">
+
+                <MudItem xs="12" md="10">
                     <MudTextField @bind-Value="_databaseConfig.Host"
+                                  Margin="Margin.Dense"
                                   Label="Database Host"
                                   Placeholder="localhost"
-                                  HelperText="Enter the database server hostname or IP address"
+                                  HelperText="Enter the database server hostname or IP address and it's port"
                                   For="@(() => _databaseConfig.Host)"
                                   Required="true"
                                   Variant="Variant.Outlined"/>
                 </MudItem>
 
-                <MudItem xs="12" md="6">
+                <MudItem xs="12" md="2">
                     <MudTextField @bind-Value="_databaseConfig.Port"
+                                  Margin="Margin.Dense"
                                   Label="Port"
                                   Placeholder="5432"
-                                  HelperText="Enter the database port (default: 5432 for PostgreSQL)"
                                   For="@(() => _databaseConfig.Port)"
                                   Required="true"
                                   Variant="Variant.Outlined"/>
                 </MudItem>
 
-                <MudItem xs="12" md="6">
+                <MudItem xs="12" md="12">
                     <MudTextField @bind-Value="_databaseConfig.DatabaseName"
+                                  Margin="Margin.Dense"
                                   Label="Database Name"
                                   Placeholder="homebook"
                                   HelperText="Enter the name of the database"
@@ -44,6 +54,7 @@
 
                 <MudItem xs="12" md="6">
                     <MudTextField @bind-Value="_databaseConfig.Username"
+                                  Margin="Margin.Dense"
                                   Label="Username"
                                   Placeholder="homebook_user"
                                   HelperText="Enter the database username"
@@ -52,8 +63,9 @@
                                   Variant="Variant.Outlined"/>
                 </MudItem>
 
-                <MudItem xs="12">
+                <MudItem xs="12" md="6">
                     <MudTextField @bind-Value="_databaseConfig.Password"
+                                  Margin="Margin.Dense"
                                   Label="Password"
                                   InputType="InputType.Password"
                                   HelperText="Enter the database password"
@@ -62,31 +74,17 @@
                                   Variant="Variant.Outlined"/>
                 </MudItem>
 
-                <MudItem xs="12">
-                    <MudCheckBox T="bool"
-                                 @bind-Checked="_databaseConfig.UseSSL"
-                                 Label="Use SSL Connection"
-                                 Color="Color.Primary"/>
-                </MudItem>
-
-                <MudItem xs="12">
-                    <MudTextField @bind-Value="_databaseConfig.ConnectionTimeout"
-                                  Label="Connection Timeout (seconds)"
-                                  Placeholder="30"
-                                  HelperText="Connection timeout in seconds (optional)"
-                                  For="@(() => _databaseConfig.ConnectionTimeout)"
-                                  Variant="Variant.Outlined"/>
-                </MudItem>
             </MudGrid>
 
-            <MudDivider Class="my-4"/>
+            <MudStack Row Justify="Justify.SpaceBetween"
+                      AlignItems="AlignItems.Center">
 
-            <MudStack Row Justify="Justify.SpaceBetween" AlignItems="AlignItems.Center">
                 <MudButton ButtonType="ButtonType.Submit"
-                           Variant="Variant.Filled"
                            Color="Color.Primary"
-                           StartIcon="Icons.Material.Filled.CheckCircle"
+                           Variant="Variant.Filled"
+                           Class="mt-3"
                            Disabled="@_isProcessing">
+
                     @if (_isProcessing)
                     {
                         <MudProgressCircular Class="ms-n1" Size="Size.Small" Indeterminate="true"/>
@@ -96,6 +94,7 @@
                     {
                         <MudText>Test Connection</MudText>
                     }
+
                 </MudButton>
 
                 <MudButton OnClick="ClearForm"
@@ -104,6 +103,7 @@
                            StartIcon="Icons.Material.Filled.Clear">
                     Clear
                 </MudButton>
+
             </MudStack>
 
             @if (_connectionResult is not null)

@@ -46,8 +46,8 @@ public static class SetupEndpoints
             .WithName("CheckDatabase")
             .WithDescription(new Description("check that the Database is available",
                 "HTTP 200: Database is available",
-                "HTTP 503: Database is not available",
-                "HTTP 500: Unknown error while database connection check"))
+                "HTTP 500: Unknown error while database connection check",
+                "HTTP 503: Database is not available"))
             .WithOpenApi(operation => new(operation)
             {
             })
