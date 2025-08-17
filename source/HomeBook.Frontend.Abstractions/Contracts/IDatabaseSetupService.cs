@@ -1,3 +1,5 @@
+using HomeBook.Frontend.Abstractions.Models;
+
 namespace HomeBook.Frontend.Abstractions.Contracts;
 
 /// <summary>
@@ -6,7 +8,8 @@ namespace HomeBook.Frontend.Abstractions.Contracts;
 public interface IDatabaseSetupService
 {
     /// <summary>
-    ///
+    /// checks the connection to the database with the provided parameters.
+    /// returns true if the connection is successful, otherwise false.
     /// </summary>
     /// <param name="host"></param>
     /// <param name="port"></param>
@@ -21,4 +24,11 @@ public interface IDatabaseSetupService
         string username,
         string password,
         CancellationToken cancellationToken);
+
+    /// <summary>
+    /// returns the stored database configuration.
+    /// </summary>
+    /// <param name="cancellationToken"></param>
+    /// <returns></returns>
+    Task<DatabaseConfiguration?> GetDatabaseConfigurationAsync(CancellationToken cancellationToken = default);
 }

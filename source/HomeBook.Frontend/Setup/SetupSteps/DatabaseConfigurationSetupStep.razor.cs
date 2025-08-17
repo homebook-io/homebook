@@ -1,12 +1,15 @@
 using HomeBook.Frontend.Abstractions.Contracts;
+using HomeBook.Frontend.Abstractions.Models;
+using HomeBook.Frontend.Mappings;
 using HomeBook.Frontend.Models.Setup;
+using HomeBook.Frontend.Services.Exceptions;
 using Microsoft.AspNetCore.Components;
 
 namespace HomeBook.Frontend.Setup.SetupSteps;
 
-public partial class DatabaseFormSetupStep : ComponentBase, ISetupStep
+public partial class DatabaseConfigurationSetupStep : ComponentBase, ISetupStep
 {
-    public string Key { get; } = nameof(DatabaseFormSetupStep);
+    public string Key { get; } = nameof(DatabaseConfigurationSetupStep);
     public bool HasError { get; set; }
     public bool IsSuccessful { get; set; }
     public Task HandleStepAsync() => throw new NotImplementedException();
@@ -23,7 +26,30 @@ public partial class DatabaseFormSetupStep : ComponentBase, ISetupStep
         if (!firstRender)
             return;
 
-        // TODO
+        try
+        {
+            CancellationToken cancellationToken = CancellationToken.None;
+            DatabaseConfiguration? databaseConfiguration = await DatabaseSetupService
+                .GetDatabaseConfigurationAsync(cancellationToken);
+            _databaseConfig = databaseConfiguration?.ToViewModel() ?? new DatabaseConfigurationViewModel();
+        }
+        catch (InvalidConfigurationException err)
+        {
+            // display error
+        }
+        catch (SetupException err)
+        {
+            // display error
+        }
+        catch (Exception ex)
+        {
+            // log error
+            Console.Error.WriteLine($"Error during database configuration setup: {ex.Message}");
+        }
+        finally
+        {
+            StateHasChanged();
+        }
     }
 
     public class ConnectionResult
@@ -48,6 +74,7 @@ public partial class DatabaseFormSetupStep : ComponentBase, ISetupStep
                 _databaseConfig.Username,
                 _databaseConfig.Password,
                 cancellationToken);
+            int i = 0;
         }
         finally
         {
