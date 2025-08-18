@@ -39,4 +39,13 @@
     <data name="UISetupStepper_ConfigurationSetupStep_Title" xml:space="preserve">
         <value>Configuration</value>
     </data>
+    <data name="Setup_Title" xml:space="preserve">
+        <value>HomeBook Setup</value>
+    </data>
+    <data name="Setup_CardActions_Server" xml:space="preserve">
+        <value>Server</value>
+    </data>
+    <data name="Setup_CardActions_Version" xml:space="preserve">
+        <value>Version</value>
+    </data>
 </root>

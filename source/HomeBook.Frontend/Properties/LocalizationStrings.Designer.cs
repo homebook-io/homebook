@@ -86,5 +86,23 @@ namespace HomeBook.Frontend.Properties {
                 return ResourceManager.GetString("UISetupStepper_ConfigurationSetupStep_Title", resourceCulture);
             }
         }
+        
+        internal static string Setup_Title {
+            get {
+                return ResourceManager.GetString("Setup_Title", resourceCulture);
+            }
+        }
+        
+        internal static string Setup_CardActions_Server {
+            get {
+                return ResourceManager.GetString("Setup_CardActions_Server", resourceCulture);
+            }
+        }
+        
+        internal static string Setup_CardActions_Version {
+            get {
+                return ResourceManager.GetString("Setup_CardActions_Version", resourceCulture);
+            }
+        }
     }
 }
