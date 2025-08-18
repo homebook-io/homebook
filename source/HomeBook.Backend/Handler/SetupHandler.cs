@@ -41,6 +41,52 @@ public class SetupHandler
     }
 
     /// <summary>
+    /// returns all licenses of the project.
+    /// </summary>
+    /// <param name="setupInstanceManager"></param>
+    /// <param name="cancellationToken"></param>
+    /// <returns></returns>
+    public static async Task<IResult> HandleGetLicenses([FromServices] ILogger<SetupHandler> logger,
+        CancellationToken cancellationToken)
+    {
+        try
+        {
+            Dictionary<string, string> licenses = new()
+            {
+                {
+                    "HomeBook", "html"
+                },
+                {
+                    "HomeBook.Backend", "html"
+                },
+                {
+                    "HomeBook.Frontend", "html"
+                },
+                {
+                    "HomeBook.Abstractions", "html"
+                },
+                {
+                    "HomeBook.Abstractions.Setup", "html"
+                },
+                {
+                    "HomeBook.Abstractions.Database", "html"
+                },
+                {
+                    "HomeBook.Abstractions.FileService", "html"
+                }
+            };
+            GetLicensesResponse response = new(licenses);
+
+            return TypedResults.Ok(response);
+        }
+        catch (Exception err)
+        {
+            logger.LogError(err, "Error while checking setup availability");
+            return TypedResults.InternalServerError(err.Message);
+        }
+    }
+
+    /// <summary>
     /// returns the database configuration if it is available (set via environment variables).
     /// </summary>
     /// <param name="fileService"></param>
