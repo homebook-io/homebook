@@ -32,7 +32,7 @@ public static class SetupEndpoints
                 "HTTP 200: Database configuration found",
                 "HTTP 400: Validation error, e.g. too short password, etc.",
                 "HTTP 404: No Database configuration found",
-                "HTTP 500: Unknown error while setup checking"))
+                "HTTP 500: Unknown error while checking Database configuration"))
             .WithOpenApi(operation => new(operation)
             {
                 // Summary = "check if database configuration is available via environment variables"
@@ -46,8 +46,8 @@ public static class SetupEndpoints
             .WithName("CheckDatabase")
             .WithDescription(new Description("check that the Database is available",
                 "HTTP 200: Database is available",
-                "HTTP 503: Database is not available",
-                "HTTP 500: Unknown error while database connection check"))
+                "HTTP 500: Unknown error while database connection check",
+                "HTTP 503: Database is not available"))
             .WithOpenApi(operation => new(operation)
             {
             })

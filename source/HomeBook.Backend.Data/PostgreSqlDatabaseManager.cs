@@ -1,10 +1,11 @@
 using HomeBook.Backend.Abstractions;
+using Microsoft.Extensions.Logging;
 using Npgsql;
 
 namespace HomeBook.Backend.Data;
 
 /// <inheritdoc />
-public class PostgreSqlDatabaseManager : IDatabaseManager
+public class PostgreSqlDatabaseManager(ILogger<PostgreSqlDatabaseManager> logger) : IDatabaseManager
 {
     /// <inheritdoc />
     public async Task<bool> IsDatabaseAvailableAsync(string databaseHost,
@@ -18,13 +19,17 @@ public class PostgreSqlDatabaseManager : IDatabaseManager
         {
             string connectionString = $"Host={databaseHost};Port={databasePort};Database={databaseName};Username={databaseUserName};Password={databaseUserPassword};Timeout=5;";
 
+            logger.LogInformation("Checking PostgreSQL database availability with connection string: {ConnectionString}", connectionString);
+
             await using NpgsqlConnection connection = new(connectionString);
             await connection.OpenAsync(cancellationToken);
 
             return true;
         }
-        catch
+        catch(Exception err)
         {
+            logger.LogError(err, "Error while checking postgresql database availability");
+
             return false;
         }
     }

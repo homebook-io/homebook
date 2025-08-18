@@ -10,7 +10,7 @@ public class DatabaseConfigurationViewModel
 
     [Required(ErrorMessage = "Port is required")]
     [Range(1, 65535, ErrorMessage = "Port must be between 1 and 65535")]
-    public string Port { get; set; } = "5432";
+    public ushort Port { get; set; } = 5432;
 
     [Required(ErrorMessage = "Database name is required")]
     [StringLength(64, ErrorMessage = "Database name cannot exceed 64 characters")]

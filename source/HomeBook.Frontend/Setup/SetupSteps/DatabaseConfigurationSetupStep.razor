@@ -1,0 +1,133 @@
+@using HomeBook.Client
+@using HomeBook.Frontend.Abstractions.Contracts
+
+@inject IDatabaseSetupService DatabaseSetupService
+@inject ISetupService SetupService
+@inject BackendClient BackendClient
+
+<MudCard Class="frosted-b3 mud-elevation-6">
+
+    <MudCardHeader>
+        <CardHeaderContent>
+            <MudText Typo="Typo.h4" Color="Color.Inherit">Database Setup</MudText>
+        </CardHeaderContent>
+    </MudCardHeader>
+
+    <MudCardContent>
+
+        <div class="relative d-flex flex-grow-1 flex-wrap flex-column justify-center align-center">
+
+            @if (_isChecking)
+            {
+                <MudProgressLinear Color="Color.Primary"
+                                   Indeterminate="@_isChecking"
+                                   Class="my-7"/>
+            }
+
+        </div>
+
+        <EditForm Model="@_databaseConfig"
+                  OnValidSubmit="OnValidSubmit">
+
+            @if (!_isChecking)
+            {
+                @if (_databaseIsOk)
+                {
+                    <MudAlert Class="mt-3 mb-3"
+                              Severity="Severity.Info">
+                        Database is found and available.
+                    </MudAlert>
+                }
+
+                @if (!string.IsNullOrEmpty(_errorMessage))
+                {
+                    <MudAlert Class="mt-3"
+                              Severity="Severity.Error">
+                        @_errorMessage
+                    </MudAlert>
+                }
+            }
+
+            <DataAnnotationsValidator/>
+
+            @if (!_isChecking && !_databaseIsOk)
+            {
+                <MudGrid>
+
+                    <MudItem xs="12" md="10">
+                        <MudTextField @bind-Value="_databaseConfig.Host"
+                                      Margin="Margin.Dense"
+                                      Label="Database Host"
+                                      Placeholder="localhost"
+                                      HelperText="Enter the database server hostname or IP address and it's port"
+                                      For="@(() => _databaseConfig.Host)"
+                                      Required="true"
+                                      Variant="Variant.Outlined"/>
+                    </MudItem>
+
+                    <MudItem xs="12" md="2">
+                        <MudTextField @bind-Value="_databaseConfig.Port"
+                                      Margin="Margin.Dense"
+                                      Label="Port"
+                                      Placeholder="5432"
+                                      For="@(() => _databaseConfig.Port)"
+                                      Required="true"
+                                      Variant="Variant.Outlined"/>
+                    </MudItem>
+
+                    <MudItem xs="12" md="12">
+                        <MudTextField @bind-Value="_databaseConfig.DatabaseName"
+                                      Margin="Margin.Dense"
+                                      Label="Database Name"
+                                      Placeholder="homebook"
+                                      HelperText="Enter the name of the database"
+                                      For="@(() => _databaseConfig.DatabaseName)"
+                                      Required="true"
+                                      Variant="Variant.Outlined"/>
+                    </MudItem>
+
+                    <MudItem xs="12" md="6">
+                        <MudTextField @bind-Value="_databaseConfig.Username"
+                                      Margin="Margin.Dense"
+                                      Label="Username"
+                                      Placeholder="homebook_user"
+                                      HelperText="Enter the database username"
+                                      For="@(() => _databaseConfig.Username)"
+                                      Required="true"
+                                      Variant="Variant.Outlined"/>
+                    </MudItem>
+
+                    <MudItem xs="12" md="6">
+                        <MudTextField @bind-Value="_databaseConfig.Password"
+                                      Margin="Margin.Dense"
+                                      Label="Password"
+                                      InputType="InputType.Password"
+                                      HelperText="Enter the database password"
+                                      For="@(() => _databaseConfig.Password)"
+                                      Required="true"
+                                      Variant="Variant.Outlined"/>
+                    </MudItem>
+
+                </MudGrid>
+
+                <MudStack Row Justify="Justify.SpaceBetween"
+                          AlignItems="AlignItems.Center">
+
+                    <MudButton ButtonType="ButtonType.Submit"
+                               Color="Color.Primary"
+                               Variant="Variant.Filled"
+                               Class="mt-3"
+                               Disabled="@_isChecking">
+
+                        <MudText>Test Connection</MudText>
+
+                    </MudButton>
+
+                </MudStack>
+            }
+
+        </EditForm>
+
+    </MudCardContent>
+
+</MudCard>
