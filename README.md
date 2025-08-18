@@ -89,3 +89,11 @@ if all environment variables are set, correctly, the setup will be running autom
 | `DATABASE_PASSWORD`      | the database password (e.g., `db_password`)  |
 | `HOMEBOOK_USER_NAME`     | the admin username (e.g., `admin`)           |
 | `HOMEBOOK_USER_PASSWORD` | the admin password (e.g., `password`)        |
+
+## Allowed Password Characters
+```
+a-z
+A-Z
+0-9
+!@#$%^&*()_+-=[]{}|;':",./<>?~`
+```

