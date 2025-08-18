@@ -1,21 +1,25 @@
+using HomeBook.Client.Models;
 using HomeBook.Frontend.Abstractions.Contracts;
 using HomeBook.Frontend.Abstractions.Models;
 using HomeBook.Frontend.Mappings;
 using HomeBook.Frontend.Models.Setup;
 using HomeBook.Frontend.Services.Exceptions;
+using HomeBook.Frontend.Setup.Exceptions;
 using Microsoft.AspNetCore.Components;
+using Microsoft.Kiota.Abstractions;
 
 namespace HomeBook.Frontend.Setup.SetupSteps;
 
 public partial class DatabaseConfigurationSetupStep : ComponentBase, ISetupStep
 {
+    private bool _isChecking = false;
+    private bool _databaseIsOk = false;
+    private string? _errorMessage = null;
     public string Key { get; } = nameof(DatabaseConfigurationSetupStep);
     public bool HasError { get; set; }
     public bool IsSuccessful { get; set; }
     public Task HandleStepAsync() => throw new NotImplementedException();
     private DatabaseConfigurationViewModel _databaseConfig = new();
-    private bool _isProcessing = false;
-    private ConnectionResult? _connectionResult;
 
     public Task<bool> IsStepDoneAsync(CancellationToken cancellationToken) => throw new NotImplementedException();
 
@@ -29,22 +33,22 @@ public partial class DatabaseConfigurationSetupStep : ComponentBase, ISetupStep
         try
         {
             CancellationToken cancellationToken = CancellationToken.None;
+
             DatabaseConfiguration? databaseConfiguration = await DatabaseSetupService
                 .GetDatabaseConfigurationAsync(cancellationToken);
             _databaseConfig = databaseConfiguration?.ToViewModel() ?? new DatabaseConfigurationViewModel();
         }
         catch (InvalidConfigurationException err)
         {
-            // display error
+            _errorMessage = err.Message;
         }
         catch (SetupException err)
         {
-            // display error
+            _errorMessage = err.Message;
         }
-        catch (Exception ex)
+        catch (Exception err)
         {
-            // log error
-            Console.Error.WriteLine($"Error during database configuration setup: {ex.Message}");
+            _errorMessage = err.Message;
         }
         finally
         {
@@ -52,39 +56,100 @@ public partial class DatabaseConfigurationSetupStep : ComponentBase, ISetupStep
         }
     }
 
-    public class ConnectionResult
-    {
-        public bool IsSuccess { get; set; }
-        public string Message { get; set; } = string.Empty;
-    }
-
     private async Task OnValidSubmit()
     {
-        _isProcessing = true;
-        _connectionResult = null;
+        CancellationToken cancellationToken = CancellationToken.None;
 
+        _isChecking = true;
+        _databaseIsOk = false;
+        _errorMessage = null;
+        await InvokeAsync(StateHasChanged);
+
+        bool checkSuccessful = false;
         try
         {
-            CancellationToken cancellationToken = CancellationToken.None;
+            await Task.WhenAll(
+                Task.Delay(8000, cancellationToken),
+                ConnectToDatabaseAsync(cancellationToken));
 
-            bool databaseConnected = await DatabaseSetupService.CheckConnectionAsync(
-                _databaseConfig.Host,
-                _databaseConfig.Port,
-                _databaseConfig.DatabaseName,
-                _databaseConfig.Username,
-                _databaseConfig.Password,
-                cancellationToken);
-            int i = 0;
+            _databaseIsOk = true;
+            checkSuccessful = true;
+        }
+        catch (HttpRequestException err)
+        {
+            // DE => Verbindung zum Server konnte nicht hergestellt werden. Stellen Sie sicher, dass der Server läuft und korrekt konfiguriert wurde und versuchen Sie es erneut.
+            _errorMessage = "Unable to connect to the server. Make sure that the server is running and has been configured correctly, then try again.";
+            await StepErrorAsync(cancellationToken);
+        }
+        catch (SetupCheckException err)
+        {
+            _errorMessage = err.Message;
+            await StepErrorAsync(cancellationToken);
+        }
+        catch (Exception err)
+        {
+            _errorMessage = "error while connecting to database: " + err.Message;
+            await StepErrorAsync(cancellationToken);
         }
         finally
         {
-            _isProcessing = false;
+            _isChecking = false;
+            await InvokeAsync(StateHasChanged);
+        }
+
+        if (checkSuccessful)
+        {
+            await StepSuccessAsync(cancellationToken);
+            await InvokeAsync(StateHasChanged);
         }
     }
 
     private void ClearForm()
     {
         _databaseConfig = new DatabaseConfigurationViewModel();
-        _connectionResult = null;
+    }
+
+    private async Task ConnectToDatabaseAsync(CancellationToken cancellationToken)
+    {
+        try
+        {
+            await BackendClient.Setup.Database.Check.PostAsync(
+                new CheckDatabaseRequest
+                {
+                    DatabaseHost = _databaseConfig.Host,
+                    DatabasePort = _databaseConfig.Port,
+                    DatabaseName = _databaseConfig.DatabaseName,
+                    DatabaseUserName = _databaseConfig.Username,
+                    DatabaseUserPassword = _databaseConfig.Password
+                },
+                x =>
+                {
+                },
+                cancellationToken);
+        }
+        catch (ApiException err) when (err.ResponseStatusCode == 500)
+        {
+            throw new SetupCheckException("Unknown error while database connection check.");
+        }
+        catch (ApiException err) when (err.ResponseStatusCode == 503)
+        {
+            throw new SetupCheckException("Database is not available.");
+        }
+        catch (Exception err)
+        {
+            throw new SetupCheckException(err.Message);
+        }
+    }
+
+    private async Task StepErrorAsync(CancellationToken cancellationToken = default)
+    {
+        await SetupService.SetStepStatusAsync(false, true, cancellationToken);
+    }
+
+    private async Task StepSuccessAsync(CancellationToken cancellationToken = default)
+    {
+        await SetupService.SetStepStatusAsync(false, false, cancellationToken);
+        await Task.Delay(5000, cancellationToken);
+        await SetupService.SetStepStatusAsync(true, false, cancellationToken);
     }
 }
