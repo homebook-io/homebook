@@ -116,6 +116,14 @@ jobs:
         run: |
           dotnet tool install --global nuget-license
 
+      - name: Restore dependencies
+        run: |
+          dotnet restore
+
+      - name: Build OpenAPI
+        run: |
+          dotnet build --configuration Release --no-restore
+
       - name: save nuget licenses
         run: |
           nuget-license -i ./homebook.slnx --include-transitive --output Markdown --file-output source/HomeBook.Backend.Licenses/licenses.md
