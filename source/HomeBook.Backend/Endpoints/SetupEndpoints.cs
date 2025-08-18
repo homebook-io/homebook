@@ -26,6 +26,17 @@ public static class SetupEndpoints
             .Produces(StatusCodes.Status409Conflict)
             .Produces<string>(StatusCodes.Status500InternalServerError);
 
+        group.MapGet("/licenses", SetupHandler.HandleGetLicenses)
+            .WithName("GetLicenses")
+            .WithDescription(new Description("returns all licenses of the project",
+                "HTTP 200: Licenses found",
+                "HTTP 500: Unknown error while loading licenses"))
+            .WithOpenApi(operation => new(operation)
+            {
+            })
+            .Produces<GetLicensesResponse>(StatusCodes.Status200OK)
+            .Produces<string>(StatusCodes.Status500InternalServerError);
+
         group.MapGet("/database/configuration", SetupHandler.HandleGetDatabaseCheck)
             .WithName("GetDatabaseCheck")
             .WithDescription(new Description("check if database configuration is available via environment variables",
