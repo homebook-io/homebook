@@ -1,5 +1,5 @@
+using HomeBook.Backend.Abstractions.Models;
+
 namespace HomeBook.Backend.Responses;
 
-public record GetLicensesResponse(License[] Licenses);
-
-public record License(string Name, string MarkdownContent);
+public record GetLicensesResponse(DependencyLicense[] Licenses);

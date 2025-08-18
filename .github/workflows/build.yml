@@ -127,9 +127,9 @@ jobs:
       - name: save nuget licenses
         run: |
           nuget-license -i ./homebook.slnx --include-transitive --output Markdown --file-output source/HomeBook.Backend.Licenses/licenses.md
-          nuget-license -i ./homebook.slnx --include-transitive  -d source/HomeBook.Backend.Licenses/licenses/
+          nuget-license -i ./homebook.slnx --include-transitive  -d source/HomeBook.Backend.Licenses/Licenses/
           git add source/HomeBook.Backend.Licenses/licenses.md
-          git add source/HomeBook.Backend.Licenses/licenses/
+          git add source/HomeBook.Backend.Licenses/Licenses/
 
       - name: Set Version Git Tag
         run: |
