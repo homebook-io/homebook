@@ -104,11 +104,6 @@ public partial class DatabaseConfigurationSetupStep : ComponentBase, ISetupStep
         }
     }
 
-    private void ClearForm()
-    {
-        _databaseConfig = new DatabaseConfigurationViewModel();
-    }
-
     private async Task ConnectToDatabaseAsync(CancellationToken cancellationToken)
     {
         try

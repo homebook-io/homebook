@@ -18,6 +18,7 @@ public class SetupService(BackendClient backendClient) : ISetupService
         List<ISetupStep> setupSteps = [];
 
         setupSteps.Add(new BackendConnectionSetupStep());
+        setupSteps.Add(new LicenseAgreementSetupStep());
         setupSteps.Add(new DatabaseConfigurationSetupStep());
         setupSteps.Add(new DatabaseMigrationSetupStep());
         setupSteps.Add(new AdminUserSetupStep());

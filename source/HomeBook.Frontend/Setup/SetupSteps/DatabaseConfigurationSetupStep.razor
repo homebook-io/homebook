@@ -33,7 +33,7 @@
             {
                 @if (_databaseIsOk)
                 {
-                    <MudAlert Class="mt-3"
+                    <MudAlert Class="mt-3 mb-3"
                               Severity="Severity.Info">
                         Database is found and available.
                     </MudAlert>
@@ -109,7 +109,7 @@
                     </MudItem>
 
                 </MudGrid>
-                
+
                 <MudStack Row Justify="Justify.SpaceBetween"
                           AlignItems="AlignItems.Center">
 
@@ -121,12 +121,6 @@
 
                         <MudText>Test Connection</MudText>
 
-                    </MudButton>
-
-                    <MudButton OnClick="ClearForm"
-                               Color="Color.Secondary"
-                               Variant="Variant.Filled">
-                        Clear
                     </MudButton>
 
                 </MudStack>

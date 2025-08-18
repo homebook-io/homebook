@@ -1,0 +1,24 @@
+@using HomeBook.Client
+@using HomeBook.Frontend.Abstractions.Contracts
+
+@inject IConfiguration Configuration
+@inject ISetupService SetupService
+@inject BackendClient BackendClient
+
+<MudCard Class="frosted-b3 mud-elevation-6">
+
+    <MudCardHeader>
+        <CardHeaderContent>
+            <MudText Typo="Typo.h4">License Agreement</MudText>
+        </CardHeaderContent>
+    </MudCardHeader>
+
+    <MudCardContent>
+
+        <article>
+            @((MarkupString)_licenseHtmlContent)
+        </article>
+
+    </MudCardContent>
+
+</MudCard>
