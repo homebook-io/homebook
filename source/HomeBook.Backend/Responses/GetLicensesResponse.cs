@@ -1,3 +1,5 @@
 namespace HomeBook.Backend.Responses;
 
-public record GetLicensesResponse(Dictionary<string, string> Licenses);
+public record GetLicensesResponse(License[] Licenses);
+
+public record License(string Name, string MarkdownContent);

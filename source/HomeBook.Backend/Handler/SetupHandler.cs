@@ -51,31 +51,17 @@ public class SetupHandler
     {
         try
         {
-            Dictionary<string, string> licenses = new()
-            {
-                {
-                    "HomeBook", "html"
-                },
-                {
-                    "HomeBook.Backend", "html"
-                },
-                {
-                    "HomeBook.Frontend", "html"
-                },
-                {
-                    "HomeBook.Abstractions", "html"
-                },
-                {
-                    "HomeBook.Abstractions.Setup", "html"
-                },
-                {
-                    "HomeBook.Abstractions.Database", "html"
-                },
-                {
-                    "HomeBook.Abstractions.FileService", "html"
-                }
-            };
-            GetLicensesResponse response = new(licenses);
+            List<License> licenses =
+            [
+                new("HomeBook", "html"),
+                new("HomeBook.Backend", "html"),
+                new("HomeBook.Frontend", "html"),
+                new("HomeBook.Abstractions", "html"),
+                new("HomeBook.Abstractions.Setup", "html"),
+                new("HomeBook.Abstractions.Database", "html"),
+                new("HomeBook.Abstractions.FileService", "html")
+            ];
+            GetLicensesResponse response = new(licenses.ToArray());
 
             return TypedResults.Ok(response);
         }

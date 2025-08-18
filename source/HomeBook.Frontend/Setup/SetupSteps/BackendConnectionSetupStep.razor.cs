@@ -78,18 +78,18 @@ public partial class BackendConnectionSetupStep : ComponentBase, ISetupStep
 
     private async Task ConnectToServerAsync(CancellationToken cancellationToken)
     {
-        var version = await BackendClient
+        var versionResponse = await BackendClient
             .Version
             .GetAsync((x) =>
             {
             }, cancellationToken);
 
-        if (string.IsNullOrEmpty(version))
+        if (string.IsNullOrEmpty(versionResponse))
             // DE => Der Server hat keine gültige Version zurückgegeben.
             throw new SetupCheckException("Server did not return a valid version.");
 
         string appVersion = Configuration.GetSection("Version").Value ?? "";
-        if (appVersion != version)
+        if (appVersion != versionResponse)
             // DE => Die Version des Servers stimmt nicht mit der Version der App überein. Bitte aktualisieren Sie die App oder den Server.
             throw new SetupCheckException("The server version does not match the app version. Please update the app.");
 
