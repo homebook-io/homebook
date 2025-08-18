@@ -35,6 +35,7 @@
   <ItemGroup>
     <ProjectReference Include="..\HomeBook.Backend.Abstractions\HomeBook.Backend.Abstractions.csproj" />
     <ProjectReference Include="..\Homebook.Backend.Core.Setup\Homebook.Backend.Core.Setup.csproj" />
+    <ProjectReference Include="..\HomeBook.Backend.Licenses\HomeBook.Backend.Licenses.csproj" />
     <ProjectReference Include="..\HomeBook.Data.PostgreSQL\HomeBook.Data.PostgreSQL.csproj" />
   </ItemGroup>
 

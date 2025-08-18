@@ -1,5 +1,6 @@
 using FluentValidation;
 using HomeBook.Backend.Abstractions;
+using HomeBook.Backend.Abstractions.Models;
 using HomeBook.Backend.Abstractions.Setup;
 using HomeBook.Backend.Requests;
 using HomeBook.Backend.Responses;
@@ -43,25 +44,17 @@ public class SetupHandler
     /// <summary>
     /// returns all licenses of the project.
     /// </summary>
-    /// <param name="setupInstanceManager"></param>
+    /// <param name="licenseProvider"></param>
     /// <param name="cancellationToken"></param>
     /// <returns></returns>
     public static async Task<IResult> HandleGetLicenses([FromServices] ILogger<SetupHandler> logger,
+        [FromServices] ILicenseProvider licenseProvider,
         CancellationToken cancellationToken)
     {
         try
         {
-            List<License> licenses =
-            [
-                new("HomeBook", "html"),
-                new("HomeBook.Backend", "html"),
-                new("HomeBook.Frontend", "html"),
-                new("HomeBook.Abstractions", "html"),
-                new("HomeBook.Abstractions.Setup", "html"),
-                new("HomeBook.Abstractions.Database", "html"),
-                new("HomeBook.Abstractions.FileService", "html")
-            ];
-            GetLicensesResponse response = new(licenses.ToArray());
+            DependencyLicense[] licenses = await licenseProvider.GetLicensesAsync(cancellationToken);
+            GetLicensesResponse response = new(licenses);
 
             return TypedResults.Ok(response);
         }
