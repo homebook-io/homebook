@@ -1,5 +1,7 @@
 using HomeBook.Client.Models;
 using HomeBook.Frontend.Abstractions.Contracts;
+using HomeBook.Frontend.Mappings;
+using HomeBook.Frontend.Models.Setup;
 using HomeBook.Frontend.Setup.Exceptions;
 using Microsoft.AspNetCore.Components;
 using Microsoft.Kiota.Abstractions;
@@ -10,7 +12,7 @@ public partial class LicenseAgreementSetupStep : ComponentBase, ISetupStep
 {
     private bool _isLoading = false;
     private string? _errorMessage = null;
-    private Dictionary<string, string> _licenses = new();
+    private List<LicenseViewModel> _licenses = [];
 
     public string Key { get; } = nameof(LicenseAgreementSetupStep);
     public bool HasError { get; set; }
@@ -46,14 +48,13 @@ public partial class LicenseAgreementSetupStep : ComponentBase, ISetupStep
             );
 
             if (licensesResponse is null)
-                // DE => Der Server hat keine gültige Version zurückgegeben.
                 throw new SetupCheckException("Server did not return valid licenses.");
 
             _licenses.Clear();
-            // foreach (var license in licensesResponse.Licenses)
-            // {
-            //     _licenses[license.Name] = license.Text;
-            // }
+            _licenses = licensesResponse.Licenses
+                .Select(license => license.ToViewModel())
+                .ToList();
+            await InvokeAsync(StateHasChanged);
         }
         catch (ApiException err) when (err.ResponseStatusCode == 500)
         {
