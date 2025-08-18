@@ -72,6 +72,13 @@ public partial class LicenseAgreementSetupStep : ComponentBase, ISetupStep
         }
     }
 
+    private async Task AcceptLicensesAsync()
+    {
+        CancellationToken cancellationToken = CancellationToken.None;
+        await StepSuccessAsync(cancellationToken);
+        await InvokeAsync(StateHasChanged);
+    }
+
     private async Task StepErrorAsync(CancellationToken cancellationToken = default)
     {
         await SetupService.SetStepStatusAsync(false, true, cancellationToken);
@@ -79,8 +86,6 @@ public partial class LicenseAgreementSetupStep : ComponentBase, ISetupStep
 
     private async Task StepSuccessAsync(CancellationToken cancellationToken = default)
     {
-        await SetupService.SetStepStatusAsync(false, false, cancellationToken);
-        await Task.Delay(5000, cancellationToken);
         await SetupService.SetStepStatusAsync(true, false, cancellationToken);
     }
 }

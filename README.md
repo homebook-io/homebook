@@ -80,17 +80,19 @@ open your domain and you should see the HomeBook Setup.
 
 if all environment variables are set, correctly, the setup will be running automatically.
 
-| Variable                 | Description                                  |
-|--------------------------|----------------------------------------------|
-| `DATABASE_HOST`          | the database host (e.g., `my-db.server.com`) |
-| `DATABASE_PORT`          | the database port (e.g., `5432`)             |
-| `DATABASE_NAME`          | the database name (e.g., `homebook`)         |
-| `DATABASE_USER`          | the database user (e.g., `db_user`)          |
-| `DATABASE_PASSWORD`      | the database password (e.g., `db_password`)  |
-| `HOMEBOOK_USER_NAME`     | the admin username (e.g., `admin`)           |
-| `HOMEBOOK_USER_PASSWORD` | the admin password (e.g., `password`)        |
+| Variable                   | Description                                                             |
+|----------------------------|-------------------------------------------------------------------------|
+| `DATABASE_HOST`            | the database host (e.g., `my-db.server.com`)                            |
+| `DATABASE_PORT`            | the database port (e.g., `5432`)                                        |
+| `DATABASE_NAME`            | the database name (e.g., `homebook`)                                    |
+| `DATABASE_USER`            | the database user (e.g., `db_user`)                                     |
+| `DATABASE_PASSWORD`        | the database password (e.g., `db_password`)                             |
+| `HOMEBOOK_USER_NAME`       | the admin username (e.g., `admin`)                                      |
+| `HOMEBOOK_USER_PASSWORD`   | the admin password (e.g., `password`)                                   |
+| `HOMEBOOK_ACCEPT_LICENSES` | no value needed. if added, the licenses will be accepted automatically. |
 
 ## Allowed Password Characters
+
 ```
 a-z
 A-Z

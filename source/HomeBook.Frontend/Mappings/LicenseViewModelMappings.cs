@@ -7,6 +7,7 @@ public static class LicenseViewModelMappings
 {
     public static LicenseViewModel ToViewModel(this DependencyLicense license)
     {
-        return new LicenseViewModel(license.Name, license.MarkdownContent);
+        return new LicenseViewModel(license?.Name ?? string.Empty,
+            license?.Content ?? string.Empty);
     }
 }

@@ -30,12 +30,9 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Frontend\"/>
-  </ItemGroup>
-
-  <ItemGroup>
     <ProjectReference Include="..\Homebook.Backend.Core.Setup\Homebook.Backend.Core.Setup.csproj"/>
     <ProjectReference Include="..\HomeBook.Backend\HomeBook.Backend.csproj" />
+    <ProjectReference Include="..\HomeBook.Frontend\HomeBook.Frontend.csproj" />
   </ItemGroup>
 
 </Project>

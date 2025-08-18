@@ -301,11 +301,15 @@
 
 .hb-setup-card {
   height: 100%;
-  overflow-y: auto;
+  overflow-y: hidden;
 }
 
 .ui-setup-stepper .mud-stepper-actions {
   display: none;
+}
+
+.hb-license-agreement-content {
+  overflow-y: auto;
 }
 
 /*# sourceMappingURL=app.css.map */
