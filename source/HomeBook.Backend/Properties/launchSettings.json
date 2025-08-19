@@ -19,11 +19,11 @@
             "applicationUrl": "http://localhost:5032",
             "environmentVariables": {
                 "ASPNETCORE_ENVIRONMENT": "Development",
-                "DATABASE_HOST": "188.245.154.163",
+                "DATABASE_HOST": "server",
                 "DATABASE_PORT": "5432",
-                "DATABASE_NAME": "homebook-dev",
-                "DATABASE_USER": "dbadmin",
-                "DATABASE_PASSWORD": "0H&41L!B481r5l$wiP$&",
+                "DATABASE_NAME": "database-name",
+                "DATABASE_USER": "dbuser",
+                "DATABASE_PASSWORD": "s3cr3t-passw0rd",
                 "HOMEBOOK_USER_NAME": "admin",
                 "HOMEBOOK_USER_PASSWORD": "another1234"
             }
