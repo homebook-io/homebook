@@ -42,7 +42,7 @@ public partial class BackendConnectionSetupStep : ComponentBase, ISetupStep
         try
         {
             await Task.WhenAll(
-                Task.Delay(4000, cancellationToken),
+                Task.Delay(2000, cancellationToken),
                 ConnectToServerAsync(cancellationToken));
 
             _serverIsOk = true;

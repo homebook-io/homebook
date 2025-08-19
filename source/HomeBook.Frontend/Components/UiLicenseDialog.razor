@@ -40,13 +40,18 @@
 
     <DialogActions>
 
-        <MudButton OnClick="Cancel">Cancel</MudButton>
-
-        <MudButton Color="Color.Primary" OnClick="Submit">OK</MudButton>
+        <MudButton Color="Color.Default"
+                   Variant="Variant.Filled"
+                   Class="mt-3"
+                   StartIcon="@Icons.Material.TwoTone.Close"
+                   OnClick="Cancel">
+            Close
+        </MudButton>
 
         <MudButton Color="Color.Primary"
                    Variant="Variant.Filled"
-                   Class="mt-3"
+                   Class="ms-3 mt-3"
+                   StartIcon="@Icons.Material.TwoTone.Check"
                    OnClick="async () => await AcceptLicensesAsync()">
             Accept and Continue
         </MudButton>
