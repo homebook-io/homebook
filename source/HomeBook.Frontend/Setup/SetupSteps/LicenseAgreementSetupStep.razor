@@ -30,10 +30,12 @@
         {
             @if (_licensesAccepted)
             {
-                <MudAlert Class="mt-3"
-                          Severity="Severity.Info">
+                <UiCountdownAlert Class="mt-3"
+                                  Duration="TimeSpan.FromSeconds(5)"
+                                  OnFinished="async () => await OnCountdownFinishedAsync()"
+                                  Severity="Severity.Info">
                     Licenses are already accepted.
-                </MudAlert>
+                </UiCountdownAlert>
             }
 
             @if (!string.IsNullOrEmpty(_errorMessage))
@@ -51,13 +53,24 @@
                 </MudButton>
             }
 
-            <MudButton Variant="Variant.Filled"
+            <MudButton Color="Color.Secondary"
+                       Variant="Variant.Filled"
+                       Class="mt-3"
                        StartIcon="@Icons.Material.TwoTone.TextSnippet"
-                       IconColor="Color.Secondary"
-                       OnClick="async () => await OpenLicensesDialogAsync()"
-                       Size="Size.Large">
-                Open Licenses
+                       OnClick="async () => await OpenLicensesDialogAsync()">
+                Show Licenses
             </MudButton>
+
+            @if (!_licensesAccepted)
+            {
+                <MudButton Color="Color.Primary"
+                           Variant="Variant.Filled"
+                           Class="ms-3 mt-3"
+                           StartIcon="@Icons.Material.TwoTone.Check"
+                           OnClick="async () => await StepSuccessAsync()">
+                    Accept and Continue
+                </MudButton>
+            }
         }
 
     </MudCardContent>

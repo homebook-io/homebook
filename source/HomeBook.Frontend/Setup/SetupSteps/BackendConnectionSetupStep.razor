@@ -29,10 +29,12 @@
         {
             @if (_serverIsOk)
             {
-                <MudAlert Class="mt-3"
-                          Severity="Severity.Info">
+                <UiCountdownAlert Class="mt-3"
+                                  Duration="TimeSpan.FromSeconds(5)"
+                                  OnFinished="async () => await OnCountdownFinishedAsync()"
+                                  Severity="Severity.Info">
                     Server is found and connected.
-                </MudAlert>
+                </UiCountdownAlert>
             }
 
             @if (!string.IsNullOrEmpty(_errorMessage))

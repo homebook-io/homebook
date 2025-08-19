@@ -75,6 +75,17 @@ public partial class LicenseAgreementSetupStep : ComponentBase, ISetupStep
             _isLoading = false;
             await InvokeAsync(StateHasChanged);
         }
+
+        if (_licensesAccepted)
+        {
+            // wait and go to next step
+            await SetupService.SetStepStatusAsync(false, false, cancellationToken);
+            await InvokeAsync(StateHasChanged);
+            await Task.Delay(5000, cancellationToken);
+
+            await StepSuccessAsync(cancellationToken);
+            await InvokeAsync(StateHasChanged);
+        }
     }
 
     private async Task StepErrorAsync(CancellationToken cancellationToken = default)
@@ -96,5 +107,14 @@ public partial class LicenseAgreementSetupStep : ComponentBase, ISetupStep
             MaxWidth = MaxWidth.Medium,
             FullWidth = true
         });
+    }
+
+    private async Task OnCountdownFinishedAsync()
+    {
+        CancellationToken cancellationToken = CancellationToken.None;
+        if (_licensesAccepted)
+        {
+            await StepSuccessAsync(cancellationToken);
+        }
     }
 }

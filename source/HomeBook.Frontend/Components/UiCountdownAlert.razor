@@ -1,0 +1,10 @@
+<MudStack Class="@($"ui-countdown-alert {Class ?? string.Empty}")">
+
+    <MudAlert Severity="Severity">
+        @ChildContent
+    </MudAlert>
+
+    <MudProgressLinear Value="@_progress"
+                       Color="CountdownColor"/>
+
+</MudStack>

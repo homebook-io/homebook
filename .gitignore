@@ -70,3 +70,5 @@ source/HomeBook.Client/*
 source/HomeBook.Client/HomeBook.Client.csproj
 
 *.sln.DotSettings.user
+
+*.env

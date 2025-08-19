@@ -293,6 +293,18 @@
     transform: translateX(1);
   }
 }
+.ui-countdown-alert {
+  overflow: hidden;
+  position: relative;
+  border-radius: var(--mud-default-borderradius);
+}
+.ui-countdown-alert .mud-progress-linear {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+}
+
 .hb-setup-container {
   height: 100vh;
   padding-top: 120px;
