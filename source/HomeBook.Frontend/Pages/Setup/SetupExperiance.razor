@@ -1,9 +1,11 @@
 @page "/Setup"
+@using HomeBook.Frontend.Abstractions.Contracts
 
-<PageTitle>HomeBook Setup</PageTitle>
+<PageTitle>@Loc["Setup_Title"]</PageTitle>
 
 @layout ContentOnlyLayout
 
+@inject ILocalizationProvider Loc
 @inject IConfiguration Configuration
 
 <UIWaveBackground/>
@@ -15,7 +17,7 @@
         <MudCardHeader>
 
             <CardHeaderContent>
-                <MudText Typo="Typo.h3">HomeBook Setup</MudText>
+                <MudText Typo="Typo.h3">@Loc["Setup_Title"]</MudText>
             </CardHeaderContent>
 
         </MudCardHeader>
@@ -63,7 +65,7 @@
         </MudCardContent>
 
         <MudCardActions Class="mud-theme-primary px-5">
-            Version: @_appVersion - Server: @_appServer
+            @Loc["Setup_CardActions_Version"]: @_appVersion - @Loc["Setup_CardActions_Server"]: @_appServer
         </MudCardActions>
 
     </MudCard>

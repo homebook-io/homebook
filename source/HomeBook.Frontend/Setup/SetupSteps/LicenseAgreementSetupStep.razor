@@ -2,27 +2,41 @@
 @using HomeBook.Frontend.Abstractions.Contracts
 @using HomeBook.Frontend.Models.Setup
 
+@inject ILocalizationProvider Loc
 @inject ISetupService SetupService
 @inject BackendClient BackendClient
 
-<MudCard Class="frosted-b3 mud-elevation-6">
+<MudExpansionPanels>
 
-    <MudCardHeader>
-        <CardHeaderContent>
-            <MudText Typo="Typo.h4">License Agreement</MudText>
-        </CardHeaderContent>
-    </MudCardHeader>
-
-    <MudCardContent>
-
+    <MudExpansionPanel Text="License Agreement"
+                       MaxHeight="500"
+                       Expanded="true"
+                       Class="frosted-b3 mud-elevation-6">
         @foreach (LicenseViewModel license in _licenses)
         {
-            <article>
-                <MudText Typo="Typo.h6">@license.Name</MudText>
-                @((MarkupString)license.HtmlContent)
-            </article>
+            <MudCard Class="frosted-b3 mud-elevation-6 mt-5">
+
+                <MudCardHeader>
+                    <CardHeaderContent>
+                        <MudText Typo="Typo.h6">@license.Name.Replace("__", " ")</MudText>
+                    </CardHeaderContent>
+                </MudCardHeader>
+
+                <MudCardContent>
+                    <article>
+                        @((MarkupString)license.HtmlContent)
+                    </article>
+                </MudCardContent>
+
+            </MudCard>
         }
+    </MudExpansionPanel>
 
-    </MudCardContent>
+</MudExpansionPanels>
 
-</MudCard>
+<MudButton Color="Color.Primary"
+           Variant="Variant.Filled"
+           Class="mt-3"
+           OnClick="async () => await AcceptLicensesAsync()">
+    Accept and Continue
+</MudButton>

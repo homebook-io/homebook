@@ -69,7 +69,7 @@ public partial class DatabaseConfigurationSetupStep : ComponentBase, ISetupStep
         try
         {
             await Task.WhenAll(
-                Task.Delay(8000, cancellationToken),
+                Task.Delay(4000, cancellationToken),
                 ConnectToDatabaseAsync(cancellationToken));
 
             _databaseIsOk = true;

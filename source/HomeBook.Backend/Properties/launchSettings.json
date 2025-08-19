@@ -27,6 +27,17 @@
                 "HOMEBOOK_USER_NAME": "admin",
                 "HOMEBOOK_USER_PASSWORD": "another1234"
             }
+        },
+        "licenses_accepted": {
+            "commandName": "Project",
+            "dotnetRunMessages": true,
+            "launchBrowser": true,
+            "launchUrl": "scalar",
+            "applicationUrl": "http://localhost:5032",
+            "environmentVariables": {
+                "ASPNETCORE_ENVIRONMENT": "Development",
+                "HOMEBOOK_ACCEPT_LICENSES": ""
+            }
         }
     }
 }

@@ -1,4 +1,5 @@
 using HomeBook.Backend.Abstractions;
+using HomeBook.Backend.Abstractions.Models;
 using HomeBook.Backend.Abstractions.Setup;
 using HomeBook.Backend.Handler;
 using HomeBook.Backend.Requests;
@@ -231,5 +232,68 @@ public class SetupHandlerTests
         // Assert
         var internalErr = result.ShouldBeOfType<InternalServerError<string>>();
         internalErr.Value.ShouldBe("boom");
+    }
+
+    [Test]
+    public async Task HandleGetLicenses_ReturnsOkWithLicenses_WhenLicensesAreAvailable()
+    {
+        // Arrange
+        var licenses = new[]
+        {
+            new DependencyLicense("License1", "License-Content"),
+            new DependencyLicense("License2", "License-Content")
+        };
+
+        _setupConfigurationProvider.GetValue(EnvironmentVariables.HOMEBOOK_ACCEPT_LICENSES).Returns("true");
+        var licenseProvider = Substitute.For<ILicenseProvider>();
+        licenseProvider.GetLicensesAsync(Arg.Any<CancellationToken>()).Returns(licenses);
+
+        // Act
+        var result = await SetupHandler.HandleGetLicenses(_logger, licenseProvider, _setupConfigurationProvider, CancellationToken.None);
+
+        // Assert
+        var okResult = result.ShouldBeOfType<Ok<GetLicensesResponse>>();
+        okResult.Value.ShouldNotBeNull();
+        okResult.Value.LicensesAccepted.ShouldBeTrue();
+        okResult.Value.Licenses.ShouldBe(licenses);
+    }
+
+    [Test]
+    public async Task HandleGetLicenses_ReturnsOkWithLicenses_WhenLicensesAreNotAccepted()
+    {
+        // Arrange
+        var licenses = new[]
+        {
+            new DependencyLicense("License1", "License-Content"),
+            new DependencyLicense("License2", "License-Content")
+        };
+
+        _setupConfigurationProvider.GetValue(EnvironmentVariables.HOMEBOOK_ACCEPT_LICENSES).Returns((string?)null);
+        var licenseProvider = Substitute.For<ILicenseProvider>();
+        licenseProvider.GetLicensesAsync(Arg.Any<CancellationToken>()).Returns(licenses);
+
+        // Act
+        var result = await SetupHandler.HandleGetLicenses(_logger, licenseProvider, _setupConfigurationProvider, CancellationToken.None);
+
+        // Assert
+        var okResult = result.ShouldBeOfType<Ok<GetLicensesResponse>>();
+        okResult.Value.ShouldNotBeNull();
+        okResult.Value.LicensesAccepted.ShouldBeFalse();
+        okResult.Value.Licenses.ShouldBe(licenses);
+    }
+
+    [Test]
+    public async Task HandleGetLicenses_ReturnsInternalServerError_OnException()
+    {
+        // Arrange
+        var licenseProvider = Substitute.For<ILicenseProvider>();
+        licenseProvider.GetLicensesAsync(Arg.Any<CancellationToken>()).Throws(new InvalidOperationException("boom"));
+
+        // Act
+        var result = await SetupHandler.HandleGetLicenses(_logger, licenseProvider, _setupConfigurationProvider, CancellationToken.None);
+
+        // Assert
+        var internalError = result.ShouldBeOfType<InternalServerError<string>>();
+        internalError.Value.ShouldBe("boom");
     }
 }

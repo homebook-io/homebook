@@ -32,7 +32,8 @@ public partial class UISetupStepper : ComponentBase, IAsyncDisposable
         ISetupStep[] setupSteps = await SetupService.GetSetupStepsAsync(cancellationToken);
         foreach (ISetupStep setupStep in setupSteps)
         {
-            SetupStepViewModel stepVM = new(setupStep.Key, setupStep)
+            string localizedName = GetStepTitle(setupStep.Key);
+            SetupStepViewModel stepVM = new(localizedName, setupStep)
             {
                 Completed = setupStep.IsSuccessful, HasError = setupStep.HasError
             };
@@ -41,6 +42,12 @@ public partial class UISetupStepper : ComponentBase, IAsyncDisposable
         }
 
         _ = ObserveSetupStepVMsAsync(cancellationToken);
+    }
+
+    private string GetStepTitle(string stepKey)
+    {
+        string localizedTitle = Loc[$"UISetupStepper_{stepKey}_Title"];
+        return localizedTitle;
     }
 
     private async Task OnMudStepInitializedAsync()
