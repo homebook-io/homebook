@@ -16,16 +16,14 @@
 
     <MudCardContent>
 
-        <div class="relative d-flex flex-grow-1 flex-wrap flex-column justify-center align-center">
-
-            @if (_isChecking)
-            {
+        @if (_isChecking)
+        {
+            <div class="relative d-flex flex-grow-1 flex-wrap flex-column justify-center align-center">
                 <MudProgressLinear Color="Color.Primary"
-                                   Indeterminate="@_isChecking"
+                                   Indeterminate="true"
                                    Class="my-7"/>
-            }
-
-        </div>
+            </div>
+        }
 
         <EditForm Model="@_databaseConfig"
                   OnValidSubmit="OnValidSubmit">

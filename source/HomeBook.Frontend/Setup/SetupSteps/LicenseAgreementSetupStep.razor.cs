@@ -1,10 +1,12 @@
 using HomeBook.Client.Models;
 using HomeBook.Frontend.Abstractions.Contracts;
+using HomeBook.Frontend.Components;
 using HomeBook.Frontend.Mappings;
 using HomeBook.Frontend.Models.Setup;
 using HomeBook.Frontend.Setup.Exceptions;
 using Microsoft.AspNetCore.Components;
 using Microsoft.Kiota.Abstractions;
+using MudBlazor;
 
 namespace HomeBook.Frontend.Setup.SetupSteps;
 
@@ -13,6 +15,7 @@ public partial class LicenseAgreementSetupStep : ComponentBase, ISetupStep
     private bool _isLoading = false;
     private string? _errorMessage = null;
     private List<LicenseViewModel> _licenses = [];
+    private bool _licensesAccepted = false;
 
     public string Key { get; } = nameof(LicenseAgreementSetupStep);
     public bool HasError { get; set; }
@@ -50,15 +53,17 @@ public partial class LicenseAgreementSetupStep : ComponentBase, ISetupStep
             if (licensesResponse is null)
                 throw new SetupCheckException("Server did not return valid licenses.");
 
+            _licensesAccepted = licensesResponse.LicensesAccepted ?? false;
             _licenses.Clear();
-            _licenses = licensesResponse.Licenses
+            _licenses = (licensesResponse.Licenses ?? [])
                 .Select(license => license.ToViewModel())
                 .ToList();
             await InvokeAsync(StateHasChanged);
         }
         catch (ApiException err) when (err.ResponseStatusCode == 500)
         {
-            throw new SetupCheckException("Unknown Server Error while loading Licenses.");
+            _errorMessage = "Unknown Server Error while loading Licenses: " + err.Message;
+            await StepErrorAsync(cancellationToken);
         }
         catch (Exception err)
         {
@@ -72,13 +77,6 @@ public partial class LicenseAgreementSetupStep : ComponentBase, ISetupStep
         }
     }
 
-    private async Task AcceptLicensesAsync()
-    {
-        CancellationToken cancellationToken = CancellationToken.None;
-        await StepSuccessAsync(cancellationToken);
-        await InvokeAsync(StateHasChanged);
-    }
-
     private async Task StepErrorAsync(CancellationToken cancellationToken = default)
     {
         await SetupService.SetStepStatusAsync(false, true, cancellationToken);
@@ -87,5 +85,16 @@ public partial class LicenseAgreementSetupStep : ComponentBase, ISetupStep
     private async Task StepSuccessAsync(CancellationToken cancellationToken = default)
     {
         await SetupService.SetStepStatusAsync(true, false, cancellationToken);
+    }
+
+    private async Task OpenLicensesDialogAsync()
+    {
+        CancellationToken cancellationToken = CancellationToken.None;
+
+        await DialogService.ShowAsync<UiLicenseDialog>("HomeBook Licenses", new DialogOptions()
+        {
+            MaxWidth = MaxWidth.Medium,
+            FullWidth = true
+        });
     }
 }

@@ -5,38 +5,61 @@
 @inject ILocalizationProvider Loc
 @inject ISetupService SetupService
 @inject BackendClient BackendClient
+@inject IDialogService DialogService
 
-<MudExpansionPanels>
+<MudCard Class="frosted-b3 mud-elevation-6">
 
-    <MudExpansionPanel Text="License Agreement"
-                       MaxHeight="500"
-                       Expanded="true"
-                       Class="frosted-b3 mud-elevation-6">
-        @foreach (LicenseViewModel license in _licenses)
+    <MudCardHeader>
+        <CardHeaderContent>
+            <MudText Typo="Typo.h4">Check Server Connection</MudText>
+        </CardHeaderContent>
+    </MudCardHeader>
+
+    <MudCardContent>
+
+        @if (_isLoading)
         {
-            <MudCard Class="frosted-b3 mud-elevation-6 mt-5">
-
-                <MudCardHeader>
-                    <CardHeaderContent>
-                        <MudText Typo="Typo.h6">@license.Name.Replace("__", " ")</MudText>
-                    </CardHeaderContent>
-                </MudCardHeader>
-
-                <MudCardContent>
-                    <article>
-                        @((MarkupString)license.HtmlContent)
-                    </article>
-                </MudCardContent>
-
-            </MudCard>
+            <div class="relative d-flex flex-grow-1 flex-wrap flex-column justify-center align-center">
+                <MudProgressLinear Color="Color.Primary"
+                                   Indeterminate="true"
+                                   Class="my-7"/>
+            </div>
         }
-    </MudExpansionPanel>
 
-</MudExpansionPanels>
+        @if (!_isLoading)
+        {
+            @if (_licensesAccepted)
+            {
+                <MudAlert Class="mt-3"
+                          Severity="Severity.Info">
+                    Licenses are already accepted.
+                </MudAlert>
+            }
 
-<MudButton Color="Color.Primary"
-           Variant="Variant.Filled"
-           Class="mt-3"
-           OnClick="async () => await AcceptLicensesAsync()">
-    Accept and Continue
-</MudButton>
+            @if (!string.IsNullOrEmpty(_errorMessage))
+            {
+                <MudAlert Class="mt-3"
+                          Severity="Severity.Error">
+                    @_errorMessage
+                </MudAlert>
+
+                <MudButton Color="Color.Primary"
+                           Variant="Variant.Filled"
+                           Class="mt-3"
+                           OnClick="async () => await LoadLicensesAsync()">
+                    Retry
+                </MudButton>
+            }
+
+            <MudButton Variant="Variant.Filled"
+                       StartIcon="@Icons.Material.TwoTone.TextSnippet"
+                       IconColor="Color.Secondary"
+                       OnClick="async () => await OpenLicensesDialogAsync()"
+                       Size="Size.Large">
+                Open Licenses
+            </MudButton>
+        }
+
+    </MudCardContent>
+
+</MudCard>
