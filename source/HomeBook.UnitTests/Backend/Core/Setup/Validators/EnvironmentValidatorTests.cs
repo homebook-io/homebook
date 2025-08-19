@@ -27,7 +27,8 @@ public class EnvironmentValidatorTests
             DatabaseUserName: "admin",
             DatabaseUserPassword: "SecurePassword123",
             HomebookUserName: "homebook_admin",
-            HomebookUserPassword: "AdminPassword456"
+            HomebookUserPassword: "AdminPassword456",
+            HomebookAcceptLicenses: null
         );
 
         // Act
@@ -49,7 +50,8 @@ public class EnvironmentValidatorTests
             DatabaseUserName: "db_user",
             DatabaseUserPassword: "MyPassword456",
             HomebookUserName: "homebook_admin",
-            HomebookUserPassword: "AdminPassword456"
+            HomebookUserPassword: "AdminPassword456",
+            HomebookAcceptLicenses: null
         );
 
         // Act
@@ -71,7 +73,8 @@ public class EnvironmentValidatorTests
             DatabaseUserName: "prod.user",
             DatabaseUserPassword: "ComplexPass789",
             HomebookUserName: "homebook_admin",
-            HomebookUserPassword: "AdminPassword456"
+            HomebookUserPassword: "AdminPassword456",
+            HomebookAcceptLicenses: null
         );
 
         // Act
@@ -93,7 +96,8 @@ public class EnvironmentValidatorTests
             DatabaseUserName: null,
             DatabaseUserPassword: "ValidPassword123",
             HomebookUserName: "homebook_admin",
-            HomebookUserPassword: "AdminPassword456"
+            HomebookUserPassword: "AdminPassword456",
+            HomebookAcceptLicenses: null
         );
 
         // Act
@@ -115,7 +119,8 @@ public class EnvironmentValidatorTests
             DatabaseUserName: null,
             DatabaseUserPassword: null,
             HomebookUserName: null,
-            HomebookUserPassword: null
+            HomebookUserPassword: null,
+            HomebookAcceptLicenses: null
         );
 
         // Act
@@ -137,7 +142,8 @@ public class EnvironmentValidatorTests
             DatabaseUserName: "",
             DatabaseUserPassword: "",
             HomebookUserName: "",
-            HomebookUserPassword: ""
+            HomebookUserPassword: "",
+            HomebookAcceptLicenses: null
         );
 
         // Act
@@ -188,6 +194,7 @@ public class EnvironmentValidatorTests
             null,
             null,
             null,
+            null,
             null);
 
         // Act
@@ -212,6 +219,7 @@ public class EnvironmentValidatorTests
     {
         // Arrange
         var config = new EnvironmentConfiguration(host,
+            null,
             null,
             null,
             null,
@@ -254,6 +262,7 @@ public class EnvironmentValidatorTests
             null,
             null,
             null,
+            null,
             null);
 
         // Act
@@ -276,6 +285,7 @@ public class EnvironmentValidatorTests
         // Arrange
         var config = new EnvironmentConfiguration(null,
             port,
+            null,
             null,
             null,
             null,
@@ -311,6 +321,7 @@ public class EnvironmentValidatorTests
             null,
             null,
             null,
+            null,
             null);
 
         // Act
@@ -338,6 +349,7 @@ public class EnvironmentValidatorTests
             null,
             null,
             null,
+            null,
             null);
 
         // Act
@@ -358,6 +370,7 @@ public class EnvironmentValidatorTests
         var config = new EnvironmentConfiguration(null,
             null,
             longName,
+            null,
             null,
             null,
             null,
@@ -393,6 +406,7 @@ public class EnvironmentValidatorTests
             username,
             null,
             null,
+            null,
             null);
 
         // Act
@@ -422,6 +436,7 @@ public class EnvironmentValidatorTests
             username,
             null,
             null,
+            null,
             null);
         // Act
         var result = _validator.Validate(config);
@@ -442,6 +457,7 @@ public class EnvironmentValidatorTests
             null,
             null,
             longUsername,
+            null,
             null,
             null,
             null);
@@ -476,6 +492,7 @@ public class EnvironmentValidatorTests
             null,
             password,
             null,
+            null,
             null);
 
         // Act
@@ -496,6 +513,7 @@ public class EnvironmentValidatorTests
             null,
             null,
             password,
+            null,
             null,
             null);
 
@@ -520,6 +538,7 @@ public class EnvironmentValidatorTests
             null,
             "",
             null,
+            null,
             null);
 
         // Act
@@ -540,6 +559,7 @@ public class EnvironmentValidatorTests
             null,
             null,
             passwordWithControlChar,
+            null,
             null,
             null);
 
@@ -565,6 +585,7 @@ public class EnvironmentValidatorTests
         // Arrange
         var config = new EnvironmentConfiguration(host, port, dbName, username, password,
             null,
+            null,
             null);
 
         // Act
@@ -585,6 +606,7 @@ public class EnvironmentValidatorTests
         // Arrange
         var config = new EnvironmentConfiguration("evil.com'; DROP DATABASE homebook; --",
             "3306", null, null, null,
+            null,
             null,
             null);
 
@@ -609,6 +631,7 @@ public class EnvironmentValidatorTests
         var config = new EnvironmentConfiguration("::1", null, null,
             null, null,
             null,
+            null,
             null);
 
         // Act
@@ -625,6 +648,7 @@ public class EnvironmentValidatorTests
         // Arrange
         var config = new EnvironmentConfiguration("::", null, null,
             null, null,
+            null,
             null,
             null);
 
@@ -645,6 +669,7 @@ public class EnvironmentValidatorTests
         var config = new EnvironmentConfiguration("localhost", "5432", maxDbName,
             maxUsername, "ValidPassword123",
             null,
+            null,
             null);
 
         // Act
@@ -662,6 +687,7 @@ public class EnvironmentValidatorTests
         var password = "P@ssw0rd!#%*+=?^_~()-[]{}";
         var config = new EnvironmentConfiguration(null, null, null,
             null, password,
+            null,
             null,
             null);
 

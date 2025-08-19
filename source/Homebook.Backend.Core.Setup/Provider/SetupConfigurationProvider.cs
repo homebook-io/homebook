@@ -28,7 +28,8 @@ public class SetupConfigurationProvider(
             Environment.GetEnvironmentVariable(EnvironmentVariables.DATABASE_USER.ToString()),
             Environment.GetEnvironmentVariable(EnvironmentVariables.DATABASE_PASSWORD.ToString()),
             Environment.GetEnvironmentVariable(EnvironmentVariables.HOMEBOOK_USER_NAME.ToString()),
-            Environment.GetEnvironmentVariable(EnvironmentVariables.HOMEBOOK_USER_PASSWORD.ToString())
+            Environment.GetEnvironmentVariable(EnvironmentVariables.HOMEBOOK_USER_PASSWORD.ToString()),
+            Environment.GetEnvironmentVariable(EnvironmentVariables.HOMEBOOK_ACCEPT_LICENSES.ToString())
         );
         environmentValidator.ValidateAndThrow(environmentConfiguration);
 

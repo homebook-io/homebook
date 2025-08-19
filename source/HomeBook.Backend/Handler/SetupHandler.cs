@@ -45,16 +45,22 @@ public class SetupHandler
     /// returns all licenses of the project.
     /// </summary>
     /// <param name="licenseProvider"></param>
+    /// <param name="setupConfigurationProvider"></param>
     /// <param name="cancellationToken"></param>
     /// <returns></returns>
     public static async Task<IResult> HandleGetLicenses([FromServices] ILogger<SetupHandler> logger,
         [FromServices] ILicenseProvider licenseProvider,
+        [FromServices] ISetupConfigurationProvider setupConfigurationProvider,
         CancellationToken cancellationToken)
     {
         try
         {
+            string? licensesAreAcceptedValue = setupConfigurationProvider.GetValue(EnvironmentVariables.HOMEBOOK_ACCEPT_LICENSES);
             DependencyLicense[] licenses = await licenseProvider.GetLicensesAsync(cancellationToken);
-            GetLicensesResponse response = new(licenses);
+            GetLicensesResponse response = new(
+                (licensesAreAcceptedValue is not null),
+                licenses
+            );
 
             return TypedResults.Ok(response);
         }
