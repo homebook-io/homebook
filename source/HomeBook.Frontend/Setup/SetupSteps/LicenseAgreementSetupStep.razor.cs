@@ -81,10 +81,6 @@ public partial class LicenseAgreementSetupStep : ComponentBase, ISetupStep
             // wait and go to next step
             await SetupService.SetStepStatusAsync(false, false, cancellationToken);
             await InvokeAsync(StateHasChanged);
-            await Task.Delay(5000, cancellationToken);
-
-            await StepSuccessAsync(cancellationToken);
-            await InvokeAsync(StateHasChanged);
         }
     }
 
