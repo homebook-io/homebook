@@ -32,10 +32,12 @@
             {
                 @if (_databaseIsOk)
                 {
-                    <MudAlert Class="mt-3 mb-3"
-                              Severity="Severity.Info">
+                    <UiCountdownAlert Class="mt-3 mb-3"
+                                      Duration="TimeSpan.FromSeconds(5)"
+                                      OnFinished="async () => await OnCountdownFinishedAsync()"
+                                      Severity="Severity.Info">
                         Database is found and available.
-                    </MudAlert>
+                    </UiCountdownAlert>
                 }
 
                 @if (!string.IsNullOrEmpty(_errorMessage))

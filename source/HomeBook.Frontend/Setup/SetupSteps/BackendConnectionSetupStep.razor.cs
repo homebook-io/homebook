@@ -10,7 +10,6 @@ public partial class BackendConnectionSetupStep : ComponentBase, ISetupStep
     private bool _isChecking = false;
     private bool _serverIsOk = false;
     private string? _errorMessage = null;
-    private bool _checkSuccessful = false;
 
     public string Key { get; } = nameof(BackendConnectionSetupStep);
     public bool HasError { get; set; }
@@ -36,7 +35,6 @@ public partial class BackendConnectionSetupStep : ComponentBase, ISetupStep
         _isChecking = true;
         _serverIsOk = false;
         _errorMessage = null;
-        _checkSuccessful = false;
         await InvokeAsync(StateHasChanged);
 
         try
@@ -46,7 +44,6 @@ public partial class BackendConnectionSetupStep : ComponentBase, ISetupStep
                 ConnectToServerAsync(cancellationToken));
 
             _serverIsOk = true;
-            _checkSuccessful = true;
             await SetupService.SetStepStatusAsync(false, false, cancellationToken);
         }
         catch (HttpRequestException err)
@@ -124,7 +121,7 @@ public partial class BackendConnectionSetupStep : ComponentBase, ISetupStep
     private async Task OnCountdownFinishedAsync()
     {
         CancellationToken cancellationToken = CancellationToken.None;
-        if (_checkSuccessful)
+        if (_serverIsOk)
         {
             await StepSuccessAsync(cancellationToken);
             await InvokeAsync(StateHasChanged);
