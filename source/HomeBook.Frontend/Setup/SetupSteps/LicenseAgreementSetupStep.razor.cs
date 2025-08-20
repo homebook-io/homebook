@@ -56,6 +56,7 @@ public partial class LicenseAgreementSetupStep : ComponentBase, ISetupStep
             _licensesAccepted = licensesResponse.LicensesAccepted ?? false;
             _licenses.Clear();
             _licenses = (licensesResponse.Licenses ?? [])
+                .OrderBy(x => x.Name)
                 .Select(license => license.ToViewModel())
                 .ToList();
             await InvokeAsync(StateHasChanged);
@@ -98,11 +99,26 @@ public partial class LicenseAgreementSetupStep : ComponentBase, ISetupStep
     {
         CancellationToken cancellationToken = CancellationToken.None;
 
-        await DialogService.ShowAsync<UiLicenseDialog>("HomeBook Licenses", new DialogOptions()
+        DialogParameters<UiLicenseDialog> parameters = new()
         {
-            MaxWidth = MaxWidth.Medium,
-            FullWidth = true
-        });
+            {
+                x => x.Licenses, _licenses
+            }
+        };
+
+        IDialogReference licenseDialog = await DialogService.ShowAsync<UiLicenseDialog>("HomeBook Licenses",
+            parameters,
+            new DialogOptions()
+            {
+                MaxWidth = MaxWidth.Medium, FullWidth = true,
+            });
+
+        DialogResult? licenseDialogResult = await licenseDialog.Result;
+        if (licenseDialogResult.Canceled)
+            return;
+
+        // license is accepted
+        await StepSuccessAsync(cancellationToken);
     }
 
     private async Task OnCountdownFinishedAsync()

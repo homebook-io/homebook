@@ -1,3 +1,4 @@
+@using HomeBook.Frontend.Models.Setup
 <MudDialog>
 
     <TitleContent>
@@ -6,35 +7,21 @@
 
     <DialogContent>
 
-        Licenses
+        <MudExpansionPanels Class="my-5">
 
-        @* <MudExpansionPanels> *@
-        @* *@
-        @*     <MudExpansionPanel Text="License Agreement" *@
-        @*                        MaxHeight="500" *@
-        @*                        Expanded="true" *@
-        @*                        Class="frosted-b3 mud-elevation-6"> *@
-        @*         @foreach (LicenseViewModel license in _licenses) *@
-        @*         { *@
-        @*             <MudCard Class="frosted-b3 mud-elevation-6 mt-5"> *@
-        @* *@
-        @*                 <MudCardHeader> *@
-        @*                     <CardHeaderContent> *@
-        @*                         <MudText Typo="Typo.h6">@license.Name.Replace("__", " ")</MudText> *@
-        @*                     </CardHeaderContent> *@
-        @*                 </MudCardHeader> *@
-        @* *@
-        @*                 <MudCardContent> *@
-        @*                     <article> *@
-        @*                         @((MarkupString)license.HtmlContent) *@
-        @*                     </article> *@
-        @*                 </MudCardContent> *@
-        @* *@
-        @*             </MudCard> *@
-        @*         } *@
-        @*     </MudExpansionPanel> *@
-        @* *@
-        @* </MudExpansionPanels> *@
+            @foreach (LicenseViewModel license in Licenses)
+            {
+                <MudExpansionPanel Text="@license.Name.Replace("__", " ")"
+                                   Class="">
+
+                    <article>
+                        @((MarkupString)license.HtmlContent)
+                    </article>
+
+                </MudExpansionPanel>
+            }
+
+        </MudExpansionPanels>
 
     </DialogContent>
 
@@ -44,7 +31,7 @@
                    Variant="Variant.Filled"
                    Class="mt-3"
                    StartIcon="@Icons.Material.TwoTone.Close"
-                   OnClick="Cancel">
+                   OnClick="async () => await CancelAsync()">
             Close
         </MudButton>
 
