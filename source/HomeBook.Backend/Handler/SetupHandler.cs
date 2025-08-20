@@ -169,6 +169,8 @@ public class SetupHandler
     {
         try
         {
+            await Task.Delay(10000, cancellationToken); // simulate some delay for the setup process
+
             return TypedResults.Ok();
             return TypedResults.StatusCode(StatusCodes.Status409Conflict);
         }
