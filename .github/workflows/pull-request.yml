@@ -85,7 +85,7 @@ jobs:
       - name: Collect Test Coverage
         shell: pwsh
         run: |
-          reportgenerator -reports:TestResults/**/coverage.opencover.xml -targetdir:coverage-report -reporttypes:Html
+          run: reportgenerator -reports:**/coverage.cobertura.xml -targetdir:./reports/coverage
 
       - name: End SonarQube
         shell: pwsh
@@ -104,3 +104,8 @@ jobs:
             --build-arg FRONTEND_APPSETTINGS_FILE=${{ env.FRONTEND_APPSETTINGS_FILE }} \
             --build-arg BACKEND_APPSETTINGS_FILE=${{ env.BACKEND_APPSETTINGS_FILE }} \
             --tag test-image .
+
+      - uses: actions/upload-artifact@v4
+        with:
+          name: coverage
+          path: reports/coverage
