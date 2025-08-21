@@ -79,6 +79,34 @@ public static class SetupEndpoints
             .Produces(StatusCodes.Status409Conflict)
             .Produces<string>(StatusCodes.Status500InternalServerError);
 
+        group.MapPost("/user", SetupHandler.HandleCreateAdminUser)
+            .WithName("CreateAdminUser")
+            .WithDescription(new Description("create the admin user for the application",
+                "HTTP 201: Admin User created successfully",
+                "HTTP 400: Validation error, e.g. too short password, etc.",
+                "HTTP 409: User already exists",
+                "HTTP 500: Unknown error while creating user"))
+            .WithOpenApi(operation => new(operation)
+            {
+            })
+            .Produces(StatusCodes.Status201Created)
+            .Produces(StatusCodes.Status400BadRequest)
+            .Produces(StatusCodes.Status409Conflict)
+            .Produces<string>(StatusCodes.Status500InternalServerError);
+
+        group.MapPut("/configuration", SetupHandler.HandleCreateConfiguration)
+            .WithName("CreateConfiguration")
+            .WithDescription(new Description("create the admin user for the application",
+                "HTTP 200: Configuration created successfully",
+                "HTTP 400: Invalid configuration, e.g. missing required fields",
+                "HTTP 500: Unknown error while updating configuration"))
+            .WithOpenApi(operation => new(operation)
+            {
+            })
+            .Produces(StatusCodes.Status200OK)
+            .Produces(StatusCodes.Status400BadRequest)
+            .Produces<string>(StatusCodes.Status500InternalServerError);
+
         return routeBuilder;
     }
 }
