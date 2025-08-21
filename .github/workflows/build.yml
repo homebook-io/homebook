@@ -57,13 +57,17 @@ jobs:
         run: |
           dotnet tool install --global dotnet-reportgenerator-globaltool
 
-      - name: Restore dependencies
+      - name: Install .NET Coverage
+        run: |
+          dotnet tool install --global dotnet-coverage
+
+      - name: .NET Restore
         run: |
           dotnet restore
 
-      - name: Build OpenAPI
+      - name: .NET Build (Service for Client Generation)
         run: |
-          dotnet build --configuration Release --no-restore
+          dotnet build --no-restore
 
       - name: Generate Client
         shell: bash
@@ -75,16 +79,40 @@ jobs:
             --openapi ${{ env.OPENAPI_FILE }} \
             --output ${{ env.CLIENT_OUTPUT_DIR }} \
 
-      - name: Build And Test
+      - name: Begin SonarQube
         shell: pwsh
         env:
           SONARTOKEN: ${{ secrets.SONAR_TOKEN }}
         run: |
-          dotnet-sonarscanner begin /k:"lk-code_homebook" /o:"lk-code-github" /d:sonar.token="$env:SONARTOKEN" /d:sonar.host.url="https://sonarcloud.io" /d:sonar.cs.opencover.reportsPaths="**/coverage.opencover.xml"
-          dotnet build --configuration Release --no-restore
-          dotnet test --configuration Release --no-restore --collect:"XPlat Code Coverage" --results-directory TestResults
-          reportgenerator -reports:**/TestResults/**/*.xml -targetdir:coverage-report -reporttypes:Html
-          dotnet-sonarscanner end /d:sonar.token="$env:SONARTOKEN"
+          dotnet-sonarscanner begin \
+          /k:"lk-code_homebook" \
+          /o:"lk-code-github" \
+          /d:sonar.token="$env:SONARTOKEN" \
+          /d:sonar.host.url="https://sonarcloud.io" \
+          /d:sonar.cs.vscoveragexml.reportsPaths=coverage.xml
+
+      - name: .NET Build
+        shell: pwsh
+        run: |
+          dotnet build --no-restore
+
+      - name: .NET Test
+        shell: pwsh
+        run: |
+          dotnet test --no-build
+
+      - name: Collect Test Coverage
+        shell: pwsh
+        run: |
+          dotnet-coverage collect "dotnet test" -f xml -o "coverage.xml"
+
+      - name: End SonarQube
+        shell: pwsh
+        env:
+          SONARTOKEN: ${{ secrets.SONAR_TOKEN }}
+        run: |
+          dotnet-sonarscanner end \
+          /d:sonar.token="$env:SONARTOKEN"
 
 #      - name: Build And Test
 #        shell: pwsh
