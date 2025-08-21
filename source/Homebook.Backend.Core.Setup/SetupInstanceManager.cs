@@ -15,6 +15,8 @@ public class SetupInstanceManager(
     /// <inheritdoc />
     public async Task<bool> IsSetupInstanceCreatedAsync(CancellationToken cancellationToken = default)
     {
+        logger.LogInformation("Checking if setup instance file exists at {FilePath}", INSTANCE_FILE_PATH);
+
         bool instanceFileExists = await fileService.DoesFileExistsAsync(INSTANCE_FILE_PATH);
 
         return instanceFileExists; // true => means setup is already executed and instance is created
