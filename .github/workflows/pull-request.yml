@@ -43,6 +43,10 @@ jobs:
         run: |
           dotnet tool install --global Microsoft.OpenApi.Kiota
 
+      - name: Install ReportGenerator
+        run: |
+          dotnet tool install --global dotnet-reportgenerator-globaltool
+
       - name: Restore dependencies
         run: |
           dotnet restore
