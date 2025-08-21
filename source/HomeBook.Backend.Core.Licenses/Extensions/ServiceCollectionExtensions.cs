@@ -2,7 +2,7 @@ using HomeBook.Backend.Abstractions;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 
-namespace HomeBook.Backend.Licenses.Extensions;
+namespace HomeBook.Backend.Core.Licenses.Extensions;
 
 public static class ServiceCollectionExtensions
 {

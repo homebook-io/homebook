@@ -23,7 +23,7 @@ public class SetupHandler
         try
         {
             // 1. check if file "/var/lib/homebook/instance.txt" exists
-            bool setupInstanceExists = await setupInstanceManager.IsSetupInstanceCreatedAsync(cancellationToken);
+            bool setupInstanceExists = setupInstanceManager.IsSetupInstanceCreated();
 
             if (!setupInstanceExists)
                 // does not exist => setup is not executed yet and available
@@ -74,12 +74,11 @@ public class SetupHandler
     /// <summary>
     /// returns the database configuration if it is available (set via environment variables).
     /// </summary>
-    /// <param name="fileService"></param>
+    /// <param name="fileSystemService"></param>
     /// <param name="setupConfigurationProvider"></param>
     /// <param name="cancellationToken"></param>
     /// <returns></returns>
     public static async Task<IResult> HandleGetDatabaseCheck([FromServices] ILogger<SetupHandler> logger,
-        [FromServices] IFileService fileService,
         [FromServices] ISetupConfigurationProvider setupConfigurationProvider,
         CancellationToken cancellationToken)
     {
@@ -159,18 +158,19 @@ public class SetupHandler
     /// starts the database migration process.
     /// </summary>
     /// <param name="request"></param>
-    /// <param name="fileService"></param>
+    /// <param name="logger"></param>
+    /// <param name="fileSystemService"></param>
     /// <param name="setupConfigurationProvider"></param>
     /// <param name="cancellationToken"></param>
     /// <returns></returns>
-    public static async Task<IResult> HandleMigrateDatabase([FromBody] MigrateDatabaseRequest request,
-        [FromServices] ILogger<SetupHandler> logger,
-        [FromServices] IFileService fileService,
+    public static async Task<IResult> HandleMigrateDatabase([FromServices] ILogger<SetupHandler> logger,
+        [FromServices] IFileSystemService fileSystemService,
         [FromServices] ISetupConfigurationProvider setupConfigurationProvider,
         CancellationToken cancellationToken)
     {
         try
         {
+            // TODO: start database migration process
             await Task.Delay(10000, cancellationToken); // simulate some delay for the setup process
 
             return TypedResults.Ok();
@@ -186,12 +186,57 @@ public class SetupHandler
     /// <summary>
     /// starts the database migration process.
     /// </summary>
-    /// <param name="fileService"></param>
+    /// <param name="request"></param>
+    /// <param name="logger"></param>
+    /// <param name="fileSystemService"></param>
+    /// <param name="setupConfigurationProvider"></param>
+    /// <param name="cancellationToken"></param>
+    /// <returns></returns>
+    public static async Task<IResult> HandleStartSetup([FromBody] StartSetupRequest request,
+        [FromServices] ILogger<SetupHandler> logger,
+        [FromServices] IFileSystemService fileSystemService,
+        [FromServices] ISetupInstanceManager setupInstanceManager,
+        [FromServices] ILicenseProvider licenseProvider,
+        [FromServices] ISetupConfigurationProvider setupConfigurationProvider,
+        CancellationToken cancellationToken)
+    {
+        try
+        {
+            // 1. write instance file
+            await setupInstanceManager.CreateSetupInstanceAsync(cancellationToken);
+
+            // 2. write license accepted file
+            bool licensesAcceptedViaRequest = request.LicensesAccepted ?? false;
+            bool licensesAcceptedViaEnvVar = setupConfigurationProvider.GetValue(EnvironmentVariables.HOMEBOOK_ACCEPT_LICENSES) is not null;
+            if (!licensesAcceptedViaRequest
+                && !licensesAcceptedViaEnvVar)
+                return TypedResults.StatusCode(StatusCodes.Status422UnprocessableEntity);
+
+            // mark the licenses of this version as accepted
+            await licenseProvider.MarkLicenseAsAcceptedAsync(cancellationToken);
+
+            // 3. write database configuration to environment variables
+
+            // 4. save setup configuration
+
+            return TypedResults.Ok();
+        }
+        catch (Exception err)
+        {
+            logger.LogError(err, "Error while migrating database");
+            return TypedResults.InternalServerError(err.Message);
+        }
+    }
+
+    /// <summary>
+    /// starts the database migration process.
+    /// </summary>
+    /// <param name="fileSystemService"></param>
     /// <param name="setupConfigurationProvider"></param>
     /// <param name="cancellationToken"></param>
     /// <returns></returns>
     public static async Task<IResult> HandleCreateAdminUser([FromServices] ILogger<SetupHandler> logger,
-        [FromServices] IFileService fileService,
+        [FromServices] IFileSystemService fileSystemService,
         [FromServices] ISetupConfigurationProvider setupConfigurationProvider,
         CancellationToken cancellationToken)
     {
@@ -212,12 +257,12 @@ public class SetupHandler
     /// <summary>
     /// starts the database migration process.
     /// </summary>
-    /// <param name="fileService"></param>
+    /// <param name="fileSystemService"></param>
     /// <param name="setupConfigurationProvider"></param>
     /// <param name="cancellationToken"></param>
     /// <returns></returns>
     public static async Task<IResult> HandleCreateConfiguration([FromServices] ILogger<SetupHandler> logger,
-        [FromServices] IFileService fileService,
+        [FromServices] IFileSystemService fileSystemService,
         [FromServices] ISetupConfigurationProvider setupConfigurationProvider,
         CancellationToken cancellationToken)
     {

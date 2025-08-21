@@ -79,6 +79,19 @@ public static class SetupEndpoints
             .Produces(StatusCodes.Status409Conflict)
             .Produces<string>(StatusCodes.Status500InternalServerError);
 
+        group.MapPost("/start", SetupHandler.HandleStartSetup)
+            .WithName("StartSetup")
+            .WithDescription(new Description("start the setup process. it will save the configuration for the setup steps",
+                "HTTP 200: Setup started successfully",
+                "HTTP 422: Licenses not accepted",
+                "HTTP 500: Unknown error while starting setup"))
+            .WithOpenApi(operation => new(operation)
+            {
+            })
+            .Produces(StatusCodes.Status200OK)
+            .Produces(StatusCodes.Status422UnprocessableEntity)
+            .Produces<string>(StatusCodes.Status500InternalServerError);
+
         group.MapPost("/user", SetupHandler.HandleCreateAdminUser)
             .WithName("CreateAdminUser")
             .WithDescription(new Description("create the admin user for the application",

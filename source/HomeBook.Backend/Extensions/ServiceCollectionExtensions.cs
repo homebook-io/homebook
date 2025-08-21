@@ -10,10 +10,11 @@ public static class ServiceCollectionExtensions
         IConfiguration configuration)
     {
         // Register the file service
+        services.AddSingleton<IApplicationPathProvider, NativeFileService>();
 // #if DEBUG
-        // services.AddSingleton<IFileService, DebugFileService>();
+        // services.AddSingleton<IFileSystemService, DebugFileService>();
 // #else
-         services.AddSingleton<IFileService, NativeFileService>();
+         services.AddSingleton<IFileSystemService, NativeFileService>();
 // #endif
 
         // Register other services as needed

@@ -16,7 +16,7 @@ public class SetupHandlerTests
 {
     private ILogger<SetupHandler> _logger;
     private ISetupInstanceManager _setupInstanceManager = null!;
-    private IFileService _fileService = null!;
+    private IFileSystemService _fileService = null!;
     private ISetupConfigurationProvider _setupConfigurationProvider = null!;
     private IDatabaseManager _databaseManager = null!;
 
@@ -36,7 +36,7 @@ public class SetupHandlerTests
 
         _logger = factory.CreateLogger<SetupHandler>();
         _setupInstanceManager = Substitute.For<ISetupInstanceManager>();
-        _fileService = Substitute.For<IFileService>();
+        _fileService = Substitute.For<IFileSystemService>();
         _setupConfigurationProvider = Substitute.For<ISetupConfigurationProvider>();
         _databaseManager = Substitute.For<IDatabaseManager>();
     }
@@ -46,7 +46,7 @@ public class SetupHandlerTests
     {
         // Arrange
         _setupInstanceManager
-            .IsSetupInstanceCreatedAsync(Arg.Any<CancellationToken>())
+            .IsSetupInstanceCreated()
             .Returns(true);
 
         // Act
@@ -62,7 +62,7 @@ public class SetupHandlerTests
     {
         // Arrange
         _setupInstanceManager
-            .IsSetupInstanceCreatedAsync(Arg.Any<CancellationToken>())
+            .IsSetupInstanceCreated()
             .Returns(false);
 
         // Act
@@ -79,7 +79,7 @@ public class SetupHandlerTests
         // Arrange
         const string boom = "boom";
         _setupInstanceManager
-            .IsSetupInstanceCreatedAsync(Arg.Any<CancellationToken>())
+            .IsSetupInstanceCreated()
             .Throws(new InvalidOperationException(boom));
 
         // Act
@@ -101,7 +101,7 @@ public class SetupHandlerTests
         _setupConfigurationProvider.GetValue(EnvironmentVariables.DATABASE_PASSWORD).Returns("s3cr3t");
 
         // Act
-        var result = await SetupHandler.HandleGetDatabaseCheck(_logger, _fileService, _setupConfigurationProvider, CancellationToken.None);
+        var result = await SetupHandler.HandleGetDatabaseCheck(_logger, _setupConfigurationProvider, CancellationToken.None);
 
         // Assert
         var ok = result.ShouldBeOfType<Ok<GetDatabaseCheckResponse>>();
@@ -134,7 +134,7 @@ public class SetupHandlerTests
         _setupConfigurationProvider.GetValue(EnvironmentVariables.DATABASE_PASSWORD).Returns((string?)null);
 
         // Act
-        var result = await SetupHandler.HandleGetDatabaseCheck(_logger, _fileService, _setupConfigurationProvider, CancellationToken.None);
+        var result = await SetupHandler.HandleGetDatabaseCheck(_logger, _setupConfigurationProvider, CancellationToken.None);
 
         // Assert: The current implementation always returns Ok with whatever it read
         var ok = result.ShouldBeOfType<NotFound>();
@@ -149,7 +149,7 @@ public class SetupHandlerTests
             .Do(_ => throw new InvalidOperationException("boom"));
 
         // Act
-        var result = await SetupHandler.HandleGetDatabaseCheck(_logger, _fileService, _setupConfigurationProvider, CancellationToken.None);
+        var result = await SetupHandler.HandleGetDatabaseCheck(_logger, _setupConfigurationProvider, CancellationToken.None);
 
         // Assert
         var internalErr = result.ShouldBeOfType<InternalServerError<string>>();

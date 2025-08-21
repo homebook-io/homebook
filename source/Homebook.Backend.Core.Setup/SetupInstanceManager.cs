@@ -8,16 +8,16 @@ namespace Homebook.Backend.Core.Setup;
 public class SetupInstanceManager(
     ILogger<SetupInstanceManager> logger,
     IConfiguration configuration,
-    IFileService fileService) : ISetupInstanceManager
+    IFileSystemService fileSystemService,
+    IApplicationPathProvider applicationPathProvider) : ISetupInstanceManager
 {
-    private const string INSTANCE_FILE_PATH = "/var/lib/homebook/instance.txt";
-
     /// <inheritdoc />
-    public async Task<bool> IsSetupInstanceCreatedAsync(CancellationToken cancellationToken = default)
+    public bool IsSetupInstanceCreated()
     {
-        logger.LogInformation("Checking if setup instance file exists at {FilePath}", INSTANCE_FILE_PATH);
+        string instanceFilePath = Path.Combine(applicationPathProvider.DataDirectory, "instance.txt");
+        logger.LogInformation("Checking if setup instance file exists at {FilePath}", instanceFilePath);
 
-        bool instanceFileExists = await fileService.DoesFileExistsAsync(INSTANCE_FILE_PATH);
+        bool instanceFileExists = fileSystemService.FileExists(instanceFilePath);
 
         return instanceFileExists; // true => means setup is already executed and instance is created
     }
@@ -25,7 +25,10 @@ public class SetupInstanceManager(
     /// <inheritdoc />
     public async Task CreateSetupInstanceAsync(CancellationToken cancellationToken = default)
     {
+        string instanceFilePath = Path.Combine(applicationPathProvider.DataDirectory, "instance.txt");
+        logger.LogInformation("Write setup instance file at {FilePath}", instanceFilePath);
+
         string appVersion = configuration["Version"] ?? string.Empty;
-        await File.WriteAllTextAsync(INSTANCE_FILE_PATH, appVersion, cancellationToken);
+        await fileSystemService.FileWriteAllTextAsync(instanceFilePath, appVersion, cancellationToken);
     }
 }
