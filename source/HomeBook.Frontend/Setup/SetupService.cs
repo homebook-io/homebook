@@ -7,7 +7,9 @@ namespace HomeBook.Frontend.Setup;
 
 public class SetupService(BackendClient backendClient) : ISetupService
 {
+    public Guid Id { get; } = Guid.NewGuid();
     private bool _isDone = false;
+    private Dictionary<string, object> _storage = new();
     private List<ISetupStep> _setupSteps = [];
     public Func<ISetupStep, Task>? OnStepSuccessful { get; set; }
     public Func<ISetupStep, bool, Task>? OnStepFailed { get; set; }
@@ -20,7 +22,7 @@ public class SetupService(BackendClient backendClient) : ISetupService
         setupSteps.Add(new BackendConnectionSetupStep());
         setupSteps.Add(new LicenseAgreementSetupStep());
         setupSteps.Add(new DatabaseConfigurationSetupStep());
-        setupSteps.Add(new DatabaseMigrationSetupStep());
+        setupSteps.Add(new SetupProcessSetupStep());
         setupSteps.Add(new AdminUserSetupStep());
         setupSteps.Add(new ConfigurationSetupStep());
 
@@ -86,5 +88,27 @@ public class SetupService(BackendClient backendClient) : ISetupService
             if (OnStepSuccessful != null)
                 await OnStepSuccessful.Invoke(activeStep);
         }
+    }
+
+    public Task SetStorageValueAsync(string key, object value, CancellationToken cancellationToken = default)
+    {
+        if (string.IsNullOrWhiteSpace(key))
+            throw new ArgumentException("Key cannot be null or whitespace.", nameof(key));
+
+        _storage[key] = value;
+        return Task.CompletedTask;
+    }
+
+    public Task<T?> GetStorageValueAsync<T>(string key, CancellationToken cancellationToken = default)
+    {
+        if (string.IsNullOrWhiteSpace(key))
+            throw new ArgumentException("Key cannot be null or whitespace.", nameof(key));
+
+        if (_storage.TryGetValue(key, out object? value) && value is T typedValue)
+        {
+            return Task.FromResult(typedValue)!;
+        }
+
+        return Task.FromResult<T?>(default);
     }
 }

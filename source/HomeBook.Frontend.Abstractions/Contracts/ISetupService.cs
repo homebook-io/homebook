@@ -40,4 +40,21 @@ public interface ISetupService
     /// <param name="cancellationToken"></param>
     /// <returns></returns>
     Task SetStepStatusAsync(bool success, bool hasError, CancellationToken cancellationToken = default);
+
+    /// <summary>
+    /// stores a setup value by the given key.
+    /// </summary>
+    /// <param name="key"></param>
+    /// <param name="value"></param>
+    /// <param name="cancellationToken"></param>
+    /// <returns></returns>
+    Task SetStorageValueAsync(string key, object value, CancellationToken cancellationToken = default);
+
+    /// <summary>
+    /// returns a setup value by the given key.
+    /// </summary>
+    /// <param name="key"></param>
+    /// <param name="cancellationToken"></param>
+    /// <returns></returns>
+    Task<T?> GetStorageValueAsync<T>(string key, CancellationToken cancellationToken = default);
 }

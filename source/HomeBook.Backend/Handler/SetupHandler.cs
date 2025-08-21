@@ -158,11 +158,13 @@ public class SetupHandler
     /// <summary>
     /// starts the database migration process.
     /// </summary>
+    /// <param name="request"></param>
     /// <param name="fileService"></param>
     /// <param name="setupConfigurationProvider"></param>
     /// <param name="cancellationToken"></param>
     /// <returns></returns>
-    public static async Task<IResult> HandleMigrateDatabase([FromServices] ILogger<SetupHandler> logger,
+    public static async Task<IResult> HandleMigrateDatabase([FromBody] MigrateDatabaseRequest request,
+        [FromServices] ILogger<SetupHandler> logger,
         [FromServices] IFileService fileService,
         [FromServices] ISetupConfigurationProvider setupConfigurationProvider,
         CancellationToken cancellationToken)
