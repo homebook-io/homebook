@@ -85,7 +85,7 @@ jobs:
       - name: Collect Test Coverage
         shell: pwsh
         run: |
-          run: reportgenerator -reports:**/coverage.cobertura.xml -targetdir:./reports/coverage
+          reportgenerator -reports:**/coverage.cobertura.xml -targetdir:./reports/coverage
 
       - name: End SonarQube
         shell: pwsh
