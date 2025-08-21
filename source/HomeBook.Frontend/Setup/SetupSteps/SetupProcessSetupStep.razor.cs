@@ -5,20 +5,31 @@ using Microsoft.Kiota.Abstractions;
 
 namespace HomeBook.Frontend.Setup.SetupSteps;
 
-public partial class DatabaseMigrationSetupStep : ComponentBase, ISetupStep
+public partial class SetupProcessSetupStep : ComponentBase, ISetupStep
 {
     private bool _isMigrating = false;
     private bool _migrationSuccessful = false;
     private string? _errorMessage = null;
 
-    public string Key { get; } = nameof(DatabaseMigrationSetupStep);
+    public string Key { get; } = nameof(SetupProcessSetupStep);
     public bool HasError { get; set; }
     public bool IsSuccessful { get; set; }
     public Task HandleStepAsync() => throw new NotImplementedException();
 
+    protected override async Task OnAfterRenderAsync(bool firstRender)
+    {
+        await base.OnAfterRenderAsync(firstRender);
+
+        if (!firstRender)
+            return;
+
+        // start migration process
+        await StartMigrationAsync();
+    }
+
     public Task<bool> IsStepDoneAsync(CancellationToken cancellationToken) => throw new NotImplementedException();
 
-    private async Task StartAsync()
+    private async Task StartMigrationAsync()
     {
         CancellationToken cancellationToken = CancellationToken.None;
 
@@ -61,6 +72,12 @@ public partial class DatabaseMigrationSetupStep : ComponentBase, ISetupStep
     {
         try
         {
+            string?databaseHost = await SetupService.GetStorageValueAsync<string>("DATABASE_HOST", cancellationToken);
+            string? databasePort = await SetupService.GetStorageValueAsync<string>("DATABASE_PORT", cancellationToken);
+            string? databaseName = await SetupService.GetStorageValueAsync<string>("DATABASE_NAME", cancellationToken);
+            string? databaseUsername = await SetupService.GetStorageValueAsync<string>("DATABASE_USERNAME", cancellationToken);
+            string? databasePassword = await SetupService.GetStorageValueAsync<string>("DATABASE_PASSWORD", cancellationToken);
+
             await BackendClient.Setup.Database.Migrate.PostAsync(x =>
                 {
                 },

@@ -22,16 +22,16 @@
         <value>HomeBook</value>
     </data>
     <data name="UISetupStepper_BackendConnectionSetupStep_Title" xml:space="preserve">
-        <value>Check Server Connection</value>
+        <value>Check Server</value>
     </data>
     <data name="UISetupStepper_LicenseAgreementSetupStep_Title" xml:space="preserve">
-        <value>License Agreement</value>
+        <value>Licenses</value>
     </data>
     <data name="UISetupStepper_DatabaseConfigurationSetupStep_Title" xml:space="preserve">
-        <value>Database Check</value>
+        <value>Database</value>
     </data>
     <data name="UISetupStepper_DatabaseMigrationSetupStep_Title" xml:space="preserve">
-        <value>Database Setup</value>
+        <value>Setup</value>
     </data>
     <data name="UISetupStepper_AdminUserSetupStep_Title" xml:space="preserve">
         <value>Admin User</value>

@@ -149,4 +149,21 @@ public partial class DatabaseConfigurationSetupStep : ComponentBase, ISetupStep
             await InvokeAsync(StateHasChanged);
         }
     }
+
+    private async Task StartMigrationAsync()
+    {
+        if (!_databaseIsOk)
+            return;
+
+        CancellationToken cancellationToken = CancellationToken.None;
+
+        await SetupService.SetStorageValueAsync("DATABASE_HOST", _databaseConfig.Host, cancellationToken);
+        await SetupService.SetStorageValueAsync("DATABASE_PORT", _databaseConfig.Port, cancellationToken);
+        await SetupService.SetStorageValueAsync("DATABASE_NAME", _databaseConfig.DatabaseName, cancellationToken);
+        await SetupService.SetStorageValueAsync("DATABASE_USERNAME", _databaseConfig.Username, cancellationToken);
+        await SetupService.SetStorageValueAsync("DATABASE_PASSWORD", _databaseConfig.Password, cancellationToken);
+
+        await StepSuccessAsync(cancellationToken);
+        await InvokeAsync(StateHasChanged);
+    }
 }
