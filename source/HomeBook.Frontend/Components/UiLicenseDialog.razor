@@ -1,0 +1,48 @@
+@using HomeBook.Frontend.Models.Setup
+<MudDialog>
+
+    <TitleContent>
+        Dialog Title
+    </TitleContent>
+
+    <DialogContent>
+
+        <MudExpansionPanels Class="my-5">
+
+            @foreach (LicenseViewModel license in Licenses)
+            {
+                <MudExpansionPanel Text="@license.Name.Replace("__", " ")"
+                                   Class="">
+
+                    <article>
+                        @((MarkupString)license.HtmlContent)
+                    </article>
+
+                </MudExpansionPanel>
+            }
+
+        </MudExpansionPanels>
+
+    </DialogContent>
+
+    <DialogActions>
+
+        <MudButton Color="Color.Default"
+                   Variant="Variant.Filled"
+                   Class="mt-3"
+                   StartIcon="@Icons.Material.TwoTone.Close"
+                   OnClick="async () => await CancelAsync()">
+            Close
+        </MudButton>
+
+        <MudButton Color="Color.Primary"
+                   Variant="Variant.Filled"
+                   Class="ms-3 mt-3"
+                   StartIcon="@Icons.Material.TwoTone.Check"
+                   OnClick="async () => await AcceptLicensesAsync()">
+            Accept and Continue
+        </MudButton>
+
+    </DialogActions>
+
+</MudDialog>

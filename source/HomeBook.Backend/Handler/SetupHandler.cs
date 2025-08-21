@@ -169,6 +169,60 @@ public class SetupHandler
     {
         try
         {
+            await Task.Delay(10000, cancellationToken); // simulate some delay for the setup process
+
+            return TypedResults.Ok();
+            return TypedResults.StatusCode(StatusCodes.Status409Conflict);
+        }
+        catch (Exception err)
+        {
+            logger.LogError(err, "Error while migrating database");
+            return TypedResults.InternalServerError(err.Message);
+        }
+    }
+
+    /// <summary>
+    /// starts the database migration process.
+    /// </summary>
+    /// <param name="fileService"></param>
+    /// <param name="setupConfigurationProvider"></param>
+    /// <param name="cancellationToken"></param>
+    /// <returns></returns>
+    public static async Task<IResult> HandleCreateAdminUser([FromServices] ILogger<SetupHandler> logger,
+        [FromServices] IFileService fileService,
+        [FromServices] ISetupConfigurationProvider setupConfigurationProvider,
+        CancellationToken cancellationToken)
+    {
+        try
+        {
+            await Task.Delay(10000, cancellationToken); // simulate some delay for the setup process
+
+            return TypedResults.Ok();
+            return TypedResults.StatusCode(StatusCodes.Status409Conflict);
+        }
+        catch (Exception err)
+        {
+            logger.LogError(err, "Error while migrating database");
+            return TypedResults.InternalServerError(err.Message);
+        }
+    }
+
+    /// <summary>
+    /// starts the database migration process.
+    /// </summary>
+    /// <param name="fileService"></param>
+    /// <param name="setupConfigurationProvider"></param>
+    /// <param name="cancellationToken"></param>
+    /// <returns></returns>
+    public static async Task<IResult> HandleCreateConfiguration([FromServices] ILogger<SetupHandler> logger,
+        [FromServices] IFileService fileService,
+        [FromServices] ISetupConfigurationProvider setupConfigurationProvider,
+        CancellationToken cancellationToken)
+    {
+        try
+        {
+            await Task.Delay(10000, cancellationToken); // simulate some delay for the setup process
+
             return TypedResults.Ok();
             return TypedResults.StatusCode(StatusCodes.Status409Conflict);
         }

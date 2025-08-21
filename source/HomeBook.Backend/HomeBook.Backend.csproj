@@ -43,4 +43,10 @@
     <Folder Include="Provider\" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Content Include="env\**\*.*">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+  </ItemGroup>
+
 </Project>

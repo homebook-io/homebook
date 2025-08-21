@@ -37,15 +37,14 @@ public partial class BackendConnectionSetupStep : ComponentBase, ISetupStep
         _errorMessage = null;
         await InvokeAsync(StateHasChanged);
 
-        bool checkSuccessful = false;
         try
         {
             await Task.WhenAll(
-                Task.Delay(4000, cancellationToken),
+                Task.Delay(2000, cancellationToken),
                 ConnectToServerAsync(cancellationToken));
 
             _serverIsOk = true;
-            checkSuccessful = true;
+            await SetupService.SetStepStatusAsync(false, false, cancellationToken);
         }
         catch (HttpRequestException err)
         {
@@ -66,12 +65,6 @@ public partial class BackendConnectionSetupStep : ComponentBase, ISetupStep
         finally
         {
             _isChecking = false;
-            await InvokeAsync(StateHasChanged);
-        }
-
-        if (checkSuccessful)
-        {
-            await StepSuccessAsync(cancellationToken);
             await InvokeAsync(StateHasChanged);
         }
     }
@@ -122,8 +115,16 @@ public partial class BackendConnectionSetupStep : ComponentBase, ISetupStep
 
     private async Task StepSuccessAsync(CancellationToken cancellationToken = default)
     {
-        await SetupService.SetStepStatusAsync(false, false, cancellationToken);
-        await Task.Delay(5000, cancellationToken);
         await SetupService.SetStepStatusAsync(true, false, cancellationToken);
+    }
+
+    private async Task OnCountdownFinishedAsync()
+    {
+        CancellationToken cancellationToken = CancellationToken.None;
+        if (_serverIsOk)
+        {
+            await StepSuccessAsync(cancellationToken);
+            await InvokeAsync(StateHasChanged);
+        }
     }
 }

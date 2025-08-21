@@ -1,11 +1,16 @@
 using Homebook.Backend.Core.Setup.Extensions;
 using HomeBook.Backend.Data.Extensions;
 using HomeBook.Backend.Endpoints;
+using HomeBook.Backend.EnvironmentHandler;
 using HomeBook.Backend.Extensions;
 using HomeBook.Backend.Licenses.Extensions;
 using Scalar.AspNetCore;
 using Serilog;
 
+#if DEBUG
+string developmentEnvFile = $"env{Path.DirectorySeparatorChar}Development.env";
+EnvironmentLoader.LoadEnvFile(developmentEnvFile);
+#endif
 
 var builder = WebApplication.CreateBuilder(args);
 builder.Configuration.Sources.Clear();

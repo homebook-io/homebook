@@ -10,34 +10,6 @@
             "environmentVariables": {
                 "ASPNETCORE_ENVIRONMENT": "Development"
             }
-        },
-        "full_docker_setup": {
-            "commandName": "Project",
-            "dotnetRunMessages": true,
-            "launchBrowser": true,
-            "launchUrl": "scalar",
-            "applicationUrl": "http://localhost:5032",
-            "environmentVariables": {
-                "ASPNETCORE_ENVIRONMENT": "Development",
-                "DATABASE_HOST": "188.245.154.163",
-                "DATABASE_PORT": "5432",
-                "DATABASE_NAME": "homebook-dev",
-                "DATABASE_USER": "dbadmin",
-                "DATABASE_PASSWORD": "0H&41L!B481r5l$wiP$&",
-                "HOMEBOOK_USER_NAME": "admin",
-                "HOMEBOOK_USER_PASSWORD": "another1234"
-            }
-        },
-        "licenses_accepted": {
-            "commandName": "Project",
-            "dotnetRunMessages": true,
-            "launchBrowser": true,
-            "launchUrl": "scalar",
-            "applicationUrl": "http://localhost:5032",
-            "environmentVariables": {
-                "ASPNETCORE_ENVIRONMENT": "Development",
-                "HOMEBOOK_ACCEPT_LICENSES": ""
-            }
         }
     }
 }

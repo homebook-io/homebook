@@ -14,10 +14,10 @@ RUN dotnet restore "source/HomeBook.Backend/HomeBook.Backend.csproj"
 RUN dotnet restore "source/HomeBook.Frontend/HomeBook.Frontend.csproj"
 
 # Publish Blazor frontend
-RUN dotnet publish "source/HomeBook.Frontend/HomeBook.Frontend.csproj" -c $BUILD_CONFIGURATION -o /frontend_dist
+RUN dotnet publish "source/HomeBook.Frontend/HomeBook.Frontend.csproj" -c "$BUILD_CONFIGURATION" -o /frontend_dist
 
 # Publish backend
-RUN dotnet publish "source/HomeBook.Backend/HomeBook.Backend.csproj" -c $BUILD_CONFIGURATION -o /backend_dist /p:UseAppHost=false
+RUN dotnet publish "source/HomeBook.Backend/HomeBook.Backend.csproj" -c "$BUILD_CONFIGURATION" -o /backend_dist /p:UseAppHost=false
 
 FROM mcr.microsoft.com/dotnet/aspnet:9.0 AS final
 ARG APP_UID=21001

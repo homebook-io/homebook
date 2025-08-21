@@ -69,7 +69,7 @@ public partial class DatabaseConfigurationSetupStep : ComponentBase, ISetupStep
         try
         {
             await Task.WhenAll(
-                Task.Delay(4000, cancellationToken),
+                Task.Delay(2000, cancellationToken),
                 ConnectToDatabaseAsync(cancellationToken));
 
             _databaseIsOk = true;
@@ -94,12 +94,6 @@ public partial class DatabaseConfigurationSetupStep : ComponentBase, ISetupStep
         finally
         {
             _isChecking = false;
-            await InvokeAsync(StateHasChanged);
-        }
-
-        if (checkSuccessful)
-        {
-            await StepSuccessAsync(cancellationToken);
             await InvokeAsync(StateHasChanged);
         }
     }
@@ -143,8 +137,16 @@ public partial class DatabaseConfigurationSetupStep : ComponentBase, ISetupStep
 
     private async Task StepSuccessAsync(CancellationToken cancellationToken = default)
     {
-        await SetupService.SetStepStatusAsync(false, false, cancellationToken);
-        await Task.Delay(5000, cancellationToken);
         await SetupService.SetStepStatusAsync(true, false, cancellationToken);
+    }
+
+    private async Task OnCountdownFinishedAsync()
+    {
+        CancellationToken cancellationToken = CancellationToken.None;
+        if (_databaseIsOk)
+        {
+            await StepSuccessAsync(cancellationToken);
+            await InvokeAsync(StateHasChanged);
+        }
     }
 }
