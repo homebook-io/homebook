@@ -74,12 +74,7 @@ jobs:
         env:
           SONARTOKEN: ${{ secrets.SONAR_TOKEN }}
         run: |
-          dotnet-sonarscanner begin \
-            /k:"lk-code_homebook" \
-            /o:"lk-code-github" \
-            /d:sonar.token="$env:SONARTOKEN" \
-            /d:sonar.host.url="https://sonarcloud.io" \
-            /d:sonar.cs.vscoveragexml.reportsPaths=coverage.xml
+          dotnet-sonarscanner begin /k:"lk-code_homebook" /o:"lk-code-github" /d:sonar.token="$env:SONARTOKEN" /d:sonar.host.url="https://sonarcloud.io" /d:sonar.cs.vscoveragexml.reportsPaths=coverage.xml
 
       - name: .NET Build
         shell: pwsh
@@ -101,8 +96,7 @@ jobs:
         env:
           SONARTOKEN: ${{ secrets.SONAR_TOKEN }}
         run: |
-          dotnet-sonarscanner end \
-          /d:sonar.token="$env:SONARTOKEN"
+          dotnet-sonarscanner end /d:sonar.token="$env:SONARTOKEN"
 
       - name: Set up Docker Buildx
         uses: docker/setup-buildx-action@v3
