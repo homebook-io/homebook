@@ -163,10 +163,10 @@ jobs:
 
       - name: save nuget licenses
         run: |
-          nuget-license -i ./homebook.slnx --include-transitive --output JsonPretty --file-output source/HomeBook.Backend.Licenses/Licenses.json
-          nuget-license -i ./homebook.slnx --include-transitive  -d source/HomeBook.Backend.Licenses/Licenses/
-          git add source/HomeBook.Backend.Licenses/Licenses.json
-          git add source/HomeBook.Backend.Licenses/Licenses/
+          nuget-license -i ./homebook.slnx --include-transitive --output JsonPretty --file-output source/HomeBook.Backend.Core.Licenses/Licenses.json
+          nuget-license -i ./homebook.slnx --include-transitive  -d source/HomeBook.Backend.Core.Licenses/Licenses/
+          git add source/HomeBook.Backend.Core.Licenses/Licenses.json
+          git add source/HomeBook.Backend.Core.Licenses/Licenses/
 
       - name: Set Version Git Tag
         run: |
