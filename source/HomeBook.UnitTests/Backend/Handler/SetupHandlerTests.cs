@@ -18,7 +18,7 @@ public class SetupHandlerTests
     private ISetupInstanceManager _setupInstanceManager = null!;
     private IFileSystemService _fileService = null!;
     private ISetupConfigurationProvider _setupConfigurationProvider = null!;
-    private IDatabaseManager _databaseManager = null!;
+    private IDatabaseProviderResolver _databaseProviderResolver = null!;
 
     [SetUp]
     public void SetUpSubstitutes()
@@ -38,7 +38,7 @@ public class SetupHandlerTests
         _setupInstanceManager = Substitute.For<ISetupInstanceManager>();
         _fileService = Substitute.For<IFileSystemService>();
         _setupConfigurationProvider = Substitute.For<ISetupConfigurationProvider>();
-        _databaseManager = Substitute.For<IDatabaseManager>();
+        _databaseProviderResolver = Substitute.For<IDatabaseProviderResolver>();
     }
 
     [Test]
@@ -165,20 +165,20 @@ public class SetupHandlerTests
         var databaseName = "homebook";
         var databaseUserName = "hb_user";
         var databaseUserPassword = "s3cr3t";
-        _databaseManager.IsDatabaseAvailableAsync(databaseHost,
+        _databaseProviderResolver.ResolveAsync(databaseHost,
                 databasePort,
                 databaseName,
                 databaseUserName,
                 databaseUserPassword,
                 Arg.Any<CancellationToken>())
-            .Returns(true);
+            .Returns(DatabaseProvider.POSTGRESQL);
 
         // Act
         var request = new CheckDatabaseRequest(databaseHost, databasePort, databaseName, databaseUserName, databaseUserPassword);
-        var result = await SetupHandler.HandleCheckDatabase(request, _logger, _databaseManager, CancellationToken.None);
+        var result = await SetupHandler.HandleCheckDatabase(request, _logger, _databaseProviderResolver, CancellationToken.None);
 
         // Assert
-        var internalErr = result.ShouldBeOfType<Ok>();
+        var internalErr = result.ShouldBeOfType<Ok<string>>();
     }
 
     [Test]
@@ -190,17 +190,17 @@ public class SetupHandlerTests
         var databaseName = "homebook";
         var databaseUserName = "hb_user";
         var databaseUserPassword = "s3cr3t";
-        _databaseManager.IsDatabaseAvailableAsync(databaseHost,
+        _databaseProviderResolver.ResolveAsync(databaseHost,
                 databasePort,
                 databaseName,
                 databaseUserName,
                 databaseUserPassword,
                 Arg.Any<CancellationToken>())
-            .Returns(false);
+            .Returns((DatabaseProvider?)null);
 
         // Act
         var request = new CheckDatabaseRequest(databaseHost, databasePort, databaseName, databaseUserName, databaseUserPassword);
-        var result = await SetupHandler.HandleCheckDatabase(request, _logger, _databaseManager, CancellationToken.None);
+        var result = await SetupHandler.HandleCheckDatabase(request, _logger, _databaseProviderResolver, CancellationToken.None);
 
         // Assert
         var internalErr = result.ShouldBeOfType<StatusCodeHttpResult>();
@@ -216,8 +216,8 @@ public class SetupHandlerTests
         var databaseName = "homebook";
         var databaseUserName = "hb_user";
         var databaseUserPassword = "s3cr3t";
-        _databaseManager
-            .When(x => x.IsDatabaseAvailableAsync(databaseHost,
+        _databaseProviderResolver
+            .When(x => x.ResolveAsync(databaseHost,
                 databasePort,
                 databaseName,
                 databaseUserName,
@@ -227,7 +227,7 @@ public class SetupHandlerTests
 
         // Act
         var request = new CheckDatabaseRequest(databaseHost, databasePort, databaseName, databaseUserName, databaseUserPassword);
-        var result = await SetupHandler.HandleCheckDatabase(request, _logger, _databaseManager, CancellationToken.None);
+        var result = await SetupHandler.HandleCheckDatabase(request, _logger, _databaseProviderResolver, CancellationToken.None);
 
         // Assert
         var internalErr = result.ShouldBeOfType<InternalServerError<string>>();
