@@ -22,9 +22,9 @@ public class SetupService(BackendClient backendClient) : ISetupService
         setupSteps.Add(new BackendConnectionSetupStep());
         setupSteps.Add(new LicenseAgreementSetupStep());
         setupSteps.Add(new DatabaseConfigurationSetupStep());
-        setupSteps.Add(new SetupProcessSetupStep());
         setupSteps.Add(new AdminUserSetupStep());
         setupSteps.Add(new ConfigurationSetupStep());
+        setupSteps.Add(new SetupProcessSetupStep());
 
         _setupSteps = setupSteps;
     }

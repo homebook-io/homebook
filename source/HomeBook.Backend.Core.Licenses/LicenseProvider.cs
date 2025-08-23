@@ -3,11 +3,18 @@ using AngleSharp;
 using AngleSharp.Dom;
 using HomeBook.Backend.Abstractions;
 using HomeBook.Backend.Abstractions.Models;
+using Microsoft.Extensions.Logging;
+using IConfiguration = Microsoft.Extensions.Configuration.IConfiguration;
 
-namespace HomeBook.Backend.Licenses;
+namespace HomeBook.Backend.Core.Licenses;
 
-public class LicenseProvider : ILicenseProvider
+public class LicenseProvider(
+    ILogger<LicenseProvider> logger,
+    IConfiguration configuration,
+    IFileSystemService fileSystemService,
+    IApplicationPathProvider applicationPathProvider) : ILicenseProvider
 {
+    /// <inheritdoc />
     public async Task<DependencyLicense[]> GetLicensesAsync(CancellationToken cancellationToken)
     {
         string executableLocation = Assembly.GetExecutingAssembly().Location;
@@ -19,7 +26,7 @@ public class LicenseProvider : ILicenseProvider
         foreach (string file in filesInDirectory)
         {
             string fileName = Path.GetFileNameWithoutExtension(file);
-            string fileContent = await File.ReadAllTextAsync(file, cancellationToken);
+            string fileContent = await fileSystemService.FileReadAllTextAsync(file, cancellationToken);
 
             IBrowsingContext context = BrowsingContext.New(Configuration.Default);
             IDocument doc = await context.OpenAsync(r => r.Content(fileContent), cancellationToken);
@@ -32,5 +39,15 @@ public class LicenseProvider : ILicenseProvider
         }
 
         return licenses.ToArray();
+    }
+
+    /// <inheritdoc />
+    public async Task MarkLicenseAsAcceptedAsync(CancellationToken cancellationToken)
+    {
+        string instanceFilePath = Path.Combine(applicationPathProvider.DataDirectory, "licenses-accepted.txt");
+        logger.LogInformation("Write licenses-accepted file at {FilePath}", instanceFilePath);
+
+        string appVersion = configuration["Version"] ?? string.Empty;
+        await fileSystemService.FileWriteAllTextAsync(instanceFilePath, appVersion, cancellationToken);
     }
 }

@@ -1,11 +1,17 @@
 ﻿<Solution>
   <Folder Name="/Backend/">
     <Project Path="source\HomeBook.Backend.Abstractions\HomeBook.Backend.Abstractions.csproj" Type="Classic C#" />
-    <Project Path="source\Homebook.Backend.Core.Setup\Homebook.Backend.Core.Setup.csproj" Type="Classic C#" />
-    <Project Path="source\HomeBook.Backend.Data\HomeBook.Backend.Data.csproj" Type="Classic C#" />
-    <Project Path="source\HomeBook.Backend.Licenses\HomeBook.Backend.Licenses.csproj" Type="Classic C#" />
     <Project Path="source\HomeBook.Backend\HomeBook.Backend.csproj" Type="Classic C#" />
-    <Project Path="source\HomeBook.Data.PostgreSQL\HomeBook.Data.PostgreSQL.csproj" Type="Classic C#" />
+  </Folder>
+  <Folder Name="/Backend/Core/">
+    <Project Path="source\HomeBook.Backend.Core.Licenses\HomeBook.Backend.Core.Licenses.csproj" Type="Classic C#" />
+    <Project Path="source\Homebook.Backend.Core.Setup\Homebook.Backend.Core.Setup.csproj" Type="Classic C#" />
+    <Project Path="source\HomeBook.Backend.Core\HomeBook.Backend.Core.csproj" Type="Classic C#" />
+  </Folder>
+  <Folder Name="/Backend/Data/">
+    <Project Path="source\HomeBook.Backend.Data.Mysql\HomeBook.Backend.Data.Mysql.csproj" Type="Classic C#" />
+    <Project Path="source\HomeBook.Backend.Data.PostgreSql\HomeBook.Backend.Data.PostgreSql.csproj" Type="Classic C#" />
+    <Project Path="source\HomeBook.Backend.Data\HomeBook.Backend.Data.csproj" Type="Classic C#" />
   </Folder>
   <Folder Name="/Frontend/">
     <Project Path="source\HomeBook.Client\HomeBook.Client.csproj" Type="Classic C#" />

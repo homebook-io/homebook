@@ -49,6 +49,11 @@ services:
     image: lkcode/homebook:latest
     container_name: homebook
     restart: unless-stopped
+    volumes:
+        - homebook-data:/var/lib/homebook
+
+volumes:
+    homebook-data:
 ```
 
 #### add to nginx proxy manager

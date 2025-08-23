@@ -1,3 +1,4 @@
+using HomeBook.Client.Models;
 using HomeBook.Frontend.Abstractions.Contracts;
 using HomeBook.Frontend.Setup.Exceptions;
 using Microsoft.AspNetCore.Components;
@@ -72,13 +73,21 @@ public partial class SetupProcessSetupStep : ComponentBase, ISetupStep
     {
         try
         {
-            string?databaseHost = await SetupService.GetStorageValueAsync<string>("DATABASE_HOST", cancellationToken);
-            string? databasePort = await SetupService.GetStorageValueAsync<string>("DATABASE_PORT", cancellationToken);
+            string? databaseHost = await SetupService.GetStorageValueAsync<string>("DATABASE_HOST", cancellationToken);
+            ushort? databasePort = await SetupService.GetStorageValueAsync<ushort>("DATABASE_PORT", cancellationToken);
             string? databaseName = await SetupService.GetStorageValueAsync<string>("DATABASE_NAME", cancellationToken);
             string? databaseUsername = await SetupService.GetStorageValueAsync<string>("DATABASE_USERNAME", cancellationToken);
             string? databasePassword = await SetupService.GetStorageValueAsync<string>("DATABASE_PASSWORD", cancellationToken);
 
-            await BackendClient.Setup.Database.Migrate.PostAsync(x =>
+            await BackendClient.Setup.Database.Migrate.PostAsync(new MigrateDatabaseRequest()
+                {
+                    DatabaseHost = databaseHost,
+                    DatabasePort = databasePort,
+                    DatabaseName = databaseName,
+                    DatabaseUserName = databaseUsername,
+                    DatabaseUserPassword = databasePassword
+                },
+                x =>
                 {
                 },
                 cancellationToken

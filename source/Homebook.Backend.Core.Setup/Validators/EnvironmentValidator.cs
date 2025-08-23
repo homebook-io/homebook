@@ -1,6 +1,7 @@
 using FluentValidation;
 using Homebook.Backend.Core.Setup.Models;
 using System.Text.RegularExpressions;
+using HomeBook.Backend.Core.Models;
 
 namespace Homebook.Backend.Core.Setup.Validators;
 

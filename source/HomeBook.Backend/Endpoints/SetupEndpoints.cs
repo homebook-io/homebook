@@ -56,15 +56,15 @@ public static class SetupEndpoints
         group.MapPost("/database/check", SetupHandler.HandleCheckDatabase)
             .WithName("CheckDatabase")
             .WithDescription(new Description("check that the Database is available",
-                "HTTP 200: Database is available",
+                "HTTP 200: Database is available => returns the detected database provider in uppercases",
                 "HTTP 500: Unknown error while database connection check",
                 "HTTP 503: Database is not available"))
             .WithOpenApi(operation => new(operation)
             {
             })
-            .Produces(StatusCodes.Status200OK)
-            .Produces(StatusCodes.Status503ServiceUnavailable)
-            .Produces<string>(StatusCodes.Status500InternalServerError);
+            .Produces<string>(StatusCodes.Status200OK)
+            .Produces<string>(StatusCodes.Status500InternalServerError)
+            .Produces(StatusCodes.Status503ServiceUnavailable);
 
         group.MapPost("/database/migrate", SetupHandler.HandleMigrateDatabase)
             .WithName("MigrateDatabase")
@@ -77,6 +77,21 @@ public static class SetupEndpoints
             })
             .Produces(StatusCodes.Status200OK)
             .Produces(StatusCodes.Status409Conflict)
+            .Produces<string>(StatusCodes.Status500InternalServerError);
+
+        group.MapPost("/start", SetupHandler.HandleStartSetup)
+            .WithName("StartSetup")
+            .WithDescription(new Description("start the setup process. it will save the configuration for the setup steps",
+                "HTTP 200: Setup started successfully",
+                "HTTP 400: Validation error for example with the database configuration, e.g. too short password, etc.",
+                "HTTP 422: Licenses not accepted",
+                "HTTP 500: Unknown error while starting setup"))
+            .WithOpenApi(operation => new(operation)
+            {
+            })
+            .Produces(StatusCodes.Status200OK)
+            .Produces<string>(StatusCodes.Status400BadRequest)
+            .Produces(StatusCodes.Status422UnprocessableEntity)
             .Produces<string>(StatusCodes.Status500InternalServerError);
 
         group.MapPost("/user", SetupHandler.HandleCreateAdminUser)

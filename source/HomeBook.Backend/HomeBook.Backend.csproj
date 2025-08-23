@@ -14,7 +14,7 @@
       <PrivateAssets>all</PrivateAssets>
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
     </PackageReference>
-    <PackageReference Include="Scalar.AspNetCore" Version="2.6.9" />
+    <PackageReference Include="Scalar.AspNetCore" Version="2.7.0" />
     <PackageReference Include="Serilog.AspNetCore" Version="9.0.0" />
     <PackageReference Include="Serilog.Sinks.Console" Version="6.0.0" />
     <PackageReference Include="Serilog.Sinks.File" Version="7.0.0" />
@@ -34,13 +34,11 @@
 
   <ItemGroup>
     <ProjectReference Include="..\HomeBook.Backend.Abstractions\HomeBook.Backend.Abstractions.csproj" />
+    <ProjectReference Include="..\HomeBook.Backend.Core.Licenses\HomeBook.Backend.Core.Licenses.csproj" />
     <ProjectReference Include="..\Homebook.Backend.Core.Setup\Homebook.Backend.Core.Setup.csproj" />
-    <ProjectReference Include="..\HomeBook.Backend.Licenses\HomeBook.Backend.Licenses.csproj" />
-    <ProjectReference Include="..\HomeBook.Data.PostgreSQL\HomeBook.Data.PostgreSQL.csproj" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <Folder Include="Provider\" />
+    <ProjectReference Include="..\HomeBook.Backend.Core\HomeBook.Backend.Core.csproj" />
+    <ProjectReference Include="..\HomeBook.Backend.Data.Mysql\HomeBook.Backend.Data.Mysql.csproj" />
+    <ProjectReference Include="..\HomeBook.Backend.Data.PostgreSql\HomeBook.Backend.Data.PostgreSql.csproj" />
   </ItemGroup>
 
   <ItemGroup>

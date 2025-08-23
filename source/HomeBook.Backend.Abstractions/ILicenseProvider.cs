@@ -5,4 +5,6 @@ namespace HomeBook.Backend.Abstractions;
 public interface ILicenseProvider
 {
     Task<DependencyLicense[]> GetLicensesAsync(CancellationToken cancellationToken);
+
+    Task MarkLicenseAsAcceptedAsync(CancellationToken cancellationToken);
 }
