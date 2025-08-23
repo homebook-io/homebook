@@ -1,9 +1,10 @@
-using HomeBook.Backend.Core.Licenses.Extensions;
-using Homebook.Backend.Core.Setup.Extensions;
-using HomeBook.Backend.Data.Extensions;
 using HomeBook.Backend.Endpoints;
 using HomeBook.Backend.EnvironmentHandler;
 using HomeBook.Backend.Extensions;
+using HomeBook.Backend.Core.Extensions;
+using HomeBook.Backend.Core.Licenses.Extensions;
+using Homebook.Backend.Core.Setup.Extensions;
+using HomeBook.Backend.Data.Extensions;
 using Scalar.AspNetCore;
 using Serilog;
 
@@ -17,7 +18,7 @@ builder.Configuration.Sources.Clear();
 builder.Configuration
     .AddJsonFile("appsettings.json", optional: false, reloadOnChange: true)
     .AddJsonFile($"appsettings.{builder.Environment.EnvironmentName}.json", optional: true, reloadOnChange: true)
-    .AddJsonFile(Path.Combine(PathHandler.ConfigurationPath, "homebook.json"), optional: true, reloadOnChange: true)
+    .AddJsonFile(PathHandler.RuntimeConfigurationFilePath, optional: true, reloadOnChange: true)
     .AddEnvironmentVariables(prefix: "HB_");
 
 // Serilog einrichten
@@ -29,8 +30,9 @@ builder.Host.UseSerilog((ctx, services, cfg) =>
 builder.Services.AddOpenApi();
 
 builder.Services.AddBackendServices(builder.Configuration)
+    .AddBackendCore(builder.Configuration)
     .AddBackendCoreSetup(builder.Configuration)
-    .AddBackendCoreData(builder.Configuration)
+    .AddBackendDatabaseProvider(builder.Configuration)
     .AddBackendCoreLicenses(builder.Configuration);
 
 if (builder.Environment.IsDevelopment())

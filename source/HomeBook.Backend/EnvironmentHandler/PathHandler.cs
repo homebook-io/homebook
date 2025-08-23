@@ -6,6 +6,7 @@ public static class PathHandler
     private const string BASE_PATH = "/var/lib/homebook";
 
     public static readonly string ConfigurationPath = Path.Combine(BASE_PATH, "config");
+    public static readonly string RuntimeConfigurationFilePath = Path.Combine(ConfigurationPath, "homebook.appsettings.json");
     public static readonly string CacheDirectory = Path.Combine(BASE_PATH, "cache");
     public static readonly string LogDirectory = Path.Combine(BASE_PATH, "logs");
     public static readonly string DataDirectory = Path.Combine(BASE_PATH, "data");

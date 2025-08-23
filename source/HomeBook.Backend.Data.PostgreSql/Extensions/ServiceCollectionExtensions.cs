@@ -6,6 +6,14 @@ namespace HomeBook.Backend.Data.PostgreSql.Extensions;
 
 public static class ServiceCollectionExtensions
 {
+    public static IServiceCollection AddBackendDataPostgreSqlProbe(this IServiceCollection services,
+        IConfiguration configuration)
+    {
+        services.AddSingleton<IDatabaseProbe, PostgreSqlProbe>();
+
+        return services;
+    }
+
     public static IServiceCollection AddBackendDataPostgreSql(this IServiceCollection services,
         IConfiguration configuration)
     {

@@ -1,13 +1,12 @@
-using FluentValidation;
-using Homebook.Backend.Core.Setup.Models;
 using System.Text.RegularExpressions;
+using FluentValidation;
 using HomeBook.Backend.Core.Models;
 
-namespace Homebook.Backend.Core.Setup.Validators;
+namespace HomeBook.Backend.Core.Validators;
 
-public class EnvironmentValidator : AbstractValidator<EnvironmentConfiguration>
+public class DatabaseConfigurationValidator : AbstractValidator<DatabaseConfiguration>
 {
-    public EnvironmentValidator()
+    public DatabaseConfigurationValidator()
     {
         // Database Host validation
         RuleFor(x => x.DatabaseHost)
@@ -19,7 +18,7 @@ public class EnvironmentValidator : AbstractValidator<EnvironmentConfiguration>
         RuleFor(x => x.DatabasePort)
             .Must(BeValidPort)
             .WithMessage("DatabasePort must be a valid port number between 1 and 65535")
-            .When(x => !string.IsNullOrEmpty(x.DatabasePort));
+            .When(x => x.DatabasePort is not null);
 
         // Database Name validation+
         RuleFor(x => x.DatabaseName)
@@ -95,25 +94,31 @@ public class EnvironmentValidator : AbstractValidator<EnvironmentConfiguration>
 
     private static bool IsValidIPv4(string ip)
     {
-        if (string.IsNullOrWhiteSpace(ip)) return false;
+        if (string.IsNullOrWhiteSpace(ip))
+            return false;
 
         // Split and check each octet individually for better validation
         var parts = ip.Split('.');
-        if (parts.Length != 4) return false;
+        if (parts.Length != 4)
+            return false;
 
         return parts.All(part =>
         {
             // Check for empty parts
-            if (string.IsNullOrEmpty(part)) return false;
+            if (string.IsNullOrEmpty(part))
+                return false;
 
             // Check if it's a valid number
-            if (!int.TryParse(part, out int num)) return false;
+            if (!int.TryParse(part, out int num))
+                return false;
 
             // Check range (1-255)
-            if (num < 1 || num > 255) return false;
+            if (num < 1 || num > 255)
+                return false;
 
             // Prevent leading zeros (except for single digit numbers)
-            if (part.Length > 1 && part[0] == '0') return false;
+            if (part.Length > 1 && part[0] == '0')
+                return false;
 
             // Ensure the parsed number matches the original string
             return part == num.ToString();
@@ -122,7 +127,8 @@ public class EnvironmentValidator : AbstractValidator<EnvironmentConfiguration>
 
     private static bool IsValidIPv6(string ip)
     {
-        if (string.IsNullOrWhiteSpace(ip)) return false;
+        if (string.IsNullOrWhiteSpace(ip))
+            return false;
 
         // Comprehensive IPv6 regex pattern
         var ipv6Regex = new Regex(
@@ -148,12 +154,9 @@ public class EnvironmentValidator : AbstractValidator<EnvironmentConfiguration>
         return ipv6Regex.IsMatch(ip);
     }
 
-    private static bool BeValidPort(string? port)
+    private static bool BeValidPort(ushort? port)
     {
-        if (string.IsNullOrEmpty(port))
-            return true;
-
-        return int.TryParse(port, out int portNum) && portNum >= 1 && portNum <= 65535;
+        return port >= 1 && port <= 65535;
     }
 
     private static bool BeValidDatabaseName(string? databaseName)

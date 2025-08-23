@@ -6,6 +6,7 @@ namespace HomeBook.Backend.Services;
 public class NativeFileService(ILogger<NativeFileService> logger) : IApplicationPathProvider, IFileSystemService
 {
     public string ConfigurationPath { get; } = PathHandler.ConfigurationPath;
+    public string RuntimeConfigurationFilePath { get; } = PathHandler.RuntimeConfigurationFilePath;
     public string CacheDirectory { get; } = PathHandler.CacheDirectory;
     public string LogDirectory { get; } = PathHandler.LogDirectory;
     public string DataDirectory { get; } = PathHandler.DataDirectory;
@@ -25,3 +26,5 @@ public class NativeFileService(ILogger<NativeFileService> logger) : IApplication
     /// <inheritdoc />
     public async Task FileWriteAllTextAsync(string path, string content, CancellationToken cancellationToken) => await File.WriteAllTextAsync(path, content, cancellationToken);
 }
+
+

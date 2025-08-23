@@ -6,7 +6,7 @@ namespace HomeBook.Backend.Data.Extensions;
 
 public static class ServiceCollectionExtensions
 {
-    public static IServiceCollection AddBackendCoreData(this IServiceCollection services,
+    public static IServiceCollection AddBackendData(this IServiceCollection services,
         IConfiguration configuration)
     {
         // services.AddSingleton<IDatabaseManager, PostgreSqlDatabaseManager>();
