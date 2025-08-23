@@ -279,7 +279,36 @@ public class SetupHandler
     }
 
     /// <summary>
-    /// starts the database migration process.
+    /// check if a pre-configured user is available via environment variables
+    /// </summary>
+    /// <param name="logger"></param>
+    /// <param name="setupConfigurationProvider"></param>
+    /// <param name="cancellationToken"></param>
+    /// <returns></returns>
+    public static async Task<IResult> HandleGetPreConfiguredUser([FromServices] ILogger<SetupHandler> logger,
+        [FromServices] ISetupConfigurationProvider setupConfigurationProvider,
+        CancellationToken cancellationToken)
+    {
+        try
+        {
+            string? homebookUserName = setupConfigurationProvider.GetValue(EnvironmentVariables.HOMEBOOK_USER_NAME);
+            string? homebookUserPassword = setupConfigurationProvider.GetValue(EnvironmentVariables.HOMEBOOK_USER_PASSWORD);
+
+            if (!string.IsNullOrEmpty(homebookUserName)
+                && !string.IsNullOrEmpty(homebookUserPassword))
+                return TypedResults.Ok();
+            else
+                return TypedResults.StatusCode(StatusCodes.Status404NotFound);
+        }
+        catch (Exception err)
+        {
+            logger.LogError(err, "Error while migrating database");
+            return TypedResults.InternalServerError(err.Message);
+        }
+    }
+
+    /// <summary>
+    /// create the admin user for the application
     /// </summary>
     /// <param name="fileSystemService"></param>
     /// <param name="setupConfigurationProvider"></param>

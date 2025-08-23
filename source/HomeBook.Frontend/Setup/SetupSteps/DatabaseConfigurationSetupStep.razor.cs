@@ -15,11 +15,13 @@ public partial class DatabaseConfigurationSetupStep : ComponentBase, ISetupStep
     private bool _isChecking = false;
     private bool _databaseIsOk = false;
     private string? _errorMessage = null;
+    private string _databaseType = string.Empty;
+    private DatabaseConfigurationViewModel _databaseConfig = new();
+
     public string Key { get; } = nameof(DatabaseConfigurationSetupStep);
     public bool HasError { get; set; }
     public bool IsSuccessful { get; set; }
     public Task HandleStepAsync() => throw new NotImplementedException();
-    private DatabaseConfigurationViewModel _databaseConfig = new();
 
     public Task<bool> IsStepDoneAsync(CancellationToken cancellationToken) => throw new NotImplementedException();
 
@@ -65,7 +67,6 @@ public partial class DatabaseConfigurationSetupStep : ComponentBase, ISetupStep
         _errorMessage = null;
         await InvokeAsync(StateHasChanged);
 
-        bool checkSuccessful = false;
         try
         {
             await Task.WhenAll(
@@ -73,7 +74,6 @@ public partial class DatabaseConfigurationSetupStep : ComponentBase, ISetupStep
                 ConnectToDatabaseAsync(cancellationToken));
 
             _databaseIsOk = true;
-            checkSuccessful = true;
         }
         catch (HttpRequestException err)
         {
@@ -102,7 +102,7 @@ public partial class DatabaseConfigurationSetupStep : ComponentBase, ISetupStep
     {
         try
         {
-            await BackendClient.Setup.Database.Check.PostAsync(
+            string? databaseType = await BackendClient.Setup.Database.Check.PostAsync(
                 new CheckDatabaseRequest
                 {
                     DatabaseHost = _databaseConfig.Host,
@@ -115,6 +115,11 @@ public partial class DatabaseConfigurationSetupStep : ComponentBase, ISetupStep
                 {
                 },
                 cancellationToken);
+
+            if (databaseType is null)
+                throw new SetupCheckException("Database is not available or not supported.");
+
+            _databaseType = databaseType;
         }
         catch (ApiException err) when (err.ResponseStatusCode == 500)
         {
@@ -142,21 +147,12 @@ public partial class DatabaseConfigurationSetupStep : ComponentBase, ISetupStep
 
     private async Task OnCountdownFinishedAsync()
     {
-        CancellationToken cancellationToken = CancellationToken.None;
-        if (_databaseIsOk)
-        {
-            await StepSuccessAsync(cancellationToken);
-            await InvokeAsync(StateHasChanged);
-        }
-    }
-
-    private async Task StartMigrationAsync()
-    {
         if (!_databaseIsOk)
             return;
 
         CancellationToken cancellationToken = CancellationToken.None;
 
+        await SetupService.SetStorageValueAsync("DATABASE_TYPE", _databaseType, cancellationToken);
         await SetupService.SetStorageValueAsync("DATABASE_HOST", _databaseConfig.Host, cancellationToken);
         await SetupService.SetStorageValueAsync("DATABASE_PORT", _databaseConfig.Port, cancellationToken);
         await SetupService.SetStorageValueAsync("DATABASE_NAME", _databaseConfig.DatabaseName, cancellationToken);

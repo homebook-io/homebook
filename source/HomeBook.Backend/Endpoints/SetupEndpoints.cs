@@ -94,6 +94,19 @@ public static class SetupEndpoints
             .Produces(StatusCodes.Status422UnprocessableEntity)
             .Produces<string>(StatusCodes.Status500InternalServerError);
 
+        group.MapGet("/user", SetupHandler.HandleGetPreConfiguredUser)
+            .WithName("GetPreConfiguredUser")
+            .WithDescription(new Description("check if a pre-configured user is available via environment variables",
+                "HTTP 200: A user was pre-configured",
+                "HTTP 404: No pre-configured user found",
+                "HTTP 500: Unknown error while loading pre-configured user"))
+            .WithOpenApi(operation => new(operation)
+            {
+            })
+            .Produces(StatusCodes.Status200OK)
+            .Produces(StatusCodes.Status404NotFound)
+            .Produces<string>(StatusCodes.Status500InternalServerError);
+
         group.MapPost("/user", SetupHandler.HandleCreateAdminUser)
             .WithName("CreateAdminUser")
             .WithDescription(new Description("create the admin user for the application",

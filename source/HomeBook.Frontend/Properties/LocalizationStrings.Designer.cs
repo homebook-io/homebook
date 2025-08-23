@@ -104,5 +104,11 @@ namespace HomeBook.Frontend.Properties {
                 return ResourceManager.GetString("Setup_CardActions_Version", resourceCulture);
             }
         }
+        
+        internal static string UISetupStepper_SetupProcessSetupStep_Title {
+            get {
+                return ResourceManager.GetString("UISetupStepper_SetupProcessSetupStep_Title", resourceCulture);
+            }
+        }
     }
 }

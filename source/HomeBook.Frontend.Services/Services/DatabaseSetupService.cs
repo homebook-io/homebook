@@ -24,7 +24,7 @@ public class DatabaseSetupService(
     {
         try
         {
-            await backendClient.Setup.Database.Check.PostAsync(
+            string? databaseType = await backendClient.Setup.Database.Check.PostAsync(
                 new CheckDatabaseRequest
                 {
                     DatabaseHost = host,
@@ -38,7 +38,7 @@ public class DatabaseSetupService(
                 },
                 cancellationToken);
 
-            return true;
+            return databaseType is not null;
         }
         catch (ApiException err) when (err.ResponseStatusCode == 500)
         {
