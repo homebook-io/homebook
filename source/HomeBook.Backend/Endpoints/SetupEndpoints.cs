@@ -66,17 +66,30 @@ public static class SetupEndpoints
             .Produces<string>(StatusCodes.Status500InternalServerError)
             .Produces(StatusCodes.Status503ServiceUnavailable);
 
-        group.MapPost("/database/migrate", SetupHandler.HandleMigrateDatabase)
-            .WithName("MigrateDatabase")
-            .WithDescription(new Description("migrate the database schema to the latest version",
-                "HTTP 200: Database migration was successful",
-                "HTTP 409: Database migration is already executed and not available",
-                "HTTP 500: Unknown error while database migration"))
+        group.MapGet("/user", SetupHandler.HandleGetPreConfiguredUser)
+            .WithName("GetPreConfiguredUser")
+            .WithDescription(new Description("check if a pre-configured user is available via environment variables",
+                "HTTP 200: A user was pre-configured",
+                "HTTP 404: No pre-configured user found",
+                "HTTP 500: Unknown error while loading pre-configured user"))
             .WithOpenApi(operation => new(operation)
             {
             })
             .Produces(StatusCodes.Status200OK)
-            .Produces(StatusCodes.Status409Conflict)
+            .Produces(StatusCodes.Status404NotFound)
+            .Produces<string>(StatusCodes.Status500InternalServerError);
+
+        group.MapGet("/configuration", SetupHandler.HandleGetConfiguration)
+            .WithName("GetConfiguration")
+            .WithDescription(new Description("returns the homebook setup configuration if it is set via environment variables.",
+                "HTTP 200: Configuration was found",
+                "HTTP 404: No configuration found",
+                "HTTP 500: Unknown error while loading configuration"))
+            .WithOpenApi(operation => new(operation)
+            {
+            })
+            .Produces(StatusCodes.Status200OK)
+            .Produces(StatusCodes.Status404NotFound)
             .Produces<string>(StatusCodes.Status500InternalServerError);
 
         group.MapPost("/start", SetupHandler.HandleStartSetup)
@@ -92,34 +105,6 @@ public static class SetupEndpoints
             .Produces(StatusCodes.Status200OK)
             .Produces<string>(StatusCodes.Status400BadRequest)
             .Produces(StatusCodes.Status422UnprocessableEntity)
-            .Produces<string>(StatusCodes.Status500InternalServerError);
-
-        group.MapPost("/user", SetupHandler.HandleCreateAdminUser)
-            .WithName("CreateAdminUser")
-            .WithDescription(new Description("create the admin user for the application",
-                "HTTP 201: Admin User created successfully",
-                "HTTP 400: Validation error, e.g. too short password, etc.",
-                "HTTP 409: User already exists",
-                "HTTP 500: Unknown error while creating user"))
-            .WithOpenApi(operation => new(operation)
-            {
-            })
-            .Produces(StatusCodes.Status201Created)
-            .Produces(StatusCodes.Status400BadRequest)
-            .Produces(StatusCodes.Status409Conflict)
-            .Produces<string>(StatusCodes.Status500InternalServerError);
-
-        group.MapPut("/configuration", SetupHandler.HandleCreateConfiguration)
-            .WithName("CreateConfiguration")
-            .WithDescription(new Description("create the admin user for the application",
-                "HTTP 200: Configuration created successfully",
-                "HTTP 400: Invalid configuration, e.g. missing required fields",
-                "HTTP 500: Unknown error while updating configuration"))
-            .WithOpenApi(operation => new(operation)
-            {
-            })
-            .Produces(StatusCodes.Status200OK)
-            .Produces(StatusCodes.Status400BadRequest)
             .Produces<string>(StatusCodes.Status500InternalServerError);
 
         return routeBuilder;

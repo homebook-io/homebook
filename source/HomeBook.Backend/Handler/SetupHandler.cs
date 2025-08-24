@@ -14,6 +14,7 @@ public class SetupHandler
     /// <summary>
     /// checks if the setup is available and no setup instance is created yet.
     /// </summary>
+    /// <param name="logger"></param>
     /// <param name="setupInstanceManager"></param>
     /// <param name="cancellationToken"></param>
     /// <returns></returns>
@@ -43,8 +44,9 @@ public class SetupHandler
     }
 
     /// <summary>
-    /// returns all licenses of the project.
+    /// returns all licenses of the project and if they are already accepted.
     /// </summary>
+    /// <param name="logger"></param>
     /// <param name="licenseProvider"></param>
     /// <param name="setupConfigurationProvider"></param>
     /// <param name="cancellationToken"></param>
@@ -75,7 +77,7 @@ public class SetupHandler
     /// <summary>
     /// returns the database configuration if it is available (set via environment variables).
     /// </summary>
-    /// <param name="fileSystemService"></param>
+    /// <param name="logger"></param>
     /// <param name="setupConfigurationProvider"></param>
     /// <param name="cancellationToken"></param>
     /// <returns></returns>
@@ -141,14 +143,6 @@ public class SetupHandler
                 request.DatabaseUserPassword,
                 cancellationToken);
 
-            // bool isDatabaseAvailable = await databaseManager.IsDatabaseAvailableAsync(
-            //     request.DatabaseHost,
-            //     request.DatabasePort,
-            //     request.DatabaseName,
-            //     request.DatabaseUserName,
-            //     request.DatabaseUserPassword,
-            //     cancellationToken);
-
             if (resolvedDatabaseProvider is not null)
                 // database is available
                 return TypedResults.Ok(resolvedDatabaseProvider.ToString()!.ToUpperInvariant());
@@ -164,22 +158,45 @@ public class SetupHandler
     }
 
     /// <summary>
-    /// starts the database migration process.
+    /// check if a pre-configured user is available via environment variables
     /// </summary>
-    /// <param name="request"></param>
     /// <param name="logger"></param>
-    /// <param name="fileSystemService"></param>
     /// <param name="setupConfigurationProvider"></param>
     /// <param name="cancellationToken"></param>
     /// <returns></returns>
-    public static async Task<IResult> HandleMigrateDatabase([FromServices] ILogger<SetupHandler> logger,
-        [FromServices] IFileSystemService fileSystemService,
+    public static async Task<IResult> HandleGetPreConfiguredUser([FromServices] ILogger<SetupHandler> logger,
         [FromServices] ISetupConfigurationProvider setupConfigurationProvider,
         CancellationToken cancellationToken)
     {
         try
         {
-            // TODO: start database migration process
+            string? homebookUserName = setupConfigurationProvider.GetValue(EnvironmentVariables.HOMEBOOK_USER_NAME);
+            string? homebookUserPassword = setupConfigurationProvider.GetValue(EnvironmentVariables.HOMEBOOK_USER_PASSWORD);
+
+            if (!string.IsNullOrEmpty(homebookUserName)
+                && !string.IsNullOrEmpty(homebookUserPassword))
+                return TypedResults.Ok();
+            else
+                return TypedResults.StatusCode(StatusCodes.Status404NotFound);
+        }
+        catch (Exception err)
+        {
+            logger.LogError(err, "Error while migrating database");
+            return TypedResults.InternalServerError(err.Message);
+        }
+    }
+
+    /// <summary>
+    /// returns the homebook setup configuration if it is set via environment variables.
+    /// </summary>
+    /// <param name="logger"></param>
+    /// <param name="cancellationToken"></param>
+    /// <returns></returns>
+    public static async Task<IResult> HandleGetConfiguration([FromServices] ILogger<SetupHandler> logger,
+        CancellationToken cancellationToken)
+    {
+        try
+        {
             await Task.Delay(10000, cancellationToken); // simulate some delay for the setup process
 
             return TypedResults.Ok();
@@ -276,57 +293,5 @@ public class SetupHandler
         if (!string.IsNullOrEmpty(dbConfig.DatabaseUserPassword))
             // TODO: store password as encrypted value in .secret file
             await runtimeConfigurationProvider.UpdateConfigurationAsync("Database:Password", dbConfig.DatabaseUserPassword, cancellationToken);
-    }
-
-    /// <summary>
-    /// starts the database migration process.
-    /// </summary>
-    /// <param name="fileSystemService"></param>
-    /// <param name="setupConfigurationProvider"></param>
-    /// <param name="cancellationToken"></param>
-    /// <returns></returns>
-    public static async Task<IResult> HandleCreateAdminUser([FromServices] ILogger<SetupHandler> logger,
-        [FromServices] IFileSystemService fileSystemService,
-        [FromServices] ISetupConfigurationProvider setupConfigurationProvider,
-        CancellationToken cancellationToken)
-    {
-        try
-        {
-            await Task.Delay(10000, cancellationToken); // simulate some delay for the setup process
-
-            return TypedResults.Ok();
-            return TypedResults.StatusCode(StatusCodes.Status409Conflict);
-        }
-        catch (Exception err)
-        {
-            logger.LogError(err, "Error while migrating database");
-            return TypedResults.InternalServerError(err.Message);
-        }
-    }
-
-    /// <summary>
-    /// starts the database migration process.
-    /// </summary>
-    /// <param name="fileSystemService"></param>
-    /// <param name="setupConfigurationProvider"></param>
-    /// <param name="cancellationToken"></param>
-    /// <returns></returns>
-    public static async Task<IResult> HandleCreateConfiguration([FromServices] ILogger<SetupHandler> logger,
-        [FromServices] IFileSystemService fileSystemService,
-        [FromServices] ISetupConfigurationProvider setupConfigurationProvider,
-        CancellationToken cancellationToken)
-    {
-        try
-        {
-            await Task.Delay(10000, cancellationToken); // simulate some delay for the setup process
-
-            return TypedResults.Ok();
-            return TypedResults.StatusCode(StatusCodes.Status409Conflict);
-        }
-        catch (Exception err)
-        {
-            logger.LogError(err, "Error while migrating database");
-            return TypedResults.InternalServerError(err.Message);
-        }
     }
 }
