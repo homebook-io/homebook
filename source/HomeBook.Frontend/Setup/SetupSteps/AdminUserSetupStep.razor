@@ -1,5 +1,108 @@
-<h3>AdminUserSetupStep</h3>
+@using HomeBook.Client
+@using HomeBook.Frontend.Abstractions.Contracts
 
-@code {
+@inject ILocalizationProvider Loc
+@inject IDatabaseSetupService DatabaseSetupService
+@inject ISetupService SetupService
+@inject BackendClient BackendClient
 
-}
+<MudCard Class="frosted-b3 mud-elevation-6">
+
+    <MudCardHeader>
+        <CardHeaderContent>
+            <MudText Typo="Typo.h4" Color="Color.Inherit">Database</MudText>
+        </CardHeaderContent>
+    </MudCardHeader>
+
+    <MudCardContent>
+
+        @if (_isChecking)
+        {
+            <div class="relative d-flex flex-grow-1 flex-wrap flex-column justify-center align-center">
+                <MudProgressLinear Color="Color.Primary"
+                                   Indeterminate="true"
+                                   Class="my-7"/>
+            </div>
+        }
+
+        <EditForm Model="@_userConfiguration"
+                  OnValidSubmit="OnValidSubmit">
+
+            @if (!_isChecking)
+            {
+                @if (_userIsOk)
+                {
+                    <UiCountdownAlert Class="mt-3"
+                                      Duration="TimeSpan.FromSeconds(5)"
+                                      OnFinished="async () => await OnCountdownFinishedAsync()"
+                                      Severity="Severity.Info">
+                        @if (_preConfigured)
+                        {
+                            <MudText>User configuration was found.</MudText>
+                        }
+                        else
+                        {
+                            <MudText>User configuration saved successfully.</MudText>
+                        }
+                    </UiCountdownAlert>
+                }
+
+                @if (!string.IsNullOrEmpty(_errorMessage))
+                {
+                    <MudAlert Class="mt-3 mb-3"
+                              Severity="Severity.Error">
+                        @_errorMessage
+                    </MudAlert>
+                }
+            }
+
+            <DataAnnotationsValidator/>
+
+            @if (!_isChecking && !_userIsOk)
+            {
+                <MudGrid>
+
+                    <MudItem xs="12" md="6">
+                        <MudTextField @bind-Value="_userConfiguration.Username"
+                                      Margin="Margin.Dense"
+                                      Label="Username"
+                                      HelperText="Enter the homebook username"
+                                      For="@(() => _userConfiguration.Username)"
+                                      Required="true"
+                                      Variant="Variant.Outlined"/>
+                    </MudItem>
+
+                    <MudItem xs="12" md="6">
+                        <MudTextField @bind-Value="_userConfiguration.Password"
+                                      Margin="Margin.Dense"
+                                      Label="Password"
+                                      InputType="InputType.Password"
+                                      HelperText="Enter the homebook password"
+                                      For="@(() => _userConfiguration.Password)"
+                                      Required="true"
+                                      Variant="Variant.Outlined"/>
+                    </MudItem>
+
+                </MudGrid>
+
+                <MudStack Row Justify="Justify.SpaceBetween"
+                          AlignItems="AlignItems.Center">
+
+                    <MudButton ButtonType="ButtonType.Submit"
+                               Color="Color.Primary"
+                               Variant="Variant.Filled"
+                               Class="mt-3"
+                               Disabled="@_isChecking">
+
+                        <MudText>Save User</MudText>
+
+                    </MudButton>
+
+                </MudStack>
+            }
+
+        </EditForm>
+
+    </MudCardContent>
+
+</MudCard>

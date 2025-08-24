@@ -73,19 +73,23 @@ public partial class SetupProcessSetupStep : ComponentBase, ISetupStep
     {
         try
         {
-            await BackendClient.Setup.Database.Migrate.PostAsync(x =>
+            await BackendClient.Setup.Start.PostAsync(new StartSetupRequest(),
+                x =>
                 {
                 },
-                cancellationToken
-            );
+                cancellationToken);
         }
-        catch (ApiException err) when (err.ResponseStatusCode == 409)
+        catch (ApiException err) when (err.ResponseStatusCode == 400)
         {
-            throw new SetupCheckException("Database migration is already executed and not available.");
+            throw new SetupCheckException("Validation error for example with the database configuration, e.g. too short password, etc.");
+        }
+        catch (ApiException err) when (err.ResponseStatusCode == 422)
+        {
+            throw new SetupCheckException("Licenses not accepted");
         }
         catch (ApiException err) when (err.ResponseStatusCode == 500)
         {
-            throw new SetupCheckException("Unknown error while database migration.");
+            throw new SetupCheckException("Unknown error while starting setup");
         }
         catch (Exception err)
         {
