@@ -8,9 +8,20 @@
 @inject ILocalizationProvider Loc
 @inject IConfiguration Configuration
 
-<UiWaveBackground/>
+<div class="setup-background @_setupBackgroundClass">
+    <UiWaveBackground/>
+</div>
 
-<MudContainer Class="hb-setup-container">
+<div class="setup-tiled-container @_setupTiledBackgroundClass">
+    <div class="setup-tiled-background">
+        <div class="bg-tile"></div>
+        <div class="bg-tile"></div>
+        <div class="bg-tile"></div>
+        <div class="bg-tile"></div>
+    </div>
+</div>
+
+<MudContainer Class="@string.Format($"hb-setup-container {_setupContainerClass}")">
 
     <MudCard Elevation="10" Class="hb-setup-card frosted-b1 mud-elevation-24 mud-text-primary">
 
@@ -34,7 +45,7 @@
                     </MudItem>
 
                     <MudItem xs="12">
-                        <UISetupContent />
+                        <UISetupContent/>
                     </MudItem>
 
                     <MudItem xs="12">
@@ -55,7 +66,7 @@
                     </MudItem>
 
                     <MudItem md="9">
-                        <UISetupContent />
+                        <UISetupContent/>
                     </MudItem>
 
                 </MudGrid>
@@ -66,6 +77,10 @@
 
         <MudCardActions Class="mud-theme-primary px-5">
             @Loc["Setup_CardActions_Version"]: @_appVersion - @Loc["Setup_CardActions_Server"]: @_appServer
+
+            <MudButton Variant="Variant.Filled" Color="Color.Primary" OnClick="() => FinishSetupAnimationAsync()">Finish
+                Animation
+            </MudButton>
         </MudCardActions>
 
     </MudCard>

@@ -2,6 +2,11 @@
     height: 100vh;
     padding-top: 120px;
     padding-bottom: 120px;
+    transition: all 2s ease;
+
+    &.is-finished {
+        opacity: 0;
+    }
 }
 
 .hb-setup-card {
@@ -18,4 +23,79 @@
 
 .hb-license-agreement-content {
     overflow-y: auto;
+}
+
+.setup-background {
+    transition: all 2s ease;
+
+    &.is-finished {
+        opacity: 0;
+    }
+}
+
+.setup-tiled-container {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    z-index: -90;
+    overflow: hidden;
+
+    .setup-tiled-background {
+        position: relative;
+        width: 150vw;
+        height: 150vh;
+        left: -25vw;
+        top: -25vh;
+
+        transform: rotate(10deg);
+        transition: all 2s ease;
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        grid-template-rows: 1fr 1fr;
+
+        .bg-tile {
+            transition: all 2s ease;
+            position: relative;
+
+            &:nth-child(1) {
+                background: red;
+            }
+
+            &:nth-child(2) {
+                background: green;
+            }
+
+            &:nth-child(3) {
+                background: yellow;
+            }
+
+            &:nth-child(4) {
+                background: blue;
+            }
+        }
+    }
+
+    &.is-finished {
+
+        .bg-tile {
+
+            &:nth-child(1) {
+                transform: translate(200vw, 0px);
+            }
+
+            &:nth-child(2) {
+                transform: translate(0px, 200vh);
+            }
+
+            &:nth-child(3) {
+                transform: translate(0px, -200vh);
+            }
+
+            &:nth-child(4) {
+                transform: translate(-200vw, 0px);
+            }
+        }
+    }
 }

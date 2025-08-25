@@ -221,7 +221,7 @@
   left: 0;
   width: 100vw;
   height: 100vh;
-  z-index: -1;
+  z-index: -100;
 }
 .ui-wavebackground-container.ui-bg-01 {
   background: linear-gradient(315deg, rgb(24, 19, 89) 2%, rgb(1, 55, 125) 25%, rgb(50, 150, 200) 45%, rgb(164, 236, 248) 70%, rgb(66, 111, 160) 98%);
@@ -309,6 +309,10 @@
   height: 100vh;
   padding-top: 120px;
   padding-bottom: 120px;
+  transition: all 2s ease;
+}
+.hb-setup-container.is-finished {
+  opacity: 0;
 }
 
 .hb-setup-card {
@@ -322,6 +326,63 @@
 
 .hb-license-agreement-content {
   overflow-y: auto;
+}
+
+.setup-background {
+  transition: all 2s ease;
+}
+.setup-background.is-finished {
+  opacity: 0;
+}
+
+.setup-tiled-container {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  z-index: -90;
+  overflow: hidden;
+}
+.setup-tiled-container .setup-tiled-background {
+  position: relative;
+  width: 150vw;
+  height: 150vh;
+  left: -25vw;
+  top: -25vh;
+  transform: rotate(10deg);
+  transition: all 2s ease;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  grid-template-rows: 1fr 1fr;
+}
+.setup-tiled-container .setup-tiled-background .bg-tile {
+  transition: all 2s ease;
+  position: relative;
+}
+.setup-tiled-container .setup-tiled-background .bg-tile:nth-child(1) {
+  background: red;
+}
+.setup-tiled-container .setup-tiled-background .bg-tile:nth-child(2) {
+  background: green;
+}
+.setup-tiled-container .setup-tiled-background .bg-tile:nth-child(3) {
+  background: yellow;
+}
+.setup-tiled-container .setup-tiled-background .bg-tile:nth-child(4) {
+  background: blue;
+}
+.setup-tiled-container.is-finished .bg-tile:nth-child(1) {
+  transform: translate(200vw, 0px);
+}
+.setup-tiled-container.is-finished .bg-tile:nth-child(2) {
+  transform: translate(0px, 200vh);
+}
+.setup-tiled-container.is-finished .bg-tile:nth-child(3) {
+  transform: translate(0px, -200vh);
+}
+.setup-tiled-container.is-finished .bg-tile:nth-child(4) {
+  transform: translate(-200vw, 0px);
 }
 
 /*# sourceMappingURL=app.css.map */
