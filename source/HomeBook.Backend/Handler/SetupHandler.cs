@@ -190,17 +190,21 @@ public class SetupHandler
     /// returns the homebook setup configuration if it is set via environment variables.
     /// </summary>
     /// <param name="logger"></param>
+    /// <param name="setupConfigurationProvider"></param>
     /// <param name="cancellationToken"></param>
     /// <returns></returns>
     public static async Task<IResult> HandleGetConfiguration([FromServices] ILogger<SetupHandler> logger,
+        [FromServices] ISetupConfigurationProvider setupConfigurationProvider,
         CancellationToken cancellationToken)
     {
         try
         {
-            await Task.Delay(10000, cancellationToken); // simulate some delay for the setup process
+            string? homebookInstanceName = setupConfigurationProvider.GetValue(EnvironmentVariables.HOMEBOOK_INSTANCE_NAME);
 
-            return TypedResults.Ok();
-            return TypedResults.StatusCode(StatusCodes.Status409Conflict);
+            if (!string.IsNullOrEmpty(homebookInstanceName))
+                return TypedResults.Ok();
+            else
+                return TypedResults.StatusCode(StatusCodes.Status404NotFound);
         }
         catch (Exception err)
         {

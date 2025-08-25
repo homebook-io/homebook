@@ -14,11 +14,11 @@ public partial class AdminUserSetupStep : ComponentBase, ISetupStep
     private bool _preConfigured = false;
     private string? _errorMessage = null;
     private UserConfigurationViewModel _userConfiguration = new();
+
     public string Key { get; } = nameof(AdminUserSetupStep);
     public bool HasError { get; set; }
     public bool IsSuccessful { get; set; }
     public Task HandleStepAsync() => throw new NotImplementedException();
-
     public Task<bool> IsStepDoneAsync(CancellationToken cancellationToken) => throw new NotImplementedException();
 
     protected override async Task OnAfterRenderAsync(bool firstRender)
@@ -30,6 +30,9 @@ public partial class AdminUserSetupStep : ComponentBase, ISetupStep
 
         try
         {
+            _isChecking = true;
+            StateHasChanged();
+
             CancellationToken cancellationToken = CancellationToken.None;
 
             await BackendClient.Setup.User.GetAsync(x =>
@@ -53,6 +56,7 @@ public partial class AdminUserSetupStep : ComponentBase, ISetupStep
         }
         finally
         {
+            _isChecking = false;
             StateHasChanged();
         }
     }
