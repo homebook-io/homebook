@@ -79,6 +79,10 @@ public partial class SetupProcessSetupStep : ComponentBase, ISetupStep
             if (!string.IsNullOrEmpty(homebookUserPassword))
                 request.HomebookUserPassword = homebookUserPassword;
 
+            string? homebookConfigurationName = await SetupService.GetStorageValueAsync<string>("HOMEBOOK_CONFIGURATION_NAME", cancellationToken);
+            if (!string.IsNullOrEmpty(homebookConfigurationName))
+                request.HomebookConfigurationName = homebookConfigurationName;
+
             string? databaseType = await SetupService.GetStorageValueAsync<string>("DATABASE_TYPE", cancellationToken);
             if (!string.IsNullOrEmpty(databaseType))
                 request.DatabaseType = databaseType;

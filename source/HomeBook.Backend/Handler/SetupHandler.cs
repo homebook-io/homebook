@@ -218,6 +218,7 @@ public class SetupHandler
     /// </summary>
     /// <param name="request"></param>
     /// <param name="logger"></param>
+    /// <param name="databaseConfigurationValidator"></param>
     /// <param name="runtimeConfigurationProvider"></param>
     /// <param name="setupInstanceManager"></param>
     /// <param name="licenseProvider"></param>
