@@ -6,12 +6,74 @@
 #ui-stripe-background-canvas {
     width: inherit;
     height: inherit;
-    /*--gradient-color-1: #a960ee;*/
-    /*--gradient-color-2: #ff333d;*/
-    /*--gradient-color-3: #90e0ff;*/
-    /*--gradient-color-4: #ffcb57;*/
-    --gradient-color-1: #181359;
-    --gradient-color-2: #3296c8;
-    --gradient-color-3: #a4ecf8;
-    --gradient-color-4: #426fa0;
+
+    &.build-mode-alpha {
+        /* https://www.color-hex.com/color-palette/1061773 */
+        /* Color Scheme for alpha build */
+        /* Noctara-Theme */
+        --gradient-color-1: #003a7a;
+        --gradient-color-2: #003f90;
+        --gradient-color-3: #00366e;
+        --gradient-color-4: #002790;
+        --gradient-color-5: #005fe0;
+    }
+
+    &.build-mode-beta {
+        /* https://www.color-hex.com/color-palette/1061227 */
+        /* Color Scheme for beta build  => REALY NICE */
+        /* Nerion-Theme */
+        --gradient-color-1: #1b5d8a;
+        --gradient-color-2: #1c5d89;
+        --gradient-color-3: #009ac7;
+        --gradient-color-4: #114d7b;
+        --gradient-color-5: #26a4d2;
+    }
+
+    &.build-mode-release {
+        /* https://www.color-hex.com/color-palette/1039353 */
+        /* Color Scheme for release build */
+        /* Frosted-Theme */
+        --gradient-color-1: #7ebbfc;
+        --gradient-color-2: #3366ff;
+        --gradient-color-3: #1340c8;
+        --gradient-color-4: #0029a3;
+        --gradient-color-5: #1c1d7c;
+    }
+    /* OLD*/
+    //--gradient-color-1: #a960ee;
+    //--gradient-color-2: #ff333d;
+    //--gradient-color-3: #90e0ff;
+    //--gradient-color-4: #ffcb57;
+    //--gradient-color-5: #ffcb57;
+
+    /* https://www.color-hex.com/color-palette/1063036 */
+    //--gradient-color-1: #382960;
+    //--gradient-color-2: #c1e5e7;
+    //--gradient-color-3: #13bd85;
+    //--gradient-color-4: #373f31;
+    //--gradient-color-5: #373f31;
+
+    /* hhttps://www.color-hex.com/color-palette/1054728 */
+    /* Fluid-Theme */
+    //--gradient-color-1: #dec2ed;
+    //--gradient-color-2: #3f0e8b;
+    //--gradient-color-3: #a793ee;
+    //--gradient-color-4: #0f2d87;
+    //--gradient-color-5: #202346;
+
+    /* https://www.color-hex.com/color-palette/1061078 */
+    /* Cineris-Theme */
+    //--gradient-color-1: #14213d;
+    //--gradient-color-2: #fca311;
+    //--gradient-color-3: #e5e5e5;
+    //--gradient-color-4: #ffffff;
+    //--gradient-color-5: #2b2d42;
+
+    /* https://www.color-hex.com/color-palette/1049367 */
+    /* Valentine-Theme */
+    //--gradient-color-1: #ff006e;
+    //--gradient-color-2: #ff00c5;
+    //--gradient-color-3: #ff00fa;
+    //--gradient-color-4: #c300ff;
+    //--gradient-color-5: #7700ff;
 }

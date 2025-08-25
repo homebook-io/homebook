@@ -294,14 +294,44 @@
 #ui-stripe-background-canvas {
   width: inherit;
   height: inherit;
-  /*--gradient-color-1: #a960ee;*/
-  /*--gradient-color-2: #ff333d;*/
-  /*--gradient-color-3: #90e0ff;*/
-  /*--gradient-color-4: #ffcb57;*/
-  --gradient-color-1: #181359;
-  --gradient-color-2: #3296c8;
-  --gradient-color-3: #a4ecf8;
-  --gradient-color-4: #426fa0;
+  /* OLD*/
+  /* https://www.color-hex.com/color-palette/1063036 */
+  /* hhttps://www.color-hex.com/color-palette/1054728 */
+  /* Fluid-Theme */
+  /* https://www.color-hex.com/color-palette/1061078 */
+  /* Cineris-Theme */
+  /* https://www.color-hex.com/color-palette/1049367 */
+  /* Valentine-Theme */
+}
+#ui-stripe-background-canvas.build-mode-alpha {
+  /* https://www.color-hex.com/color-palette/1061773 */
+  /* Color Scheme for alpha build */
+  /* Noctara-Theme */
+  --gradient-color-1: #003a7a;
+  --gradient-color-2: #003f90;
+  --gradient-color-3: #00366e;
+  --gradient-color-4: #002790;
+  --gradient-color-5: #005fe0;
+}
+#ui-stripe-background-canvas.build-mode-beta {
+  /* https://www.color-hex.com/color-palette/1061227 */
+  /* Color Scheme for beta build  => REALY NICE */
+  /* Nerion-Theme */
+  --gradient-color-1: #1b5d8a;
+  --gradient-color-2: #1c5d89;
+  --gradient-color-3: #009ac7;
+  --gradient-color-4: #114d7b;
+  --gradient-color-5: #26a4d2;
+}
+#ui-stripe-background-canvas.build-mode-release {
+  /* https://www.color-hex.com/color-palette/1039353 */
+  /* Color Scheme for release build */
+  /* Frosted-Theme */
+  --gradient-color-1: #7ebbfc;
+  --gradient-color-2: #3366ff;
+  --gradient-color-3: #1340c8;
+  --gradient-color-4: #0029a3;
+  --gradient-color-5: #1c1d7c;
 }
 
 .ui-countdown-alert {
@@ -320,7 +350,7 @@
   height: 100vh;
   padding-top: 120px;
   padding-bottom: 120px;
-  transition: all 2s ease;
+  transition: opacity 3s ease;
 }
 .hb-setup-container.is-finished {
   opacity: 0;
@@ -362,6 +392,10 @@
   height: 100vh;
   z-index: -90;
   overflow: hidden;
+  transition: opacity 4s ease;
+}
+.setup-tiled-container.is-hidden {
+  opacity: 0;
 }
 .setup-tiled-container .setup-tiled-background {
   position: relative;
@@ -380,16 +414,16 @@
   background: radial-gradient(ellipse at center, rgba(255, 255, 255, 0.5) 0%, rgba(255, 255, 255, 0) 75%);
 }
 .setup-tiled-container.is-finished .bg-tile:nth-child(1) {
-  transform: translate(200vw, 0px);
+  transform: translate(-200vw, -200px);
 }
 .setup-tiled-container.is-finished .bg-tile:nth-child(2) {
-  transform: translate(0px, 200vh);
+  transform: translate(200px, -200vh);
 }
 .setup-tiled-container.is-finished .bg-tile:nth-child(3) {
-  transform: translate(0px, -200vh);
+  transform: translate(-200px, 200vh);
 }
 .setup-tiled-container.is-finished .bg-tile:nth-child(4) {
-  transform: translate(-200vw, 0px);
+  transform: translate(200vw, 200px);
 }
 
 /*# sourceMappingURL=app.css.map */

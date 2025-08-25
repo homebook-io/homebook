@@ -6,9 +6,10 @@ public partial class SetupExperiance : ComponentBase
 {
     private string _appVersion = string.Empty;
     private string _appServer = string.Empty;
-    private string _setupTiledBackgroundClass = "";
+    private string _setupTiledBackgroundClass = "is-hidden";
     private string _setupContainerClass = "";
     private string _setupBackgroundClass = "";
+    private string _uiStripeBackgroundClass = "build-mode-alpha";
 
     protected override async Task OnAfterRenderAsync(bool firstRender)
     {
@@ -20,23 +21,37 @@ public partial class SetupExperiance : ComponentBase
         _appVersion = Configuration["Version"] ?? "Unknown";
         _appServer = Configuration["Backend:Host"] ?? "Unknown";
         StateHasChanged();
+
+        string buildMode = "release";
+        _uiStripeBackgroundClass = buildMode switch
+        {
+            "alpha" => "build-mode-alpha",
+            "beta" => "build-mode-beta",
+            "release" => "build-mode-release",
+            _ => "build-mode-unknown"
+        };
     }
 
     private async Task FinishSetupAnimationAsync()
     {
         CancellationToken cancellationToken = CancellationToken.None;
 
+        // fade in tiled background
+        _setupTiledBackgroundClass = "";
+        StateHasChanged();
+
         // hide content
+        // await Task.Delay(1000, cancellationToken);
         _setupContainerClass = "is-finished";
         StateHasChanged();
 
         // move tiles from center to outside
+        await Task.Delay(1000, cancellationToken);
         _setupTiledBackgroundClass = "is-finished";
         StateHasChanged();
 
-        await Task.Delay(2000, cancellationToken);
-
         // fade out background
+        await Task.Delay(1000, cancellationToken);
         _setupBackgroundClass = "is-finished";
         StateHasChanged();
 

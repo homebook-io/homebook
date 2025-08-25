@@ -6,6 +6,8 @@ namespace HomeBook.Frontend.Components;
 public partial class UiStripeBackground : ComponentBase, IAsyncDisposable
 {
     [Inject] private IJSRuntime JSRuntime { get; set; } = null!;
+    [Parameter]
+    public string CanvasCssClass { get; set; } = string.Empty;
 
     private IJSObjectReference? _jsModule;
     private IJSObjectReference? _gradientInstance;
