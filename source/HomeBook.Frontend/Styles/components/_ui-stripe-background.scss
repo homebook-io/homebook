@@ -1,0 +1,17 @@
+.ui-stripe-background-container {
+    width: 100vw;
+    height: 100vh;
+}
+
+#ui-stripe-background-canvas {
+    width: inherit;
+    height: inherit;
+    /*--gradient-color-1: #a960ee;*/
+    /*--gradient-color-2: #ff333d;*/
+    /*--gradient-color-3: #90e0ff;*/
+    /*--gradient-color-4: #ffcb57;*/
+    --gradient-color-1: #181359;
+    --gradient-color-2: #3296c8;
+    --gradient-color-3: #a4ecf8;
+    --gradient-color-4: #426fa0;
+}

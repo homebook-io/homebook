@@ -213,15 +213,8 @@
 }
 
 .ui-wavebackground-container {
-  margin: auto;
-  font-family: -apple-system, BlinkMacSystemFont, sans-serif;
-  overflow: auto;
-  position: absolute;
-  top: 0;
-  left: 0;
   width: 100vw;
   height: 100vh;
-  z-index: -100;
 }
 .ui-wavebackground-container.ui-bg-01 {
   background: linear-gradient(315deg, rgb(24, 19, 89) 2%, rgb(1, 55, 125) 25%, rgb(50, 150, 200) 45%, rgb(164, 236, 248) 70%, rgb(66, 111, 160) 98%);
@@ -252,7 +245,7 @@
   opacity: 0.8;
   bottom: 0;
   left: 0;
-  z-index: -1;
+  z-index: -100;
 }
 .ui-wavebackground-container .wave:nth-of-type(2) {
   bottom: -1.25em;
@@ -293,6 +286,24 @@
     transform: translateX(1);
   }
 }
+.ui-stripe-background-container {
+  width: 100vw;
+  height: 100vh;
+}
+
+#ui-stripe-background-canvas {
+  width: inherit;
+  height: inherit;
+  /*--gradient-color-1: #a960ee;*/
+  /*--gradient-color-2: #ff333d;*/
+  /*--gradient-color-3: #90e0ff;*/
+  /*--gradient-color-4: #ffcb57;*/
+  --gradient-color-1: #181359;
+  --gradient-color-2: #3296c8;
+  --gradient-color-3: #a4ecf8;
+  --gradient-color-4: #426fa0;
+}
+
 .ui-countdown-alert {
   overflow: hidden;
   position: relative;
@@ -330,6 +341,14 @@
 
 .setup-background {
   transition: all 2s ease;
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  z-index: -100;
+  margin: auto;
+  overflow: hidden;
 }
 .setup-background.is-finished {
   opacity: 0;
@@ -351,26 +370,14 @@
   left: -25vw;
   top: -25vh;
   transform: rotate(10deg);
-  transition: all 2s ease;
   display: grid;
   grid-template-columns: 1fr 1fr;
   grid-template-rows: 1fr 1fr;
 }
 .setup-tiled-container .setup-tiled-background .bg-tile {
-  transition: all 2s ease;
+  transition: all 6s ease;
   position: relative;
-}
-.setup-tiled-container .setup-tiled-background .bg-tile:nth-child(1) {
-  background: red;
-}
-.setup-tiled-container .setup-tiled-background .bg-tile:nth-child(2) {
-  background: green;
-}
-.setup-tiled-container .setup-tiled-background .bg-tile:nth-child(3) {
-  background: yellow;
-}
-.setup-tiled-container .setup-tiled-background .bg-tile:nth-child(4) {
-  background: blue;
+  background: radial-gradient(ellipse at center, rgba(255, 255, 255, 0.5) 0%, rgba(255, 255, 255, 0) 75%);
 }
 .setup-tiled-container.is-finished .bg-tile:nth-child(1) {
   transform: translate(200vw, 0px);

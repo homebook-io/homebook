@@ -26,16 +26,17 @@ public partial class SetupExperiance : ComponentBase
     {
         CancellationToken cancellationToken = CancellationToken.None;
 
+        // hide content
         _setupContainerClass = "is-finished";
         StateHasChanged();
 
-        await Task.Delay(1000, cancellationToken);
-
+        // move tiles from center to outside
         _setupTiledBackgroundClass = "is-finished";
         StateHasChanged();
 
-        await Task.Delay(1000, cancellationToken);
+        await Task.Delay(2000, cancellationToken);
 
+        // fade out background
         _setupBackgroundClass = "is-finished";
         StateHasChanged();
 
