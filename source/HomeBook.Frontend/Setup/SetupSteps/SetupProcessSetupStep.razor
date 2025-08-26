@@ -26,7 +26,7 @@
 
         @if (!_setupIsRunning)
         {
-            @if (!_setupSuccessful)
+            @if (!_setupSuccessful && !_setupFailed)
             {
                 <UiCountdownAlert Class="mt-3"
                                   Duration="TimeSpan.FromSeconds(5)"
@@ -36,7 +36,7 @@
                 </UiCountdownAlert>
             }
 
-            @if (_setupSuccessful)
+            @if (_setupSuccessful && !_setupFailed)
             {
                 <UiCountdownAlert Class="mt-3"
                                   Duration="TimeSpan.FromSeconds(5)"
@@ -58,7 +58,7 @@
                            Class="mt-3"
                            StartIcon="@Icons.Material.TwoTone.Autorenew"
                            OnClick="async () => await StartSetupAsync()">
-                    Start Setup
+                    Retry Setup
                 </MudButton>
             }
         }

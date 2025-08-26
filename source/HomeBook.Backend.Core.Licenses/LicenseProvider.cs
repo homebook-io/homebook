@@ -47,7 +47,7 @@ public class LicenseProvider(
         string instanceFilePath = Path.Combine(applicationPathProvider.DataDirectory, "licenses-accepted.txt");
         logger.LogInformation("Write licenses-accepted file at {FilePath}", instanceFilePath);
 
-        string appVersion = configuration["Version"] ?? string.Empty;
-        await fileSystemService.FileWriteAllTextAsync(instanceFilePath, appVersion, cancellationToken);
+        string appVersion = configuration.GetSection("Version")?.Value?.Trim() ?? string.Empty;
+        await fileSystemService.FileWriteAllTextAsync(instanceFilePath, appVersion, cancellationToken );
     }
 }

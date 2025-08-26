@@ -28,6 +28,9 @@ public partial class ConfigurationSetupStep : ComponentBase, ISetupStep
 
         try
         {
+            // set default
+            _homebookConfiguration.InstanceName = "My HomeBook";
+
             _isChecking = true;
             StateHasChanged();
 

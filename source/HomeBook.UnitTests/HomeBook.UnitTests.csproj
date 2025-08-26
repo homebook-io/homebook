@@ -35,4 +35,8 @@
     <ProjectReference Include="..\HomeBook.Frontend\HomeBook.Frontend.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="Backend\Core\Setup\Provider\" />
+  </ItemGroup>
+
 </Project>

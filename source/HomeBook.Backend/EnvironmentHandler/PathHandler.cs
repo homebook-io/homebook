@@ -2,8 +2,13 @@ namespace HomeBook.Backend.EnvironmentHandler;
 
 public static class PathHandler
 {
-    // the base-paht is the parent path inside the docker container which should be mounted to the host system
+    // the base-path is the parent path inside the docker container which should be mounted to the host system
+#if MACOS
+    // ReSharper disable once InconsistentNaming
+    private static readonly string BASE_PATH = Environment.GetFolderPath(Environment.SpecialFolder.UserProfile) + "/homebook";
+#else
     private const string BASE_PATH = "/var/lib/homebook";
+#endif
 
     public static readonly string ConfigurationPath = Path.Combine(BASE_PATH, "config");
     public static readonly string RuntimeConfigurationFilePath = Path.Combine(ConfigurationPath, "homebook.appsettings.json");

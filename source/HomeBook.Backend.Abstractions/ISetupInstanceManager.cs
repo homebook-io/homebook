@@ -17,4 +17,23 @@ public interface ISetupInstanceManager
     /// <param name="cancellationToken"></param>
     /// <returns></returns>
     Task CreateSetupInstanceAsync(CancellationToken cancellationToken = default);
+
+    /// <summary>
+    /// creates the required directories for the application to function properly.
+    /// </summary>
+    /// <returns></returns>
+    void CreateRequiredDirectories();
+
+    /// <summary>
+    /// Checks if an update is required by comparing the current application version with the version stored in the setup instance file.
+    /// </summary>
+    /// <param name="cancellationToken"></param>
+    /// <returns></returns>
+    Task<bool> IsUpdateRequiredAsync(CancellationToken cancellationToken = default);
+
+    /// <summary>
+    /// Checks if the setup process has been completed.
+    /// </summary>
+    /// <returns></returns>
+    bool IsSetupFinishedAsync(CancellationToken cancellationToken = default);
 }

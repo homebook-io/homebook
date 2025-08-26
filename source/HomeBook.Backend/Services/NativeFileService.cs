@@ -25,6 +25,12 @@ public class NativeFileService(ILogger<NativeFileService> logger) : IApplication
 
     /// <inheritdoc />
     public async Task FileWriteAllTextAsync(string path, string content, CancellationToken cancellationToken) => await File.WriteAllTextAsync(path, content, cancellationToken);
+
+    /// <inheritdoc />
+    public bool DirectoryExists(string path) => Directory.Exists(path);
+
+    /// <inheritdoc />
+    public DirectoryInfo CreateDirectory(string path) => Directory.CreateDirectory(path);
 }
 
 

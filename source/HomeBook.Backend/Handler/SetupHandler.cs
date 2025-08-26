@@ -24,17 +24,36 @@ public class SetupHandler
     {
         try
         {
-            // 1. check if file "/var/lib/homebook/instance.txt" exists
+            // return TypedResults.Ok(); // HTTP 200
+            // return TypedResults.Created(); // HTTP 201
+            // return TypedResults.NoContent(); // HTTP 204
+            // return TypedResults.Conflict(); // HTTP 409
+            // return TypedResults.InternalServerError(); // HTTP 500
+
+            // 1. check the status of the setup and homebook instance
             bool setupInstanceExists = setupInstanceManager.IsSetupInstanceCreated();
+            bool updateRequired = await setupInstanceManager.IsUpdateRequiredAsync(cancellationToken);
+            bool setupIsFinished = setupInstanceManager.IsSetupFinishedAsync(cancellationToken);
+
+            // 2. LATER => check dependencies like Redis, etc.
 
             if (!setupInstanceExists)
                 // does not exist => setup is not executed yet and available
                 return TypedResults.Ok();
-            else
-                // exists => setup is already executed and not available
+
+            if (setupInstanceExists && !setupIsFinished && updateRequired)
+                // update is required
+                return TypedResults.Created();
+
+            if (setupInstanceExists && !setupIsFinished && !updateRequired)
+                // exists => setup is already running and not available
                 return TypedResults.Conflict();
 
-            // 2. check dependencies like Redis, etc.
+            if (setupInstanceExists && setupIsFinished && !updateRequired)
+                // setup is finished and no update is required => Homebook is ready to use
+                return TypedResults.NoContent();
+
+            return TypedResults.InternalServerError("invalid setup configuration");
         }
         catch (Exception err)
         {
@@ -236,25 +255,28 @@ public class SetupHandler
     {
         try
         {
-            // 1. write license accepted file
+            // 1. create directory structure
+            setupInstanceManager.CreateRequiredDirectories();
+
+            // 2. write license accepted file
             bool licensesAcceptedViaRequest = request.LicensesAccepted ?? false;
             bool licensesAcceptedViaEnvVar = setupConfigurationProvider.GetValue(EnvironmentVariables.HOMEBOOK_ACCEPT_LICENSES) is not null;
             if (!licensesAcceptedViaRequest
                 && !licensesAcceptedViaEnvVar)
                 return TypedResults.StatusCode(StatusCodes.Status422UnprocessableEntity);
 
-            // 2. mark the licenses of this version as accepted
+            // 3. mark the licenses of this version as accepted
             await licenseProvider.MarkLicenseAsAcceptedAsync(cancellationToken);
 
-            // 3. write database configuration to environment variables
+            // 4. write database configuration to environment variables
             await UpdateDatabaseConfigurationAsync(request,
                 databaseConfigurationValidator,
                 runtimeConfigurationProvider,
                 cancellationToken);
 
-            // 4. save setup configuration
+            // 5. save setup configuration
 
-            // 5. write setup instance file
+            // 6. write setup instance file
             await setupInstanceManager.CreateSetupInstanceAsync(cancellationToken);
 
             return TypedResults.Ok();

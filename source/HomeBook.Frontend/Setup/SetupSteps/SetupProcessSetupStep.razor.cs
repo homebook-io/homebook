@@ -10,6 +10,7 @@ public partial class SetupProcessSetupStep : ComponentBase, ISetupStep
 {
     private bool _setupIsRunning = false;
     private bool _setupSuccessful = false;
+    private bool _setupFailed = false;
     private string? _errorMessage = null;
 
     public string Key { get; } = nameof(SetupProcessSetupStep);
@@ -32,6 +33,7 @@ public partial class SetupProcessSetupStep : ComponentBase, ISetupStep
 
         _setupIsRunning = true;
         _setupSuccessful = false;
+        _setupFailed = false;
         _errorMessage = null;
         await InvokeAsync(StateHasChanged);
 
@@ -44,17 +46,20 @@ public partial class SetupProcessSetupStep : ComponentBase, ISetupStep
         }
         catch (HttpRequestException err)
         {
+            _setupFailed = true;
             // DE => Verbindung zum Server konnte nicht hergestellt werden. Stellen Sie sicher, dass der Server läuft und korrekt konfiguriert wurde und versuchen Sie es erneut.
             _errorMessage = "Unable to connect to the server. Make sure that the server is running and has been configured correctly, then try again.";
             await StepErrorAsync(cancellationToken);
         }
         catch (SetupCheckException err)
         {
+            _setupFailed = true;
             _errorMessage = err.Message;
             await StepErrorAsync(cancellationToken);
         }
         catch (Exception err)
         {
+            _setupFailed = true;
             _errorMessage = "error while setup: " + err.Message;
             await StepErrorAsync(cancellationToken);
         }

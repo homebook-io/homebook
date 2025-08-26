@@ -14,13 +14,20 @@ public class DatabaseProviderResolver(IEnumerable<IDatabaseProbe> databaseProbes
         string password,
         CancellationToken cancellationToken = default)
     {
+        using var cts = CancellationTokenSource.CreateLinkedTokenSource(cancellationToken);
+
         // Run all database probes in parallel
         IEnumerable<Task<DatabaseProvider?>> probeTasks = databaseProbes.Select(async probe =>
         {
             try
             {
-                bool canConnect = await probe.CanConnectAsync(host, port, databaseName, username, password, cancellationToken);
+                bool canConnect = await probe.CanConnectAsync(host, port, databaseName, username, password, cts.Token);
                 return canConnect ? probe.ProviderName : (DatabaseProvider?)null;
+            }
+            catch (OperationCanceledException)
+            {
+                // Task was cancelled, return null
+                return null;
             }
             catch
             {
@@ -29,9 +36,26 @@ public class DatabaseProviderResolver(IEnumerable<IDatabaseProbe> databaseProbes
             }
         });
 
-        DatabaseProvider?[] results = await Task.WhenAll(probeTasks);
+        Task<DatabaseProvider?>[] taskArray = probeTasks.ToArray();
 
-        // Return the first successful provider
-        return results.FirstOrDefault(result => result.HasValue);
+        // Wait for the first successful result
+        while (taskArray.Length > 0)
+        {
+            Task<DatabaseProvider?> completedTask = await Task.WhenAny(taskArray);
+            DatabaseProvider? result = await completedTask;
+
+            if (result.HasValue)
+            {
+                // Cancel all remaining tasks since we found a valid provider
+                await cts.CancelAsync();
+                return result;
+            }
+
+            // Remove the completed task and continue with remaining tasks
+            taskArray = taskArray.Where(t => t != completedTask).ToArray();
+        }
+
+        // No successful provider found
+        return null;
     }
 }
