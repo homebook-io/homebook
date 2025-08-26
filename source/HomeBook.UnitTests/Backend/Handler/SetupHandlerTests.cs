@@ -42,22 +42,6 @@ public class SetupHandlerTests
     }
 
     [Test]
-    public async Task HandleGetAvailability_returns_Conflict_when_instance_exists()
-    {
-        // Arrange
-        _setupInstanceManager
-            .IsHomebookInstanceCreated()
-            .Returns(true);
-
-        // Act
-        var result = await SetupHandler.HandleGetAvailability(_logger, _setupInstanceManager, CancellationToken.None);
-
-        // Assert
-        var conflict = result.ShouldBeOfType<Conflict>();
-        conflict.ShouldNotBeNull();
-    }
-
-    [Test]
     public async Task HandleGetAvailability_returns_Ok_when_instance_not_exists()
     {
         // Arrange

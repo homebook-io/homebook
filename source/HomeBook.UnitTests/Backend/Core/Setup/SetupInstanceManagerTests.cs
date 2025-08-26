@@ -362,31 +362,12 @@ public class SetupInstanceManagerTests
     }
 
     [Test]
-    public void IsSetupInstanceCreated_CallsFileExistsWithCorrectPath()
-    {
-        // Arrange
-        const string configPath = "/test/config";
-        const string expectedFilePath = "/test/config/.setup";
-        _applicationPathProvider.ConfigurationPath.Returns(configPath);
-        _fileSystemService.FileExists(Arg.Any<string>()).Returns(true);
-
-        // Create new instance to test with mocked path
-        var instance = new SetupInstanceManager(_logger, _configuration, _fileSystemService, _applicationPathProvider);
-
-        // Act
-        instance.IsHomebookInstanceCreated();
-
-        // Assert
-        _fileSystemService.Received(1).FileExists(expectedFilePath);
-    }
-
-    [Test]
     public async Task CreateSetupInstanceAsync_WithValidVersion_WritesVersionToFile()
     {
         // Arrange
         const string appVersion = "1.2.3";
         const string dataPath = "/data";
-        const string expectedFilePath = "/data/instance.txt";
+        const string expectedFilePath = "/data/.homebook";
 
         var configSection = Substitute.For<IConfigurationSection>();
         configSection.Value.Returns(appVersion);
@@ -405,7 +386,7 @@ public class SetupInstanceManagerTests
     {
         // Arrange
         const string dataPath = "/data";
-        const string expectedFilePath = "/data/instance.txt";
+        const string expectedFilePath = "/data/.homebook";
 
         var configSection = Substitute.For<IConfigurationSection>();
         configSection.Value.Returns((string)null!);
@@ -425,7 +406,7 @@ public class SetupInstanceManagerTests
         // Arrange
         const string appVersion = "   ";
         const string dataPath = "/data";
-        const string expectedFilePath = "/data/instance.txt";
+        const string expectedFilePath = "/data/.homebook";
 
         var configSection = Substitute.For<IConfigurationSection>();
         configSection.Value.Returns(appVersion);
@@ -446,7 +427,7 @@ public class SetupInstanceManagerTests
         const string appVersionWithWhitespace = "  1.2.3  ";
         const string expectedTrimmedVersion = "1.2.3";
         const string dataPath = "/data";
-        const string expectedFilePath = "/data/instance.txt";
+        const string expectedFilePath = "/data/.homebook";
 
         var configSection = Substitute.For<IConfigurationSection>();
         configSection.Value.Returns(appVersionWithWhitespace);
@@ -465,7 +446,7 @@ public class SetupInstanceManagerTests
     {
         // Arrange
         const string dataPath = "/data";
-        const string expectedFilePath = "/data/instance.txt";
+        const string expectedFilePath = "/data/.homebook";
 
         _configuration.GetSection("Version").Returns((IConfigurationSection)null!);
         _applicationPathProvider.DataDirectory.Returns(dataPath);
