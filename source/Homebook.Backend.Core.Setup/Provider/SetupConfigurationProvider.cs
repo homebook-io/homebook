@@ -22,14 +22,14 @@ public class SetupConfigurationProvider(
 
         _valuesByEnum.Clear();
         EnvironmentConfiguration environmentConfiguration = new(
-            Environment.GetEnvironmentVariable(EnvironmentVariables.DATABASE_HOST.ToString()),
-            Environment.GetEnvironmentVariable(EnvironmentVariables.DATABASE_PORT.ToString()),
-            Environment.GetEnvironmentVariable(EnvironmentVariables.DATABASE_NAME.ToString()),
-            Environment.GetEnvironmentVariable(EnvironmentVariables.DATABASE_USER.ToString()),
-            Environment.GetEnvironmentVariable(EnvironmentVariables.DATABASE_PASSWORD.ToString()),
-            Environment.GetEnvironmentVariable(EnvironmentVariables.HOMEBOOK_USER_NAME.ToString()),
-            Environment.GetEnvironmentVariable(EnvironmentVariables.HOMEBOOK_USER_PASSWORD.ToString()),
-            Environment.GetEnvironmentVariable(EnvironmentVariables.HOMEBOOK_ACCEPT_LICENSES.ToString())
+            Environment.GetEnvironmentVariable(nameof(EnvironmentVariables.DATABASE_HOST)),
+            Environment.GetEnvironmentVariable(nameof(EnvironmentVariables.DATABASE_PORT)),
+            Environment.GetEnvironmentVariable(nameof(EnvironmentVariables.DATABASE_NAME)),
+            Environment.GetEnvironmentVariable(nameof(EnvironmentVariables.DATABASE_USER)),
+            Environment.GetEnvironmentVariable(nameof(EnvironmentVariables.DATABASE_PASSWORD)),
+            Environment.GetEnvironmentVariable(nameof(EnvironmentVariables.HOMEBOOK_USER_NAME)),
+            Environment.GetEnvironmentVariable(nameof(EnvironmentVariables.HOMEBOOK_USER_PASSWORD)),
+            Environment.GetEnvironmentVariable(nameof(EnvironmentVariables.HOMEBOOK_ACCEPT_LICENSES))
         );
         environmentValidator.ValidateAndThrow(environmentConfiguration);
 

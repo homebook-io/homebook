@@ -36,23 +36,25 @@ public class SetupHandler
             bool setupIsFinished = setupInstanceManager.IsSetupFinishedAsync(cancellationToken);
 
             // 2. LATER => check dependencies like Redis, etc.
+            // to do later
 
             if (!setupInstanceExists)
-                // does not exist => setup is not executed yet and available
+                // HTTP 200 => does not exist => setup is not executed yet and available
                 return TypedResults.Ok();
 
             if (setupInstanceExists && !setupIsFinished && updateRequired)
-                // update is required
+                // HTTP 201 => update is required
                 return TypedResults.Created();
 
             if (setupInstanceExists && !setupIsFinished && !updateRequired)
-                // exists => setup is already running and not available
+                // HTTP 409 => exists => setup is already running and not available
                 return TypedResults.Conflict();
 
             if (setupInstanceExists && setupIsFinished && !updateRequired)
-                // setup is finished and no update is required => Homebook is ready to use
+                // HTTP 204 => setup is finished and no update is required => Homebook is ready to use
                 return TypedResults.NoContent();
 
+            // HTPP 500 => something went wrong
             return TypedResults.InternalServerError("invalid setup configuration");
         }
         catch (Exception err)
