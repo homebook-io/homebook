@@ -27,30 +27,24 @@ public class SetupHandler
             // return TypedResults.Ok(); // HTTP 200
             // return TypedResults.Created(); // HTTP 201
             // return TypedResults.NoContent(); // HTTP 204
-            // return TypedResults.Conflict(); // HTTP 409
             // return TypedResults.InternalServerError(); // HTTP 500
 
             // 1. check the status of the setup and homebook instance
-            bool setupInstanceExists = setupInstanceManager.IsSetupInstanceCreated();
+            bool setupFinished = setupInstanceManager.IsHomebookInstanceCreated();
             bool updateRequired = await setupInstanceManager.IsUpdateRequiredAsync(cancellationToken);
-            bool setupIsFinished = setupInstanceManager.IsSetupFinishedAsync(cancellationToken);
 
             // 2. LATER => check dependencies like Redis, etc.
             // to do later
 
-            if (!setupInstanceExists)
+            if (!setupFinished)
                 // HTTP 200 => does not exist => setup is not executed yet and available
                 return TypedResults.Ok();
 
-            if (setupInstanceExists && !setupIsFinished && updateRequired)
+            if (setupFinished && updateRequired)
                 // HTTP 201 => update is required
                 return TypedResults.Created();
 
-            if (setupInstanceExists && !setupIsFinished && !updateRequired)
-                // HTTP 409 => exists => setup is already running and not available
-                return TypedResults.Conflict();
-
-            if (setupInstanceExists && setupIsFinished && !updateRequired)
+            if (setupFinished && !updateRequired)
                 // HTTP 204 => setup is finished and no update is required => Homebook is ready to use
                 return TypedResults.NoContent();
 
@@ -279,7 +273,7 @@ public class SetupHandler
             // 5. save setup configuration
 
             // 6. write setup instance file
-            await setupInstanceManager.CreateSetupInstanceAsync(cancellationToken);
+            await setupInstanceManager.CreateHomebookInstanceAsync(cancellationToken);
 
             return TypedResults.Ok();
         }

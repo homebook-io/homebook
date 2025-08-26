@@ -2,6 +2,7 @@ namespace HomeBook.Frontend.Abstractions.Contracts;
 
 public interface ISetupService
 {
+    Func<Task>? OnSetupSuccessful { get; set; }
     Func<ISetupStep, Task>? OnStepSuccessful { get; set; }
     Func<ISetupStep, bool, Task>? OnStepFailed { get; set; }
     Func<Task>? OnSetupStepsInitialized { get; set; }
@@ -57,4 +58,11 @@ public interface ISetupService
     /// <param name="cancellationToken"></param>
     /// <returns></returns>
     Task<T?> GetStorageValueAsync<T>(string key, CancellationToken cancellationToken = default);
+
+    /// <summary>
+    /// trigger the setup finished event.
+    /// </summary>
+    /// <param name="cancellationToken"></param>
+    /// <returns></returns>
+    Task TriggerSetupFinishedAsync(CancellationToken cancellationToken = default);
 }

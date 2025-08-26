@@ -161,4 +161,6 @@ public partial class SetupProcessSetupStep : ComponentBase, ISetupStep
             await InvokeAsync(StateHasChanged);
         }
     }
+
+    private async Task OnStartHomeBookAsync() => await SetupService.TriggerSetupFinishedAsync();
 }

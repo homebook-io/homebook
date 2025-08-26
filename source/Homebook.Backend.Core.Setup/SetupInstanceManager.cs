@@ -11,27 +11,9 @@ public class SetupInstanceManager(
     IFileSystemService fileSystemService,
     IApplicationPathProvider applicationPathProvider) : ISetupInstanceManager
 {
-    private readonly string _setupInstanceFileName = Path.Combine(applicationPathProvider.ConfigurationPath, ".setup");
-    private readonly string _homebookInstanceFileName = Path.Combine(applicationPathProvider.ConfigurationPath, ".homebook");
+    private string _homebookInstanceFileName => Path.Combine(applicationPathProvider.DataDirectory, ".homebook");
 
     /// <inheritdoc />
-    public bool IsSetupInstanceCreated()
-    {
-        logger.LogInformation("Checking if setup instance file exists at {FilePath}", _setupInstanceFileName);
-
-        return fileSystemService.FileExists(_setupInstanceFileName); // true => means setup is already executed and instance is created
-    }
-
-    /// <inheritdoc />
-    public async Task CreateSetupInstanceAsync(CancellationToken cancellationToken = default)
-    {
-        string instanceFilePath = Path.Combine(applicationPathProvider.DataDirectory, "instance.txt");
-        logger.LogInformation("Write setup instance file at {FilePath}", instanceFilePath);
-
-        string appVersion = configuration.GetSection("Version")?.Value?.Trim() ?? string.Empty;
-        await fileSystemService.FileWriteAllTextAsync(instanceFilePath, appVersion, cancellationToken);
-    }
-
     public void CreateRequiredDirectories()
     {
         string[] requiredDirectories =
@@ -51,6 +33,25 @@ public class SetupInstanceManager(
             logger.LogInformation("Creating required directory at {Directory}", dir);
             fileSystemService.CreateDirectory(dir);
         }
+    }
+
+    /// <inheritdoc />
+    public async Task CreateHomebookInstanceAsync(CancellationToken cancellationToken = default)
+    {
+        logger.LogInformation("Write homebook instance file at {FilePath}", _homebookInstanceFileName);
+
+        string appVersion = configuration.GetSection("Version")?.Value?.Trim() ?? string.Empty;
+        await fileSystemService.FileWriteAllTextAsync(_homebookInstanceFileName,
+            appVersion,
+            cancellationToken);
+    }
+
+    /// <inheritdoc />
+    public bool IsHomebookInstanceCreated()
+    {
+        logger.LogInformation("Checking if homebook instance file exists at {FilePath}", _homebookInstanceFileName);
+
+        return fileSystemService.FileExists(_homebookInstanceFileName); // true => means setup is already executed and instance is created
     }
 
     public async Task<bool> IsUpdateRequiredAsync(CancellationToken cancellationToken = default)
@@ -78,12 +79,5 @@ public class SetupInstanceManager(
             return false;
 
         return true;
-    }
-
-    public bool IsSetupFinishedAsync(CancellationToken cancellationToken = default)
-    {
-        logger.LogInformation("Checking if homebook instance file exists at {FilePath}", _homebookInstanceFileName);
-
-        return fileSystemService.FileExists(_homebookInstanceFileName); // true => means setup is finished
     }
 }

@@ -19,7 +19,6 @@ public static class SetupEndpoints
                 "HTTP 200: Setup is not executed yet and available => Setup can be started",
                 "HTTP 201: Setup is finished, but an update is required => Update must be executed before Homebook can be used",
                 "HTTP 204: Setup is finished and no update is required => Homebook is ready to use",
-                "HTTP 409: Setup is already executed and not available => Another Setup is currently running",
                 "HTTP 500: Unknown error while setup checking"))
             .WithOpenApi(operation => new(operation)
             {
@@ -27,7 +26,6 @@ public static class SetupEndpoints
             .Produces(StatusCodes.Status200OK)
             .Produces(StatusCodes.Status201Created)
             .Produces(StatusCodes.Status204NoContent)
-            .Produces(StatusCodes.Status409Conflict)
             .Produces<string>(StatusCodes.Status500InternalServerError);
 
         group.MapGet("/licenses", SetupHandler.HandleGetLicenses)

@@ -1,6 +1,5 @@
 using System.Net;
 using HomeBook.Client;
-using HomeBook.Client.Models;
 using HomeBook.Frontend.Abstractions.Contracts;
 using HomeBook.Frontend.Setup.SetupSteps;
 using Microsoft.Kiota.Abstractions;
@@ -15,6 +14,7 @@ public class SetupService(
     private bool _isDone = false;
     private Dictionary<string, object> _storage = new();
     private List<ISetupStep> _setupSteps = [];
+    public Func<Task>? OnSetupSuccessful { get; set; }
     public Func<ISetupStep, Task>? OnStepSuccessful { get; set; }
     public Func<ISetupStep, bool, Task>? OnStepFailed { get; set; }
     public Func<Task>? OnSetupStepsInitialized { get; set; }
@@ -141,5 +141,11 @@ public class SetupService(
         }
 
         return Task.FromResult<T?>(default);
+    }
+
+    public async Task TriggerSetupFinishedAsync(CancellationToken cancellationToken = default)
+    {
+        if (OnSetupSuccessful != null)
+            await OnSetupSuccessful.Invoke();
     }
 }

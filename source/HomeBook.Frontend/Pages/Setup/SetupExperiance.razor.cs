@@ -2,7 +2,7 @@ using Microsoft.AspNetCore.Components;
 
 namespace HomeBook.Frontend.Pages.Setup;
 
-public partial class SetupExperiance : ComponentBase
+public partial class SetupExperiance : ComponentBase, IDisposable
 {
     private string _appVersion = string.Empty;
     private string _appServer = string.Empty;
@@ -18,6 +18,8 @@ public partial class SetupExperiance : ComponentBase
         if (!firstRender)
             return;
 
+        SetupService.OnSetupSuccessful += async () => await FinishSetupAnimationAsync();
+
         _appVersion = Configuration["Version"] ?? "Unknown";
         _appServer = Configuration["Backend:Host"] ?? "Unknown";
         StateHasChanged();
@@ -30,6 +32,11 @@ public partial class SetupExperiance : ComponentBase
             "release" => "build-mode-release",
             _ => "build-mode-unknown"
         };
+    }
+
+    public void Dispose()
+    {
+        SetupService.OnSetupSuccessful -= async () => await FinishSetupAnimationAsync();
     }
 
     private async Task FinishSetupAnimationAsync()
