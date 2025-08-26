@@ -16,14 +16,16 @@ public static class SetupEndpoints
         group.MapGet("/availability", SetupHandler.HandleGetAvailability)
             .WithName("GetAvailability")
             .WithDescription(new Description("returns the status of the setup availability",
-                "HTTP 200: Setup is not executed yet and available",
-                "HTTP 409: Setup is already executed and not available",
+                "HTTP 200: Setup is not executed yet and available => Setup can be started",
+                "HTTP 201: Setup is finished, but an update is required => Update must be executed before Homebook can be used",
+                "HTTP 204: Setup is finished and no update is required => Homebook is ready to use",
                 "HTTP 500: Unknown error while setup checking"))
             .WithOpenApi(operation => new(operation)
             {
             })
             .Produces(StatusCodes.Status200OK)
-            .Produces(StatusCodes.Status409Conflict)
+            .Produces(StatusCodes.Status201Created)
+            .Produces(StatusCodes.Status204NoContent)
             .Produces<string>(StatusCodes.Status500InternalServerError);
 
         group.MapGet("/licenses", SetupHandler.HandleGetLicenses)

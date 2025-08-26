@@ -11,24 +11,73 @@ public class SetupInstanceManager(
     IFileSystemService fileSystemService,
     IApplicationPathProvider applicationPathProvider) : ISetupInstanceManager
 {
+    private string _homebookInstanceFileName => Path.Combine(applicationPathProvider.DataDirectory, ".homebook");
+
     /// <inheritdoc />
-    public bool IsSetupInstanceCreated()
+    public void CreateRequiredDirectories()
     {
-        string instanceFilePath = Path.Combine(applicationPathProvider.DataDirectory, "instance.txt");
-        logger.LogInformation("Checking if setup instance file exists at {FilePath}", instanceFilePath);
+        string[] requiredDirectories =
+        [
+            applicationPathProvider.ConfigurationPath,
+            applicationPathProvider.CacheDirectory,
+            applicationPathProvider.LogDirectory,
+            applicationPathProvider.DataDirectory,
+            applicationPathProvider.TempDirectory
+        ];
 
-        bool instanceFileExists = fileSystemService.FileExists(instanceFilePath);
+        foreach (string dir in requiredDirectories)
+        {
+            if (fileSystemService.DirectoryExists(dir))
+                continue;
 
-        return instanceFileExists; // true => means setup is already executed and instance is created
+            logger.LogInformation("Creating required directory at {Directory}", dir);
+            fileSystemService.CreateDirectory(dir);
+        }
     }
 
     /// <inheritdoc />
-    public async Task CreateSetupInstanceAsync(CancellationToken cancellationToken = default)
+    public async Task CreateHomebookInstanceAsync(CancellationToken cancellationToken = default)
     {
-        string instanceFilePath = Path.Combine(applicationPathProvider.DataDirectory, "instance.txt");
-        logger.LogInformation("Write setup instance file at {FilePath}", instanceFilePath);
+        logger.LogInformation("Write homebook instance file at {FilePath}", _homebookInstanceFileName);
 
-        string appVersion = configuration["Version"] ?? string.Empty;
-        await fileSystemService.FileWriteAllTextAsync(instanceFilePath, appVersion, cancellationToken);
+        string appVersion = configuration.GetSection("Version")?.Value?.Trim() ?? string.Empty;
+        await fileSystemService.FileWriteAllTextAsync(_homebookInstanceFileName,
+            appVersion,
+            cancellationToken);
+    }
+
+    /// <inheritdoc />
+    public bool IsHomebookInstanceCreated()
+    {
+        logger.LogInformation("Checking if homebook instance file exists at {FilePath}", _homebookInstanceFileName);
+
+        return fileSystemService.FileExists(_homebookInstanceFileName); // true => means setup is already executed and instance is created
+    }
+
+    public async Task<bool> IsUpdateRequiredAsync(CancellationToken cancellationToken = default)
+    {
+        // get the version from the appsettings
+        string? runningAppVersion = configuration.GetSection("Version")?.Value?.Trim();
+        string? installedInstanceVersion = null;
+        try
+        {
+            // get the version from the instance file
+            installedInstanceVersion = await fileSystemService.FileReadAllTextAsync(_homebookInstanceFileName, cancellationToken);
+        }
+        catch (Exception err)
+        {
+            logger.LogError(err, "Error reading instance version from file");
+            return false;
+        }
+
+        if (string.IsNullOrEmpty(runningAppVersion)
+            || string.IsNullOrEmpty(installedInstanceVersion))
+            return false;
+
+        int versionComparison = new Version(runningAppVersion).CompareTo(new Version(installedInstanceVersion));
+        if (versionComparison <= 0)
+            return false;
+
+        return true;
     }
 }

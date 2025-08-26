@@ -2,6 +2,11 @@
     height: 100vh;
     padding-top: 120px;
     padding-bottom: 120px;
+    transition: opacity 3s ease;
+
+    &.is-finished {
+        opacity: 0;
+    }
 }
 
 .hb-setup-card {
@@ -18,4 +23,96 @@
 
 .hb-license-agreement-content {
     overflow-y: auto;
+}
+
+.setup-background {
+    transition: all 2s ease;
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    z-index: -100;
+    margin: auto;
+    overflow: hidden;
+
+    &.is-finished {
+        opacity: 0;
+    }
+}
+
+.setup-tiled-container {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    z-index: -90;
+    overflow: hidden;
+    transition: opacity 4s ease;
+
+    &.is-hidden {
+        opacity: 0;
+    }
+
+    .setup-tiled-background {
+        position: relative;
+        width: 150vw;
+        height: 150vh;
+        left: -25vw;
+        top: -25vh;
+
+        transform: rotate(10deg);
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        grid-template-rows: 1fr 1fr;
+
+        .bg-tile {
+            transition: all 6s ease;
+            position: relative;
+            background: radial-gradient(
+                    ellipse at center,
+                    rgba(255, 255, 255, .5) 0%,
+                    rgba(255, 255, 255, 0) 75%
+            );
+
+            &:nth-child(1) {
+                //background: red;
+            }
+
+            &:nth-child(2) {
+                //background: green;
+            }
+
+            &:nth-child(3) {
+                //background: yellow;
+            }
+
+            &:nth-child(4) {
+                //background: blue;
+            }
+        }
+    }
+
+    &.is-finished {
+
+        .bg-tile {
+
+            &:nth-child(1) {
+                transform: translate(-200vw, -200px);
+            }
+
+            &:nth-child(2) {
+                transform: translate(200px, -200vh);
+            }
+
+            &:nth-child(3) {
+                transform: translate(-200px, 200vh);
+            }
+
+            &:nth-child(4) {
+                transform: translate(200vw, 200px);
+            }
+        }
+    }
 }

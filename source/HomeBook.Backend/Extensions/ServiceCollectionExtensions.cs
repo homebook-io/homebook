@@ -17,11 +17,7 @@ public static class ServiceCollectionExtensions
     {
         // Register the file service
         services.AddSingleton<IApplicationPathProvider, NativeFileService>();
-// #if DEBUG
-        // services.AddSingleton<IFileSystemService, DebugFileService>();
-// #else
         services.AddSingleton<IFileSystemService, NativeFileService>();
-// #endif
 
         // Register other services as needed
         services.AddSingleton<IRuntimeConfigurationProvider, RuntimeConfigurationProvider>(); // Program.cs
@@ -38,6 +34,7 @@ public static class ServiceCollectionExtensions
 
         // Get database provider from configuration
         string? databaseType = configuration["Database:Provider"];
+        // TODO: breakpoint
         if (!string.IsNullOrEmpty((databaseType ?? string.Empty).Trim()))
         {
             // load database provider specific services

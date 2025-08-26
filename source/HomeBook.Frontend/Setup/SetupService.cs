@@ -1,16 +1,20 @@
+using System.Net;
 using HomeBook.Client;
-using HomeBook.Client.Models;
 using HomeBook.Frontend.Abstractions.Contracts;
 using HomeBook.Frontend.Setup.SetupSteps;
+using Microsoft.Kiota.Abstractions;
 
 namespace HomeBook.Frontend.Setup;
 
-public class SetupService(BackendClient backendClient) : ISetupService
+public class SetupService(
+    IRequestAdapter requestAdapter,
+    BackendClient backendClient) : ISetupService
 {
     public Guid Id { get; } = Guid.NewGuid();
     private bool _isDone = false;
     private Dictionary<string, object> _storage = new();
     private List<ISetupStep> _setupSteps = [];
+    public Func<Task>? OnSetupSuccessful { get; set; }
     public Func<ISetupStep, Task>? OnStepSuccessful { get; set; }
     public Func<ISetupStep, bool, Task>? OnStepFailed { get; set; }
     public Func<Task>? OnSetupStepsInitialized { get; set; }
@@ -53,9 +57,36 @@ public class SetupService(BackendClient backendClient) : ISetupService
 
     public async Task<bool> IsSetupDoneAsync(CancellationToken cancellationToken = default)
     {
-        bool isSetupDone = _setupSteps.All(step => step.IsSuccessful);
+        try
+        {
+            NativeResponseHandler native = new();
+            await backendClient.Setup.Availability.GetAsync(cfg =>
+            {
+                cfg.Options.Add(new ResponseHandlerOption
+                {
+                    ResponseHandler = native
+                });
+            }, cancellationToken);
+            HttpStatusCode? status = (native.Value as HttpResponseMessage)?.StatusCode;
 
-        return isSetupDone;
+            return status switch
+            {
+                HttpStatusCode.OK => false, // setup can be started
+                HttpStatusCode.Created => false, // setup is done, but an update is required
+                HttpStatusCode.NoContent => true, // setup is finished and no update is required => Homebook is ready to use
+                HttpStatusCode.Conflict => false, // setup is not available (already running)
+                _ => false // unknown error
+            };
+        }
+        catch (ApiException)
+        {
+            // unknown error
+            return false;
+        }
+        catch (Exception)
+        {
+            return false;
+        }
     }
 
     public async Task SetStepStatusAsync(bool success,
@@ -110,5 +141,11 @@ public class SetupService(BackendClient backendClient) : ISetupService
         }
 
         return Task.FromResult<T?>(default);
+    }
+
+    public async Task TriggerSetupFinishedAsync(CancellationToken cancellationToken = default)
+    {
+        if (OnSetupSuccessful != null)
+            await OnSetupSuccessful.Invoke();
     }
 }

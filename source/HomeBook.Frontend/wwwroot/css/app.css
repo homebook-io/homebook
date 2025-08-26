@@ -213,15 +213,8 @@
 }
 
 .ui-wavebackground-container {
-  margin: auto;
-  font-family: -apple-system, BlinkMacSystemFont, sans-serif;
-  overflow: auto;
-  position: absolute;
-  top: 0;
-  left: 0;
   width: 100vw;
   height: 100vh;
-  z-index: -1;
 }
 .ui-wavebackground-container.ui-bg-01 {
   background: linear-gradient(315deg, rgb(24, 19, 89) 2%, rgb(1, 55, 125) 25%, rgb(50, 150, 200) 45%, rgb(164, 236, 248) 70%, rgb(66, 111, 160) 98%);
@@ -252,7 +245,7 @@
   opacity: 0.8;
   bottom: 0;
   left: 0;
-  z-index: -1;
+  z-index: -100;
 }
 .ui-wavebackground-container .wave:nth-of-type(2) {
   bottom: -1.25em;
@@ -293,6 +286,54 @@
     transform: translateX(1);
   }
 }
+.ui-stripe-background-container {
+  width: 100vw;
+  height: 100vh;
+}
+
+#ui-stripe-background-canvas {
+  width: inherit;
+  height: inherit;
+  /* OLD*/
+  /* https://www.color-hex.com/color-palette/1063036 */
+  /* hhttps://www.color-hex.com/color-palette/1054728 */
+  /* Fluid-Theme */
+  /* https://www.color-hex.com/color-palette/1061078 */
+  /* Cineris-Theme */
+  /* https://www.color-hex.com/color-palette/1049367 */
+  /* Valentine-Theme */
+}
+#ui-stripe-background-canvas.build-mode-alpha {
+  /* https://www.color-hex.com/color-palette/1061773 */
+  /* Color Scheme for alpha build */
+  /* Noctara-Theme */
+  --gradient-color-1: #003a7a;
+  --gradient-color-2: #003f90;
+  --gradient-color-3: #00366e;
+  --gradient-color-4: #002790;
+  --gradient-color-5: #005fe0;
+}
+#ui-stripe-background-canvas.build-mode-beta {
+  /* https://www.color-hex.com/color-palette/1061227 */
+  /* Color Scheme for beta build  => REALY NICE */
+  /* Nerion-Theme */
+  --gradient-color-1: #1b5d8a;
+  --gradient-color-2: #1c5d89;
+  --gradient-color-3: #009ac7;
+  --gradient-color-4: #114d7b;
+  --gradient-color-5: #26a4d2;
+}
+#ui-stripe-background-canvas.build-mode-release {
+  /* https://www.color-hex.com/color-palette/1039353 */
+  /* Color Scheme for release build */
+  /* Frosted-Theme */
+  --gradient-color-1: #7ebbfc;
+  --gradient-color-2: #3366ff;
+  --gradient-color-3: #1340c8;
+  --gradient-color-4: #0029a3;
+  --gradient-color-5: #1c1d7c;
+}
+
 .ui-countdown-alert {
   overflow: hidden;
   position: relative;
@@ -309,6 +350,10 @@
   height: 100vh;
   padding-top: 120px;
   padding-bottom: 120px;
+  transition: opacity 3s ease;
+}
+.hb-setup-container.is-finished {
+  opacity: 0;
 }
 
 .hb-setup-card {
@@ -322,6 +367,63 @@
 
 .hb-license-agreement-content {
   overflow-y: auto;
+}
+
+.setup-background {
+  transition: all 2s ease;
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  z-index: -100;
+  margin: auto;
+  overflow: hidden;
+}
+.setup-background.is-finished {
+  opacity: 0;
+}
+
+.setup-tiled-container {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  z-index: -90;
+  overflow: hidden;
+  transition: opacity 4s ease;
+}
+.setup-tiled-container.is-hidden {
+  opacity: 0;
+}
+.setup-tiled-container .setup-tiled-background {
+  position: relative;
+  width: 150vw;
+  height: 150vh;
+  left: -25vw;
+  top: -25vh;
+  transform: rotate(10deg);
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  grid-template-rows: 1fr 1fr;
+}
+.setup-tiled-container .setup-tiled-background .bg-tile {
+  transition: all 6s ease;
+  position: relative;
+  background: radial-gradient(ellipse at center, rgba(255, 255, 255, 0.5) 0%, rgba(255, 255, 255, 0) 75%);
+}
+.setup-tiled-container.is-finished .bg-tile:nth-child(1) {
+  transform: translate(-200vw, -200px);
+}
+.setup-tiled-container.is-finished .bg-tile:nth-child(2) {
+  transform: translate(200px, -200vh);
+}
+.setup-tiled-container.is-finished .bg-tile:nth-child(3) {
+  transform: translate(-200px, 200vh);
+}
+.setup-tiled-container.is-finished .bg-tile:nth-child(4) {
+  transform: translate(200vw, 200px);
 }
 
 /*# sourceMappingURL=app.css.map */

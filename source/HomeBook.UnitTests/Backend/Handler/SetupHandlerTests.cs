@@ -46,7 +46,7 @@ public class SetupHandlerTests
     {
         // Arrange
         _setupInstanceManager
-            .IsSetupInstanceCreated()
+            .IsHomebookInstanceCreated()
             .Returns(true);
 
         // Act
@@ -62,7 +62,7 @@ public class SetupHandlerTests
     {
         // Arrange
         _setupInstanceManager
-            .IsSetupInstanceCreated()
+            .IsHomebookInstanceCreated()
             .Returns(false);
 
         // Act
@@ -79,7 +79,7 @@ public class SetupHandlerTests
         // Arrange
         const string boom = "boom";
         _setupInstanceManager
-            .IsSetupInstanceCreated()
+            .IsHomebookInstanceCreated()
             .Throws(new InvalidOperationException(boom));
 
         // Act
