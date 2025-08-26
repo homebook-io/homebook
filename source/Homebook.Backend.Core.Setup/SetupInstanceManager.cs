@@ -19,9 +19,7 @@ public class SetupInstanceManager(
     {
         logger.LogInformation("Checking if setup instance file exists at {FilePath}", _setupInstanceFileName);
 
-        bool instanceFileExists = fileSystemService.FileExists(_setupInstanceFileName);
-
-        return instanceFileExists; // true => means setup is already executed and instance is created
+        return fileSystemService.FileExists(_setupInstanceFileName); // true => means setup is already executed and instance is created
     }
 
     /// <inheritdoc />
@@ -86,8 +84,6 @@ public class SetupInstanceManager(
     {
         logger.LogInformation("Checking if homebook instance file exists at {FilePath}", _homebookInstanceFileName);
 
-        bool instanceFileExists = fileSystemService.FileExists(_homebookInstanceFileName);
-
-        return instanceFileExists; // true => means setup is finished
+        return fileSystemService.FileExists(_homebookInstanceFileName); // true => means setup is finished
     }
 }
