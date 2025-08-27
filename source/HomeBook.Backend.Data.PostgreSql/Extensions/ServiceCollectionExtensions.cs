@@ -19,6 +19,20 @@ public static class ServiceCollectionExtensions
     {
         services.AddSingleton<IDatabaseManager, DatabaseManager>();
 
+        // Initialize Database
+        services.AddDbContextFactory<AppDbContext>(optionsBuilder =>
+        {
+            string? host = configuration["Database:Host"];
+            string? port = configuration["Database:Port"];
+            string? database = configuration["Database:InstanceDbName"];
+            string? username = configuration["Database:Username"];
+            string? password = configuration["Database:Password"];
+
+            string connectionString = ConnectionStringBuilder.Build(host!, port!, database!, username!, password!);
+
+            optionsBuilder.SetDbOptions(connectionString);
+        });
+
         return services;
     }
 }

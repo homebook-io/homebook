@@ -280,7 +280,7 @@ public class SetupHandler
             // 5. load database services
             await MigrateDatabaseAsync(configuration,
                 databaseMigratorFactory,
-                cancellationToken);
+                CancellationToken.None);
 
             // 6. write setup instance file
             await setupInstanceManager.CreateHomebookInstanceAsync(cancellationToken);
