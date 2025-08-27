@@ -34,6 +34,7 @@
 
     private bool _setupServiceInitialized = false;
     private bool _isRedirecting;
+    private bool _isSetupDone;
 
     protected override async Task OnInitializedAsync()
     {
@@ -43,9 +44,27 @@
         _ = Task.Run(async () =>
         {
             await SetupService.InitializeAsync();
+            await WaitForServerAndGetSetupStatusAsync();
+
             _setupServiceInitialized = true;
             StateHasChanged();
         });
+    }
+
+    private async Task WaitForServerAndGetSetupStatusAsync()
+    {
+        try
+        {
+            _isSetupDone = await SetupService.IsSetupDoneAsync();
+        }
+        catch (HttpRequestException err) when (err.Message.ToLowerInvariant().Contains("failed to fetch"))
+        {
+            await WaitForServerAndGetSetupStatusAsync();
+        }
+        catch (Exception err)
+        {
+            // TODO: display error or log error
+        }
     }
 
     private async Task HandleNavigationAsync(NavigationContext context)
@@ -62,18 +81,17 @@
             await Task.Delay(50);
         }
 
-        bool isSetupDone = await SetupService.IsSetupDoneAsync();
         bool isOnSetupPage = context.Path.StartsWith("setup", StringComparison.OrdinalIgnoreCase);
-
-        if (isSetupDone)
+        if (_isSetupDone)
         {
             _isRedirecting = true;
             NavigationManager.NavigateTo("/");
         }
-        else if (!isSetupDone && !isOnSetupPage)
+        else if (!_isSetupDone && !isOnSetupPage)
         {
             _isRedirecting = true;
             NavigationManager.NavigateTo("/setup");
         }
     }
+
 }

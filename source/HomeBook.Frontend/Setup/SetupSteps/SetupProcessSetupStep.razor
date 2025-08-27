@@ -9,7 +9,14 @@
 
     <MudCardHeader>
         <CardHeaderContent>
-            <MudText Typo="Typo.h4">Setup</MudText>
+            @if (_setupSuccessful && !_setupFailed)
+            {
+                <MudText Typo="Typo.h4">HomeBook Setup is finished</MudText>
+            }
+            else
+            {
+                <MudText Typo="Typo.h4">Setup</MudText>
+            }
         </CardHeaderContent>
     </MudCardHeader>
 
@@ -28,30 +35,34 @@
         {
             @if (!_setupSuccessful && !_setupFailed)
             {
-                <MudText Typo="Typo.h5">HomeBook Setup is finished</MudText>
-                <MudText Typo="Typo.body1">The setup is prepared and can now be started.</MudText>
-                <MudButton OnClick="OnStartHomeBookAsync"
-                           Size="Size.Large"
-                           Variant="Variant.Filled"
-                           Color="Color.Primary">Start
-                    HomeBook
-                </MudButton>
-                @* <UiCountdownAlert Class="mt-3" *@
-                @*                   Duration="TimeSpan.FromSeconds(5)" *@
-                @*                   OnFinished="async () => await OnStartSetupCountdownFinishedAsync()" *@
-                @*                   Severity="Severity.Info"> *@
-                @*     The setup is prepared and can now be started. *@
-                @* </UiCountdownAlert> *@
+                <UiCountdownAlert Class="mt-3"
+                                  Duration="TimeSpan.FromSeconds(5)"
+                                  OnFinished="async () => await OnStartSetupCountdownFinishedAsync()"
+                                  Severity="Severity.Info">
+                    The setup is prepared and can now be started.
+                </UiCountdownAlert>
             }
 
             @if (_setupSuccessful && !_setupFailed)
             {
-                <UiCountdownAlert Class="mt-3"
-                                  Duration="TimeSpan.FromSeconds(5)"
-                                  OnFinished="async () => await OnCountdownFinishedAsync()"
-                                  Severity="Severity.Info">
-                    Setup was successful.
-                </UiCountdownAlert>
+                <div class="d-flex flex-column justify-center flex-grow-1 gap-4">
+                    <MudText Typo="Typo.body1"
+                             Class="mb-3">
+                        The setup was successful. You can now start HomeBook.
+                    </MudText>
+                    <MudButton OnClick="OnStartHomeBookAsync"
+                               Size="Size.Large"
+                               Variant="Variant.Filled"
+                               Color="Color.Primary">
+                        Start HomeBook
+                    </MudButton>
+                </div>
+                @* <UiCountdownAlert Class="mt-3" *@
+                @*                   Duration="TimeSpan.FromSeconds(5)" *@
+                @*                   OnFinished="async () => await OnCountdownFinishedAsync()" *@
+                @*                   Severity="Severity.Info"> *@
+                @*     Setup was successful. *@
+                @* </UiCountdownAlert> *@
             }
 
             @if (!string.IsNullOrEmpty(_errorMessage))

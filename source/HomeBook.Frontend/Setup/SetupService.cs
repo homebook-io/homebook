@@ -78,13 +78,9 @@ public class SetupService(
                 _ => false // unknown error
             };
         }
-        catch (ApiException)
+        catch (ApiException err)
         {
             // unknown error
-            return false;
-        }
-        catch (Exception)
-        {
             return false;
         }
     }

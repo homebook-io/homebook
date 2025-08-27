@@ -65,5 +65,6 @@ public partial class SetupExperiance : ComponentBase, IDisposable
         await Task.Delay(1000, cancellationToken);
 
         // TODO: navigate to homebook start page
+        NavigationManager.NavigateTo("/");
     }
 }

@@ -48,7 +48,7 @@ public class RuntimeConfigurationProvider(
 
         await fileSystemService.FileWriteAllTextAsync(appSettingsPath, updatedJson, cancellationToken);
 
-        logger.LogInformation("Successfully updated configuration key '{Key}' with value '{Value}'", key, value);
+        logger.LogInformation("Successfully updated configuration key '{Key}'", key);
     }
 
     private static Dictionary<string, object> ConvertJsonElementToDictionary(JsonElement element)

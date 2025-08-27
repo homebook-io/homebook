@@ -3,16 +3,16 @@ using Microsoft.EntityFrameworkCore;
 
 namespace HomeBook.Backend.Data;
 
-public class AppDbContext : DbContext
+public class AppDbContextCore : DbContext
 {
     public virtual DbSet<User> Users { get; set; } = null!;
     public virtual DbSet<Configuration> Configurations { get; set; } = null!;
 
-    public AppDbContext()
+    public AppDbContextCore()
     {
     }
 
-    public AppDbContext(DbContextOptions<AppDbContext> options)
+    public AppDbContextCore(DbContextOptions<AppDbContextCore> options)
         : base(options)
     {
     }

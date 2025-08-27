@@ -8,6 +8,7 @@
 @inject ILocalizationProvider Loc
 @inject IConfiguration Configuration
 @inject ISetupService SetupService
+@inject NavigationManager NavigationManager
 
 <div class="setup-background @_setupBackgroundClass">
     <UiStripeBackground CanvasCssClass="@_uiStripeBackgroundClass"/>
@@ -77,7 +78,15 @@
         </MudCardContent>
 
         <MudCardActions Class="mud-theme-primary px-5">
-            @Loc["Setup_CardActions_Version"]: @_appVersion - @Loc["Setup_CardActions_Server"]: @_appServer
+            <MudText Class="me-5" Typo="Typo.caption">@Loc["Setup_CardActions_Version"]: @_appVersion</MudText>
+            <MudText Class="me-5" Typo="Typo.caption">@Loc["Setup_CardActions_Server"]: @_appServer</MudText>
+            <MudText Typo="Typo.caption">made with ❤️ by&nbsp;</MudText>
+            <MudLink Href="https://www.lk-code.dev"
+                     Target="_blank"
+                     Color="Color.Inherit"
+                     Typo="Typo.caption">
+                <MudText Typo="Typo.caption">lk-code</MudText>
+            </MudLink>
 
             @* <MudButton Variant="Variant.Filled" Color="Color.Primary" OnClick="() => FinishSetupAnimationAsync()">Finish *@
             @*     Animation *@
