@@ -1,3 +1,5 @@
+using FluentValidation;
+using FluentValidation.Results;
 using HomeBook.Backend.Abstractions;
 using HomeBook.Backend.Abstractions.Models;
 using HomeBook.Backend.Abstractions.Setup;
@@ -42,7 +44,7 @@ public class SetupHandlerTests
     }
 
     [Test]
-    public async Task HandleGetAvailability_returns_Ok_when_instance_not_exists()
+    public async Task HandleGetAvailability_SetupNotFinished_Returns()
     {
         // Arrange
         _setupInstanceManager
@@ -54,6 +56,44 @@ public class SetupHandlerTests
 
         // Assert
         var ok = result.ShouldBeOfType<Ok>();
+        ok.ShouldNotBeNull();
+    }
+
+    [Test]
+    public async Task HandleGetAvailability_SetupFinishedAndUpdateAvailable_Returns()
+    {
+        // Arrange
+        _setupInstanceManager
+            .IsHomebookInstanceCreated()
+            .Returns(true);
+        _setupInstanceManager
+            .IsUpdateRequiredAsync()
+            .Returns(true);
+
+        // Act
+        var result = await SetupHandler.HandleGetAvailability(_logger, _setupInstanceManager, CancellationToken.None);
+
+        // Assert
+        var ok = result.ShouldBeOfType<Created>();
+        ok.ShouldNotBeNull();
+    }
+
+    [Test]
+    public async Task HandleGetAvailability_SetupFinishedAndUpdateNotAvailable_Returns()
+    {
+        // Arrange
+        _setupInstanceManager
+            .IsHomebookInstanceCreated()
+            .Returns(true);
+        _setupInstanceManager
+            .IsUpdateRequiredAsync()
+            .Returns(false);
+
+        // Act
+        var result = await SetupHandler.HandleGetAvailability(_logger, _setupInstanceManager, CancellationToken.None);
+
+        // Assert
+        var ok = result.ShouldBeOfType<NoContent>();
         ok.ShouldNotBeNull();
     }
 
@@ -138,6 +178,27 @@ public class SetupHandlerTests
         // Assert
         var internalErr = result.ShouldBeOfType<InternalServerError<string>>();
         internalErr.Value.ShouldBe("boom");
+    }
+
+    [Test]
+    public async Task HandleGetDatabaseCheck_ThrowsValidationException_Returns()
+    {
+        // Arrange: throw on first var; could be any
+        _setupConfigurationProvider
+            .When(x => x.GetValue(EnvironmentVariables.DATABASE_HOST))
+            .Do(_ => throw new ValidationException("boom", new List<ValidationFailure>
+            {
+                new ("Property1", "A Error"),
+                new ("Property2", "Another Error")
+            }));
+
+        // Act
+        var result = await SetupHandler.HandleGetDatabaseCheck(_logger, _setupConfigurationProvider, CancellationToken.None);
+
+        // Assert
+        var badRequestErr = result.ShouldBeOfType<BadRequest<string[]>>();
+        badRequestErr.Value.ShouldContain("Property1, A Error");
+        badRequestErr.Value.ShouldContain("Property2, Another Error");
     }
 
     [Test]

@@ -51,7 +51,7 @@ public static class SetupEndpoints
                 // Summary = "check if database configuration is available via environment variables"
             })
             .Produces<GetDatabaseCheckResponse>(StatusCodes.Status200OK)
-            .Produces(StatusCodes.Status400BadRequest)
+            .Produces<string[]>(StatusCodes.Status400BadRequest)
             .Produces(StatusCodes.Status404NotFound)
             .Produces<string>(StatusCodes.Status500InternalServerError);
 
