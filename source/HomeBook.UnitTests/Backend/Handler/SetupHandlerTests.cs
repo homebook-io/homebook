@@ -401,26 +401,6 @@ public class SetupHandlerTests
     }
 
     [Test]
-    public async Task HandleGetPreConfiguredUser_WithEmptyUserNameAndPassword_Returns()
-    {
-        // Arrange
-        _setupConfigurationProvider
-            .GetValue(EnvironmentVariables.HOMEBOOK_USER_NAME)
-            .Returns("");
-        _setupConfigurationProvider
-            .GetValue(EnvironmentVariables.HOMEBOOK_USER_PASSWORD)
-            .Returns("");
-
-        // Act
-        var result = await SetupHandler.HandleGetPreConfiguredUser(_logger, _setupConfigurationProvider, CancellationToken.None);
-
-        // Assert
-        var status = result.ShouldBeOfType<StatusCodeHttpResult>();
-        status.StatusCode.ShouldBe(404);
-        status.ShouldNotBeNull();
-    }
-
-    [Test]
     public async Task HandleGetPreConfiguredUser_WithEmptyUserName_Returns()
     {
         // Arrange
@@ -458,5 +438,23 @@ public class SetupHandlerTests
         var status = result.ShouldBeOfType<StatusCodeHttpResult>();
         status.StatusCode.ShouldBe(404);
         status.ShouldNotBeNull();
+    }
+
+    [Test]
+    public async Task HandleGetPreConfiguredUser_WithException_Returns()
+    {
+        // Arrange
+        const string boom = "boom";
+        _setupConfigurationProvider
+            .GetValue(EnvironmentVariables.HOMEBOOK_USER_NAME)
+            .Throws(new InvalidOperationException(boom));
+
+        // Act
+        var result = await SetupHandler.HandleGetPreConfiguredUser(_logger, _setupConfigurationProvider, CancellationToken.None);
+
+        // Assert
+        var status = result.ShouldBeOfType<InternalServerError<string>>();
+        status.ShouldNotBeNull();
+        status.Value.ShouldBe(boom);
     }
 }
