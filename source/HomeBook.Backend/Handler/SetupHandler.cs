@@ -1,5 +1,6 @@
 using FluentValidation;
 using HomeBook.Backend.Abstractions;
+using HomeBook.Backend.Abstractions.Exceptions;
 using HomeBook.Backend.Abstractions.Models;
 using HomeBook.Backend.Abstractions.Setup;
 using HomeBook.Backend.Core.Models;
@@ -238,6 +239,9 @@ public class SetupHandler
     /// <param name="setupInstanceManager"></param>
     /// <param name="licenseProvider"></param>
     /// <param name="setupConfigurationProvider"></param>
+    /// <param name="configuration"></param>
+    /// <param name="databaseMigratorFactory"></param>
+    /// <param name="hostApplicationLifetime"></param>
     /// <param name="cancellationToken"></param>
     /// <returns></returns>
     public static async Task<IResult> HandleStartSetup([FromBody] StartSetupRequest request,
@@ -247,6 +251,9 @@ public class SetupHandler
         [FromServices] ISetupInstanceManager setupInstanceManager,
         [FromServices] ILicenseProvider licenseProvider,
         [FromServices] ISetupConfigurationProvider setupConfigurationProvider,
+        [FromServices] IConfiguration configuration,
+        [FromServices] IDatabaseMigratorFactory databaseMigratorFactory,
+        [FromServices] IHostApplicationLifetime hostApplicationLifetime,
         CancellationToken cancellationToken)
     {
         try
@@ -269,11 +276,19 @@ public class SetupHandler
                 databaseConfigurationValidator,
                 runtimeConfigurationProvider,
                 cancellationToken);
+            IConfigurationRoot root = (IConfigurationRoot)configuration;
+            root.Reload();
 
-            // 5. save setup configuration
+            // 5. load database services
+            await MigrateDatabaseAsync(configuration,
+                databaseMigratorFactory,
+                CancellationToken.None);
 
             // 6. write setup instance file
             await setupInstanceManager.CreateHomebookInstanceAsync(cancellationToken);
+
+            // 7. restart service
+            hostApplicationLifetime.StopApplication();
 
             return TypedResults.Ok();
         }
@@ -287,6 +302,18 @@ public class SetupHandler
             logger.LogError(err, "Error while starting the setup");
             return TypedResults.InternalServerError(err.Message);
         }
+    }
+
+    private static async Task MigrateDatabaseAsync(IConfiguration configuration,
+        IDatabaseMigratorFactory databaseMigratorFactory,
+        CancellationToken cancellationToken)
+    {
+        // load specific database type provider
+        string databaseType = configuration["Database:Provider"]!;
+        IDatabaseMigrator databaseMigrator = databaseMigratorFactory.CreateMigrator(databaseType);
+
+        // start migration
+        await databaseMigrator.MigrateAsync(cancellationToken);
     }
 
     private static async Task UpdateDatabaseConfigurationAsync(StartSetupRequest request,

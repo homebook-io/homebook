@@ -7,9 +7,8 @@ public class MySqlDesignTimeFactory : IDesignTimeDbContextFactory<AppDbContext>
 {
     public AppDbContext CreateDbContext(string[] args)
     {
-        var optionsBuilder = new DbContextOptionsBuilder<AppDbContext>();
-        optionsBuilder.UseMySQL("server=localhost:3306;uid=hb;pwd=hb;database=homebook;",
-            mysql => mysql.MigrationsAssembly(typeof(MySqlDesignTimeFactory).Assembly.FullName));
+        DbContextOptionsBuilder<AppDbContextCore> optionsBuilder = new();
+        optionsBuilder.SetDbOptions("server=localhost:3306;uid=hb;pwd=hb;database=homebook;");
 
         return new AppDbContext(optionsBuilder.Options);
     }

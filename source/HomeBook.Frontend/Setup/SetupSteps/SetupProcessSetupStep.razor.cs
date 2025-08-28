@@ -112,11 +112,23 @@ public partial class SetupProcessSetupStep : ComponentBase, ISetupStep
             if (!string.IsNullOrEmpty(databasePassword))
                 request.DatabaseUserPassword = databasePassword;
 
+            // 1. start setup (it will restart the server at the end of the setup process)
             await BackendClient.Setup.Start.PostAsync(request,
                 x =>
                 {
                 },
                 cancellationToken);
+
+            // 2. wait for min 10 seconds to give the server time to restart
+            await Task.Delay(10000, cancellationToken);
+
+            // 3. wait until the server is available again and check that the status is correct
+            bool isSetupDone = await WaitForServerRestartAndGetStatusAsync(cancellationToken);
+            if (!isSetupDone)
+                // display error message
+                throw new SetupCheckException("Server did not restart correctly after setup.");
+
+            // otherwise the setup was successful
         }
         catch (ApiException err) when (err.ResponseStatusCode == 400)
         {
@@ -134,6 +146,38 @@ public partial class SetupProcessSetupStep : ComponentBase, ISetupStep
         {
             throw new SetupCheckException(err.Message);
         }
+    }
+
+    private async Task<bool> WaitForServerRestartAndGetStatusAsync(CancellationToken cancellationToken)
+    {
+        int maxTimeToWaitInSeconds = (5 * 60); // 5 minutes
+        int timeToWaitBetweenRequestsInSeconds = 5; // 3 seconds
+        int maxRetries = maxTimeToWaitInSeconds / timeToWaitBetweenRequestsInSeconds;
+
+        for (int i = 0; i < maxRetries; i++)
+        {
+            try
+            {
+                // check if the server is available
+                int status = await SetupService.GetSetupAvailabilityAsync(cancellationToken);
+                if (status == 201
+                    || status == 204)
+                {
+                    // server is available and setup is done
+                    return true;
+                }
+            }
+            catch
+            {
+                // ignore exceptions and wait for the next retry
+                int j = 0;
+            }
+
+            // wait before the next retry
+            await Task.Delay((timeToWaitBetweenRequestsInSeconds * 1000), cancellationToken);
+        }
+
+        return false;
     }
 
     private async Task StepErrorAsync(CancellationToken cancellationToken = default)

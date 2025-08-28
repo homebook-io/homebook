@@ -7,9 +7,8 @@ public sealed class PostgreSqlDesignTimeFactory : IDesignTimeDbContextFactory<Ap
 {
     public AppDbContext CreateDbContext(string[] args)
     {
-        var optionsBuilder = new DbContextOptionsBuilder<AppDbContext>();
-        optionsBuilder.UseNpgsql("Host=localhost;Database=homebook;Username=hb;Password=hb",
-            npg => npg.MigrationsAssembly(typeof(PostgreSqlDesignTimeFactory).Assembly.FullName));
+        DbContextOptionsBuilder<AppDbContextCore> optionsBuilder = new();
+        optionsBuilder.SetDbOptions("Host=localhost;Database=homebook;Username=hb;Password=hb");
 
         return new AppDbContext(optionsBuilder.Options);
     }

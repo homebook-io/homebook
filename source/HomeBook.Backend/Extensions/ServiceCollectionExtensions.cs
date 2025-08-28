@@ -5,6 +5,7 @@ using HomeBook.Backend.Data;
 using HomeBook.Backend.Data.Extensions;
 using HomeBook.Backend.Data.Mysql.Extensions;
 using HomeBook.Backend.Data.PostgreSql.Extensions;
+using HomeBook.Backend.Factories;
 using HomeBook.Backend.Provider;
 using HomeBook.Backend.Services;
 
@@ -18,6 +19,7 @@ public static class ServiceCollectionExtensions
         // Register the file service
         services.AddSingleton<IApplicationPathProvider, NativeFileService>();
         services.AddSingleton<IFileSystemService, NativeFileService>();
+        services.AddSingleton<IDatabaseMigratorFactory, DatabaseMigratorFactory>();
 
         // Register other services as needed
         services.AddSingleton<IRuntimeConfigurationProvider, RuntimeConfigurationProvider>(); // Program.cs
@@ -34,7 +36,6 @@ public static class ServiceCollectionExtensions
 
         // Get database provider from configuration
         string? databaseType = configuration["Database:Provider"];
-        // TODO: breakpoint
         if (!string.IsNullOrEmpty((databaseType ?? string.Empty).Trim()))
         {
             // load database provider specific services
