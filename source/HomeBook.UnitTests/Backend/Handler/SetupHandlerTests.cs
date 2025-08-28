@@ -188,8 +188,7 @@ public class SetupHandlerTests
             .When(x => x.GetValue(EnvironmentVariables.DATABASE_HOST))
             .Do(_ => throw new ValidationException("boom", new List<ValidationFailure>
             {
-                new ("Property1", "A Error"),
-                new ("Property2", "Another Error")
+                new("Property1", "A Error"), new("Property2", "Another Error")
             }));
 
         // Act
@@ -340,5 +339,124 @@ public class SetupHandlerTests
         // Assert
         var internalError = result.ShouldBeOfType<InternalServerError<string>>();
         internalError.Value.ShouldBe("boom");
+    }
+
+    [Test]
+    public async Task HandleGetPreConfiguredUser_WithUserNameAndPassword_Returns()
+    {
+        // Arrange
+        _setupConfigurationProvider
+            .GetValue(EnvironmentVariables.HOMEBOOK_USER_NAME)
+            .Returns("username");
+        _setupConfigurationProvider
+            .GetValue(EnvironmentVariables.HOMEBOOK_USER_PASSWORD)
+            .Returns("s3cr3t");
+
+        // Act
+        var result = await SetupHandler.HandleGetPreConfiguredUser(_logger, _setupConfigurationProvider, CancellationToken.None);
+
+        // Assert
+        var ok = result.ShouldBeOfType<Ok>();
+        ok.ShouldNotBeNull();
+    }
+
+    [Test]
+    public async Task HandleGetPreConfiguredUser_WithEmptyUserNameAndPassword_Returns()
+    {
+        // Arrange
+        _setupConfigurationProvider
+            .GetValue(EnvironmentVariables.HOMEBOOK_USER_NAME)
+            .Returns("");
+        _setupConfigurationProvider
+            .GetValue(EnvironmentVariables.HOMEBOOK_USER_PASSWORD)
+            .Returns("");
+
+        // Act
+        var result = await SetupHandler.HandleGetPreConfiguredUser(_logger, _setupConfigurationProvider, CancellationToken.None);
+
+        // Assert
+        var status = result.ShouldBeOfType<StatusCodeHttpResult>();
+        status.StatusCode.ShouldBe(404);
+        status.ShouldNotBeNull();
+    }
+
+    [Test]
+    public async Task HandleGetPreConfiguredUser_WithNullUserNameAndPassword_Returns()
+    {
+        // Arrange
+        _setupConfigurationProvider
+            .GetValue(EnvironmentVariables.HOMEBOOK_USER_NAME)
+            .Returns((string)null!);
+        _setupConfigurationProvider
+            .GetValue(EnvironmentVariables.HOMEBOOK_USER_PASSWORD)
+            .Returns((string)null!);
+
+        // Act
+        var result = await SetupHandler.HandleGetPreConfiguredUser(_logger, _setupConfigurationProvider, CancellationToken.None);
+
+        // Assert
+        var status = result.ShouldBeOfType<StatusCodeHttpResult>();
+        status.StatusCode.ShouldBe(404);
+        status.ShouldNotBeNull();
+    }
+
+    [Test]
+    public async Task HandleGetPreConfiguredUser_WithEmptyUserNameAndPassword_Returns()
+    {
+        // Arrange
+        _setupConfigurationProvider
+            .GetValue(EnvironmentVariables.HOMEBOOK_USER_NAME)
+            .Returns("");
+        _setupConfigurationProvider
+            .GetValue(EnvironmentVariables.HOMEBOOK_USER_PASSWORD)
+            .Returns("");
+
+        // Act
+        var result = await SetupHandler.HandleGetPreConfiguredUser(_logger, _setupConfigurationProvider, CancellationToken.None);
+
+        // Assert
+        var status = result.ShouldBeOfType<StatusCodeHttpResult>();
+        status.StatusCode.ShouldBe(404);
+        status.ShouldNotBeNull();
+    }
+
+    [Test]
+    public async Task HandleGetPreConfiguredUser_WithEmptyUserName_Returns()
+    {
+        // Arrange
+        _setupConfigurationProvider
+            .GetValue(EnvironmentVariables.HOMEBOOK_USER_NAME)
+            .Returns("");
+        _setupConfigurationProvider
+            .GetValue(EnvironmentVariables.HOMEBOOK_USER_PASSWORD)
+            .Returns("s3cr3t");
+
+        // Act
+        var result = await SetupHandler.HandleGetPreConfiguredUser(_logger, _setupConfigurationProvider, CancellationToken.None);
+
+        // Assert
+        var status = result.ShouldBeOfType<StatusCodeHttpResult>();
+        status.StatusCode.ShouldBe(404);
+        status.ShouldNotBeNull();
+    }
+
+    [Test]
+    public async Task HandleGetPreConfiguredUser_WithEmptyPassword_Returns()
+    {
+        // Arrange
+        _setupConfigurationProvider
+            .GetValue(EnvironmentVariables.HOMEBOOK_USER_NAME)
+            .Returns("username");
+        _setupConfigurationProvider
+            .GetValue(EnvironmentVariables.HOMEBOOK_USER_PASSWORD)
+            .Returns("");
+
+        // Act
+        var result = await SetupHandler.HandleGetPreConfiguredUser(_logger, _setupConfigurationProvider, CancellationToken.None);
+
+        // Assert
+        var status = result.ShouldBeOfType<StatusCodeHttpResult>();
+        status.StatusCode.ShouldBe(404);
+        status.ShouldNotBeNull();
     }
 }
