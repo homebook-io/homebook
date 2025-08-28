@@ -27,6 +27,17 @@ public interface ISetupService
     Task<ISetupStep?> GetActiveSetupStepAsync(CancellationToken cancellationToken = default);
 
     /// <summary>
+    /// returns the status code of the setup availability.
+    /// 200: Setup is not executed yet and available => Setup can be started
+    /// 201: Setup is finished, but an update is required => Update must be executed before Homebook can be used
+    /// 204: Setup is finished and no update is required => Homebook is ready to use
+    /// 500: Unknown error while setup checking
+    /// </summary>
+    /// <param name="cancellationToken"></param>
+    /// <returns></returns>
+    Task<int> GetSetupAvailabilityAsync(CancellationToken cancellationToken = default);
+
+    /// <summary>
     /// returns true if the setup is done, otherwise false.
     /// </summary>
     /// <param name="cancellationToken"></param>

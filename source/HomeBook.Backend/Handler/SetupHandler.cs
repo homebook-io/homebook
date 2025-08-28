@@ -241,6 +241,7 @@ public class SetupHandler
     /// <param name="setupConfigurationProvider"></param>
     /// <param name="configuration"></param>
     /// <param name="databaseMigratorFactory"></param>
+    /// <param name="hostApplicationLifetime"></param>
     /// <param name="cancellationToken"></param>
     /// <returns></returns>
     public static async Task<IResult> HandleStartSetup([FromBody] StartSetupRequest request,
@@ -252,6 +253,7 @@ public class SetupHandler
         [FromServices] ISetupConfigurationProvider setupConfigurationProvider,
         [FromServices] IConfiguration configuration,
         [FromServices] IDatabaseMigratorFactory databaseMigratorFactory,
+        [FromServices] IHostApplicationLifetime hostApplicationLifetime,
         CancellationToken cancellationToken)
     {
         try
@@ -284,6 +286,9 @@ public class SetupHandler
 
             // 6. write setup instance file
             await setupInstanceManager.CreateHomebookInstanceAsync(cancellationToken);
+
+            // 7. restart service
+            hostApplicationLifetime.StopApplication();
 
             return TypedResults.Ok();
         }

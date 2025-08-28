@@ -55,19 +55,25 @@ public class SetupService(
         return activeStep;
     }
 
+    public async Task<int> GetSetupAvailabilityAsync(CancellationToken cancellationToken = default)
+    {
+        NativeResponseHandler native = new();
+        await backendClient.Setup.Availability.GetAsync(cfg =>
+        {
+            cfg.Options.Add(new ResponseHandlerOption
+            {
+                ResponseHandler = native
+            });
+        }, cancellationToken);
+        HttpStatusCode? status = (native.Value as HttpResponseMessage)?.StatusCode;
+        return (int)(status ?? HttpStatusCode.InternalServerError);
+    }
+
     public async Task<bool> IsSetupDoneAsync(CancellationToken cancellationToken = default)
     {
         try
         {
-            NativeResponseHandler native = new();
-            await backendClient.Setup.Availability.GetAsync(cfg =>
-            {
-                cfg.Options.Add(new ResponseHandlerOption
-                {
-                    ResponseHandler = native
-                });
-            }, cancellationToken);
-            HttpStatusCode? status = (native.Value as HttpResponseMessage)?.StatusCode;
+            HttpStatusCode status = (HttpStatusCode)await GetSetupAvailabilityAsync(cancellationToken);
 
             return status switch
             {

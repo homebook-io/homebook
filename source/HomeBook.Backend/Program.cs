@@ -4,7 +4,6 @@ using HomeBook.Backend.Extensions;
 using HomeBook.Backend.Core.Extensions;
 using HomeBook.Backend.Core.Licenses.Extensions;
 using Homebook.Backend.Core.Setup.Extensions;
-using HomeBook.Backend.Data.Extensions;
 using Scalar.AspNetCore;
 using Serilog;
 
@@ -49,6 +48,10 @@ if (builder.Environment.IsDevelopment())
 }
 
 var app = builder.Build();
+
+// Log application startup - guaranteed to be written to Serilog text file
+Log.Information("HomeBook Backend application starting up - Version: {Version}",
+    app.Configuration["Version"] ?? "Unknown");
 
 app.UseSerilogRequestLogging();
 
