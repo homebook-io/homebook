@@ -1,4 +1,5 @@
-using HomeBook.Backend.Abstractions;
+using HomeBook.Backend.Abstractions.Contracts;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 
@@ -20,19 +21,23 @@ public static class ServiceCollectionExtensions
         services.AddSingleton<IDatabaseManager, DatabaseManager>();
 
         // Initialize Database
-        services.AddDbContextFactory<AppDbContext>(optionsBuilder =>
-        {
-            string? host = configuration["Database:Host"];
-            string? port = configuration["Database:Port"];
-            string? database = configuration["Database:InstanceDbName"];
-            string? username = configuration["Database:Username"];
-            string? password = configuration["Database:Password"];
-
-            string connectionString = ConnectionStringBuilder.Build(host!, port!, database!, username!, password!);
-
-            optionsBuilder.SetDbOptions(connectionString);
-        });
+        services.AddDbContext<AppDbContext>(optionsBuilder =>
+            CreateDbContextOptionsBuilder(configuration, optionsBuilder));
 
         return services;
+    }
+
+    public static void CreateDbContextOptionsBuilder(IConfiguration configuration,
+        DbContextOptionsBuilder optionsBuilder)
+    {
+        string? host = configuration["Database:Host"];
+        string? port = configuration["Database:Port"];
+        string? database = configuration["Database:InstanceDbName"];
+        string? username = configuration["Database:Username"];
+        string? password = configuration["Database:Password"];
+
+        string connectionString = ConnectionStringBuilder.Build(host!, port!, database!, username!, password!);
+
+        optionsBuilder.SetDbOptions(connectionString);
     }
 }

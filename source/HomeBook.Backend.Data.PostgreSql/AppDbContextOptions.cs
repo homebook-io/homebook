@@ -8,7 +8,7 @@ public static class AppDbContextOptions
 
     public static void SetDbOptions(this DbContextOptionsBuilder optionsBuilder, string connectionString)
     {
-        string migrationAssembly = typeof(AppDbContext).Namespace ?? string.Empty;
+        string migrationAssembly = typeof(AppDbContextOptions).Namespace ?? string.Empty;
         optionsBuilder.UseNpgsql(connectionString,
             x => x.MigrationsHistoryTable(HISTORY_TABLE_NAME)
                 .EnableRetryOnFailure(5, TimeSpan.FromSeconds(10), null)

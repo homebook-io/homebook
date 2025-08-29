@@ -1,4 +1,4 @@
-namespace HomeBook.Backend.Abstractions;
+namespace HomeBook.Backend.Abstractions.Contracts;
 
 /// <summary>
 /// contract for a database manager which brings methods for database management tasks.

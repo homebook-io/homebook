@@ -1,6 +1,6 @@
 using HomeBook.Backend.Abstractions.Setup;
 
-namespace HomeBook.Backend.Abstractions;
+namespace HomeBook.Backend.Abstractions.Contracts;
 
 /// <summary>
 /// defines a service to resolve the database provider based on connection parameters.

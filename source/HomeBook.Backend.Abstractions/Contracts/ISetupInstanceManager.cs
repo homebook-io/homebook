@@ -1,4 +1,4 @@
-namespace HomeBook.Backend.Abstractions;
+namespace HomeBook.Backend.Abstractions.Contracts;
 
 /// <summary>
 /// contract for managing the setup instance of the application.

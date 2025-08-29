@@ -1,5 +1,5 @@
 using FluentValidation;
-using HomeBook.Backend.Abstractions;
+using HomeBook.Backend.Abstractions.Contracts;
 using HomeBook.Backend.Abstractions.Setup;
 using Homebook.Backend.Core.Setup.Models;
 using Microsoft.Extensions.Logging;
@@ -41,7 +41,7 @@ public class SetupConfigurationProvider(
 
         // displaying the loaded environment variables for debugging purposes
         logger.LogInformation("Loaded environment variables:");
-        foreach (var kvp in _valuesByEnum)
+        foreach (KeyValuePair<EnvironmentVariables, string?> kvp in _valuesByEnum)
         {
             logger.LogInformation("{VariableName}: {Value}", kvp.Key, kvp.Value ?? "null");
         }
@@ -51,7 +51,7 @@ public class SetupConfigurationProvider(
     {
         LoadEnvironmentConfiguration(environmentValidator);
 
-        _valuesByEnum!.TryGetValue(name, out var value);
+        _valuesByEnum!.TryGetValue(name, out string? value);
 
         return value;
     }

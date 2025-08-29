@@ -20,4 +20,18 @@ public class User
     [Required]
     [StringLength(20, MinimumLength = 5, ErrorMessage = "The username must be between 5 and 20 characters long.")]
     public required string Username { get; set; }
+
+    /// <summary>
+    /// the password hash of this user
+    /// </summary>
+    [Required]
+    [StringLength(512, ErrorMessage = "The password hash cannot exceed 512 characters.")]
+    public required string PasswordHash { get; set; }
+
+    /// <summary>
+    /// the type of the password hash
+    /// </summary>
+    [Required]
+    [StringLength(50, ErrorMessage = "The password hash type cannot exceed 50 characters.")]
+    public required string PasswordHashType { get; set; }
 }

@@ -1,6 +1,7 @@
 using FluentValidation;
 using FluentValidation.Results;
 using HomeBook.Backend.Abstractions;
+using HomeBook.Backend.Abstractions.Contracts;
 using HomeBook.Backend.Abstractions.Models;
 using HomeBook.Backend.Abstractions.Setup;
 using HomeBook.Backend.Handler;

@@ -1,4 +1,6 @@
-using HomeBook.Backend.Abstractions;
+using HomeBook.Backend.Abstractions.Contracts;
+using HomeBook.Backend.Data.Contracts;
+using HomeBook.Backend.Data.Repositories;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 
@@ -9,7 +11,8 @@ public static class ServiceCollectionExtensions
     public static IServiceCollection AddBackendData(this IServiceCollection services,
         IConfiguration configuration)
     {
-        // services.AddSingleton<IDatabaseManager, PostgreSqlDatabaseManager>();
+        services.AddScoped<IUserRepository, UserRepository>();
+        services.AddScoped<IConfigurationRepository, ConfigurationRepository>();
 
         return services;
     }

@@ -1,6 +1,6 @@
 using HomeBook.Backend.Abstractions.Setup;
 
-namespace HomeBook.Backend.Abstractions;
+namespace HomeBook.Backend.Abstractions.Contracts;
 
 public interface ISetupConfigurationProvider
 {

@@ -1,6 +1,8 @@
-using HomeBook.Backend.Abstractions;
+using HomeBook.Backend.Abstractions.Contracts;
+using HomeBook.Backend.Data.Mysql.Extensions;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
+using Microsoft.Extensions.DependencyInjection;
 
 namespace HomeBook.Backend.Data.Mysql;
 
@@ -10,18 +12,22 @@ public class DatabaseMigrator(IConfiguration configuration) : IDatabaseMigrator
     /// <inheritdoc />
     public async Task MigrateAsync(CancellationToken cancellationToken = default)
     {
-        string? host = configuration["Database:Host"];
-        string? port = configuration["Database:Port"];
-        string? database = configuration["Database:InstanceDbName"];
-        string? username = configuration["Database:Username"];
-        string? password = configuration["Database:Password"];
+        await using AppDbContext context = (AppDbContext)GetDbContext();
+        await context.Database.MigrateAsync(cancellationToken);
+    }
 
-        string connectionString = ConnectionStringBuilder.Build(host!, port!, database!, username!, password!);
+    /// <inheritdoc />
+    public DbContext GetDbContext()
+    {
+        DbContextOptionsBuilder<AppDbContext> optionsBuilder = new();
+        Extensions.ServiceCollectionExtensions.CreateDbContextOptionsBuilder(configuration, optionsBuilder);
 
-        DbContextOptionsBuilder<AppDbContextCore> optionsBuilder = new();
-        optionsBuilder.SetDbOptions(connectionString);
+        AppDbContext context = new(optionsBuilder.Options);
+        return context;
+    }
 
-        await using AppDbContext contextBase = new(optionsBuilder.Options);
-        await contextBase.Database.MigrateAsync(cancellationToken);
+    public void ConfigureForServiceCollection(ServiceCollection services, IConfiguration configuration)
+    {
+        services.AddBackendDataMysql(configuration);
     }
 }

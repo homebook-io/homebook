@@ -30,9 +30,7 @@ builder.Services.AddOpenApi();
 
 builder.Services.AddBackendServices(builder.Configuration)
     .AddBackendCore(builder.Configuration)
-    .AddBackendCoreSetup(builder.Configuration)
-    .AddBackendDatabaseProvider(builder.Configuration)
-    .AddBackendCoreLicenses(builder.Configuration);
+    .AddBackendDatabaseProvider(builder.Configuration);
 
 if (builder.Environment.IsDevelopment())
 {
