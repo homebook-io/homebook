@@ -1,5 +1,6 @@
 using System.Text.Json;
 using HomeBook.Backend.Abstractions;
+using HomeBook.Backend.Abstractions.Contracts;
 
 namespace HomeBook.Backend.Provider;
 

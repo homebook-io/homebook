@@ -1,5 +1,6 @@
 using FluentValidation;
-using HomeBook.Backend.Abstractions;
+using HomeBook.Backend.Abstractions.Contracts;
+using Homebook.Backend.Core.Setup.Factories;
 using Homebook.Backend.Core.Setup.Models;
 using Homebook.Backend.Core.Setup.Provider;
 using Homebook.Backend.Core.Setup.Validators;
@@ -18,6 +19,7 @@ public static class ServiceCollectionExtensions
 
         services.AddSingleton<ISetupConfigurationProvider, SetupConfigurationProvider>();
         services.AddSingleton<ISetupInstanceManager, SetupInstanceManager>();
+        services.AddSingleton<ISetupProcessorFactory, SetupProcessorFactory>();
 
         return services;
     }

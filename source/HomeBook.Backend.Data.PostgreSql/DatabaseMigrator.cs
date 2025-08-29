@@ -1,6 +1,9 @@
-using HomeBook.Backend.Abstractions;
+using HomeBook.Backend.Abstractions.Contracts;
+using HomeBook.Backend.Data.PostgreSql.Extensions;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
+using Microsoft.Extensions.DependencyInjection;
+using TanvirArjel.EFCore.GenericRepository;
 
 namespace HomeBook.Backend.Data.PostgreSql;
 
@@ -10,18 +13,22 @@ public class DatabaseMigrator(IConfiguration configuration) : IDatabaseMigrator
     /// <inheritdoc />
     public async Task MigrateAsync(CancellationToken cancellationToken = default)
     {
-        string? host = configuration["Database:Host"];
-        string? port = configuration["Database:Port"];
-        string? database = configuration["Database:InstanceDbName"];
-        string? username = configuration["Database:Username"];
-        string? password = configuration["Database:Password"];
+        await using AppDbContext context = (AppDbContext)GetDbContext();
+        await context.Database.MigrateAsync(cancellationToken);
+    }
 
-        string connectionString = ConnectionStringBuilder.Build(host!, port!, database!, username!, password!);
-
+    /// <inheritdoc />
+    public DbContext GetDbContext()
+    {
         DbContextOptionsBuilder<AppDbContextCore> optionsBuilder = new();
-        optionsBuilder.SetDbOptions(connectionString);
+        Extensions.ServiceCollectionExtensions.CreateDbContextOptionsBuilder(configuration, optionsBuilder);
 
-        await using AppDbContext contextBase = new(optionsBuilder.Options);
-        await contextBase.Database.MigrateAsync(cancellationToken);
+        AppDbContext context = new(optionsBuilder.Options);
+        return context;
+    }
+
+    public void ConfigureForServiceCollection(ServiceCollection services, IConfiguration configuration)
+    {
+        services.AddBackendDataPostgreSql(configuration);
     }
 }

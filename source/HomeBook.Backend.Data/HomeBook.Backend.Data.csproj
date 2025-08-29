@@ -18,10 +18,7 @@
       </PackageReference>
       <PackageReference Include="Microsoft.Extensions.Configuration.Abstractions" Version="9.0.8" />
       <PackageReference Include="Microsoft.Extensions.DependencyInjection.Abstractions" Version="9.0.8" />
+      <PackageReference Include="TanvirArjel.EFCore.GenericRepository" Version="6.0.4" />
     </ItemGroup>
-
-  <ItemGroup>
-    <Folder Include="Entities\" />
-  </ItemGroup>
 
 </Project>

@@ -1,4 +1,5 @@
 using HomeBook.Backend.Abstractions;
+using HomeBook.Backend.Abstractions.Contracts;
 using Microsoft.Extensions.Logging;
 
 namespace HomeBook.Backend.Data.Mysql;

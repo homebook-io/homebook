@@ -11,8 +11,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace HomeBook.Backend.Data.Mysql.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    [Migration("20250827210243_InitialWithUserAndConfiguration")]
-    partial class InitialWithUserAndConfiguration
+    [Migration("20250829121708_InitialWithUsersAndConfigurations")]
+    partial class InitialWithUsersAndConfigurations
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -47,6 +47,16 @@ namespace HomeBook.Backend.Data.Mysql.Migrations
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("char(36)");
+
+                    b.Property<string>("PasswordHash")
+                        .IsRequired()
+                        .HasMaxLength(512)
+                        .HasColumnType("varchar(512)");
+
+                    b.Property<string>("PasswordHashType")
+                        .IsRequired()
+                        .HasMaxLength(50)
+                        .HasColumnType("varchar(50)");
 
                     b.Property<string>("Username")
                         .IsRequired()

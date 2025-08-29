@@ -1,9 +1,15 @@
 using FluentValidation;
 using HomeBook.Backend.Abstractions;
+using HomeBook.Backend.Abstractions.Contracts;
 using HomeBook.Backend.Abstractions.Exceptions;
 using HomeBook.Backend.Abstractions.Models;
 using HomeBook.Backend.Abstractions.Setup;
+using HomeBook.Backend.Core.DataProvider.UserManagement;
+using HomeBook.Backend.Core.HashProvider;
 using HomeBook.Backend.Core.Models;
+using Homebook.Backend.Core.Setup.Exceptions;
+using HomeBook.Backend.Data.Contracts;
+using HomeBook.Backend.Data.Repositories;
 using HomeBook.Backend.Requests;
 using HomeBook.Backend.Responses;
 using Microsoft.AspNetCore.Mvc;
@@ -70,7 +76,8 @@ public class SetupHandler
     {
         try
         {
-            string? licensesAreAcceptedValue = setupConfigurationProvider.GetValue(EnvironmentVariables.HOMEBOOK_ACCEPT_LICENSES);
+            string? licensesAreAcceptedValue =
+                setupConfigurationProvider.GetValue(EnvironmentVariables.HOMEBOOK_ACCEPT_LICENSES);
             DependencyLicense[] licenses = await licenseProvider.GetLicensesAsync(cancellationToken);
             GetLicensesResponse response = new(
                 (licensesAreAcceptedValue is not null),
@@ -149,7 +156,8 @@ public class SetupHandler
     {
         try
         {
-            DatabaseProvider? resolvedDatabaseProvider = await databaseProviderResolver.ResolveAsync(request.DatabaseHost,
+            DatabaseProvider? resolvedDatabaseProvider = await databaseProviderResolver.ResolveAsync(
+                request.DatabaseHost,
                 request.DatabasePort,
                 request.DatabaseName,
                 request.DatabaseUserName,
@@ -184,7 +192,8 @@ public class SetupHandler
         try
         {
             string? homebookUserName = setupConfigurationProvider.GetValue(EnvironmentVariables.HOMEBOOK_USER_NAME);
-            string? homebookUserPassword = setupConfigurationProvider.GetValue(EnvironmentVariables.HOMEBOOK_USER_PASSWORD);
+            string? homebookUserPassword =
+                setupConfigurationProvider.GetValue(EnvironmentVariables.HOMEBOOK_USER_PASSWORD);
 
             if (!string.IsNullOrEmpty(homebookUserName)
                 && !string.IsNullOrEmpty(homebookUserPassword))
@@ -212,7 +221,8 @@ public class SetupHandler
     {
         try
         {
-            string? homebookInstanceName = setupConfigurationProvider.GetValue(EnvironmentVariables.HOMEBOOK_INSTANCE_NAME);
+            string? homebookInstanceName =
+                setupConfigurationProvider.GetValue(EnvironmentVariables.HOMEBOOK_INSTANCE_NAME);
 
             if (!string.IsNullOrEmpty(homebookInstanceName))
                 return TypedResults.Ok();
@@ -227,7 +237,7 @@ public class SetupHandler
     }
 
     /// <summary>
-    /// starts the database migration process.
+    /// starts the homebook setup process.
     /// </summary>
     /// <param name="request"></param>
     /// <param name="logger"></param>
@@ -237,8 +247,8 @@ public class SetupHandler
     /// <param name="licenseProvider"></param>
     /// <param name="setupConfigurationProvider"></param>
     /// <param name="configuration"></param>
-    /// <param name="databaseMigratorFactory"></param>
     /// <param name="hostApplicationLifetime"></param>
+    /// <param name="setupProcessorFactory"></param>
     /// <param name="cancellationToken"></param>
     /// <returns></returns>
     public static async Task<IResult> HandleStartSetup([FromBody] StartSetupRequest request,
@@ -249,8 +259,8 @@ public class SetupHandler
         [FromServices] ILicenseProvider licenseProvider,
         [FromServices] ISetupConfigurationProvider setupConfigurationProvider,
         [FromServices] IConfiguration configuration,
-        [FromServices] IDatabaseMigratorFactory databaseMigratorFactory,
         [FromServices] IHostApplicationLifetime hostApplicationLifetime,
+        [FromServices] ISetupProcessorFactory setupProcessorFactory,
         CancellationToken cancellationToken)
     {
         try
@@ -260,7 +270,8 @@ public class SetupHandler
 
             // 2. write license accepted file
             bool licensesAcceptedViaRequest = request.LicensesAccepted ?? false;
-            bool licensesAcceptedViaEnvVar = setupConfigurationProvider.GetValue(EnvironmentVariables.HOMEBOOK_ACCEPT_LICENSES) is not null;
+            bool licensesAcceptedViaEnvVar =
+                setupConfigurationProvider.GetValue(EnvironmentVariables.HOMEBOOK_ACCEPT_LICENSES) is not null;
             if (!licensesAcceptedViaRequest
                 && !licensesAcceptedViaEnvVar)
                 return TypedResults.StatusCode(StatusCodes.Status422UnprocessableEntity);
@@ -276,10 +287,12 @@ public class SetupHandler
             IConfigurationRoot root = (IConfigurationRoot)configuration;
             root.Reload();
 
-            // 5. load database services
-            await MigrateDatabaseAsync(configuration,
-                databaseMigratorFactory,
-                CancellationToken.None);
+            // 5. process primary setup
+            ISetupProcessor setupProcessor = await setupProcessorFactory.CreateAsync(cancellationToken);
+            await setupProcessor.ProcessAsync(configuration,
+                request.HomebookUserName,
+                request.HomebookUserPassword,
+                cancellationToken);
 
             // 6. write setup instance file
             await setupInstanceManager.CreateHomebookInstanceAsync(cancellationToken);
@@ -288,6 +301,11 @@ public class SetupHandler
             hostApplicationLifetime.StopApplication();
 
             return TypedResults.Ok();
+        }
+        catch (SetupException err)
+        {
+            logger.LogError(err, "Setup error while processing the setup");
+            return TypedResults.BadRequest(err.Message);
         }
         catch (ValidationException err)
         {
@@ -299,18 +317,6 @@ public class SetupHandler
             logger.LogError(err, "Error while starting the setup");
             return TypedResults.InternalServerError(err.Message);
         }
-    }
-
-    private static async Task MigrateDatabaseAsync(IConfiguration configuration,
-        IDatabaseMigratorFactory databaseMigratorFactory,
-        CancellationToken cancellationToken)
-    {
-        // load specific database type provider
-        string databaseType = configuration["Database:Provider"]!;
-        IDatabaseMigrator databaseMigrator = databaseMigratorFactory.CreateMigrator(databaseType);
-
-        // start migration
-        await databaseMigrator.MigrateAsync(cancellationToken);
     }
 
     private static async Task UpdateDatabaseConfigurationAsync(StartSetupRequest request,
@@ -328,17 +334,29 @@ public class SetupHandler
         await databaseConfigurationValidator.ValidateAndThrowAsync(dbConfig, cancellationToken);
 
         if (!string.IsNullOrEmpty(dbConfig.DatabaseType))
-            await runtimeConfigurationProvider.UpdateConfigurationAsync("Database:Provider", dbConfig.DatabaseType, cancellationToken);
+            await runtimeConfigurationProvider.UpdateConfigurationAsync("Database:Provider",
+                dbConfig.DatabaseType,
+                cancellationToken);
         if (!string.IsNullOrEmpty(dbConfig.DatabaseHost))
-            await runtimeConfigurationProvider.UpdateConfigurationAsync("Database:Host", dbConfig.DatabaseHost, cancellationToken);
+            await runtimeConfigurationProvider.UpdateConfigurationAsync("Database:Host",
+                dbConfig.DatabaseHost,
+                cancellationToken);
         if (dbConfig.DatabasePort is not null)
-            await runtimeConfigurationProvider.UpdateConfigurationAsync("Database:Port", dbConfig.DatabasePort, cancellationToken);
+            await runtimeConfigurationProvider.UpdateConfigurationAsync("Database:Port",
+                dbConfig.DatabasePort,
+                cancellationToken);
         if (!string.IsNullOrEmpty(dbConfig.DatabaseName))
-            await runtimeConfigurationProvider.UpdateConfigurationAsync("Database:InstanceDbName", dbConfig.DatabaseName, cancellationToken);
+            await runtimeConfigurationProvider.UpdateConfigurationAsync("Database:InstanceDbName",
+                dbConfig.DatabaseName,
+                cancellationToken);
         if (!string.IsNullOrEmpty(dbConfig.DatabaseUserName))
-            await runtimeConfigurationProvider.UpdateConfigurationAsync("Database:Username", dbConfig.DatabaseUserName, cancellationToken);
+            await runtimeConfigurationProvider.UpdateConfigurationAsync("Database:Username",
+                dbConfig.DatabaseUserName,
+                cancellationToken);
         if (!string.IsNullOrEmpty(dbConfig.DatabaseUserPassword))
             // TODO: store password as encrypted value in .secret file
-            await runtimeConfigurationProvider.UpdateConfigurationAsync("Database:Password", dbConfig.DatabaseUserPassword, cancellationToken);
+            await runtimeConfigurationProvider.UpdateConfigurationAsync("Database:Password",
+                dbConfig.DatabaseUserPassword,
+                cancellationToken);
     }
 }

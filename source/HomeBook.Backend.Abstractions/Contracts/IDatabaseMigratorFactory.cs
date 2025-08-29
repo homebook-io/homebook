@@ -1,4 +1,4 @@
-namespace HomeBook.Backend.Abstractions;
+namespace HomeBook.Backend.Abstractions.Contracts;
 
 /// <summary>
 /// creates database migrators

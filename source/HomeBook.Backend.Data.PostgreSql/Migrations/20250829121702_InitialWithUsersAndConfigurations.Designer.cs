@@ -12,8 +12,8 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace HomeBook.Backend.Data.PostgreSql.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    [Migration("20250827210250_InitialWithUserAndConfiguration")]
-    partial class InitialWithUserAndConfiguration
+    [Migration("20250829121702_InitialWithUsersAndConfigurations")]
+    partial class InitialWithUsersAndConfigurations
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -50,6 +50,16 @@ namespace HomeBook.Backend.Data.PostgreSql.Migrations
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uuid");
+
+                    b.Property<string>("PasswordHash")
+                        .IsRequired()
+                        .HasMaxLength(512)
+                        .HasColumnType("character varying(512)");
+
+                    b.Property<string>("PasswordHashType")
+                        .IsRequired()
+                        .HasMaxLength(50)
+                        .HasColumnType("character varying(50)");
 
                     b.Property<string>("Username")
                         .IsRequired()

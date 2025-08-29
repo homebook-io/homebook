@@ -1,4 +1,5 @@
 using HomeBook.Backend.Abstractions;
+using HomeBook.Backend.Abstractions.Contracts;
 using HomeBook.Backend.Abstractions.Setup;
 
 namespace HomeBook.Backend.Data;

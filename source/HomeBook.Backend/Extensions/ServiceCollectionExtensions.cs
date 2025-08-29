@@ -1,5 +1,7 @@
 using HomeBook.Backend.Abstractions;
+using HomeBook.Backend.Abstractions.Contracts;
 using HomeBook.Backend.Abstractions.Exceptions;
+using HomeBook.Backend.Core.DataProvider.Extensions;
 using Homebook.Backend.Core.Setup.Provider;
 using HomeBook.Backend.Data;
 using HomeBook.Backend.Data.Extensions;
@@ -52,9 +54,11 @@ public static class ServiceCollectionExtensions
             }
 
             // load common database services (repositories, etc.)
-            services.AddBackendData(configuration);
+            services.AddBackendData(configuration)
+                .AddBackendCoreDataProvider(configuration);
         }
 
+        services.AddBackendCoreDataProviderValidators(configuration);
 
         return services;
     }
