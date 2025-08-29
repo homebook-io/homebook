@@ -41,16 +41,12 @@ public class SetupHandler
                 // HTTP 200 => does not exist => setup is not executed yet and available
                 return TypedResults.Ok();
 
-            if (setupFinished && updateRequired)
-                // HTTP 201 => update is required
-                return TypedResults.Created();
-
-            if (setupFinished && !updateRequired)
+            if (!updateRequired)
                 // HTTP 204 => setup is finished and no update is required => Homebook is ready to use
                 return TypedResults.NoContent();
 
-            // HTPP 500 => something went wrong
-            return TypedResults.InternalServerError("invalid setup configuration");
+            // HTTP 201 => update is required
+            return TypedResults.Created();
         }
         catch (Exception err)
         {
@@ -128,7 +124,8 @@ public class SetupHandler
         catch (ValidationException err)
         {
             logger.LogError(err, "Validation error while getting database configuration");
-            return TypedResults.BadRequest(err.Errors.Select(x => x.ErrorMessage).ToArray());
+            string[] errors = err.Errors.Select(x => $"{x.PropertyName}, {x.ErrorMessage}").ToArray();
+            return TypedResults.BadRequest(errors);
         }
         catch (Exception err)
         {
