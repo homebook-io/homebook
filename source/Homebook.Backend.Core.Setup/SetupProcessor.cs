@@ -54,10 +54,6 @@ public class SetupProcessor(
             hashProviderFactory,
             userValidator);
 
-        bool userExists = await userProvider.ContainsUserAsync(adminUsername, cancellationToken);
-        if (userExists)
-            throw new SetupException("a user with the given username already exists");
-
         await userProvider.CreateUserAsync(adminUsername,
                 adminPassword,
                 cancellationToken);

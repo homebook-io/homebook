@@ -7,7 +7,7 @@ namespace HomeBook.Backend.Data.Repositories;
 
 /// <inheritdoc />
 public class UserRepository(
-    AppDbContextCore dbContext
+    AppDbContext dbContext
     // ,
     // IRepository<User> repository
 ) : IUserRepository

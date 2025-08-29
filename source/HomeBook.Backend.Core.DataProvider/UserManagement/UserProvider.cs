@@ -18,6 +18,7 @@ public class UserProvider(
     {
         bool userExists = await userRepository.ContainsUserAsync(username, cancellationToken);
         if (userExists)
+            // TODO: replace with custom exception
             throw new InvalidOperationException($"User with username '{username}' already exists.");
 
         IHashProvider hashProvider = hashProviderFactory.CreateDefault();
