@@ -13,13 +13,10 @@ public class SetupProcessorFactory(
     IValidator<Configuration> configurationValidator) : ISetupProcessorFactory
 {
     /// <inheritdoc />
-    public Task<ISetupProcessor> CreateAsync(CancellationToken cancellationToken = default)
-    {
-        ISetupProcessor setupProcessor = new SetupProcessor(databaseMigratorFactory,
+    public ISetupProcessor Create() =>
+        new SetupProcessor(databaseMigratorFactory,
             setupConfigurationProvider,
             hashProviderFactory,
             userValidator,
             configurationValidator);
-        return Task.FromResult(setupProcessor);
-    }
 }

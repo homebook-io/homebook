@@ -288,7 +288,7 @@ public class SetupHandler
             root.Reload();
 
             // 5. process primary setup
-            ISetupProcessor setupProcessor = await setupProcessorFactory.CreateAsync(cancellationToken);
+            ISetupProcessor setupProcessor = setupProcessorFactory.Create();
             await setupProcessor.ProcessAsync(configuration,
                 request.HomebookUserName,
                 request.HomebookUserPassword,
