@@ -292,6 +292,7 @@ public class SetupHandler
             await setupProcessor.ProcessAsync(configuration,
                 request.HomebookUserName,
                 request.HomebookUserPassword,
+                request.HomebookConfigurationName,
                 cancellationToken);
 
             // 6. write setup instance file

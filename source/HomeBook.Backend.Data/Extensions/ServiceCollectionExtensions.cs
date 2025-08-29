@@ -1,3 +1,4 @@
+using HomeBook.Backend.Abstractions.Contracts;
 using HomeBook.Backend.Data.Contracts;
 using HomeBook.Backend.Data.Repositories;
 using Microsoft.Extensions.Configuration;
@@ -11,6 +12,7 @@ public static class ServiceCollectionExtensions
         IConfiguration configuration)
     {
         services.AddScoped<IUserRepository, UserRepository>();
+        services.AddScoped<IConfigurationRepository, ConfigurationRepository>();
 
         return services;
     }

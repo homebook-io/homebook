@@ -16,12 +16,14 @@ public class SetupProcessor(
     IDatabaseMigratorFactory databaseMigratorFactory,
     ISetupConfigurationProvider setupConfigurationProvider,
     IHashProviderFactory hashProviderFactory,
-    IValidator<User> userValidator) : ISetupProcessor
+    IValidator<User> userValidator,
+    IValidator<Configuration> configurationValidator) : ISetupProcessor
 {
     /// <inheritdoc />
     public async Task ProcessAsync(IConfiguration configuration,
         string? homebookUserName,
         string? homebookUserPassword,
+        string? homebookConfigurationName,
         CancellationToken cancellationToken = default)
     {
         // load specific database type provider
@@ -46,16 +48,29 @@ public class SetupProcessor(
 
         // Create a temporary service collection to get the repository
         services.AddScoped<IUserRepository, UserRepository>();
+        services.AddScoped<IConfigurationRepository, ConfigurationRepository>();
 
-        var serviceProvider = services.BuildServiceProvider();
-        var userRepository = serviceProvider.GetRequiredService<IUserRepository>();
+        ServiceProvider serviceProvider = services.BuildServiceProvider();
 
+        IUserRepository userRepository = serviceProvider.GetRequiredService<IUserRepository>();
         UserProvider userProvider = new(userRepository,
             hashProviderFactory,
             userValidator);
 
         await userProvider.CreateUserAsync(adminUsername,
-                adminPassword,
-                cancellationToken);
+            adminPassword,
+            cancellationToken);
+
+        // 3. write homebook configuration
+        string? configurationName = homebookConfigurationName
+                                    ?? setupConfigurationProvider.GetValue(EnvironmentVariables.HOMEBOOK_INSTANCE_NAME);
+        if (string.IsNullOrEmpty(configurationName))
+            throw new SetupException("homebook configuration name is not set");
+
+        IConfigurationRepository configurationRepository =
+            serviceProvider.GetRequiredService<IConfigurationRepository>();
+        ConfigurationProvider configurationProvider = new(configurationRepository,
+            configurationValidator);
+        await configurationProvider.WriteHomeBookInstanceNameAsync(configurationName, cancellationToken);
     }
 }

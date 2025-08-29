@@ -9,7 +9,8 @@ public class SetupProcessorFactory(
     IDatabaseMigratorFactory databaseMigratorFactory,
     ISetupConfigurationProvider setupConfigurationProvider,
     IHashProviderFactory hashProviderFactory,
-    IValidator<User> userValidator) : ISetupProcessorFactory
+    IValidator<User> userValidator,
+    IValidator<Configuration> configurationValidator) : ISetupProcessorFactory
 {
     /// <inheritdoc />
     public Task<ISetupProcessor> CreateAsync(CancellationToken cancellationToken = default)
@@ -17,7 +18,8 @@ public class SetupProcessorFactory(
         ISetupProcessor setupProcessor = new SetupProcessor(databaseMigratorFactory,
             setupConfigurationProvider,
             hashProviderFactory,
-            userValidator);
+            userValidator,
+            configurationValidator);
         return Task.FromResult(setupProcessor);
     }
 }

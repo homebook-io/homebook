@@ -1,6 +1,6 @@
-using HomeBook.Backend.Abstractions;
 using HomeBook.Backend.Abstractions.Contracts;
 using Microsoft.Extensions.Logging;
+using MySql.Data.MySqlClient;
 
 namespace HomeBook.Backend.Data.Mysql;
 
@@ -17,9 +17,14 @@ public class DatabaseManager(ILogger<DatabaseManager> logger) : IDatabaseManager
     {
         try
         {
-            string connectionString = $"Host={databaseHost};Port={databasePort};Database={databaseName};Username={databaseUserName};Password={databaseUserPassword};Timeout=5;";
+            string connectionString =
+                $"Host={databaseHost};Port={databasePort};Database={databaseName};Username={databaseUserName};Password={databaseUserPassword};Timeout=5;";
 
-            logger.LogInformation("Checking MySQL database availability with connection string: {ConnectionString}", connectionString);
+            logger.LogInformation("Checking MySQL database availability with connection string: {ConnectionString}",
+                connectionString);
+
+            await using MySqlConnection connection = new(connectionString);
+            await connection.OpenAsync(cancellationToken);
 
             return true;
         }

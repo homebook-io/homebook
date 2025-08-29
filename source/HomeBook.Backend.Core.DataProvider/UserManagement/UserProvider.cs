@@ -2,7 +2,6 @@ using FluentValidation;
 using HomeBook.Backend.Abstractions.Contracts;
 using HomeBook.Backend.Data.Contracts;
 using HomeBook.Backend.Data.Entities;
-using Microsoft.Extensions.Logging;
 
 namespace HomeBook.Backend.Core.DataProvider.UserManagement;
 

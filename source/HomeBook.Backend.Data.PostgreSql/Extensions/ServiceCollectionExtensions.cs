@@ -1,9 +1,7 @@
-using HomeBook.Backend.Abstractions;
 using HomeBook.Backend.Abstractions.Contracts;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
-using TanvirArjel.EFCore.GenericRepository;
 
 namespace HomeBook.Backend.Data.PostgreSql.Extensions;
 
@@ -25,9 +23,6 @@ public static class ServiceCollectionExtensions
         // Initialize Database
         services.AddDbContext<AppDbContext>(optionsBuilder =>
             CreateDbContextOptionsBuilder(configuration, optionsBuilder));
-
-        // TODO: GenericRepository
-        // services.AddGenericRepository<AppDbContext>();
 
         return services;
     }
