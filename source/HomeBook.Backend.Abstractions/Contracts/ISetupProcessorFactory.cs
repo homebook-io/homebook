@@ -8,7 +8,6 @@ public interface ISetupProcessorFactory
     /// <summary>
     /// creates a new instance of <see cref="ISetupProcessor"/>
     /// </summary>
-    /// <param name="cancellationToken"></param>
     /// <returns></returns>
-    Task<ISetupProcessor> CreateAsync(CancellationToken cancellationToken = default);
+    ISetupProcessor Create();
 }
