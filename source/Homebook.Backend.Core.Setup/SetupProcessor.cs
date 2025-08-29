@@ -45,7 +45,7 @@ public class SetupProcessor(
         databaseMigrator.ConfigureForServiceCollection(services, configuration);
 
         // Create a temporary service collection to get the repository
-        services.AddTransient<IUserRepository, UserRepository>();
+        services.AddScoped<IUserRepository, UserRepository>();
 
         var serviceProvider = services.BuildServiceProvider();
         var userRepository = serviceProvider.GetRequiredService<IUserRepository>();

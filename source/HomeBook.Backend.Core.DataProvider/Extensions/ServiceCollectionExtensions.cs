@@ -13,8 +13,7 @@ public static class ServiceCollectionExtensions
     public static IServiceCollection AddBackendCoreDataProvider(this IServiceCollection services,
         IConfiguration configuration)
     {
-
-        services.AddSingleton<IUserProvider, UserProvider>();
+        services.AddScoped<IUserProvider, UserProvider>();
 
         return services;
     }

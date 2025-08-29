@@ -10,7 +10,7 @@ public static class ServiceCollectionExtensions
     public static IServiceCollection AddBackendData(this IServiceCollection services,
         IConfiguration configuration)
     {
-        services.AddSingleton<IUserRepository, UserRepository>();
+        services.AddScoped<IUserRepository, UserRepository>();
 
         return services;
     }
