@@ -2,6 +2,7 @@ using FluentValidation;
 using HomeBook.Backend.Abstractions.Contracts;
 using HomeBook.Backend.Data.Contracts;
 using HomeBook.Backend.Data.Entities;
+using Microsoft.Extensions.Logging;
 
 namespace HomeBook.Backend.Core.DataProvider.UserManagement;
 
@@ -33,14 +34,10 @@ public class UserProvider(
 
         await userValidator.ValidateAndThrowAsync(user, cancellationToken);
 
-        User createdUser = await userRepository.CreateUserAsync(user, cancellationToken);
-        int i = 0;
+        await userRepository.CreateUserAsync(user, cancellationToken);
     }
 
     /// <inheritdoc />
-    public async Task<bool> ContainsUserAsync(string username,
-        CancellationToken cancellationToken = default)
-    {
-        return await userRepository.ContainsUserAsync(username, cancellationToken);
-    }
+    public async Task<bool> ContainsUserAsync(string username, CancellationToken cancellationToken = default) =>
+        await userRepository.ContainsUserAsync(username, cancellationToken);
 }

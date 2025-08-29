@@ -7,10 +7,6 @@ public class UserValidator : AbstractValidator<User>
 {
     public UserValidator()
     {
-        RuleFor(user => user.Id)
-            .NotEmpty()
-            .WithMessage("User ID is required and cannot be empty.");
-
         RuleFor(user => user.Username)
             .NotEmpty()
             .WithMessage("Username is required.")
