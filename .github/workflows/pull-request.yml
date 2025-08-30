@@ -1,115 +1,115 @@
 name: Pull Request
 
 on:
-  pull_request:
-    branches: [ "main" ]
+    pull_request:
+        branches: [ "main" ]
 
 env:
-  DOTNET_VERSION: "9.0.x"
-  FRONTEND_APPSETTINGS_FILE: "./source/HomeBook.Frontend/wwwroot/appsettings.json"
-  BACKEND_APPSETTINGS_FILE: "./source/HomeBook.Backend/appsettings.json"
-  OPENAPI_FILE: "./source/HomeBook.Backend/HomeBook.Backend.json"
-  CLIENT_CSPROJ: "./source/HomeBook.Client/HomeBook.Client.csproj"
-  CLIENT_OUTPUT_DIR: "./source/HomeBook.Client"
-  CLIENT_NAMESPACE: "HomeBook.Client"
+    DOTNET_VERSION: "9.0.x"
+    FRONTEND_APPSETTINGS_FILE: "./source/HomeBook.Frontend/wwwroot/appsettings.json"
+    BACKEND_APPSETTINGS_FILE: "./source/HomeBook.Backend/appsettings.json"
+    OPENAPI_FILE: "./source/HomeBook.Backend/HomeBook.Backend.json"
+    CLIENT_CSPROJ: "./source/HomeBook.Client/HomeBook.Client.csproj"
+    CLIENT_OUTPUT_DIR: "./source/HomeBook.Client"
+    CLIENT_NAMESPACE: "HomeBook.Client"
 
 jobs:
 
-  pull-request-check:
-    runs-on: ubuntu-latest
+    pull-request-check:
+        runs-on: ubuntu-latest
 
-    steps:
-      - name: Checkout repository
-        uses: actions/checkout@v4
-        with:
-          fetch-depth: 0
+        steps:
+            -   name: Checkout repository
+                uses: actions/checkout@v4
+                with:
+                    fetch-depth: 0
 
-      - name: Set up JDK 17
-        uses: actions/setup-java@v4
-        with:
-          java-version: 17
-          distribution: 'zulu'
+            -   name: Set up JDK 17
+                uses: actions/setup-java@v4
+                with:
+                    java-version: 17
+                    distribution: 'zulu'
 
-      - name: Setup .NET
-        uses: actions/setup-dotnet@v4
-        with:
-          dotnet-version: ${{ env.DOTNET_VERSION }}
+            -   name: Setup .NET
+                uses: actions/setup-dotnet@v4
+                with:
+                    dotnet-version: ${{ env.DOTNET_VERSION }}
 
-      - name: Install SonarQube Cloud scanner
-        run: |
-          dotnet tool install --global dotnet-sonarscanner
+            -   name: Install SonarQube Cloud scanner
+                run: |
+                    dotnet tool install --global dotnet-sonarscanner
 
-      - name: Install Kiota CLI
-        run: |
-          dotnet tool install --global Microsoft.OpenApi.Kiota
+            -   name: Install Kiota CLI
+                run: |
+                    dotnet tool install --global Microsoft.OpenApi.Kiota
 
-      - name: Install ReportGenerator
-        run: |
-          dotnet tool install --global dotnet-reportgenerator-globaltool
+            -   name: Install ReportGenerator
+                run: |
+                    dotnet tool install --global dotnet-reportgenerator-globaltool
 
-      - name: Install .NET Coverage
-        run: |
-          dotnet tool install --global dotnet-coverage
+            -   name: Install .NET Coverage
+                run: |
+                    dotnet tool install --global dotnet-coverage
 
-      - name: .NET Restore
-        run: |
-          dotnet restore
+            -   name: .NET Restore
+                run: |
+                    dotnet restore
 
-      - name: .NET Build (Service for Client Generation)
-        run: |
-          dotnet build --no-restore
+            -   name: .NET Build (Service for Client Generation)
+                run: |
+                    dotnet build --no-restore
 
-      - name: Generate Kiota Client
-        shell: bash
-        run: |
-          kiota generate \
-            --language csharp \
-            --class-name RestClient \
-            --namespace-name ${{ env.CLIENT_NAMESPACE }} \
-            --openapi ${{ env.OPENAPI_FILE }} \
-            --output ${{ env.CLIENT_OUTPUT_DIR }} \
+            -   name: Generate Kiota Client
+                shell: bash
+                run: |
+                    kiota generate \
+                      --language csharp \
+                      --class-name RestClient \
+                      --namespace-name ${{ env.CLIENT_NAMESPACE }} \
+                      --openapi ${{ env.OPENAPI_FILE }} \
+                      --output ${{ env.CLIENT_OUTPUT_DIR }} \
 
-      - name: Begin SonarQube
-        shell: pwsh
-        env:
-          SONARTOKEN: ${{ secrets.SONAR_TOKEN }}
-        run: |
-          dotnet-sonarscanner begin /k:"lk-code_homebook" /o:"lk-code-github" /d:sonar.token="$env:SONARTOKEN" /d:sonar.host.url="https://sonarcloud.io" /d:sonar.cs.vscoveragexml.reportsPaths=coverage.xml
+            -   name: Begin SonarQube
+                shell: pwsh
+                env:
+                    SONARTOKEN: ${{ secrets.SONAR_TOKEN }}
+                run: |
+                    dotnet-sonarscanner begin /k:"lk-code_homebook" /o:"lk-code-github" /d:sonar.token="$env:SONARTOKEN" /d:sonar.host.url="https://sonarcloud.io" /d:sonar.cs.vscoveragexml.reportsPaths=coverage.xml
 
-      - name: .NET Build
-        shell: pwsh
-        run: |
-          dotnet build --no-restore
+            -   name: .NET Build
+                shell: pwsh
+                run: |
+                    dotnet build --no-restore
 
-      - name: .NET Test
-        shell: pwsh
-        run: |
-          dotnet test --no-build
+            -   name: .NET Test
+                shell: pwsh
+                run: |
+                    dotnet test --no-build
 
-      - name: Collect Test Coverage
-        shell: pwsh
-        run: |
-          dotnet-coverage collect "dotnet test" -f xml -o "coverage.xml"
+            -   name: Collect Test Coverage
+                shell: pwsh
+                run: |
+                    dotnet-coverage collect "dotnet test" -f xml -o "coverage.xml"
 
-      - name: End SonarQube
-        shell: pwsh
-        env:
-          SONARTOKEN: ${{ secrets.SONAR_TOKEN }}
-        run: |
-          dotnet-sonarscanner end /d:sonar.token="$env:SONARTOKEN"
+            -   name: End SonarQube
+                shell: pwsh
+                env:
+                    SONARTOKEN: ${{ secrets.SONAR_TOKEN }}
+                run: |
+                    dotnet-sonarscanner end /d:sonar.token="$env:SONARTOKEN"
 
-      - name: Set up Docker Buildx
-        uses: docker/setup-buildx-action@v3
+            -   name: Set up Docker Buildx
+                uses: docker/setup-buildx-action@v3
 
-      - name: Build Docker Image
-        run: |
-          docker build \
-            --file ./Dockerfile \
-            --build-arg FRONTEND_APPSETTINGS_FILE=${{ env.FRONTEND_APPSETTINGS_FILE }} \
-            --build-arg BACKEND_APPSETTINGS_FILE=${{ env.BACKEND_APPSETTINGS_FILE }} \
-            --tag test-image .
+            -   name: Build Docker Image
+                run: |
+                    docker build \
+                      --file ./Dockerfile \
+                      --build-arg FRONTEND_APPSETTINGS_FILE=${{ env.FRONTEND_APPSETTINGS_FILE }} \
+                      --build-arg BACKEND_APPSETTINGS_FILE=${{ env.BACKEND_APPSETTINGS_FILE }} \
+                      --tag test-image .
 
-      - uses: actions/upload-artifact@v4
-        with:
-          name: coverage
-          path: coverage.xml
+            -   uses: actions/upload-artifact@v4
+                with:
+                    name: coverage
+                    path: coverage.xml

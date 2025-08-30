@@ -1,305 +1,309 @@
 name: Build and Deploy
 
 on:
-  push:
-    branches:
-      - main
-  workflow_dispatch:
+    push:
+        branches:
+            - main
+    workflow_dispatch:
 
 permissions:
-  contents: write
-  packages: write
+    contents: write
+    packages: write
 
 env:
-  DOCKER_IMAGE: "docker.io/lkcode/homebook"
-  DOCKER_PLATFORMS: "linux/amd64,linux/arm64"
-  VERSION: "1.0.${{ github.run_number }}"
-  DOTNET_VERSION: "9.0.x"
-  FRONTEND_APPSETTINGS_FILE: "./source/HomeBook.Frontend/wwwroot/appsettings.json"
-  BACKEND_APPSETTINGS_FILE: "./source/HomeBook.Backend/appsettings.json"
-  OPENAPI_FILE: "./source/HomeBook.Backend/HomeBook.Backend.json"
-  CLIENT_CSPROJ: "./source/HomeBook.Client/HomeBook.Client.csproj"
-  CLIENT_OUTPUT_DIR: "./source/HomeBook.Client"
-  CLIENT_NAMESPACE: "HomeBook.Client"
-  CLIENT_CLASS: "BackendClient"
+    DOCKER_IMAGE: "docker.io/lkcode/homebook"
+    DOCKER_PLATFORMS: "linux/amd64,linux/arm64"
+    VERSION: "1.0.${{ github.run_number }}"
+    DOTNET_VERSION: "9.0.x"
+    FRONTEND_APPSETTINGS_FILE: "./source/HomeBook.Frontend/wwwroot/appsettings.json"
+    BACKEND_APPSETTINGS_FILE: "./source/HomeBook.Backend/appsettings.json"
+    OPENAPI_FILE: "./source/HomeBook.Backend/HomeBook.Backend.json"
+    CLIENT_CSPROJ: "./source/HomeBook.Client/HomeBook.Client.csproj"
+    CLIENT_OUTPUT_DIR: "./source/HomeBook.Client"
+    CLIENT_NAMESPACE: "HomeBook.Client"
+    CLIENT_CLASS: "BackendClient"
 
 jobs:
 
-  build-test:
-    runs-on: ubuntu-latest
+    build-test:
+        runs-on: ubuntu-latest
 
-    steps:
-      - name: Checkout repository
-        uses: actions/checkout@v4
-        with:
-          fetch-depth: 0
+        steps:
+            -   name: Checkout repository
+                uses: actions/checkout@v4
+                with:
+                    fetch-depth: 0
 
-      - name: Set up JDK 17
-        uses: actions/setup-java@v4
-        with:
-          java-version: 17
-          distribution: 'zulu'
+            -   name: Set up JDK 17
+                uses: actions/setup-java@v4
+                with:
+                    java-version: 17
+                    distribution: 'zulu'
 
-      - name: Setup .NET
-        uses: actions/setup-dotnet@v4
-        with:
-          dotnet-version: ${{ env.DOTNET_VERSION }}
+            -   name: Setup .NET
+                uses: actions/setup-dotnet@v4
+                with:
+                    dotnet-version: ${{ env.DOTNET_VERSION }}
 
-      - name: Install SonarQube Cloud scanner
-        run: |
-          dotnet tool install --global dotnet-sonarscanner
+            -   name: Install SonarQube Cloud scanner
+                run: |
+                    dotnet tool install --global dotnet-sonarscanner
 
-      - name: Install Kiota CLI
-        run: |
-          dotnet tool install --global Microsoft.OpenApi.Kiota
+            -   name: Install Kiota CLI
+                run: |
+                    dotnet tool install --global Microsoft.OpenApi.Kiota
 
-      - name: Install ReportGenerator
-        run: |
-          dotnet tool install --global dotnet-reportgenerator-globaltool
+            -   name: Install ReportGenerator
+                run: |
+                    dotnet tool install --global dotnet-reportgenerator-globaltool
 
-      - name: Install .NET Coverage
-        run: |
-          dotnet tool install --global dotnet-coverage
+            -   name: Install .NET Coverage
+                run: |
+                    dotnet tool install --global dotnet-coverage
 
-      - name: .NET Restore
-        run: |
-          dotnet restore
+            -   name: .NET Restore
+                run: |
+                    dotnet restore
 
-      - name: .NET Build (Service for Client Generation)
-        run: |
-          dotnet build --no-restore
+            -   name: .NET Build (Service for Client Generation)
+                run: |
+                    dotnet build --no-restore
 
-      - name: Generate Client
-        shell: bash
-        run: |
-          kiota generate \
-            --language csharp \
-            --class-name ${{ env.CLIENT_CLASS }} \
-            --namespace-name ${{ env.CLIENT_NAMESPACE }} \
-            --openapi ${{ env.OPENAPI_FILE }} \
-            --output ${{ env.CLIENT_OUTPUT_DIR }} \
+            -   name: Generate Client
+                shell: bash
+                run: |
+                    kiota generate \
+                      --language csharp \
+                      --class-name ${{ env.CLIENT_CLASS }} \
+                      --namespace-name ${{ env.CLIENT_NAMESPACE }} \
+                      --openapi ${{ env.OPENAPI_FILE }} \
+                      --output ${{ env.CLIENT_OUTPUT_DIR }} \
 
-      - name: Begin SonarQube
-        shell: pwsh
-        env:
-          SONARTOKEN: ${{ secrets.SONAR_TOKEN }}
-        run: |
-          dotnet-sonarscanner begin /k:"lk-code_homebook" /o:"lk-code-github" /d:sonar.token="$env:SONARTOKEN" /d:sonar.host.url="https://sonarcloud.io" /d:sonar.cs.vscoveragexml.reportsPaths=coverage.xml
+            -   name: Begin SonarQube
+                shell: pwsh
+                env:
+                    SONARTOKEN: ${{ secrets.SONAR_TOKEN }}
+                run: |
+                    dotnet-sonarscanner begin /k:"lk-code_homebook" /o:"lk-code-github" /d:sonar.token="$env:SONARTOKEN" /d:sonar.host.url="https://sonarcloud.io" /d:sonar.cs.vscoveragexml.reportsPaths=coverage.xml
 
-      - name: .NET Build
-        shell: pwsh
-        run: |
-          dotnet build --no-restore
+            -   name: .NET Build
+                shell: pwsh
+                run: |
+                    dotnet build --no-restore
 
-      - name: .NET Test
-        shell: pwsh
-        run: |
-          dotnet test --no-build
+            -   name: .NET Test
+                shell: pwsh
+                run: |
+                    dotnet test --no-build
 
-      - name: Collect Test Coverage
-        shell: pwsh
-        run: |
-          dotnet-coverage collect "dotnet test" -f xml -o "coverage.xml"
+            -   name: Collect Test Coverage
+                shell: pwsh
+                run: |
+                    dotnet-coverage collect "dotnet test" -f xml -o "coverage.xml"
 
-      - name: End SonarQube
-        shell: pwsh
-        env:
-          SONARTOKEN: ${{ secrets.SONAR_TOKEN }}
-        run: |
-          dotnet-sonarscanner end /d:sonar.token="$env:SONARTOKEN"
+            -   name: End SonarQube
+                shell: pwsh
+                env:
+                    SONARTOKEN: ${{ secrets.SONAR_TOKEN }}
+                run: |
+                    dotnet-sonarscanner end /d:sonar.token="$env:SONARTOKEN"
 
-#      - name: Build And Test
-#        shell: pwsh
-#        env:
-#          SONARTOKEN: ${{ secrets.SONAR_TOKEN }}
-#        run: |
-#          dotnet-sonarscanner begin /k:"lk-code_homebook" /o:"lk-code-github" /d:sonar.token="$env:SONARTOKEN" /d:sonar.host.url="https://sonarcloud.io"
-#          dotnet build --configuration Release --no-restore
-#          dotnet test --configuration Release --no-restore
-#          dotnet-sonarscanner end /d:sonar.token="$env:SONARTOKEN"
+            #      - name: Build And Test
+            #        shell: pwsh
+            #        env:
+            #          SONARTOKEN: ${{ secrets.SONAR_TOKEN }}
+            #        run: |
+            #          dotnet-sonarscanner begin /k:"lk-code_homebook" /o:"lk-code-github" /d:sonar.token="$env:SONARTOKEN" /d:sonar.host.url="https://sonarcloud.io"
+            #          dotnet build --configuration Release --no-restore
+            #          dotnet test --configuration Release --no-restore
+            #          dotnet-sonarscanner end /d:sonar.token="$env:SONARTOKEN"
 
-      - name: Set up Docker Buildx
-        uses: docker/setup-buildx-action@v3
+            -   name: Set up Docker Buildx
+                uses: docker/setup-buildx-action@v3
 
-      - name: Build Docker Image
-        run: |
-          docker build \
-            --file ./Dockerfile \
-            --build-arg FRONTEND_APPSETTINGS_FILE=${{ env.FRONTEND_APPSETTINGS_FILE }} \
-            --build-arg BACKEND_APPSETTINGS_FILE=${{ env.BACKEND_APPSETTINGS_FILE }} \
-            --tag test-image .
+            -   name: Build Docker Image
+                run: |
+                    docker build \
+                      --file ./Dockerfile \
+                      --build-arg FRONTEND_APPSETTINGS_FILE=${{ env.FRONTEND_APPSETTINGS_FILE }} \
+                      --build-arg BACKEND_APPSETTINGS_FILE=${{ env.BACKEND_APPSETTINGS_FILE }} \
+                      --tag test-image .
 
-  post-build:
-    runs-on: ubuntu-latest
-    needs:
-      - build-test
+    post-build:
+        runs-on: ubuntu-latest
+        needs:
+            - build-test
 
-    steps:
-      - name: Checkout repository
-        uses: actions/checkout@v4
+        steps:
+            -   name: Checkout repository
+                uses: actions/checkout@v4
 
-      - name: Setup .NET
-        uses: actions/setup-dotnet@v4
-        with:
-          dotnet-version: ${{ env.DOTNET_VERSION }}
+            -   name: Setup .NET
+                uses: actions/setup-dotnet@v4
+                with:
+                    dotnet-version: ${{ env.DOTNET_VERSION }}
 
-      - name: Configure Git User and Auth
-        run: |
-          git config user.name "GitHub Actions"
-          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          git remote set-url origin https://x-access-token:${{ secrets.GITHUB_TOKEN }}@github.com/${{ github.repository }}
+            -   name: Configure Git User and Auth
+                run: |
+                    git config user.name "GitHub Actions"
+                    git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+                    git remote set-url origin https://x-access-token:${{ secrets.GITHUB_TOKEN }}@github.com/${{ github.repository }}
 
-      - name: Install .NET NuGet License
-        run: |
-          dotnet tool install --global nuget-license
+            -   name: Install .NET NuGet License
+                run: |
+                    dotnet tool install --global nuget-license
 
-      - name: Restore dependencies
-        run: |
-          dotnet restore
+            -   name: Restore dependencies
+                run: |
+                    dotnet restore
 
-      - name: Build OpenAPI
-        run: |
-          dotnet build --configuration Release --no-restore
+            -   name: Build OpenAPI
+                run: |
+                    dotnet build --configuration Release --no-restore
 
-      - name: clean up nuget licenses
-        run: |
-            rm -rf source/HomeBook.Backend.Core.Licenses/Licenses
-            mkdir -p source/HomeBook.Backend.Core.Licenses/Licenses
+            -   name: clean up nuget licenses
+                run: |
+                    rm source/HomeBook.Backend.Core.Licenses/Licenses.json
+                    rm -rf source/HomeBook.Backend.Core.Licenses/Licenses
+                    mkdir -p source/HomeBook.Backend.Core.Licenses/Licenses
 
-      - name: generate nuget licenses
-        run: |
-            nuget-license -i ./homebook.slnx --include-transitive --output JsonPretty --file-output source/HomeBook.Backend.Core.Licenses/Licenses.json
-            nuget-license -i ./homebook.slnx --include-transitive -d source/HomeBook.Backend.Core.Licenses/Licenses/
+            -   name: generate nuget license index
+                run: |
+                    nuget-license -i ./homebook.slnx --include-transitive --output JsonPretty --file-output source/HomeBook.Backend.Core.Licenses/Licenses.json
 
-      - name: save nuget licenses
-        run: |
-            git add source/HomeBook.Backend.Core.Licenses/Licenses.json
-            git add source/HomeBook.Backend.Core.Licenses/Licenses/
+            -   name: generate nuget licenses
+                run: |
+                    nuget-license -i ./homebook.slnx --include-transitive -d source/HomeBook.Backend.Core.Licenses/Licenses/
 
-      - name: Set Version Git Tag
-        run: |
-          git tag ${{ env.VERSION }}
+            -   name: save nuget licenses
+                run: |
+                    git add source/HomeBook.Backend.Core.Licenses/Licenses.json
+                    git add source/HomeBook.Backend.Core.Licenses/Licenses/
 
-      - name: update Frontend appsettings.json
-        run: |
-          sed -i "s/\"Version\": \".*\"/\"Version\": \"$VERSION\"/" ${{ env.FRONTEND_APPSETTINGS_FILE }}
-          git add ${{ env.FRONTEND_APPSETTINGS_FILE }}
+            -   name: Set Version Git Tag
+                run: |
+                    git tag ${{ env.VERSION }}
 
-      - name: cat Frontend appsettings.json
-        run: |
-          cat ${{ env.FRONTEND_APPSETTINGS_FILE }}
+            -   name: update Frontend appsettings.json
+                run: |
+                    sed -i "s/\"Version\": \".*\"/\"Version\": \"$VERSION\"/" ${{ env.FRONTEND_APPSETTINGS_FILE }}
+                    git add ${{ env.FRONTEND_APPSETTINGS_FILE }}
 
-      - name: update Backend appsettings.json
-        run: |
-          sed -i "s/\"Version\": \".*\"/\"Version\": \"$VERSION\"/" ${{ env.BACKEND_APPSETTINGS_FILE }}
-          git add ${{ env.BACKEND_APPSETTINGS_FILE }}
+            -   name: cat Frontend appsettings.json
+                run: |
+                    cat ${{ env.FRONTEND_APPSETTINGS_FILE }}
 
-      - name: cat Backend appsettings.json
-        run: |
-          cat ${{ env.BACKEND_APPSETTINGS_FILE }}
+            -   name: update Backend appsettings.json
+                run: |
+                    sed -i "s/\"Version\": \".*\"/\"Version\": \"$VERSION\"/" ${{ env.BACKEND_APPSETTINGS_FILE }}
+                    git add ${{ env.BACKEND_APPSETTINGS_FILE }}
 
-      - name: Create and push deploy branch
-        run: |
-          git push origin ${{ env.VERSION }}
-          git checkout -b deploy
-          git commit -m "Release version ${{ env.VERSION }}"
-          git push origin deploy --force
+            -   name: cat Backend appsettings.json
+                run: |
+                    cat ${{ env.BACKEND_APPSETTINGS_FILE }}
 
-  client-deploy:
-    runs-on: ubuntu-latest
-    needs:
-      - post-build
+            -   name: Create and push deploy branch
+                run: |
+                    git push origin ${{ env.VERSION }}
+                    git checkout -b deploy
+                    git commit -m "Release version ${{ env.VERSION }}"
+                    git push origin deploy --force
 
-    steps:
-      - name: Checkout repository
-        uses: actions/checkout@v4
-        with:
-          ref: deploy
+    client-deploy:
+        runs-on: ubuntu-latest
+        needs:
+            - post-build
 
-      - name: Setup .NET
-        uses: actions/setup-dotnet@v4
-        with:
-          dotnet-version: ${{ env.DOTNET_VERSION }}
+        steps:
+            -   name: Checkout repository
+                uses: actions/checkout@v4
+                with:
+                    ref: deploy
 
-      - name: Install Kiota CLI
-        run: |
-          dotnet tool install --global Microsoft.OpenApi.Kiota
+            -   name: Setup .NET
+                uses: actions/setup-dotnet@v4
+                with:
+                    dotnet-version: ${{ env.DOTNET_VERSION }}
 
-      - name: Restore dependencies
-        run: |
-          dotnet restore
+            -   name: Install Kiota CLI
+                run: |
+                    dotnet tool install --global Microsoft.OpenApi.Kiota
 
-      - name: Build Solution
-        run: |
-          dotnet build --configuration Release --no-restore
+            -   name: Restore dependencies
+                run: |
+                    dotnet restore
 
-      - name: Generate Client
-        run: |
-          kiota generate \
-            --language csharp \
-            --class-name ${{ env.CLIENT_CLASS }} \
-            --namespace-name ${{ env.CLIENT_NAMESPACE }} \
-            --openapi ${{ env.OPENAPI_FILE }} \
-            --output ${{ env.CLIENT_OUTPUT_DIR }} \
+            -   name: Build Solution
+                run: |
+                    dotnet build --configuration Release --no-restore
 
-      - name: Build Client
-        run: |
-          dotnet build ${{ env.CLIENT_CSPROJ }} --configuration Release --no-restore -p:PackageVersion=${{ env.VERSION }}
+            -   name: Generate Client
+                run: |
+                    kiota generate \
+                      --language csharp \
+                      --class-name ${{ env.CLIENT_CLASS }} \
+                      --namespace-name ${{ env.CLIENT_NAMESPACE }} \
+                      --openapi ${{ env.OPENAPI_FILE }} \
+                      --output ${{ env.CLIENT_OUTPUT_DIR }} \
 
-      - name: Upload NuGet Artifact
-        uses: actions/upload-artifact@v4.6.2
-        with:
-          name: ${{ env.VERSION }}
-          path: "**/*.${{ env.VERSION }}.nupkg"
+            -   name: Build Client
+                run: |
+                    dotnet build ${{ env.CLIENT_CSPROJ }} --configuration Release --no-restore -p:PackageVersion=${{ env.VERSION }}
 
-      - name: Upload Client Artifact
-        uses: actions/upload-artifact@v4.6.2
-        with:
-          name: client-output
-          path: ${{ env.CLIENT_OUTPUT_DIR }}
+            -   name: Upload NuGet Artifact
+                uses: actions/upload-artifact@v4.6.2
+                with:
+                    name: ${{ env.VERSION }}
+                    path: "**/*.${{ env.VERSION }}.nupkg"
 
-      - name: Publish
-        run: |
-          dotnet nuget push "**/*.${{ env.VERSION }}.nupkg" --no-symbols --skip-duplicate --api-key ${{ secrets.NUGET_API_KEY }} --source "nuget.org"
+            -   name: Upload Client Artifact
+                uses: actions/upload-artifact@v4.6.2
+                with:
+                    name: client-output
+                    path: ${{ env.CLIENT_OUTPUT_DIR }}
 
-  docker-deploy:
-    runs-on: ubuntu-latest
-    needs:
-      - post-build
+            -   name: Publish
+                run: |
+                    dotnet nuget push "**/*.${{ env.VERSION }}.nupkg" --no-symbols --skip-duplicate --api-key ${{ secrets.NUGET_API_KEY }} --source "nuget.org"
 
-    steps:
-      - name: Checkout repository
-        uses: actions/checkout@v4
-        with:
-          ref: deploy
+    docker-deploy:
+        runs-on: ubuntu-latest
+        needs:
+            - post-build
 
-      - name: Setup Docker Buildx
-        uses: docker/setup-buildx-action@v3
+        steps:
+            -   name: Checkout repository
+                uses: actions/checkout@v4
+                with:
+                    ref: deploy
 
-      - name: Log in to Docker Hub
-        uses: docker/login-action@v3.4.0
-        with:
-          username: ${{ secrets.DOCKERHUB_USERNAME }}
-          password: ${{ secrets.DOCKERHUB_TOKEN }}
+            -   name: Setup Docker Buildx
+                uses: docker/setup-buildx-action@v3
 
-      - name: Extract metadata (tags, labels) for Docker
-        id: meta
-        uses: docker/metadata-action@v5.7.0
-        with:
-          images: ${{ env.DOCKER_IMAGE }}
-          tags: |
-            type=raw,value=${{ env.VERSION }}
-            type=raw,value=latest
+            -   name: Log in to Docker Hub
+                uses: docker/login-action@v3.4.0
+                with:
+                    username: ${{ secrets.DOCKERHUB_USERNAME }}
+                    password: ${{ secrets.DOCKERHUB_TOKEN }}
 
-      - name: Build and push Docker image
-        uses: docker/build-push-action@v6.18.0
-        with:
-          context: ./
-          file: ./Dockerfile
-          push: true
-          tags: ${{ steps.meta.outputs.tags }}
-          labels: ${{ steps.meta.outputs.labels }}
-          platforms: ${{ env.DOCKER_PLATFORMS }}
-          build-args: |
-            FRONTEND_APPSETTINGS_FILE=${{ env.FRONTEND_APPSETTINGS_FILE }}
-            BACKEND_APPSETTINGS_FILE=${{ env.BACKEND_APPSETTINGS_FILE }}
+            -   name: Extract metadata (tags, labels) for Docker
+                id: meta
+                uses: docker/metadata-action@v5.7.0
+                with:
+                    images: ${{ env.DOCKER_IMAGE }}
+                    tags: |
+                        type=raw,value=${{ env.VERSION }}
+                        type=raw,value=latest
+
+            -   name: Build and push Docker image
+                uses: docker/build-push-action@v6.18.0
+                with:
+                    context: ./
+                    file: ./Dockerfile
+                    push: true
+                    tags: ${{ steps.meta.outputs.tags }}
+                    labels: ${{ steps.meta.outputs.labels }}
+                    platforms: ${{ env.DOCKER_PLATFORMS }}
+                    build-args: |
+                        FRONTEND_APPSETTINGS_FILE=${{ env.FRONTEND_APPSETTINGS_FILE }}
+                        BACKEND_APPSETTINGS_FILE=${{ env.BACKEND_APPSETTINGS_FILE }}
