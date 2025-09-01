@@ -1,6 +1,6 @@
 using System.Text;
 
-namespace HomeBook.Frontend.Services.Mappings;
+namespace HomeBook.Frontend.Services.Extensions;
 
 public static class StringExtensions
 {
