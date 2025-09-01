@@ -32,11 +32,9 @@ RUN apt-get update && \
 RUN addgroup --gid $APP_GID appgroup \
     && adduser --uid $APP_UID --gid $APP_GID --disabled-password --gecos "" appuser
 
-RUN mkdir -p /var/log/homebook \
-    && chown -R appuser:appgroup /var/log/homebook
-
 RUN mkdir -p /var/lib/homebook \
-    && chown -R appuser:appgroup /var/lib/homebook
+    && chown -R appuser:appgroup /var/lib/homebook \
+    && chmod -R 755 /var/lib/homebook
 
 RUN rm -rf /usr/share/nginx/html/*
 RUN rm /etc/nginx/sites-enabled/default
@@ -63,5 +61,10 @@ COPY $FRONTEND_APPSETTINGS_FILE /usr/share/nginx/html/wwwroot/appsettings.json
 ARG BACKEND_APPSETTINGS_FILE="./source/HomeBook.Backend/appsettings.json"
 COPY $BACKEND_APPSETTINGS_FILE /opt/homebook/appsettings.json
 
+# Copy and make docker-entrypoint.sh executable
+COPY docker-entrypoint.sh /usr/local/bin/
+RUN chmod +x /usr/local/bin/docker-entrypoint.sh \
+    && chown appuser:appgroup /usr/local/bin/docker-entrypoint.sh
+
 USER appuser
-CMD ["/bin/sh", "-c", "dotnet /opt/homebook/HomeBook.Backend.dll & nginx -g 'daemon off;'"]
+ENTRYPOINT ["/usr/local/bin/docker-entrypoint.sh"]

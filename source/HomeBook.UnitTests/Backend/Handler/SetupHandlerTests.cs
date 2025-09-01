@@ -126,7 +126,8 @@ public class SetupHandlerTests
         _setupConfigurationProvider.GetValue(EnvironmentVariables.DATABASE_PASSWORD).Returns("s3cr3t");
 
         // Act
-        var result = await SetupHandler.HandleGetDatabaseCheck(_logger, _setupConfigurationProvider, CancellationToken.None);
+        var result =
+            await SetupHandler.HandleGetDatabaseCheck(_logger, _setupConfigurationProvider, CancellationToken.None);
 
         // Assert
         var ok = result.ShouldBeOfType<Ok<GetDatabaseCheckResponse>>();
@@ -159,7 +160,8 @@ public class SetupHandlerTests
         _setupConfigurationProvider.GetValue(EnvironmentVariables.DATABASE_PASSWORD).Returns((string?)null);
 
         // Act
-        var result = await SetupHandler.HandleGetDatabaseCheck(_logger, _setupConfigurationProvider, CancellationToken.None);
+        var result =
+            await SetupHandler.HandleGetDatabaseCheck(_logger, _setupConfigurationProvider, CancellationToken.None);
 
         // Assert: The current implementation always returns Ok with whatever it read
         var ok = result.ShouldBeOfType<NotFound>();
@@ -174,7 +176,8 @@ public class SetupHandlerTests
             .Do(_ => throw new InvalidOperationException("boom"));
 
         // Act
-        var result = await SetupHandler.HandleGetDatabaseCheck(_logger, _setupConfigurationProvider, CancellationToken.None);
+        var result =
+            await SetupHandler.HandleGetDatabaseCheck(_logger, _setupConfigurationProvider, CancellationToken.None);
 
         // Assert
         var internalErr = result.ShouldBeOfType<InternalServerError<string>>();
@@ -187,13 +190,16 @@ public class SetupHandlerTests
         // Arrange: throw on first var; could be any
         _setupConfigurationProvider
             .When(x => x.GetValue(EnvironmentVariables.DATABASE_HOST))
-            .Do(_ => throw new ValidationException("boom", new List<ValidationFailure>
-            {
-                new("Property1", "A Error"), new("Property2", "Another Error")
-            }));
+            .Do(_ => throw new ValidationException("boom",
+                new List<ValidationFailure>
+                {
+                    new("Property1", "A Error"),
+                    new("Property2", "Another Error")
+                }));
 
         // Act
-        var result = await SetupHandler.HandleGetDatabaseCheck(_logger, _setupConfigurationProvider, CancellationToken.None);
+        var result =
+            await SetupHandler.HandleGetDatabaseCheck(_logger, _setupConfigurationProvider, CancellationToken.None);
 
         // Assert
         var badRequestErr = result.ShouldBeOfType<BadRequest<string[]>>();
@@ -219,8 +225,13 @@ public class SetupHandlerTests
             .Returns(DatabaseProvider.POSTGRESQL);
 
         // Act
-        var request = new CheckDatabaseRequest(databaseHost, databasePort, databaseName, databaseUserName, databaseUserPassword);
-        var result = await SetupHandler.HandleCheckDatabase(request, _logger, _databaseProviderResolver, CancellationToken.None);
+        var request = new CheckDatabaseRequest(databaseHost,
+            databasePort,
+            databaseName,
+            databaseUserName,
+            databaseUserPassword);
+        var result =
+            await SetupHandler.HandleCheckDatabase(request, _logger, _databaseProviderResolver, CancellationToken.None);
 
         // Assert
         var internalErr = result.ShouldBeOfType<Ok<string>>();
@@ -244,8 +255,13 @@ public class SetupHandlerTests
             .Returns((DatabaseProvider?)null);
 
         // Act
-        var request = new CheckDatabaseRequest(databaseHost, databasePort, databaseName, databaseUserName, databaseUserPassword);
-        var result = await SetupHandler.HandleCheckDatabase(request, _logger, _databaseProviderResolver, CancellationToken.None);
+        var request = new CheckDatabaseRequest(databaseHost,
+            databasePort,
+            databaseName,
+            databaseUserName,
+            databaseUserPassword);
+        var result =
+            await SetupHandler.HandleCheckDatabase(request, _logger, _databaseProviderResolver, CancellationToken.None);
 
         // Assert
         var internalErr = result.ShouldBeOfType<StatusCodeHttpResult>();
@@ -271,8 +287,13 @@ public class SetupHandlerTests
             .Do(_ => throw new InvalidOperationException("boom"));
 
         // Act
-        var request = new CheckDatabaseRequest(databaseHost, databasePort, databaseName, databaseUserName, databaseUserPassword);
-        var result = await SetupHandler.HandleCheckDatabase(request, _logger, _databaseProviderResolver, CancellationToken.None);
+        var request = new CheckDatabaseRequest(databaseHost,
+            databasePort,
+            databaseName,
+            databaseUserName,
+            databaseUserPassword);
+        var result =
+            await SetupHandler.HandleCheckDatabase(request, _logger, _databaseProviderResolver, CancellationToken.None);
 
         // Assert
         var internalErr = result.ShouldBeOfType<InternalServerError<string>>();
@@ -294,7 +315,10 @@ public class SetupHandlerTests
         licenseProvider.GetLicensesAsync(Arg.Any<CancellationToken>()).Returns(licenses);
 
         // Act
-        var result = await SetupHandler.HandleGetLicenses(_logger, licenseProvider, _setupConfigurationProvider, CancellationToken.None);
+        var result = await SetupHandler.HandleGetLicenses(_logger,
+            licenseProvider,
+            _setupConfigurationProvider,
+            CancellationToken.None);
 
         // Assert
         var okResult = result.ShouldBeOfType<Ok<GetLicensesResponse>>();
@@ -318,7 +342,10 @@ public class SetupHandlerTests
         licenseProvider.GetLicensesAsync(Arg.Any<CancellationToken>()).Returns(licenses);
 
         // Act
-        var result = await SetupHandler.HandleGetLicenses(_logger, licenseProvider, _setupConfigurationProvider, CancellationToken.None);
+        var result = await SetupHandler.HandleGetLicenses(_logger,
+            licenseProvider,
+            _setupConfigurationProvider,
+            CancellationToken.None);
 
         // Assert
         var okResult = result.ShouldBeOfType<Ok<GetLicensesResponse>>();
@@ -335,7 +362,10 @@ public class SetupHandlerTests
         licenseProvider.GetLicensesAsync(Arg.Any<CancellationToken>()).Throws(new InvalidOperationException("boom"));
 
         // Act
-        var result = await SetupHandler.HandleGetLicenses(_logger, licenseProvider, _setupConfigurationProvider, CancellationToken.None);
+        var result = await SetupHandler.HandleGetLicenses(_logger,
+            licenseProvider,
+            _setupConfigurationProvider,
+            CancellationToken.None);
 
         // Assert
         var internalError = result.ShouldBeOfType<InternalServerError<string>>();
@@ -354,7 +384,8 @@ public class SetupHandlerTests
             .Returns("s3cr3t");
 
         // Act
-        var result = await SetupHandler.HandleGetPreConfiguredUser(_logger, _setupConfigurationProvider, CancellationToken.None);
+        var result =
+            await SetupHandler.HandleGetPreConfiguredUser(_logger, _setupConfigurationProvider, CancellationToken.None);
 
         // Assert
         var ok = result.ShouldBeOfType<Ok>();
@@ -373,7 +404,8 @@ public class SetupHandlerTests
             .Returns("");
 
         // Act
-        var result = await SetupHandler.HandleGetPreConfiguredUser(_logger, _setupConfigurationProvider, CancellationToken.None);
+        var result =
+            await SetupHandler.HandleGetPreConfiguredUser(_logger, _setupConfigurationProvider, CancellationToken.None);
 
         // Assert
         var status = result.ShouldBeOfType<StatusCodeHttpResult>();
@@ -393,7 +425,8 @@ public class SetupHandlerTests
             .Returns((string)null!);
 
         // Act
-        var result = await SetupHandler.HandleGetPreConfiguredUser(_logger, _setupConfigurationProvider, CancellationToken.None);
+        var result =
+            await SetupHandler.HandleGetPreConfiguredUser(_logger, _setupConfigurationProvider, CancellationToken.None);
 
         // Assert
         var status = result.ShouldBeOfType<StatusCodeHttpResult>();
@@ -413,7 +446,8 @@ public class SetupHandlerTests
             .Returns("s3cr3t");
 
         // Act
-        var result = await SetupHandler.HandleGetPreConfiguredUser(_logger, _setupConfigurationProvider, CancellationToken.None);
+        var result =
+            await SetupHandler.HandleGetPreConfiguredUser(_logger, _setupConfigurationProvider, CancellationToken.None);
 
         // Assert
         var status = result.ShouldBeOfType<StatusCodeHttpResult>();
@@ -433,7 +467,8 @@ public class SetupHandlerTests
             .Returns("");
 
         // Act
-        var result = await SetupHandler.HandleGetPreConfiguredUser(_logger, _setupConfigurationProvider, CancellationToken.None);
+        var result =
+            await SetupHandler.HandleGetPreConfiguredUser(_logger, _setupConfigurationProvider, CancellationToken.None);
 
         // Assert
         var status = result.ShouldBeOfType<StatusCodeHttpResult>();
@@ -451,11 +486,184 @@ public class SetupHandlerTests
             .Throws(new InvalidOperationException(boom));
 
         // Act
-        var result = await SetupHandler.HandleGetPreConfiguredUser(_logger, _setupConfigurationProvider, CancellationToken.None);
+        var result =
+            await SetupHandler.HandleGetPreConfiguredUser(_logger, _setupConfigurationProvider, CancellationToken.None);
 
         // Assert
         var status = result.ShouldBeOfType<InternalServerError<string>>();
         status.ShouldNotBeNull();
         status.Value.ShouldBe(boom);
+    }
+
+    [Test]
+    public async Task MapConfiguration_WithEnvironmentVariables_Returns_EnvironmentSettings()
+    {
+        // Arrange
+        var startSetupRequest = new StartSetupRequest(
+            LicensesAccepted: null,
+            DatabaseType: null,
+            DatabaseHost: null,
+            DatabasePort: null,
+            DatabaseName: null,
+            DatabaseUserName: null,
+            DatabaseUserPassword: null,
+            HomebookUserName: null,
+            HomebookUserPassword: null,
+            HomebookConfigurationName: null);
+        _setupConfigurationProvider.GetValue(EnvironmentVariables.DATABASE_TYPE).Returns("POSTGRESQL");
+        _setupConfigurationProvider.GetValue(EnvironmentVariables.DATABASE_HOST).Returns("test-server");
+        _setupConfigurationProvider.GetValue<ushort>(EnvironmentVariables.DATABASE_PORT).Returns((ushort)5432);
+        _setupConfigurationProvider.GetValue(EnvironmentVariables.DATABASE_NAME).Returns("test-database");
+        _setupConfigurationProvider.GetValue(EnvironmentVariables.DATABASE_USER).Returns("test-user");
+        _setupConfigurationProvider.GetValue(EnvironmentVariables.DATABASE_PASSWORD).Returns("test-password");
+        _setupConfigurationProvider.GetValue(EnvironmentVariables.HOMEBOOK_INSTANCE_NAME).Returns("test-homebook");
+        _setupConfigurationProvider.GetValue(EnvironmentVariables.HOMEBOOK_USER_NAME).Returns("user");
+        _setupConfigurationProvider.GetValue(EnvironmentVariables.HOMEBOOK_USER_PASSWORD).Returns("s3cr3t");
+        _setupConfigurationProvider.GetValue<bool>(EnvironmentVariables.HOMEBOOK_ACCEPT_LICENSES).Returns(true);
+
+        // Act
+        var actual = SetupHandler.MapConfiguration(_setupConfigurationProvider, startSetupRequest);
+
+        // Assert
+        actual.ShouldNotBeNull();
+        actual.DatabaseType.ShouldBe(DatabaseProvider.POSTGRESQL);
+        actual.DatabaseHost.ShouldBe("test-server");
+        actual.DatabasePort.ShouldBe((ushort)5432);
+        actual.DatabaseName.ShouldBe("test-database");
+        actual.DatabaseUserName.ShouldBe("test-user");
+        actual.DatabaseUserPassword.ShouldBe("test-password");
+        actual.HomebookConfigurationName.ShouldBe("test-homebook");
+        actual.HomebookUserName.ShouldBe("user");
+        actual.HomebookUserPassword.ShouldBe("s3cr3t");
+        actual.HomebookAcceptLicenses.ShouldBeTrue();
+    }
+
+    [Test]
+    public async Task MapConfiguration_WithRequestVariables_Returns_RequestSettings()
+    {
+        // Arrange
+        var startSetupRequest = new StartSetupRequest(
+            LicensesAccepted: true,
+            DatabaseType: "POSTGRESQL",
+            DatabaseHost: "test-server",
+            DatabasePort: (ushort)5432,
+            DatabaseName: "test-database",
+            DatabaseUserName: "test-user",
+            DatabaseUserPassword: "test-password",
+            HomebookUserName: "user",
+            HomebookUserPassword: "s3cr3t",
+            HomebookConfigurationName: "test-homebook");
+        _setupConfigurationProvider.GetValue(EnvironmentVariables.DATABASE_TYPE).Returns((string)null);
+        _setupConfigurationProvider.GetValue(EnvironmentVariables.DATABASE_HOST).Returns((string)null);
+        _setupConfigurationProvider.GetValue<ushort>(EnvironmentVariables.DATABASE_PORT).Returns((ushort)default);
+        _setupConfigurationProvider.GetValue(EnvironmentVariables.DATABASE_NAME).Returns((string)null);
+        _setupConfigurationProvider.GetValue(EnvironmentVariables.DATABASE_USER).Returns((string)null);
+        _setupConfigurationProvider.GetValue(EnvironmentVariables.DATABASE_PASSWORD).Returns((string)null);
+        _setupConfigurationProvider.GetValue(EnvironmentVariables.HOMEBOOK_INSTANCE_NAME).Returns((string)null);
+        _setupConfigurationProvider.GetValue(EnvironmentVariables.HOMEBOOK_USER_NAME).Returns((string)null);
+        _setupConfigurationProvider.GetValue(EnvironmentVariables.HOMEBOOK_USER_PASSWORD).Returns((string)null);
+        _setupConfigurationProvider.GetValue<bool>(EnvironmentVariables.HOMEBOOK_ACCEPT_LICENSES).Returns((bool)default);
+
+        // Act
+        var actual = SetupHandler.MapConfiguration(_setupConfigurationProvider, startSetupRequest);
+
+        // Assert
+        actual.ShouldNotBeNull();
+        actual.DatabaseType.ShouldBe(DatabaseProvider.POSTGRESQL);
+        actual.DatabaseHost.ShouldBe("test-server");
+        actual.DatabasePort.ShouldBe((ushort)5432);
+        actual.DatabaseName.ShouldBe("test-database");
+        actual.DatabaseUserName.ShouldBe("test-user");
+        actual.DatabaseUserPassword.ShouldBe("test-password");
+        actual.HomebookConfigurationName.ShouldBe("test-homebook");
+        actual.HomebookUserName.ShouldBe("user");
+        actual.HomebookUserPassword.ShouldBe("s3cr3t");
+        actual.HomebookAcceptLicenses.ShouldBeTrue();
+    }
+
+    [Test]
+    public async Task MapConfiguration_WithEnvironmentAndRequestVariables_Returns_RequestSettings()
+    {
+        // Arrange
+        var startSetupRequest = new StartSetupRequest(
+            LicensesAccepted: true,
+            DatabaseType: "MYSQL",
+            DatabaseHost: "another-server",
+            DatabasePort: (ushort)3306,
+            DatabaseName: "another-database",
+            DatabaseUserName: "another-user",
+            DatabaseUserPassword: "another-password",
+            HomebookUserName: "another-user",
+            HomebookUserPassword: "another-s3cr3t",
+            HomebookConfigurationName: "another-homebook");
+        _setupConfigurationProvider.GetValue(EnvironmentVariables.DATABASE_TYPE).Returns("POSTGRESQL");
+        _setupConfigurationProvider.GetValue(EnvironmentVariables.DATABASE_HOST).Returns("test-server");
+        _setupConfigurationProvider.GetValue<ushort>(EnvironmentVariables.DATABASE_PORT).Returns((ushort)5432);
+        _setupConfigurationProvider.GetValue(EnvironmentVariables.DATABASE_NAME).Returns("test-database");
+        _setupConfigurationProvider.GetValue(EnvironmentVariables.DATABASE_USER).Returns("test-user");
+        _setupConfigurationProvider.GetValue(EnvironmentVariables.DATABASE_PASSWORD).Returns("test-password");
+        _setupConfigurationProvider.GetValue(EnvironmentVariables.HOMEBOOK_INSTANCE_NAME).Returns("test-homebook");
+        _setupConfigurationProvider.GetValue(EnvironmentVariables.HOMEBOOK_USER_NAME).Returns("user");
+        _setupConfigurationProvider.GetValue(EnvironmentVariables.HOMEBOOK_USER_PASSWORD).Returns("s3cr3t");
+        _setupConfigurationProvider.GetValue<bool>(EnvironmentVariables.HOMEBOOK_ACCEPT_LICENSES).Returns(true);
+
+        // Act
+        var actual = SetupHandler.MapConfiguration(_setupConfigurationProvider, startSetupRequest);
+
+        // Assert
+        actual.ShouldNotBeNull();
+        actual.DatabaseType.ShouldBe(DatabaseProvider.MYSQL);
+        actual.DatabaseHost.ShouldBe("another-server");
+        actual.DatabasePort.ShouldBe((ushort)3306);
+        actual.DatabaseName.ShouldBe("another-database");
+        actual.DatabaseUserName.ShouldBe("another-user");
+        actual.DatabaseUserPassword.ShouldBe("another-password");
+        actual.HomebookConfigurationName.ShouldBe("another-homebook");
+        actual.HomebookUserName.ShouldBe("another-user");
+        actual.HomebookUserPassword.ShouldBe("another-s3cr3t");
+        actual.HomebookAcceptLicenses.ShouldBeTrue();
+    }
+
+    [Test]
+    public async Task MapConfiguration_WithNoVariables_Returns_DefaultSettings()
+    {
+        // Arrange
+        var startSetupRequest = new StartSetupRequest(
+            LicensesAccepted: null,
+            DatabaseType: null,
+            DatabaseHost: null,
+            DatabasePort: null,
+            DatabaseName: null,
+            DatabaseUserName: null,
+            DatabaseUserPassword: null,
+            HomebookUserName: null,
+            HomebookUserPassword: null,
+            HomebookConfigurationName: null);
+        _setupConfigurationProvider.GetValue(EnvironmentVariables.DATABASE_TYPE).Returns((string)null);
+        _setupConfigurationProvider.GetValue(EnvironmentVariables.DATABASE_HOST).Returns((string)null);
+        _setupConfigurationProvider.GetValue<ushort>(EnvironmentVariables.DATABASE_PORT).Returns((ushort)default);
+        _setupConfigurationProvider.GetValue(EnvironmentVariables.DATABASE_NAME).Returns((string)null);
+        _setupConfigurationProvider.GetValue(EnvironmentVariables.DATABASE_USER).Returns((string)null);
+        _setupConfigurationProvider.GetValue(EnvironmentVariables.DATABASE_PASSWORD).Returns((string)null);
+        _setupConfigurationProvider.GetValue(EnvironmentVariables.HOMEBOOK_INSTANCE_NAME).Returns((string)null);
+        _setupConfigurationProvider.GetValue(EnvironmentVariables.HOMEBOOK_USER_NAME).Returns((string)null);
+        _setupConfigurationProvider.GetValue(EnvironmentVariables.HOMEBOOK_USER_PASSWORD).Returns((string)null);
+        _setupConfigurationProvider.GetValue<bool>(EnvironmentVariables.HOMEBOOK_ACCEPT_LICENSES).Returns((bool)default);
+
+        // Act
+        var actual = SetupHandler.MapConfiguration(_setupConfigurationProvider, startSetupRequest);
+
+        // Assert
+        actual.ShouldNotBeNull();
+        actual.DatabaseType.ShouldBe(DatabaseProvider.UNKNOWN);
+        actual.DatabaseHost.ShouldBe("");
+        actual.DatabasePort.ShouldBe((ushort)0);
+        actual.DatabaseName.ShouldBe("");
+        actual.DatabaseUserName.ShouldBe("");
+        actual.DatabaseUserPassword.ShouldBe("");
+        actual.HomebookConfigurationName.ShouldBe("");
+        actual.HomebookUserName.ShouldBe("");
+        actual.HomebookUserPassword.ShouldBe("");
+        actual.HomebookAcceptLicenses.ShouldBeFalse();
     }
 }

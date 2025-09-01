@@ -22,6 +22,7 @@ public class SetupConfigurationProvider(
 
         _valuesByEnum.Clear();
         EnvironmentConfiguration environmentConfiguration = new(
+            Environment.GetEnvironmentVariable(nameof(EnvironmentVariables.DATABASE_TYPE)),
             Environment.GetEnvironmentVariable(nameof(EnvironmentVariables.DATABASE_HOST)),
             Environment.GetEnvironmentVariable(nameof(EnvironmentVariables.DATABASE_PORT)),
             Environment.GetEnvironmentVariable(nameof(EnvironmentVariables.DATABASE_NAME)),
@@ -47,6 +48,7 @@ public class SetupConfigurationProvider(
         }
     }
 
+    /// <inheritdoc />
     public string? GetValue(EnvironmentVariables name)
     {
         LoadEnvironmentConfiguration(environmentValidator);
@@ -54,5 +56,15 @@ public class SetupConfigurationProvider(
         _valuesByEnum!.TryGetValue(name, out string? value);
 
         return value;
+    }
+
+    /// <inheritdoc />
+    public T? GetValue<T>(EnvironmentVariables name)
+    {
+        string? value = GetValue(name);
+        if (value is null)
+            return default;
+
+        return (T?)Convert.ChangeType(value, typeof(T));
     }
 }

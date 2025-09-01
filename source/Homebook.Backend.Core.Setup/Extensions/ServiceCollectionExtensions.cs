@@ -1,5 +1,6 @@
 using FluentValidation;
 using HomeBook.Backend.Abstractions.Contracts;
+using HomeBook.Backend.Abstractions.Models;
 using Homebook.Backend.Core.Setup.Factories;
 using Homebook.Backend.Core.Setup.Models;
 using Homebook.Backend.Core.Setup.Provider;
@@ -15,7 +16,8 @@ public static class ServiceCollectionExtensions
         IConfiguration configuration)
     {
         //
-        services.AddSetupEnvironment(configuration);
+        services.AddBackendCoreSetupEnvironment(configuration)
+            .AddBackendCoreSetupValidators(configuration);
 
         services.AddSingleton<ISetupConfigurationProvider, SetupConfigurationProvider>();
         services.AddSingleton<ISetupInstanceManager, SetupInstanceManager>();
@@ -24,10 +26,18 @@ public static class ServiceCollectionExtensions
         return services;
     }
 
-    private static IServiceCollection AddSetupEnvironment(this IServiceCollection services,
+    private static IServiceCollection AddBackendCoreSetupEnvironment(this IServiceCollection services,
         IConfiguration configuration)
     {
         services.AddSingleton<IValidator<EnvironmentConfiguration>, EnvironmentValidator>();
+
+        return services;
+    }
+
+    private static IServiceCollection AddBackendCoreSetupValidators(this IServiceCollection services,
+        IConfiguration configuration)
+    {
+        services.AddSingleton<IValidator<SetupConfiguration>, SetupConfigurationValidator>();
 
         return services;
     }

@@ -118,15 +118,25 @@ public partial class LicenseAgreementSetupStep : ComponentBase, ISetupStep
             return;
 
         // license is accepted
+        await AcceptLicensesAsync();
         await StepSuccessAsync(cancellationToken);
     }
 
     private async Task OnCountdownFinishedAsync()
     {
         CancellationToken cancellationToken = CancellationToken.None;
-        if (_licensesAccepted)
-        {
-            await StepSuccessAsync(cancellationToken);
-        }
+
+        await StepSuccessAsync(cancellationToken);
+        await InvokeAsync(StateHasChanged);
+    }
+
+    private async Task AcceptLicensesAsync()
+    {
+        CancellationToken cancellationToken = CancellationToken.None;
+
+        await SetupService.SetStorageValueAsync("HOMEBOOK_LICENSES_ACCEPTED", true, cancellationToken);
+
+        await StepSuccessAsync(cancellationToken);
+        await InvokeAsync(StateHasChanged);
     }
 }

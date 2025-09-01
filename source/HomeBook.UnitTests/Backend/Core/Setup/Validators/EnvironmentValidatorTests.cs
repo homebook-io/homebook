@@ -21,6 +21,7 @@ public class EnvironmentValidatorTests
     {
         // Arrange
         var config = new EnvironmentConfiguration(
+            DatabaseType: "POSTGRESQL",
             DatabaseHost: "localhost",
             DatabasePort: "5432",
             DatabaseName: "homebook",
@@ -44,6 +45,7 @@ public class EnvironmentValidatorTests
     {
         // Arrange
         var config = new EnvironmentConfiguration(
+            DatabaseType: "MYSQL",
             DatabaseHost: "192.168.1.100",
             DatabasePort: "3306",
             DatabaseName: "my_database",
@@ -67,6 +69,7 @@ public class EnvironmentValidatorTests
     {
         // Arrange
         var config = new EnvironmentConfiguration(
+            DatabaseType: "POSTGRESQL",
             DatabaseHost: "database.example.com",
             DatabasePort: "1521",
             DatabaseName: "production-db",
@@ -90,6 +93,7 @@ public class EnvironmentValidatorTests
     {
         // Arrange
         var config = new EnvironmentConfiguration(
+            DatabaseType: "POSTGRESQL",
             DatabaseHost: "localhost",
             DatabasePort: null,
             DatabaseName: "testdb",
@@ -113,6 +117,7 @@ public class EnvironmentValidatorTests
     {
         // Arrange
         var config = new EnvironmentConfiguration(
+            DatabaseType: null,
             DatabaseHost: null,
             DatabasePort: null,
             DatabaseName: null,
@@ -136,6 +141,7 @@ public class EnvironmentValidatorTests
     {
         // Arrange
         var config = new EnvironmentConfiguration(
+            DatabaseType: "",
             DatabaseHost: "",
             DatabasePort: "",
             DatabaseName: "",
@@ -188,7 +194,8 @@ public class EnvironmentValidatorTests
     public void Validate_ValidHosts_ShouldPass(string host)
     {
         // Arrange
-        var config = new EnvironmentConfiguration(host,
+        var config = new EnvironmentConfiguration(null,
+            host,
             null,
             null,
             null,
@@ -218,7 +225,8 @@ public class EnvironmentValidatorTests
     public void Validate_InvalidHosts_ShouldFail(string host)
     {
         // Arrange
-        var config = new EnvironmentConfiguration(host,
+        var config = new EnvironmentConfiguration(null,
+            host,
             null,
             null,
             null,
@@ -257,6 +265,7 @@ public class EnvironmentValidatorTests
     {
         // Arrange
         var config = new EnvironmentConfiguration(null,
+            null,
             port,
             null,
             null,
@@ -284,6 +293,7 @@ public class EnvironmentValidatorTests
     {
         // Arrange
         var config = new EnvironmentConfiguration(null,
+            null,
             port,
             null,
             null,
@@ -317,6 +327,7 @@ public class EnvironmentValidatorTests
         // Arrange
         var config = new EnvironmentConfiguration(null,
             null,
+            null,
             dbName,
             null,
             null,
@@ -345,6 +356,7 @@ public class EnvironmentValidatorTests
         // Arrange
         var config = new EnvironmentConfiguration(null,
             null,
+            null,
             dbName,
             null,
             null,
@@ -368,6 +380,7 @@ public class EnvironmentValidatorTests
         // Arrange
         var longName = new string('a', 64);
         var config = new EnvironmentConfiguration(null,
+            null,
             null,
             longName,
             null,
@@ -403,6 +416,7 @@ public class EnvironmentValidatorTests
         var config = new EnvironmentConfiguration(null,
             null,
             null,
+            null,
             username,
             null,
             null,
@@ -433,6 +447,7 @@ public class EnvironmentValidatorTests
         var config = new EnvironmentConfiguration(null,
             null,
             null,
+            null,
             username,
             null,
             null,
@@ -454,6 +469,7 @@ public class EnvironmentValidatorTests
         // Arrange
         var longUsername = new string('a', 64);
         var config = new EnvironmentConfiguration(null,
+            null,
             null,
             null,
             longUsername,
@@ -490,6 +506,7 @@ public class EnvironmentValidatorTests
             null,
             null,
             null,
+            null,
             password,
             null,
             null,
@@ -509,6 +526,7 @@ public class EnvironmentValidatorTests
     {
         // Arrange
         var config = new EnvironmentConfiguration(null,
+            null,
             null,
             null,
             null,
@@ -536,6 +554,7 @@ public class EnvironmentValidatorTests
             null,
             null,
             null,
+            null,
             "",
             null,
             null,
@@ -555,6 +574,7 @@ public class EnvironmentValidatorTests
         // Arrange
         var passwordWithControlChar = "password\x00test";
         var config = new EnvironmentConfiguration(null,
+            null,
             null,
             null,
             null,
@@ -583,7 +603,13 @@ public class EnvironmentValidatorTests
     public void Validate_ComplexInjectionAttempts_ShouldFailOnAllFields(string host, string port, string dbName, string username, string password)
     {
         // Arrange
-        var config = new EnvironmentConfiguration(host, port, dbName, username, password,
+        var config = new EnvironmentConfiguration(
+            "MYSQL",
+            host,
+            port,
+            dbName,
+            username,
+            password,
             null,
             null,
             null);
@@ -604,7 +630,8 @@ public class EnvironmentValidatorTests
     {
         // This specific case was failing because the hostname regex was too permissive
         // Arrange
-        var config = new EnvironmentConfiguration("evil.com'; DROP DATABASE homebook; --",
+        var config = new EnvironmentConfiguration("MYSQL",
+            "evil.com'; DROP DATABASE homebook; --",
             "3306", null, null, null,
             null,
             null,
@@ -628,7 +655,7 @@ public class EnvironmentValidatorTests
     public void Validate_IPv6LocalhostAddresses_ShouldPass()
     {
         // Arrange
-        var config = new EnvironmentConfiguration("::1", null, null,
+        var config = new EnvironmentConfiguration("MYSQL","::1", null, null,
             null, null,
             null,
             null,
@@ -646,7 +673,7 @@ public class EnvironmentValidatorTests
     public void Validate_IPv6AllZeros_ShouldPass()
     {
         // Arrange
-        var config = new EnvironmentConfiguration("::", null, null,
+        var config = new EnvironmentConfiguration("MYSQL","::", null, null,
             null, null,
             null,
             null,
@@ -666,7 +693,7 @@ public class EnvironmentValidatorTests
         // Arrange
         var maxDbName = new string('a', 63);
         var maxUsername = new string('u', 63);
-        var config = new EnvironmentConfiguration("localhost", "5432", maxDbName,
+        var config = new EnvironmentConfiguration("MYSQL","localhost", "5432", maxDbName,
             maxUsername, "ValidPassword123",
             null,
             null,
@@ -685,7 +712,7 @@ public class EnvironmentValidatorTests
     {
         // Arrange
         var password = "P@ssw0rd!#%*+=?^_~()-[]{}";
-        var config = new EnvironmentConfiguration(null, null, null,
+        var config = new EnvironmentConfiguration(null, null, null, null,
             null, password,
             null,
             null,

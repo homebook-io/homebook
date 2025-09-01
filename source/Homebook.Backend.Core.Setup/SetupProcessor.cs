@@ -1,6 +1,6 @@
 using FluentValidation;
 using HomeBook.Backend.Abstractions.Contracts;
-using HomeBook.Backend.Abstractions.Setup;
+using HomeBook.Backend.Abstractions.Models;
 using HomeBook.Backend.Core.DataProvider.UserManagement;
 using Homebook.Backend.Core.Setup.Exceptions;
 using HomeBook.Backend.Data.Contracts;
@@ -14,30 +14,28 @@ namespace Homebook.Backend.Core.Setup;
 /// <inheritdoc />
 public class SetupProcessor(
     IDatabaseMigratorFactory databaseMigratorFactory,
-    ISetupConfigurationProvider setupConfigurationProvider,
     IHashProviderFactory hashProviderFactory,
     IValidator<User> userValidator,
     IValidator<Configuration> configurationValidator) : ISetupProcessor
 {
     /// <inheritdoc />
     public async Task ProcessAsync(IConfiguration configuration,
-        string? homebookUserName,
-        string? homebookUserPassword,
-        string? homebookConfigurationName,
+        SetupConfiguration setupConfiguration,
         CancellationToken cancellationToken = default)
     {
         // load specific database type provider
-        string databaseType = configuration["Database:Provider"]!;
+        string? databaseType = configuration["Database:Provider"];
+        if (string.IsNullOrEmpty(databaseType))
+            throw new SetupException("database provider is not configured");
+
         IDatabaseMigrator databaseMigrator = databaseMigratorFactory.CreateMigrator(databaseType);
 
         // 1. create database structure via migrations
         await databaseMigrator.MigrateAsync(cancellationToken);
 
         // 2. create user
-        string? adminUsername = homebookUserName
-                                ?? setupConfigurationProvider.GetValue(EnvironmentVariables.HOMEBOOK_USER_NAME);
-        string? adminPassword = homebookUserPassword
-                                ?? setupConfigurationProvider.GetValue(EnvironmentVariables.HOMEBOOK_USER_PASSWORD);
+        string? adminUsername = setupConfiguration.HomebookUserName;
+        string? adminPassword = setupConfiguration.HomebookUserPassword;
         if (string.IsNullOrEmpty(adminUsername)
             || string.IsNullOrEmpty(adminPassword))
             throw new SetupException("homebook username or password is not set");
@@ -62,8 +60,7 @@ public class SetupProcessor(
             cancellationToken);
 
         // 3. write homebook configuration
-        string? configurationName = homebookConfigurationName
-                                    ?? setupConfigurationProvider.GetValue(EnvironmentVariables.HOMEBOOK_INSTANCE_NAME);
+        string? configurationName = setupConfiguration.HomebookConfigurationName;
         if (string.IsNullOrEmpty(configurationName))
             throw new SetupException("homebook configuration name is not set");
 
