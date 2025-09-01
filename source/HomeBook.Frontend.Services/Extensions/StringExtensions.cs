@@ -1,6 +1,6 @@
 using System.Text;
 
-namespace HomeBook.Frontend.Extensions;
+namespace HomeBook.Frontend.Services.Extensions;
 
 public static class StringExtensions
 {
@@ -9,7 +9,7 @@ public static class StringExtensions
         if (string.IsNullOrEmpty(val))
             return string.Empty;
 
-        StringBuilder result = new StringBuilder();
+        StringBuilder result = new();
 
         for (int i = 0; i < val.Length; i++)
         {

@@ -32,6 +32,7 @@
     <File Path="nginx.conf" />
     <File Path="icon_128.png" />
     <File Path="docker-entrypoint.sh" />
+    <File Path="sonar-project.properties" />
   </Folder>
   <Folder Name="/Solution/workflows/">
     <File Path=".github\workflows\build.yml" />

@@ -562,7 +562,8 @@ public class SetupHandlerTests
         _setupConfigurationProvider.GetValue(EnvironmentVariables.HOMEBOOK_INSTANCE_NAME).Returns((string)null);
         _setupConfigurationProvider.GetValue(EnvironmentVariables.HOMEBOOK_USER_NAME).Returns((string)null);
         _setupConfigurationProvider.GetValue(EnvironmentVariables.HOMEBOOK_USER_PASSWORD).Returns((string)null);
-        _setupConfigurationProvider.GetValue<bool>(EnvironmentVariables.HOMEBOOK_ACCEPT_LICENSES).Returns((bool)default);
+        _setupConfigurationProvider.GetValue<bool>(EnvironmentVariables.HOMEBOOK_ACCEPT_LICENSES)
+            .Returns((bool)default);
 
         // Act
         var actual = SetupHandler.MapConfiguration(_setupConfigurationProvider, startSetupRequest);
@@ -648,7 +649,8 @@ public class SetupHandlerTests
         _setupConfigurationProvider.GetValue(EnvironmentVariables.HOMEBOOK_INSTANCE_NAME).Returns((string)null);
         _setupConfigurationProvider.GetValue(EnvironmentVariables.HOMEBOOK_USER_NAME).Returns((string)null);
         _setupConfigurationProvider.GetValue(EnvironmentVariables.HOMEBOOK_USER_PASSWORD).Returns((string)null);
-        _setupConfigurationProvider.GetValue<bool>(EnvironmentVariables.HOMEBOOK_ACCEPT_LICENSES).Returns((bool)default);
+        _setupConfigurationProvider.GetValue<bool>(EnvironmentVariables.HOMEBOOK_ACCEPT_LICENSES)
+            .Returns((bool)default);
 
         // Act
         var actual = SetupHandler.MapConfiguration(_setupConfigurationProvider, startSetupRequest);
@@ -665,5 +667,77 @@ public class SetupHandlerTests
         actual.HomebookUserName.ShouldBe("");
         actual.HomebookUserPassword.ShouldBe("");
         actual.HomebookAcceptLicenses.ShouldBeFalse();
+    }
+
+    [Test]
+    public async Task HandleGetConfiguration_WithNoValues_Returns()
+    {
+        // Arrange
+        _setupConfigurationProvider
+            .GetValue(EnvironmentVariables.HOMEBOOK_INSTANCE_NAME)
+            .Returns((string)null);
+
+        // Act
+        var result = await SetupHandler.HandleGetConfiguration(_logger,
+            _setupConfigurationProvider,
+            CancellationToken.None);
+
+        // Assert
+        var ok = result.ShouldBeOfType<NotFound>();
+        ok.ShouldNotBeNull();
+    }
+
+    [Test]
+    public async Task HandleGetConfiguration_WithEmptyString_Returns()
+    {
+        // Arrange
+        _setupConfigurationProvider
+            .GetValue(EnvironmentVariables.HOMEBOOK_INSTANCE_NAME)
+            .Returns(string.Empty);
+
+        // Act
+        var result = await SetupHandler.HandleGetConfiguration(_logger,
+            _setupConfigurationProvider,
+            CancellationToken.None);
+
+        // Assert
+        var ok = result.ShouldBeOfType<NotFound>();
+        ok.ShouldNotBeNull();
+    }
+
+    [Test]
+    public async Task HandleGetConfiguration_WithConfiguredValues_Returns()
+    {
+        // Arrange
+        _setupConfigurationProvider
+            .GetValue(EnvironmentVariables.HOMEBOOK_INSTANCE_NAME)
+            .Returns("test instance");
+
+        // Act
+        var result = await SetupHandler.HandleGetConfiguration(_logger,
+            _setupConfigurationProvider,
+            CancellationToken.None);
+
+        // Assert
+        var ok = result.ShouldBeOfType<Ok>();
+        ok.ShouldNotBeNull();
+    }
+
+    [Test]
+    public async Task HandleGetConfiguration_WithThrowingException_Returns()
+    {
+        // Arrange
+        _setupConfigurationProvider
+            .GetValue(EnvironmentVariables.HOMEBOOK_INSTANCE_NAME)
+            .Throws(new InvalidOperationException("boom"));
+
+        // Act
+        var result = await SetupHandler.HandleGetConfiguration(_logger,
+            _setupConfigurationProvider,
+            CancellationToken.None);
+
+        // Assert
+        var ok = result.ShouldBeOfType<InternalServerError<string>>();
+        ok.Value.ShouldBe("boom");
     }
 }
