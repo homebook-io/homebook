@@ -11,7 +11,8 @@ public static class EnvironmentLoader
         {
             string trimmed = line.Trim();
 
-            if (string.IsNullOrWhiteSpace(trimmed) || trimmed.StartsWith("#"))
+            if (string.IsNullOrWhiteSpace(trimmed)
+                || trimmed.StartsWith('#'))
                 continue;
 
             int idx = trimmed.IndexOf('=');
@@ -19,7 +20,7 @@ public static class EnvironmentLoader
                 continue;
 
             string key = trimmed.Substring(0, idx).Trim();
-            string value = trimmed.Substring(idx + 1).Trim();
+            string value = trimmed[(idx + 1)..].Trim();
             if (!string.IsNullOrEmpty(key))
                 Environment.SetEnvironmentVariable(key, value);
         }

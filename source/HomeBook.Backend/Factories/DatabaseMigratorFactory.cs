@@ -1,4 +1,3 @@
-using HomeBook.Backend.Abstractions;
 using HomeBook.Backend.Abstractions.Contracts;
 using HomeBook.Backend.Abstractions.Exceptions;
 
