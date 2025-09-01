@@ -1,15 +1,9 @@
 using FluentValidation;
-using HomeBook.Backend.Abstractions;
 using HomeBook.Backend.Abstractions.Contracts;
-using HomeBook.Backend.Abstractions.Exceptions;
 using HomeBook.Backend.Abstractions.Models;
 using HomeBook.Backend.Abstractions.Setup;
-using HomeBook.Backend.Core.DataProvider.UserManagement;
-using HomeBook.Backend.Core.HashProvider;
-using HomeBook.Backend.Core.Models;
 using Homebook.Backend.Core.Setup.Exceptions;
-using HomeBook.Backend.Data.Contracts;
-using HomeBook.Backend.Data.Repositories;
+using Homebook.Backend.Core.Setup.Models;
 using HomeBook.Backend.Requests;
 using HomeBook.Backend.Responses;
 using Microsoft.AspNetCore.Mvc;
@@ -241,7 +235,7 @@ public class SetupHandler
     /// </summary>
     /// <param name="request"></param>
     /// <param name="logger"></param>
-    /// <param name="databaseConfigurationValidator"></param>
+    /// <param name="setupConfigurationValidator"></param>
     /// <param name="runtimeConfigurationProvider"></param>
     /// <param name="setupInstanceManager"></param>
     /// <param name="licenseProvider"></param>
@@ -253,7 +247,7 @@ public class SetupHandler
     /// <returns></returns>
     public static async Task<IResult> HandleStartSetup([FromBody] StartSetupRequest request,
         [FromServices] ILogger<SetupHandler> logger,
-        [FromServices] IValidator<DatabaseConfiguration> databaseConfigurationValidator,
+        [FromServices] IValidator<SetupConfiguration> setupConfigurationValidator,
         [FromServices] IRuntimeConfigurationProvider runtimeConfigurationProvider,
         [FromServices] ISetupInstanceManager setupInstanceManager,
         [FromServices] ILicenseProvider licenseProvider,
@@ -265,23 +259,21 @@ public class SetupHandler
     {
         try
         {
-            // 1. create directory structure
+            // 1. map configuration (environment variables override request values)
+            SetupConfiguration setupConfiguration = MapConfiguration(setupConfigurationProvider, request);
+            await setupConfigurationValidator.ValidateAndThrowAsync(setupConfiguration, cancellationToken);
+
+            // 2. create directory structure
             setupInstanceManager.CreateRequiredDirectories();
 
-            // 2. write license accepted file
-            bool licensesAcceptedViaRequest = request.LicensesAccepted ?? false;
-            bool licensesAcceptedViaEnvVar =
-                setupConfigurationProvider.GetValue(EnvironmentVariables.HOMEBOOK_ACCEPT_LICENSES) is not null;
-            if (!licensesAcceptedViaRequest
-                && !licensesAcceptedViaEnvVar)
+            // 3. mark the licenses of this version as accepted
+            if (!setupConfiguration.HomebookAcceptLicenses)
                 return TypedResults.StatusCode(StatusCodes.Status422UnprocessableEntity);
 
-            // 3. mark the licenses of this version as accepted
             await licenseProvider.MarkLicenseAsAcceptedAsync(cancellationToken);
 
-            // 4. write database configuration to environment variables
-            await UpdateDatabaseConfigurationAsync(request,
-                databaseConfigurationValidator,
+            // 4. write database configuration to IConfuguration (runtime)
+            await UpdateDatabaseConfigurationAsync(setupConfiguration,
                 runtimeConfigurationProvider,
                 cancellationToken);
             IConfigurationRoot root = (IConfigurationRoot)configuration;
@@ -290,9 +282,7 @@ public class SetupHandler
             // 5. process primary setup
             ISetupProcessor setupProcessor = setupProcessorFactory.Create();
             await setupProcessor.ProcessAsync(configuration,
-                request.HomebookUserName,
-                request.HomebookUserPassword,
-                request.HomebookConfigurationName,
+                setupConfiguration,
                 cancellationToken);
 
             // 6. write setup instance file
@@ -320,44 +310,97 @@ public class SetupHandler
         }
     }
 
-    private static async Task UpdateDatabaseConfigurationAsync(StartSetupRequest request,
-        IValidator<DatabaseConfiguration> databaseConfigurationValidator,
+    internal static SetupConfiguration MapConfiguration(ISetupConfigurationProvider scp,
+        StartSetupRequest request)
+    {
+        SetupConfiguration defaultConfiguration = new(
+            DatabaseProvider.UNKNOWN,
+            "",
+            0,
+            "",
+            "",
+            "",
+            "",
+            "",
+            "",
+            false);
+
+        string? databaseTypeValue = request.DatabaseType
+                                    ?? scp.GetValue(EnvironmentVariables.DATABASE_TYPE);
+        DatabaseProvider databaseType = defaultConfiguration.DatabaseType;
+        if (!string.IsNullOrEmpty(databaseTypeValue))
+            Enum.TryParse(databaseTypeValue, true, out databaseType);
+
+        SetupConfiguration setupConfiguration = new(
+            // DATABASE_TYPE
+            databaseType,
+            // DATABASE_HOST
+            request.DatabaseHost
+            ?? scp.GetValue(EnvironmentVariables.DATABASE_HOST)
+            ?? defaultConfiguration.DatabaseHost,
+            // DATABASE_PORT
+            request.DatabasePort
+            ?? (ushort?)scp.GetValue<ushort>(EnvironmentVariables.DATABASE_PORT)
+            ?? defaultConfiguration.DatabasePort,
+            // DATABASE_NAME
+            request.DatabaseName
+            ?? scp.GetValue(EnvironmentVariables.DATABASE_NAME)
+            ?? defaultConfiguration.DatabaseName,
+            // DATABASE_USER
+            request.DatabaseUserName
+            ?? scp.GetValue(EnvironmentVariables.DATABASE_USER)
+            ?? defaultConfiguration.DatabaseUserName,
+            // DATABASE_PASSWORD
+            request.DatabaseUserPassword
+            ?? scp.GetValue(EnvironmentVariables.DATABASE_PASSWORD)
+            ?? defaultConfiguration.DatabaseUserPassword,
+            // HOMEBOOK_INSTANCE_NAME
+            request.HomebookConfigurationName
+            ?? scp.GetValue(EnvironmentVariables.HOMEBOOK_INSTANCE_NAME)
+            ?? defaultConfiguration.HomebookConfigurationName,
+            // HOMEBOOK_USER_NAME
+            request.HomebookUserName
+            ?? scp.GetValue(EnvironmentVariables.HOMEBOOK_USER_NAME)
+            ?? defaultConfiguration.HomebookUserName,
+            // HOMEBOOK_USER_PASSWORD
+            request.HomebookUserPassword
+            ?? scp.GetValue(EnvironmentVariables.HOMEBOOK_USER_PASSWORD)
+            ?? defaultConfiguration.HomebookUserPassword,
+            // HOMEBOOK_ACCEPT_LICENSES
+            request.LicensesAccepted
+            ?? (bool?)scp.GetValue<bool>(EnvironmentVariables.HOMEBOOK_ACCEPT_LICENSES)
+            ?? defaultConfiguration.HomebookAcceptLicenses);
+
+        return setupConfiguration;
+    }
+
+    private static async Task UpdateDatabaseConfigurationAsync(SetupConfiguration setupConfiguration,
         IRuntimeConfigurationProvider runtimeConfigurationProvider,
         CancellationToken cancellationToken)
     {
-        DatabaseConfiguration dbConfig = new(
-            request.DatabaseType,
-            request.DatabaseHost,
-            request.DatabasePort,
-            request.DatabaseName,
-            request.DatabaseUserName,
-            request.DatabaseUserPassword);
-        await databaseConfigurationValidator.ValidateAndThrowAsync(dbConfig, cancellationToken);
+        await runtimeConfigurationProvider.UpdateConfigurationAsync("Database:Provider",
+            setupConfiguration.DatabaseType,
+            cancellationToken);
 
-        if (!string.IsNullOrEmpty(dbConfig.DatabaseType))
-            await runtimeConfigurationProvider.UpdateConfigurationAsync("Database:Provider",
-                dbConfig.DatabaseType,
-                cancellationToken);
-        if (!string.IsNullOrEmpty(dbConfig.DatabaseHost))
-            await runtimeConfigurationProvider.UpdateConfigurationAsync("Database:Host",
-                dbConfig.DatabaseHost,
-                cancellationToken);
-        if (dbConfig.DatabasePort is not null)
-            await runtimeConfigurationProvider.UpdateConfigurationAsync("Database:Port",
-                dbConfig.DatabasePort,
-                cancellationToken);
-        if (!string.IsNullOrEmpty(dbConfig.DatabaseName))
-            await runtimeConfigurationProvider.UpdateConfigurationAsync("Database:InstanceDbName",
-                dbConfig.DatabaseName,
-                cancellationToken);
-        if (!string.IsNullOrEmpty(dbConfig.DatabaseUserName))
-            await runtimeConfigurationProvider.UpdateConfigurationAsync("Database:Username",
-                dbConfig.DatabaseUserName,
-                cancellationToken);
-        if (!string.IsNullOrEmpty(dbConfig.DatabaseUserPassword))
-            // TODO: store password as encrypted value in .secret file
-            await runtimeConfigurationProvider.UpdateConfigurationAsync("Database:Password",
-                dbConfig.DatabaseUserPassword,
-                cancellationToken);
+        await runtimeConfigurationProvider.UpdateConfigurationAsync("Database:Host",
+            setupConfiguration.DatabaseHost,
+            cancellationToken);
+
+        await runtimeConfigurationProvider.UpdateConfigurationAsync("Database:Port",
+            setupConfiguration.DatabasePort,
+            cancellationToken);
+
+        await runtimeConfigurationProvider.UpdateConfigurationAsync("Database:InstanceDbName",
+            setupConfiguration.DatabaseName,
+            cancellationToken);
+
+        await runtimeConfigurationProvider.UpdateConfigurationAsync("Database:Username",
+            setupConfiguration.DatabaseUserName,
+            cancellationToken);
+
+        // TODO: store password as encrypted value in .secret file
+        await runtimeConfigurationProvider.UpdateConfigurationAsync("Database:Password",
+            setupConfiguration.DatabaseUserPassword,
+            cancellationToken);
     }
 }

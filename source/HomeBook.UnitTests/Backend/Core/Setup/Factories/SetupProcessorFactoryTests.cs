@@ -11,7 +11,6 @@ namespace HomeBook.UnitTests.Backend.Core.Setup.Factories;
 public class SetupProcessorFactoryTests
 {
     private IDatabaseMigratorFactory _databaseMigratorFactory;
-    private ISetupConfigurationProvider _setupConfigurationProvider;
     private IHashProviderFactory _hashProviderFactory;
     private IValidator<User> _userValidator;
     private IValidator<Configuration> _configurationValidator;
@@ -21,14 +20,12 @@ public class SetupProcessorFactoryTests
     public void SetUp()
     {
         _databaseMigratorFactory = Substitute.For<IDatabaseMigratorFactory>();
-        _setupConfigurationProvider = Substitute.For<ISetupConfigurationProvider>();
         _hashProviderFactory = Substitute.For<IHashProviderFactory>();
         _userValidator = Substitute.For<IValidator<User>>();
         _configurationValidator = Substitute.For<IValidator<Configuration>>();
 
         _factory = new SetupProcessorFactory(
             _databaseMigratorFactory,
-            _setupConfigurationProvider,
             _hashProviderFactory,
             _userValidator,
             _configurationValidator);

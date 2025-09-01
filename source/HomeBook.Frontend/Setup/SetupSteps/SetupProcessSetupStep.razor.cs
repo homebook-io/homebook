@@ -48,7 +48,8 @@ public partial class SetupProcessSetupStep : ComponentBase, ISetupStep
         {
             _setupFailed = true;
             // DE => Verbindung zum Server konnte nicht hergestellt werden. Stellen Sie sicher, dass der Server läuft und korrekt konfiguriert wurde und versuchen Sie es erneut.
-            _errorMessage = "Unable to connect to the server. Make sure that the server is running and has been configured correctly, then try again.";
+            _errorMessage =
+                "Unable to connect to the server. Make sure that the server is running and has been configured correctly, then try again.";
             await StepErrorAsync(cancellationToken);
         }
         catch (SetupCheckException err)
@@ -76,15 +77,18 @@ public partial class SetupProcessSetupStep : ComponentBase, ISetupStep
         {
             StartSetupRequest request = new();
 
-            string? homebookUserName = await SetupService.GetStorageValueAsync<string>("HOMEBOOK_USERNAME", cancellationToken);
+            string? homebookUserName =
+                await SetupService.GetStorageValueAsync<string>("HOMEBOOK_USERNAME", cancellationToken);
             if (!string.IsNullOrEmpty(homebookUserName))
                 request.HomebookUserName = homebookUserName;
 
-            string? homebookUserPassword = await SetupService.GetStorageValueAsync<string>("HOMEBOOK_PASSWORD", cancellationToken);
+            string? homebookUserPassword =
+                await SetupService.GetStorageValueAsync<string>("HOMEBOOK_PASSWORD", cancellationToken);
             if (!string.IsNullOrEmpty(homebookUserPassword))
                 request.HomebookUserPassword = homebookUserPassword;
 
-            string? homebookConfigurationName = await SetupService.GetStorageValueAsync<string>("HOMEBOOK_CONFIGURATION_NAME", cancellationToken);
+            string? homebookConfigurationName =
+                await SetupService.GetStorageValueAsync<string>("HOMEBOOK_CONFIGURATION_NAME", cancellationToken);
             if (!string.IsNullOrEmpty(homebookConfigurationName))
                 request.HomebookConfigurationName = homebookConfigurationName;
 
@@ -104,13 +108,19 @@ public partial class SetupProcessSetupStep : ComponentBase, ISetupStep
             if (!string.IsNullOrEmpty(databaseName))
                 request.DatabaseName = databaseName;
 
-            string? databaseUsername = await SetupService.GetStorageValueAsync<string>("DATABASE_USERNAME", cancellationToken);
+            string? databaseUsername =
+                await SetupService.GetStorageValueAsync<string>("DATABASE_USERNAME", cancellationToken);
             if (!string.IsNullOrEmpty(databaseUsername))
                 request.DatabaseUserName = databaseUsername;
 
-            string? databasePassword = await SetupService.GetStorageValueAsync<string>("DATABASE_PASSWORD", cancellationToken);
+            string? databasePassword =
+                await SetupService.GetStorageValueAsync<string>("DATABASE_PASSWORD", cancellationToken);
             if (!string.IsNullOrEmpty(databasePassword))
                 request.DatabaseUserPassword = databasePassword;
+
+            bool? licensesAccepted =
+                await SetupService.GetStorageValueAsync<bool>("HOMEBOOK_LICENSES_ACCEPTED", cancellationToken);
+            request.LicensesAccepted = licensesAccepted;
 
             // 1. start setup (it will restart the server at the end of the setup process)
             await BackendClient.Setup.Start.PostAsync(request,
@@ -132,7 +142,8 @@ public partial class SetupProcessSetupStep : ComponentBase, ISetupStep
         }
         catch (ApiException err) when (err.ResponseStatusCode == 400)
         {
-            throw new SetupCheckException("Validation error for example with the database configuration, e.g. too short password, etc.");
+            throw new SetupCheckException(
+                "Validation error for example with the database configuration, e.g. too short password, etc.");
         }
         catch (ApiException err) when (err.ResponseStatusCode == 422)
         {

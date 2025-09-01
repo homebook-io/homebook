@@ -1,10 +1,6 @@
-using FluentValidation;
-using HomeBook.Backend.Core.Models;
 using HomeBook.Backend.Core.Licenses.Extensions;
-using HomeBook.Backend.Core.DataProvider.Extensions;
 using Homebook.Backend.Core.Setup.Extensions;
 using HomeBook.Backend.Core.HashProvider.Extensions;
-using HomeBook.Backend.Core.Validators;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 
@@ -26,8 +22,6 @@ public static class ServiceCollectionExtensions
     private static IServiceCollection AddBackendCoreValidators(this IServiceCollection services,
         IConfiguration configuration)
     {
-        services.AddSingleton<IValidator<DatabaseConfiguration>, DatabaseConfigurationValidator>();
-
         return services;
     }
 }

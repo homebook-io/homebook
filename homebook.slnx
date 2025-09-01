@@ -31,6 +31,7 @@
     <File Path="Dockerfile" />
     <File Path="nginx.conf" />
     <File Path="icon_128.png" />
+    <File Path="docker-entrypoint.sh" />
   </Folder>
   <Folder Name="/Solution/workflows/">
     <File Path=".github\workflows\build.yml" />

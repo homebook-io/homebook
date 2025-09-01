@@ -8,6 +8,12 @@ public class EnvironmentValidator : AbstractValidator<EnvironmentConfiguration>
 {
     public EnvironmentValidator()
     {
+        // Database Type validation
+        RuleFor(x => x.DatabaseType)
+            .Must(BeValidDatabaseType)
+            .WithMessage("DatabaseType must be one of: POSTGRESQL, MYSQL, MARIADB")
+            .When(x => !string.IsNullOrEmpty(x.DatabaseType));
+
         // Database Host validation
         RuleFor(x => x.DatabaseHost)
             .Must(BeValidHostname)
@@ -94,25 +100,31 @@ public class EnvironmentValidator : AbstractValidator<EnvironmentConfiguration>
 
     private static bool IsValidIPv4(string ip)
     {
-        if (string.IsNullOrWhiteSpace(ip)) return false;
+        if (string.IsNullOrWhiteSpace(ip))
+            return false;
 
         // Split and check each octet individually for better validation
         var parts = ip.Split('.');
-        if (parts.Length != 4) return false;
+        if (parts.Length != 4)
+            return false;
 
         return parts.All(part =>
         {
             // Check for empty parts
-            if (string.IsNullOrEmpty(part)) return false;
+            if (string.IsNullOrEmpty(part))
+                return false;
 
             // Check if it's a valid number
-            if (!int.TryParse(part, out int num)) return false;
+            if (!int.TryParse(part, out int num))
+                return false;
 
             // Check range (1-255)
-            if (num < 1 || num > 255) return false;
+            if (num < 1 || num > 255)
+                return false;
 
             // Prevent leading zeros (except for single digit numbers)
-            if (part.Length > 1 && part[0] == '0') return false;
+            if (part.Length > 1 && part[0] == '0')
+                return false;
 
             // Ensure the parsed number matches the original string
             return part == num.ToString();
@@ -121,7 +133,8 @@ public class EnvironmentValidator : AbstractValidator<EnvironmentConfiguration>
 
     private static bool IsValidIPv6(string ip)
     {
-        if (string.IsNullOrWhiteSpace(ip)) return false;
+        if (string.IsNullOrWhiteSpace(ip))
+            return false;
 
         // Comprehensive IPv6 regex pattern
         var ipv6Regex = new Regex(
@@ -138,7 +151,8 @@ public class EnvironmentValidator : AbstractValidator<EnvironmentConfiguration>
             @"[0-9a-fA-F]{1,4}:(?:(?::[0-9a-fA-F]{1,4}){1,6})|" +
             @":(?:(?::[0-9a-fA-F]{1,4}){1,7}|:)|" +
             // IPv6 with IPv4 suffix (like ::ffff:192.168.1.1)
-            @"(?:[0-9a-fA-F]{1,4}:){1,4}:(?:(?:25[0-5]|2[0-4][0-9]|1[0-9][0-9]|[1-9]?[0-9])\.){3}(?:25[0-5]|2[0-4][0-9]|1[0-9][0-9]|[1-9]?[0-9])|" +
+            @"(?:[0-9a-fA-F]{1,4}:){1,4}:(?:(?:25[0-5]|2[0-4][0-9]|1[0-9][0-9]|[1-9]?[0-9])\.){3}(?:25[0-5]|2[0-4][0-9]|1[0-9][0-9]|[1-9]?[0-9])|"
+            +
             // Special cases
             @"::1|::" +
             @")$",
@@ -190,7 +204,8 @@ public class EnvironmentValidator : AbstractValidator<EnvironmentConfiguration>
         // - a-z, A-Z (letters)
         // - 0-9 (digits)
         // - Safe special characters commonly used in passwords
-        var allowedCharsRegex = new Regex(@"^[a-zA-Z0-9!@#$%^&*()_+\-=\[\]{};':""\\|,.<>/?`~]+$", RegexOptions.Compiled);
+        var allowedCharsRegex =
+            new Regex(@"^[a-zA-Z0-9!@#$%^&*()_+\-=\[\]{};':""\\|,.<>/?`~]+$", RegexOptions.Compiled);
 
         // Check if password contains only allowed characters
         if (!allowedCharsRegex.IsMatch(password))
@@ -205,5 +220,21 @@ public class EnvironmentValidator : AbstractValidator<EnvironmentConfiguration>
         }
 
         return true;
+    }
+
+    private static bool BeValidDatabaseType(string? databaseType)
+    {
+        if (string.IsNullOrEmpty(databaseType))
+            return true;
+
+        // Allowed database types
+        var allowedTypes = new[]
+        {
+            "POSTGRESQL",
+            "MYSQL",
+            "MARIADB"
+        };
+
+        return allowedTypes.Contains(databaseType.ToUpper());
     }
 }

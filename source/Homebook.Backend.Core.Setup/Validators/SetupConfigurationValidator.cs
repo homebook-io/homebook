@@ -1,12 +1,13 @@
 using System.Text.RegularExpressions;
 using FluentValidation;
-using HomeBook.Backend.Core.Models;
+using HomeBook.Backend.Abstractions.Models;
+using Homebook.Backend.Core.Setup.Models;
 
-namespace HomeBook.Backend.Core.Validators;
+namespace Homebook.Backend.Core.Setup.Validators;
 
-public class DatabaseConfigurationValidator : AbstractValidator<DatabaseConfiguration>
+public class SetupConfigurationValidator : AbstractValidator<SetupConfiguration>
 {
-    public DatabaseConfigurationValidator()
+    public SetupConfigurationValidator()
     {
         // Database Host validation
         RuleFor(x => x.DatabaseHost)
@@ -17,8 +18,7 @@ public class DatabaseConfigurationValidator : AbstractValidator<DatabaseConfigur
         // Database Port validation
         RuleFor(x => x.DatabasePort)
             .Must(BeValidPort)
-            .WithMessage("DatabasePort must be a valid port number between 1 and 65535")
-            .When(x => x.DatabasePort is not null);
+            .WithMessage("DatabasePort must be a valid port number between 1 and 65535");
 
         // Database Name validation+
         RuleFor(x => x.DatabaseName)
@@ -45,7 +45,7 @@ public class DatabaseConfigurationValidator : AbstractValidator<DatabaseConfigur
             .When(x => !string.IsNullOrEmpty(x.DatabaseUserPassword));
     }
 
-    private static bool BeValidHostname(string? hostname)
+    private static bool BeValidHostname(string hostname)
     {
         if (string.IsNullOrEmpty(hostname))
             return true;
@@ -145,7 +145,8 @@ public class DatabaseConfigurationValidator : AbstractValidator<DatabaseConfigur
             @"[0-9a-fA-F]{1,4}:(?:(?::[0-9a-fA-F]{1,4}){1,6})|" +
             @":(?:(?::[0-9a-fA-F]{1,4}){1,7}|:)|" +
             // IPv6 with IPv4 suffix (like ::ffff:192.168.1.1)
-            @"(?:[0-9a-fA-F]{1,4}:){1,4}:(?:(?:25[0-5]|2[0-4][0-9]|1[0-9][0-9]|[1-9]?[0-9])\.){3}(?:25[0-5]|2[0-4][0-9]|1[0-9][0-9]|[1-9]?[0-9])|" +
+            @"(?:[0-9a-fA-F]{1,4}:){1,4}:(?:(?:25[0-5]|2[0-4][0-9]|1[0-9][0-9]|[1-9]?[0-9])\.){3}(?:25[0-5]|2[0-4][0-9]|1[0-9][0-9]|[1-9]?[0-9])|"
+            +
             // Special cases
             @"::1|::" +
             @")$",
@@ -154,12 +155,12 @@ public class DatabaseConfigurationValidator : AbstractValidator<DatabaseConfigur
         return ipv6Regex.IsMatch(ip);
     }
 
-    private static bool BeValidPort(ushort? port)
+    private static bool BeValidPort(ushort port)
     {
         return port >= 1 && port <= 65535;
     }
 
-    private static bool BeValidDatabaseName(string? databaseName)
+    private static bool BeValidDatabaseName(string databaseName)
     {
         if (string.IsNullOrEmpty(databaseName))
             return true;
@@ -171,7 +172,7 @@ public class DatabaseConfigurationValidator : AbstractValidator<DatabaseConfigur
                !databaseName.EndsWith("-");
     }
 
-    private static bool BeValidUsername(string? username)
+    private static bool BeValidUsername(string username)
     {
         if (string.IsNullOrEmpty(username))
             return true;
@@ -185,7 +186,7 @@ public class DatabaseConfigurationValidator : AbstractValidator<DatabaseConfigur
                !username.EndsWith("-");
     }
 
-    private static bool BeValidPassword(string? password)
+    private static bool BeValidPassword(string password)
     {
         if (string.IsNullOrEmpty(password))
             return true;
@@ -194,7 +195,8 @@ public class DatabaseConfigurationValidator : AbstractValidator<DatabaseConfigur
         // - a-z, A-Z (letters)
         // - 0-9 (digits)
         // - Safe special characters commonly used in passwords
-        var allowedCharsRegex = new Regex(@"^[a-zA-Z0-9!@#$%^&*()_+\-=\[\]{};':""\\|,.<>/?`~]+$", RegexOptions.Compiled);
+        var allowedCharsRegex =
+            new Regex(@"^[a-zA-Z0-9!@#$%^&*()_+\-=\[\]{};':""\\|,.<>/?`~]+$", RegexOptions.Compiled);
 
         // Check if password contains only allowed characters
         if (!allowedCharsRegex.IsMatch(password))
