@@ -63,7 +63,7 @@ COPY $BACKEND_APPSETTINGS_FILE /opt/homebook/appsettings.json
 # Copy and make docker-entrypoint.sh executable
 COPY docker-entrypoint.sh /usr/local/bin/
 RUN chmod +x /usr/local/bin/docker-entrypoint.sh \
-    && chown appuser:appgroup /usr/local/bin/docker-entrypoint.sh
+    && chown $APP_UID /usr/local/bin/docker-entrypoint.sh
 
-USER appuser
+USER $APP_UID
 ENTRYPOINT ["/usr/local/bin/docker-entrypoint.sh"]
