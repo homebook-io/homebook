@@ -221,7 +221,7 @@ public class SetupHandler
             if (!string.IsNullOrEmpty(homebookInstanceName))
                 return TypedResults.Ok();
             else
-                return TypedResults.StatusCode(StatusCodes.Status404NotFound);
+                return TypedResults.NotFound();
         }
         catch (Exception err)
         {
