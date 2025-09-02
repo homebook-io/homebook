@@ -379,7 +379,7 @@ public class SetupHandler
         CancellationToken cancellationToken)
     {
         await runtimeConfigurationProvider.UpdateConfigurationAsync("Database:Provider",
-            setupConfiguration.DatabaseType,
+            setupConfiguration.DatabaseType.ToString(),
             cancellationToken);
 
         await runtimeConfigurationProvider.UpdateConfigurationAsync("Database:Host",

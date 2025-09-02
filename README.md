@@ -81,7 +81,9 @@ open your domain and you should see the HomeBook Setup.
 3. **Database Setup** - configure the database connection and check the connection.
 4. **Configuration** - configure the application settings, such as the homebook instance name and language.
 
-## Environment Variables
+## User Guide
+
+### Environment Variables
 
 if all environment variables are set, correctly, the setup will be running automatically.
 
@@ -96,11 +98,27 @@ if all environment variables are set, correctly, the setup will be running autom
 | `HOMEBOOK_USER_PASSWORD`   | the admin password (e.g., `password`)                                   |
 | `HOMEBOOK_ACCEPT_LICENSES` | no value needed. if added, the licenses will be accepted automatically. |
 
-## Allowed Password Characters
+### Allowed Password Characters
 
 ```
 a-z
 A-Z
 0-9
 !@#$%^&*()_+-=[]{}|;':",./<>?~`
+```
+
+### Optional Docker Settings
+
+#### Bind Volume to Host
+
+1. Create a directory on your host machine to store HomeBook data, e.g., `mkdir -p /your/path/homebook`.
+2. Execute command to set rights `chown -R 21001 /your/path/homebook && chmod -R 770 /your/path/homebook` (21001 is the standard homebook user-id for docker, replace if needed).
+3. Modify your Docker Compose file to bind the volume to the host directory:
+
+```yaml
+services:
+  homebook:
+    ...
+    volumes:
+      - /host/path/homebook:/var/lib/homebook
 ```
