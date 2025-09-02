@@ -5,6 +5,7 @@ using FluentValidation.Results;
 using HomeBook.Backend.Abstractions.Contracts;
 using HomeBook.Backend.Abstractions.Models;
 using HomeBook.Backend.Abstractions.Setup;
+using Homebook.Backend.Core.Setup.Exceptions;
 using Homebook.Backend.Core.Setup.Validators;
 using HomeBook.Backend.Handler;
 using HomeBook.Backend.Requests;
@@ -770,9 +771,6 @@ public class SetupHandlerTests
         var setupConfigurationValidator = new SetupConfigurationValidator();
         var configuration = Substitute.For<IConfiguration, IConfigurationRoot>();
 
-        _setupConfigurationProvider
-            .GetValue(EnvironmentVariables.HOMEBOOK_INSTANCE_NAME)
-            .Throws(new InvalidOperationException("boom"));
         var setupProcessor = Substitute.For<ISetupProcessor>();
         _setupProcessorFactory.Create().Returns(setupProcessor);
 
@@ -822,5 +820,170 @@ public class SetupHandlerTests
         _hostApplicationLifetime
             .Received(1)
             .StopApplication();
+    }
+
+    [Test]
+    public async Task HandleStartSetup_WithoutAcceptingLicenses_Returns()
+    {
+        // Arrange
+        var request = new StartSetupRequest(false,
+            "POSTGRESQL",
+            "192.168.0.1",
+            5432,
+            "homebook-test",
+            "dbroot",
+            "this-is-s3cr3t",
+            "auser",
+            "as3cr3tpassword",
+            "Test Homebook");
+        var setupConfigurationValidator = new SetupConfigurationValidator();
+        var configuration = Substitute.For<IConfiguration, IConfigurationRoot>();
+
+        var setupProcessor = Substitute.For<ISetupProcessor>();
+        _setupProcessorFactory.Create().Returns(setupProcessor);
+
+        // Act
+        var result = await SetupHandler.HandleStartSetup(request,
+            _logger,
+            setupConfigurationValidator,
+            _runtimeConfigurationProvider,
+            _setupInstanceManager,
+            _licenseProvider,
+            _setupConfigurationProvider,
+            configuration,
+            _hostApplicationLifetime,
+            _setupProcessorFactory,
+            CancellationToken.None);
+
+        // Assert
+        var internalErr = result.ShouldBeOfType<StatusCodeHttpResult>();
+        internalErr.StatusCode.ShouldBe(422); // Service Unavailable
+        internalErr.ShouldNotBeNull();
+    }
+
+    [Test]
+    public async Task HandleStartSetup_WithInvalidRequestData_Returns()
+    {
+        // Arrange
+        var request = new StartSetupRequest(false,
+            "",
+            "",
+            0,
+            "",
+            "",
+            "",
+            "",
+            "",
+            "");
+        var setupConfigurationValidator = new SetupConfigurationValidator();
+        var configuration = Substitute.For<IConfiguration, IConfigurationRoot>();
+
+        var setupProcessor = Substitute.For<ISetupProcessor>();
+        _setupProcessorFactory.Create().Returns(setupProcessor);
+
+        // Act
+        var result = await SetupHandler.HandleStartSetup(request,
+            _logger,
+            setupConfigurationValidator,
+            _runtimeConfigurationProvider,
+            _setupInstanceManager,
+            _licenseProvider,
+            _setupConfigurationProvider,
+            configuration,
+            _hostApplicationLifetime,
+            _setupProcessorFactory,
+            CancellationToken.None);
+
+        // Assert
+        var response = result.ShouldBeOfType<BadRequest<string[]>>();
+        response.ShouldNotBeNull();
+    }
+
+    [Test]
+    public async Task HandleStartSetup_WithThrowingSetupException_Returns()
+    {
+        // Arrange
+        var request = new StartSetupRequest(true,
+            "POSTGRESQL",
+            "192.168.0.1",
+            5432,
+            "homebook-test",
+            "dbroot",
+            "this-is-s3cr3t",
+            "auser",
+            "as3cr3tpassword",
+            "Test Homebook");
+        var setupConfigurationValidator = new SetupConfigurationValidator();
+        var configuration = Substitute.For<IConfiguration, IConfigurationRoot>();
+
+        var setupProcessor = Substitute.For<ISetupProcessor>();
+        _setupProcessorFactory.Create().Returns(setupProcessor);
+
+        setupProcessor.ProcessAsync(configuration,
+                Arg.Any<SetupConfiguration>(),
+                Arg.Any<CancellationToken>())
+            .Throws(new SetupException("boom"));
+
+        // Act
+        var result = await SetupHandler.HandleStartSetup(request,
+            _logger,
+            setupConfigurationValidator,
+            _runtimeConfigurationProvider,
+            _setupInstanceManager,
+            _licenseProvider,
+            _setupConfigurationProvider,
+            configuration,
+            _hostApplicationLifetime,
+            _setupProcessorFactory,
+            CancellationToken.None);
+
+        // Assert
+        var response = result.ShouldBeOfType<BadRequest<string>>();
+        response.ShouldNotBeNull();
+        response.Value.ShouldContain("boom");
+    }
+
+    [Test]
+    public async Task HandleStartSetup_WithThrowingUnknownException_Returns()
+    {
+        // Arrange
+        var request = new StartSetupRequest(true,
+            "POSTGRESQL",
+            "192.168.0.1",
+            5432,
+            "homebook-test",
+            "dbroot",
+            "this-is-s3cr3t",
+            "auser",
+            "as3cr3tpassword",
+            "Test Homebook");
+        var setupConfigurationValidator = new SetupConfigurationValidator();
+        var configuration = Substitute.For<IConfiguration, IConfigurationRoot>();
+
+        var setupProcessor = Substitute.For<ISetupProcessor>();
+        _setupProcessorFactory.Create().Returns(setupProcessor);
+
+        setupProcessor.ProcessAsync(configuration,
+                Arg.Any<SetupConfiguration>(),
+                Arg.Any<CancellationToken>())
+            .Throws(new InvalidOperationException("boom"));
+
+        // Act
+        var result = await SetupHandler.HandleStartSetup(request,
+            _logger,
+            setupConfigurationValidator,
+            _runtimeConfigurationProvider,
+            _setupInstanceManager,
+            _licenseProvider,
+            _setupConfigurationProvider,
+            configuration,
+            _hostApplicationLifetime,
+            _setupProcessorFactory,
+            CancellationToken.None);
+
+        // Assert
+        var response = result.ShouldBeOfType<InternalServerError<string>>();
+        response.ShouldNotBeNull();
+        response.Value.ShouldContain("boom");
     }
 }
