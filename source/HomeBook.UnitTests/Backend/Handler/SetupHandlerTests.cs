@@ -1,13 +1,17 @@
+using FluentDataBuilder;
+using FluentDataBuilder.Microsoft.Extensions.Configuration;
 using FluentValidation;
 using FluentValidation.Results;
-using HomeBook.Backend.Abstractions;
 using HomeBook.Backend.Abstractions.Contracts;
 using HomeBook.Backend.Abstractions.Models;
 using HomeBook.Backend.Abstractions.Setup;
+using Homebook.Backend.Core.Setup.Validators;
 using HomeBook.Backend.Handler;
 using HomeBook.Backend.Requests;
 using HomeBook.Backend.Responses;
 using Microsoft.AspNetCore.Http.HttpResults;
+using Microsoft.Extensions.Configuration;
+using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 using NSubstitute;
 using NSubstitute.ExceptionExtensions;
@@ -22,6 +26,10 @@ public class SetupHandlerTests
     private IFileSystemService _fileService = null!;
     private ISetupConfigurationProvider _setupConfigurationProvider = null!;
     private IDatabaseProviderResolver _databaseProviderResolver = null!;
+    private IRuntimeConfigurationProvider _runtimeConfigurationProvider = null!;
+    private ILicenseProvider _licenseProvider = null!;
+    private IHostApplicationLifetime _hostApplicationLifetime = null!;
+    private ISetupProcessorFactory _setupProcessorFactory = null!;
 
     [SetUp]
     public void SetUpSubstitutes()
@@ -42,6 +50,10 @@ public class SetupHandlerTests
         _fileService = Substitute.For<IFileSystemService>();
         _setupConfigurationProvider = Substitute.For<ISetupConfigurationProvider>();
         _databaseProviderResolver = Substitute.For<IDatabaseProviderResolver>();
+        _runtimeConfigurationProvider = Substitute.For<IRuntimeConfigurationProvider>();
+        _licenseProvider = Substitute.For<ILicenseProvider>();
+        _hostApplicationLifetime = Substitute.For<IHostApplicationLifetime>();
+        _setupProcessorFactory = Substitute.For<ISetupProcessorFactory>();
     }
 
     [Test]
@@ -739,5 +751,76 @@ public class SetupHandlerTests
         // Assert
         var ok = result.ShouldBeOfType<InternalServerError<string>>();
         ok.Value.ShouldBe("boom");
+    }
+
+    [Test]
+    public async Task HandleStartSetup_WithFullRequest_Returns()
+    {
+        // Arrange
+        var request = new StartSetupRequest(true,
+            "POSTGRESQL",
+            "192.168.0.1",
+            5432,
+            "homebook-test",
+            "dbroot",
+            "this-is-s3cr3t",
+            "auser",
+            "as3cr3tpassword",
+            "Test Homebook");
+        var setupConfigurationValidator = new SetupConfigurationValidator();
+        var configuration = Substitute.For<IConfiguration, IConfigurationRoot>();
+
+        _setupConfigurationProvider
+            .GetValue(EnvironmentVariables.HOMEBOOK_INSTANCE_NAME)
+            .Throws(new InvalidOperationException("boom"));
+        var setupProcessor = Substitute.For<ISetupProcessor>();
+        _setupProcessorFactory.Create().Returns(setupProcessor);
+
+        // Act
+        var result = await SetupHandler.HandleStartSetup(request,
+            _logger,
+            setupConfigurationValidator,
+            _runtimeConfigurationProvider,
+            _setupInstanceManager,
+            _licenseProvider,
+            _setupConfigurationProvider,
+            configuration,
+            _hostApplicationLifetime,
+            _setupProcessorFactory,
+            CancellationToken.None);
+
+        // Assert
+        var ok = result.ShouldBeOfType<Ok>();
+        ok.ShouldNotBeNull();
+
+        await _runtimeConfigurationProvider
+            .Received(1)
+            .UpdateConfigurationAsync("Database:Provider", "POSTGRESQL", Arg.Any<CancellationToken>());
+        await _runtimeConfigurationProvider
+            .Received(1)
+            .UpdateConfigurationAsync("Database:Host", "192.168.0.1", Arg.Any<CancellationToken>());
+        await _runtimeConfigurationProvider
+            .Received(1)
+            .UpdateConfigurationAsync("Database:Port", (ushort)5432, Arg.Any<CancellationToken>());
+        await _runtimeConfigurationProvider
+            .Received(1)
+            .UpdateConfigurationAsync("Database:InstanceDbName", "homebook-test", Arg.Any<CancellationToken>());
+        await _runtimeConfigurationProvider
+            .Received(1)
+            .UpdateConfigurationAsync("Database:Username", "dbroot", Arg.Any<CancellationToken>());
+        await _runtimeConfigurationProvider
+            .Received(1)
+            .UpdateConfigurationAsync("Database:Password", "this-is-s3cr3t", Arg.Any<CancellationToken>());
+        await setupProcessor
+            .Received(1)
+            .ProcessAsync(configuration,
+                Arg.Is<SetupConfiguration>(u => u.DatabaseType == DatabaseProvider.POSTGRESQL),
+                Arg.Any<CancellationToken>());
+        await _setupInstanceManager
+            .Received(1)
+            .CreateHomebookInstanceAsync(Arg.Any<CancellationToken>());
+        _hostApplicationLifetime
+            .Received(1)
+            .StopApplication();
     }
 }
