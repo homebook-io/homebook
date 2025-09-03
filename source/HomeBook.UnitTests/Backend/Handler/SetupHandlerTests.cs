@@ -662,8 +662,8 @@ public class SetupHandlerTests
         _setupConfigurationProvider.GetValue(EnvironmentVariables.HOMEBOOK_INSTANCE_NAME).Returns((string)null);
         _setupConfigurationProvider.GetValue(EnvironmentVariables.HOMEBOOK_USER_NAME).Returns((string)null);
         _setupConfigurationProvider.GetValue(EnvironmentVariables.HOMEBOOK_USER_PASSWORD).Returns((string)null);
-        _setupConfigurationProvider.GetValue<bool>(EnvironmentVariables.HOMEBOOK_ACCEPT_LICENSES)
-            .Returns((bool)default);
+        _setupConfigurationProvider.GetValue(EnvironmentVariables.HOMEBOOK_ACCEPT_LICENSES)
+            .Returns((string?)null);
 
         // Act
         var actual = SetupHandler.MapConfiguration(_setupConfigurationProvider, startSetupRequest);

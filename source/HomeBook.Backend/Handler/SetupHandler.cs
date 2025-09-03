@@ -367,9 +367,9 @@ public class SetupHandler
             ?? scp.GetValue(EnvironmentVariables.HOMEBOOK_USER_PASSWORD)
             ?? defaultConfiguration.HomebookUserPassword,
             // HOMEBOOK_ACCEPT_LICENSES
-            request.LicensesAccepted
-            ?? (bool?)scp.GetValue<bool>(EnvironmentVariables.HOMEBOOK_ACCEPT_LICENSES)
-            ?? defaultConfiguration.HomebookAcceptLicenses);
+            request.LicensesAccepted ?? false
+            || scp.GetValue(EnvironmentVariables.HOMEBOOK_ACCEPT_LICENSES) is not null
+            || defaultConfiguration.HomebookAcceptLicenses);
 
         return setupConfiguration;
     }
