@@ -439,7 +439,8 @@ public class SetupInstanceManagerTests
         await _instance.CreateHomebookInstanceAsync(_cancellationToken);
 
         // Assert
-        await _fileSystemService.Received(1).FileWriteAllTextAsync(expectedFilePath, expectedTrimmedVersion, _cancellationToken);
+        await _fileSystemService.Received(1)
+            .FileWriteAllTextAsync(expectedFilePath, expectedTrimmedVersion, _cancellationToken);
     }
 
     [Test]
