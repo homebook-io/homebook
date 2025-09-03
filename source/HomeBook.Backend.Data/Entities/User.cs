@@ -34,4 +34,18 @@ public class User
     [Required]
     [StringLength(50, ErrorMessage = "The password hash type cannot exceed 50 characters.")]
     public required string PasswordHashType { get; set; }
+
+    /// <summary>
+    /// UTC Zeitstempel der Erstellung - wird automatisch von der Datenbank gesetzt
+    /// </summary>
+    [Required]
+    [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
+    [Column(TypeName = "datetime2")]
+    public DateTime Created { get; set; } = DateTime.UtcNow;
+
+    /// <summary>
+    /// UTC Zeitstempel der Deaktivierung (null = aktiv)
+    /// </summary>
+    [Column(TypeName = "datetime2")]
+    public DateTime? Disabled { get; set; }
 }
