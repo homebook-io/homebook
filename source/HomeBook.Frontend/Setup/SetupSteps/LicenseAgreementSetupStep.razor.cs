@@ -80,6 +80,7 @@ public partial class LicenseAgreementSetupStep : ComponentBase, ISetupStep
         if (_licensesAccepted)
         {
             // wait and go to next step
+            await SetupService.SetStorageValueAsync("HOMEBOOK_LICENSES_ACCEPTED", true, cancellationToken);
             await SetupService.SetStepStatusAsync(false, false, cancellationToken);
             await InvokeAsync(StateHasChanged);
         }
