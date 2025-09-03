@@ -40,12 +40,10 @@ public class User
     /// </summary>
     [Required]
     [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
-    [Column(TypeName = "datetime2")]
     public DateTime Created { get; set; } = DateTime.UtcNow;
 
     /// <summary>
     /// UTC Zeitstempel der Deaktivierung (null = aktiv)
     /// </summary>
-    [Column(TypeName = "datetime2")]
     public DateTime? Disabled { get; set; }
 }

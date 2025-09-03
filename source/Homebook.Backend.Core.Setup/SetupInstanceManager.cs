@@ -1,4 +1,3 @@
-using HomeBook.Backend.Abstractions;
 using HomeBook.Backend.Abstractions.Contracts;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Logging;
@@ -52,9 +51,12 @@ public class SetupInstanceManager(
     {
         logger.LogInformation("Checking if homebook instance file exists at {FilePath}", _homebookInstanceFileName);
 
-        return fileSystemService.FileExists(_homebookInstanceFileName); // true => means setup is already executed and instance is created
+        return
+            fileSystemService.FileExists(
+                _homebookInstanceFileName); // true => means setup is already executed and instance is created
     }
 
+    /// <inheritdoc />
     public async Task<bool> IsUpdateRequiredAsync(CancellationToken cancellationToken = default)
     {
         // get the version from the appsettings
@@ -63,7 +65,8 @@ public class SetupInstanceManager(
         try
         {
             // get the version from the instance file
-            installedInstanceVersion = await fileSystemService.FileReadAllTextAsync(_homebookInstanceFileName, cancellationToken);
+            installedInstanceVersion =
+                await fileSystemService.FileReadAllTextAsync(_homebookInstanceFileName, cancellationToken);
         }
         catch (Exception err)
         {
@@ -80,5 +83,18 @@ public class SetupInstanceManager(
             return false;
 
         return true;
+    }
+
+    /// <inheritdoc />
+    public async Task<string?> GetLatestUpdateVersionAsync(CancellationToken cancellationToken)
+    {
+        bool isHomebookInstanceCreated = IsHomebookInstanceCreated();
+        if (!isHomebookInstanceCreated)
+            return null;
+
+        string installedInstanceVersion = await fileSystemService.FileReadAllTextAsync(_homebookInstanceFileName,
+            cancellationToken);
+
+        return installedInstanceVersion;
     }
 }

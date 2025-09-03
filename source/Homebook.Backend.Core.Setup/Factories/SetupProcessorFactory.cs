@@ -9,12 +9,14 @@ public class SetupProcessorFactory(
     IDatabaseMigratorFactory databaseMigratorFactory,
     IHashProviderFactory hashProviderFactory,
     IValidator<User> userValidator,
-    IValidator<Configuration> configurationValidator) : ISetupProcessorFactory
+    IValidator<Configuration> configurationValidator,
+    IUpdateProcessor updateProcessor) : ISetupProcessorFactory
 {
     /// <inheritdoc />
     public ISetupProcessor Create() =>
         new SetupProcessor(databaseMigratorFactory,
             hashProviderFactory,
             userValidator,
-            configurationValidator);
+            configurationValidator,
+            updateProcessor);
 }
