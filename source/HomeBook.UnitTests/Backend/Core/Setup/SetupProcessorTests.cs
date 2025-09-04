@@ -19,6 +19,7 @@ public class SetupProcessorTests
     private ILogger<SetupProcessor> _logger;
     private IDatabaseMigratorFactory _databaseMigratorFactory;
     private IHashProviderFactory _hashProviderFactory;
+    private IUpdateProcessor _updateProcessor;
     private SetupProcessor _instance;
 
     [SetUp]
@@ -38,10 +39,12 @@ public class SetupProcessorTests
         _logger = factory.CreateLogger<SetupProcessor>();
         _databaseMigratorFactory = Substitute.For<IDatabaseMigratorFactory>();
         _hashProviderFactory = Substitute.For<IHashProviderFactory>();
+        _updateProcessor = Substitute.For<IUpdateProcessor>();
         _instance = new SetupProcessor(_databaseMigratorFactory,
             _hashProviderFactory,
             new UserValidator(),
-            new ConfigurationValidator());
+            new ConfigurationValidator(),
+            _updateProcessor);
     }
 
     [Test]

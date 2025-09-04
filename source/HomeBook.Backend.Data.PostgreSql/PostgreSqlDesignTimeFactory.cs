@@ -8,7 +8,7 @@ public sealed class PostgreSqlDesignTimeFactory : IDesignTimeDbContextFactory<Ap
     public AppDbContext CreateDbContext(string[] args)
     {
         DbContextOptionsBuilder<AppDbContext> optionsBuilder = new();
-        optionsBuilder.SetDbOptions("Host=localhost;Database=homebook;Username=hb;Password=hb");
+        optionsBuilder.SetDbOptions(ConnectionStringBuilder.Build("localhost", "5432", "hb-migration", "db-migration", "this-is-not-a-password"));
 
         return new AppDbContext(optionsBuilder.Options);
     }

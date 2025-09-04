@@ -285,10 +285,7 @@ public class SetupHandler
                 setupConfiguration,
                 cancellationToken);
 
-            // 6. write setup instance file
-            await setupInstanceManager.CreateHomebookInstanceAsync(cancellationToken);
-
-            // 7. restart service
+            // 6. restart service
             hostApplicationLifetime.StopApplication();
 
             return TypedResults.Ok();
@@ -402,5 +399,53 @@ public class SetupHandler
         await runtimeConfigurationProvider.UpdateConfigurationAsync("Database:Password",
             setupConfiguration.DatabaseUserPassword,
             cancellationToken);
+    }
+
+    /// <summary>
+    /// starts the homebook update process.
+    /// </summary>
+    /// <param name="logger"></param>
+    /// <param name="setupInstanceManager"></param>
+    /// <param name="hostApplicationLifetime"></param>
+    /// <param name="updateProcessor"></param>
+    /// <param name="cancellationToken"></param>
+    /// <returns></returns>
+    public static async Task<IResult> HandleStartUpdate([FromServices] ILogger<SetupHandler> logger,
+        [FromServices] ISetupInstanceManager setupInstanceManager,
+        [FromServices] IHostApplicationLifetime hostApplicationLifetime,
+        [FromServices] IUpdateProcessor updateProcessor,
+        CancellationToken cancellationToken)
+    {
+        try
+        {
+            bool setupFinished = setupInstanceManager.IsHomebookInstanceCreated();
+            bool updateRequired = await setupInstanceManager.IsUpdateRequiredAsync(cancellationToken);
+
+            if (!setupFinished)
+                // HTTP 409 => Setup was not executed yet
+                return TypedResults.Conflict();
+
+            if (!updateRequired)
+                // HTTP 200 => no update available
+                return TypedResults.Ok();
+
+            // 1. execute update
+            await updateProcessor.ProcessAsync(cancellationToken);
+
+            // 2. restart service
+            hostApplicationLifetime.StopApplication();
+
+            return TypedResults.Ok();
+        }
+        catch (SetupException err)
+        {
+            logger.LogError(err, "Error while updating");
+            return TypedResults.InternalServerError(err.Message);
+        }
+        catch (Exception err)
+        {
+            logger.LogError(err, "Error while updating");
+            return TypedResults.InternalServerError(err.Message);
+        }
     }
 }

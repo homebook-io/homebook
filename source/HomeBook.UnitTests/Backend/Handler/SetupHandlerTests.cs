@@ -31,6 +31,7 @@ public class SetupHandlerTests
     private ILicenseProvider _licenseProvider = null!;
     private IHostApplicationLifetime _hostApplicationLifetime = null!;
     private ISetupProcessorFactory _setupProcessorFactory = null!;
+    private IUpdateProcessor _updateProcessor = null!;
 
     [SetUp]
     public void SetUpSubstitutes()
@@ -55,6 +56,7 @@ public class SetupHandlerTests
         _licenseProvider = Substitute.For<ILicenseProvider>();
         _hostApplicationLifetime = Substitute.For<IHostApplicationLifetime>();
         _setupProcessorFactory = Substitute.For<ISetupProcessorFactory>();
+        _updateProcessor = Substitute.For<IUpdateProcessor>();
     }
 
     [Test]
@@ -814,9 +816,6 @@ public class SetupHandlerTests
             .ProcessAsync(configuration,
                 Arg.Is<SetupConfiguration>(u => u.DatabaseType == DatabaseProvider.POSTGRESQL),
                 Arg.Any<CancellationToken>());
-        await _setupInstanceManager
-            .Received(1)
-            .CreateHomebookInstanceAsync(Arg.Any<CancellationToken>());
         _hostApplicationLifetime
             .Received(1)
             .StopApplication();
@@ -985,5 +984,48 @@ public class SetupHandlerTests
         var response = result.ShouldBeOfType<InternalServerError<string>>();
         response.ShouldNotBeNull();
         response.Value.ShouldContain("boom");
+    }
+
+    [Test]
+    public async Task HandleStartUpdate_NoSetupExecuted_Returns()
+    {
+        // Arrange
+        _setupInstanceManager
+            .IsHomebookInstanceCreated()
+            .Returns(false);
+
+        // Act
+        var result = await SetupHandler.HandleStartUpdate(_logger,
+            _setupInstanceManager,
+            _hostApplicationLifetime,
+            _updateProcessor,
+            CancellationToken.None);
+
+        // Assert
+        var response = result.ShouldBeOfType<Conflict>();
+        response.ShouldNotBeNull();
+    }
+
+    [Test]
+    public async Task HandleStartUpdate_NoUpdateAvailable_Returns()
+    {
+        // Arrange
+        _setupInstanceManager
+            .IsHomebookInstanceCreated()
+            .Returns(true);
+        _setupInstanceManager
+            .IsUpdateRequiredAsync()
+            .Returns(false);
+
+        // Act
+        var result = await SetupHandler.HandleStartUpdate(_logger,
+            _setupInstanceManager,
+            _hostApplicationLifetime,
+            _updateProcessor,
+            CancellationToken.None);
+
+        // Assert
+        var response = result.ShouldBeOfType<Ok>();
+        response.ShouldNotBeNull();
     }
 }

@@ -8,7 +8,7 @@ public class MySqlDesignTimeFactory : IDesignTimeDbContextFactory<AppDbContext>
     public AppDbContext CreateDbContext(string[] args)
     {
         DbContextOptionsBuilder<AppDbContext> optionsBuilder = new();
-        optionsBuilder.SetDbOptions("server=localhost:3306;uid=hb;pwd=hb;database=homebook;");
+        optionsBuilder.SetDbOptions(ConnectionStringBuilder.Build("localhost", "3306", "hb-migration", "db-migration", "this-is-not-a-password"));
 
         return new AppDbContext(optionsBuilder.Options);
     }

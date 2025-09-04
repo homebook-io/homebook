@@ -30,4 +30,11 @@ public interface ISetupInstanceManager
     /// <param name="cancellationToken"></param>
     /// <returns></returns>
     Task<bool> IsUpdateRequiredAsync(CancellationToken cancellationToken = default);
+
+    /// <summary>
+    /// returns the latest installed update version.
+    /// </summary>
+    /// <param name="cancellationToken"></param>
+    /// <returns></returns>
+    Task<string?> GetLatestUpdateVersionAsync(CancellationToken cancellationToken);
 }

@@ -48,6 +48,13 @@ namespace HomeBook.Backend.Data.PostgreSql.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uuid");
 
+                    b.Property<DateTime>("Created")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("timestamp with time zone");
+
+                    b.Property<DateTime?>("Disabled")
+                        .HasColumnType("timestamp with time zone");
+
                     b.Property<string>("PasswordHash")
                         .IsRequired()
                         .HasMaxLength(512)

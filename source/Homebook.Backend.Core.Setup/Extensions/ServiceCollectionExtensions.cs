@@ -4,6 +4,7 @@ using HomeBook.Backend.Abstractions.Models;
 using Homebook.Backend.Core.Setup.Factories;
 using Homebook.Backend.Core.Setup.Models;
 using Homebook.Backend.Core.Setup.Provider;
+using Homebook.Backend.Core.Setup.UpdateMigrators;
 using Homebook.Backend.Core.Setup.Validators;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -15,13 +16,23 @@ public static class ServiceCollectionExtensions
     public static IServiceCollection AddBackendCoreSetup(this IServiceCollection services,
         IConfiguration configuration)
     {
-        //
         services.AddBackendCoreSetupEnvironment(configuration)
-            .AddBackendCoreSetupValidators(configuration);
+            .AddBackendCoreSetupValidators(configuration)
+            .AddBackendCoreSetupUpdateComponents(configuration);
 
         services.AddSingleton<ISetupConfigurationProvider, SetupConfigurationProvider>();
         services.AddSingleton<ISetupInstanceManager, SetupInstanceManager>();
-        services.AddSingleton<ISetupProcessorFactory, SetupProcessorFactory>();
+        services.AddScoped<ISetupProcessorFactory, SetupProcessorFactory>();
+
+        return services;
+    }
+    public static IServiceCollection AddBackendCoreSetupUpdateComponents(this IServiceCollection services,
+        IConfiguration configuration)
+    {
+        services.AddScoped<IUpdateProcessor, UpdateProcessor>();
+
+        // update migrators
+        services.AddScoped<IUpdateMigrator, Update_1_0_10>();
 
         return services;
     }

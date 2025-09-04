@@ -16,7 +16,8 @@ public class SetupProcessor(
     IDatabaseMigratorFactory databaseMigratorFactory,
     IHashProviderFactory hashProviderFactory,
     IValidator<User> userValidator,
-    IValidator<Configuration> configurationValidator) : ISetupProcessor
+    IValidator<Configuration> configurationValidator,
+    IUpdateProcessor updateProcessor) : ISetupProcessor
 {
     /// <inheritdoc />
     public async Task ProcessAsync(IConfiguration configuration,
@@ -69,5 +70,8 @@ public class SetupProcessor(
         ConfigurationProvider configurationProvider = new(configurationRepository,
             configurationValidator);
         await configurationProvider.WriteHomeBookInstanceNameAsync(configurationName, cancellationToken);
+
+        // 4. execute available updates
+        await updateProcessor.ProcessAsync(cancellationToken);
     }
 }
