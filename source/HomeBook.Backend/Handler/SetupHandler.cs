@@ -1,5 +1,6 @@
 using FluentValidation;
 using HomeBook.Backend.Abstractions.Contracts;
+using HomeBook.Backend.Abstractions.Exceptions;
 using HomeBook.Backend.Abstractions.Models;
 using HomeBook.Backend.Abstractions.Setup;
 using Homebook.Backend.Core.Setup.Exceptions;
@@ -290,6 +291,11 @@ public class SetupHandler
 
             return TypedResults.Ok();
         }
+        catch (UserAlreadyExistsException err)
+        {
+            logger.LogError(err, "Given user already exists");
+            return TypedResults.BadRequest(err.Message);
+        }
         catch (SetupException err)
         {
             logger.LogError(err, "Setup error while processing the setup");
@@ -435,6 +441,7 @@ public class SetupHandler
             // 2. restart service
             hostApplicationLifetime.StopApplication();
 
+            // HTTP 200 => update finished
             return TypedResults.Ok();
         }
         catch (SetupException err)

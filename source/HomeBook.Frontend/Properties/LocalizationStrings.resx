@@ -54,6 +54,9 @@
         <value>Version</value>
     </data>
     <data name="UISetupStepper_SetupProcessSetupStep_Title" xml:space="preserve">
-        <value>Setup</value>
+        <value>HomeBook Setup</value>
+    </data>
+    <data name="UISetupStepper_UpdateProcessSetupStep_Title" xml:space="preserve">
+        <value>HomeBook Update</value>
     </data>
 </root>

@@ -1,6 +1,7 @@
 using System.Net;
 using HomeBook.Client;
 using HomeBook.Frontend.Abstractions.Contracts;
+using HomeBook.Frontend.Abstractions.Enums;
 using HomeBook.Frontend.Setup.SetupSteps;
 using Microsoft.Kiota.Abstractions;
 
@@ -23,12 +24,33 @@ public class SetupService(
     {
         List<ISetupStep> setupSteps = [];
 
-        setupSteps.Add(new BackendConnectionSetupStep());
-        setupSteps.Add(new LicenseAgreementSetupStep());
-        setupSteps.Add(new DatabaseConfigurationSetupStep());
-        setupSteps.Add(new AdminUserSetupStep());
-        setupSteps.Add(new ConfigurationSetupStep());
-        setupSteps.Add(new SetupProcessSetupStep());
+        InstanceStatus? instanceStatus = await GetInstanceStatusAsync(cancellationToken);
+
+        // homebook is running, no setup or update required
+        if (instanceStatus == InstanceStatus.Running)
+            return;
+
+        // setup is already running, cannot be started again
+        if (instanceStatus == InstanceStatus.ErrorSetupRunning)
+            return;
+
+        // ONLY ON FIRST SETUP
+        if (instanceStatus == InstanceStatus.SetupRequired)
+        {
+            setupSteps.Add(new BackendConnectionSetupStep());
+            setupSteps.Add(new LicenseAgreementSetupStep());
+            setupSteps.Add(new DatabaseConfigurationSetupStep());
+            setupSteps.Add(new AdminUserSetupStep());
+            setupSteps.Add(new ConfigurationSetupStep());
+            setupSteps.Add(new SetupProcessSetupStep());
+        }
+
+        // ONLY ON UPDATE
+        if (instanceStatus == InstanceStatus.UpdateRequired)
+        {
+            setupSteps.Add(new BackendConnectionSetupStep());
+            setupSteps.Add(new UpdateProcessSetupStep());
+        }
 
         _setupSteps = setupSteps;
     }
@@ -59,17 +81,18 @@ public class SetupService(
     {
         NativeResponseHandler native = new();
         await backendClient.Setup.Availability.GetAsync(cfg =>
-        {
-            cfg.Options.Add(new ResponseHandlerOption
             {
-                ResponseHandler = native
-            });
-        }, cancellationToken);
+                cfg.Options.Add(new ResponseHandlerOption
+                {
+                    ResponseHandler = native
+                });
+            },
+            cancellationToken);
         HttpStatusCode? status = (native.Value as HttpResponseMessage)?.StatusCode;
         return (int)(status ?? HttpStatusCode.InternalServerError);
     }
 
-    public async Task<bool> IsSetupDoneAsync(CancellationToken cancellationToken = default)
+    public async Task<InstanceStatus?> GetInstanceStatusAsync(CancellationToken cancellationToken = default)
     {
         try
         {
@@ -77,17 +100,21 @@ public class SetupService(
 
             return status switch
             {
-                HttpStatusCode.OK => false, // setup can be started
-                HttpStatusCode.Created => false, // setup is done, but an update is required
-                HttpStatusCode.NoContent => true, // setup is finished and no update is required => Homebook is ready to use
-                HttpStatusCode.Conflict => false, // setup is not available (already running)
-                _ => false // unknown error
+                // setup can be started
+                HttpStatusCode.OK => InstanceStatus.SetupRequired,
+                // setup is done, but an update is required
+                HttpStatusCode.Created => InstanceStatus.UpdateRequired,
+                // setup is finished and no update is required => Homebook is ready to use
+                HttpStatusCode.NoContent => InstanceStatus.Running,
+                // setup is not available (already running)
+                HttpStatusCode.Conflict => InstanceStatus.ErrorSetupRunning,
+                _ => null // unknown error
             };
         }
         catch (ApiException err)
         {
             // unknown error
-            return false;
+            return null;
         }
     }
 
@@ -138,9 +165,7 @@ public class SetupService(
             throw new ArgumentException("Key cannot be null or whitespace.", nameof(key));
 
         if (_storage.TryGetValue(key, out object? value) && value is T typedValue)
-        {
             return Task.FromResult(typedValue)!;
-        }
 
         return Task.FromResult<T?>(default);
     }

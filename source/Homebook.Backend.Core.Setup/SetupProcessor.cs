@@ -1,7 +1,7 @@
 using FluentValidation;
 using HomeBook.Backend.Abstractions.Contracts;
 using HomeBook.Backend.Abstractions.Models;
-using HomeBook.Backend.Core.DataProvider.UserManagement;
+using HomeBook.Backend.Core.DataProvider;
 using Homebook.Backend.Core.Setup.Exceptions;
 using HomeBook.Backend.Data.Contracts;
 using HomeBook.Backend.Data.Entities;

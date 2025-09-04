@@ -1,11 +1,12 @@
 using FluentValidation;
 using HomeBook.Backend.Abstractions.Contracts;
+using HomeBook.Backend.Abstractions.Exceptions;
 using HomeBook.Backend.Abstractions.Models.UserManagement;
 using HomeBook.Backend.Core.DataProvider.Mappings;
 using HomeBook.Backend.Data.Contracts;
 using HomeBook.Backend.Data.Entities;
 
-namespace HomeBook.Backend.Core.DataProvider.UserManagement;
+namespace HomeBook.Backend.Core.DataProvider;
 
 /// <inheritdoc />
 public class UserProvider(
@@ -20,8 +21,7 @@ public class UserProvider(
     {
         bool userExists = await userRepository.ContainsUserAsync(username, cancellationToken);
         if (userExists)
-            // TODO: replace with custom exception
-            throw new InvalidOperationException($"User with username '{username}' already exists.");
+            throw new UserAlreadyExistsException($"User with username '{username}' already exists.");
 
         IHashProvider hashProvider = hashProviderFactory.CreateDefault();
         string hashAlgorithm = hashProvider.AlgorithmName;

@@ -110,5 +110,11 @@ namespace HomeBook.Frontend.Properties {
                 return ResourceManager.GetString("UISetupStepper_SetupProcessSetupStep_Title", resourceCulture);
             }
         }
+        
+        internal static string UISetupStepper_UpdateProcessSetupStep_Title {
+            get {
+                return ResourceManager.GetString("UISetupStepper_UpdateProcessSetupStep_Title", resourceCulture);
+            }
+        }
     }
 }

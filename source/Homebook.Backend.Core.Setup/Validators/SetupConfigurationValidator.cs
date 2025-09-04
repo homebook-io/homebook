@@ -150,7 +150,8 @@ public class SetupConfigurationValidator : AbstractValidator<SetupConfiguration>
             // Special cases
             @"::1|::" +
             @")$",
-            RegexOptions.Compiled | RegexOptions.IgnoreCase);
+            RegexOptions.Compiled | RegexOptions.IgnoreCase,
+            TimeSpan.FromMilliseconds(250));
 
         return ipv6Regex.IsMatch(ip);
     }
@@ -166,7 +167,9 @@ public class SetupConfigurationValidator : AbstractValidator<SetupConfiguration>
             return true;
 
         // Only allow alphanumeric characters, underscores and hyphens
-        var regex = new Regex(@"^[a-zA-Z0-9_-]+$", RegexOptions.Compiled);
+        var regex = new Regex(@"^[a-zA-Z0-9_-]+$",
+            RegexOptions.Compiled,
+            TimeSpan.FromMilliseconds(250));
         return regex.IsMatch(databaseName) &&
                !databaseName.StartsWith("-") &&
                !databaseName.EndsWith("-");
@@ -178,7 +181,9 @@ public class SetupConfigurationValidator : AbstractValidator<SetupConfiguration>
             return true;
 
         // Alphanumeric characters, underscores, dots and hyphens
-        var regex = new Regex(@"^[a-zA-Z0-9_.-]+$", RegexOptions.Compiled);
+        var regex = new Regex(@"^[a-zA-Z0-9_.-]+$",
+            RegexOptions.Compiled,
+            TimeSpan.FromMilliseconds(250));
         return regex.IsMatch(username) &&
                !username.StartsWith(".") &&
                !username.EndsWith(".") &&
@@ -196,7 +201,9 @@ public class SetupConfigurationValidator : AbstractValidator<SetupConfiguration>
         // - 0-9 (digits)
         // - Safe special characters commonly used in passwords
         var allowedCharsRegex =
-            new Regex(@"^[a-zA-Z0-9!@#$%^&*()_+\-=\[\]{};':""\\|,.<>/?`~]+$", RegexOptions.Compiled);
+            new Regex(@"^[a-zA-Z0-9!@#$%^&*()_+\-=\[\]{};':""\\|,.<>/?`~]+$",
+                RegexOptions.Compiled,
+                TimeSpan.FromMilliseconds(250));
 
         // Check if password contains only allowed characters
         if (!allowedCharsRegex.IsMatch(password))

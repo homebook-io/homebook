@@ -3,7 +3,7 @@ using HomeBook.Backend.Abstractions.Contracts;
 using HomeBook.Backend.Data.Contracts;
 using HomeBook.Backend.Data.Entities;
 
-namespace HomeBook.Backend.Core.DataProvider.UserManagement;
+namespace HomeBook.Backend.Core.DataProvider;
 
 /// <inheritdoc />
 public class ConfigurationProvider(
