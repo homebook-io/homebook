@@ -1,3 +1,5 @@
+using HomeBook.Backend.Abstractions.Models.UserManagement;
+
 namespace HomeBook.Backend.Abstractions.Contracts;
 
 /// <summary>
@@ -24,4 +26,19 @@ public interface IUserProvider
     /// <returns></returns>
     Task<bool> ContainsUserAsync(string username,
         CancellationToken cancellationToken = default);
+
+    /// <summary>
+    /// returns all users
+    /// </summary>
+    /// <param name="cancellationToken"></param>
+    /// <returns></returns>
+    Task<IEnumerable<UserInfo>> GetAllAsync(CancellationToken cancellationToken);
+
+    /// <summary>
+    /// updates the given user
+    /// </summary>
+    /// <param name="userInfo"></param>
+    /// <param name="cancellationToken"></param>
+    /// <returns></returns>
+    Task UpdateUserAsync(UserInfo userInfo, CancellationToken cancellationToken);
 }

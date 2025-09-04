@@ -25,9 +25,6 @@ namespace HomeBook.Backend.Data.Mysql.Migrations
                 table: "Users",
                 type: "datetime(6)",
                 nullable: true);
-
-            // Set Created for all existing users to the current UTC timestamp
-            migrationBuilder.Sql("UPDATE Users SET Created = UTC_TIMESTAMP() WHERE Created IS NULL OR Created = '0001-01-01 00:00:00'");
         }
 
         /// <inheritdoc />

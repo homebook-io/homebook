@@ -1,10 +1,12 @@
 using HomeBook.Backend.Abstractions.Contracts;
 using Homebook.Backend.Core.Setup.Exceptions;
 using Microsoft.Extensions.Configuration;
+using Microsoft.Extensions.Logging;
 
 namespace Homebook.Backend.Core.Setup;
 
 public class UpdateProcessor(
+    ILogger<UpdateProcessor> logger,
     IConfiguration configuration,
     ISetupInstanceManager setupInstanceManager,
     IEnumerable<IUpdateMigrator> availableUpdateMigrators,
@@ -17,8 +19,17 @@ public class UpdateProcessor(
         if (string.IsNullOrEmpty(databaseType))
             throw new SetupException("database provider is not configured");
 
-        IDatabaseMigrator databaseMigrator = databaseMigratorFactory.CreateMigrator(databaseType);
-        await databaseMigrator.MigrateAsync(cancellationToken);
+        try
+        {
+            logger.LogInformation("Starting database migration for provider: {DatabaseType}", databaseType);
+            IDatabaseMigrator databaseMigrator = databaseMigratorFactory.CreateMigrator(databaseType);
+            await databaseMigrator.MigrateAsync(cancellationToken);
+        }
+        catch (Exception ex)
+        {
+            logger.LogError(ex, "Error during database migration, update aborted");
+            throw new SetupException("Error during database migration, update aborted");
+        }
 
         // 2. get latest update version
         string? latestUpdateVersion = await setupInstanceManager.GetLatestUpdateVersionAsync(cancellationToken);
@@ -29,9 +40,20 @@ public class UpdateProcessor(
                          string.Compare(um.Version, latestUpdateVersion, StringComparison.OrdinalIgnoreCase) > 0)
             .OrderBy(um => um.Version)
             .ToList();
-        foreach (IUpdateMigrator updateMigrator in updateMigrators)
+        try
         {
-            await updateMigrator.ExecuteAsync(cancellationToken);
+            foreach (IUpdateMigrator updateMigrator in updateMigrators)
+            {
+                logger.LogInformation("Executing update: {Version} - {Description}",
+                    updateMigrator.Version,
+                    updateMigrator.Description);
+                await updateMigrator.ExecuteAsync(cancellationToken);
+            }
+        }
+        catch (Exception ex)
+        {
+            logger.LogError(ex, "Error during update process, update aborted");
+            throw new SetupException("Error during update process, update aborted");
         }
 
         // 4. write current version to file

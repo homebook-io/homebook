@@ -26,6 +26,15 @@ public interface IUserRepository
         CancellationToken cancellationToken = default);
 
     /// <summary>
+    /// returns the user with the given user-id or null if not found
+    /// </summary>
+    /// <param name="id"></param>
+    /// <param name="cancellationToken"></param>
+    /// <returns></returns>
+    Task<User?> GetUserByIdAsync(Guid id,
+        CancellationToken cancellationToken = default);
+
+    /// <summary>
     /// returns the user with the given username or null if not found
     /// </summary>
     /// <param name="username"></param>
@@ -33,4 +42,19 @@ public interface IUserRepository
     /// <returns></returns>
     Task<User?> GetUserByUsernameAsync(string username,
         CancellationToken cancellationToken = default);
+
+    /// <summary>
+    /// returns all users
+    /// </summary>
+    /// <param name="cancellationToken"></param>
+    /// <returns></returns>
+    Task<IEnumerable<User>> GetAllAsync(CancellationToken cancellationToken);
+
+    /// <summary>
+    /// updates the given user
+    /// </summary>
+    /// <param name="user"></param>
+    /// <param name="cancellationToken"></param>
+    /// <returns></returns>
+    Task<User> UpdateUserAsync(User user, CancellationToken cancellationToken);
 }

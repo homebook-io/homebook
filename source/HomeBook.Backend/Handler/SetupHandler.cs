@@ -438,9 +438,14 @@ public class SetupHandler
 
             return TypedResults.Ok();
         }
+        catch (SetupException err)
+        {
+            logger.LogError(err, "Error while updating");
+            return TypedResults.InternalServerError(err.Message);
+        }
         catch (Exception err)
         {
-            logger.LogError(err, "Error while starting the setup");
+            logger.LogError(err, "Error while updating");
             return TypedResults.InternalServerError(err.Message);
         }
     }

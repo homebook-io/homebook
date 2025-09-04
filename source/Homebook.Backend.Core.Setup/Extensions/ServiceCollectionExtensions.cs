@@ -22,18 +22,17 @@ public static class ServiceCollectionExtensions
 
         services.AddSingleton<ISetupConfigurationProvider, SetupConfigurationProvider>();
         services.AddSingleton<ISetupInstanceManager, SetupInstanceManager>();
-        services.AddSingleton<ISetupProcessorFactory, SetupProcessorFactory>();
+        services.AddScoped<ISetupProcessorFactory, SetupProcessorFactory>();
 
         return services;
     }
     public static IServiceCollection AddBackendCoreSetupUpdateComponents(this IServiceCollection services,
         IConfiguration configuration)
     {
-        services.AddSingleton<IUpdateProcessor, UpdateProcessor>();
+        services.AddScoped<IUpdateProcessor, UpdateProcessor>();
 
         // update migrators
-        services.AddSingleton<IUpdateMigrator, Update_1_0_1_AddInstanceData>();
-        services.AddSingleton<IUpdateMigrator, Update_1_0_10_AddInstanceData>();
+        services.AddScoped<IUpdateMigrator, Update_1_0_10>();
 
         return services;
     }

@@ -1,5 +1,7 @@
 using FluentValidation;
 using HomeBook.Backend.Abstractions.Contracts;
+using HomeBook.Backend.Abstractions.Models.UserManagement;
+using HomeBook.Backend.Core.DataProvider.Mappings;
 using HomeBook.Backend.Data.Contracts;
 using HomeBook.Backend.Data.Entities;
 
@@ -39,4 +41,25 @@ public class UserProvider(
     /// <inheritdoc />
     public async Task<bool> ContainsUserAsync(string username, CancellationToken cancellationToken = default) =>
         await userRepository.ContainsUserAsync(username, cancellationToken);
+
+    /// <inheritdoc />
+    public async Task<IEnumerable<UserInfo>> GetAllAsync(CancellationToken cancellationToken)
+    {
+        IEnumerable<User> userEntities = await userRepository.GetAllAsync(cancellationToken);
+        IEnumerable<UserInfo> userInfos = userEntities.Select(x => x.ToUserInfo());
+        return userInfos;
+    }
+
+    /// <inheritdoc />
+    public async Task UpdateUserAsync(UserInfo userInfo,
+        CancellationToken cancellationToken)
+    {
+        User user = await userRepository.GetUserByIdAsync(userInfo.Id, cancellationToken)
+                    ?? throw new KeyNotFoundException($"User with id '{userInfo.Id}' not found.");
+        user = user.Update(userInfo);
+
+        await userValidator.ValidateAndThrowAsync(user, cancellationToken);
+
+        await userRepository.UpdateUserAsync(user, cancellationToken);
+    }
 }
