@@ -1,6 +1,5 @@
 using FluentValidation;
 using HomeBook.Backend.Abstractions.Contracts;
-using HomeBook.Backend.Core.DataProvider.UserManagement;
 using HomeBook.Backend.Core.DataProvider.Validators;
 using HomeBook.Backend.Data.Entities;
 using Microsoft.Extensions.Configuration;

@@ -1,14 +1,12 @@
-using HomeBook.Backend.Abstractions.Contracts;
-using HomeBook.Backend.Core.DataProvider.UserManagement;
+using HomeBook.Backend.Core.DataProvider;
 using HomeBook.Backend.Core.DataProvider.Validators;
 using HomeBook.Backend.Core.HashProvider;
 using HomeBook.Backend.Data.Contracts;
 using HomeBook.Backend.Data.Entities;
-using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Logging;
 using NSubstitute;
 
-namespace HomeBook.UnitTests.Backend.Core.DataProvider.UserManagement;
+namespace HomeBook.UnitTests.Backend.Core.DataProvider;
 
 [TestFixture]
 public class UserProviderTests

@@ -1,5 +1,6 @@
 using FluentValidation;
 using HomeBook.Backend.Abstractions.Contracts;
+using HomeBook.Backend.Abstractions.Exceptions;
 using HomeBook.Backend.Abstractions.Models;
 using HomeBook.Backend.Abstractions.Setup;
 using Homebook.Backend.Core.Setup.Exceptions;
@@ -289,6 +290,11 @@ public class SetupHandler
             hostApplicationLifetime.StopApplication();
 
             return TypedResults.Ok();
+        }
+        catch (UserAlreadyExistsException err)
+        {
+            logger.LogError(err, "Given user already exists");
+            return TypedResults.BadRequest(err.Message);
         }
         catch (SetupException err)
         {
