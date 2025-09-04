@@ -433,8 +433,7 @@ public class SetupHandler
             await updateProcessor.ProcessAsync(cancellationToken);
 
             // 2. restart service
-            // TODO: uncomment
-            // hostApplicationLifetime.StopApplication();
+            hostApplicationLifetime.StopApplication();
 
             return TypedResults.Ok();
         }
