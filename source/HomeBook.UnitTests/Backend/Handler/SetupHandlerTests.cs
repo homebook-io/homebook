@@ -159,9 +159,6 @@ public class SetupHandlerTests
         _setupConfigurationProvider.Received(1).GetValue(EnvironmentVariables.DATABASE_NAME);
         _setupConfigurationProvider.Received(1).GetValue(EnvironmentVariables.DATABASE_USER);
         _setupConfigurationProvider.Received(1).GetValue(EnvironmentVariables.DATABASE_PASSWORD);
-
-        // file service is currently not used by the handler
-        _fileService.DidNotReceiveWithAnyArgs();
     }
 
     [Test]
@@ -180,6 +177,7 @@ public class SetupHandlerTests
 
         // Assert: The current implementation always returns Ok with whatever it read
         var ok = result.ShouldBeOfType<NotFound>();
+        ok.ShouldNotBeNull();
     }
 
     [Test]
@@ -250,6 +248,7 @@ public class SetupHandlerTests
 
         // Assert
         var internalErr = result.ShouldBeOfType<Ok<string>>();
+        internalErr.ShouldNotBeNull();
     }
 
     [Test]
