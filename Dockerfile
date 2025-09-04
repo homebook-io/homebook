@@ -25,7 +25,7 @@ EXPOSE 8080 5000
 ENV ASPNETCORE_URLS=http://+:5000
 
 RUN apt-get update && \
-    apt-get install -y nginx && \
+    apt-get --no-install-recommends install -y nginx && \
     rm -rf /var/lib/apt/lists/*
 
 RUN addgroup --gid $APP_UID appgroup \
