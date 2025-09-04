@@ -9,20 +9,20 @@
 
     <MudCardHeader>
         <CardHeaderContent>
-            @if (_setupSuccessful && !_setupFailed)
+            @if (_updateSuccessful && !_updateFailed)
             {
-                <MudText Typo="Typo.h4">HomeBook Setup is finished</MudText>
+                <MudText Typo="Typo.h4">HomeBook Update is finished</MudText>
             }
             else
             {
-                <MudText Typo="Typo.h4">HomeBook Setup</MudText>
+                <MudText Typo="Typo.h4">HomeBook Update</MudText>
             }
         </CardHeaderContent>
     </MudCardHeader>
 
     <MudCardContent>
 
-        @if (_setupIsRunning)
+        @if (_updateIsRunning)
         {
             <div class="relative d-flex flex-grow-1 flex-wrap flex-column justify-center align-center">
                 <MudProgressLinear Color="Color.Primary"
@@ -31,28 +31,24 @@
             </div>
         }
 
-        @if (!_setupIsRunning)
+        @if (!_updateIsRunning)
         {
-            @if (!_setupSuccessful && !_setupFailed)
+            @if (!_updateSuccessful && !_updateFailed)
             {
                 <UiCountdownAlert Class="mt-3"
                                   Duration="TimeSpan.FromSeconds(5)"
-                                  OnFinished="async () => await OnStartSetupCountdownFinishedAsync()"
+                                  OnFinished="async () => await OnStartUpdateCountdownFinishedAsync()"
                                   Severity="Severity.Info">
-                    The setup is prepared and is starting now.
+                    The update is prepared and is starting now.
                 </UiCountdownAlert>
             }
 
-            @if (_setupSuccessful && !_setupFailed)
+            @if (_updateSuccessful && !_updateFailed)
             {
                 <div class="d-flex flex-column justify-center flex-grow-1 gap-4">
                     <MudText Typo="Typo.body1"
                              Class="mb-3">
-                        The setup was successful.
-                    </MudText>
-                    <MudText Typo="Typo.body1"
-                             Class="mb-5">
-                        Please remove the Setup Environment Variables from your docker configuration.
+                        The update was successful.
                     </MudText>
                     <MudButton OnClick="OnStartHomeBookAsync"
                                Size="Size.Large"
@@ -65,7 +61,7 @@
                 @*                   Duration="TimeSpan.FromSeconds(5)" *@
                 @*                   OnFinished="async () => await OnCountdownFinishedAsync()" *@
                 @*                   Severity="Severity.Info"> *@
-                @*     Setup was successful. *@
+                @*     Update was successful. *@
                 @* </UiCountdownAlert> *@
             }
 
@@ -80,8 +76,8 @@
                            Variant="Variant.Filled"
                            Class="mt-3"
                            StartIcon="@Icons.Material.TwoTone.Autorenew"
-                           OnClick="async () => await StartSetupAsync()">
-                    Retry Setup
+                           OnClick="async () => await StartUpdateAsync()">
+                    Retry Update
                 </MudButton>
             }
         }

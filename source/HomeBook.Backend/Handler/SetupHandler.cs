@@ -435,6 +435,7 @@ public class SetupHandler
             // 2. restart service
             hostApplicationLifetime.StopApplication();
 
+            // HTTP 200 => update finished
             return TypedResults.Ok();
         }
         catch (SetupException err)

@@ -1,3 +1,5 @@
+using HomeBook.Frontend.Abstractions.Enums;
+
 namespace HomeBook.Frontend.Abstractions.Contracts;
 
 public interface ISetupService
@@ -42,7 +44,7 @@ public interface ISetupService
     /// </summary>
     /// <param name="cancellationToken"></param>
     /// <returns></returns>
-    Task<bool> IsSetupDoneAsync(CancellationToken cancellationToken = default);
+    Task<InstanceStatus?> GetInstanceStatusAsync(CancellationToken cancellationToken = default);
 
     /// <summary>
     /// set the status of the current step.

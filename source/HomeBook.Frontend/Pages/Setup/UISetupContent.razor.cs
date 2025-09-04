@@ -1,6 +1,5 @@
 using HomeBook.Frontend.Abstractions.Contracts;
 using Microsoft.AspNetCore.Components;
-using Microsoft.AspNetCore.Components.Web;
 
 namespace HomeBook.Frontend.Pages.Setup;
 
@@ -55,11 +54,5 @@ public partial class UISetupContent : ComponentBase, IDisposable
     {
         _activeSetupStep = await SetupService.GetActiveSetupStepAsync(cancellationToken);
         await InvokeAsync(StateHasChanged);
-    }
-
-    private void Callback(MouseEventArgs obj)
-    {
-        // SetupService.SetIsDone(true);
-        NavigationManager.NavigateTo("/");
     }
 }
