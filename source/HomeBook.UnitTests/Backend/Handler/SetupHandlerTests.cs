@@ -816,9 +816,6 @@ public class SetupHandlerTests
             .ProcessAsync(configuration,
                 Arg.Is<SetupConfiguration>(u => u.DatabaseType == DatabaseProvider.POSTGRESQL),
                 Arg.Any<CancellationToken>());
-        await _setupInstanceManager
-            .Received(1)
-            .CreateHomebookInstanceAsync(Arg.Any<CancellationToken>());
         _hostApplicationLifetime
             .Received(1)
             .StopApplication();

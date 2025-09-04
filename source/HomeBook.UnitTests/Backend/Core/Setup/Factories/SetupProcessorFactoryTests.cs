@@ -14,6 +14,7 @@ public class SetupProcessorFactoryTests
     private IHashProviderFactory _hashProviderFactory;
     private IValidator<User> _userValidator;
     private IValidator<Configuration> _configurationValidator;
+    private IUpdateProcessor _updateProcessor;
     private SetupProcessorFactory _factory;
 
     [SetUp]
@@ -23,12 +24,14 @@ public class SetupProcessorFactoryTests
         _hashProviderFactory = Substitute.For<IHashProviderFactory>();
         _userValidator = Substitute.For<IValidator<User>>();
         _configurationValidator = Substitute.For<IValidator<Configuration>>();
+        _updateProcessor = Substitute.For<IUpdateProcessor>();
 
         _factory = new SetupProcessorFactory(
             _databaseMigratorFactory,
             _hashProviderFactory,
             _userValidator,
-            _configurationValidator);
+            _configurationValidator,
+            _updateProcessor);
     }
 
     [Test]
