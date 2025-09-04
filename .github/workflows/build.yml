@@ -220,7 +220,7 @@ jobs:
                     if git ls-remote --heads origin deploy | grep deploy; then
                         echo "Deploy branch exists, checking out and updating"
                         git checkout -B deploy origin/deploy
-                        git merge main -m "Merge main into deploy for version ${{ env.VERSION }}" --strategy-option=theirs
+                        git merge main -m "Merge main into deploy for version ${{ env.VERSION }}" --strategy-option=theirs --allow-unrelated-histories
                     else
                         echo "Deploy branch does not exist, creating new branch"
                         git checkout -b deploy
