@@ -8,4 +8,5 @@ public interface IApplicationPathProvider
     string LogDirectory { get; }
     string DataDirectory { get; }
     string TempDirectory { get; }
+    string UpdateDirectory { get; }
 }
