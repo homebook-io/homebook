@@ -1,5 +1,6 @@
 using System.Text.Json;
 using HomeBook.Backend.Abstractions.Contracts;
+using Homebook.Backend.Core.Setup.Exceptions;
 using Microsoft.Extensions.Logging;
 
 namespace Homebook.Backend.Core.Setup;
@@ -25,6 +26,22 @@ public class UpdateManager(
     public async Task ExecuteAvailableUpdateAsync(CancellationToken cancellationToken = default)
     {
         IEnumerable<IUpdateMigrator> pendingUpdates = await GetPendingUpdatesAsync(cancellationToken);
+
+        try
+        {
+            foreach (IUpdateMigrator updateMigrator in pendingUpdates)
+            {
+                logger.LogInformation("Executing update: {Version} - {Description}",
+                    updateMigrator.Version,
+                    updateMigrator.Description);
+                await updateMigrator.ExecuteAsync(cancellationToken);
+            }
+        }
+        catch (Exception ex)
+        {
+            logger.LogError(ex, "Error during update process, update aborted");
+            throw new SetupException("Error during update process, update aborted");
+        }
     }
 
     private async Task<IEnumerable<IUpdateMigrator>> GetPendingUpdatesAsync(CancellationToken cancellationToken =
