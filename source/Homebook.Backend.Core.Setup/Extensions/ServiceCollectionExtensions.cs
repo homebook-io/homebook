@@ -30,6 +30,7 @@ public static class ServiceCollectionExtensions
         IConfiguration configuration)
     {
         services.AddScoped<IUpdateProcessor, UpdateProcessor>();
+        services.AddScoped<IUpdateManager, UpdateManager>();
 
         // update migrators
         services.AddScoped<IUpdateMigrator, Update_1_0_10>();

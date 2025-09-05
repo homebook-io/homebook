@@ -12,7 +12,7 @@ public class Update_1_0_10(ILogger<Update_1_0_10> logger,
     IUserProvider userProvider) : IUpdateMigrator
 {
     /// <inheritdoc />
-    public string Version { get; } = "1.0.10";
+    public Version Version { get; } = new(1, 0, 10);
 
     /// <inheritdoc />
     public string Description { get; } = "Add HomeBook instance data";
