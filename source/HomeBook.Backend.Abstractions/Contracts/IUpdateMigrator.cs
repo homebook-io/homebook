@@ -8,7 +8,7 @@ public interface IUpdateMigrator
     /// <summary>
     /// the version that this migrator is responsible for updating to.
     /// </summary>
-    string Version { get; }
+    Version Version { get; }
 
     /// <summary>
     /// the description of the update being applied.

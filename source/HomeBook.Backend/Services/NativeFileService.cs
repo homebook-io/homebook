@@ -11,6 +11,7 @@ public class NativeFileService(ILogger<NativeFileService> logger) : IApplication
     public string LogDirectory { get; } = PathHandler.LogDirectory;
     public string DataDirectory { get; } = PathHandler.DataDirectory;
     public string TempDirectory { get; } = PathHandler.TempDirectory;
+    public string UpdateDirectory { get; } = PathHandler.UpdateDirectory;
 
     /// <inheritdoc />
     public bool FileExists(string path)
