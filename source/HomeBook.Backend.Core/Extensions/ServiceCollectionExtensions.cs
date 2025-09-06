@@ -1,3 +1,4 @@
+using HomeBook.Backend.Core.Account.Extensions;
 using HomeBook.Backend.Core.Licenses.Extensions;
 using Homebook.Backend.Core.Setup.Extensions;
 using HomeBook.Backend.Core.HashProvider.Extensions;
