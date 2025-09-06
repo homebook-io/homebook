@@ -5,17 +5,6 @@ namespace HomeBook.Backend.Handler;
 
 public static class VersionHandler
 {
-    // public static async Task<Results<Ok<AnalysisResponse>, BadRequest<string>, NotImplementedResult>> HandleGetVersion(
-    //     [FromQuery] int? maxResults,
-    //     [FromBody] AnalysisRequest request,
-    //     [FromServices] IValidator<AnalysisRequest> validator,
-    //     [FromServices] IAnalysisService analysisService,
-    //     [FromServices] IConfiguration configuration,
-    //     CancellationToken cancellationToken)
-    // {
-    //
-    // }
-
     public static async Task<IResult> HandleGetVersion(
         [FromServices] IConfiguration configuration,
         CancellationToken cancellationToken)

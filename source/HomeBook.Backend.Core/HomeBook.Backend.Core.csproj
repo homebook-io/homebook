@@ -14,6 +14,7 @@
 
     <ItemGroup>
       <ProjectReference Include="..\HomeBook.Backend.Abstractions\HomeBook.Backend.Abstractions.csproj" />
+      <ProjectReference Include="..\HomeBook.Backend.Core.Account\HomeBook.Backend.Core.Account.csproj" />
       <ProjectReference Include="..\HomeBook.Backend.Core.DataProvider\HomeBook.Backend.Core.DataProvider.csproj" />
       <ProjectReference Include="..\HomeBook.Backend.Core.HashProvider\HomeBook.Backend.Core.HashProvider.csproj" />
       <ProjectReference Include="..\HomeBook.Backend.Core.Licenses\HomeBook.Backend.Core.Licenses.csproj" />
