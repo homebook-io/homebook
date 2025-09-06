@@ -31,6 +31,7 @@ builder.Host.UseSerilog((ctx, services, cfg) =>
 builder.Services.AddOpenApi();
 
 builder.Services.AddAuthorization();
+builder.Services.AddHttpContextAccessor();
 
 builder.Services.AddBackendServices(builder.Configuration)
     .AddBackendCore(builder.Configuration)

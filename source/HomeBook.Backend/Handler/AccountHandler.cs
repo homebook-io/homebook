@@ -4,6 +4,7 @@ using HomeBook.Backend.Responses;
 using Microsoft.AspNetCore.Http.HttpResults;
 using Microsoft.AspNetCore.Mvc;
 using System.ComponentModel.DataAnnotations;
+using HomeBook.Backend.Abstractions.Models;
 
 namespace HomeBook.Backend.Handler;
 
@@ -19,7 +20,7 @@ public static class AccountHandler
         {
             logger.LogInformation("Login attempt for user: {Email}", request.Username);
 
-            var loginResult = await accountProvider.LoginAsync(
+            JwtTokenResult? loginResult = await accountProvider.LoginAsync(
                 request.Username,
                 request.Password,
                 cancellationToken);
@@ -32,7 +33,7 @@ public static class AccountHandler
 
             logger.LogInformation("Login successful for user: {Email}", request.Username);
 
-            var response = new LoginResponse
+            LoginResponse response = new()
             {
                 Token = loginResult.Token,
                 RefreshToken = loginResult.RefreshToken,
@@ -69,7 +70,7 @@ public static class AccountHandler
     {
         try
         {
-            var httpContext = httpContextAccessor.HttpContext;
+            HttpContext? httpContext = httpContextAccessor.HttpContext;
             if (httpContext == null)
             {
                 logger.LogWarning("HttpContext is null during logout");
@@ -77,18 +78,18 @@ public static class AccountHandler
             }
 
             // Get the current user's token from the authorization header
-            var authHeader = httpContext.Request.Headers.Authorization.FirstOrDefault();
+            string? authHeader = httpContext.Request.Headers.Authorization.FirstOrDefault();
             if (string.IsNullOrEmpty(authHeader) || !authHeader.StartsWith("Bearer "))
             {
                 logger.LogWarning("No valid authorization header found during logout");
                 return TypedResults.BadRequest("No valid token provided");
             }
 
-            var token = authHeader["Bearer ".Length..].Trim();
+            string token = authHeader["Bearer ".Length..].Trim();
 
             logger.LogInformation("Logout attempt for token");
 
-            var success = await accountProvider.LogoutAsync(token, cancellationToken);
+            bool success = await accountProvider.LogoutAsync(token, cancellationToken);
 
             if (!success)
             {
