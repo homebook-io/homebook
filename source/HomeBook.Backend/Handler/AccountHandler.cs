@@ -47,7 +47,7 @@ public static class AccountHandler
         catch (ValidationException ex)
         {
             logger.LogWarning(ex, "Validation error during login for user: {Email}", request.Username);
-            var problemDetails = new ValidationProblemDetails
+            ValidationProblemDetails problemDetails = new()
             {
                 Title = "Validation Error",
                 Detail = ex.Message,
