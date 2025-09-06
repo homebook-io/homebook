@@ -2,6 +2,7 @@ using HomeBook.Backend.Endpoints;
 using HomeBook.Backend.EnvironmentHandler;
 using HomeBook.Backend.Extensions;
 using HomeBook.Backend.Core.Extensions;
+using HomeBook.Backend.Core.Account.Extensions;
 using HomeBook.Backend.Core.Licenses.Extensions;
 using Homebook.Backend.Core.Setup.Extensions;
 using Scalar.AspNetCore;
@@ -17,6 +18,7 @@ builder.Configuration.Sources.Clear();
 builder.Configuration
     .AddJsonFile("appsettings.json", optional: false, reloadOnChange: true)
     .AddJsonFile($"appsettings.{builder.Environment.EnvironmentName}.json", optional: true, reloadOnChange: true)
+    .AddJsonFile("appsettings.jwt.json", optional: true, reloadOnChange: true)
     .AddJsonFile(PathHandler.RuntimeConfigurationFilePath, optional: true, reloadOnChange: true)
     .AddEnvironmentVariables(prefix: "HB_");
 
@@ -28,9 +30,14 @@ builder.Host.UseSerilog((ctx, services, cfg) =>
 
 builder.Services.AddOpenApi();
 
+builder.Services.AddAuthorization();
+builder.Services.AddHttpContextAccessor();
+
 builder.Services.AddBackendServices(builder.Configuration)
     .AddBackendCore(builder.Configuration)
-    .AddBackendDatabaseProvider(builder.Configuration);
+    .AddBackendDatabaseProvider(builder.Configuration)
+    .AddAccountServices()
+    .AddJwtAuthentication(builder.Configuration);
 
 if (builder.Environment.IsDevelopment())
 {
@@ -53,6 +60,9 @@ Log.Information("HomeBook Backend application starting up - Version: {Version}",
 
 app.UseSerilogRequestLogging();
 
+app.UseAuthentication();
+app.UseAuthorization();
+
 if (app.Environment.IsDevelopment())
 {
     app.UseCors();
@@ -65,6 +75,6 @@ app.UseDefaultFiles();
 // app.MapFallbackToFile("index.html"); // <- important for Blazor Routing
 
 app.MapSetupEndpoints()
-    .MapVersionEndpoints();
+    .MapAccountEndpoints();
 
 app.Run();

@@ -1,5 +1,4 @@
 using HomeBook.Backend.Handler;
-using Microsoft.OpenApi.Models;
 
 namespace HomeBook.Backend.Endpoints;
 

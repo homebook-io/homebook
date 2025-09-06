@@ -1,5 +1,6 @@
 using HomeBook.Backend.Handler;
 using HomeBook.Backend.OpenApi;
+using HomeBook.Backend.Requests;
 using HomeBook.Backend.Responses;
 
 namespace HomeBook.Backend.Endpoints;
@@ -64,6 +65,7 @@ public static class SetupEndpoints
             .WithOpenApi(operation => new(operation)
             {
             })
+            .Accepts<CheckDatabaseRequest>("application/json")
             .Produces<string>(StatusCodes.Status200OK)
             .Produces<string>(StatusCodes.Status500InternalServerError)
             .Produces(StatusCodes.Status503ServiceUnavailable);
@@ -104,6 +106,7 @@ public static class SetupEndpoints
             .WithOpenApi(operation => new(operation)
             {
             })
+            .Accepts<StartSetupRequest>("application/json")
             .Produces(StatusCodes.Status200OK)
             .Produces<string>(StatusCodes.Status400BadRequest)
             .Produces(StatusCodes.Status422UnprocessableEntity)
