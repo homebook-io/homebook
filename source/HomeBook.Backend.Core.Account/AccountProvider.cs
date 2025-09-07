@@ -1,6 +1,7 @@
 using HomeBook.Backend.Abstractions.Contracts;
 using HomeBook.Backend.Abstractions.Models;
 using HomeBook.Backend.Data.Contracts;
+using HomeBook.Backend.Data.Entities;
 using Microsoft.Extensions.Logging;
 
 namespace HomeBook.Backend.Core.Account;
@@ -26,7 +27,7 @@ public class AccountProvider(
         try
         {
             // Benutzer aus der Datenbank laden
-            var user = await userRepository.GetUserByUsernameAsync(username, cancellationToken);
+            User? user = await userRepository.GetUserByUsernameAsync(username, cancellationToken);
             if (user == null)
             {
                 logger.LogWarning("Login failed: User '{Username}' not found", username);
@@ -49,7 +50,7 @@ public class AccountProvider(
                 return null;
             }
 
-            var hashProvider = hashProviderFactory.Create(user.PasswordHashType);
+            IHashProvider hashProvider = hashProviderFactory.Create(user.PasswordHashType);
 
             // Passwort verifizieren
             if (!hashProvider.Verify(password, user.PasswordHash))
@@ -59,7 +60,7 @@ public class AccountProvider(
             }
 
             // JWT Token generieren
-            var tokenResult = jwtService.GenerateToken(user.Id, user.Username);
+            JwtTokenResult tokenResult = jwtService.GenerateToken(user.Id, user.Username);
 
             logger.LogInformation("Login successful for user '{Username}'", username);
             return tokenResult;
