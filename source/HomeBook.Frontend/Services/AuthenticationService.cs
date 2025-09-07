@@ -14,6 +14,9 @@ public class AuthenticationService(
     BackendClient backendClient,
     IJSRuntime jsRuntime) : IAuthenticationService
 {
+    private const string CLAIMS_ID_KEY = "http://schemas.xmlsoap.org/ws/2005/05/identity/claims/nameidentifier";
+    private const string CLAIMS_NAME_KEY = "http://schemas.xmlsoap.org/ws/2005/05/identity/claims/name";
+
     private const string TOKEN_KEY = "authToken";
     private const string REFRESH_TOKEN_KEY = "refreshToken";
     private const string EXPIRES_AT_KEY = "expiresAt";
@@ -183,10 +186,10 @@ public class AuthenticationService(
             List<Claim> claims = new();
 
             // Extract standard claims
-            if (jsonDocument.RootElement.TryGetProperty("sub", out JsonElement subElement))
+            if (jsonDocument.RootElement.TryGetProperty(CLAIMS_ID_KEY, out JsonElement subElement))
                 claims.Add(new Claim(ClaimTypes.NameIdentifier, subElement.GetString() ?? ""));
 
-            if (jsonDocument.RootElement.TryGetProperty("name", out JsonElement nameElement))
+            if (jsonDocument.RootElement.TryGetProperty(CLAIMS_NAME_KEY, out JsonElement nameElement))
                 claims.Add(new Claim(ClaimTypes.Name, nameElement.GetString() ?? ""));
 
             ClaimsIdentity identity = new(claims, "jwt");
