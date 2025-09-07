@@ -1,29 +1,61 @@
 ﻿@using HomeBook.Frontend.Abstractions.Contracts
 @using HomeBook.Frontend.Abstractions.Enums
+@using Microsoft.AspNetCore.Components.Authorization
 @using NavigationContext = Microsoft.AspNetCore.Components.Routing.NavigationContext
 
-<Router AppAssembly="@typeof(App).Assembly"
-        OnNavigateAsync="HandleNavigationAsync">
+<CascadingAuthenticationState>
 
-    <Found Context="routeData">
+    <Router AppAssembly="@typeof(App).Assembly"
+            OnNavigateAsync="HandleNavigationAsync">
 
-        <RouteView RouteData="@routeData" DefaultLayout="@typeof(MainLayout)"/>
+        <Found Context="routeData">
 
-        <FocusOnNavigate RouteData="@routeData" Selector="h1"/>
+            <AuthorizeRouteView RouteData="@routeData"
+                                DefaultLayout="@typeof(MainLayout)">
 
-    </Found>
+                <NotAuthorized>
 
-    <NotFound>
+                    @if (context.User.Identity?.IsAuthenticated != true)
+                    {
+                        <UiRedirectToLogin/>
+                    }
+                    else
+                    {
+                        <MudGrid Justify="Justify.Center"
+                                 Class="mt-20">
+                            <MudItem Class="pa-0">
+                                <MudAlert Severity="Severity.Error"
+                                          Variant="Variant.Filled"
+                                          Width="400px">
+                                    MainLayout_NotAuthorizedText
+                                </MudAlert>
+                            </MudItem>
+                        </MudGrid>
+                    }
 
-        <PageTitle>Not found</PageTitle>
+                </NotAuthorized>
 
-        <LayoutView Layout="@typeof(MainLayout)">
-            <p role="alert">Sorry, there's nothing at this address.</p>
-        </LayoutView>
+            </AuthorizeRouteView>
 
-    </NotFound>
+            @* <RouteView RouteData="@routeData" DefaultLayout="@typeof(MainLayout)"/> *@
 
-</Router>
+            <FocusOnNavigate RouteData="@routeData" Selector="h1"/>
+
+        </Found>
+
+        <NotFound>
+
+            <PageTitle>Not found</PageTitle>
+
+            <LayoutView Layout="@typeof(MainLayout)">
+                <p role="alert">Sorry, there's nothing at this address.</p>
+            </LayoutView>
+
+        </NotFound>
+
+    </Router>
+
+</CascadingAuthenticationState>
 
 @code {
 

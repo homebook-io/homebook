@@ -22,7 +22,6 @@ public partial class SetupExperiance : ComponentBase, IDisposable
 
         _appVersion = Configuration["Version"] ?? "Unknown";
         _appServer = Configuration["Backend:Host"] ?? "Unknown";
-        StateHasChanged();
 
         string buildMode = "release";
         _uiStripeBackgroundClass = buildMode switch
@@ -32,6 +31,7 @@ public partial class SetupExperiance : ComponentBase, IDisposable
             "release" => "build-mode-release",
             _ => "build-mode-unknown"
         };
+        StateHasChanged();
     }
 
     public void Dispose()

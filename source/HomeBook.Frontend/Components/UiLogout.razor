@@ -1,0 +1,55 @@
+@using HomeBook.Frontend.Abstractions.Contracts
+@using Microsoft.AspNetCore.Components.Authorization
+
+@inject IAuthenticationService AuthenticationService
+@inject NavigationManager NavigationManager
+@inject ISnackbar Snackbar
+@inject AuthenticationStateProvider AuthenticationStateProvider
+
+<AuthorizeView>
+    <Authorized>
+        <MudButton Variant="Variant.Text"
+                   Color="Color.Inherit"
+                   StartIcon="Icons.Material.Filled.Logout"
+                   OnClick="HandleLogoutAsync"
+                   Disabled="@_isLoggingOut">
+            @if (_isLoggingOut)
+            {
+                <MudProgressCircular Size="Size.Small" Indeterminate="true"/>
+                <MudText Class="ms-2">Logging out...</MudText>
+            }
+            else
+            {
+                <MudText>Logout</MudText>
+            }
+        </MudButton>
+    </Authorized>
+</AuthorizeView>
+
+@code {
+    private bool _isLoggingOut = false;
+
+    private async Task HandleLogoutAsync()
+    {
+        try
+        {
+            _isLoggingOut = true;
+            StateHasChanged();
+
+            await AuthenticationService.LogoutAsync();
+
+            Snackbar.Add("Successfully logged out.", Severity.Success);
+            NavigationManager.NavigateTo("/Login", true);
+        }
+        catch (Exception ex)
+        {
+            Snackbar.Add("Error during logout. Please try again.", Severity.Error);
+        }
+        finally
+        {
+            _isLoggingOut = false;
+            StateHasChanged();
+        }
+    }
+
+}
