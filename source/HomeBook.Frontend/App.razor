@@ -15,29 +15,20 @@
 
                 <NotAuthorized>
 
-                    @if (context.User.Identity?.IsAuthenticated != true)
-                    {
-                        <UiRedirectToLogin/>
-                    }
-                    else
-                    {
-                        <MudGrid Justify="Justify.Center"
-                                 Class="mt-20">
-                            <MudItem Class="pa-0">
-                                <MudAlert Severity="Severity.Error"
-                                          Variant="Variant.Filled"
-                                          Width="400px">
-                                    MainLayout_NotAuthorizedText
-                                </MudAlert>
-                            </MudItem>
-                        </MudGrid>
-                    }
+                    <MudGrid Justify="Justify.Center"
+                             Class="mt-20">
+                        <MudItem Class="pa-0">
+                            <MudAlert Severity="Severity.Error"
+                                      Variant="Variant.Filled"
+                                      Width="400px">
+                                MainLayout_NotAuthorizedText
+                            </MudAlert>
+                        </MudItem>
+                    </MudGrid>
 
                 </NotAuthorized>
 
             </AuthorizeRouteView>
-
-            @* <RouteView RouteData="@routeData" DefaultLayout="@typeof(MainLayout)"/> *@
 
             <FocusOnNavigate RouteData="@routeData" Selector="h1"/>
 
@@ -64,6 +55,9 @@
 
     [Inject]
     private ISetupService SetupService { get; set; }
+
+    [Inject]
+    private IAuthenticationService AuthenticationService { get; set; }
 
     private bool _setupServiceInitialized = false;
     private bool _isRedirecting;
@@ -115,14 +109,6 @@
         }
 
         bool isOnSetupPage = context.Path.StartsWith("setup", StringComparison.OrdinalIgnoreCase);
-
-        if (_instanceStatus == InstanceStatus.Running)
-        {
-            _isRedirecting = true;
-            NavigationManager.NavigateTo("/");
-            return;
-        }
-
         if ((_instanceStatus == InstanceStatus.SetupRequired
              || _instanceStatus == InstanceStatus.UpdateRequired)
             && !isOnSetupPage)
@@ -131,6 +117,24 @@
             NavigationManager.NavigateTo("/setup");
             return;
         }
+
+        if (_instanceStatus != InstanceStatus.Running)
+            return;
+
+        bool isOnLoginPage = context.Path.StartsWith("login", StringComparison.OrdinalIgnoreCase);
+        if (isOnLoginPage)
+            return;
+
+        bool isAuthenticated = await AuthenticationService.IsAuthenticatedAsync();
+        if (!isAuthenticated)
+        {
+            _isRedirecting = true;
+            NavigationManager.NavigateTo("/login");
+            return;
+        }
+
+        _isRedirecting = true;
+        NavigationManager.NavigateTo("/");
     }
 
 }
