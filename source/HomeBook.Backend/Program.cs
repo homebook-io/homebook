@@ -75,6 +75,7 @@ app.UseDefaultFiles();
 // app.MapFallbackToFile("index.html"); // <- important for Blazor Routing
 
 app.MapSetupEndpoints()
-    .MapAccountEndpoints();
+    .MapAccountEndpoints()
+    .MapVersionEndpoints();
 
 app.Run();
