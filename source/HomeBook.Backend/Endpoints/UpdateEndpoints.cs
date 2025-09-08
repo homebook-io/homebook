@@ -9,11 +9,11 @@ public static class UpdateEndpoints
     {
         RouteGroupBuilder group = routeBuilder
             .MapGroup("/update")
-            .WithTags("setup")
+            .WithTags("update")
             .WithDescription("Endpoints for setup management");
 
         group.MapPost("/start", UpdateHandler.HandleStartUpdate)
-            .WithName("StartUpdate")
+            .WithName("Update")
             .WithDescription(new Description("start the update process",
                 "HTTP 200: Update was successful",
                 "HTTP 409: Setup was not executed yet - setup must be completed before update can be started",
