@@ -114,20 +114,6 @@ public static class SetupEndpoints
             .Produces(StatusCodes.Status422UnprocessableEntity)
             .Produces<string>(StatusCodes.Status500InternalServerError);
 
-        group.MapPost("/update", UpdateHandler.HandleStartUpdate)
-            .WithName("StartUpdate")
-            .WithDescription(new Description("start the update process",
-                "HTTP 200: Update was successful",
-                "HTTP 409: Setup was not executed yet - setup must be completed before update can be started",
-                "HTTP 500: Unknown error while starting update"))
-            .WithOpenApi(operation => new(operation)
-            {
-                Deprecated = true // Marks the endpoint as deprecated in OpenAPI/Swagger
-            })
-            .Produces(StatusCodes.Status200OK)
-            .Produces(StatusCodes.Status409Conflict)
-            .Produces<string>(StatusCodes.Status500InternalServerError);
-
         return routeBuilder;
     }
 }
