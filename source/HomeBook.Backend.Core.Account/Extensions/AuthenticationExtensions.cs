@@ -3,6 +3,8 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.IdentityModel.Tokens;
 using System.Text;
+using HomeBook.Backend.Abstractions;
+using HomeBook.Backend.Abstractions.Contracts;
 
 namespace HomeBook.Backend.Core.Account.Extensions;
 
@@ -17,12 +19,15 @@ public static class AuthenticationExtensions
     /// <param name="services">The service collection</param>
     /// <param name="configuration">The configuration</param>
     /// <returns>The service collection for chaining</returns>
-    public static IServiceCollection AddJwtAuthentication(this IServiceCollection services, IConfiguration configuration)
+    public static IServiceCollection AddJwtAuthentication(this IServiceCollection services,
+        IConfiguration configuration,
+        InstanceStatus instanceStatus)
     {
         var secretKey = configuration["Jwt:SecretKey"] ?? throw new InvalidOperationException("JWT SecretKey is required");
         var issuer = configuration["Jwt:Issuer"] ?? "HomeBook";
         var audience = configuration["Jwt:Audience"] ?? "HomeBook";
 
+        services.AddScoped<IJwtService, JwtService>();
         services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
             .AddJwtBearer(options =>
             {

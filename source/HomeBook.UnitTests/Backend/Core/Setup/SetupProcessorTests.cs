@@ -7,6 +7,7 @@ using HomeBook.Backend.Core.DataProvider.Validators;
 using Homebook.Backend.Core.Setup;
 using Homebook.Backend.Core.Setup.Exceptions;
 using HomeBook.Backend.Data.PostgreSql;
+using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Logging;
 using NSubstitute;
 
@@ -19,7 +20,10 @@ public class SetupProcessorTests
     private ILogger<SetupProcessor> _logger;
     private IDatabaseMigratorFactory _databaseMigratorFactory;
     private IHashProviderFactory _hashProviderFactory;
-    private IUpdateProcessor _updateProcessor;
+    private ILoggerFactory _loggerFactory;
+    private IConfiguration _injectedConfiguration;
+    private IFileSystemService _fileSystemService;
+    private IApplicationPathProvider _applicationPathProvider;
     private SetupProcessor _instance;
 
     [SetUp]
@@ -39,12 +43,22 @@ public class SetupProcessorTests
         _logger = factory.CreateLogger<SetupProcessor>();
         _databaseMigratorFactory = Substitute.For<IDatabaseMigratorFactory>();
         _hashProviderFactory = Substitute.For<IHashProviderFactory>();
-        _updateProcessor = Substitute.For<IUpdateProcessor>();
+        _loggerFactory = Substitute.For<ILoggerFactory>();
+        _injectedConfiguration = Substitute.For<IConfiguration>();
+        _fileSystemService = Substitute.For<IFileSystemService>();
+        _applicationPathProvider = Substitute.For<IApplicationPathProvider>();
         _instance = new SetupProcessor(_databaseMigratorFactory,
             _hashProviderFactory,
-            new UserValidator(),
-            new ConfigurationValidator(),
-            _updateProcessor);
+            _loggerFactory,
+            _injectedConfiguration,
+            _fileSystemService,
+            _applicationPathProvider);
+    }
+
+    [TearDown]
+    public void TearDown()
+    {
+        _loggerFactory?.Dispose();
     }
 
     [Test]

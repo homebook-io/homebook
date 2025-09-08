@@ -294,14 +294,6 @@
 #ui-stripe-background-canvas {
   width: inherit;
   height: inherit;
-  /* OLD*/
-  /* https://www.color-hex.com/color-palette/1063036 */
-  /* hhttps://www.color-hex.com/color-palette/1054728 */
-  /* Fluid-Theme */
-  /* https://www.color-hex.com/color-palette/1061078 */
-  /* Cineris-Theme */
-  /* https://www.color-hex.com/color-palette/1049367 */
-  /* Valentine-Theme */
 }
 #ui-stripe-background-canvas.build-mode-alpha {
   /* https://www.color-hex.com/color-palette/1061773 */
@@ -332,6 +324,16 @@
   --gradient-color-3: #1340c8;
   --gradient-color-4: #0029a3;
   --gradient-color-5: #1c1d7c;
+}
+#ui-stripe-background-canvas {
+  /* OLD*/
+  /* https://www.color-hex.com/color-palette/1063036 */
+  /* hhttps://www.color-hex.com/color-palette/1054728 */
+  /* Fluid-Theme */
+  /* https://www.color-hex.com/color-palette/1061078 */
+  /* Cineris-Theme */
+  /* https://www.color-hex.com/color-palette/1049367 */
+  /* Valentine-Theme */
 }
 
 .ui-countdown-alert {
@@ -424,6 +426,33 @@
 }
 .setup-tiled-container.is-finished .bg-tile:nth-child(4) {
   transform: translate(200vw, 200px);
+}
+
+.hb-account-login-container {
+  height: 100vh;
+  padding-top: 120px;
+  padding-bottom: 120px;
+  transition: opacity 3s ease;
+}
+
+.hb-account-login-card {
+  height: 100%;
+  overflow-y: hidden;
+}
+
+.account-login-background {
+  transition: all 2s ease;
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  z-index: -100;
+  margin: auto;
+  overflow: hidden;
+}
+.account-login-background.is-finished {
+  opacity: 0;
 }
 
 /*# sourceMappingURL=app.css.map */

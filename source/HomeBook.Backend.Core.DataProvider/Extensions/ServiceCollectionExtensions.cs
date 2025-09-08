@@ -1,4 +1,5 @@
 using FluentValidation;
+using HomeBook.Backend.Abstractions;
 using HomeBook.Backend.Abstractions.Contracts;
 using HomeBook.Backend.Core.DataProvider.Validators;
 using HomeBook.Backend.Data.Entities;
@@ -11,7 +12,8 @@ namespace HomeBook.Backend.Core.DataProvider.Extensions;
 public static class ServiceCollectionExtensions
 {
     public static IServiceCollection AddBackendCoreDataProvider(this IServiceCollection services,
-        IConfiguration configuration)
+        IConfiguration configuration,
+        InstanceStatus instanceStatus)
     {
         services.AddScoped<IUserProvider, UserProvider>();
         services.AddScoped<IConfigurationProvider, ConfigurationProvider>();
@@ -20,7 +22,8 @@ public static class ServiceCollectionExtensions
     }
 
     public static IServiceCollection AddBackendCoreDataProviderValidators(this IServiceCollection services,
-        IConfiguration configuration)
+        IConfiguration configuration,
+        InstanceStatus instanceStatus)
     {
         services.AddSingleton<IValidator<User>, UserValidator>();
         services.AddSingleton<IValidator<Configuration>, ConfigurationValidator>();

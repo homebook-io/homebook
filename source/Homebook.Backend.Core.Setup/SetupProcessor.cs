@@ -1,13 +1,14 @@
-using FluentValidation;
+using HomeBook.Backend.Abstractions;
 using HomeBook.Backend.Abstractions.Contracts;
 using HomeBook.Backend.Abstractions.Models;
-using HomeBook.Backend.Core.DataProvider;
+using HomeBook.Backend.Core.DataProvider.Extensions;
 using Homebook.Backend.Core.Setup.Exceptions;
-using HomeBook.Backend.Data.Contracts;
-using HomeBook.Backend.Data.Entities;
-using HomeBook.Backend.Data.Repositories;
+using Homebook.Backend.Core.Setup.Extensions;
+using HomeBook.Backend.Data.Extensions;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Logging;
+using IConfigurationProvider = HomeBook.Backend.Abstractions.Contracts.IConfigurationProvider;
 
 namespace Homebook.Backend.Core.Setup;
 
@@ -15,9 +16,10 @@ namespace Homebook.Backend.Core.Setup;
 public class SetupProcessor(
     IDatabaseMigratorFactory databaseMigratorFactory,
     IHashProviderFactory hashProviderFactory,
-    IValidator<User> userValidator,
-    IValidator<Configuration> configurationValidator,
-    IUpdateProcessor updateProcessor) : ISetupProcessor
+    ILoggerFactory loggerFactory,
+    IConfiguration injectedConfiguration,
+    IFileSystemService fileSystemService,
+    IApplicationPathProvider applicationPathProvider) : ISetupProcessor
 {
     /// <inheritdoc />
     public async Task ProcessAsync(IConfiguration configuration,
@@ -41,21 +43,33 @@ public class SetupProcessor(
             || string.IsNullOrEmpty(adminPassword))
             throw new SetupException("homebook username or password is not set");
 
-        // Get the database context using the new method
+        // Get the database context using the new method with logging and configuration
         ServiceCollection services = new();
+
+        // Add the same logging configuration as in Program.cs
+        services.AddSingleton(loggerFactory);
+        services.AddLogging();
+
+        // Add the same configuration as in Program.cs
+        services.AddSingleton(injectedConfiguration);
+
+        // Add the same file system services as in Program.cs
+        services.AddSingleton(fileSystemService);
+        services.AddSingleton(applicationPathProvider);
+        services.AddSingleton(hashProviderFactory);
+        services.AddSingleton(databaseMigratorFactory);
+
         databaseMigrator.ConfigureForServiceCollection(services, configuration);
 
-        // Create a temporary service collection to get the repository
-        services.AddScoped<IUserRepository, UserRepository>();
-        services.AddScoped<IConfigurationRepository, ConfigurationRepository>();
+        services.AddSingleton<ISetupInstanceManager, SetupInstanceManager>();
+        services.AddBackendCoreSetupUpdateComponents(configuration, InstanceStatus.SETUP)
+            .AddBackendData(configuration, InstanceStatus.SETUP)
+            .AddBackendCoreDataProvider(configuration, InstanceStatus.SETUP)
+            .AddBackendCoreDataProviderValidators(configuration, InstanceStatus.SETUP);
 
         ServiceProvider serviceProvider = services.BuildServiceProvider();
 
-        IUserRepository userRepository = serviceProvider.GetRequiredService<IUserRepository>();
-        UserProvider userProvider = new(userRepository,
-            hashProviderFactory,
-            userValidator);
-
+        IUserProvider userProvider = serviceProvider.GetRequiredService<IUserProvider>();
         await userProvider.CreateUserAsync(adminUsername,
             adminPassword,
             cancellationToken);
@@ -65,13 +79,11 @@ public class SetupProcessor(
         if (string.IsNullOrEmpty(configurationName))
             throw new SetupException("homebook configuration name is not set");
 
-        IConfigurationRepository configurationRepository =
-            serviceProvider.GetRequiredService<IConfigurationRepository>();
-        ConfigurationProvider configurationProvider = new(configurationRepository,
-            configurationValidator);
+        IConfigurationProvider configurationProvider = serviceProvider.GetRequiredService<IConfigurationProvider>();
         await configurationProvider.WriteHomeBookInstanceNameAsync(configurationName, cancellationToken);
 
         // 4. execute available updates
+        IUpdateProcessor updateProcessor = serviceProvider.GetRequiredService<IUpdateProcessor>();
         await updateProcessor.ProcessAsync(cancellationToken);
     }
 }

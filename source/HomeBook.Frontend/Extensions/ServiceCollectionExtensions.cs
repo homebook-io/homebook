@@ -1,7 +1,10 @@
 using HomeBook.Frontend.Abstractions.Contracts;
 using HomeBook.Frontend.Properties;
 using HomeBook.Frontend.Provider;
+using HomeBook.Frontend.Services;
+using HomeBook.Frontend.Services.Provider;
 using HomeBook.Frontend.Setup;
+using Microsoft.AspNetCore.Components.Authorization;
 using Microsoft.Extensions.Localization;
 
 namespace HomeBook.Frontend.Extensions;
@@ -11,7 +14,13 @@ public static class ServiceCollectionExtensions
     public static IServiceCollection AddFrontendUiServices(this IServiceCollection services,
         IConfiguration configuration)
     {
+        services.AddAuthorizationCore();
+        services.AddCascadingAuthenticationState();
+        services.AddScoped<IAuthenticationService, AuthenticationService>();
+        services.AddScoped<AuthenticationStateProvider, CustomAuthenticationStateProvider>();
+
         services.AddSingleton<ISetupService, SetupService>();
+        services.AddScoped<IContentProvider, ContentProvider>();
 
         services.AddLocalization();
         services.AddSingleton<ILocalizationProvider, LocalizationProvider>(x =>
