@@ -10,7 +10,7 @@ public class InstanceStatusExtensionsTests
     [TestCase("", InstanceStatus.SETUP)]
     [TestCase(null, InstanceStatus.SETUP)]
     [TestCase("not-empty-value", InstanceStatus.RUNNING)]
-    public async Task ContainsUserAsync_ShouldReturnExpectedResult(string? status, InstanceStatus expected)
+    public void ContainsUserAsync_ShouldReturnExpectedResult(string? status, InstanceStatus expected)
     {
         // Arrange
         var configuration = new DataBuilder()

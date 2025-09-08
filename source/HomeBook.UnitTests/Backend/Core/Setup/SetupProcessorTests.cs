@@ -62,7 +62,7 @@ public class SetupProcessorTests
     }
 
     [Test]
-    public async Task ProcessAsync_WithoutDatabaseType_Throws()
+    public void ProcessAsync_WithoutDatabaseType_Throws()
     {
         // Arrange
         var setupConfiguration = new SetupConfiguration(DatabaseProvider.POSTGRESQL,

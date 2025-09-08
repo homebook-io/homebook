@@ -397,7 +397,7 @@ public class SetupHandlerTests
 
         // Act
         var result =
-            await SetupHandler.HandleGetPreConfiguredUser(_logger, _setupConfigurationProvider, CancellationToken.None);
+            SetupHandler.HandleGetPreConfiguredUser(_logger, _setupConfigurationProvider, CancellationToken.None);
 
         // Assert
         var ok = result.ShouldBeOfType<Ok>();
@@ -417,7 +417,7 @@ public class SetupHandlerTests
 
         // Act
         var result =
-            await SetupHandler.HandleGetPreConfiguredUser(_logger, _setupConfigurationProvider, CancellationToken.None);
+            SetupHandler.HandleGetPreConfiguredUser(_logger, _setupConfigurationProvider, CancellationToken.None);
 
         // Assert
         var status = result.ShouldBeOfType<StatusCodeHttpResult>();
@@ -438,7 +438,7 @@ public class SetupHandlerTests
 
         // Act
         var result =
-            await SetupHandler.HandleGetPreConfiguredUser(_logger, _setupConfigurationProvider, CancellationToken.None);
+            SetupHandler.HandleGetPreConfiguredUser(_logger, _setupConfigurationProvider, CancellationToken.None);
 
         // Assert
         var status = result.ShouldBeOfType<StatusCodeHttpResult>();
@@ -459,7 +459,7 @@ public class SetupHandlerTests
 
         // Act
         var result =
-            await SetupHandler.HandleGetPreConfiguredUser(_logger, _setupConfigurationProvider, CancellationToken.None);
+            SetupHandler.HandleGetPreConfiguredUser(_logger, _setupConfigurationProvider, CancellationToken.None);
 
         // Assert
         var status = result.ShouldBeOfType<StatusCodeHttpResult>();
@@ -480,7 +480,7 @@ public class SetupHandlerTests
 
         // Act
         var result =
-            await SetupHandler.HandleGetPreConfiguredUser(_logger, _setupConfigurationProvider, CancellationToken.None);
+            SetupHandler.HandleGetPreConfiguredUser(_logger, _setupConfigurationProvider, CancellationToken.None);
 
         // Assert
         var status = result.ShouldBeOfType<StatusCodeHttpResult>();
@@ -499,7 +499,7 @@ public class SetupHandlerTests
 
         // Act
         var result =
-            await SetupHandler.HandleGetPreConfiguredUser(_logger, _setupConfigurationProvider, CancellationToken.None);
+            SetupHandler.HandleGetPreConfiguredUser(_logger, _setupConfigurationProvider, CancellationToken.None);
 
         // Assert
         var status = result.ShouldBeOfType<InternalServerError<string>>();
@@ -508,7 +508,7 @@ public class SetupHandlerTests
     }
 
     [Test]
-    public async Task MapConfiguration_WithEnvironmentVariables_Returns_EnvironmentSettings()
+    public void MapConfiguration_WithEnvironmentVariables_Returns_EnvironmentSettings()
     {
         // Arrange
         var startSetupRequest = new StartSetupRequest(
@@ -551,7 +551,7 @@ public class SetupHandlerTests
     }
 
     [Test]
-    public async Task MapConfiguration_WithRequestVariables_Returns_RequestSettings()
+    public void MapConfiguration_WithRequestVariables_Returns_RequestSettings()
     {
         // Arrange
         var startSetupRequest = new StartSetupRequest(
@@ -565,15 +565,15 @@ public class SetupHandlerTests
             HomebookUserName: "user",
             HomebookUserPassword: "s3cr3t",
             HomebookConfigurationName: "test-homebook");
-        _setupConfigurationProvider.GetValue(EnvironmentVariables.DATABASE_TYPE).Returns((string)null);
-        _setupConfigurationProvider.GetValue(EnvironmentVariables.DATABASE_HOST).Returns((string)null);
+        _setupConfigurationProvider.GetValue(EnvironmentVariables.DATABASE_TYPE).Returns((string?)null);
+        _setupConfigurationProvider.GetValue(EnvironmentVariables.DATABASE_HOST).Returns((string?)null);
         _setupConfigurationProvider.GetValue<ushort>(EnvironmentVariables.DATABASE_PORT).Returns((ushort)default);
-        _setupConfigurationProvider.GetValue(EnvironmentVariables.DATABASE_NAME).Returns((string)null);
-        _setupConfigurationProvider.GetValue(EnvironmentVariables.DATABASE_USER).Returns((string)null);
-        _setupConfigurationProvider.GetValue(EnvironmentVariables.DATABASE_PASSWORD).Returns((string)null);
-        _setupConfigurationProvider.GetValue(EnvironmentVariables.HOMEBOOK_INSTANCE_NAME).Returns((string)null);
-        _setupConfigurationProvider.GetValue(EnvironmentVariables.HOMEBOOK_USER_NAME).Returns((string)null);
-        _setupConfigurationProvider.GetValue(EnvironmentVariables.HOMEBOOK_USER_PASSWORD).Returns((string)null);
+        _setupConfigurationProvider.GetValue(EnvironmentVariables.DATABASE_NAME).Returns((string?)null);
+        _setupConfigurationProvider.GetValue(EnvironmentVariables.DATABASE_USER).Returns((string?)null);
+        _setupConfigurationProvider.GetValue(EnvironmentVariables.DATABASE_PASSWORD).Returns((string?)null);
+        _setupConfigurationProvider.GetValue(EnvironmentVariables.HOMEBOOK_INSTANCE_NAME).Returns((string?)null);
+        _setupConfigurationProvider.GetValue(EnvironmentVariables.HOMEBOOK_USER_NAME).Returns((string?)null);
+        _setupConfigurationProvider.GetValue(EnvironmentVariables.HOMEBOOK_USER_PASSWORD).Returns((string?)null);
         _setupConfigurationProvider.GetValue<bool>(EnvironmentVariables.HOMEBOOK_ACCEPT_LICENSES)
             .Returns((bool)default);
 
@@ -595,7 +595,7 @@ public class SetupHandlerTests
     }
 
     [Test]
-    public async Task MapConfiguration_WithEnvironmentAndRequestVariables_Returns_RequestSettings()
+    public void MapConfiguration_WithEnvironmentAndRequestVariables_Returns_RequestSettings()
     {
         // Arrange
         var startSetupRequest = new StartSetupRequest(
@@ -638,7 +638,7 @@ public class SetupHandlerTests
     }
 
     [Test]
-    public async Task MapConfiguration_WithNoVariables_Returns_DefaultSettings()
+    public void MapConfiguration_WithNoVariables_Returns_DefaultSettings()
     {
         // Arrange
         var startSetupRequest = new StartSetupRequest(
@@ -652,15 +652,15 @@ public class SetupHandlerTests
             HomebookUserName: null,
             HomebookUserPassword: null,
             HomebookConfigurationName: null);
-        _setupConfigurationProvider.GetValue(EnvironmentVariables.DATABASE_TYPE).Returns((string)null);
-        _setupConfigurationProvider.GetValue(EnvironmentVariables.DATABASE_HOST).Returns((string)null);
+        _setupConfigurationProvider.GetValue(EnvironmentVariables.DATABASE_TYPE).Returns((string?)null);
+        _setupConfigurationProvider.GetValue(EnvironmentVariables.DATABASE_HOST).Returns((string?)null);
         _setupConfigurationProvider.GetValue<ushort>(EnvironmentVariables.DATABASE_PORT).Returns((ushort)default);
-        _setupConfigurationProvider.GetValue(EnvironmentVariables.DATABASE_NAME).Returns((string)null);
-        _setupConfigurationProvider.GetValue(EnvironmentVariables.DATABASE_USER).Returns((string)null);
-        _setupConfigurationProvider.GetValue(EnvironmentVariables.DATABASE_PASSWORD).Returns((string)null);
-        _setupConfigurationProvider.GetValue(EnvironmentVariables.HOMEBOOK_INSTANCE_NAME).Returns((string)null);
-        _setupConfigurationProvider.GetValue(EnvironmentVariables.HOMEBOOK_USER_NAME).Returns((string)null);
-        _setupConfigurationProvider.GetValue(EnvironmentVariables.HOMEBOOK_USER_PASSWORD).Returns((string)null);
+        _setupConfigurationProvider.GetValue(EnvironmentVariables.DATABASE_NAME).Returns((string?)null);
+        _setupConfigurationProvider.GetValue(EnvironmentVariables.DATABASE_USER).Returns((string?)null);
+        _setupConfigurationProvider.GetValue(EnvironmentVariables.DATABASE_PASSWORD).Returns((string?)null);
+        _setupConfigurationProvider.GetValue(EnvironmentVariables.HOMEBOOK_INSTANCE_NAME).Returns((string?)null);
+        _setupConfigurationProvider.GetValue(EnvironmentVariables.HOMEBOOK_USER_NAME).Returns((string?)null);
+        _setupConfigurationProvider.GetValue(EnvironmentVariables.HOMEBOOK_USER_PASSWORD).Returns((string?)null);
         _setupConfigurationProvider.GetValue(EnvironmentVariables.HOMEBOOK_ACCEPT_LICENSES)
             .Returns((string?)null);
 
@@ -682,15 +682,15 @@ public class SetupHandlerTests
     }
 
     [Test]
-    public async Task HandleGetConfiguration_WithNoValues_Returns()
+    public void HandleGetConfiguration_WithNoValues_Returns()
     {
         // Arrange
         _setupConfigurationProvider
             .GetValue(EnvironmentVariables.HOMEBOOK_INSTANCE_NAME)
-            .Returns((string)null);
+            .Returns((string?)null);
 
         // Act
-        var result = await SetupHandler.HandleGetConfiguration(_logger,
+        var result = SetupHandler.HandleGetConfiguration(_logger,
             _setupConfigurationProvider,
             CancellationToken.None);
 
@@ -700,7 +700,7 @@ public class SetupHandlerTests
     }
 
     [Test]
-    public async Task HandleGetConfiguration_WithEmptyString_Returns()
+    public void HandleGetConfiguration_WithEmptyString_Returns()
     {
         // Arrange
         _setupConfigurationProvider
@@ -708,7 +708,7 @@ public class SetupHandlerTests
             .Returns(string.Empty);
 
         // Act
-        var result = await SetupHandler.HandleGetConfiguration(_logger,
+        var result = SetupHandler.HandleGetConfiguration(_logger,
             _setupConfigurationProvider,
             CancellationToken.None);
 
@@ -718,7 +718,7 @@ public class SetupHandlerTests
     }
 
     [Test]
-    public async Task HandleGetConfiguration_WithConfiguredValues_Returns()
+    public void HandleGetConfiguration_WithConfiguredValues_Returns()
     {
         // Arrange
         _setupConfigurationProvider
@@ -726,7 +726,7 @@ public class SetupHandlerTests
             .Returns("test instance");
 
         // Act
-        var result = await SetupHandler.HandleGetConfiguration(_logger,
+        var result = SetupHandler.HandleGetConfiguration(_logger,
             _setupConfigurationProvider,
             CancellationToken.None);
 
@@ -736,7 +736,7 @@ public class SetupHandlerTests
     }
 
     [Test]
-    public async Task HandleGetConfiguration_WithThrowingException_Returns()
+    public void HandleGetConfiguration_WithThrowingException_Returns()
     {
         // Arrange
         _setupConfigurationProvider
@@ -744,7 +744,7 @@ public class SetupHandlerTests
             .Throws(new InvalidOperationException("boom"));
 
         // Act
-        var result = await SetupHandler.HandleGetConfiguration(_logger,
+        var result = SetupHandler.HandleGetConfiguration(_logger,
             _setupConfigurationProvider,
             CancellationToken.None);
 
@@ -936,7 +936,7 @@ public class SetupHandlerTests
         // Assert
         var response = result.ShouldBeOfType<BadRequest<string>>();
         response.ShouldNotBeNull();
-        response.Value.ShouldContain("boom");
+        response.Value?.ShouldContain("boom");
     }
 
     [Test]
@@ -980,6 +980,6 @@ public class SetupHandlerTests
         // Assert
         var response = result.ShouldBeOfType<InternalServerError<string>>();
         response.ShouldNotBeNull();
-        response.Value.ShouldContain("boom");
+        response.Value?.ShouldContain("boom");
     }
 }

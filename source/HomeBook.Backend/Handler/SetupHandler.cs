@@ -180,7 +180,7 @@ public class SetupHandler
     /// <param name="setupConfigurationProvider"></param>
     /// <param name="cancellationToken"></param>
     /// <returns></returns>
-    public static async Task<IResult> HandleGetPreConfiguredUser([FromServices] ILogger<SetupHandler> logger,
+    public static IResult HandleGetPreConfiguredUser([FromServices] ILogger<SetupHandler> logger,
         [FromServices] ISetupConfigurationProvider setupConfigurationProvider,
         CancellationToken cancellationToken)
     {
@@ -210,14 +210,14 @@ public class SetupHandler
     /// <param name="setupConfigurationProvider"></param>
     /// <param name="cancellationToken"></param>
     /// <returns></returns>
-    public static async Task<IResult> HandleGetConfiguration([FromServices] ILogger<SetupHandler> logger,
+    public static IResult HandleGetConfiguration([FromServices] ILogger<SetupHandler> logger,
         [FromServices] ISetupConfigurationProvider setupConfigurationProvider,
         CancellationToken cancellationToken)
     {
         try
         {
-            string? homebookInstanceName =
-                setupConfigurationProvider.GetValue(EnvironmentVariables.HOMEBOOK_INSTANCE_NAME);
+            string? homebookInstanceName = setupConfigurationProvider
+                .GetValue(EnvironmentVariables.HOMEBOOK_INSTANCE_NAME);
 
             if (!string.IsNullOrEmpty(homebookInstanceName))
                 return TypedResults.Ok();
