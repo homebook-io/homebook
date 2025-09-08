@@ -1,0 +1,103 @@
+@page "/Login"
+@using HomeBook.Frontend.Abstractions.Contracts
+@using Microsoft.AspNetCore.Components.Authorization
+
+@attribute [AllowAnonymous]
+
+<PageTitle>@Loc["Setup_Title"]</PageTitle>
+
+@layout ContentOnlyLayout
+
+@inject ILocalizationProvider Loc
+@inject NavigationManager NavigationManager
+@inject IAuthenticationService AuthenticationService
+@inject ISnackbar Snackbar
+@inject AuthenticationStateProvider AuthenticationStateProvider
+
+<div class="account-login-background @_accountBackgroundClass">
+    <UiStripeBackground CanvasCssClass="@_uiStripeBackgroundClass"/>
+</div>
+
+<MudContainer Class="@string.Format($"hb-account-login-container {_accountContainerClass}")">
+
+    <MudGrid Class="mt-4" Justify="Justify.Center">
+
+        <MudItem xs="12" sm="8" md="6" lg="4">
+
+            <EditForm Model="@_loginModel" OnValidSubmit="HandleLoginAsync">
+                <DataAnnotationsValidator/>
+
+                <MudCard Elevation="10"
+                         Class="hb-account-login-card frosted-b5 mud-elevation-24 mud-text-primary">
+
+                    <MudCardHeader>
+
+                        <CardHeaderContent>
+                            <MudText Typo="Typo.h3">@Loc["Account_Login_Title"]</MudText>
+                        </CardHeaderContent>
+
+                    </MudCardHeader>
+
+                    <MudCardContent>
+
+                        @if (!string.IsNullOrEmpty(_errorMessage))
+                        {
+                            <MudAlert Severity="Severity.Error" Class="mb-4" ShowCloseIcon="false">
+                                @_errorMessage
+                            </MudAlert>
+                        }
+
+                        <MudTextField Label="Username"
+                                      @bind-Value="_loginModel.Username"
+                                      For="@(() => _loginModel.Username)"
+                                      Variant="Variant.Outlined"
+                                      Margin="Margin.Normal"
+                                      FullWidth="true"
+                                      Disabled="@_isLoading"
+                                      Adornment="Adornment.Start"
+                                      AdornmentIcon="Icons.Material.Filled.Person"/>
+
+                        <MudTextField Label="Password"
+                                      @bind-Value="_loginModel.Password"
+                                      For="@(() => _loginModel.Password)"
+                                      Variant="Variant.Outlined"
+                                      Margin="Margin.Normal"
+                                      FullWidth="true"
+                                      InputType="InputType.Password"
+                                      Disabled="@_isLoading"
+                                      Adornment="Adornment.Start"
+                                      AdornmentIcon="Icons.Material.Filled.Lock"/>
+
+                    </MudCardContent>
+
+                    <MudCardActions>
+
+                        <MudButton ButtonType="ButtonType.Submit"
+                                   Variant="Variant.Filled"
+                                   Color="Color.Primary"
+                                   FullWidth="true"
+                                   Size="Size.Large"
+                                   Disabled="@_isLoading">
+                            @if (_isLoading)
+                            {
+                                <MudProgressCircular Class="ms-n1" Size="Size.Small" Indeterminate="true"/>
+                                <MudText Class="ms-2">Signing in...</MudText>
+                            }
+                            else
+                            {
+                                <MudIcon Icon="Icons.Material.Filled.Login" Class="mr-2"/>
+                                <MudText>Sign In</MudText>
+                            }
+                        </MudButton>
+
+                    </MudCardActions>
+
+                </MudCard>
+
+            </EditForm>
+
+        </MudItem>
+
+    </MudGrid>
+
+</MudContainer>

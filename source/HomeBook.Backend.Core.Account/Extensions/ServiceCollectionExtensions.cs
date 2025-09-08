@@ -1,4 +1,6 @@
+using HomeBook.Backend.Abstractions;
 using HomeBook.Backend.Abstractions.Contracts;
+using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 
 namespace HomeBook.Backend.Core.Account.Extensions;
@@ -13,10 +15,11 @@ public static class ServiceCollectionExtensions
     /// </summary>
     /// <param name="services">The service collection</param>
     /// <returns>The service collection for chaining</returns>
-    public static IServiceCollection AddAccountServices(this IServiceCollection services)
+    public static IServiceCollection AddAccountServices(this IServiceCollection services,
+        IConfiguration configuration,
+        InstanceStatus instanceStatus)
     {
         services.AddScoped<IAccountProvider, AccountProvider>();
-        services.AddScoped<IJwtService, JwtService>();
 
         return services;
     }

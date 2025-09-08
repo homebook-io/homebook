@@ -1,4 +1,5 @@
 using FluentValidation;
+using HomeBook.Backend.Abstractions;
 using HomeBook.Backend.Abstractions.Contracts;
 using HomeBook.Backend.Abstractions.Models;
 using Homebook.Backend.Core.Setup.Factories;
@@ -14,11 +15,12 @@ namespace Homebook.Backend.Core.Setup.Extensions;
 public static class ServiceCollectionExtensions
 {
     public static IServiceCollection AddBackendCoreSetup(this IServiceCollection services,
-        IConfiguration configuration)
+        IConfiguration configuration,
+        InstanceStatus instanceStatus)
     {
-        services.AddBackendCoreSetupEnvironment(configuration)
-            .AddBackendCoreSetupValidators(configuration)
-            .AddBackendCoreSetupUpdateComponents(configuration);
+        services.AddBackendCoreSetupEnvironment(configuration, instanceStatus)
+            .AddBackendCoreSetupValidators(configuration, instanceStatus)
+            .AddBackendCoreSetupUpdateComponents(configuration, instanceStatus);
 
         services.AddSingleton<ISetupConfigurationProvider, SetupConfigurationProvider>();
         services.AddSingleton<ISetupInstanceManager, SetupInstanceManager>();
@@ -26,8 +28,10 @@ public static class ServiceCollectionExtensions
 
         return services;
     }
+
     public static IServiceCollection AddBackendCoreSetupUpdateComponents(this IServiceCollection services,
-        IConfiguration configuration)
+        IConfiguration configuration,
+        InstanceStatus instanceStatus)
     {
         services.AddScoped<IUpdateProcessor, UpdateProcessor>();
         services.AddScoped<IUpdateManager, UpdateManager>();
@@ -39,7 +43,8 @@ public static class ServiceCollectionExtensions
     }
 
     private static IServiceCollection AddBackendCoreSetupEnvironment(this IServiceCollection services,
-        IConfiguration configuration)
+        IConfiguration configuration,
+        InstanceStatus instanceStatus)
     {
         services.AddSingleton<IValidator<EnvironmentConfiguration>, EnvironmentValidator>();
 
@@ -47,7 +52,8 @@ public static class ServiceCollectionExtensions
     }
 
     private static IServiceCollection AddBackendCoreSetupValidators(this IServiceCollection services,
-        IConfiguration configuration)
+        IConfiguration configuration,
+        InstanceStatus instanceStatus)
     {
         services.AddSingleton<IValidator<SetupConfiguration>, SetupConfigurationValidator>();
 

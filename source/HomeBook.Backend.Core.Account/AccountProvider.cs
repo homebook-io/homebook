@@ -89,6 +89,7 @@ public class AccountProvider(
 
             // TODO: Hier könnte eine Token-Blacklist implementiert werden
             // um Tokens vor Ablauf ungültig zu machen
+            await Task.CompletedTask;
 
             logger.LogInformation("Logout successful");
             return true;

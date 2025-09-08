@@ -1,6 +1,8 @@
 @page "/Setup"
 @using HomeBook.Frontend.Abstractions.Contracts
 
+@attribute [AllowAnonymous]
+
 <PageTitle>@Loc["Setup_Title"]</PageTitle>
 
 @layout ContentOnlyLayout
@@ -80,6 +82,7 @@
         <MudCardActions Class="mud-theme-primary px-5">
             <MudText Class="me-5" Typo="Typo.caption">@Loc["Setup_CardActions_Version"]: @_appVersion</MudText>
             <MudText Class="me-5" Typo="Typo.caption">@Loc["Setup_CardActions_Server"]: @_appServer</MudText>
+            <MudText Class="me-5" Typo="Typo.caption">HomeBook</MudText>
             <MudText Typo="Typo.caption">made with ❤️ by&nbsp;</MudText>
             <MudLink Href="https://www.lk-code.dev"
                      Target="_blank"

@@ -59,4 +59,7 @@
     <data name="UISetupStepper_UpdateProcessSetupStep_Title" xml:space="preserve">
         <value>HomeBook Update</value>
     </data>
+    <data name="Account_Login_Title" xml:space="preserve">
+        <value>Login</value>
+    </data>
 </root>

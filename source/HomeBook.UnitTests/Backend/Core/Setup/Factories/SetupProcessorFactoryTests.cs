@@ -3,6 +3,8 @@ using HomeBook.Backend.Abstractions.Contracts;
 using Homebook.Backend.Core.Setup;
 using HomeBook.Backend.Data.Entities;
 using Homebook.Backend.Core.Setup.Factories;
+using Microsoft.Extensions.Configuration;
+using Microsoft.Extensions.Logging;
 using NSubstitute;
 
 namespace HomeBook.UnitTests.Backend.Core.Setup.Factories;
@@ -12,9 +14,10 @@ public class SetupProcessorFactoryTests
 {
     private IDatabaseMigratorFactory _databaseMigratorFactory;
     private IHashProviderFactory _hashProviderFactory;
-    private IValidator<User> _userValidator;
-    private IValidator<Configuration> _configurationValidator;
-    private IUpdateProcessor _updateProcessor;
+    private ILoggerFactory _loggerFactory;
+    private IConfiguration _injectedConfiguration;
+    private IFileSystemService _fileSystemService;
+    private IApplicationPathProvider _applicationPathProvider;
     private SetupProcessorFactory _factory;
 
     [SetUp]
@@ -22,16 +25,24 @@ public class SetupProcessorFactoryTests
     {
         _databaseMigratorFactory = Substitute.For<IDatabaseMigratorFactory>();
         _hashProviderFactory = Substitute.For<IHashProviderFactory>();
-        _userValidator = Substitute.For<IValidator<User>>();
-        _configurationValidator = Substitute.For<IValidator<Configuration>>();
-        _updateProcessor = Substitute.For<IUpdateProcessor>();
+        _loggerFactory = Substitute.For<ILoggerFactory>();
+        _injectedConfiguration = Substitute.For<IConfiguration>();
+        _fileSystemService = Substitute.For<IFileSystemService>();
+        _applicationPathProvider = Substitute.For<IApplicationPathProvider>();
 
         _factory = new SetupProcessorFactory(
             _databaseMigratorFactory,
             _hashProviderFactory,
-            _userValidator,
-            _configurationValidator,
-            _updateProcessor);
+            _loggerFactory,
+            _injectedConfiguration,
+            _fileSystemService,
+            _applicationPathProvider);
+    }
+
+    [TearDown]
+    public void TearDown()
+    {
+        _loggerFactory?.Dispose();
     }
 
     [Test]
