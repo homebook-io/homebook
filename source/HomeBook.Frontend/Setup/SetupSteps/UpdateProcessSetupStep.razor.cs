@@ -48,8 +48,7 @@ public partial class UpdateProcessSetupStep : ComponentBase, ISetupStep
         {
             _updateFailed = true;
             // DE => Verbindung zum Server konnte nicht hergestellt werden. Stellen Sie sicher, dass der Server läuft und korrekt konfiguriert wurde und versuchen Sie es erneut.
-            _errorMessage =
-                "Unable to connect to the server. Make sure that the server is running and has been configured correctly, then try again.";
+            _errorMessage = "Unable to connect to the server. Make sure that the server is running and has been configured correctly, then try again.";
             await StepErrorAsync(cancellationToken);
         }
         catch (SetupCheckException err)
