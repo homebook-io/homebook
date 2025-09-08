@@ -1,6 +1,8 @@
 using FluentValidation;
 using HomeBook.Backend.Abstractions.Contracts;
 using HomeBook.Backend.Data.Entities;
+using Microsoft.Extensions.Configuration;
+using Microsoft.Extensions.Logging;
 
 namespace Homebook.Backend.Core.Setup.Factories;
 
@@ -10,7 +12,10 @@ public class SetupProcessorFactory(
     IHashProviderFactory hashProviderFactory,
     IValidator<User> userValidator,
     IValidator<Configuration> configurationValidator,
-    IUpdateProcessor updateProcessor) : ISetupProcessorFactory
+    ILoggerFactory loggerFactory,
+    IConfiguration injectedConfiguration,
+    IFileSystemService fileSystemService,
+    IApplicationPathProvider applicationPathProvider) : ISetupProcessorFactory
 {
     /// <inheritdoc />
     public ISetupProcessor Create() =>
@@ -18,5 +23,8 @@ public class SetupProcessorFactory(
             hashProviderFactory,
             userValidator,
             configurationValidator,
-            updateProcessor);
+            loggerFactory,
+            injectedConfiguration,
+            fileSystemService,
+            applicationPathProvider);
 }

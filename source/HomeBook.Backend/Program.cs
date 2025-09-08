@@ -1,10 +1,9 @@
+using HomeBook.Backend.Abstractions;
 using HomeBook.Backend.Endpoints;
 using HomeBook.Backend.EnvironmentHandler;
 using HomeBook.Backend.Extensions;
 using HomeBook.Backend.Core.Extensions;
 using HomeBook.Backend.Core.Account.Extensions;
-using HomeBook.Backend.Core.Licenses.Extensions;
-using Homebook.Backend.Core.Setup.Extensions;
 using Scalar.AspNetCore;
 using Serilog;
 
@@ -33,11 +32,24 @@ builder.Services.AddOpenApi();
 builder.Services.AddAuthorization();
 builder.Services.AddHttpContextAccessor();
 
-builder.Services.AddBackendServices(builder.Configuration)
-    .AddBackendCore(builder.Configuration)
-    .AddBackendDatabaseProvider(builder.Configuration)
-    .AddAccountServices()
-    .AddJwtAuthentication(builder.Configuration);
+InstanceStatus instanceStatus = builder.Configuration.GetCurrentInstanceStatus();
+
+switch (instanceStatus)
+{
+    // map endpoints that are only available in setup mode
+    case InstanceStatus.SETUP:
+        builder.Services.AddBackendSetup(builder.Configuration, instanceStatus);
+        break;
+    // map endpoints that are only available in running mode
+    case InstanceStatus.RUNNING:
+        builder.Services.AddBackendServices(builder.Configuration, instanceStatus)
+            .AddBackendCore(builder.Configuration, instanceStatus)
+            .AddBackendDatabaseProvider(builder.Configuration, instanceStatus)
+            .AddAccountServices(builder.Configuration, instanceStatus);
+        break;
+}
+
+builder.Services.AddJwtAuthentication(builder.Configuration, instanceStatus);
 
 if (builder.Environment.IsDevelopment())
 {
@@ -74,8 +86,25 @@ app.UseDefaultFiles();
 // app.UseStaticFiles();
 // app.MapFallbackToFile("index.html"); // <- important for Blazor Routing
 
-app.MapSetupEndpoints()
-    .MapAccountEndpoints()
-    .MapVersionEndpoints();
+#region map endpoints
+
+// map endpoints that are always available
+app.MapVersionEndpoints();
+
+switch (instanceStatus)
+{
+    // map endpoints that are only available in setup mode
+    case InstanceStatus.SETUP:
+        app.MapSetupEndpoints();
+        break;
+    // map endpoints that are only available in running mode
+    case InstanceStatus.RUNNING:
+        app.MapSetupEndpoints()
+            .MapUpdateEndpoints()
+            .MapAccountEndpoints();
+        break;
+}
+
+#endregion
 
 app.Run();

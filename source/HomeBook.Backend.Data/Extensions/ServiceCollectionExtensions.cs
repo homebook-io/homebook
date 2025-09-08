@@ -1,4 +1,4 @@
-using HomeBook.Backend.Abstractions.Contracts;
+using HomeBook.Backend.Abstractions;
 using HomeBook.Backend.Data.Contracts;
 using HomeBook.Backend.Data.Repositories;
 using Microsoft.Extensions.Configuration;
@@ -9,7 +9,8 @@ namespace HomeBook.Backend.Data.Extensions;
 public static class ServiceCollectionExtensions
 {
     public static IServiceCollection AddBackendData(this IServiceCollection services,
-        IConfiguration configuration)
+        IConfiguration configuration,
+        InstanceStatus instanceStatus)
     {
         services.AddScoped<IUserRepository, UserRepository>();
         services.AddScoped<IConfigurationRepository, ConfigurationRepository>();

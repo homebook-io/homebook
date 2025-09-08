@@ -20,7 +20,7 @@ public class DatabaseMigrator(IConfiguration configuration) : IDatabaseMigrator
     public DbContext GetDbContext()
     {
         DbContextOptionsBuilder<AppDbContext> optionsBuilder = new();
-        Extensions.ServiceCollectionExtensions.CreateDbContextOptionsBuilder(configuration, optionsBuilder);
+        ServiceCollectionExtensions.CreateDbContextOptionsBuilder(configuration, optionsBuilder);
 
         AppDbContext context = new(optionsBuilder.Options);
         return context;

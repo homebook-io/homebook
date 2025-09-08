@@ -85,7 +85,8 @@ public static class SetupEndpoints
 
         group.MapGet("/configuration", SetupHandler.HandleGetConfiguration)
             .WithName("GetConfiguration")
-            .WithDescription(new Description("returns the homebook setup configuration if it is set via environment variables.",
+            .WithDescription(new Description(
+                "returns the homebook setup configuration if it is set via environment variables.",
                 "HTTP 200: Configuration was found",
                 "HTTP 404: No configuration found",
                 "HTTP 500: Unknown error while loading configuration"))
@@ -98,7 +99,8 @@ public static class SetupEndpoints
 
         group.MapPost("/start", SetupHandler.HandleStartSetup)
             .WithName("StartSetup")
-            .WithDescription(new Description("start the setup process. it will save the configuration for the setup steps",
+            .WithDescription(new Description(
+                "start the setup process. it will save the configuration for the setup steps",
                 "HTTP 200: Setup started successfully",
                 "HTTP 400: Validation error for example with the database configuration, e.g. too short password, etc.",
                 "HTTP 422: Licenses not accepted",
@@ -111,20 +113,6 @@ public static class SetupEndpoints
             .Produces<string>(StatusCodes.Status400BadRequest)
             .Produces(StatusCodes.Status422UnprocessableEntity)
             .Produces<string>(StatusCodes.Status500InternalServerError);
-
-        group.MapPost("/update", SetupHandler.HandleStartUpdate)
-            .WithName("StartUpdate")
-            .WithDescription(new Description("start the update process",
-                "HTTP 200: Update was successful",
-                "HTTP 409: Setup was not executed yet - setup must be completed before update can be started",
-                "HTTP 500: Unknown error while starting update"))
-            .WithOpenApi(operation => new(operation)
-            {
-            })
-            .Produces(StatusCodes.Status200OK)
-            .Produces(StatusCodes.Status409Conflict)
-            .Produces<string>(StatusCodes.Status500InternalServerError);
-
 
         return routeBuilder;
     }
