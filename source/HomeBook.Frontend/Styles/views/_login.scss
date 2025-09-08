@@ -1,0 +1,27 @@
+.hb-account-login-container {
+    height: 100vh;
+    padding-top: 120px;
+    padding-bottom: 120px;
+    transition: opacity 3s ease;
+}
+
+.hb-account-login-card {
+    height: 100%;
+    overflow-y: hidden;
+}
+
+.account-login-background {
+    transition: all 2s ease;
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    z-index: -100;
+    margin: auto;
+    overflow: hidden;
+
+    &.is-finished {
+        opacity: 0;
+    }
+}

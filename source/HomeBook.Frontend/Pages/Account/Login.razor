@@ -9,114 +9,95 @@
 @layout ContentOnlyLayout
 
 @inject ILocalizationProvider Loc
-@inject IConfiguration Configuration
-@inject ISetupService SetupService
 @inject NavigationManager NavigationManager
 @inject IAuthenticationService AuthenticationService
 @inject ISnackbar Snackbar
 @inject AuthenticationStateProvider AuthenticationStateProvider
 
-<div class="setup-background @_accountBackgroundClass">
+<div class="account-login-background @_accountBackgroundClass">
     <UiStripeBackground CanvasCssClass="@_uiStripeBackgroundClass"/>
 </div>
 
-<MudContainer Class="@string.Format($"hb-account-container {_accountContainerClass}")">
+<MudContainer Class="@string.Format($"hb-account-login-container {_accountContainerClass}")">
 
-    <MudCard Elevation="10" Class="hb-account-card frosted-b1 mud-elevation-24 mud-text-primary">
+    <MudGrid Class="mt-4" Justify="Justify.Center">
 
-        <MudCardHeader>
+        <MudItem xs="12" sm="8" md="6" lg="4">
 
-            <CardHeaderContent>
-                <MudText Typo="Typo.h3">@Loc["Account_Login_Title"]</MudText>
-            </CardHeaderContent>
+            <EditForm Model="@_loginModel" OnValidSubmit="HandleLoginAsync">
+                <DataAnnotationsValidator/>
 
-        </MudCardHeader>
+                <MudCard Elevation="10"
+                         Class="hb-account-login-card frosted-b5 mud-elevation-24 mud-text-primary">
 
-        <MudCardContent>
+                    <MudCardHeader>
 
-            <MudGrid Class="mt-4">
+                        <CardHeaderContent>
+                            <MudText Typo="Typo.h3">@Loc["Account_Login_Title"]</MudText>
+                        </CardHeaderContent>
 
-                <MudItem xs="12">
+                    </MudCardHeader>
 
-                    <MudText Typo="Typo.body1" Align="Align.Center" Class="mb-6" Color="Color.Secondary">
-                        Please sign in to your HomeBook account
-                    </MudText>
+                    <MudCardContent>
 
-                    <EditForm Model="@_loginModel" OnValidSubmit="HandleLoginAsync">
-                        <DataAnnotationsValidator/>
+                        @if (!string.IsNullOrEmpty(_errorMessage))
+                        {
+                            <MudAlert Severity="Severity.Error" Class="mb-4" ShowCloseIcon="false">
+                                @_errorMessage
+                            </MudAlert>
+                        }
 
-                        <MudCard>
-                            <MudCardContent>
-                                <MudTextField Label="Username"
-                                              @bind-Value="_loginModel.Username"
-                                              For="@(() => _loginModel.Username)"
-                                              Variant="Variant.Outlined"
-                                              Margin="Margin.Normal"
-                                              FullWidth="true"
-                                              Disabled="@_isLoading"
-                                              Adornment="Adornment.Start"
-                                              AdornmentIcon="Icons.Material.Filled.Person"/>
+                        <MudTextField Label="Username"
+                                      @bind-Value="_loginModel.Username"
+                                      For="@(() => _loginModel.Username)"
+                                      Variant="Variant.Outlined"
+                                      Margin="Margin.Normal"
+                                      FullWidth="true"
+                                      Disabled="@_isLoading"
+                                      Adornment="Adornment.Start"
+                                      AdornmentIcon="Icons.Material.Filled.Person"/>
 
-                                <MudTextField Label="Password"
-                                              @bind-Value="_loginModel.Password"
-                                              For="@(() => _loginModel.Password)"
-                                              Variant="Variant.Outlined"
-                                              Margin="Margin.Normal"
-                                              FullWidth="true"
-                                              InputType="InputType.Password"
-                                              Disabled="@_isLoading"
-                                              Adornment="Adornment.Start"
-                                              AdornmentIcon="Icons.Material.Filled.Lock"/>
-                            </MudCardContent>
+                        <MudTextField Label="Password"
+                                      @bind-Value="_loginModel.Password"
+                                      For="@(() => _loginModel.Password)"
+                                      Variant="Variant.Outlined"
+                                      Margin="Margin.Normal"
+                                      FullWidth="true"
+                                      InputType="InputType.Password"
+                                      Disabled="@_isLoading"
+                                      Adornment="Adornment.Start"
+                                      AdornmentIcon="Icons.Material.Filled.Lock"/>
 
-                            <MudCardActions>
-                                <MudButton ButtonType="ButtonType.Submit"
-                                           Variant="Variant.Filled"
-                                           Color="Color.Primary"
-                                           FullWidth="true"
-                                           Size="Size.Large"
-                                           Disabled="@_isLoading">
-                                    @if (_isLoading)
-                                    {
-                                        <MudProgressCircular Class="ms-n1" Size="Size.Small" Indeterminate="true"/>
-                                        <MudText Class="ms-2">Signing in...</MudText>
-                                    }
-                                    else
-                                    {
-                                        <MudIcon Icon="Icons.Material.Filled.Login" Class="mr-2"/>
-                                        <MudText>Sign In</MudText>
-                                    }
-                                </MudButton>
-                            </MudCardActions>
-                        </MudCard>
+                    </MudCardContent>
 
-                        <ValidationSummary/>
-                    </EditForm>
+                    <MudCardActions>
 
-                    @if (!string.IsNullOrEmpty(_errorMessage))
-                    {
-                        <MudAlert Severity="Severity.Error" Class="mt-4" ShowCloseIcon="false">
-                            @_errorMessage
-                        </MudAlert>
-                    }
+                        <MudButton ButtonType="ButtonType.Submit"
+                                   Variant="Variant.Filled"
+                                   Color="Color.Primary"
+                                   FullWidth="true"
+                                   Size="Size.Large"
+                                   Disabled="@_isLoading">
+                            @if (_isLoading)
+                            {
+                                <MudProgressCircular Class="ms-n1" Size="Size.Small" Indeterminate="true"/>
+                                <MudText Class="ms-2">Signing in...</MudText>
+                            }
+                            else
+                            {
+                                <MudIcon Icon="Icons.Material.Filled.Login" Class="mr-2"/>
+                                <MudText>Sign In</MudText>
+                            }
+                        </MudButton>
 
-                </MudItem>
+                    </MudCardActions>
 
-            </MudGrid>
+                </MudCard>
 
-        </MudCardContent>
+            </EditForm>
 
-        <MudCardActions Class="mud-theme-primary px-5">
-            <MudText Class="me-5" Typo="Typo.caption">HomeBook</MudText>
-            <MudText Typo="Typo.caption">made with ❤️ by&nbsp;</MudText>
-            <MudLink Href="https://www.lk-code.dev"
-                     Target="_blank"
-                     Color="Color.Inherit"
-                     Typo="Typo.caption">
-                <MudText Typo="Typo.caption">lk-code</MudText>
-            </MudLink>
-        </MudCardActions>
+        </MudItem>
 
-    </MudCard>
+    </MudGrid>
 
 </MudContainer>
