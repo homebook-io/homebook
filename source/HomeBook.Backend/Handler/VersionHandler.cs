@@ -1,11 +1,10 @@
-using Microsoft.AspNetCore.Http.HttpResults;
 using Microsoft.AspNetCore.Mvc;
 
 namespace HomeBook.Backend.Handler;
 
 public static class VersionHandler
 {
-    public static async Task<IResult> HandleGetVersion(
+    public static IResult HandleGetVersion(
         [FromServices] IConfiguration configuration,
         CancellationToken cancellationToken)
     {

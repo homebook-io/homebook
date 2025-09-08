@@ -14,7 +14,7 @@ public class TestUpdateMigrator(string version, string description) : IUpdateMig
     /// <inheritdoc />
     public async Task ExecuteAsync(CancellationToken cancellationToken)
     {
-
+        await Task.CompletedTask;
     }
 
     public override string ToString() => $"{Version} - {Description}";
