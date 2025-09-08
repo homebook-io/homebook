@@ -1,11 +1,9 @@
-using FluentValidation;
 using HomeBook.Backend.Abstractions;
 using HomeBook.Backend.Abstractions.Contracts;
 using HomeBook.Backend.Abstractions.Models;
 using HomeBook.Backend.Core.DataProvider.Extensions;
 using Homebook.Backend.Core.Setup.Exceptions;
 using Homebook.Backend.Core.Setup.Extensions;
-using HomeBook.Backend.Data.Entities;
 using HomeBook.Backend.Data.Extensions;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -18,8 +16,6 @@ namespace Homebook.Backend.Core.Setup;
 public class SetupProcessor(
     IDatabaseMigratorFactory databaseMigratorFactory,
     IHashProviderFactory hashProviderFactory,
-    IValidator<User> userValidator,
-    IValidator<Configuration> configurationValidator,
     ILoggerFactory loggerFactory,
     IConfiguration injectedConfiguration,
     IFileSystemService fileSystemService,
