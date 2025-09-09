@@ -11,7 +11,7 @@
   },
   {
     "PackageId": "AspNetCore.SassCompiler",
-    "PackageVersion": "1.91.0",
+    "PackageVersion": "1.92.1",
     "Authors": "koenvzeijl,sleeuwen,Michaelvs97",
     "License": "MIT",
     "LicenseUrl": "https://licenses.nuget.org/MIT",
@@ -67,6 +67,36 @@
     "LicenseInformationOrigin": 0
   },
   {
+    "PackageId": "FluentDataBuilder",
+    "PackageVersion": "8.0.114",
+    "PackageProjectUrl": "https://github.com/lk-code/fluent-data-builder",
+    "Copyright": "MIT",
+    "Authors": "lk-code",
+    "License": "MIT",
+    "LicenseUrl": "https://licenses.nuget.org/MIT",
+    "LicenseInformationOrigin": 0
+  },
+  {
+    "PackageId": "FluentDataBuilder.Json",
+    "PackageVersion": "8.0.114",
+    "PackageProjectUrl": "https://github.com/lk-code/fluent-data-builder",
+    "Copyright": "MIT",
+    "Authors": "lk-code",
+    "License": "MIT",
+    "LicenseUrl": "https://licenses.nuget.org/MIT",
+    "LicenseInformationOrigin": 0
+  },
+  {
+    "PackageId": "FluentDataBuilder.Microsoft.Extensions.Configuration",
+    "PackageVersion": "8.0.114",
+    "PackageProjectUrl": "https://github.com/lk-code/fluent-data-builder",
+    "Copyright": "MIT",
+    "Authors": "lk-code",
+    "License": "MIT",
+    "LicenseUrl": "https://licenses.nuget.org/MIT",
+    "LicenseInformationOrigin": 0
+  },
+  {
     "PackageId": "FluentValidation",
     "PackageVersion": "12.0.0",
     "PackageProjectUrl": "https://fluentvalidation.net/",
@@ -88,7 +118,7 @@
   },
   {
     "PackageId": "HomeBook.Client",
-    "PackageVersion": "1.0.47",
+    "PackageVersion": "1.0.72",
     "PackageProjectUrl": "https://github.com/lk-code/homebook",
     "Copyright": "MIT",
     "Authors": "lk-code",
@@ -240,6 +270,16 @@
     "LicenseInformationOrigin": 0
   },
   {
+    "PackageId": "Microsoft.AspNetCore.Authentication.JwtBearer",
+    "PackageVersion": "9.0.8",
+    "PackageProjectUrl": "https://asp.net/",
+    "Copyright": "\u00A9 Microsoft Corporation. All rights reserved.",
+    "Authors": "Microsoft",
+    "License": "MIT",
+    "LicenseUrl": "https://licenses.nuget.org/MIT",
+    "LicenseInformationOrigin": 0
+  },
+  {
     "PackageId": "Microsoft.AspNetCore.Authorization",
     "PackageVersion": "9.0.8",
     "PackageProjectUrl": "https://asp.net/",
@@ -270,6 +310,16 @@
     "LicenseInformationOrigin": 0
   },
   {
+    "PackageId": "Microsoft.AspNetCore.Components.Authorization",
+    "PackageVersion": "9.0.8",
+    "PackageProjectUrl": "https://asp.net/",
+    "Copyright": "\u00A9 Microsoft Corporation. All rights reserved.",
+    "Authors": "Microsoft",
+    "License": "MIT",
+    "LicenseUrl": "https://licenses.nuget.org/MIT",
+    "LicenseInformationOrigin": 0
+  },
+  {
     "PackageId": "Microsoft.AspNetCore.Components.Forms",
     "PackageVersion": "9.0.8",
     "PackageProjectUrl": "https://asp.net/",
@@ -291,6 +341,16 @@
   },
   {
     "PackageId": "Microsoft.AspNetCore.Components.WebAssembly",
+    "PackageVersion": "9.0.8",
+    "PackageProjectUrl": "https://asp.net/",
+    "Copyright": "\u00A9 Microsoft Corporation. All rights reserved.",
+    "Authors": "Microsoft",
+    "License": "MIT",
+    "LicenseUrl": "https://licenses.nuget.org/MIT",
+    "LicenseInformationOrigin": 0
+  },
+  {
+    "PackageId": "Microsoft.AspNetCore.Components.WebAssembly.Authentication",
     "PackageVersion": "9.0.8",
     "PackageProjectUrl": "https://asp.net/",
     "Copyright": "\u00A9 Microsoft Corporation. All rights reserved.",
@@ -740,6 +800,66 @@
     "LicenseInformationOrigin": 0
   },
   {
+    "PackageId": "Microsoft.IdentityModel.Abstractions",
+    "PackageVersion": "8.14.0",
+    "PackageProjectUrl": "https://github.com/AzureAD/azure-activedirectory-identitymodel-extensions-for-dotnet",
+    "Copyright": "\u00A9 Microsoft Corporation. All rights reserved.",
+    "Authors": "Microsoft",
+    "License": "MIT",
+    "LicenseUrl": "https://licenses.nuget.org/MIT",
+    "LicenseInformationOrigin": 0
+  },
+  {
+    "PackageId": "Microsoft.IdentityModel.JsonWebTokens",
+    "PackageVersion": "8.14.0",
+    "PackageProjectUrl": "https://github.com/AzureAD/azure-activedirectory-identitymodel-extensions-for-dotnet",
+    "Copyright": "\u00A9 Microsoft Corporation. All rights reserved.",
+    "Authors": "Microsoft",
+    "License": "MIT",
+    "LicenseUrl": "https://licenses.nuget.org/MIT",
+    "LicenseInformationOrigin": 0
+  },
+  {
+    "PackageId": "Microsoft.IdentityModel.Logging",
+    "PackageVersion": "8.14.0",
+    "PackageProjectUrl": "https://github.com/AzureAD/azure-activedirectory-identitymodel-extensions-for-dotnet",
+    "Copyright": "\u00A9 Microsoft Corporation. All rights reserved.",
+    "Authors": "Microsoft",
+    "License": "MIT",
+    "LicenseUrl": "https://licenses.nuget.org/MIT",
+    "LicenseInformationOrigin": 0
+  },
+  {
+    "PackageId": "Microsoft.IdentityModel.Protocols",
+    "PackageVersion": "8.0.1",
+    "PackageProjectUrl": "https://github.com/AzureAD/azure-activedirectory-identitymodel-extensions-for-dotnet",
+    "Copyright": "\u00A9 Microsoft Corporation. All rights reserved.",
+    "Authors": "Microsoft",
+    "License": "MIT",
+    "LicenseUrl": "https://licenses.nuget.org/MIT",
+    "LicenseInformationOrigin": 0
+  },
+  {
+    "PackageId": "Microsoft.IdentityModel.Protocols.OpenIdConnect",
+    "PackageVersion": "8.0.1",
+    "PackageProjectUrl": "https://github.com/AzureAD/azure-activedirectory-identitymodel-extensions-for-dotnet",
+    "Copyright": "\u00A9 Microsoft Corporation. All rights reserved.",
+    "Authors": "Microsoft",
+    "License": "MIT",
+    "LicenseUrl": "https://licenses.nuget.org/MIT",
+    "LicenseInformationOrigin": 0
+  },
+  {
+    "PackageId": "Microsoft.IdentityModel.Tokens",
+    "PackageVersion": "8.14.0",
+    "PackageProjectUrl": "https://github.com/AzureAD/azure-activedirectory-identitymodel-extensions-for-dotnet",
+    "Copyright": "\u00A9 Microsoft Corporation. All rights reserved.",
+    "Authors": "Microsoft",
+    "License": "MIT",
+    "LicenseUrl": "https://licenses.nuget.org/MIT",
+    "LicenseInformationOrigin": 0
+  },
+  {
     "PackageId": "Microsoft.JSInterop",
     "PackageVersion": "9.0.8",
     "PackageProjectUrl": "https://asp.net/",
@@ -980,7 +1100,7 @@
   },
   {
     "PackageId": "MudBlazor",
-    "PackageVersion": "8.11.0",
+    "PackageVersion": "8.12.0",
     "PackageProjectUrl": "https://mudblazor.com/",
     "Copyright": "Copyright 2024 MudBlazor",
     "Authors": "Garderoben, Henon and Contributors",
@@ -1309,6 +1429,16 @@
     "PackageId": "System.Diagnostics.EventLog",
     "PackageVersion": "8.0.0",
     "PackageProjectUrl": "https://dot.net/",
+    "Copyright": "\u00A9 Microsoft Corporation. All rights reserved.",
+    "Authors": "Microsoft",
+    "License": "MIT",
+    "LicenseUrl": "https://licenses.nuget.org/MIT",
+    "LicenseInformationOrigin": 0
+  },
+  {
+    "PackageId": "System.IdentityModel.Tokens.Jwt",
+    "PackageVersion": "8.14.0",
+    "PackageProjectUrl": "https://github.com/AzureAD/azure-activedirectory-identitymodel-extensions-for-dotnet",
     "Copyright": "\u00A9 Microsoft Corporation. All rights reserved.",
     "Authors": "Microsoft",
     "License": "MIT",

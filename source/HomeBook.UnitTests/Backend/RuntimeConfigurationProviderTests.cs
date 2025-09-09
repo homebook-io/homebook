@@ -6,6 +6,7 @@ using NSubstitute;
 
 namespace HomeBook.UnitTests.Backend;
 
+[TestFixture]
 public class RuntimeConfigurationProviderTests
 {
     private ILogger<RuntimeConfigurationProvider> _logger;
