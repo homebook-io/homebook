@@ -8,10 +8,23 @@ namespace HomeBook.UnitTests.Backend.Extensions;
 [TestFixture]
 public class InstanceStatusExtensionsTests
 {
-    [TearDown]
-    public void CleanupAfterEachTest()
+    private string? _originalGitHubActionsValue;
+
+    [SetUp]
+    public void SetUp()
     {
+        // Store the original value of GITHUB_ACTIONS environment variable
+        _originalGitHubActionsValue = Environment.GetEnvironmentVariable("GITHUB_ACTIONS");
+
+        // Clear the environment variable for clean test state
         Environment.SetEnvironmentVariable("GITHUB_ACTIONS", null);
+    }
+
+    [TearDown]
+    public void TearDown()
+    {
+        // Restore the original value of GITHUB_ACTIONS environment variable
+        Environment.SetEnvironmentVariable("GITHUB_ACTIONS", _originalGitHubActionsValue);
     }
 
     [TestCase("", InstanceStatus.SETUP)]
