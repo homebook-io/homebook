@@ -234,6 +234,8 @@ jobs:
 
     client-deploy:
         runs-on: ubuntu-latest
+        env:
+            HB_GITHUB_WORKFLOW: true
         needs:
             - post-build
 

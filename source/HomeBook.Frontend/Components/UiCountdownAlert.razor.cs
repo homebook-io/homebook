@@ -1,7 +1,6 @@
 using Microsoft.AspNetCore.Components;
 using MudBlazor;
 
-
 namespace HomeBook.Frontend.Components;
 
 public enum EasingMode
