@@ -10,26 +10,6 @@
     "LicenseInformationOrigin": 0
   },
   {
-    "PackageId": "AngleSharp.Css",
-    "PackageVersion": "1.0.0-beta.154",
-    "PackageProjectUrl": "https://anglesharp.github.io/",
-    "Copyright": "Copyright 2016-2025, AngleSharp",
-    "Authors": "AngleSharp",
-    "License": "MIT",
-    "LicenseUrl": "https://licenses.nuget.org/MIT",
-    "LicenseInformationOrigin": 0
-  },
-  {
-    "PackageId": "AngleSharp.Diffing",
-    "PackageVersion": "1.0.0",
-    "PackageProjectUrl": "https://anglesharp.github.io/",
-    "Copyright": "Egil Hansen",
-    "Authors": "AngleSharp",
-    "License": "MIT",
-    "LicenseUrl": "https://licenses.nuget.org/MIT",
-    "LicenseInformationOrigin": 0
-  },
-  {
     "PackageId": "AspNetCore.SassCompiler",
     "PackageVersion": "1.92.1",
     "Authors": "koenvzeijl,sleeuwen,Michaelvs97",
@@ -43,36 +23,6 @@
     "PackageProjectUrl": "https://www.bouncycastle.org/stable/nuget/csharp/website",
     "Copyright": "Copyright \u00A9 Legion of the Bouncy Castle Inc. 2000-2024",
     "Authors": "Legion of the Bouncy Castle Inc.",
-    "License": "MIT",
-    "LicenseUrl": "https://licenses.nuget.org/MIT",
-    "LicenseInformationOrigin": 0
-  },
-  {
-    "PackageId": "bunit",
-    "PackageVersion": "1.40.0",
-    "PackageProjectUrl": "https://bunit.egilhansen.com/",
-    "Copyright": "Egil Hansen",
-    "Authors": "Egil Hansen",
-    "License": "MIT",
-    "LicenseUrl": "https://licenses.nuget.org/MIT",
-    "LicenseInformationOrigin": 0
-  },
-  {
-    "PackageId": "bunit.core",
-    "PackageVersion": "1.40.0",
-    "PackageProjectUrl": "https://bunit.egilhansen.com/",
-    "Copyright": "Egil Hansen",
-    "Authors": "Egil Hansen",
-    "License": "MIT",
-    "LicenseUrl": "https://licenses.nuget.org/MIT",
-    "LicenseInformationOrigin": 0
-  },
-  {
-    "PackageId": "bunit.web",
-    "PackageVersion": "1.40.0",
-    "PackageProjectUrl": "https://bunit.egilhansen.com/",
-    "Copyright": "Egil Hansen",
-    "Authors": "Egil Hansen",
     "License": "MIT",
     "LicenseUrl": "https://licenses.nuget.org/MIT",
     "LicenseInformationOrigin": 0
@@ -802,16 +752,6 @@
   {
     "PackageId": "Microsoft.Extensions.Localization.Abstractions",
     "PackageVersion": "9.0.1",
-    "PackageProjectUrl": "https://asp.net/",
-    "Copyright": "\u00A9 Microsoft Corporation. All rights reserved.",
-    "Authors": "Microsoft",
-    "License": "MIT",
-    "LicenseUrl": "https://licenses.nuget.org/MIT",
-    "LicenseInformationOrigin": 0
-  },
-  {
-    "PackageId": "Microsoft.Extensions.Localization.Abstractions",
-    "PackageVersion": "9.0.5",
     "PackageProjectUrl": "https://asp.net/",
     "Copyright": "\u00A9 Microsoft Corporation. All rights reserved.",
     "Authors": "Microsoft",
@@ -1658,16 +1598,6 @@
   {
     "PackageId": "System.Text.Json",
     "PackageVersion": "9.0.0",
-    "PackageProjectUrl": "https://dot.net/",
-    "Copyright": "\u00A9 Microsoft Corporation. All rights reserved.",
-    "Authors": "Microsoft",
-    "License": "MIT",
-    "LicenseUrl": "https://licenses.nuget.org/MIT",
-    "LicenseInformationOrigin": 0
-  },
-  {
-    "PackageId": "System.Text.Json",
-    "PackageVersion": "9.0.5",
     "PackageProjectUrl": "https://dot.net/",
     "Copyright": "\u00A9 Microsoft Corporation. All rights reserved.",
     "Authors": "Microsoft",
