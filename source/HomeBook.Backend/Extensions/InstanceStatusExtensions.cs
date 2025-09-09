@@ -12,7 +12,7 @@ public static class InstanceStatusExtensions
     /// <returns></returns>
     public static InstanceStatus GetCurrentInstanceStatus(this IConfiguration configuration)
     {
-        bool isGithubWorkflow = configuration.GetValue<bool>("GITHUB_WORKFLOW");
+        bool isGithubWorkflow = configuration.GetValue<bool>("HB_GITHUB_WORKFLOW");
         if (isGithubWorkflow)
             return InstanceStatus.RUNNING;
 
