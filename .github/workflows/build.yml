@@ -257,8 +257,6 @@ jobs:
                     dotnet restore
 
             -   name: Build Solution
-                env:
-                    HB_GITHUB_WORKFLOW: true
                 run: |
                     dotnet build --configuration Release --no-restore
 
