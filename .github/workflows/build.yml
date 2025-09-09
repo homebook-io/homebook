@@ -154,42 +154,42 @@ jobs:
 
             -   name: Configure Git User and Auth
                 run: |
-                         git config user.name "GitHub Actions"
-                         git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-                         git remote set-url origin https://x-access-token:${{ secrets.GITHUB_TOKEN }}@github.com/${{ github.repository }}
+                    git config user.name "GitHub Actions"
+                    git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+                    git remote set-url origin https://x-access-token:${{ secrets.GITHUB_TOKEN }}@github.com/${{ github.repository }}
 
-                  #            -   name: Install .NET NuGet License
-                  #                run: |
-                  #                    dotnet tool install --global nuget-license
+                     #            -   name: Install .NET NuGet License
+                     #                run: |
+                     #                    dotnet tool install --global nuget-license
 
-                  #            -   name: Restore dependencies
-                  #                run: |
-                  #                    dotnet restore
-                  #
-                  #            -   name: Build OpenAPI
-                  #                run: |
-                  #                    dotnet build --configuration Release --no-restore
+                     #            -   name: Restore dependencies
+                     #                run: |
+                     #                    dotnet restore
+                     #
+                     #            -   name: Build OpenAPI
+                     #                run: |
+                     #                    dotnet build --configuration Release --no-restore
 
-                  #            -   name: clean up nuget licenses
-                  #                run: |
-                  #                    rm source/HomeBook.Backend.Core.Licenses/Licenses.json
-                  #                    rm -rf source/HomeBook.Backend.Core.Licenses/Licenses
-                  #                    mkdir -p source/HomeBook.Backend.Core.Licenses/Licenses
-                  #
-                  #            -   name: generate nuget license index
-                  #                run: |
-                  #                    nuget-license -i ./homebook.slnx --include-transitive --output JsonPretty --file-output source/HomeBook.Backend.Core.Licenses/Licenses.json
-                  #
-                  #            -   name: generate nuget licenses
-                  #                run: |
-                  #                    nuget-license -i ./homebook.slnx --include-transitive -d source/HomeBook.Backend.Core.Licenses/Licenses/
-                  #
-                  #            -   name: save nuget licenses
-                  #                run: |
-                  #                    git add source/HomeBook.Backend.Core.Licenses/Licenses.json
-                  #                    git add source/HomeBook.Backend.Core.Licenses/Licenses/
+                     #            -   name: clean up nuget licenses
+                     #                run: |
+                     #                    rm source/HomeBook.Backend.Core.Licenses/Licenses.json
+                     #                    rm -rf source/HomeBook.Backend.Core.Licenses/Licenses
+                     #                    mkdir -p source/HomeBook.Backend.Core.Licenses/Licenses
+                     #
+                     #            -   name: generate nuget license index
+                     #                run: |
+                     #                    nuget-license -i ./homebook.slnx --include-transitive --output JsonPretty --file-output source/HomeBook.Backend.Core.Licenses/Licenses.json
+                     #
+                     #            -   name: generate nuget licenses
+                     #                run: |
+                     #                    nuget-license -i ./homebook.slnx --include-transitive -d source/HomeBook.Backend.Core.Licenses/Licenses/
+                     #
+                     #            -   name: save nuget licenses
+                     #                run: |
+                     #                    git add source/HomeBook.Backend.Core.Licenses/Licenses.json
+                     #                    git add source/HomeBook.Backend.Core.Licenses/Licenses/
 
-                         git add ${{ env.FRONTEND_APPSETTINGS_FILE }}
+                            git add ${{ env.FRONTEND_APPSETTINGS_FILE }}
 
             -   name: cat Frontend appsettings.json
                 run: |
