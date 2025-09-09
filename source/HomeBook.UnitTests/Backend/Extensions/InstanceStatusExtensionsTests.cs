@@ -35,7 +35,7 @@ public class InstanceStatusExtensionsTests
             .Add("Database",
                 new DataBuilder()
                     .Add("Provider", (string?)null))
-            .Add("GITHUB_WORKFLOW", true)
+            .Add("HB_GITHUB_WORKFLOW", true)
             .ToConfiguration();
 
         // Act
