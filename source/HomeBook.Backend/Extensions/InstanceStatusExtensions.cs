@@ -12,8 +12,11 @@ public static class InstanceStatusExtensions
     /// <returns></returns>
     public static InstanceStatus GetCurrentInstanceStatus(this IConfiguration configuration)
     {
-        string? databaseProvider = configuration["Database:Provider"];
+        bool isGithubWorkflow = configuration.GetValue<bool>("GITHUB_WORKFLOW");
+        if (isGithubWorkflow)
+            return InstanceStatus.RUNNING;
 
+        string? databaseProvider = configuration["Database:Provider"];
         return databaseProvider switch
         {
             null or "" => InstanceStatus.SETUP,

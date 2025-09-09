@@ -189,9 +189,6 @@ jobs:
             #                    git add source/HomeBook.Backend.Core.Licenses/Licenses.json
             #                    git add source/HomeBook.Backend.Core.Licenses/Licenses/
 
-            -   name: update Frontend appsettings.json
-                run: |
-                    sed -i "s/\"Version\": \".*\"/\"Version\": \"$VERSION\"/" ${{ env.FRONTEND_APPSETTINGS_FILE }}
                     git add ${{ env.FRONTEND_APPSETTINGS_FILE }}
 
             -   name: cat Frontend appsettings.json
@@ -255,6 +252,9 @@ jobs:
             -   name: Restore dependencies
                 run: |
                     dotnet restore
+
+            -   name: Set GITHUB_WORKFLOW env
+                run: echo "GITHUB_WORKFLOW=true" >> $GITHUB_ENV
 
             -   name: Build Solution
                 run: |

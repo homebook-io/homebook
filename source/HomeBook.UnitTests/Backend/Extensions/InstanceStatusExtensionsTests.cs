@@ -5,6 +5,7 @@ using HomeBook.Backend.Extensions;
 
 namespace HomeBook.UnitTests.Backend.Extensions;
 
+[TestFixture]
 public class InstanceStatusExtensionsTests
 {
     [TestCase("", InstanceStatus.SETUP)]
@@ -14,7 +15,8 @@ public class InstanceStatusExtensionsTests
     {
         // Arrange
         var configuration = new DataBuilder()
-            .Add("Database", new DataBuilder()
+            .Add("Database",
+                new DataBuilder()
                     .Add("Provider", status))
             .ToConfiguration();
 
@@ -23,5 +25,23 @@ public class InstanceStatusExtensionsTests
 
         // Assert
         actual.ShouldBe(expected);
+    }
+
+    [Test]
+    public void ContainsUserAsync_WithEnvGitHubWorkflow_Return()
+    {
+        // Arrange
+        var configuration = new DataBuilder()
+            .Add("Database",
+                new DataBuilder()
+                    .Add("Provider", (string?)null))
+            .Add("GITHUB_WORKFLOW", true)
+            .ToConfiguration();
+
+        // Act
+        var actual = configuration.GetCurrentInstanceStatus();
+
+        // Assert
+        actual.ShouldBe(InstanceStatus.RUNNING);
     }
 }
