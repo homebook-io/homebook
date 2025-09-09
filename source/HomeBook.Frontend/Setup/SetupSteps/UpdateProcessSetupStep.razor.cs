@@ -75,7 +75,7 @@ public partial class UpdateProcessSetupStep : ComponentBase, ISetupStep
         try
         {
             // 1. start update (it will restart the server at the end of the update process)
-            await BackendClient.Setup.Update.PostAsync(x =>
+            await BackendClient.Update.Start.PostAsync(x =>
                 {
                 },
                 cancellationToken);
