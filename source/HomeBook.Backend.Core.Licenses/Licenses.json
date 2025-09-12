@@ -117,16 +117,6 @@
     "LicenseInformationOrigin": 0
   },
   {
-    "PackageId": "HomeBook.Client",
-    "PackageVersion": "1.0.72",
-    "PackageProjectUrl": "https://github.com/lk-code/homebook",
-    "Copyright": "MIT",
-    "Authors": "lk-code",
-    "License": "MIT",
-    "LicenseUrl": "https://licenses.nuget.org/MIT",
-    "LicenseInformationOrigin": 0
-  },
-  {
     "PackageId": "Humanizer.Core",
     "PackageVersion": "2.14.1",
     "PackageProjectUrl": "https://github.com/Humanizr/Humanizer",
@@ -271,7 +261,7 @@
   },
   {
     "PackageId": "Microsoft.AspNetCore.Authentication.JwtBearer",
-    "PackageVersion": "9.0.8",
+    "PackageVersion": "9.0.9",
     "PackageProjectUrl": "https://asp.net/",
     "Copyright": "\u00A9 Microsoft Corporation. All rights reserved.",
     "Authors": "Microsoft",
@@ -281,7 +271,7 @@
   },
   {
     "PackageId": "Microsoft.AspNetCore.Authorization",
-    "PackageVersion": "9.0.8",
+    "PackageVersion": "9.0.9",
     "PackageProjectUrl": "https://asp.net/",
     "Copyright": "\u00A9 Microsoft Corporation. All rights reserved.",
     "Authors": "Microsoft",
@@ -291,7 +281,7 @@
   },
   {
     "PackageId": "Microsoft.AspNetCore.Components",
-    "PackageVersion": "9.0.8",
+    "PackageVersion": "9.0.9",
     "PackageProjectUrl": "https://asp.net/",
     "Copyright": "\u00A9 Microsoft Corporation. All rights reserved.",
     "Authors": "Microsoft",
@@ -301,7 +291,7 @@
   },
   {
     "PackageId": "Microsoft.AspNetCore.Components.Analyzers",
-    "PackageVersion": "9.0.8",
+    "PackageVersion": "9.0.9",
     "PackageProjectUrl": "https://asp.net/",
     "Copyright": "\u00A9 Microsoft Corporation. All rights reserved.",
     "Authors": "Microsoft",
@@ -311,7 +301,7 @@
   },
   {
     "PackageId": "Microsoft.AspNetCore.Components.Authorization",
-    "PackageVersion": "9.0.8",
+    "PackageVersion": "9.0.9",
     "PackageProjectUrl": "https://asp.net/",
     "Copyright": "\u00A9 Microsoft Corporation. All rights reserved.",
     "Authors": "Microsoft",
@@ -321,7 +311,7 @@
   },
   {
     "PackageId": "Microsoft.AspNetCore.Components.Forms",
-    "PackageVersion": "9.0.8",
+    "PackageVersion": "9.0.9",
     "PackageProjectUrl": "https://asp.net/",
     "Copyright": "\u00A9 Microsoft Corporation. All rights reserved.",
     "Authors": "Microsoft",
@@ -331,7 +321,7 @@
   },
   {
     "PackageId": "Microsoft.AspNetCore.Components.Web",
-    "PackageVersion": "9.0.8",
+    "PackageVersion": "9.0.9",
     "PackageProjectUrl": "https://asp.net/",
     "Copyright": "\u00A9 Microsoft Corporation. All rights reserved.",
     "Authors": "Microsoft",
@@ -341,7 +331,7 @@
   },
   {
     "PackageId": "Microsoft.AspNetCore.Components.WebAssembly",
-    "PackageVersion": "9.0.8",
+    "PackageVersion": "9.0.9",
     "PackageProjectUrl": "https://asp.net/",
     "Copyright": "\u00A9 Microsoft Corporation. All rights reserved.",
     "Authors": "Microsoft",
@@ -351,7 +341,7 @@
   },
   {
     "PackageId": "Microsoft.AspNetCore.Components.WebAssembly.Authentication",
-    "PackageVersion": "9.0.8",
+    "PackageVersion": "9.0.9",
     "PackageProjectUrl": "https://asp.net/",
     "Copyright": "\u00A9 Microsoft Corporation. All rights reserved.",
     "Authors": "Microsoft",
@@ -361,7 +351,7 @@
   },
   {
     "PackageId": "Microsoft.AspNetCore.Components.WebAssembly.DevServer",
-    "PackageVersion": "9.0.8",
+    "PackageVersion": "9.0.9",
     "PackageProjectUrl": "https://asp.net/",
     "Copyright": "\u00A9 Microsoft Corporation. All rights reserved.",
     "Authors": "Microsoft",
@@ -371,7 +361,7 @@
   },
   {
     "PackageId": "Microsoft.AspNetCore.Metadata",
-    "PackageVersion": "9.0.8",
+    "PackageVersion": "9.0.9",
     "PackageProjectUrl": "https://asp.net/",
     "Copyright": "\u00A9 Microsoft Corporation. All rights reserved.",
     "Authors": "Microsoft",
@@ -381,7 +371,7 @@
   },
   {
     "PackageId": "Microsoft.AspNetCore.OpenApi",
-    "PackageVersion": "9.0.8",
+    "PackageVersion": "9.0.9",
     "PackageProjectUrl": "https://asp.net/",
     "Copyright": "\u00A9 Microsoft Corporation. All rights reserved.",
     "Authors": "Microsoft",
@@ -491,7 +481,7 @@
   },
   {
     "PackageId": "Microsoft.EntityFrameworkCore",
-    "PackageVersion": "9.0.8",
+    "PackageVersion": "9.0.9",
     "PackageProjectUrl": "https://docs.microsoft.com/ef/core/",
     "Copyright": "\u00A9 Microsoft Corporation. All rights reserved.",
     "Authors": "Microsoft",
@@ -501,7 +491,7 @@
   },
   {
     "PackageId": "Microsoft.EntityFrameworkCore.Abstractions",
-    "PackageVersion": "9.0.8",
+    "PackageVersion": "9.0.9",
     "PackageProjectUrl": "https://docs.microsoft.com/ef/core/",
     "Copyright": "\u00A9 Microsoft Corporation. All rights reserved.",
     "Authors": "Microsoft",
@@ -511,7 +501,7 @@
   },
   {
     "PackageId": "Microsoft.EntityFrameworkCore.Analyzers",
-    "PackageVersion": "9.0.8",
+    "PackageVersion": "9.0.9",
     "PackageProjectUrl": "https://docs.microsoft.com/ef/core/",
     "Copyright": "\u00A9 Microsoft Corporation. All rights reserved.",
     "Authors": "Microsoft",
@@ -521,7 +511,7 @@
   },
   {
     "PackageId": "Microsoft.EntityFrameworkCore.Design",
-    "PackageVersion": "9.0.8",
+    "PackageVersion": "9.0.9",
     "PackageProjectUrl": "https://docs.microsoft.com/ef/core/",
     "Copyright": "\u00A9 Microsoft Corporation. All rights reserved.",
     "Authors": "Microsoft",
@@ -531,7 +521,7 @@
   },
   {
     "PackageId": "Microsoft.EntityFrameworkCore.Relational",
-    "PackageVersion": "9.0.8",
+    "PackageVersion": "9.0.9",
     "PackageProjectUrl": "https://docs.microsoft.com/ef/core/",
     "Copyright": "\u00A9 Microsoft Corporation. All rights reserved.",
     "Authors": "Microsoft",
@@ -541,7 +531,7 @@
   },
   {
     "PackageId": "Microsoft.EntityFrameworkCore.Tools",
-    "PackageVersion": "9.0.8",
+    "PackageVersion": "9.0.9",
     "PackageProjectUrl": "https://docs.microsoft.com/ef/core/",
     "Copyright": "\u00A9 Microsoft Corporation. All rights reserved.",
     "Authors": "Microsoft",
@@ -551,7 +541,7 @@
   },
   {
     "PackageId": "Microsoft.Extensions.ApiDescription.Server",
-    "PackageVersion": "9.0.8",
+    "PackageVersion": "9.0.9",
     "PackageProjectUrl": "https://asp.net/",
     "Copyright": "\u00A9 Microsoft Corporation. All rights reserved.",
     "Authors": "Microsoft",
@@ -561,7 +551,7 @@
   },
   {
     "PackageId": "Microsoft.Extensions.Caching.Abstractions",
-    "PackageVersion": "9.0.8",
+    "PackageVersion": "9.0.9",
     "PackageProjectUrl": "https://dot.net/",
     "Copyright": "\u00A9 Microsoft Corporation. All rights reserved.",
     "Authors": "Microsoft",
@@ -571,7 +561,7 @@
   },
   {
     "PackageId": "Microsoft.Extensions.Caching.Memory",
-    "PackageVersion": "9.0.8",
+    "PackageVersion": "9.0.9",
     "PackageProjectUrl": "https://dot.net/",
     "Copyright": "\u00A9 Microsoft Corporation. All rights reserved.",
     "Authors": "Microsoft",
@@ -581,7 +571,7 @@
   },
   {
     "PackageId": "Microsoft.Extensions.Configuration",
-    "PackageVersion": "9.0.8",
+    "PackageVersion": "9.0.9",
     "PackageProjectUrl": "https://dot.net/",
     "Copyright": "\u00A9 Microsoft Corporation. All rights reserved.",
     "Authors": "Microsoft",
@@ -591,7 +581,7 @@
   },
   {
     "PackageId": "Microsoft.Extensions.Configuration.Abstractions",
-    "PackageVersion": "9.0.8",
+    "PackageVersion": "9.0.9",
     "PackageProjectUrl": "https://dot.net/",
     "Copyright": "\u00A9 Microsoft Corporation. All rights reserved.",
     "Authors": "Microsoft",
@@ -611,7 +601,7 @@
   },
   {
     "PackageId": "Microsoft.Extensions.Configuration.Binder",
-    "PackageVersion": "9.0.8",
+    "PackageVersion": "9.0.9",
     "PackageProjectUrl": "https://dot.net/",
     "Copyright": "\u00A9 Microsoft Corporation. All rights reserved.",
     "Authors": "Microsoft",
@@ -621,7 +611,7 @@
   },
   {
     "PackageId": "Microsoft.Extensions.Configuration.FileExtensions",
-    "PackageVersion": "9.0.8",
+    "PackageVersion": "9.0.9",
     "PackageProjectUrl": "https://dot.net/",
     "Copyright": "\u00A9 Microsoft Corporation. All rights reserved.",
     "Authors": "Microsoft",
@@ -631,7 +621,7 @@
   },
   {
     "PackageId": "Microsoft.Extensions.Configuration.Json",
-    "PackageVersion": "9.0.8",
+    "PackageVersion": "9.0.9",
     "PackageProjectUrl": "https://dot.net/",
     "Copyright": "\u00A9 Microsoft Corporation. All rights reserved.",
     "Authors": "Microsoft",
@@ -641,7 +631,7 @@
   },
   {
     "PackageId": "Microsoft.Extensions.DependencyInjection",
-    "PackageVersion": "9.0.8",
+    "PackageVersion": "9.0.9",
     "PackageProjectUrl": "https://dot.net/",
     "Copyright": "\u00A9 Microsoft Corporation. All rights reserved.",
     "Authors": "Microsoft",
@@ -651,7 +641,7 @@
   },
   {
     "PackageId": "Microsoft.Extensions.DependencyInjection.Abstractions",
-    "PackageVersion": "9.0.8",
+    "PackageVersion": "9.0.9",
     "PackageProjectUrl": "https://dot.net/",
     "Copyright": "\u00A9 Microsoft Corporation. All rights reserved.",
     "Authors": "Microsoft",
@@ -671,7 +661,7 @@
   },
   {
     "PackageId": "Microsoft.Extensions.DependencyModel",
-    "PackageVersion": "9.0.8",
+    "PackageVersion": "9.0.9",
     "PackageProjectUrl": "https://dot.net/",
     "Copyright": "\u00A9 Microsoft Corporation. All rights reserved.",
     "Authors": "Microsoft",
@@ -691,7 +681,7 @@
   },
   {
     "PackageId": "Microsoft.Extensions.FileProviders.Abstractions",
-    "PackageVersion": "9.0.8",
+    "PackageVersion": "9.0.9",
     "PackageProjectUrl": "https://dot.net/",
     "Copyright": "\u00A9 Microsoft Corporation. All rights reserved.",
     "Authors": "Microsoft",
@@ -701,7 +691,7 @@
   },
   {
     "PackageId": "Microsoft.Extensions.FileProviders.Physical",
-    "PackageVersion": "9.0.8",
+    "PackageVersion": "9.0.9",
     "PackageProjectUrl": "https://dot.net/",
     "Copyright": "\u00A9 Microsoft Corporation. All rights reserved.",
     "Authors": "Microsoft",
@@ -711,7 +701,7 @@
   },
   {
     "PackageId": "Microsoft.Extensions.FileSystemGlobbing",
-    "PackageVersion": "9.0.8",
+    "PackageVersion": "9.0.9",
     "PackageProjectUrl": "https://dot.net/",
     "Copyright": "\u00A9 Microsoft Corporation. All rights reserved.",
     "Authors": "Microsoft",
@@ -761,7 +751,7 @@
   },
   {
     "PackageId": "Microsoft.Extensions.Logging",
-    "PackageVersion": "9.0.8",
+    "PackageVersion": "9.0.9",
     "PackageProjectUrl": "https://dot.net/",
     "Copyright": "\u00A9 Microsoft Corporation. All rights reserved.",
     "Authors": "Microsoft",
@@ -771,7 +761,7 @@
   },
   {
     "PackageId": "Microsoft.Extensions.Logging.Abstractions",
-    "PackageVersion": "9.0.8",
+    "PackageVersion": "9.0.9",
     "PackageProjectUrl": "https://dot.net/",
     "Copyright": "\u00A9 Microsoft Corporation. All rights reserved.",
     "Authors": "Microsoft",
@@ -781,7 +771,7 @@
   },
   {
     "PackageId": "Microsoft.Extensions.Options",
-    "PackageVersion": "9.0.8",
+    "PackageVersion": "9.0.9",
     "PackageProjectUrl": "https://dot.net/",
     "Copyright": "\u00A9 Microsoft Corporation. All rights reserved.",
     "Authors": "Microsoft",
@@ -791,7 +781,7 @@
   },
   {
     "PackageId": "Microsoft.Extensions.Primitives",
-    "PackageVersion": "9.0.8",
+    "PackageVersion": "9.0.9",
     "PackageProjectUrl": "https://dot.net/",
     "Copyright": "\u00A9 Microsoft Corporation. All rights reserved.",
     "Authors": "Microsoft",
@@ -861,7 +851,7 @@
   },
   {
     "PackageId": "Microsoft.JSInterop",
-    "PackageVersion": "9.0.8",
+    "PackageVersion": "9.0.9",
     "PackageProjectUrl": "https://asp.net/",
     "Copyright": "\u00A9 Microsoft Corporation. All rights reserved.",
     "Authors": "Microsoft",
@@ -871,7 +861,7 @@
   },
   {
     "PackageId": "Microsoft.JSInterop.WebAssembly",
-    "PackageVersion": "9.0.8",
+    "PackageVersion": "9.0.9",
     "PackageProjectUrl": "https://asp.net/",
     "Copyright": "\u00A9 Microsoft Corporation. All rights reserved.",
     "Authors": "Microsoft",
@@ -1199,7 +1189,7 @@
   },
   {
     "PackageId": "Scalar.AspNetCore",
-    "PackageVersion": "2.7.2",
+    "PackageVersion": "2.8.1",
     "PackageProjectUrl": "https://scalar.com/",
     "Authors": "Scalar",
     "License": "MIT",
@@ -1607,7 +1597,7 @@
   },
   {
     "PackageId": "System.Text.Json",
-    "PackageVersion": "9.0.8",
+    "PackageVersion": "9.0.9",
     "PackageProjectUrl": "https://dot.net/",
     "Copyright": "\u00A9 Microsoft Corporation. All rights reserved.",
     "Authors": "Microsoft",

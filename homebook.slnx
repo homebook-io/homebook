@@ -34,6 +34,7 @@
     <File Path="icon_128.png" />
     <File Path="docker-entrypoint.sh" />
     <File Path="generate-client.sh" />
+    <File Path="update-licenses.sh" />
   </Folder>
   <Folder Name="/Solution/assets/">
     <File Path="assets\README.md" />
