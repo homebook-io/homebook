@@ -12,9 +12,13 @@ public static class SystemHandler
         {
             string? dotnetVersion = Environment.Version.ToString();
             string? appVersion = configuration["Version"];
-            string? databaseInfo = configuration["Database:Provider"];
+            string? databaseProvider = configuration["Database:Provider"];
+            string deploymentType = "Docker";
 
-            GetSystemInfoResponse response = new(dotnetVersion, appVersion, databaseInfo);
+            GetSystemInfoResponse response = new(dotnetVersion,
+                appVersion,
+                databaseProvider,
+                deploymentType);
             return TypedResults.Ok(response);
         }
         catch (Exception ex)
