@@ -18,6 +18,9 @@ public partial class UiLicenseDialog : ComponentBase
     [Parameter]
     public List<LicenseViewModel> Licenses { get; set; } = [];
 
+    [Parameter]
+    public bool ShowAcceptButton { get; set; } = true;
+
     private async Task CancelAsync()
     {
         CancellationToken cancellationToken = CancellationToken.None;

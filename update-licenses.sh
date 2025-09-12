@@ -7,8 +7,8 @@ LICENSES_JSON="./source/HomeBook.Backend.Core.Licenses/Licenses.json"
 LICENSES_DIR="./source/HomeBook.Backend.Core.Licenses/Licenses"
 
 dotnet tool install --global nuget-license
-dotnet restore
-dotnet build --configuration Release --no-restore
+dotnet restore ${SOLUTION}
+dotnet build ${SOLUTION} --configuration Release --no-restore
 
 rm "${LICENSES_JSON}"
 rm -rf "${LICENSES_DIR}"

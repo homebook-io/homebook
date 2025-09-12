@@ -7,6 +7,8 @@
 @inject ILocalizationProvider Loc
 @inject IConfiguration Configuration
 @inject BackendClient BackendClient
+@inject IDialogService DialogService
+@inject ILicensesService LicensesService
 
 <MudContainer Class="mt-4">
 
@@ -122,27 +124,25 @@
                     <MudDivider Class="mb-4"/>
 
                     <MudStack Spacing="3">
-                        <MudAlert Severity="Severity.Info" Variant="Variant.Outlined">
-                            <MudText Typo="Typo.body2">
-                                This software is provided under an open source license.
-                                Please refer to the LICENSE file in the repository for detailed terms and
-                                conditions.
-                            </MudText>
-                        </MudAlert>
+
+                        <MudButton Color="Color.Secondary"
+                                   Variant="Variant.Filled"
+                                   Class="mt-3"
+                                   StartIcon="@Icons.Material.TwoTone.TextSnippet"
+                                   OnClick="async () => await OpenLicensesDialogAsync()">
+                            Show Licenses
+                        </MudButton>
 
                         <MudStack Row="true" Class="justify-space-between align-center">
+
                             <MudText Typo="Typo.body2" Color="Color.Secondary">
                                 © @DateTime.Now.Year HomeBook. All rights reserved.
                             </MudText>
-                            <MudButton Variant="Variant.Text"
-                                       Color="Color.Primary"
-                                       StartIcon="@Icons.Material.Filled.OpenInNew"
-                                       Href="https://github.com/lk-code/homebook"
-                                       Target="_blank">
-                                View on GitHub
-                            </MudButton>
+
                         </MudStack>
+
                     </MudStack>
+
                 </MudPaper>
 
                 <!-- External Links -->

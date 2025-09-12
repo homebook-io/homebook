@@ -1,5 +1,10 @@
 using HomeBook.Client.Models;
+using HomeBook.Frontend.Abstractions.Models;
+using HomeBook.Frontend.Components;
+using HomeBook.Frontend.Mappings;
+using HomeBook.Frontend.Models.Setup;
 using Microsoft.AspNetCore.Components;
+using MudBlazor;
 
 namespace HomeBook.Frontend.Pages.Settings;
 
@@ -11,6 +16,7 @@ public partial class About : ComponentBase
     private string _backendDotnetVersion = "1.0.0";
     private string _databaseProvider = "";
     private string _deploymentType = "";
+    private List<LicenseViewModel> _licenses = [];
 
     protected override async Task OnInitializedAsync()
     {
@@ -20,6 +26,15 @@ public partial class About : ComponentBase
 
         await LoadUIInfoAsync(cancellationToken);
         await LoadBackendInfoAsync(cancellationToken);
+        await LoadLicensesAsync(cancellationToken);
+    }
+
+    private async Task LoadLicensesAsync(CancellationToken cancellationToken)
+    {
+        License[] licenses = await LicensesService.GetAllLicensesAsync(cancellationToken);
+        _licenses = licenses.OrderBy(x => x.Name)
+            .Select(x => x.ToViewModel())
+            .ToList();
     }
 
     private async Task LoadUIInfoAsync(CancellationToken cancellationToken)
@@ -50,5 +65,32 @@ public partial class About : ComponentBase
             "DOCKER" => "Docker",
             _ => response.DeploymentType
         };
+    }
+
+    private async Task OpenLicensesDialogAsync()
+    {
+        CancellationToken cancellationToken = CancellationToken.None;
+
+        DialogParameters<UiLicenseDialog> parameters = new()
+        {
+            {
+                x => x.Licenses, _licenses
+            },
+            {
+                x => x.ShowAcceptButton, false
+            },
+        };
+
+        IDialogReference licenseDialog = await DialogService.ShowAsync<UiLicenseDialog>("HomeBook Licenses",
+            parameters,
+            new DialogOptions()
+            {
+                MaxWidth = MaxWidth.Medium,
+                FullWidth = true,
+            });
+
+        DialogResult? licenseDialogResult = await licenseDialog.Result;
+        if (licenseDialogResult.Canceled)
+            return;
     }
 }
