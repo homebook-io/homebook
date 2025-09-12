@@ -18,7 +18,7 @@
 
 <MudLayout>
 
-    <MudAppBar Elevation="1">
+    <MudAppBar Color="Color.Primary" Elevation="1">
 
         <MudText Typo="Typo.h5" Class="ml-3">HomeBook</MudText>
 
@@ -27,19 +27,38 @@
         <AuthorizeView>
 
             <Authorized>
-                <MudMenu Icon="@Icons.Material.Filled.AccountCircle"
+
+                <MudMenu Dense
+                         Icon="@Icons.Material.TwoTone.AccountCircle"
                          Color="Color.Inherit"
                          Direction="Direction.Bottom"
                          OffsetX="true">
-                    <MudMenuItem Icon="@Icons.Material.Filled.Person">
-                        <MudText>@context.User.Identity?.Name</MudText>
-                    </MudMenuItem>
+
+                    <MudMenuItem Icon="@Icons.Material.Filled.Person"
+                                 IconColor="Color.Primary"
+                                 Label="@context.User.Identity?.Name"/>
+
                     <MudDivider/>
-                    <MudMenuItem Icon="@Icons.Material.Filled.Logout"
-                                 OnClick="HandleLogoutAsync">
-                        Logout
-                    </MudMenuItem>
+
+                    <MudMenuItem Icon="@Icons.Material.TwoTone.Logout"
+                                 IconColor="Color.Primary"
+                                 OnClick="HandleLogoutAsync"
+                                 Label="Logout"/>
+
                 </MudMenu>
+
+                <MudMenu Dense
+                         Variant="Variant.Text"
+                         Size="Size.Medium"
+                         Color="Color.Inherit"
+                         Icon="@Icons.Material.TwoTone.MoreVert">
+
+                    <MudMenuItem Icon="@Icons.Material.TwoTone.Settings"
+                                 IconColor="Color.Primary"
+                                 Href="/Settings"
+                                 Label="Settings"/>
+                </MudMenu>
+
             </Authorized>
 
             <NotAuthorized>
@@ -56,6 +75,23 @@
     <MudMainContent>
         @Body
     </MudMainContent>
+
+    <MudAppBar Bottom="true" Color="Color.Secondary" Elevation="1">
+
+        <MudText Class="me-5" Typo="Typo.caption">HomeBook</MudText>
+        <MudText Typo="Typo.caption">made with ❤️ by&nbsp;</MudText>
+        <MudLink Href="https://www.lk-code.dev"
+                 Target="_blank"
+                 Color="Color.Inherit"
+                 Typo="Typo.caption">
+            <MudText Typo="Typo.caption">lk-code</MudText>
+        </MudLink>
+
+        <MudSpacer/>
+
+        <MudIconButton Icon="@Icons.Material.Filled.MoreVert" Color="Color.Inherit" Edge="Edge.End"/>
+
+    </MudAppBar>
 
 </MudLayout>
 
