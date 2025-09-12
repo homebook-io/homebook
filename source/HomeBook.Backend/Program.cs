@@ -89,7 +89,8 @@ app.UseDefaultFiles();
 #region map endpoints
 
 // map endpoints that are always available
-app.MapVersionEndpoints();
+app.MapVersionEndpoints()
+    .MapSystemEndpoints();
 
 switch (instanceStatus)
 {
