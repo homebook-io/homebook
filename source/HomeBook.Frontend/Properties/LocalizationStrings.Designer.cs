@@ -122,5 +122,11 @@ namespace HomeBook.Frontend.Properties {
                 return ResourceManager.GetString("Account_Login_Title", resourceCulture);
             }
         }
+        
+        internal static string Settings_About_AppSlogan_Text {
+            get {
+                return ResourceManager.GetString("Settings_About_AppSlogan_Text", resourceCulture);
+            }
+        }
     }
 }

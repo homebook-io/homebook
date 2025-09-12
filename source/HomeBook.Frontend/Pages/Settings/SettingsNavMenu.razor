@@ -1,0 +1,32 @@
+@using HomeBook.Frontend.Icons
+@using HomeBookIcons = HomeBook.Frontend.Defaults.HomeBookIcons
+<MudPaper>
+
+    <MudNavMenu Bordered="true"
+                Class="mud-navmenu-first-level"
+                Color="Color.Secondary">
+
+        <MudNavLink Match="NavLinkMatch.All"
+                    Href="/Settings"
+                    Icon="@HomeBookIcons.Icons8.GlassMorphism.Adjust">
+            Dashboard
+        </MudNavLink>
+        <MudNavLink Match="NavLinkMatch.All"
+                    Href="/Settings/Users"
+                    Icon="@HomeBookIcons.Icons8.GlassMorphism.PeopleAlt">
+            Servers
+        </MudNavLink>
+        @* <MudNavLink Href="/Settings/billing" Disabled="true">Billing</MudNavLink> *@
+        @* <MudNavGroup Title="Settings" Expanded="true"> *@
+        @*     <MudNavLink Href="/Settings/users">Users</MudNavLink> *@
+        @*     <MudNavLink Href="/Settings/security">Security</MudNavLink> *@
+        @* </MudNavGroup> *@
+        <MudNavLink Match="NavLinkMatch.All"
+                    Href="/Settings/About"
+                    Icon="@HomeBookIcons.Icons8.GlassMorphism.Queue">
+            About
+        </MudNavLink>
+
+    </MudNavMenu>
+
+</MudPaper>

@@ -16,10 +16,13 @@
 @* Needed for snackbars *@
 <MudSnackbarProvider/>
 
-<MudLayout>
+<MudLayout Class="pb-20">
 
     <MudAppBar Color="Color.Primary" Elevation="1">
 
+        <MudIconButton Icon="@Icons.Material.TwoTone.Home"
+                       Href="/"
+                       Color="Color.Inherit"/>
         <MudText Typo="Typo.h5" Class="ml-3">HomeBook</MudText>
 
         <MudSpacer/>
@@ -76,7 +79,7 @@
         @Body
     </MudMainContent>
 
-    <MudAppBar Bottom="true" Color="Color.Secondary" Elevation="1">
+    <MudAppBar Bottom="true" Color="Color.Tertiary" Elevation="1">
 
         <MudText Class="me-5" Typo="Typo.caption">HomeBook</MudText>
         <MudText Typo="Typo.caption">made with ❤️ by&nbsp;</MudText>
