@@ -1,15 +1,19 @@
 using HomeBook.Backend.Data.Contracts;
 using HomeBook.Backend.Data.Entities;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Logging;
 
 namespace HomeBook.Backend.Data.Repositories;
 
 /// <inheritdoc />
-public class UserRepository(AppDbContext dbContext) : IUserRepository
+public class UserRepository(
+    ILogger<UserRepository> logger,
+    IDbContextFactory<AppDbContext> factory) : IUserRepository
 {
     /// <inheritdoc />
     public async Task<User> CreateUserAsync(User user, CancellationToken cancellationToken = default)
     {
+        await using AppDbContext dbContext = await factory.CreateDbContextAsync(cancellationToken);
         dbContext.Add(user);
         await dbContext.SaveChangesAsync(cancellationToken);
 
@@ -17,25 +21,66 @@ public class UserRepository(AppDbContext dbContext) : IUserRepository
     }
 
     /// <inheritdoc />
-    public async Task<bool> ContainsUserAsync(string username, CancellationToken cancellationToken = default) =>
-        (await GetUserByUsernameAsync(username, cancellationToken)) is not null;
+    public async Task<bool> ContainsUserAsync(string username, CancellationToken cancellationToken = default)
+    {
+        await using AppDbContext dbContext = await factory.CreateDbContextAsync(cancellationToken);
+        return (await GetUserByUsernameAsync(username, cancellationToken)) is not null;
+    }
 
     /// <inheritdoc />
-    public async Task<User?> GetUserByIdAsync(Guid id, CancellationToken cancellationToken = default) =>
-        await dbContext.Set<User>().FirstOrDefaultAsync(x => x.Id == id, cancellationToken);
+    public async Task<User?> GetUserByIdAsync(Guid id, CancellationToken cancellationToken = default)
+    {
+        await using AppDbContext dbContext = await factory.CreateDbContextAsync(cancellationToken);
+        return await dbContext.Set<User>().FirstOrDefaultAsync(x => x.Id == id, cancellationToken);
+    }
 
     /// <inheritdoc />
-    public async Task<User?> GetUserByUsernameAsync(string username, CancellationToken cancellationToken = default) =>
-        await dbContext.Set<User>().FirstOrDefaultAsync(x => x.Username == username, cancellationToken);
+    public async Task<User?> GetUserByUsernameAsync(string username, CancellationToken cancellationToken = default)
+    {
+        await using AppDbContext dbContext = await factory.CreateDbContextAsync(cancellationToken);
+        return await dbContext.Set<User>().FirstOrDefaultAsync(x => x.Username == username, cancellationToken);
+    }
 
     /// <inheritdoc />
-    public async Task<IEnumerable<User>> GetAllAsync(CancellationToken cancellationToken) =>
-        await dbContext.Users.ToListAsync(cancellationToken);
+    public async Task<IEnumerable<User>> GetAllAsync(CancellationToken cancellationToken)
+    {
+        await using AppDbContext dbContext = await factory.CreateDbContextAsync(cancellationToken);
+        return await dbContext.Users.ToListAsync(cancellationToken);
+    }
 
     /// <inheritdoc />
     public async Task<User> UpdateUserAsync(User user, CancellationToken cancellationToken)
     {
+        await using AppDbContext dbContext = await factory.CreateDbContextAsync(cancellationToken);
         dbContext.Update(user);
+
+        logger.LogInformation("SaveChangesAsync via UpdateUserAsync for user {UserId}", user.Id);
+
+        await dbContext.SaveChangesAsync(cancellationToken);
+
+        return user;
+    }
+
+    /// <inheritdoc />
+    public async Task<User?> UpdateAsync(Guid userId,
+        Action<User> updateHandler,
+        CancellationToken cancellationToken)
+    {
+        await using AppDbContext dbContext = await factory.CreateDbContextAsync(cancellationToken);
+
+        User? user = await dbContext.Set<User>()
+            .FirstOrDefaultAsync(x => x.Id == userId,
+                cancellationToken: cancellationToken);
+
+        if (user is null)
+            throw new KeyNotFoundException($"User with id '{userId}' not found.");
+
+        updateHandler(user);
+
+        dbContext.Update(user);
+
+        logger.LogInformation("SaveChangesAsync via UpdateAsyncfor user {UserId}", user.Id);
+
         await dbContext.SaveChangesAsync(cancellationToken);
 
         return user;

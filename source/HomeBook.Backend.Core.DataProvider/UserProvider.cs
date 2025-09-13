@@ -62,4 +62,23 @@ public class UserProvider(
 
         await userRepository.UpdateUserAsync(user, cancellationToken);
     }
+
+    /// <inheritdoc />
+    public Task UpdateAdminFlag(Guid userId,
+        bool isAdmin,
+        CancellationToken cancellationToken)
+    {
+        User? user = userRepository.GetUserByIdAsync(userId, cancellationToken)
+            .GetAwaiter()
+            .GetResult();
+        if (user is null)
+            throw new KeyNotFoundException($"User with id '{userId}' not found.");
+
+        return userRepository.UpdateAsync(userId,
+            x =>
+            {
+                x.IsAdmin = true;
+            },
+            cancellationToken);
+    }
 }

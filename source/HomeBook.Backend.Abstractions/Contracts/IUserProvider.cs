@@ -41,4 +41,15 @@ public interface IUserProvider
     /// <param name="cancellationToken"></param>
     /// <returns></returns>
     Task UpdateUserAsync(UserInfo userInfo, CancellationToken cancellationToken);
+
+    /// <summary>
+    /// updates the admin flag of the given user
+    /// </summary>
+    /// <param name="userId"></param>
+    /// <param name="isAdmin"></param>
+    /// <param name="cancellationToken"></param>
+    /// <returns></returns>
+    Task UpdateAdminFlag(Guid userId,
+        bool isAdmin,
+        CancellationToken cancellationToken);
 }
