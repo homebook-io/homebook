@@ -1,4 +1,5 @@
 @using HomeBookIcons = HomeBook.Frontend.Defaults.HomeBookIcons
+@using Microsoft.AspNetCore.Components.Authorization
 
 <MudPaper>
 
@@ -12,11 +13,13 @@
             General
         </MudNavLink>
 
-        <MudNavLink Match="NavLinkMatch.All"
-                    Href="/Settings/Users"
-                    Icon="@HomeBookIcons.Icons8.GlassMorphism.PeopleAlt">
-            Users
-        </MudNavLink>
+        <AuthorizeView Roles="Admin">
+            <MudNavLink Match="NavLinkMatch.All"
+                        Href="/Settings/Users"
+                        Icon="@HomeBookIcons.Icons8.GlassMorphism.PeopleAlt">
+                Users
+            </MudNavLink>
+        </AuthorizeView>
 
         @* <MudNavLink Href="/Settings/billing" Disabled="true">Billing</MudNavLink> *@
         @* <MudNavGroup Title="Settings" Expanded="true"> *@

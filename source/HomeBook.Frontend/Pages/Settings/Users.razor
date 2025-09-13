@@ -1,4 +1,5 @@
 @page "/Settings/Users"
+@attribute [Authorize(Roles = "Admin")]
 
 <MudContainer Class="mt-4">
 
@@ -13,7 +14,7 @@
         <MudItem xs="12" sm="12" md="7" lg="8" xl="9">
 
             <MudPaper Class="d-flex align-center justify-center mud-width-full py-8">
-                users
+                <MudText Typo="Typo.h5">User Management</MudText>
             </MudPaper>
 
         </MudItem>

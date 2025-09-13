@@ -192,6 +192,14 @@ public class AuthenticationService(
             if (jsonDocument.RootElement.TryGetProperty(CLAIMS_NAME_KEY, out JsonElement nameElement))
                 claims.Add(new Claim(ClaimTypes.Name, nameElement.GetString() ?? ""));
 
+            // Extract admin claim
+            if (jsonDocument.RootElement.TryGetProperty("IsAdmin", out JsonElement isAdminElement))
+                claims.Add(new Claim("IsAdmin", isAdminElement.GetBoolean().ToString() ?? "false"));
+
+            // Extract role claim
+            if (jsonDocument.RootElement.TryGetProperty("http://schemas.microsoft.com/ws/2008/06/identity/claims/role", out JsonElement roleElement))
+                claims.Add(new Claim(ClaimTypes.Role, roleElement.GetString() ?? "User"));
+
             ClaimsIdentity identity = new(claims, "jwt");
             return new ClaimsPrincipal(identity);
         }
@@ -200,5 +208,19 @@ public class AuthenticationService(
             logger.LogError(ex, "Error parsing JWT token");
             return new ClaimsPrincipal(new ClaimsIdentity());
         }
+    }
+
+    /// <inheritdoc />
+    public async Task<bool> IsCurrentUserAdminAsync(CancellationToken cancellationToken = default)
+    {
+        ClaimsPrincipal user = await GetCurrentUserAsync(cancellationToken);
+        Claim? isAdminClaim = user.FindFirst("IsAdmin");
+
+        if (isAdminClaim != null && bool.TryParse(isAdminClaim.Value, out bool isAdmin))
+        {
+            return isAdmin;
+        }
+
+        return false;
     }
 }
