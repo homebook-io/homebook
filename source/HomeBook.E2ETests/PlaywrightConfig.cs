@@ -14,8 +14,7 @@ public static class PlaywrightConfig
     {
         Chromium,
         Firefox,
-        WebKit,
-        Safari
+        WebKit
     }
 
     /// <summary>
@@ -25,7 +24,7 @@ public static class PlaywrightConfig
     [
         BrowserType.Chromium,
         BrowserType.Firefox,
-        BrowserType.Safari // Use Safari instead of WebKit on macOS
+        BrowserType.WebKit
     ];
 
     /// <summary>
@@ -111,15 +110,6 @@ public static class PlaywrightConfig
                     "--disable-web-security"
                 };
                 // Force visible mode for WebKit on macOS
-                options.Headless = false;
-                break;
-            case BrowserType.Safari:
-                // Safari specific configuration
-                options.Args = new[]
-                {
-                    "--disable-web-security"
-                };
-                // Force visible mode for Safari
                 options.Headless = false;
                 break;
         }

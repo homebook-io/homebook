@@ -34,7 +34,6 @@ public abstract class BasePageTest
             PlaywrightConfig.BrowserType.Chromium => await Playwright.Chromium.LaunchAsync(PlaywrightConfig.GetLaunchOptions(browserType)),
             PlaywrightConfig.BrowserType.Firefox => await Playwright.Firefox.LaunchAsync(PlaywrightConfig.GetLaunchOptions(browserType)),
             PlaywrightConfig.BrowserType.WebKit => await LaunchWebKitBrowserAsync(),
-            PlaywrightConfig.BrowserType.Safari => await LaunchSafariBrowserAsync(),
             _ => throw new ArgumentException($"Unsupported browser type: {browserType}")
         };
 
@@ -80,31 +79,6 @@ public abstract class BasePageTest
         Console.WriteLine("Launching WebKit browser with special macOS configuration...");
         IBrowser browser = await Playwright.Webkit.LaunchAsync(webkitOptions);
         Console.WriteLine("WebKit browser launched successfully");
-
-        return browser;
-    }
-
-    /// <summary>
-    /// Launch Safari browser using WebKit engine with enhanced visibility settings
-    /// </summary>
-    private async Task<IBrowser> LaunchSafariBrowserAsync()
-    {
-        BrowserTypeLaunchOptions safariOptions = new()
-        {
-            Headless = false, // Explicitly force non-headless for Safari
-            SlowMo = PlaywrightConfig.DefaultLaunchOptions.SlowMo,
-            Timeout = PlaywrightConfig.DefaultLaunchOptions.Timeout,
-            Args = new[]
-            {
-                "--disable-web-security",
-                "--allow-running-insecure-content",
-                "--disable-features=VizDisplayCompositor"
-            }
-        };
-
-        Console.WriteLine("Launching Safari browser using WebKit engine with enhanced visibility...");
-        IBrowser browser = await Playwright.Webkit.LaunchAsync(safariOptions);
-        Console.WriteLine("Safari (WebKit) browser launched successfully");
 
         return browser;
     }
