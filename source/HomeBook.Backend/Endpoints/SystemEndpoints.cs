@@ -30,6 +30,53 @@ public static class SystemEndpoints
             .Produces<string>(StatusCodes.Status403Forbidden)
             .Produces<string>(StatusCodes.Status500InternalServerError);
 
+        group.MapPost("/users", SystemHandler.HandleCreateUser)
+            .WithName("CreateUser")
+            .WithDescription("Creates a new user (Admin only)")
+            .WithMetadata(new RequireAdminAttribute())
+            .WithOpenApi()
+            .Produces<CreateUserResponse>()
+            .Produces<string>(StatusCodes.Status400BadRequest)
+            .Produces<string>(StatusCodes.Status401Unauthorized)
+            .Produces<string>(StatusCodes.Status403Forbidden)
+            .Produces<string>(StatusCodes.Status500InternalServerError);
+
+        group.MapDelete("/users", SystemHandler.HandleDeleteUser)
+            .WithName("DeleteUser")
+            .WithDescription("Deletes a user (Admin only, cannot delete self)")
+            .WithMetadata(new RequireAdminAttribute())
+            .WithOpenApi()
+            .Produces<string>(StatusCodes.Status200OK)
+            .Produces<string>(StatusCodes.Status400BadRequest)
+            .Produces<string>(StatusCodes.Status401Unauthorized)
+            .Produces<string>(StatusCodes.Status403Forbidden)
+            .Produces<string>(StatusCodes.Status404NotFound)
+            .Produces<string>(StatusCodes.Status500InternalServerError);
+
+        group.MapPut("/users/password", SystemHandler.HandleUpdatePassword)
+            .WithName("UpdateUserPassword")
+            .WithDescription("Updates a user's password (Admin only)")
+            .WithMetadata(new RequireAdminAttribute())
+            .WithOpenApi()
+            .Produces<string>(StatusCodes.Status200OK)
+            .Produces<string>(StatusCodes.Status400BadRequest)
+            .Produces<string>(StatusCodes.Status401Unauthorized)
+            .Produces<string>(StatusCodes.Status403Forbidden)
+            .Produces<string>(StatusCodes.Status404NotFound)
+            .Produces<string>(StatusCodes.Status500InternalServerError);
+
+        group.MapPut("/users/admin", SystemHandler.HandleUpdateUserAdmin)
+            .WithName("UpdateUserAdmin")
+            .WithDescription("Updates a user's admin status (Admin only, cannot change own status)")
+            .WithMetadata(new RequireAdminAttribute())
+            .WithOpenApi()
+            .Produces<string>(StatusCodes.Status200OK)
+            .Produces<string>(StatusCodes.Status400BadRequest)
+            .Produces<string>(StatusCodes.Status401Unauthorized)
+            .Produces<string>(StatusCodes.Status403Forbidden)
+            .Produces<string>(StatusCodes.Status404NotFound)
+            .Produces<string>(StatusCodes.Status500InternalServerError);
+
         return routeBuilder;
     }
 }

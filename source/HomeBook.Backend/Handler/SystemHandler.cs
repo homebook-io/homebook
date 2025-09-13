@@ -1,6 +1,8 @@
 using HomeBook.Backend.Responses;
+using HomeBook.Backend.Requests;
 using HomeBook.Backend.Data.Contracts;
 using HomeBook.Backend.Data.Entities;
+using HomeBook.Backend.Abstractions.Contracts;
 using Microsoft.AspNetCore.Mvc;
 
 namespace HomeBook.Backend.Handler;
@@ -40,9 +42,9 @@ public static class SystemHandler
             if (page < 1) page = 1;
             if (pageSize < 1 || pageSize > 100) pageSize = 10;
 
-            // Get all users from repository
-            IEnumerable<User> allUsers = await userRepository.GetAllAsync(cancellationToken);
-            int totalCount = allUsers.Count();
+            // Get all users from repository and materialize to avoid multiple enumeration
+            List<User> allUsers = (await userRepository.GetAllAsync(cancellationToken)).ToList();
+            int totalCount = allUsers.Count;
             int totalPages = (int)Math.Ceiling((double)totalCount / pageSize);
 
             // Apply pagination
@@ -64,6 +66,221 @@ public static class SystemHandler
         catch (Exception)
         {
             return TypedResults.Problem("An error occurred while retrieving users.", statusCode: 500);
+        }
+    }
+
+    public static async Task<IResult> HandleCreateUser([FromServices] IUserRepository userRepository,
+        [FromServices] IHashProvider hashProvider,
+        [FromBody] CreateUserRequest request,
+        CancellationToken cancellationToken = default)
+    {
+        try
+        {
+            // Validate input
+            if (string.IsNullOrWhiteSpace(request.Username))
+            {
+                return TypedResults.BadRequest("Username is required");
+            }
+
+            if (string.IsNullOrWhiteSpace(request.Password))
+            {
+                return TypedResults.BadRequest("Password is required");
+            }
+
+            if (request.Username.Length < 5 || request.Username.Length > 20)
+            {
+                return TypedResults.BadRequest("Username must be between 5 and 20 characters");
+            }
+
+            if (request.Password.Length < 8)
+            {
+                return TypedResults.BadRequest("Password must be at least 8 characters long");
+            }
+
+            // Check if username already exists
+            bool userExists = await userRepository.ContainsUserAsync(request.Username, cancellationToken);
+            if (userExists)
+            {
+                return TypedResults.BadRequest("Username already exists");
+            }
+
+            // Hash the password
+            string passwordHash = hashProvider.Hash(request.Password);
+
+            // Create new user entity
+            User newUser = new()
+            {
+                Username = request.Username,
+                PasswordHash = passwordHash,
+                PasswordHashType = hashProvider.GetType().Name,
+                IsAdmin = request.IsAdmin,
+                Created = DateTime.UtcNow
+            };
+
+            // Save user to database
+            User createdUser = await userRepository.CreateUserAsync(newUser, cancellationToken);
+
+            // Return the new user ID
+            CreateUserResponse response = new(createdUser.Id);
+            return TypedResults.Ok(response);
+        }
+        catch (Exception)
+        {
+            return TypedResults.Problem("An error occurred while creating the user.", statusCode: 500);
+        }
+    }
+
+    public static async Task<IResult> HandleDeleteUser([FromServices] IUserRepository userRepository,
+        [FromServices] IJwtService jwtService,
+        [FromBody] DeleteUserRequest request,
+        HttpContext httpContext,
+        CancellationToken cancellationToken = default)
+    {
+        try
+        {
+            // Get current user ID from JWT token
+            string? authHeader = httpContext.Request.Headers.Authorization.FirstOrDefault();
+            if (authHeader == null || !authHeader.StartsWith("Bearer "))
+            {
+                return TypedResults.Unauthorized();
+            }
+
+            string token = authHeader.Substring("Bearer ".Length).Trim();
+            Guid? currentUserId = jwtService.GetUserIdFromToken(token);
+
+            if (currentUserId == null)
+            {
+                return TypedResults.Unauthorized();
+            }
+
+            // Check if user is trying to delete themselves
+            if (currentUserId == request.UserId)
+            {
+                return TypedResults.BadRequest("You cannot delete your own account");
+            }
+
+            // Check if user to delete exists
+            User? userToDelete = await userRepository.GetUserByIdAsync(request.UserId, cancellationToken);
+            if (userToDelete == null)
+            {
+                return TypedResults.NotFound("User not found");
+            }
+
+            // Soft delete by setting Disabled timestamp
+            User? updatedUser = await userRepository.UpdateAsync(request.UserId,
+                user => user.Disabled = DateTime.UtcNow, cancellationToken);
+
+            if (updatedUser == null)
+            {
+                return TypedResults.Problem("Failed to delete user", statusCode: 500);
+            }
+
+            return TypedResults.Ok("User deleted successfully");
+        }
+        catch (Exception)
+        {
+            return TypedResults.Problem("An error occurred while deleting the user.", statusCode: 500);
+        }
+    }
+
+    public static async Task<IResult> HandleUpdatePassword([FromServices] IUserRepository userRepository,
+        [FromServices] IHashProvider hashProvider,
+        [FromBody] UpdatePasswordRequest request,
+        CancellationToken cancellationToken = default)
+    {
+        try
+        {
+            // Validate input
+            if (string.IsNullOrWhiteSpace(request.NewPassword))
+            {
+                return TypedResults.BadRequest("Password is required");
+            }
+
+            if (request.NewPassword.Length < 8)
+            {
+                return TypedResults.BadRequest("Password must be at least 8 characters long");
+            }
+
+            // Check if user exists
+            User? user = await userRepository.GetUserByIdAsync(request.UserId, cancellationToken);
+            if (user == null)
+            {
+                return TypedResults.NotFound("User not found");
+            }
+
+            // Hash the new password
+            string passwordHash = hashProvider.Hash(request.NewPassword);
+
+            // Update user password
+            User? updatedUser = await userRepository.UpdateAsync(request.UserId,
+                u => {
+                    u.PasswordHash = passwordHash;
+                    u.PasswordHashType = hashProvider.GetType().Name;
+                }, cancellationToken);
+
+            if (updatedUser == null)
+            {
+                return TypedResults.Problem("Failed to update password", statusCode: 500);
+            }
+
+            return TypedResults.Ok("Password updated successfully");
+        }
+        catch (Exception)
+        {
+            return TypedResults.Problem("An error occurred while updating the password.", statusCode: 500);
+        }
+    }
+
+    public static async Task<IResult> HandleUpdateUserAdmin([FromServices] IUserRepository userRepository,
+        [FromServices] IJwtService jwtService,
+        [FromBody] UpdateUserAdminRequest request,
+        HttpContext httpContext,
+        CancellationToken cancellationToken = default)
+    {
+        try
+        {
+            // Get current user ID from JWT token
+            string? authHeader = httpContext.Request.Headers.Authorization.FirstOrDefault();
+            if (authHeader == null || !authHeader.StartsWith("Bearer "))
+            {
+                return TypedResults.Unauthorized();
+            }
+
+            string token = authHeader.Substring("Bearer ".Length).Trim();
+            Guid? currentUserId = jwtService.GetUserIdFromToken(token);
+
+            if (currentUserId == null)
+            {
+                return TypedResults.Unauthorized();
+            }
+
+            // Check if user is trying to change their own admin status
+            if (currentUserId == request.UserId)
+            {
+                return TypedResults.BadRequest("You cannot change your own admin status");
+            }
+
+            // Check if target user exists
+            User? user = await userRepository.GetUserByIdAsync(request.UserId, cancellationToken);
+            if (user == null)
+            {
+                return TypedResults.NotFound("User not found");
+            }
+
+            // Update user admin status
+            User? updatedUser = await userRepository.UpdateAsync(request.UserId,
+                u => u.IsAdmin = request.IsAdmin, cancellationToken);
+
+            if (updatedUser == null)
+            {
+                return TypedResults.Problem("Failed to update admin status", statusCode: 500);
+            }
+
+            return TypedResults.Ok($"User admin status updated successfully to {request.IsAdmin}");
+        }
+        catch (Exception)
+        {
+            return TypedResults.Problem("An error occurred while updating admin status.", statusCode: 500);
         }
     }
 }
