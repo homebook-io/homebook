@@ -92,15 +92,10 @@ jobs:
                 run: |
                     dotnet build --no-restore
 
-            -   name: .NET Test
-                shell: pwsh
-                run: |
-                    dotnet test ${{ env.UNIT_TEST_CSPROJ }} --no-build
-
-            -   name: Collect Test Coverage
-                shell: pwsh
-                run: |
-                    dotnet-coverage collect "dotnet test" -f xml -o "coverage.xml"
+            - name: Collect Test Coverage
+              shell: pwsh
+              run: |
+                  dotnet-coverage collect "dotnet test ${{ env.UNIT_TEST_CSPROJ }} --no-build" -f xml -o "coverage.xml"
 
             -   name: End SonarQube
                 shell: pwsh
