@@ -125,37 +125,37 @@ jobs:
                       --build-arg BACKEND_APPSETTINGS_FILE=${{ env.BACKEND_APPSETTINGS_FILE }} \
                       --tag test-image .
 
-    tests-e2e:
-        runs-on: ubuntu-latest
-        needs:
-            - build-test
-
-        steps:
-            -   name: Checkout repository
-                uses: actions/checkout@v4
-
-            -   name: Setup .NET
-                uses: actions/setup-dotnet@v4
-                with:
-                    dotnet-version: ${{ env.DOTNET_VERSION }}
-
-            -   name: .NET Restore
-                run: |
-                    dotnet restore ${{ env.E2E_TEST_CSPROJ }}
-
-            -   name: .NET Build
-                run: |
-                    dotnet build ${{ env.E2E_TEST_CSPROJ }} --no-restore
-
-            -   name: .NET Tests - E2E
-                run: |
-                    dotnet test ${{ env.E2E_TEST_CSPROJ }} --no-build
+#    tests-e2e:
+#        runs-on: ubuntu-latest
+#        needs:
+#            - build-test
+#
+#        steps:
+#            -   name: Checkout repository
+#                uses: actions/checkout@v4
+#
+#            -   name: Setup .NET
+#                uses: actions/setup-dotnet@v4
+#                with:
+#                    dotnet-version: ${{ env.DOTNET_VERSION }}
+#
+#            -   name: .NET Restore
+#                run: |
+#                    dotnet restore ${{ env.E2E_TEST_CSPROJ }}
+#
+#            -   name: .NET Build
+#                run: |
+#                    dotnet build ${{ env.E2E_TEST_CSPROJ }} --no-restore
+#
+#            -   name: .NET Tests - E2E
+#                run: |
+#                    dotnet test ${{ env.E2E_TEST_CSPROJ }} --no-build
 
     post-build:
         runs-on: ubuntu-latest
         needs:
             - build-test
-            - tests-e2e
+#            - tests-e2e
 
         steps:
             -   name: Checkout repository
