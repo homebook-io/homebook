@@ -31,10 +31,22 @@ public class UpdateManager(
         {
             foreach (IUpdateMigrator updateMigrator in pendingUpdates)
             {
+                string updateLogFilePath = Path.Combine(applicationPathProvider.UpdateDirectory,
+                    $"update_{updateMigrator.Version.ToString().Replace(".", "_")}.log");
+
                 logger.LogInformation("Executing update: {Version} - {Description}",
                     updateMigrator.Version,
                     updateMigrator.Description);
                 await updateMigrator.ExecuteAsync(cancellationToken);
+
+                string timestamp = DateTime.UtcNow.ToString("yyyy-MM-dd HH:mm:ss");
+                await fileSystemService.FileWriteAllTextAsync(updateLogFilePath,
+                    timestamp,
+                    cancellationToken);
+
+                Version[] appliedUpdates = await LoadAppliedUpdatesAsync(cancellationToken);
+                appliedUpdates = appliedUpdates.Append(updateMigrator.Version).ToArray();
+                await WriteAppliedUpdatesAsync(appliedUpdates, cancellationToken);
             }
         }
         catch (Exception ex)
@@ -44,8 +56,16 @@ public class UpdateManager(
         }
     }
 
-    private async Task<IEnumerable<IUpdateMigrator>> GetPendingUpdatesAsync(CancellationToken cancellationToken =
-        default)
+    private async Task WriteAppliedUpdatesAsync(Version[] appliedUpdates, CancellationToken cancellationToken)
+    {
+        string updateIndexContent = JsonSerializer.Serialize(appliedUpdates, new JsonSerializerOptions
+        {
+            WriteIndented = true,
+        });
+        await fileSystemService.FileWriteAllTextAsync(_updateMigrationIndex, updateIndexContent, cancellationToken);
+    }
+
+    private async Task<Version[]> LoadAppliedUpdatesAsync(CancellationToken cancellationToken = default)
     {
         string updateIndexContent = string.Empty;
         if (fileSystemService.FileExists(_updateMigrationIndex))
@@ -54,6 +74,13 @@ public class UpdateManager(
         Version[] appliedUpdates = string.IsNullOrEmpty(updateIndexContent)
             ? []
             : JsonSerializer.Deserialize<Version[]>(updateIndexContent) ?? [];
+
+        return appliedUpdates;
+    }
+
+    private async Task<IEnumerable<IUpdateMigrator>> GetPendingUpdatesAsync(CancellationToken cancellationToken = default)
+    {
+        Version[] appliedUpdates = await LoadAppliedUpdatesAsync(cancellationToken);
 
         List<IUpdateMigrator> updateMigrators = availableUpdateMigrators
             .OrderBy(um => um.Version)

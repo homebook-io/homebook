@@ -37,7 +37,8 @@ public static class ServiceCollectionExtensions
         services.AddScoped<IUpdateManager, UpdateManager>();
 
         // update migrators
-        services.AddScoped<IUpdateMigrator, Update_1_0_10>();
+        services.AddScoped<IUpdateMigrator, Update_20250910_01>();
+        services.AddScoped<IUpdateMigrator, Update_20250912_01>();
 
         return services;
     }

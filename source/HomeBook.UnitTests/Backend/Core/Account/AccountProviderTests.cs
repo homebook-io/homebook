@@ -42,6 +42,7 @@ public class AccountProviderTests
         var username = "testuser";
         var password = "testpassword";
         var userId = Guid.NewGuid();
+        var isAdmin = false;
         var user = new User
         {
             Id = userId,
@@ -65,7 +66,7 @@ public class AccountProviderTests
         _hashProviderFactory.IsSupported("ARGON2ID").Returns(true);
         _hashProviderFactory.Create("ARGON2ID").Returns(_hashProvider);
         _hashProvider.Verify(password, "hashedpassword").Returns(true);
-        _jwtService.GenerateToken(userId, username).Returns(expectedToken);
+        _jwtService.GenerateToken(userId, username, isAdmin).Returns(expectedToken);
 
         // Act
         var result = await _accountProvider.LoginAsync(username, password);
@@ -78,7 +79,7 @@ public class AccountProviderTests
         _hashProviderFactory.Received(1).IsSupported("ARGON2ID");
         _hashProviderFactory.Received(1).Create("ARGON2ID");
         _hashProvider.Received(1).Verify(password, "hashedpassword");
-        _jwtService.Received(1).GenerateToken(userId, username);
+        _jwtService.Received(1).GenerateToken(userId, username, isAdmin);
     }
 
     [Test]

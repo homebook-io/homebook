@@ -8,13 +8,15 @@ public static class UserMappings
         new(x.Id,
             x.Username,
             x.Created,
-            x.Disabled);
+            x.Disabled,
+            x.IsAdmin);
 
     public static Data.Entities.User Update(this Data.Entities.User user, UserInfo x)
     {
         user.Username = x.Username;
         user.Created = x.Created;
         user.Disabled = x.Disabled;
+        user.IsAdmin = x.IsAdmin;
 
         return user;
     }

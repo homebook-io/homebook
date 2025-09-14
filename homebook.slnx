@@ -33,12 +33,18 @@
     <File Path="nginx.conf" />
     <File Path="icon_128.png" />
     <File Path="docker-entrypoint.sh" />
+    <File Path="generate-client.sh" />
+    <File Path="update-licenses.sh" />
+  </Folder>
+  <Folder Name="/Solution/assets/">
+    <File Path="assets\README.md" />
   </Folder>
   <Folder Name="/Solution/workflows/">
     <File Path=".github\workflows\build.yml" />
     <File Path=".github\workflows\pull-request.yml" />
   </Folder>
   <Folder Name="/Tests/">
+    <Project Path="source\HomeBook.E2ETests\HomeBook.E2ETests.csproj" Type="Classic C#" />
     <Project Path="source\HomeBook.UnitTests\HomeBook.UnitTests.csproj" Type="Classic C#" />
   </Folder>
 </Solution>

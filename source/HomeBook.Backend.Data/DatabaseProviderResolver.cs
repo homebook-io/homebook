@@ -15,7 +15,7 @@ public class DatabaseProviderResolver(IEnumerable<IDatabaseProbe> databaseProbes
         string password,
         CancellationToken cancellationToken = default)
     {
-        using var cts = CancellationTokenSource.CreateLinkedTokenSource(cancellationToken);
+        using CancellationTokenSource cts = CancellationTokenSource.CreateLinkedTokenSource(cancellationToken);
 
         // Run all database probes in parallel
         IEnumerable<Task<DatabaseProvider?>> probeTasks = databaseProbes.Select(async probe =>

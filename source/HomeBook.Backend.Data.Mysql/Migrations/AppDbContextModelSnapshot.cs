@@ -16,7 +16,7 @@ namespace HomeBook.Backend.Data.Mysql.Migrations
         {
 #pragma warning disable 612, 618
             modelBuilder
-                .HasAnnotation("ProductVersion", "9.0.8")
+                .HasAnnotation("ProductVersion", "9.0.9")
                 .HasAnnotation("Relational:MaxIdentifierLength", 64);
 
             modelBuilder.Entity("HomeBook.Backend.Data.Entities.Configuration", b =>
@@ -51,6 +51,9 @@ namespace HomeBook.Backend.Data.Mysql.Migrations
 
                     b.Property<DateTime?>("Disabled")
                         .HasColumnType("datetime(6)");
+
+                    b.Property<bool>("IsAdmin")
+                        .HasColumnType("tinyint(1)");
 
                     b.Property<string>("PasswordHash")
                         .IsRequired()

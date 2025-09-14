@@ -45,6 +45,13 @@ public interface IAuthenticationService
     Task<ClaimsPrincipal> GetCurrentUserAsync(CancellationToken cancellationToken = default);
 
     /// <summary>
+    /// checks if the current user has admin privileges.
+    /// </summary>
+    /// <param name="cancellationToken"></param>
+    /// <returns></returns>
+    Task<bool> IsCurrentUserAdminAsync(CancellationToken cancellationToken = default);
+
+    /// <summary>
     /// event triggered when the authentication state changes (e.g., login or logout).
     /// </summary>
     event Action<bool>? AuthenticationStateChanged;

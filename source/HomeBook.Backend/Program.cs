@@ -4,6 +4,7 @@ using HomeBook.Backend.EnvironmentHandler;
 using HomeBook.Backend.Extensions;
 using HomeBook.Backend.Core.Extensions;
 using HomeBook.Backend.Core.Account.Extensions;
+using HomeBook.Backend.Middleware;
 using Scalar.AspNetCore;
 using Serilog;
 
@@ -73,6 +74,7 @@ Log.Information("HomeBook Backend application starting up - Version: {Version}",
 app.UseSerilogRequestLogging();
 
 app.UseAuthentication();
+app.UseMiddleware<AdminAuthorizationMiddleware>();
 app.UseAuthorization();
 
 if (app.Environment.IsDevelopment())

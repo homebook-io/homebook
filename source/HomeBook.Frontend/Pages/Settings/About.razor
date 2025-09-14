@@ -1,0 +1,195 @@
+@page "/Settings/About"
+
+@using HomeBook.Client
+@using HomeBook.Frontend.Abstractions.Contracts
+@using HomeBookIcons = HomeBook.Frontend.Defaults.HomeBookIcons
+
+@inject ILocalizationProvider Loc
+@inject IConfiguration Configuration
+@inject BackendClient BackendClient
+@inject IDialogService DialogService
+@inject ILicensesService LicensesService
+
+<MudContainer Class="mt-4">
+
+    <MudGrid>
+
+        <MudItem xs="12" sm="12" md="5" lg="4" xl="3">
+
+            <SettingsNavMenu/>
+
+        </MudItem>
+
+        <MudItem xs="12" sm="12" md="7" lg="8" xl="9">
+
+            <MudStack Spacing="4">
+
+                <MudPaper Class="pa-6" Elevation="2">
+
+                    <MudStack Class="align-center" Spacing="3">
+
+                        <img src="/logo.svg" alt="HomeBook" style="height: 10rem;"/>
+
+                        <MudText Typo="Typo.h3" Color="Color.Primary" Align="Align.Center">
+                            @Loc["AppTitle"]
+                        </MudText>
+                        <MudText Typo="Typo.subtitle1" Color="Color.Secondary" Align="Align.Center">
+                            @Loc["Settings_About_AppSlogan_Text"]
+                        </MudText>
+
+                        <MudTooltip Text="@string.Format("Backend: {0}, Frontend: {1}", _backendVersion, _uiVersion)"
+                                    Placement="Placement.Bottom">
+                            <MudChip T="string" Color="Color.Primary" Size="Size.Small">
+                                Version @_uiVersion
+                            </MudChip>
+                        </MudTooltip>
+
+                    </MudStack>
+                </MudPaper>
+
+                <!-- Application Information -->
+                <MudPaper Class="pa-6" Elevation="2">
+
+                    <MudStack Row="true" Class="align-center mb-1" Spacing="2">
+                        <MudIcon Icon="@HomeBookIcons.Icons8.GlassMorphism.Processor" Size="Size.Large" Class="mr-2"/>
+                        <MudText Typo="Typo.h5" Color="Color.Secondary">
+                            Application Information
+                        </MudText>
+                    </MudStack>
+
+                    <MudDivider Class="mb-4"/>
+
+                    <MudGrid>
+
+                        <MudItem xs="12" md="6">
+
+                            <MudStack Spacing="2">
+
+                                <MudStack Row="true" Class="align-center">
+                                    <MudIcon Icon="@Icons.Material.Filled.Code" Size="Size.Small"
+                                             Color="Color.Secondary"/>
+                                    <MudText Typo="Typo.body2">
+                                        <strong>Backend:</strong> .NET @_backendDotnetVersion
+                                    </MudText>
+                                </MudStack>
+
+                                <MudStack Row="true" Class="align-center">
+                                    <MudIcon Icon="@Icons.Material.Filled.Storage" Size="Size.Small"
+                                             Color="Color.Secondary"/>
+                                    <MudText Typo="Typo.body2"><strong>Database:</strong> @_databaseProvider
+                                    </MudText>
+                                </MudStack>
+
+                            </MudStack>
+
+                        </MudItem>
+
+                        <MudItem xs="12" md="6">
+
+                            <MudStack Spacing="2">
+
+                                <MudStack Row="true" Class="align-center">
+                                    <MudIcon Icon="@Icons.Material.Filled.Code" Size="Size.Small"
+                                             Color="Color.Secondary"/>
+                                    <MudText Typo="Typo.body2">
+                                        <strong>UI:</strong> .NET @_uiDotnetVersion
+                                    </MudText>
+                                </MudStack>
+
+                                <MudStack Row="true" Class="align-center">
+                                    <MudIcon Icon="@Icons.Material.Filled.Storage" Size="Size.Small"
+                                             Color="Color.Secondary"/>
+                                    <MudText Typo="Typo.body2"><strong>Deployment Type:</strong> @_deploymentType
+                                    </MudText>
+                                </MudStack>
+
+                            </MudStack>
+
+                        </MudItem>
+
+                    </MudGrid>
+
+                </MudPaper>
+
+                <!-- License and Legal -->
+                <MudPaper Class="pa-6" Elevation="2">
+
+                    <MudStack Row="true" Class="align-center mb-1" Spacing="2">
+                        <MudIcon Icon="@HomeBookIcons.Icons8.GlassMorphism.Article" Size="Size.Large" Class="mr-2"/>
+                        <MudText Typo="Typo.h5" Color="Color.Secondary">
+                            Licenses
+                        </MudText>
+                    </MudStack>
+
+                    <MudDivider Class="mb-4"/>
+
+                    <MudStack Spacing="3">
+
+                        <MudButton Color="Color.Secondary"
+                                   Variant="Variant.Filled"
+                                   Class="mt-3"
+                                   StartIcon="@Icons.Material.TwoTone.TextSnippet"
+                                   OnClick="async () => await OpenLicensesDialogAsync()">
+                            Show Licenses
+                        </MudButton>
+
+                        <MudStack Row="true" Class="justify-space-between align-center">
+
+                            <MudText Typo="Typo.body2" Color="Color.Secondary">
+                                © @DateTime.Now.Year HomeBook. All rights reserved.
+                            </MudText>
+
+                        </MudStack>
+
+                    </MudStack>
+
+                </MudPaper>
+
+                <!-- External Links -->
+                <MudStack Row="true" Class="align-center mt-5 mb-1" Spacing="2">
+                    <MudFab Class="github-bg me-3" StartIcon="@Icons.Custom.Brands.GitHub" Size="Size.Large"
+                            Href="https://github.com/lk-code/homebook" Target="_blank"/>
+                    @* <MudFab Class="ubuntu-bg me-3" StartIcon="@HomeBookIcons.Icons8.Material.TwoTone.Ubuntu" Size="Size.Large" *@
+                    @*         Href="https://github.com/lk-code/homebook" Target="_blank"/> *@
+                    @* <MudFab Class="docker-bg me-3" StartIcon="@HomeBookIcons.Icons8.GlassMorphism.Article" Size="Size.Large" *@
+                    @*         Href="https://github.com/lk-code/homebook" Target="_blank"/> *@
+                </MudStack>
+
+                <!-- System Information -->
+                @* <MudPaper Class="pa-6" Elevation="2"> *@
+                @*     <MudText Typo="Typo.h5" Color="Color.Primary" GutterBottom="true"> *@
+                @*         <MudIcon Icon="@Icons.Material.Filled.Computer" Size="Size.Large" Class="mr-2"/> *@
+                @*         System Information *@
+                @*     </MudText> *@
+                @*     <MudDivider Class="mb-4"/> *@
+                @* *@
+                @*     <MudSimpleTable Style="overflow-x:auto;" Dense="true"> *@
+                @*         <tbody> *@
+                @*         <tr> *@
+                @*             <td><strong>Build Date</strong></td> *@
+                @*             <td>@DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss")</td> *@
+                @*         </tr> *@
+                @*         <tr> *@
+                @*             <td><strong>Environment</strong></td> *@
+                @*             <td>Production</td> *@
+                @*         </tr> *@
+                @*         <tr> *@
+                @*             <td><strong>Platform</strong></td> *@
+                @*             <td>Web Browser</td> *@
+                @*         </tr> *@
+                @*         <tr> *@
+                @*             <td><strong>Runtime</strong></td> *@
+                @*             <td>.NET WebAssembly</td> *@
+                @*         </tr> *@
+                @*         </tbody> *@
+                @*     </MudSimpleTable> *@
+                @* *@
+                @* </MudPaper> *@
+
+            </MudStack>
+
+        </MudItem>
+
+    </MudGrid>
+
+</MudContainer>
