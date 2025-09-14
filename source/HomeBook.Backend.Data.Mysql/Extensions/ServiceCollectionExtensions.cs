@@ -21,7 +21,10 @@ public static class ServiceCollectionExtensions
         services.AddSingleton<IDatabaseManager, DatabaseManager>();
 
         // Initialize Database
-        services.AddDbContext<AppDbContext>(optionsBuilder =>
+        services.AddDbContextPool<AppDbContext>(optionsBuilder =>
+            CreateDbContextOptionsBuilder(configuration, optionsBuilder));
+
+        services.AddDbContextFactory<AppDbContext>(optionsBuilder =>
             CreateDbContextOptionsBuilder(configuration, optionsBuilder));
 
         return services;

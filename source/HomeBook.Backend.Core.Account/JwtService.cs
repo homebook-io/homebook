@@ -12,39 +12,39 @@ namespace HomeBook.Backend.Core.Account;
 /// <summary>
 /// JWT service implementation for token operations
 /// </summary>
-public class JwtService : IJwtService
+public class JwtService(IConfiguration configuration) : IJwtService
 {
-    private readonly string _secretKey;
-    private readonly string _issuer;
-    private readonly string _audience;
-    private readonly int _expirationMinutes;
-
-    public JwtService(IConfiguration configuration)
-    {
-        _secretKey = configuration["Jwt:SecretKey"] ?? throw new InvalidOperationException("JWT SecretKey is required");
-        _issuer = configuration["Jwt:Issuer"] ?? "HomeBook";
-        _audience = configuration["Jwt:Audience"] ?? "HomeBook";
-        _expirationMinutes = int.Parse(configuration["Jwt:ExpirationMinutes"] ?? "60");
-    }
+    private readonly string _secretKey = configuration["Jwt:SecretKey"] ?? throw new InvalidOperationException("JWT SecretKey is required");
+    private readonly string _issuer = configuration["Jwt:Issuer"] ?? "HomeBook";
+    private readonly string _audience = configuration["Jwt:Audience"] ?? "HomeBook";
+    private readonly int _expirationMinutes = int.Parse(configuration["Jwt:ExpirationMinutes"] ?? "60");
 
     /// <inheritdoc />
     public JwtTokenResult GenerateToken(Guid userId, string username)
     {
-        var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_secretKey));
-        var credentials = new SigningCredentials(key, SecurityAlgorithms.HmacSha256);
-        var expiresAt = DateTime.UtcNow.AddMinutes(_expirationMinutes);
+        return GenerateToken(userId, username, false);
+    }
 
-        var claims = new[]
-        {
-            new Claim(ClaimTypes.NameIdentifier, userId.ToString()),
-            new Claim(ClaimTypes.Name, username),
-            new Claim(JwtRegisteredClaimNames.Jti, Guid.NewGuid().ToString()),
-            new Claim(JwtRegisteredClaimNames.Iat,
+    /// <inheritdoc />
+    public JwtTokenResult GenerateToken(Guid userId, string username, bool isAdmin)
+    {
+        SymmetricSecurityKey key = new(Encoding.UTF8.GetBytes(_secretKey));
+        SigningCredentials credentials = new(key, SecurityAlgorithms.HmacSha256);
+        DateTime expiresAt = DateTime.UtcNow.AddMinutes(_expirationMinutes);
+
+        Claim[] claims =
+        [
+            new(ClaimTypes.NameIdentifier, userId.ToString()),
+            new(ClaimTypes.Name, username),
+            new(ClaimTypes.Role, isAdmin ? "Admin" : "User"),
+            new("IsAdmin", isAdmin.ToString(), ClaimValueTypes.Boolean),
+            new(JwtRegisteredClaimNames.Jti, Guid.NewGuid().ToString()),
+            new(JwtRegisteredClaimNames.Iat,
                 new DateTimeOffset(DateTime.UtcNow).ToUnixTimeSeconds().ToString(),
                 ClaimValueTypes.Integer64)
-        };
+        ];
 
-        var token = new JwtSecurityToken(
+        JwtSecurityToken token = new(
             issuer: _issuer,
             audience: _audience,
             claims: claims,
@@ -52,9 +52,9 @@ public class JwtService : IJwtService
             signingCredentials: credentials
         );
 
-        var tokenHandler = new JwtSecurityTokenHandler();
-        var tokenString = tokenHandler.WriteToken(token);
-        var refreshToken = GenerateRefreshToken();
+        JwtSecurityTokenHandler tokenHandler = new();
+        string? tokenString = tokenHandler.WriteToken(token);
+        string refreshToken = GenerateRefreshToken();
 
         return new JwtTokenResult
         {
@@ -74,17 +74,19 @@ public class JwtService : IJwtService
             var tokenHandler = new JwtSecurityTokenHandler();
             var key = Encoding.UTF8.GetBytes(_secretKey);
 
-            tokenHandler.ValidateToken(token, new TokenValidationParameters
-            {
-                ValidateIssuerSigningKey = true,
-                IssuerSigningKey = new SymmetricSecurityKey(key),
-                ValidateIssuer = true,
-                ValidIssuer = _issuer,
-                ValidateAudience = true,
-                ValidAudience = _audience,
-                ValidateLifetime = true,
-                ClockSkew = TimeSpan.Zero
-            }, out SecurityToken validatedToken);
+            tokenHandler.ValidateToken(token,
+                new TokenValidationParameters
+                {
+                    ValidateIssuerSigningKey = true,
+                    IssuerSigningKey = new SymmetricSecurityKey(key),
+                    ValidateIssuer = true,
+                    ValidIssuer = _issuer,
+                    ValidateAudience = true,
+                    ValidAudience = _audience,
+                    ValidateLifetime = true,
+                    ClockSkew = TimeSpan.Zero
+                },
+                out SecurityToken validatedToken);
 
             return true;
         }
@@ -102,17 +104,19 @@ public class JwtService : IJwtService
             var tokenHandler = new JwtSecurityTokenHandler();
             var key = Encoding.UTF8.GetBytes(_secretKey);
 
-            var principal = tokenHandler.ValidateToken(token, new TokenValidationParameters
-            {
-                ValidateIssuerSigningKey = true,
-                IssuerSigningKey = new SymmetricSecurityKey(key),
-                ValidateIssuer = true,
-                ValidIssuer = _issuer,
-                ValidateAudience = true,
-                ValidAudience = _audience,
-                ValidateLifetime = true,
-                ClockSkew = TimeSpan.Zero
-            }, out SecurityToken validatedToken);
+            var principal = tokenHandler.ValidateToken(token,
+                new TokenValidationParameters
+                {
+                    ValidateIssuerSigningKey = true,
+                    IssuerSigningKey = new SymmetricSecurityKey(key),
+                    ValidateIssuer = true,
+                    ValidIssuer = _issuer,
+                    ValidateAudience = true,
+                    ValidAudience = _audience,
+                    ValidateLifetime = true,
+                    ClockSkew = TimeSpan.Zero
+                },
+                out SecurityToken validatedToken);
 
             var userIdClaim = principal.FindFirst(ClaimTypes.NameIdentifier);
             if (userIdClaim != null && Guid.TryParse(userIdClaim.Value, out Guid userId))
@@ -125,6 +129,42 @@ public class JwtService : IJwtService
         catch
         {
             return null;
+        }
+    }
+
+    /// <inheritdoc />
+    public bool IsAdminFromToken(string token)
+    {
+        try
+        {
+            JwtSecurityTokenHandler tokenHandler = new();
+            byte[] key = Encoding.UTF8.GetBytes(_secretKey);
+
+            ClaimsPrincipal principal = tokenHandler.ValidateToken(token,
+                new TokenValidationParameters
+                {
+                    ValidateIssuerSigningKey = true,
+                    IssuerSigningKey = new SymmetricSecurityKey(key),
+                    ValidateIssuer = true,
+                    ValidIssuer = _issuer,
+                    ValidateAudience = true,
+                    ValidAudience = _audience,
+                    ValidateLifetime = true,
+                    ClockSkew = TimeSpan.Zero
+                },
+                out SecurityToken validatedToken);
+
+            Claim? isAdminClaim = principal.FindFirst("IsAdmin");
+            if (isAdminClaim != null && bool.TryParse(isAdminClaim.Value, out bool isAdmin))
+            {
+                return isAdmin;
+            }
+
+            return false;
+        }
+        catch
+        {
+            return false;
         }
     }
 

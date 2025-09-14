@@ -212,6 +212,45 @@
   border-radius: inherit;
 }
 
+.github-bg {
+  background-color: #24292e !important;
+  color: #ffffff !important;
+}
+
+.github-text {
+  color: #24292e !important;
+}
+
+.docker-bg {
+  background-color: #2496ed !important;
+  color: #ffffff !important;
+}
+
+.docker-text {
+  color: #2496ed !important;
+}
+
+.ubuntu-bg {
+  background-color: #e95420 !important;
+  color: #ffffff !important;
+}
+
+.ubuntu-text {
+  color: #e95420 !important;
+}
+
+.mud-navmenu.mud-navmenu-first-level > .mud-nav-item:first-child {
+  border-top-left-radius: var(--mud-default-borderradius);
+  border-top-right-radius: var(--mud-default-borderradius);
+}
+.mud-navmenu.mud-navmenu-first-level > .mud-nav-item:last-child {
+  border-bottom-left-radius: var(--mud-default-borderradius);
+  border-bottom-right-radius: var(--mud-default-borderradius);
+}
+.mud-navmenu.mud-navmenu-first-level > .mud-nav-item > .mud-nav-link {
+  border-radius: inherit;
+}
+
 .ui-wavebackground-container {
   width: 100vw;
   height: 100vh;

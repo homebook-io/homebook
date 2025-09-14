@@ -60,7 +60,9 @@ public class AccountProvider(
             }
 
             // JWT Token generieren
-            JwtTokenResult tokenResult = jwtService.GenerateToken(user.Id, user.Username);
+            JwtTokenResult tokenResult = jwtService.GenerateToken(user.Id,
+                user.Username,
+                user.IsAdmin);
 
             logger.LogInformation("Login successful for user '{Username}'", username);
             return tokenResult;

@@ -57,4 +57,6 @@ public interface IUserRepository
     /// <param name="cancellationToken"></param>
     /// <returns></returns>
     Task<User> UpdateUserAsync(User user, CancellationToken cancellationToken);
+
+    Task<User?> UpdateAsync(Guid userId, Action<User> updateHandler, CancellationToken cancellationToken);
 }

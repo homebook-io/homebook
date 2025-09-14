@@ -7,7 +7,6 @@
     </PropertyGroup>
 
     <ItemGroup>
-      <PackageReference Include="HomeBook.Client" Version="1.0.81" />
       <PackageReference Include="Microsoft.AspNetCore.Components.Authorization" Version="9.0.9" />
       <PackageReference Include="Microsoft.Extensions.Configuration.Abstractions" Version="9.0.9" />
       <PackageReference Include="Microsoft.Extensions.DependencyInjection.Abstractions" Version="9.0.9" />
@@ -15,6 +14,7 @@
     </ItemGroup>
 
     <ItemGroup>
+      <ProjectReference Include="..\HomeBook.Client\HomeBook.Client.csproj" />
       <ProjectReference Include="..\HomeBook.Frontend.Abstractions\HomeBook.Frontend.Abstractions.csproj" />
     </ItemGroup>
 

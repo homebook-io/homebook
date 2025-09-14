@@ -1,0 +1,12 @@
+$github-color: #24292e;
+$docker-color: #2496ed;
+$ubuntu-color: #e95420;
+
+.github-bg   { background-color: $github-color !important; color: #ffffff !important; }
+.github-text { color: $github-color !important; }
+
+.docker-bg   { background-color: $docker-color !important; color: #ffffff !important; }
+.docker-text { color: $docker-color !important; }
+
+.ubuntu-bg   { background-color: $ubuntu-color !important; color: #ffffff !important; }
+.ubuntu-text { color: $ubuntu-color !important; }

@@ -15,6 +15,7 @@ public static class ServiceCollectionExtensions
         IConfiguration configuration)
     {
         services.AddSingleton<IDatabaseSetupService, DatabaseSetupService>();
+        services.AddSingleton<ILicensesService, LicensesService>();
 
         return services;
     }

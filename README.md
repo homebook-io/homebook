@@ -112,7 +112,8 @@ A-Z
 #### Bind Volume to Host
 
 1. Create a directory on your host machine to store HomeBook data, e.g., `mkdir -p /your/path/homebook`.
-2. Execute command to set rights `chown -R 21001 /your/path/homebook && chmod -R 770 /your/path/homebook` (21001 is the standard homebook user-id for docker, replace if needed).
+2. Execute command to set rights `chown -R 21001 /your/path/homebook && chmod -R 770 /your/path/homebook` (21001 is the
+   standard homebook user-id for docker, replace if needed).
 3. Modify your Docker Compose file to bind the volume to the host directory:
 
 ```yaml

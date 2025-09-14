@@ -1,15 +1,18 @@
 using HomeBook.Backend.Data.Contracts;
 using HomeBook.Backend.Data.Entities;
+using Microsoft.EntityFrameworkCore;
 
 namespace HomeBook.Backend.Data.Repositories;
 
 /// <inheritdoc />
-public class ConfigurationRepository(AppDbContext dbContext) : IConfigurationRepository
+public class ConfigurationRepository(IDbContextFactory<AppDbContext> factory) : IConfigurationRepository
 {
     /// <inheritdoc />
     public async Task WriteConfigurationAsync(Configuration configuration,
         CancellationToken cancellationToken = default)
     {
+        await using AppDbContext dbContext = await factory.CreateDbContextAsync(cancellationToken);
+
         Configuration? existingConfiguration = dbContext.Set<Configuration>().FirstOrDefault();
 
         if (existingConfiguration is null)

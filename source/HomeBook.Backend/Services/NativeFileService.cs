@@ -14,12 +14,7 @@ public class NativeFileService(ILogger<NativeFileService> logger) : IApplication
     public string UpdateDirectory { get; } = PathHandler.UpdateDirectory;
 
     /// <inheritdoc />
-    public bool FileExists(string path)
-    {
-        logger.LogInformation("Checking if file exists: {Path}", path);
-
-        return File.Exists(path);
-    }
+    public bool FileExists(string path) => File.Exists(path);
 
     /// <inheritdoc />
     public async Task<string> FileReadAllTextAsync(string path, CancellationToken cancellationToken) => await File.ReadAllTextAsync(path, cancellationToken);

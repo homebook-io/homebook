@@ -7,7 +7,7 @@ namespace HomeBook.Backend.Data.Entities;
 public class Configuration
 {
     /// <summary>
-    /// the id of this Product Team
+    /// the id of this configuration entry
     /// </summary>
     [Key]
     [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
