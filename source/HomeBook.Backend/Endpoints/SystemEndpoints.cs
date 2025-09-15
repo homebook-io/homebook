@@ -77,6 +77,30 @@ public static class SystemEndpoints
             .Produces<string>(StatusCodes.Status404NotFound)
             .Produces<string>(StatusCodes.Status500InternalServerError);
 
+        group.MapPut("/users/{userId:guid}/enable", SystemHandler.HandleEnableUser)
+            .WithName("EnableUser")
+            .WithDescription("Enables a disabled user (Admin only, cannot enable self)")
+            .WithMetadata(new RequireAdminAttribute())
+            .WithOpenApi()
+            .Produces<string>(StatusCodes.Status200OK)
+            .Produces<string>(StatusCodes.Status400BadRequest)
+            .Produces<string>(StatusCodes.Status401Unauthorized)
+            .Produces<string>(StatusCodes.Status403Forbidden)
+            .Produces<string>(StatusCodes.Status404NotFound)
+            .Produces<string>(StatusCodes.Status500InternalServerError);
+
+        group.MapPut("/users/{userId:guid}/disable", SystemHandler.HandleDisableUser)
+            .WithName("DisableUser")
+            .WithDescription("Disables an active user (Admin only, cannot disable self)")
+            .WithMetadata(new RequireAdminAttribute())
+            .WithOpenApi()
+            .Produces<string>(StatusCodes.Status200OK)
+            .Produces<string>(StatusCodes.Status400BadRequest)
+            .Produces<string>(StatusCodes.Status401Unauthorized)
+            .Produces<string>(StatusCodes.Status403Forbidden)
+            .Produces<string>(StatusCodes.Status404NotFound)
+            .Produces<string>(StatusCodes.Status500InternalServerError);
+
         return routeBuilder;
     }
 }

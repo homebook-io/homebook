@@ -10,6 +10,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Primitives;
 using NSubstitute;
 using NSubstitute.ExceptionExtensions;
+using Shouldly;
 
 namespace HomeBook.UnitTests.Backend.Handler;
 
@@ -745,6 +746,292 @@ public class SystemHandlerTests
 
     #endregion
 
+    #region HandleEnableUser Tests
+
+    [Test]
+    public async Task HandleEnableUser_WithValidRequest_ReturnsOk()
+    {
+        // Arrange
+        Guid currentUserId = Guid.NewGuid();
+        Guid targetUserId = Guid.NewGuid();
+        string token = "valid-token";
+
+        User disabledUser = new()
+        {
+            Id = targetUserId,
+            Username = "testuser",
+            PasswordHash = "hash",
+            PasswordHashType = "Test",
+            Disabled = DateTime.UtcNow
+        };
+        User enabledUser = new()
+        {
+            Id = targetUserId,
+            Username = "testuser",
+            PasswordHash = "hash",
+            PasswordHashType = "Test",
+            Disabled = null
+        };
+
+        SetupHttpContext(token);
+        _jwtService.GetUserIdFromToken(token).Returns(currentUserId);
+        _userRepository.GetUserByIdAsync(targetUserId, _cancellationToken).Returns(disabledUser);
+        _userRepository.UpdateAsync(targetUserId, Arg.Any<Action<User>>(), _cancellationToken).Returns(enabledUser);
+
+        // Act
+        IResult result = await SystemHandler.HandleEnableUser(_userRepository, _jwtService, targetUserId, _httpContext, _cancellationToken);
+
+        // Assert
+        result.ShouldBeOfType<Ok<string>>();
+        var okResult = (Ok<string>)result;
+        okResult.Value.ShouldBe("User enabled successfully");
+    }
+
+    [Test]
+    public async Task HandleEnableUser_WithoutAuthHeader_ReturnsUnauthorized()
+    {
+        // Arrange
+        Guid targetUserId = Guid.NewGuid();
+        _httpContext.Request.Headers.Returns(new HeaderDictionary());
+
+        // Act
+        IResult result = await SystemHandler.HandleEnableUser(_userRepository, _jwtService, targetUserId, _httpContext, _cancellationToken);
+
+        // Assert
+        result.ShouldBeOfType<UnauthorizedHttpResult>();
+    }
+
+    [Test]
+    public async Task HandleEnableUser_WithInvalidToken_ReturnsUnauthorized()
+    {
+        // Arrange
+        string token = "invalid-token";
+        Guid targetUserId = Guid.NewGuid();
+
+        SetupHttpContext(token);
+        _jwtService.GetUserIdFromToken(token).Returns((Guid?)null);
+
+        // Act
+        IResult result = await SystemHandler.HandleEnableUser(_userRepository, _jwtService, targetUserId, _httpContext, _cancellationToken);
+
+        // Assert
+        result.ShouldBeOfType<UnauthorizedHttpResult>();
+    }
+
+    [Test]
+    public async Task HandleEnableUser_WhenUserTriesToEnableSelf_ReturnsBadRequest()
+    {
+        // Arrange
+        Guid userId = Guid.NewGuid();
+        string token = "valid-token";
+
+        SetupHttpContext(token);
+        _jwtService.GetUserIdFromToken(token).Returns(userId);
+
+        // Act
+        IResult result = await SystemHandler.HandleEnableUser(_userRepository, _jwtService, userId, _httpContext, _cancellationToken);
+
+        // Assert
+        result.ShouldBeOfType<BadRequest<string>>();
+        var badRequestResult = (BadRequest<string>)result;
+        badRequestResult.Value.ShouldBe("You cannot enable your own account");
+    }
+
+    [Test]
+    public async Task HandleEnableUser_WhenUserNotFound_ReturnsNotFound()
+    {
+        // Arrange
+        Guid currentUserId = Guid.NewGuid();
+        Guid targetUserId = Guid.NewGuid();
+        string token = "valid-token";
+
+        SetupHttpContext(token);
+        _jwtService.GetUserIdFromToken(token).Returns(currentUserId);
+        _userRepository.GetUserByIdAsync(targetUserId, _cancellationToken).Returns((User?)null);
+
+        // Act
+        IResult result = await SystemHandler.HandleEnableUser(_userRepository, _jwtService, targetUserId, _httpContext, _cancellationToken);
+
+        // Assert
+        result.ShouldBeOfType<NotFound<string>>();
+        var notFoundResult = (NotFound<string>)result;
+        notFoundResult.Value.ShouldBe("User not found");
+    }
+
+    [Test]
+    public async Task HandleEnableUser_WhenUserAlreadyEnabled_ReturnsBadRequest()
+    {
+        // Arrange
+        Guid currentUserId = Guid.NewGuid();
+        Guid targetUserId = Guid.NewGuid();
+        string token = "valid-token";
+        User enabledUser = new()
+        {
+            Id = targetUserId,
+            Username = "testuser",
+            PasswordHash = "hash",
+            PasswordHashType = "Test",
+            Disabled = null
+        };
+
+        SetupHttpContext(token);
+        _jwtService.GetUserIdFromToken(token).Returns(currentUserId);
+        _userRepository.GetUserByIdAsync(targetUserId, _cancellationToken).Returns(enabledUser);
+
+        // Act
+        IResult result = await SystemHandler.HandleEnableUser(_userRepository, _jwtService, targetUserId, _httpContext, _cancellationToken);
+
+        // Assert
+        result.ShouldBeOfType<BadRequest<string>>();
+        var badRequestResult = (BadRequest<string>)result;
+        badRequestResult.Value.ShouldBe("User is already enabled");
+    }
+
+    #endregion
+
+    #region HandleDisableUser Tests
+
+    [Test]
+    public async Task HandleDisableUser_WithValidRequest_ReturnsOk()
+    {
+        // Arrange
+        Guid currentUserId = Guid.NewGuid();
+        Guid targetUserId = Guid.NewGuid();
+        string token = "valid-token";
+
+        User enabledUser = new()
+        {
+            Id = targetUserId,
+            Username = "testuser",
+            PasswordHash = "hash",
+            PasswordHashType = "Test",
+            Disabled = null
+        };
+        User disabledUser = new()
+        {
+            Id = targetUserId,
+            Username = "testuser",
+            PasswordHash = "hash",
+            PasswordHashType = "Test",
+            Disabled = DateTime.UtcNow
+        };
+
+        SetupHttpContext(token);
+        _jwtService.GetUserIdFromToken(token).Returns(currentUserId);
+        _userRepository.GetUserByIdAsync(targetUserId, _cancellationToken).Returns(enabledUser);
+        _userRepository.UpdateAsync(targetUserId, Arg.Any<Action<User>>(), _cancellationToken).Returns(disabledUser);
+
+        // Act
+        IResult result = await SystemHandler.HandleDisableUser(_userRepository, _jwtService, targetUserId, _httpContext, _cancellationToken);
+
+        // Assert
+        result.ShouldBeOfType<Ok<string>>();
+        var okResult = (Ok<string>)result;
+        okResult.Value.ShouldBe("User disabled successfully");
+    }
+
+    [Test]
+    public async Task HandleDisableUser_WithoutAuthHeader_ReturnsUnauthorized()
+    {
+        // Arrange
+        Guid targetUserId = Guid.NewGuid();
+        _httpContext.Request.Headers.Returns(new HeaderDictionary());
+
+        // Act
+        IResult result = await SystemHandler.HandleDisableUser(_userRepository, _jwtService, targetUserId, _httpContext, _cancellationToken);
+
+        // Assert
+        result.ShouldBeOfType<UnauthorizedHttpResult>();
+    }
+
+    [Test]
+    public async Task HandleDisableUser_WithInvalidToken_ReturnsUnauthorized()
+    {
+        // Arrange
+        string token = "invalid-token";
+        Guid targetUserId = Guid.NewGuid();
+
+        SetupHttpContext(token);
+        _jwtService.GetUserIdFromToken(token).Returns((Guid?)null);
+
+        // Act
+        IResult result = await SystemHandler.HandleDisableUser(_userRepository, _jwtService, targetUserId, _httpContext, _cancellationToken);
+
+        // Assert
+        result.ShouldBeOfType<UnauthorizedHttpResult>();
+    }
+
+    [Test]
+    public async Task HandleDisableUser_WhenUserTriesToDisableSelf_ReturnsBadRequest()
+    {
+        // Arrange
+        Guid userId = Guid.NewGuid();
+        string token = "valid-token";
+
+        SetupHttpContext(token);
+        _jwtService.GetUserIdFromToken(token).Returns(userId);
+
+        // Act
+        IResult result = await SystemHandler.HandleDisableUser(_userRepository, _jwtService, userId, _httpContext, _cancellationToken);
+
+        // Assert
+        result.ShouldBeOfType<BadRequest<string>>();
+        var badRequestResult = (BadRequest<string>)result;
+        badRequestResult.Value.ShouldBe("You cannot disable your own account");
+    }
+
+    [Test]
+    public async Task HandleDisableUser_WhenUserNotFound_ReturnsNotFound()
+    {
+        // Arrange
+        Guid currentUserId = Guid.NewGuid();
+        Guid targetUserId = Guid.NewGuid();
+        string token = "valid-token";
+
+        SetupHttpContext(token);
+        _jwtService.GetUserIdFromToken(token).Returns(currentUserId);
+        _userRepository.GetUserByIdAsync(targetUserId, _cancellationToken).Returns((User?)null);
+
+        // Act
+        IResult result = await SystemHandler.HandleDisableUser(_userRepository, _jwtService, targetUserId, _httpContext, _cancellationToken);
+
+        // Assert
+        result.ShouldBeOfType<NotFound<string>>();
+        var notFoundResult = (NotFound<string>)result;
+        notFoundResult.Value.ShouldBe("User not found");
+    }
+
+    [Test]
+    public async Task HandleDisableUser_WhenUserAlreadyDisabled_ReturnsBadRequest()
+    {
+        // Arrange
+        Guid currentUserId = Guid.NewGuid();
+        Guid targetUserId = Guid.NewGuid();
+        string token = "valid-token";
+        User disabledUser = new()
+        {
+            Id = targetUserId,
+            Username = "testuser",
+            PasswordHash = "hash",
+            PasswordHashType = "Test",
+            Disabled = DateTime.UtcNow
+        };
+
+        SetupHttpContext(token);
+        _jwtService.GetUserIdFromToken(token).Returns(currentUserId);
+        _userRepository.GetUserByIdAsync(targetUserId, _cancellationToken).Returns(disabledUser);
+
+        // Act
+        IResult result = await SystemHandler.HandleDisableUser(_userRepository, _jwtService, targetUserId, _httpContext, _cancellationToken);
+
+        // Assert
+        result.ShouldBeOfType<BadRequest<string>>();
+        var badRequestResult = (BadRequest<string>)result;
+        badRequestResult.Value.ShouldBe("User is already disabled");
+    }
+
+    #endregion
+
     #region Helper Methods
 
     private void SetupHttpContextWithBearerToken(string token)
@@ -773,6 +1060,15 @@ public class SystemHandlerTests
         request.Headers.Authorization.Returns(emptyHeaderValue);
 
         _httpContext.Request.Returns(request);
+    }
+
+    private void SetupHttpContext(string token)
+    {
+        HeaderDictionary headers = new()
+        {
+            { "Authorization", $"Bearer {token}" }
+        };
+        _httpContext.Request.Headers.Returns(headers);
     }
 
     #endregion

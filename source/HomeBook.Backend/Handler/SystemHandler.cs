@@ -283,4 +283,122 @@ public static class SystemHandler
             return TypedResults.Problem("An error occurred while updating admin status.", statusCode: 500);
         }
     }
+
+    public static async Task<IResult> HandleEnableUser([FromServices] IUserRepository userRepository,
+        [FromServices] IJwtService jwtService,
+        [FromRoute] Guid userId,
+        HttpContext httpContext,
+        CancellationToken cancellationToken = default)
+    {
+        try
+        {
+            // Get current user ID from JWT token
+            string? authHeader = httpContext.Request.Headers.Authorization.FirstOrDefault();
+            if (authHeader == null || !authHeader.StartsWith("Bearer "))
+            {
+                return TypedResults.Unauthorized();
+            }
+
+            string token = authHeader.Substring("Bearer ".Length).Trim();
+            Guid? currentUserId = jwtService.GetUserIdFromToken(token);
+
+            if (currentUserId == null)
+            {
+                return TypedResults.Unauthorized();
+            }
+
+            // Check if user is trying to enable themselves
+            if (currentUserId == userId)
+            {
+                return TypedResults.BadRequest("You cannot enable your own account");
+            }
+
+            // Check if target user exists
+            User? user = await userRepository.GetUserByIdAsync(userId, cancellationToken);
+            if (user == null)
+            {
+                return TypedResults.NotFound("User not found");
+            }
+
+            // Check if user is already enabled
+            if (!user.Disabled.HasValue)
+            {
+                return TypedResults.BadRequest("User is already enabled");
+            }
+
+            // Enable user by clearing the Disabled timestamp
+            User? updatedUser = await userRepository.UpdateAsync(userId,
+                u => u.Disabled = null, cancellationToken);
+
+            if (updatedUser == null)
+            {
+                return TypedResults.Problem("Failed to enable user", statusCode: 500);
+            }
+
+            return TypedResults.Ok("User enabled successfully");
+        }
+        catch (Exception)
+        {
+            return TypedResults.Problem("An error occurred while enabling the user.", statusCode: 500);
+        }
+    }
+
+    public static async Task<IResult> HandleDisableUser([FromServices] IUserRepository userRepository,
+        [FromServices] IJwtService jwtService,
+        [FromRoute] Guid userId,
+        HttpContext httpContext,
+        CancellationToken cancellationToken = default)
+    {
+        try
+        {
+            // Get current user ID from JWT token
+            string? authHeader = httpContext.Request.Headers.Authorization.FirstOrDefault();
+            if (authHeader == null || !authHeader.StartsWith("Bearer "))
+            {
+                return TypedResults.Unauthorized();
+            }
+
+            string token = authHeader.Substring("Bearer ".Length).Trim();
+            Guid? currentUserId = jwtService.GetUserIdFromToken(token);
+
+            if (currentUserId == null)
+            {
+                return TypedResults.Unauthorized();
+            }
+
+            // Check if user is trying to disable themselves
+            if (currentUserId == userId)
+            {
+                return TypedResults.BadRequest("You cannot disable your own account");
+            }
+
+            // Check if target user exists
+            User? user = await userRepository.GetUserByIdAsync(userId, cancellationToken);
+            if (user == null)
+            {
+                return TypedResults.NotFound("User not found");
+            }
+
+            // Check if user is already disabled
+            if (user.Disabled.HasValue)
+            {
+                return TypedResults.BadRequest("User is already disabled");
+            }
+
+            // Disable user by setting the Disabled timestamp
+            User? updatedUser = await userRepository.UpdateAsync(userId,
+                u => u.Disabled = DateTime.UtcNow, cancellationToken);
+
+            if (updatedUser == null)
+            {
+                return TypedResults.Problem("Failed to disable user", statusCode: 500);
+            }
+
+            return TypedResults.Ok("User disabled successfully");
+        }
+        catch (Exception)
+        {
+            return TypedResults.Problem("An error occurred while disabling the user.", statusCode: 500);
+        }
+    }
 }

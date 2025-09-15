@@ -5,13 +5,13 @@
 
     <MudGrid>
 
-        <MudItem xs="12" sm="12" md="5" lg="4" xl="3">
+        <MudItem xs="12" sm="12" md="4" lg="3" xl="3" xxl="2">
 
             <SettingsNavMenu/>
 
         </MudItem>
 
-        <MudItem xs="12" sm="12" md="7" lg="8" xl="9">
+        <MudItem xs="12" sm="12" md="8" lg="9" xl="9" xxl="10">
 
             <MudPaper Class="pa-4">
 
@@ -19,7 +19,7 @@
 
                 @if (_loading)
                 {
-                    <MudProgressLinear Indeterminate="true" Class="mb-4" />
+                    <MudProgressLinear Indeterminate="true" Class="mb-4"/>
                     <MudText Align="Align.Center">Loading users...</MudText>
                 }
                 else if (_users.Any())
@@ -52,6 +52,7 @@
                               Hover="true"
                               Striped="true"
                               Dense="true">
+
                         <HeaderContent>
                             <MudTh>Username</MudTh>
                             <MudTh>Status</MudTh>
@@ -59,20 +60,25 @@
                             <MudTh>Created</MudTh>
                             <MudTh>Actions</MudTh>
                         </HeaderContent>
+
                         <RowTemplate>
+
                             <MudTd DataLabel="Username">
                                 <div class="d-flex align-center">
-                                    <MudIcon Icon="@Icons.Material.Filled.Person" Class="mr-2" Size="Size.Small" />
+                                    <MudIcon Icon="@Icons.Material.Filled.Person" Class="mr-2" Size="Size.Small"/>
                                     <MudText Typo="Typo.body2">@context.Username</MudText>
                                 </div>
                             </MudTd>
+
                             <MudTd DataLabel="Status">
-                                <MudChip T="string" Color="@GetUserStatusColor(context)"
+                                <MudChip T="string"
+                                         Color="@(context.Disabled.HasValue ? Color.Error : Color.Success)"
                                          Size="Size.Small"
-                                         Variant="Variant.Filled">
-                                    @GetUserStatusText(context)
+                                         Variant="Variant.Filled"
+                                         Icon="@(context.Disabled.HasValue ? Icons.Material.Filled.Close : Icons.Material.Filled.Check)">
                                 </MudChip>
                             </MudTd>
+
                             <MudTd DataLabel="Role">
                                 <MudChip T="string" Color="@(context.IsAdmin == true ? Color.Warning : Color.Default)"
                                          Size="Size.Small"
@@ -80,26 +86,34 @@
                                     @(context.IsAdmin == true ? "Admin" : "User")
                                 </MudChip>
                             </MudTd>
+
                             <MudTd DataLabel="Created">
                                 <MudText Typo="Typo.body2">
                                     @(context.Created?.ToString("yyyy-MM-dd HH:mm") ?? "Unknown")
                                 </MudText>
                             </MudTd>
+
                             <MudTd DataLabel="Actions">
+
                                 <MudTooltip Text="Edit User">
                                     <MudIconButton Icon="@Icons.Material.Filled.Edit"
                                                    Size="Size.Small"
                                                    Color="Color.Primary"
-                                                   Disabled="true" />
+                                                   Disabled="true"/>
                                 </MudTooltip>
+
                                 <MudTooltip Text="@(context.Disabled.HasValue ? "Enable User" : "Disable User")">
-                                    <MudIconButton Icon="@(context.Disabled.HasValue ? Icons.Material.Filled.PersonAdd : Icons.Material.Filled.PersonOff)"
-                                                   Size="Size.Small"
-                                                   Color="@(context.Disabled.HasValue ? Color.Success : Color.Warning)"
-                                                   Disabled="true" />
+                                    <MudIconButton
+                                        Icon="@(context.Disabled.HasValue ? Icons.Material.Filled.PersonAdd : Icons.Material.Filled.PersonOff)"
+                                        Size="Size.Small"
+                                        Color="@(context.Disabled.HasValue ? Color.Success : Color.Warning)"
+                                        Disabled="true"/>
                                 </MudTooltip>
+
                             </MudTd>
+
                         </RowTemplate>
+
                     </MudTable>
 
                     <!-- Pagination -->
@@ -112,7 +126,7 @@
                                            ShowFirstButton="true"
                                            ShowLastButton="true"
                                            ShowPreviousButton="true"
-                                           ShowNextButton="true" />
+                                           ShowNextButton="true"/>
                         </div>
                     }
                 }

@@ -1,6 +1,6 @@
 using Microsoft.Playwright;
 
-namespace HomeBook.E2ETests;
+namespace HomeBook.E2ETests.Configuration;
 
 /// <summary>
 /// Configuration class for Playwright browser settings

@@ -2,6 +2,7 @@
 #pragma warning disable CS0618
 using HomeBook.Client.Models;
 using HomeBook.Client.System.Users.Admin;
+using HomeBook.Client.System.Users.Item;
 using HomeBook.Client.System.Users.Password;
 using Microsoft.Kiota.Abstractions.Extensions;
 using Microsoft.Kiota.Abstractions.Serialization;
@@ -28,6 +29,31 @@ namespace HomeBook.Client.System.Users
         public global::HomeBook.Client.System.Users.Password.PasswordRequestBuilder Password
         {
             get => new global::HomeBook.Client.System.Users.Password.PasswordRequestBuilder(PathParameters, RequestAdapter);
+        }
+        /// <summary>Gets an item from the HomeBook.Client.system.users.item collection</summary>
+        /// <param name="position">Unique identifier of the item</param>
+        /// <returns>A <see cref="global::HomeBook.Client.System.Users.Item.WithUserItemRequestBuilder"/></returns>
+        public global::HomeBook.Client.System.Users.Item.WithUserItemRequestBuilder this[Guid position]
+        {
+            get
+            {
+                var urlTplParams = new Dictionary<string, object>(PathParameters);
+                urlTplParams.Add("userId", position);
+                return new global::HomeBook.Client.System.Users.Item.WithUserItemRequestBuilder(urlTplParams, RequestAdapter);
+            }
+        }
+        /// <summary>Gets an item from the HomeBook.Client.system.users.item collection</summary>
+        /// <param name="position">Unique identifier of the item</param>
+        /// <returns>A <see cref="global::HomeBook.Client.System.Users.Item.WithUserItemRequestBuilder"/></returns>
+        [Obsolete("This indexer is deprecated and will be removed in the next major version. Use the one with the typed parameter instead.")]
+        public global::HomeBook.Client.System.Users.Item.WithUserItemRequestBuilder this[string position]
+        {
+            get
+            {
+                var urlTplParams = new Dictionary<string, object>(PathParameters);
+                if (!string.IsNullOrWhiteSpace(position)) urlTplParams.Add("userId", position);
+                return new global::HomeBook.Client.System.Users.Item.WithUserItemRequestBuilder(urlTplParams, RequestAdapter);
+            }
         }
         /// <summary>
         /// Instantiates a new <see cref="global::HomeBook.Client.System.Users.UsersRequestBuilder"/> and sets the default values.
