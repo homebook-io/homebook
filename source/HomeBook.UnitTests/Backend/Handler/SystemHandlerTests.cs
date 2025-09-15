@@ -350,7 +350,7 @@ public class SystemHandlerTests
         SetupHttpContextWithBearerToken("valid-token");
         _jwtService.GetUserIdFromToken("valid-token").Returns(currentUserId);
         _userRepository.GetUserByIdAsync(userToDeleteId, _cancellationToken).Returns(userToDelete);
-        _userRepository.UpdateAsync(userToDeleteId, Arg.Any<Action<User>>(), _cancellationToken).Returns(updatedUser);
+        _userRepository.DeleteAsync(userToDeleteId, _cancellationToken).Returns(true);
 
         // Act
         IResult result = await SystemHandler.HandleDeleteUser(_userRepository, _jwtService, request, _httpContext, _cancellationToken);
