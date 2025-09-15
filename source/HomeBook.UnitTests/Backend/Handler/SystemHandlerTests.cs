@@ -1,4 +1,5 @@
 using HomeBook.Backend.Abstractions.Contracts;
+using HomeBook.Backend.Core.HashProvider;
 using HomeBook.Backend.Data.Contracts;
 using HomeBook.Backend.Data.Entities;
 using HomeBook.Backend.Handler;
@@ -19,7 +20,7 @@ public class SystemHandlerTests
 {
     private IConfiguration _configuration = null!;
     private IUserRepository _userRepository = null!;
-    private IHashProvider _hashProvider = null!;
+    private IHashProviderFactory _hashProviderFactory = null!;
     private IJwtService _jwtService = null!;
     private HttpContext _httpContext = null!;
     private CancellationToken _cancellationToken;
@@ -29,9 +30,9 @@ public class SystemHandlerTests
     {
         _configuration = Substitute.For<IConfiguration>();
         _userRepository = Substitute.For<IUserRepository>();
-        _hashProvider = Substitute.For<IHashProvider>();
         _jwtService = Substitute.For<IJwtService>();
         _httpContext = Substitute.For<HttpContext>();
+        _hashProviderFactory = new HashProviderFactory();
         _cancellationToken = CancellationToken.None;
     }
 
@@ -204,12 +205,10 @@ public class SystemHandlerTests
         };
 
         _userRepository.ContainsUserAsync("testuser", _cancellationToken).Returns(false);
-        _hashProvider.Hash("password123").Returns("hashedpassword");
-        _hashProvider.AlgorithmName.Returns("TestHashProvider");
         _userRepository.CreateUserAsync(Arg.Any<User>(), _cancellationToken).Returns(createdUser);
 
         // Act
-        IResult result = await SystemHandler.HandleCreateUser(_userRepository, _hashProvider, request, _cancellationToken);
+        IResult result = await SystemHandler.HandleCreateUser(_userRepository, _hashProviderFactory, request, _cancellationToken);
 
         // Assert
         result.ShouldBeOfType<Ok<CreateUserResponse>>();
@@ -225,7 +224,7 @@ public class SystemHandlerTests
         var request = new CreateUserRequest("", "password123", false);
 
         // Act
-        IResult result = await SystemHandler.HandleCreateUser(_userRepository, _hashProvider, request, _cancellationToken);
+        IResult result = await SystemHandler.HandleCreateUser(_userRepository, _hashProviderFactory, request, _cancellationToken);
 
         // Assert
         result.ShouldBeOfType<BadRequest<string>>();
@@ -240,7 +239,7 @@ public class SystemHandlerTests
         var request = new CreateUserRequest("testuser", "", false);
 
         // Act
-        IResult result = await SystemHandler.HandleCreateUser(_userRepository, _hashProvider, request, _cancellationToken);
+        IResult result = await SystemHandler.HandleCreateUser(_userRepository, _hashProviderFactory, request, _cancellationToken);
 
         // Assert
         result.ShouldBeOfType<BadRequest<string>>();
@@ -255,7 +254,7 @@ public class SystemHandlerTests
         var request = new CreateUserRequest("test", "password123", false);
 
         // Act
-        IResult result = await SystemHandler.HandleCreateUser(_userRepository, _hashProvider, request, _cancellationToken);
+        IResult result = await SystemHandler.HandleCreateUser(_userRepository, _hashProviderFactory, request, _cancellationToken);
 
         // Assert
         result.ShouldBeOfType<BadRequest<string>>();
@@ -270,7 +269,7 @@ public class SystemHandlerTests
         var request = new CreateUserRequest("verylongusernamethatistoolong", "password123", false);
 
         // Act
-        IResult result = await SystemHandler.HandleCreateUser(_userRepository, _hashProvider, request, _cancellationToken);
+        IResult result = await SystemHandler.HandleCreateUser(_userRepository, _hashProviderFactory, request, _cancellationToken);
 
         // Assert
         result.ShouldBeOfType<BadRequest<string>>();
@@ -285,7 +284,7 @@ public class SystemHandlerTests
         var request = new CreateUserRequest("testuser", "short", false);
 
         // Act
-        IResult result = await SystemHandler.HandleCreateUser(_userRepository, _hashProvider, request, _cancellationToken);
+        IResult result = await SystemHandler.HandleCreateUser(_userRepository, _hashProviderFactory, request, _cancellationToken);
 
         // Assert
         result.ShouldBeOfType<BadRequest<string>>();
@@ -301,7 +300,7 @@ public class SystemHandlerTests
         _userRepository.ContainsUserAsync("testuser", _cancellationToken).Returns(true);
 
         // Act
-        IResult result = await SystemHandler.HandleCreateUser(_userRepository, _hashProvider, request, _cancellationToken);
+        IResult result = await SystemHandler.HandleCreateUser(_userRepository, _hashProviderFactory, request, _cancellationToken);
 
         // Assert
         result.ShouldBeOfType<BadRequest<string>>();
@@ -317,7 +316,7 @@ public class SystemHandlerTests
         _userRepository.ContainsUserAsync("testuser", _cancellationToken).ThrowsAsync<Exception>();
 
         // Act
-        IResult result = await SystemHandler.HandleCreateUser(_userRepository, _hashProvider, request, _cancellationToken);
+        IResult result = await SystemHandler.HandleCreateUser(_userRepository, _hashProviderFactory, request, _cancellationToken);
 
         // Assert
         result.ShouldBeOfType<ProblemHttpResult>();
@@ -496,12 +495,10 @@ public class SystemHandlerTests
         };
 
         _userRepository.GetUserByIdAsync(userId, _cancellationToken).Returns(user);
-        _hashProvider.Hash("newpassword123").Returns("newhash");
-        _hashProvider.AlgorithmName.Returns("TestHashProvider");
         _userRepository.UpdateAsync(userId, Arg.Any<Action<User>>(), _cancellationToken).Returns(updatedUser);
 
         // Act
-        IResult result = await SystemHandler.HandleUpdatePassword(_userRepository, _hashProvider, request, _cancellationToken);
+        IResult result = await SystemHandler.HandleUpdatePassword(_userRepository, _hashProviderFactory, request, _cancellationToken);
 
         // Assert
         result.ShouldBeOfType<Ok<string>>();
@@ -516,7 +513,7 @@ public class SystemHandlerTests
         var request = new UpdatePasswordRequest(Guid.NewGuid(), "");
 
         // Act
-        IResult result = await SystemHandler.HandleUpdatePassword(_userRepository, _hashProvider, request, _cancellationToken);
+        IResult result = await SystemHandler.HandleUpdatePassword(_userRepository, _hashProviderFactory, request, _cancellationToken);
 
         // Assert
         result.ShouldBeOfType<BadRequest<string>>();
@@ -531,7 +528,7 @@ public class SystemHandlerTests
         var request = new UpdatePasswordRequest(Guid.NewGuid(), "short");
 
         // Act
-        IResult result = await SystemHandler.HandleUpdatePassword(_userRepository, _hashProvider, request, _cancellationToken);
+        IResult result = await SystemHandler.HandleUpdatePassword(_userRepository, _hashProviderFactory, request, _cancellationToken);
 
         // Assert
         result.ShouldBeOfType<BadRequest<string>>();
@@ -548,7 +545,7 @@ public class SystemHandlerTests
         _userRepository.GetUserByIdAsync(userId, _cancellationToken).Returns((User?)null);
 
         // Act
-        IResult result = await SystemHandler.HandleUpdatePassword(_userRepository, _hashProvider, request, _cancellationToken);
+        IResult result = await SystemHandler.HandleUpdatePassword(_userRepository, _hashProviderFactory, request, _cancellationToken);
 
         // Assert
         result.ShouldBeOfType<NotFound<string>>();
@@ -570,12 +567,10 @@ public class SystemHandlerTests
         };
 
         _userRepository.GetUserByIdAsync(userId, _cancellationToken).Returns(user);
-        _hashProvider.Hash("newpassword123").Returns("newhash");
-        _hashProvider.AlgorithmName.Returns("TestHashProvider");
         _userRepository.UpdateAsync(userId, Arg.Any<Action<User>>(), _cancellationToken).Returns((User?)null);
 
         // Act
-        IResult result = await SystemHandler.HandleUpdatePassword(_userRepository, _hashProvider, request, _cancellationToken);
+        IResult result = await SystemHandler.HandleUpdatePassword(_userRepository, _hashProviderFactory, request, _cancellationToken);
 
         // Assert
         result.ShouldBeOfType<ProblemHttpResult>();
@@ -589,7 +584,7 @@ public class SystemHandlerTests
         _userRepository.GetUserByIdAsync(Arg.Any<Guid>(), _cancellationToken).ThrowsAsync<Exception>();
 
         // Act
-        IResult result = await SystemHandler.HandleUpdatePassword(_userRepository, _hashProvider, request, _cancellationToken);
+        IResult result = await SystemHandler.HandleUpdatePassword(_userRepository, _hashProviderFactory, request, _cancellationToken);
 
         // Assert
         result.ShouldBeOfType<ProblemHttpResult>();

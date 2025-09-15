@@ -1,4 +1,3 @@
-using System.Net;
 using System.Net.Http.Json;
 using HomeBook.Client;
 using HomeBook.E2ETests.Configuration;
@@ -18,7 +17,8 @@ public class VersionStepDefinitions(ScenarioContext scenarioContext)
     [When("I request the backend version")]
     public async Task WhenIRequestTheBackendVersion()
     {
-        NativeResponseHandler native = new();await ApiClient.Version.GetAsync(x =>
+        NativeResponseHandler native = new();
+        await ApiClient.Version.GetAsync(x =>
             {
                 x.Options.Add(new ResponseHandlerOption
                 {

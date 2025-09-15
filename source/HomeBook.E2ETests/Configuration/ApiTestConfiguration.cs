@@ -15,7 +15,17 @@ public class ApiTestConfiguration
     /// <summary>
     /// Test user credentials
     /// </summary>
-    public TestUserCredentials TestUser { get; set; } = new();
+    public TestUserCredentials AdminUser { get; set; } = new();
+
+    /// <summary>
+    /// Test user credentials
+    /// </summary>
+    public TestUserCredentials NonAdminUser { get; set; } = new();
+
+    /// <summary>
+    /// Test user credentials
+    /// </summary>
+    public TestUserCredentials TestUserToCreate { get; set; } = new();
 
     /// <summary>
     /// HTTP client timeout in seconds
@@ -38,20 +48,4 @@ public class ApiTestConfiguration
 
         return config;
     }
-}
-
-/// <summary>
-/// Test user credentials for authentication tests
-/// </summary>
-public class TestUserCredentials
-{
-    /// <summary>
-    /// Username for test user
-    /// </summary>
-    public string Username { get; set; } = "";
-
-    /// <summary>
-    /// Password for test user
-    /// </summary>
-    public string Password { get; set; } = "";
 }

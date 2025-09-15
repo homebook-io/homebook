@@ -18,20 +18,41 @@ public class AccountStepDefinitions(ScenarioContext scenarioContext)
     private string? _logoutResponse;
     private string? _accessToken;
 
-    [Given(@"I have valid test user credentials")]
+    [Given(@"I have valid user credentials")]
     public void GivenIHaveValidTestUserCredentials()
     {
-        Configuration.TestUser.Username.ShouldNotBeNullOrEmpty("Test username should be configured");
-        Configuration.TestUser.Password.ShouldNotBeNullOrEmpty("Test password should be configured");
+        Configuration.AdminUser.Username.ShouldNotBeNullOrEmpty("Test username should be configured");
+        Configuration.AdminUser.Password.ShouldNotBeNullOrEmpty("Test password should be configured");
+
+        Configuration.NonAdminUser.Username.ShouldNotBeNullOrEmpty("Test username should be configured");
+        Configuration.NonAdminUser.Password.ShouldNotBeNullOrEmpty("Test password should be configured");
+
+        Configuration.TestUserToCreate.Username.ShouldNotBeNullOrEmpty("Test username should be configured");
+        Configuration.TestUserToCreate.Password.ShouldNotBeNullOrEmpty("Test password should be configured");
     }
 
-    [Given(@"I have valid user credentials")]
+    [Given("I have valid test user")]
+    public void GivenIHaveValidTestUser()
+    {
+    }
+
+    [Given("I have valid admin user credentials")]
+    public void GivenIHaveValidAdminUserCredentials()
+    {
+        _loginRequest = new LoginRequest
+        {
+            Username = Configuration.AdminUser.Username,
+            Password = Configuration.AdminUser.Password
+        };
+    }
+
+    [Given(@"I have valid non admin user credentials")]
     public void GivenIHaveValidUserCredentials()
     {
         _loginRequest = new LoginRequest
         {
-            Username = Configuration.TestUser.Username,
-            Password = Configuration.TestUser.Password
+            Username = Configuration.NonAdminUser.Username,
+            Password = Configuration.NonAdminUser.Password
         };
     }
 

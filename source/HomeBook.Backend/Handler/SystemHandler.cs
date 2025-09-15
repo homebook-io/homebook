@@ -70,7 +70,7 @@ public static class SystemHandler
     }
 
     public static async Task<IResult> HandleCreateUser([FromServices] IUserRepository userRepository,
-        [FromServices] IHashProvider hashProvider,
+        [FromServices] IHashProviderFactory hashProviderFactory,
         [FromBody] CreateUserRequest request,
         CancellationToken cancellationToken = default)
     {
@@ -105,6 +105,7 @@ public static class SystemHandler
             }
 
             // Hash the password
+            IHashProvider hashProvider = hashProviderFactory.CreateDefault();
             string passwordHash = hashProvider.Hash(request.Password);
 
             // Create new user entity
@@ -166,11 +167,10 @@ public static class SystemHandler
                 return TypedResults.NotFound("User not found");
             }
 
-            // Soft delete by setting Disabled timestamp
-            User? updatedUser = await userRepository.UpdateAsync(request.UserId,
-                user => user.Disabled = DateTime.UtcNow, cancellationToken);
+            // Actually delete the user from the database
+            bool deleteResult = await userRepository.DeleteAsync(request.UserId, cancellationToken);
 
-            if (updatedUser == null)
+            if (!deleteResult)
             {
                 return TypedResults.Problem("Failed to delete user", statusCode: 500);
             }
@@ -184,7 +184,7 @@ public static class SystemHandler
     }
 
     public static async Task<IResult> HandleUpdatePassword([FromServices] IUserRepository userRepository,
-        [FromServices] IHashProvider hashProvider,
+        [FromServices] IHashProviderFactory hashProviderFactory,
         [FromBody] UpdatePasswordRequest request,
         CancellationToken cancellationToken = default)
     {
@@ -209,6 +209,7 @@ public static class SystemHandler
             }
 
             // Hash the new password
+            IHashProvider hashProvider = hashProviderFactory.CreateDefault();
             string passwordHash = hashProvider.Hash(request.NewPassword);
 
             // Update user password

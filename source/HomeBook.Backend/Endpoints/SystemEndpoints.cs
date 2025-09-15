@@ -15,7 +15,8 @@ public static class SystemEndpoints
 
         group.MapGet("/", SystemHandler.HandleGetSystemInfo)
             .WithName("GetSystemInfo")
-            .WithDescription("returns several system informations")
+            .WithDescription("returns several system informations (Admin only)")
+            .WithMetadata(new RequireAdminAttribute())
             .WithOpenApi()
             .Produces<GetSystemInfoResponse>()
             .Produces<string>(StatusCodes.Status500InternalServerError);
