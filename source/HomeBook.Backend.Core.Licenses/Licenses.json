@@ -1319,7 +1319,7 @@
   },
   {
     "PackageId": "Scalar.AspNetCore",
-    "PackageVersion": "2.8.3",
+    "PackageVersion": "2.8.4",
     "PackageProjectUrl": "https://scalar.com/",
     "Authors": "Scalar",
     "License": "MIT",
@@ -1406,15 +1406,6 @@
     "Authors": "Serilog Contributors",
     "License": "Apache-2.0",
     "LicenseUrl": "https://licenses.nuget.org/Apache-2.0",
-    "LicenseInformationOrigin": 0
-  },
-  {
-    "PackageId": "Shouldly",
-    "PackageVersion": "4.2.1",
-    "PackageProjectUrl": "https://shouldly.org/",
-    "Authors": "Jake Ginnivan, Joseph Woodward, Simon Cropp",
-    "License": "BSD-2-Clause",
-    "LicenseUrl": "https://licenses.nuget.org/BSD-2-Clause",
     "LicenseInformationOrigin": 0
   },
   {
