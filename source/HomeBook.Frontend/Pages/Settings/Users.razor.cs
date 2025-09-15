@@ -8,10 +8,6 @@ namespace HomeBook.Frontend.Pages.Settings;
 
 public partial class Users : ComponentBase
 {
-    [Inject] private BackendClient BackendClient { get; set; } = default!;
-    [Inject] private IAuthenticationService AuthenticationService { get; set; } = default!;
-    [Inject] private ISnackbar Snackbar { get; set; } = default!;
-
     private bool _loading = true;
     private GetUsersResponse? _usersResponse;
     private List<UserResponse> _users = new();
@@ -41,11 +37,11 @@ public partial class Users : ComponentBase
                 return;
             }
 
-            _usersResponse = await BackendClient.System.Users.GetAsync(requestConfiguration =>
+            _usersResponse = await BackendClient.System.Users.GetAsync(x =>
             {
-                requestConfiguration.QueryParameters.Page = _currentPage;
-                requestConfiguration.QueryParameters.PageSize = _pageSize;
-                requestConfiguration.Headers.Add("Authorization", $"Bearer {token}");
+                x.QueryParameters.Page = _currentPage;
+                x.QueryParameters.PageSize = _pageSize;
+                x.Headers.Add("Authorization", $"Bearer {token}");
             });
 
             if (_usersResponse != null)

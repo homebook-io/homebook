@@ -24,7 +24,7 @@ public partial class About : ComponentBase
 
         CancellationToken cancellationToken = CancellationToken.None;
 
-        await LoadUIInfoAsync(cancellationToken);
+        await LoadUiInfoAsync(cancellationToken);
         await LoadBackendInfoAsync(cancellationToken);
         await LoadLicensesAsync(cancellationToken);
     }
@@ -37,7 +37,7 @@ public partial class About : ComponentBase
             .ToList();
     }
 
-    private async Task LoadUIInfoAsync(CancellationToken cancellationToken)
+    private async Task LoadUiInfoAsync(CancellationToken cancellationToken)
     {
         _uiVersion = Configuration["AppVersion"] ?? "1.0.0";
         _uiDotnetVersion = System.Environment.Version.ToString();
@@ -45,8 +45,16 @@ public partial class About : ComponentBase
 
     private async Task LoadBackendInfoAsync(CancellationToken cancellationToken)
     {
+        string? token = await AuthenticationService.GetTokenAsync(cancellationToken);
+        if (string.IsNullOrEmpty(token))
+        {
+            Snackbar.Add("Authentication token not found", Severity.Error);
+            return;
+        }
+
         GetSystemInfoResponse? response = await BackendClient.System.GetAsync(x =>
             {
+                x.Headers.Add("Authorization", $"Bearer {token}");
             },
             cancellationToken);
 
