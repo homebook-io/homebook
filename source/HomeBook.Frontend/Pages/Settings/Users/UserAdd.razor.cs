@@ -1,9 +1,9 @@
+using System.ComponentModel.DataAnnotations;
 using HomeBook.Client.Models;
 using Microsoft.AspNetCore.Components;
 using MudBlazor;
-using System.ComponentModel.DataAnnotations;
 
-namespace HomeBook.Frontend.Pages.Settings;
+namespace HomeBook.Frontend.Pages.Settings.Users;
 
 public partial class UserAdd : ComponentBase
 {
@@ -19,7 +19,8 @@ public partial class UserAdd : ComponentBase
 
     private async Task HandleValidSubmitAsync()
     {
-        if (_saving) return;
+        if (_saving)
+            return;
 
         try
         {

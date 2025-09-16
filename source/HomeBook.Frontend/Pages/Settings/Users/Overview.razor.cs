@@ -5,9 +5,9 @@ using Microsoft.AspNetCore.Components;
 using Microsoft.AspNetCore.Components.Authorization;
 using MudBlazor;
 
-namespace HomeBook.Frontend.Pages.Settings;
+namespace HomeBook.Frontend.Pages.Settings.Users;
 
-public partial class Users : ComponentBase
+public partial class Overview : ComponentBase
 {
     private bool _loading = true;
     private List<UserData> _users = new();

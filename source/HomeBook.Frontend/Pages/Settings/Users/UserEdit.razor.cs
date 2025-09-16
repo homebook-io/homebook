@@ -1,10 +1,10 @@
+using System.ComponentModel.DataAnnotations;
+using System.Security.Claims;
 using HomeBook.Client.Models;
 using Microsoft.AspNetCore.Components;
 using MudBlazor;
-using System.ComponentModel.DataAnnotations;
-using System.Security.Claims;
 
-namespace HomeBook.Frontend.Pages.Settings;
+namespace HomeBook.Frontend.Pages.Settings.Users;
 
 public partial class UserEdit : ComponentBase
 {
