@@ -132,8 +132,8 @@ public static class SystemHandler
     }
 
     public static async Task<IResult> HandleDeleteUser([FromServices] IUserRepository userRepository,
+        Guid userId,
         [FromServices] IJwtService jwtService,
-        [FromBody] DeleteUserRequest request,
         HttpContext httpContext,
         CancellationToken cancellationToken = default)
     {
@@ -155,20 +155,20 @@ public static class SystemHandler
             }
 
             // Check if user is trying to delete themselves
-            if (currentUserId == request.UserId)
+            if (currentUserId == userId)
             {
                 return TypedResults.BadRequest("You cannot delete your own account");
             }
 
             // Check if user to delete exists
-            User? userToDelete = await userRepository.GetUserByIdAsync(request.UserId, cancellationToken);
+            User? userToDelete = await userRepository.GetUserByIdAsync(userId, cancellationToken);
             if (userToDelete == null)
             {
                 return TypedResults.NotFound("User not found");
             }
 
             // Actually delete the user from the database
-            bool deleteResult = await userRepository.DeleteAsync(request.UserId, cancellationToken);
+            bool deleteResult = await userRepository.DeleteAsync(userId, cancellationToken);
 
             if (!deleteResult)
             {
@@ -185,6 +185,7 @@ public static class SystemHandler
 
     public static async Task<IResult> HandleUpdatePassword([FromServices] IUserRepository userRepository,
         [FromServices] IHashProviderFactory hashProviderFactory,
+        Guid userId,
         [FromBody] UpdatePasswordRequest request,
         CancellationToken cancellationToken = default)
     {
@@ -202,7 +203,7 @@ public static class SystemHandler
             }
 
             // Check if user exists
-            User? user = await userRepository.GetUserByIdAsync(request.UserId, cancellationToken);
+            User? user = await userRepository.GetUserByIdAsync(userId, cancellationToken);
             if (user == null)
             {
                 return TypedResults.NotFound("User not found");
@@ -213,16 +214,10 @@ public static class SystemHandler
             string passwordHash = hashProvider.Hash(request.NewPassword);
 
             // Update user password
-            User? updatedUser = await userRepository.UpdateAsync(request.UserId,
-                u => {
-                    u.PasswordHash = passwordHash;
-                    u.PasswordHashType = hashProvider.GetType().Name;
-                }, cancellationToken);
+            user.PasswordHash = passwordHash;
+            user.PasswordHashType = hashProvider.GetType().Name;
 
-            if (updatedUser == null)
-            {
-                return TypedResults.Problem("Failed to update password", statusCode: 500);
-            }
+            await userRepository.UpdateUserAsync(user, cancellationToken);
 
             return TypedResults.Ok("Password updated successfully");
         }
@@ -234,6 +229,7 @@ public static class SystemHandler
 
     public static async Task<IResult> HandleUpdateUserAdmin([FromServices] IUserRepository userRepository,
         [FromServices] IJwtService jwtService,
+        Guid userId,
         [FromBody] UpdateUserAdminRequest request,
         HttpContext httpContext,
         CancellationToken cancellationToken = default)
@@ -256,26 +252,22 @@ public static class SystemHandler
             }
 
             // Check if user is trying to change their own admin status
-            if (currentUserId == request.UserId)
+            if (currentUserId == userId)
             {
                 return TypedResults.BadRequest("You cannot change your own admin status");
             }
 
             // Check if target user exists
-            User? user = await userRepository.GetUserByIdAsync(request.UserId, cancellationToken);
+            User? user = await userRepository.GetUserByIdAsync(userId, cancellationToken);
             if (user == null)
             {
                 return TypedResults.NotFound("User not found");
             }
 
             // Update user admin status
-            User? updatedUser = await userRepository.UpdateAsync(request.UserId,
-                u => u.IsAdmin = request.IsAdmin, cancellationToken);
+            user.IsAdmin = request.IsAdmin;
 
-            if (updatedUser == null)
-            {
-                return TypedResults.Problem("Failed to update admin status", statusCode: 500);
-            }
+            await userRepository.UpdateUserAsync(user, cancellationToken);
 
             return TypedResults.Ok($"User admin status updated successfully to {request.IsAdmin}");
         }
@@ -328,13 +320,8 @@ public static class SystemHandler
             }
 
             // Enable user by clearing the Disabled timestamp
-            User? updatedUser = await userRepository.UpdateAsync(userId,
+            await userRepository.UpdateAsync(userId,
                 u => u.Disabled = null, cancellationToken);
-
-            if (updatedUser == null)
-            {
-                return TypedResults.Problem("Failed to enable user", statusCode: 500);
-            }
 
             return TypedResults.Ok("User enabled successfully");
         }
@@ -387,19 +374,58 @@ public static class SystemHandler
             }
 
             // Disable user by setting the Disabled timestamp
-            User? updatedUser = await userRepository.UpdateAsync(userId,
+            await userRepository.UpdateAsync(userId,
                 u => u.Disabled = DateTime.UtcNow, cancellationToken);
-
-            if (updatedUser == null)
-            {
-                return TypedResults.Problem("Failed to disable user", statusCode: 500);
-            }
 
             return TypedResults.Ok("User disabled successfully");
         }
         catch (Exception)
         {
             return TypedResults.Problem("An error occurred while disabling the user.", statusCode: 500);
+        }
+    }
+
+    public static async Task<IResult> HandleUpdateUsername([FromServices] IUserRepository userRepository,
+        Guid userId,
+        [FromBody] UpdateUsernameRequest request,
+        CancellationToken cancellationToken = default)
+    {
+        try
+        {
+            // Validate input
+            if (string.IsNullOrWhiteSpace(request.NewUsername))
+            {
+                return TypedResults.BadRequest("New username is required");
+            }
+
+            if (request.NewUsername.Length < 5 || request.NewUsername.Length > 20)
+            {
+                return TypedResults.BadRequest("Username must be between 5 and 20 characters");
+            }
+
+            // Check if username already exists (case-insensitive)
+            bool usernameExists = await userRepository.ContainsUserAsync(request.NewUsername, cancellationToken);
+            if (usernameExists)
+            {
+                return TypedResults.Conflict("Username already exists");
+            }
+
+            // Retrieve the user to update
+            User? user = await userRepository.GetUserByIdAsync(userId, cancellationToken);
+            if (user == null)
+            {
+                return TypedResults.NotFound("User not found");
+            }
+
+            // Update the username
+            user.Username = request.NewUsername;
+            await userRepository.UpdateUserAsync(user, cancellationToken);
+
+            return TypedResults.Ok("Username updated successfully");
+        }
+        catch (Exception)
+        {
+            return TypedResults.Problem("An error occurred while updating the username", statusCode: 500);
         }
     }
 }

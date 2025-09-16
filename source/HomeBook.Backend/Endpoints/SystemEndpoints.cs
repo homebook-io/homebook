@@ -42,7 +42,7 @@ public static class SystemEndpoints
             .Produces<string>(StatusCodes.Status403Forbidden)
             .Produces<string>(StatusCodes.Status500InternalServerError);
 
-        group.MapDelete("/users", SystemHandler.HandleDeleteUser)
+        group.MapDelete("/users/{userId:guid}", SystemHandler.HandleDeleteUser)
             .WithName("DeleteUser")
             .WithDescription("Deletes a user (Admin only, cannot delete self)")
             .WithMetadata(new RequireAdminAttribute())
@@ -54,7 +54,20 @@ public static class SystemEndpoints
             .Produces<string>(StatusCodes.Status404NotFound)
             .Produces<string>(StatusCodes.Status500InternalServerError);
 
-        group.MapPut("/users/password", SystemHandler.HandleUpdatePassword)
+        group.MapPut("/users/{userId:guid}/username", SystemHandler.HandleUpdateUsername)
+            .WithName("UpdateUsername")
+            .WithDescription("Updates a user's username (Admin only, checks for uniqueness ignoring case)")
+            .WithMetadata(new RequireAdminAttribute())
+            .WithOpenApi()
+            .Produces<string>(StatusCodes.Status200OK)
+            .Produces<string>(StatusCodes.Status400BadRequest)
+            .Produces<string>(StatusCodes.Status401Unauthorized)
+            .Produces<string>(StatusCodes.Status403Forbidden)
+            .Produces<string>(StatusCodes.Status404NotFound)
+            .Produces<string>(StatusCodes.Status409Conflict) // For username conflict
+            .Produces<string>(StatusCodes.Status500InternalServerError);
+
+        group.MapPut("/users/{userId:guid}/password", SystemHandler.HandleUpdatePassword)
             .WithName("UpdateUserPassword")
             .WithDescription("Updates a user's password (Admin only)")
             .WithMetadata(new RequireAdminAttribute())
@@ -66,7 +79,7 @@ public static class SystemEndpoints
             .Produces<string>(StatusCodes.Status404NotFound)
             .Produces<string>(StatusCodes.Status500InternalServerError);
 
-        group.MapPut("/users/admin", SystemHandler.HandleUpdateUserAdmin)
+        group.MapPut("/users/{userId:guid}/admin", SystemHandler.HandleUpdateUserAdmin)
             .WithName("UpdateUserAdmin")
             .WithDescription("Updates a user's admin status (Admin only, cannot change own status)")
             .WithMetadata(new RequireAdminAttribute())
