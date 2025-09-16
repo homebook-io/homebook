@@ -141,14 +141,11 @@ public class TestUserHooks(ScenarioContext scenarioContext)
         if (_accessToken == null)
             throw new InvalidOperationException("Access token is null");
 
-        await ApiClient.System.Users.DeleteAsync(new DeleteUserRequest
-            {
-                UserId = testUserId
-            },
-            requestConfiguration: x =>
-            {
-                x.Headers.Add("Authorization", $"Bearer {_accessToken}");
-            },
-            cancellationToken: CancellationToken.None);
+        await ApiClient.System.Users[testUserId]
+            .DeleteAsync(x =>
+                {
+                    x.Headers.Add("Authorization", $"Bearer {_accessToken}");
+                },
+                cancellationToken: CancellationToken.None);
     }
 }

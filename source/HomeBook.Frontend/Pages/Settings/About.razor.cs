@@ -1,5 +1,6 @@
 using HomeBook.Client.Models;
 using HomeBook.Frontend.Abstractions.Models;
+using HomeBook.Frontend.Abstractions.Models.System;
 using HomeBook.Frontend.Components;
 using HomeBook.Frontend.Mappings;
 using HomeBook.Frontend.Models.Setup;
@@ -40,39 +41,31 @@ public partial class About : ComponentBase
     private async Task LoadUiInfoAsync(CancellationToken cancellationToken)
     {
         _uiVersion = Configuration["AppVersion"] ?? "1.0.0";
-        _uiDotnetVersion = System.Environment.Version.ToString();
+        _uiDotnetVersion = Environment.Version.ToString();
     }
 
     private async Task LoadBackendInfoAsync(CancellationToken cancellationToken)
     {
-        string? token = await AuthenticationService.GetTokenAsync(cancellationToken);
-        if (string.IsNullOrEmpty(token))
+        try
         {
-            Snackbar.Add("Authentication token not found", Severity.Error);
-            return;
+            SystemInfo systemInfo = await SystemManagementProvider.GetSystemInfoAsync(cancellationToken);
+
+            _backendVersion = systemInfo.AppVersion.ToString();
+            _backendDotnetVersion = systemInfo.DotNetVersion;
+
+            _databaseProvider = systemInfo.DatabaseProvider;
+            _deploymentType = systemInfo.DeploymentType;
         }
-
-        GetSystemInfoResponse? response = await BackendClient.System.GetAsync(x =>
-            {
-                x.Headers.Add("Authorization", $"Bearer {token}");
-            },
-            cancellationToken);
-
-        _backendVersion = response.AppVersion;
-        _backendDotnetVersion = response.DotnetRuntimeVersion;
-
-        _databaseProvider = response.DatabaseProvider.ToUpperInvariant() switch
+        catch (UnauthorizedAccessException)
         {
-            "POSTGRESQL" => "PostgreSQL",
-            "MYSQL" => "MySQL",
-            "MARIADBl" => "MariaDB",
-            _ => response.DatabaseProvider
-        };
-        _deploymentType = response.DeploymentType.ToUpperInvariant() switch
+            // user is no admin
+            Snackbar.Add("You are not authorized to view system information.", Severity.Warning);
+        }
+        catch (Exception err)
         {
-            "DOCKER" => "Docker",
-            _ => response.DeploymentType
-        };
+            // display error
+            Snackbar.Add($"Loading system information failed: {err.Message}", Severity.Error);
+        }
     }
 
     private async Task OpenLicensesDialogAsync()

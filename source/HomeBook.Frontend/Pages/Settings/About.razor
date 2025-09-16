@@ -1,16 +1,14 @@
 @page "/Settings/About"
 
-@using HomeBook.Client
 @using HomeBook.Frontend.Abstractions.Contracts
 @using HomeBookIcons = HomeBook.Frontend.Defaults.HomeBookIcons
 
 @inject ILocalizationProvider Loc
 @inject IConfiguration Configuration
-@inject BackendClient BackendClient
 @inject IDialogService DialogService
 @inject ILicensesService LicensesService
-@inject IAuthenticationService AuthenticationService
 @inject ISnackbar Snackbar
+@inject ISystemManagementProvider SystemManagementProvider
 
 <MudContainer Class="mt-4">
 

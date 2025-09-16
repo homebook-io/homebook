@@ -99,7 +99,8 @@ public class SystemHandlerTests
         // Arrange
         var users = new List<User>
         {
-            new() {
+            new()
+            {
                 Id = Guid.NewGuid(),
                 Username = "user1",
                 PasswordHash = "hash1",
@@ -107,7 +108,8 @@ public class SystemHandlerTests
                 Created = DateTime.UtcNow,
                 IsAdmin = true
             },
-            new() {
+            new()
+            {
                 Id = Guid.NewGuid(),
                 Username = "user2",
                 PasswordHash = "hash2",
@@ -115,7 +117,8 @@ public class SystemHandlerTests
                 Created = DateTime.UtcNow,
                 IsAdmin = false
             },
-            new() {
+            new()
+            {
                 Id = Guid.NewGuid(),
                 Username = "user3",
                 PasswordHash = "hash3",
@@ -197,7 +200,8 @@ public class SystemHandlerTests
         // Arrange
         var request = new CreateUserRequest("testuser", "password123", true);
         var userId = Guid.NewGuid();
-        var createdUser = new User {
+        var createdUser = new User
+        {
             Id = userId,
             Username = "testuser",
             PasswordHash = "hashedpassword",
@@ -208,7 +212,8 @@ public class SystemHandlerTests
         _userRepository.CreateUserAsync(Arg.Any<User>(), _cancellationToken).Returns(createdUser);
 
         // Act
-        IResult result = await SystemHandler.HandleCreateUser(_userRepository, _hashProviderFactory, request, _cancellationToken);
+        IResult result =
+            await SystemHandler.HandleCreateUser(_userRepository, _hashProviderFactory, request, _cancellationToken);
 
         // Assert
         result.ShouldBeOfType<Ok<CreateUserResponse>>();
@@ -224,7 +229,8 @@ public class SystemHandlerTests
         var request = new CreateUserRequest("", "password123", false);
 
         // Act
-        IResult result = await SystemHandler.HandleCreateUser(_userRepository, _hashProviderFactory, request, _cancellationToken);
+        IResult result =
+            await SystemHandler.HandleCreateUser(_userRepository, _hashProviderFactory, request, _cancellationToken);
 
         // Assert
         result.ShouldBeOfType<BadRequest<string>>();
@@ -239,7 +245,8 @@ public class SystemHandlerTests
         var request = new CreateUserRequest("testuser", "", false);
 
         // Act
-        IResult result = await SystemHandler.HandleCreateUser(_userRepository, _hashProviderFactory, request, _cancellationToken);
+        IResult result =
+            await SystemHandler.HandleCreateUser(_userRepository, _hashProviderFactory, request, _cancellationToken);
 
         // Assert
         result.ShouldBeOfType<BadRequest<string>>();
@@ -254,7 +261,8 @@ public class SystemHandlerTests
         var request = new CreateUserRequest("test", "password123", false);
 
         // Act
-        IResult result = await SystemHandler.HandleCreateUser(_userRepository, _hashProviderFactory, request, _cancellationToken);
+        IResult result =
+            await SystemHandler.HandleCreateUser(_userRepository, _hashProviderFactory, request, _cancellationToken);
 
         // Assert
         result.ShouldBeOfType<BadRequest<string>>();
@@ -269,7 +277,8 @@ public class SystemHandlerTests
         var request = new CreateUserRequest("verylongusernamethatistoolong", "password123", false);
 
         // Act
-        IResult result = await SystemHandler.HandleCreateUser(_userRepository, _hashProviderFactory, request, _cancellationToken);
+        IResult result =
+            await SystemHandler.HandleCreateUser(_userRepository, _hashProviderFactory, request, _cancellationToken);
 
         // Assert
         result.ShouldBeOfType<BadRequest<string>>();
@@ -284,7 +293,8 @@ public class SystemHandlerTests
         var request = new CreateUserRequest("testuser", "short", false);
 
         // Act
-        IResult result = await SystemHandler.HandleCreateUser(_userRepository, _hashProviderFactory, request, _cancellationToken);
+        IResult result =
+            await SystemHandler.HandleCreateUser(_userRepository, _hashProviderFactory, request, _cancellationToken);
 
         // Assert
         result.ShouldBeOfType<BadRequest<string>>();
@@ -300,7 +310,8 @@ public class SystemHandlerTests
         _userRepository.ContainsUserAsync("testuser", _cancellationToken).Returns(true);
 
         // Act
-        IResult result = await SystemHandler.HandleCreateUser(_userRepository, _hashProviderFactory, request, _cancellationToken);
+        IResult result =
+            await SystemHandler.HandleCreateUser(_userRepository, _hashProviderFactory, request, _cancellationToken);
 
         // Assert
         result.ShouldBeOfType<BadRequest<string>>();
@@ -316,7 +327,8 @@ public class SystemHandlerTests
         _userRepository.ContainsUserAsync("testuser", _cancellationToken).ThrowsAsync<Exception>();
 
         // Act
-        IResult result = await SystemHandler.HandleCreateUser(_userRepository, _hashProviderFactory, request, _cancellationToken);
+        IResult result =
+            await SystemHandler.HandleCreateUser(_userRepository, _hashProviderFactory, request, _cancellationToken);
 
         // Assert
         result.ShouldBeOfType<ProblemHttpResult>();
@@ -330,21 +342,14 @@ public class SystemHandlerTests
     public async Task HandleDeleteUser_ReturnsOk_WhenUserDeletedSuccessfully()
     {
         // Arrange
-        var currentUserId = Guid.NewGuid();
-        var userToDeleteId = Guid.NewGuid();
-        var request = new DeleteUserRequest(userToDeleteId);
-        var userToDelete = new User {
+        Guid currentUserId = Guid.NewGuid();
+        Guid userToDeleteId = Guid.NewGuid();
+        User userToDelete = new()
+        {
             Id = userToDeleteId,
             Username = "usertodelete",
             PasswordHash = "hash",
             PasswordHashType = "Test"
-        };
-        var updatedUser = new User {
-            Id = userToDeleteId,
-            Username = "usertodelete",
-            PasswordHash = "hash",
-            PasswordHashType = "Test",
-            Disabled = DateTime.UtcNow
         };
 
         SetupHttpContextWithBearerToken("valid-token");
@@ -353,11 +358,16 @@ public class SystemHandlerTests
         _userRepository.DeleteAsync(userToDeleteId, _cancellationToken).Returns(true);
 
         // Act
-        IResult result = await SystemHandler.HandleDeleteUser(_userRepository, _jwtService, request, _httpContext, _cancellationToken);
+        IResult result =
+            await SystemHandler.HandleDeleteUser(_userRepository,
+                userToDeleteId,
+                _jwtService,
+                _httpContext,
+                _cancellationToken);
 
         // Assert
         result.ShouldBeOfType<Ok<string>>();
-        var okResult = (Ok<string>)result;
+        Ok<string> okResult = (Ok<string>)result;
         okResult.Value.ShouldBe("User deleted successfully");
     }
 
@@ -365,11 +375,16 @@ public class SystemHandlerTests
     public async Task HandleDeleteUser_ReturnsUnauthorized_WhenNoAuthorizationHeader()
     {
         // Arrange
-        var request = new DeleteUserRequest(Guid.NewGuid());
+        var userToDeleteId = Guid.NewGuid();
         SetupHttpContextWithoutAuthHeader();
 
         // Act
-        IResult result = await SystemHandler.HandleDeleteUser(_userRepository, _jwtService, request, _httpContext, _cancellationToken);
+        IResult result =
+            await SystemHandler.HandleDeleteUser(_userRepository,
+                userToDeleteId,
+                _jwtService,
+                _httpContext,
+                _cancellationToken);
 
         // Assert
         result.ShouldBeOfType<UnauthorizedHttpResult>();
@@ -379,12 +394,17 @@ public class SystemHandlerTests
     public async Task HandleDeleteUser_ReturnsUnauthorized_WhenInvalidToken()
     {
         // Arrange
-        var request = new DeleteUserRequest(Guid.NewGuid());
+        var userToDeleteId = Guid.NewGuid();
         SetupHttpContextWithBearerToken("invalid-token");
         _jwtService.GetUserIdFromToken("invalid-token").Returns((Guid?)null);
 
         // Act
-        IResult result = await SystemHandler.HandleDeleteUser(_userRepository, _jwtService, request, _httpContext, _cancellationToken);
+        IResult result =
+            await SystemHandler.HandleDeleteUser(_userRepository,
+                userToDeleteId,
+                _jwtService,
+                _httpContext,
+                _cancellationToken);
 
         // Assert
         result.ShouldBeOfType<UnauthorizedHttpResult>();
@@ -394,18 +414,22 @@ public class SystemHandlerTests
     public async Task HandleDeleteUser_ReturnsBadRequest_WhenUserTriesToDeleteThemselves()
     {
         // Arrange
-        var userId = Guid.NewGuid();
-        var request = new DeleteUserRequest(userId);
+        Guid userToDeleteId = Guid.NewGuid();
 
         SetupHttpContextWithBearerToken("valid-token");
-        _jwtService.GetUserIdFromToken("valid-token").Returns(userId);
+        _jwtService.GetUserIdFromToken("valid-token").Returns(userToDeleteId);
 
         // Act
-        IResult result = await SystemHandler.HandleDeleteUser(_userRepository, _jwtService, request, _httpContext, _cancellationToken);
+        IResult result =
+            await SystemHandler.HandleDeleteUser(_userRepository,
+                userToDeleteId,
+                _jwtService,
+                _httpContext,
+                _cancellationToken);
 
         // Assert
         result.ShouldBeOfType<BadRequest<string>>();
-        var badRequestResult = (BadRequest<string>)result;
+        BadRequest<string> badRequestResult = (BadRequest<string>)result;
         badRequestResult.Value.ShouldBe("You cannot delete your own account");
     }
 
@@ -413,31 +437,35 @@ public class SystemHandlerTests
     public async Task HandleDeleteUser_ReturnsNotFound_WhenUserToDeleteDoesNotExist()
     {
         // Arrange
-        var currentUserId = Guid.NewGuid();
-        var userToDeleteId = Guid.NewGuid();
-        var request = new DeleteUserRequest(userToDeleteId);
+        Guid currentUserId = Guid.NewGuid();
+        Guid userToDeleteId = Guid.NewGuid();
 
         SetupHttpContextWithBearerToken("valid-token");
         _jwtService.GetUserIdFromToken("valid-token").Returns(currentUserId);
         _userRepository.GetUserByIdAsync(userToDeleteId, _cancellationToken).Returns((User?)null);
 
         // Act
-        IResult result = await SystemHandler.HandleDeleteUser(_userRepository, _jwtService, request, _httpContext, _cancellationToken);
+        IResult result =
+            await SystemHandler.HandleDeleteUser(_userRepository,
+                userToDeleteId,
+                _jwtService,
+                _httpContext,
+                _cancellationToken);
 
         // Assert
         result.ShouldBeOfType<NotFound<string>>();
-        var notFoundResult = (NotFound<string>)result;
+        NotFound<string> notFoundResult = (NotFound<string>)result;
         notFoundResult.Value.ShouldBe("User not found");
     }
 
     [Test]
-    public async Task HandleDeleteUser_ReturnsProblem_WhenUpdateFails()
+    public async Task HandleDeleteUser_ReturnsProblem_WhenDeleteFails()
     {
         // Arrange
-        var currentUserId = Guid.NewGuid();
-        var userToDeleteId = Guid.NewGuid();
-        var request = new DeleteUserRequest(userToDeleteId);
-        var userToDelete = new User {
+        Guid currentUserId = Guid.NewGuid();
+        Guid userToDeleteId = Guid.NewGuid();
+        User userToDelete = new()
+        {
             Id = userToDeleteId,
             Username = "usertodelete",
             PasswordHash = "hash",
@@ -447,10 +475,15 @@ public class SystemHandlerTests
         SetupHttpContextWithBearerToken("valid-token");
         _jwtService.GetUserIdFromToken("valid-token").Returns(currentUserId);
         _userRepository.GetUserByIdAsync(userToDeleteId, _cancellationToken).Returns(userToDelete);
-        _userRepository.UpdateAsync(userToDeleteId, Arg.Any<Action<User>>(), _cancellationToken).Returns((User?)null);
+        _userRepository.DeleteAsync(userToDeleteId, _cancellationToken).Returns(false);
 
         // Act
-        IResult result = await SystemHandler.HandleDeleteUser(_userRepository, _jwtService, request, _httpContext, _cancellationToken);
+        IResult result =
+            await SystemHandler.HandleDeleteUser(_userRepository,
+                userToDeleteId,
+                _jwtService,
+                _httpContext,
+                _cancellationToken);
 
         // Assert
         result.ShouldBeOfType<ProblemHttpResult>();
@@ -460,12 +493,17 @@ public class SystemHandlerTests
     public async Task HandleDeleteUser_ReturnsProblem_WhenExceptionOccurs()
     {
         // Arrange
-        var request = new DeleteUserRequest(Guid.NewGuid());
+        var userToDeleteId = Guid.NewGuid();
         SetupHttpContextWithBearerToken("valid-token");
         _jwtService.GetUserIdFromToken("valid-token").ThrowsForAnyArgs<Exception>();
 
         // Act
-        IResult result = await SystemHandler.HandleDeleteUser(_userRepository, _jwtService, request, _httpContext, _cancellationToken);
+        IResult result =
+            await SystemHandler.HandleDeleteUser(_userRepository,
+                userToDeleteId,
+                _jwtService,
+                _httpContext,
+                _cancellationToken);
 
         // Assert
         result.ShouldBeOfType<ProblemHttpResult>();
@@ -479,30 +517,29 @@ public class SystemHandlerTests
     public async Task HandleUpdatePassword_ReturnsOk_WhenPasswordUpdatedSuccessfully()
     {
         // Arrange
-        var userId = Guid.NewGuid();
-        var request = new UpdatePasswordRequest(userId, "newpassword123");
-        var user = new User {
+        Guid userId = Guid.NewGuid();
+        UpdatePasswordRequest request = new(userId, "newpassword123");
+        User user = new()
+        {
             Id = userId,
             Username = "testuser",
             PasswordHash = "oldhash",
             PasswordHashType = "Test"
         };
-        var updatedUser = new User {
-            Id = userId,
-            Username = "testuser",
-            PasswordHash = "newhash",
-            PasswordHashType = "TestHashProvider"
-        };
 
         _userRepository.GetUserByIdAsync(userId, _cancellationToken).Returns(user);
-        _userRepository.UpdateAsync(userId, Arg.Any<Action<User>>(), _cancellationToken).Returns(updatedUser);
+        _userRepository.UpdateUserAsync(user, _cancellationToken).Returns(user);
 
         // Act
-        IResult result = await SystemHandler.HandleUpdatePassword(_userRepository, _hashProviderFactory, request, _cancellationToken);
+        IResult result = await SystemHandler.HandleUpdatePassword(_userRepository,
+            _hashProviderFactory,
+            userId,
+            request,
+            _cancellationToken);
 
         // Assert
         result.ShouldBeOfType<Ok<string>>();
-        var okResult = (Ok<string>)result;
+        Ok<string> okResult = (Ok<string>)result;
         okResult.Value.ShouldBe("Password updated successfully");
     }
 
@@ -510,14 +547,19 @@ public class SystemHandlerTests
     public async Task HandleUpdatePassword_ReturnsBadRequest_WhenPasswordIsEmpty()
     {
         // Arrange
-        var request = new UpdatePasswordRequest(Guid.NewGuid(), "");
+        Guid userId = Guid.NewGuid();
+        UpdatePasswordRequest request = new(userId, "");
 
         // Act
-        IResult result = await SystemHandler.HandleUpdatePassword(_userRepository, _hashProviderFactory, request, _cancellationToken);
+        IResult result = await SystemHandler.HandleUpdatePassword(_userRepository,
+            _hashProviderFactory,
+            userId,
+            request,
+            _cancellationToken);
 
         // Assert
         result.ShouldBeOfType<BadRequest<string>>();
-        var badRequestResult = (BadRequest<string>)result;
+        BadRequest<string> badRequestResult = (BadRequest<string>)result;
         badRequestResult.Value.ShouldBe("Password is required");
     }
 
@@ -525,14 +567,19 @@ public class SystemHandlerTests
     public async Task HandleUpdatePassword_ReturnsBadRequest_WhenPasswordTooShort()
     {
         // Arrange
-        var request = new UpdatePasswordRequest(Guid.NewGuid(), "short");
+        Guid userId = Guid.NewGuid();
+        UpdatePasswordRequest request = new(userId, "short");
 
         // Act
-        IResult result = await SystemHandler.HandleUpdatePassword(_userRepository, _hashProviderFactory, request, _cancellationToken);
+        IResult result = await SystemHandler.HandleUpdatePassword(_userRepository,
+            _hashProviderFactory,
+            userId,
+            request,
+            _cancellationToken);
 
         // Assert
         result.ShouldBeOfType<BadRequest<string>>();
-        var badRequestResult = (BadRequest<string>)result;
+        BadRequest<string> badRequestResult = (BadRequest<string>)result;
         badRequestResult.Value.ShouldBe("Password must be at least 8 characters long");
     }
 
@@ -540,51 +587,37 @@ public class SystemHandlerTests
     public async Task HandleUpdatePassword_ReturnsNotFound_WhenUserDoesNotExist()
     {
         // Arrange
-        var userId = Guid.NewGuid();
-        var request = new UpdatePasswordRequest(userId, "newpassword123");
+        Guid userId = Guid.NewGuid();
+        UpdatePasswordRequest request = new(userId, "newpassword123");
         _userRepository.GetUserByIdAsync(userId, _cancellationToken).Returns((User?)null);
 
         // Act
-        IResult result = await SystemHandler.HandleUpdatePassword(_userRepository, _hashProviderFactory, request, _cancellationToken);
+        IResult result = await SystemHandler.HandleUpdatePassword(_userRepository,
+            _hashProviderFactory,
+            userId,
+            request,
+            _cancellationToken);
 
         // Assert
         result.ShouldBeOfType<NotFound<string>>();
-        var notFoundResult = (NotFound<string>)result;
+        NotFound<string> notFoundResult = (NotFound<string>)result;
         notFoundResult.Value.ShouldBe("User not found");
-    }
-
-    [Test]
-    public async Task HandleUpdatePassword_ReturnsProblem_WhenUpdateFails()
-    {
-        // Arrange
-        var userId = Guid.NewGuid();
-        var request = new UpdatePasswordRequest(userId, "newpassword123");
-        var user = new User {
-            Id = userId,
-            Username = "testuser",
-            PasswordHash = "oldhash",
-            PasswordHashType = "Test"
-        };
-
-        _userRepository.GetUserByIdAsync(userId, _cancellationToken).Returns(user);
-        _userRepository.UpdateAsync(userId, Arg.Any<Action<User>>(), _cancellationToken).Returns((User?)null);
-
-        // Act
-        IResult result = await SystemHandler.HandleUpdatePassword(_userRepository, _hashProviderFactory, request, _cancellationToken);
-
-        // Assert
-        result.ShouldBeOfType<ProblemHttpResult>();
     }
 
     [Test]
     public async Task HandleUpdatePassword_ReturnsProblem_WhenExceptionOccurs()
     {
         // Arrange
-        var request = new UpdatePasswordRequest(Guid.NewGuid(), "newpassword123");
+        Guid userId = Guid.NewGuid();
+        UpdatePasswordRequest request = new(userId, "newpassword123");
         _userRepository.GetUserByIdAsync(Arg.Any<Guid>(), _cancellationToken).ThrowsAsync<Exception>();
 
         // Act
-        IResult result = await SystemHandler.HandleUpdatePassword(_userRepository, _hashProviderFactory, request, _cancellationToken);
+        IResult result = await SystemHandler.HandleUpdatePassword(_userRepository,
+            _hashProviderFactory,
+            userId,
+            request,
+            _cancellationToken);
 
         // Assert
         result.ShouldBeOfType<ProblemHttpResult>();
@@ -598,34 +631,33 @@ public class SystemHandlerTests
     public async Task HandleUpdateUserAdmin_ReturnsOk_WhenAdminStatusUpdatedSuccessfully()
     {
         // Arrange
-        var currentUserId = Guid.NewGuid();
-        var targetUserId = Guid.NewGuid();
-        var request = new UpdateUserAdminRequest(targetUserId, true);
-        var user = new User {
+        Guid currentUserId = Guid.NewGuid();
+        Guid targetUserId = Guid.NewGuid();
+        UpdateUserAdminRequest request = new(targetUserId, true);
+        User user = new()
+        {
             Id = targetUserId,
             Username = "targetuser",
             PasswordHash = "hash",
             PasswordHashType = "Test"
         };
-        var updatedUser = new User {
-            Id = targetUserId,
-            Username = "targetuser",
-            PasswordHash = "hash",
-            PasswordHashType = "Test",
-            IsAdmin = true
-        };
 
         SetupHttpContextWithBearerToken("valid-token");
         _jwtService.GetUserIdFromToken("valid-token").Returns(currentUserId);
         _userRepository.GetUserByIdAsync(targetUserId, _cancellationToken).Returns(user);
-        _userRepository.UpdateAsync(targetUserId, Arg.Any<Action<User>>(), _cancellationToken).Returns(updatedUser);
+        _userRepository.UpdateUserAsync(user, _cancellationToken).Returns(user);
 
         // Act
-        IResult result = await SystemHandler.HandleUpdateUserAdmin(_userRepository, _jwtService, request, _httpContext, _cancellationToken);
+        IResult result = await SystemHandler.HandleUpdateUserAdmin(_userRepository,
+            _jwtService,
+            targetUserId,
+            request,
+            _httpContext,
+            _cancellationToken);
 
         // Assert
         result.ShouldBeOfType<Ok<string>>();
-        var okResult = (Ok<string>)result;
+        Ok<string> okResult = (Ok<string>)result;
         okResult.Value.ShouldBe("User admin status updated successfully to True");
     }
 
@@ -633,11 +665,17 @@ public class SystemHandlerTests
     public async Task HandleUpdateUserAdmin_ReturnsUnauthorized_WhenNoAuthorizationHeader()
     {
         // Arrange
-        var request = new UpdateUserAdminRequest(Guid.NewGuid(), true);
+        Guid targetUserId = Guid.NewGuid();
+        UpdateUserAdminRequest request = new(targetUserId, true);
         SetupHttpContextWithoutAuthHeader();
 
         // Act
-        IResult result = await SystemHandler.HandleUpdateUserAdmin(_userRepository, _jwtService, request, _httpContext, _cancellationToken);
+        IResult result = await SystemHandler.HandleUpdateUserAdmin(_userRepository,
+            _jwtService,
+            targetUserId,
+            request,
+            _httpContext,
+            _cancellationToken);
 
         // Assert
         result.ShouldBeOfType<UnauthorizedHttpResult>();
@@ -647,12 +685,18 @@ public class SystemHandlerTests
     public async Task HandleUpdateUserAdmin_ReturnsUnauthorized_WhenInvalidToken()
     {
         // Arrange
-        var request = new UpdateUserAdminRequest(Guid.NewGuid(), true);
+        Guid targetUserId = Guid.NewGuid();
+        UpdateUserAdminRequest request = new(targetUserId, true);
         SetupHttpContextWithBearerToken("invalid-token");
         _jwtService.GetUserIdFromToken("invalid-token").Returns((Guid?)null);
 
         // Act
-        IResult result = await SystemHandler.HandleUpdateUserAdmin(_userRepository, _jwtService, request, _httpContext, _cancellationToken);
+        IResult result = await SystemHandler.HandleUpdateUserAdmin(_userRepository,
+            _jwtService,
+            targetUserId,
+            request,
+            _httpContext,
+            _cancellationToken);
 
         // Assert
         result.ShouldBeOfType<UnauthorizedHttpResult>();
@@ -662,18 +706,23 @@ public class SystemHandlerTests
     public async Task HandleUpdateUserAdmin_ReturnsBadRequest_WhenUserTriesToChangeOwnStatus()
     {
         // Arrange
-        var userId = Guid.NewGuid();
-        var request = new UpdateUserAdminRequest(userId, false);
+        Guid userId = Guid.NewGuid();
+        UpdateUserAdminRequest request = new(userId, false);
 
         SetupHttpContextWithBearerToken("valid-token");
         _jwtService.GetUserIdFromToken("valid-token").Returns(userId);
 
         // Act
-        IResult result = await SystemHandler.HandleUpdateUserAdmin(_userRepository, _jwtService, request, _httpContext, _cancellationToken);
+        IResult result = await SystemHandler.HandleUpdateUserAdmin(_userRepository,
+            _jwtService,
+            userId,
+            request,
+            _httpContext,
+            _cancellationToken);
 
         // Assert
         result.ShouldBeOfType<BadRequest<string>>();
-        var badRequestResult = (BadRequest<string>)result;
+        BadRequest<string> badRequestResult = (BadRequest<string>)result;
         badRequestResult.Value.ShouldBe("You cannot change your own admin status");
     }
 
@@ -681,59 +730,44 @@ public class SystemHandlerTests
     public async Task HandleUpdateUserAdmin_ReturnsNotFound_WhenTargetUserDoesNotExist()
     {
         // Arrange
-        var currentUserId = Guid.NewGuid();
-        var targetUserId = Guid.NewGuid();
-        var request = new UpdateUserAdminRequest(targetUserId, true);
+        Guid currentUserId = Guid.NewGuid();
+        Guid targetUserId = Guid.NewGuid();
+        UpdateUserAdminRequest request = new(targetUserId, true);
 
         SetupHttpContextWithBearerToken("valid-token");
         _jwtService.GetUserIdFromToken("valid-token").Returns(currentUserId);
         _userRepository.GetUserByIdAsync(targetUserId, _cancellationToken).Returns((User?)null);
 
         // Act
-        IResult result = await SystemHandler.HandleUpdateUserAdmin(_userRepository, _jwtService, request, _httpContext, _cancellationToken);
+        IResult result = await SystemHandler.HandleUpdateUserAdmin(_userRepository,
+            _jwtService,
+            targetUserId,
+            request,
+            _httpContext,
+            _cancellationToken);
 
         // Assert
         result.ShouldBeOfType<NotFound<string>>();
-        var notFoundResult = (NotFound<string>)result;
+        NotFound<string> notFoundResult = (NotFound<string>)result;
         notFoundResult.Value.ShouldBe("User not found");
-    }
-
-    [Test]
-    public async Task HandleUpdateUserAdmin_ReturnsProblem_WhenUpdateFails()
-    {
-        // Arrange
-        var currentUserId = Guid.NewGuid();
-        var targetUserId = Guid.NewGuid();
-        var request = new UpdateUserAdminRequest(targetUserId, true);
-        var user = new User {
-            Id = targetUserId,
-            Username = "targetuser",
-            PasswordHash = "hash",
-            PasswordHashType = "Test"
-        };
-
-        SetupHttpContextWithBearerToken("valid-token");
-        _jwtService.GetUserIdFromToken("valid-token").Returns(currentUserId);
-        _userRepository.GetUserByIdAsync(targetUserId, _cancellationToken).Returns(user);
-        _userRepository.UpdateAsync(targetUserId, Arg.Any<Action<User>>(), _cancellationToken).Returns((User?)null);
-
-        // Act
-        IResult result = await SystemHandler.HandleUpdateUserAdmin(_userRepository, _jwtService, request, _httpContext, _cancellationToken);
-
-        // Assert
-        result.ShouldBeOfType<ProblemHttpResult>();
     }
 
     [Test]
     public async Task HandleUpdateUserAdmin_ReturnsProblem_WhenExceptionOccurs()
     {
         // Arrange
-        var request = new UpdateUserAdminRequest(Guid.NewGuid(), true);
+        Guid targetUserId = Guid.NewGuid();
+        UpdateUserAdminRequest request = new(targetUserId, true);
         SetupHttpContextWithBearerToken("valid-token");
         _jwtService.GetUserIdFromToken("valid-token").ThrowsForAnyArgs<Exception>();
 
         // Act
-        IResult result = await SystemHandler.HandleUpdateUserAdmin(_userRepository, _jwtService, request, _httpContext, _cancellationToken);
+        IResult result = await SystemHandler.HandleUpdateUserAdmin(_userRepository,
+            _jwtService,
+            targetUserId,
+            request,
+            _httpContext,
+            _cancellationToken);
 
         // Assert
         result.ShouldBeOfType<ProblemHttpResult>();
@@ -774,7 +808,11 @@ public class SystemHandlerTests
         _userRepository.UpdateAsync(targetUserId, Arg.Any<Action<User>>(), _cancellationToken).Returns(enabledUser);
 
         // Act
-        IResult result = await SystemHandler.HandleEnableUser(_userRepository, _jwtService, targetUserId, _httpContext, _cancellationToken);
+        IResult result = await SystemHandler.HandleEnableUser(_userRepository,
+            _jwtService,
+            targetUserId,
+            _httpContext,
+            _cancellationToken);
 
         // Assert
         result.ShouldBeOfType<Ok<string>>();
@@ -790,7 +828,11 @@ public class SystemHandlerTests
         _httpContext.Request.Headers.Returns(new HeaderDictionary());
 
         // Act
-        IResult result = await SystemHandler.HandleEnableUser(_userRepository, _jwtService, targetUserId, _httpContext, _cancellationToken);
+        IResult result = await SystemHandler.HandleEnableUser(_userRepository,
+            _jwtService,
+            targetUserId,
+            _httpContext,
+            _cancellationToken);
 
         // Assert
         result.ShouldBeOfType<UnauthorizedHttpResult>();
@@ -807,7 +849,11 @@ public class SystemHandlerTests
         _jwtService.GetUserIdFromToken(token).Returns((Guid?)null);
 
         // Act
-        IResult result = await SystemHandler.HandleEnableUser(_userRepository, _jwtService, targetUserId, _httpContext, _cancellationToken);
+        IResult result = await SystemHandler.HandleEnableUser(_userRepository,
+            _jwtService,
+            targetUserId,
+            _httpContext,
+            _cancellationToken);
 
         // Assert
         result.ShouldBeOfType<UnauthorizedHttpResult>();
@@ -824,7 +870,12 @@ public class SystemHandlerTests
         _jwtService.GetUserIdFromToken(token).Returns(userId);
 
         // Act
-        IResult result = await SystemHandler.HandleEnableUser(_userRepository, _jwtService, userId, _httpContext, _cancellationToken);
+        IResult result =
+            await SystemHandler.HandleEnableUser(_userRepository,
+                _jwtService,
+                userId,
+                _httpContext,
+                _cancellationToken);
 
         // Assert
         result.ShouldBeOfType<BadRequest<string>>();
@@ -845,7 +896,11 @@ public class SystemHandlerTests
         _userRepository.GetUserByIdAsync(targetUserId, _cancellationToken).Returns((User?)null);
 
         // Act
-        IResult result = await SystemHandler.HandleEnableUser(_userRepository, _jwtService, targetUserId, _httpContext, _cancellationToken);
+        IResult result = await SystemHandler.HandleEnableUser(_userRepository,
+            _jwtService,
+            targetUserId,
+            _httpContext,
+            _cancellationToken);
 
         // Assert
         result.ShouldBeOfType<NotFound<string>>();
@@ -874,7 +929,11 @@ public class SystemHandlerTests
         _userRepository.GetUserByIdAsync(targetUserId, _cancellationToken).Returns(enabledUser);
 
         // Act
-        IResult result = await SystemHandler.HandleEnableUser(_userRepository, _jwtService, targetUserId, _httpContext, _cancellationToken);
+        IResult result = await SystemHandler.HandleEnableUser(_userRepository,
+            _jwtService,
+            targetUserId,
+            _httpContext,
+            _cancellationToken);
 
         // Assert
         result.ShouldBeOfType<BadRequest<string>>();
@@ -917,7 +976,11 @@ public class SystemHandlerTests
         _userRepository.UpdateAsync(targetUserId, Arg.Any<Action<User>>(), _cancellationToken).Returns(disabledUser);
 
         // Act
-        IResult result = await SystemHandler.HandleDisableUser(_userRepository, _jwtService, targetUserId, _httpContext, _cancellationToken);
+        IResult result = await SystemHandler.HandleDisableUser(_userRepository,
+            _jwtService,
+            targetUserId,
+            _httpContext,
+            _cancellationToken);
 
         // Assert
         result.ShouldBeOfType<Ok<string>>();
@@ -933,7 +996,11 @@ public class SystemHandlerTests
         _httpContext.Request.Headers.Returns(new HeaderDictionary());
 
         // Act
-        IResult result = await SystemHandler.HandleDisableUser(_userRepository, _jwtService, targetUserId, _httpContext, _cancellationToken);
+        IResult result = await SystemHandler.HandleDisableUser(_userRepository,
+            _jwtService,
+            targetUserId,
+            _httpContext,
+            _cancellationToken);
 
         // Assert
         result.ShouldBeOfType<UnauthorizedHttpResult>();
@@ -950,7 +1017,11 @@ public class SystemHandlerTests
         _jwtService.GetUserIdFromToken(token).Returns((Guid?)null);
 
         // Act
-        IResult result = await SystemHandler.HandleDisableUser(_userRepository, _jwtService, targetUserId, _httpContext, _cancellationToken);
+        IResult result = await SystemHandler.HandleDisableUser(_userRepository,
+            _jwtService,
+            targetUserId,
+            _httpContext,
+            _cancellationToken);
 
         // Assert
         result.ShouldBeOfType<UnauthorizedHttpResult>();
@@ -967,7 +1038,12 @@ public class SystemHandlerTests
         _jwtService.GetUserIdFromToken(token).Returns(userId);
 
         // Act
-        IResult result = await SystemHandler.HandleDisableUser(_userRepository, _jwtService, userId, _httpContext, _cancellationToken);
+        IResult result =
+            await SystemHandler.HandleDisableUser(_userRepository,
+                _jwtService,
+                userId,
+                _httpContext,
+                _cancellationToken);
 
         // Assert
         result.ShouldBeOfType<BadRequest<string>>();
@@ -988,7 +1064,11 @@ public class SystemHandlerTests
         _userRepository.GetUserByIdAsync(targetUserId, _cancellationToken).Returns((User?)null);
 
         // Act
-        IResult result = await SystemHandler.HandleDisableUser(_userRepository, _jwtService, targetUserId, _httpContext, _cancellationToken);
+        IResult result = await SystemHandler.HandleDisableUser(_userRepository,
+            _jwtService,
+            targetUserId,
+            _httpContext,
+            _cancellationToken);
 
         // Assert
         result.ShouldBeOfType<NotFound<string>>();
@@ -1017,12 +1097,118 @@ public class SystemHandlerTests
         _userRepository.GetUserByIdAsync(targetUserId, _cancellationToken).Returns(disabledUser);
 
         // Act
-        IResult result = await SystemHandler.HandleDisableUser(_userRepository, _jwtService, targetUserId, _httpContext, _cancellationToken);
+        IResult result = await SystemHandler.HandleDisableUser(_userRepository,
+            _jwtService,
+            targetUserId,
+            _httpContext,
+            _cancellationToken);
 
         // Assert
         result.ShouldBeOfType<BadRequest<string>>();
         var badRequestResult = (BadRequest<string>)result;
         badRequestResult.Value.ShouldBe("User is already disabled");
+    }
+
+    #endregion
+
+    #region HandleUpdateUsername Tests
+
+    [Test]
+    public async Task HandleUpdateUsername_ReturnsOk_WhenUsernameUpdatedSuccessfully()
+    {
+        // Arrange
+        Guid userId = Guid.NewGuid();
+        string newUsername = "NewUser";
+        UpdateUsernameRequest request = new()
+        {
+            NewUsername = newUsername
+        };
+
+        User existingUser = new()
+        {
+            Id = userId,
+            Username = "OldUser",
+            PasswordHash = "hash",
+            PasswordHashType = "Test"
+        };
+        User updatedUser = new()
+        {
+            Id = userId,
+            Username = newUsername,
+            PasswordHash = "hash",
+            PasswordHashType = "Test"
+        };
+
+        _userRepository.GetUserByIdAsync(userId, _cancellationToken).Returns(existingUser);
+        _userRepository.ContainsUserAsync(newUsername, _cancellationToken).Returns(false);
+        _userRepository.UpdateUserAsync(existingUser, _cancellationToken).Returns(updatedUser);
+
+        // Act
+        IResult result = await SystemHandler.HandleUpdateUsername(_userRepository, userId, request, _cancellationToken);
+
+        // Assert
+        result.ShouldBeOfType<Ok<string>>();
+        ((Ok<string>)result).Value.ShouldBe("Username updated successfully");
+    }
+
+    [Test]
+    public async Task HandleUpdateUsername_ReturnsConflict_WhenUsernameAlreadyExists()
+    {
+        // Arrange
+        Guid userId = Guid.NewGuid();
+        string newUsername = "ExistingUser";
+        UpdateUsernameRequest request = new()
+        {
+            NewUsername = newUsername
+        };
+
+        _userRepository.ContainsUserAsync(newUsername, _cancellationToken).Returns(true);
+
+        // Act
+        IResult result = await SystemHandler.HandleUpdateUsername(_userRepository, userId, request, _cancellationToken);
+
+        // Assert
+        result.ShouldBeOfType<Conflict<string>>();
+        ((Conflict<string>)result).Value.ShouldBe("Username already exists");
+    }
+
+    [Test]
+    public async Task HandleUpdateUsername_ReturnsNotFound_WhenUserDoesNotExist()
+    {
+        // Arrange
+        Guid userId = Guid.NewGuid();
+        string newUsername = "NewUser";
+        UpdateUsernameRequest request = new()
+        {
+            NewUsername = newUsername
+        };
+
+        _userRepository.GetUserByIdAsync(userId, _cancellationToken).Returns((User?)null);
+
+        // Act
+        IResult result = await SystemHandler.HandleUpdateUsername(_userRepository, userId, request, _cancellationToken);
+
+        // Assert
+        result.ShouldBeOfType<NotFound<string>>();
+        ((NotFound<string>)result).Value.ShouldBe("User not found");
+    }
+
+    [Test]
+    public async Task HandleUpdateUsername_ReturnsBadRequest_WhenNewUsernameIsInvalid()
+    {
+        // Arrange
+        Guid userId = Guid.NewGuid();
+        UpdateUsernameRequest request = new()
+        {
+            NewUsername = ""
+        };
+
+        // Act
+        IResult result = await SystemHandler.HandleUpdateUsername(_userRepository, userId, request, _cancellationToken);
+
+        // Assert
+        result.ShouldBeOfType<BadRequest<string>>();
+        ((BadRequest<string>)result).Value.ShouldBe("New username is required");
     }
 
     #endregion
@@ -1061,7 +1247,9 @@ public class SystemHandlerTests
     {
         HeaderDictionary headers = new()
         {
-            { "Authorization", $"Bearer {token}" }
+            {
+                "Authorization", $"Bearer {token}"
+            }
         };
         _httpContext.Request.Headers.Returns(headers);
     }
