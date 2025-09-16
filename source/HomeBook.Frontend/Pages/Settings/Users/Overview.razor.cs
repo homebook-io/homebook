@@ -100,7 +100,7 @@ public partial class Overview : ComponentBase
 
     private void NavigateToEditUser(Guid userId)
     {
-        NavigationManager.NavigateTo($"/Settings/Users/Edit/{userId}");
+        NavigationManager.NavigateTo($"/Settings/Users/{userId}");
     }
 
     private bool IsCurrentUser(Guid userId)
