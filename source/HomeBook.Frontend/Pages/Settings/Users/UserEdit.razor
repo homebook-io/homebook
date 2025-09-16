@@ -23,7 +23,9 @@
 
         <MudItem xs="12" sm="12" md="8" lg="9" xl="9" xxl="10">
 
-            <MudBreadcrumbs Items="_breadcrumbs" Class="mb-4"/>
+            <MudCard Class="mb-4">
+                <MudBreadcrumbs Items="_breadcrumbs"/>
+            </MudCard>
 
             @if (_loading)
             {
@@ -48,7 +50,7 @@
 
                     <MudCardContent>
                         <EditForm Model="_userModel" OnValidSubmit="HandleValidSubmitAsync">
-                            <DataAnnotationsValidator />
+                            <DataAnnotationsValidator/>
 
                             <MudGrid>
                                 <MudItem xs="12" md="6">
@@ -90,7 +92,7 @@
                                 </MudItem>
                             </MudGrid>
 
-                            <ValidationSummary />
+                            <ValidationSummary/>
                         </EditForm>
                     </MudCardContent>
 
