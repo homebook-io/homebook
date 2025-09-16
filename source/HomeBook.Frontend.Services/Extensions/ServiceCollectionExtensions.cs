@@ -17,8 +17,8 @@ public static class ServiceCollectionExtensions
     {
         services.AddScoped<IContentProvider, ContentProvider>();
 
-        services.AddSingleton<ISystemManagementProvider, SystemManagementProvider>();
-        services.AddSingleton<IUserManagementProvider, UserManagementProvider>();
+        services.AddScoped<ISystemManagementProvider, SystemManagementProvider>();
+        services.AddScoped<IUserManagementProvider, UserManagementProvider>();
 
         services.AddSingleton<IDatabaseSetupService, DatabaseSetupService>();
         services.AddSingleton<ILicensesService, LicensesService>();
