@@ -59,4 +59,12 @@ public interface IUserRepository
     Task<User> UpdateUserAsync(User user, CancellationToken cancellationToken);
 
     Task<User?> UpdateAsync(Guid userId, Action<User> updateHandler, CancellationToken cancellationToken);
+
+    /// <summary>
+    /// deletes the user with the given user-id
+    /// </summary>
+    /// <param name="userId"></param>
+    /// <param name="cancellationToken"></param>
+    /// <returns>true if user was deleted, false if user was not found</returns>
+    Task<bool> DeleteAsync(Guid userId, CancellationToken cancellationToken = default);
 }

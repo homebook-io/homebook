@@ -49,4 +49,9 @@
         </Compile>
     </ItemGroup>
 
+    <ItemGroup>
+      <_ContentIncludedByDefault Remove="Pages\Settings\Users\Add.razor" />
+      <_ContentIncludedByDefault Remove="Pages\Settings\Users\Edit.razor" />
+    </ItemGroup>
+
 </Project>

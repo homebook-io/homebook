@@ -39,7 +39,11 @@
   <Folder Name="/Solution/assets/">
     <File Path="assets\README.md" />
   </Folder>
-  <Folder Name="/Solution/workflows/">
+  <Folder Name="/Solution/github/" />
+  <Folder Name="/Solution/github/templates/">
+    <File Path=".github\ISSUE_TEMPLATE\codex-task.md" />
+  </Folder>
+  <Folder Name="/Solution/github/workflows/">
     <File Path=".github\workflows\build.yml" />
     <File Path=".github\workflows\pull-request.yml" />
   </Folder>

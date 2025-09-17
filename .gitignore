@@ -75,3 +75,5 @@ source/HomeBook.Backend/HomeBook.Backend.json
 
 *.env
 
+# Reqnroll Feature Generated Files
+*.feature.cs

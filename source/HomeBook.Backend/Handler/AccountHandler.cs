@@ -18,7 +18,7 @@ public static class AccountHandler
     {
         try
         {
-            logger.LogInformation("Login attempt for user: {Email}", request.Username);
+            logger.LogInformation("Login attempt for user: {Username}", request.Username);
 
             JwtTokenResult? loginResult = await accountProvider.LoginAsync(
                 request.Username,
@@ -27,11 +27,11 @@ public static class AccountHandler
 
             if (loginResult is null)
             {
-                logger.LogWarning("Login failed for user: {Email}", request.Username);
+                logger.LogWarning("Login failed for user: {Username}", request.Username);
                 return TypedResults.Unauthorized();
             }
 
-            logger.LogInformation("Login successful for user: {Email}", request.Username);
+            logger.LogInformation("Login successful for user: {Username}", request.Username);
 
             LoginResponse response = new()
             {
@@ -46,7 +46,7 @@ public static class AccountHandler
         }
         catch (ValidationException ex)
         {
-            logger.LogWarning(ex, "Validation error during login for user: {Email}", request.Username);
+            logger.LogWarning(ex, "Validation error during login for user: {Username}", request.Username);
             ValidationProblemDetails problemDetails = new()
             {
                 Title = "Validation Error",
@@ -57,7 +57,7 @@ public static class AccountHandler
         }
         catch (Exception ex)
         {
-            logger.LogError(ex, "Unexpected error during login for user: {Email}", request.Username);
+            logger.LogError(ex, "Unexpected error during login for user: {Username}", request.Username);
             return TypedResults.Unauthorized();
         }
     }

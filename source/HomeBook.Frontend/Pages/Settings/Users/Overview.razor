@@ -1,25 +1,46 @@
 @page "/Settings/Users"
+
+@using HomeBook.Frontend.Abstractions.Contracts
+@using Microsoft.AspNetCore.Components.Authorization
+
 @attribute [Authorize(Roles = "Admin")]
+
+@inject AuthenticationStateProvider AuthenticationStateProvider
+@inject ISnackbar Snackbar
+@inject NavigationManager NavigationManager
+@inject IUserManagementProvider UserManagementProvider
 
 <MudContainer Class="mt-4">
 
     <MudGrid>
 
-        <MudItem xs="12" sm="12" md="5" lg="4" xl="3">
+        <MudItem xs="12" sm="12" md="4" lg="3" xl="3" xxl="2">
 
             <SettingsNavMenu/>
 
         </MudItem>
 
-        <MudItem xs="12" sm="12" md="7" lg="8" xl="9">
+        <MudItem xs="12" sm="12" md="8" lg="9" xl="9" xxl="10">
 
             <MudPaper Class="pa-4">
 
-                <MudText Typo="Typo.h4" Class="mb-4">User Management</MudText>
+                <MudGrid Class="mb-4" AlignItems="Center">
+                    <MudItem xs="6">
+                        <MudText Typo="Typo.h4">User Management</MudText>
+                    </MudItem>
+                    <MudItem xs="6" Class="d-flex justify-end">
+                        <MudButton Variant="Variant.Filled"
+                                   Color="Color.Primary"
+                                   StartIcon="@Icons.Material.Filled.PersonAdd"
+                                   OnClick="NavigateToAddUser">
+                            Add User
+                        </MudButton>
+                    </MudItem>
+                </MudGrid>
 
                 @if (_loading)
                 {
-                    <MudProgressLinear Indeterminate="true" Class="mb-4" />
+                    <MudProgressLinear Indeterminate="true" Class="mb-4"/>
                     <MudText Align="Align.Center">Loading users...</MudText>
                 }
                 else if (_users.Any())
@@ -52,6 +73,7 @@
                               Hover="true"
                               Striped="true"
                               Dense="true">
+
                         <HeaderContent>
                             <MudTh>Username</MudTh>
                             <MudTh>Status</MudTh>
@@ -59,20 +81,26 @@
                             <MudTh>Created</MudTh>
                             <MudTh>Actions</MudTh>
                         </HeaderContent>
+
                         <RowTemplate>
+
                             <MudTd DataLabel="Username">
                                 <div class="d-flex align-center">
-                                    <MudIcon Icon="@Icons.Material.Filled.Person" Class="mr-2" Size="Size.Small" />
-                                    <MudText Typo="Typo.body2">@context.Username</MudText>
+                                    <MudIcon Icon="@Icons.Material.Filled.Person" Class="mr-2" Size="Size.Small"/>
+                                    <MudText Typo="Typo.body2">@context.UserName</MudText>
                                 </div>
                             </MudTd>
+
                             <MudTd DataLabel="Status">
-                                <MudChip T="string" Color="@GetUserStatusColor(context)"
+                                <MudChip T="string"
+                                         Color="@GetUserStatusColor(context)"
                                          Size="Size.Small"
-                                         Variant="Variant.Filled">
+                                         Variant="Variant.Filled"
+                                         Icon="@(context.DisabledAt.HasValue ? Icons.Material.Filled.Close : Icons.Material.Filled.Check)">
                                     @GetUserStatusText(context)
                                 </MudChip>
                             </MudTd>
+
                             <MudTd DataLabel="Role">
                                 <MudChip T="string" Color="@(context.IsAdmin == true ? Color.Warning : Color.Default)"
                                          Size="Size.Small"
@@ -80,26 +108,35 @@
                                     @(context.IsAdmin == true ? "Admin" : "User")
                                 </MudChip>
                             </MudTd>
+
                             <MudTd DataLabel="Created">
                                 <MudText Typo="Typo.body2">
-                                    @(context.Created?.ToString("yyyy-MM-dd HH:mm") ?? "Unknown")
+                                    @(context.CreatedAt.ToString("yyyy-MM-dd HH:mm") ?? "Unknown")
                                 </MudText>
                             </MudTd>
+
                             <MudTd DataLabel="Actions">
+
                                 <MudTooltip Text="Edit User">
                                     <MudIconButton Icon="@Icons.Material.Filled.Edit"
                                                    Size="Size.Small"
                                                    Color="Color.Primary"
-                                                   Disabled="true" />
+                                                   OnClick="() => NavigateToEditUser(context.Id)"/>
                                 </MudTooltip>
-                                <MudTooltip Text="@(context.Disabled.HasValue ? "Enable User" : "Disable User")">
-                                    <MudIconButton Icon="@(context.Disabled.HasValue ? Icons.Material.Filled.PersonAdd : Icons.Material.Filled.PersonOff)"
-                                                   Size="Size.Small"
-                                                   Color="@(context.Disabled.HasValue ? Color.Success : Color.Warning)"
-                                                   Disabled="true" />
+
+                                <MudTooltip Text="@(context.DisabledAt.HasValue ? "Enable User" : "Disable User")">
+                                    <MudIconButton
+                                        Icon="@(context.DisabledAt.HasValue ? Icons.Material.Filled.PersonAdd : Icons.Material.Filled.PersonOff)"
+                                        Size="Size.Small"
+                                        Color="@(context.DisabledAt.HasValue ? Color.Success : Color.Warning)"
+                                        Disabled="@IsCurrentUser(context.Id)"
+                                        OnClick="() => ToggleUserStatusAsync(context)"/>
                                 </MudTooltip>
+
                             </MudTd>
+
                         </RowTemplate>
+
                     </MudTable>
 
                     <!-- Pagination -->
@@ -112,7 +149,7 @@
                                            ShowFirstButton="true"
                                            ShowLastButton="true"
                                            ShowPreviousButton="true"
-                                           ShowNextButton="true" />
+                                           ShowNextButton="true"/>
                         </div>
                     }
                 }

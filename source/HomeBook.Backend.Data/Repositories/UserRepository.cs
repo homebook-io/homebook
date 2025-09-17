@@ -85,4 +85,26 @@ public class UserRepository(
 
         return user;
     }
+
+    /// <inheritdoc />
+    public async Task<bool> DeleteAsync(Guid userId, CancellationToken cancellationToken = default)
+    {
+        await using AppDbContext dbContext = await factory.CreateDbContextAsync(cancellationToken);
+
+        User? user = await dbContext.Set<User>()
+            .FirstOrDefaultAsync(x => x.Id == userId, cancellationToken);
+
+        if (user == null)
+        {
+            return false;
+        }
+
+        dbContext.Remove(user);
+
+        logger.LogInformation("SaveChangesAsync via DeleteAsync for user {UserId}", user.Id);
+
+        await dbContext.SaveChangesAsync(cancellationToken);
+
+        return true;
+    }
 }

@@ -21,6 +21,14 @@
           <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
         </PackageReference>
         <PackageReference Include="NUnit3TestAdapter" Version="5.1.0" />
+        <PackageReference Include="Reqnroll" Version="3.0.2" />
+        <PackageReference Include="Reqnroll.NUnit" Version="3.0.2" />
+        <PackageReference Include="Reqnroll.Tools.MsBuild.Generation" Version="3.0.2" />
+        <PackageReference Include="Microsoft.Extensions.Configuration" Version="9.0.9" />
+        <PackageReference Include="Microsoft.Extensions.Configuration.Json" Version="9.0.9" />
+        <PackageReference Include="Microsoft.Extensions.Configuration.Binder" Version="9.0.9" />
+        <PackageReference Include="Microsoft.Extensions.Configuration.EnvironmentVariables" Version="9.0.9" />
+        <PackageReference Include="Shouldly" Version="4.3.0" />
     </ItemGroup>
 
     <ItemGroup>
@@ -28,6 +36,28 @@
         <Using Include="NUnit.Framework"/>
         <Using Include="System.Text.RegularExpressions"/>
         <Using Include="System.Threading.Tasks"/>
+        <Using Include="System.Text.Json"/>
+        <Using Include="Reqnroll"/>
+        <Using Include="Reqnroll.NUnit"/>
+        <Using Include="Shouldly"/>
+    </ItemGroup>
+
+    <ItemGroup>
+      <ProjectReference Include="..\HomeBook.Client\HomeBook.Client.csproj" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <Reqnroll Include="Features\**\*.feature" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <None Update="appsettings.Development.json">
+        <DependentUpon>appsettings.json</DependentUpon>
+        <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      </None>
+      <None Update="appsettings.json">
+        <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      </None>
     </ItemGroup>
 
     <Target Name="InstallPlaywrightBrowsers" AfterTargets="Build" BeforeTargets="VSTest">

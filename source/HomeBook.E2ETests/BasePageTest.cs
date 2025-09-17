@@ -1,3 +1,4 @@
+using HomeBook.E2ETests.Configuration;
 using Microsoft.Playwright;
 
 namespace HomeBook.E2ETests;

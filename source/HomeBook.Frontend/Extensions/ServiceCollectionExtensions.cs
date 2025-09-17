@@ -20,7 +20,6 @@ public static class ServiceCollectionExtensions
         services.AddScoped<AuthenticationStateProvider, CustomAuthenticationStateProvider>();
 
         services.AddSingleton<ISetupService, SetupService>();
-        services.AddScoped<IContentProvider, ContentProvider>();
 
         services.AddLocalization();
         services.AddSingleton<ILocalizationProvider, LocalizationProvider>(x =>

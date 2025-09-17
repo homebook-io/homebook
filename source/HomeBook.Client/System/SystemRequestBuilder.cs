@@ -40,7 +40,7 @@ namespace HomeBook.Client.System
         {
         }
         /// <summary>
-        /// returns several system informations
+        /// returns several system informations (Admin only)
         /// </summary>
         /// <returns>A <see cref="global::HomeBook.Client.Models.GetSystemInfoResponse"/></returns>
         /// <param name="cancellationToken">Cancellation token to use when cancelling requests</param>
@@ -58,7 +58,7 @@ namespace HomeBook.Client.System
             return await RequestAdapter.SendAsync<global::HomeBook.Client.Models.GetSystemInfoResponse>(requestInfo, global::HomeBook.Client.Models.GetSystemInfoResponse.CreateFromDiscriminatorValue, default, cancellationToken).ConfigureAwait(false);
         }
         /// <summary>
-        /// returns several system informations
+        /// returns several system informations (Admin only)
         /// </summary>
         /// <returns>A <see cref="RequestInformation"/></returns>
         /// <param name="requestConfiguration">Configuration for the request such as headers, query parameters, and middleware options.</param>

@@ -95,7 +95,7 @@ public class SetupHandler
     /// <param name="setupConfigurationProvider"></param>
     /// <param name="cancellationToken"></param>
     /// <returns></returns>
-    public static async Task<IResult> HandleGetDatabaseCheck([FromServices] ILogger<SetupHandler> logger,
+    public static IResult HandleGetDatabaseCheck([FromServices] ILogger<SetupHandler> logger,
         [FromServices] ISetupConfigurationProvider setupConfigurationProvider,
         CancellationToken cancellationToken)
     {
@@ -106,7 +106,6 @@ public class SetupHandler
             string? databaseName = setupConfigurationProvider.GetValue(EnvironmentVariables.DATABASE_NAME);
             string? databaseUserName = setupConfigurationProvider.GetValue(EnvironmentVariables.DATABASE_USER);
             string? databaseUserPassword = setupConfigurationProvider.GetValue(EnvironmentVariables.DATABASE_PASSWORD);
-
 
             bool databaseConfigurationFound = databaseHost is not null
                                               && databasePort is not null
