@@ -26,7 +26,7 @@ public static class SystemEndpoints
             .WithDescription("Returns all users with pagination (Admin only)")
             .WithMetadata(new RequireAdminAttribute())
             .WithOpenApi()
-            .Produces<GetUsersResponse>()
+            .Produces<UsersResponse>()
             .Produces<string>(StatusCodes.Status401Unauthorized)
             .Produces<string>(StatusCodes.Status403Forbidden)
             .Produces<string>(StatusCodes.Status500InternalServerError);
@@ -38,6 +38,16 @@ public static class SystemEndpoints
             .WithOpenApi()
             .Produces<CreateUserResponse>()
             .Produces<string>(StatusCodes.Status400BadRequest)
+            .Produces<string>(StatusCodes.Status401Unauthorized)
+            .Produces<string>(StatusCodes.Status403Forbidden)
+            .Produces<string>(StatusCodes.Status500InternalServerError);
+
+        group.MapGet("/users/{userId:guid}", SystemHandler.HandleGetUserById)
+            .WithName("GetUserById")
+            .WithDescription("Returns a user by its id (Admin only)")
+            .WithMetadata(new RequireAdminAttribute())
+            .WithOpenApi()
+            .Produces<UserResponse>()
             .Produces<string>(StatusCodes.Status401Unauthorized)
             .Produces<string>(StatusCodes.Status403Forbidden)
             .Produces<string>(StatusCodes.Status500InternalServerError);

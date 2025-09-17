@@ -8,7 +8,7 @@ namespace HomeBook.Backend.Responses;
 /// <param name="Page">Current page number</param>
 /// <param name="PageSize">Number of items per page</param>
 /// <param name="TotalPages">Total number of pages</param>
-public record GetUsersResponse(IEnumerable<UserResponse> Users,
+public record UsersResponse(IEnumerable<UserResponse> Users,
     int TotalCount,
     int Page,
     int PageSize,

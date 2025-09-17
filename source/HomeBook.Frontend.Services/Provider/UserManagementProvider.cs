@@ -20,7 +20,7 @@ public class UserManagementProvider(
         await IsAdminOrThrowAsync(cancellationToken);
 
         string? token = await authenticationService.GetTokenAsync(cancellationToken);
-        GetUsersResponse? response = await backendClient.System.Users
+        UsersResponse? response = await backendClient.System.Users
             .GetAsync(x =>
                 {
                     x.QueryParameters.Page = page;
@@ -34,6 +34,23 @@ public class UserManagementProvider(
             return new();
 
         return response.ToPagedResult();
+    }
+
+    /// <inheritdoc />
+    public async Task<UserData?> GetUserByIdAsync(Guid userId,
+        CancellationToken cancellationToken = default)
+    {
+        await IsAdminOrThrowAsync(cancellationToken);
+
+        string? token = await authenticationService.GetTokenAsync(cancellationToken);
+        UserResponse? response = await backendClient.System.Users[userId]
+            .GetAsync(x =>
+                {
+                    x.Headers.Add("Authorization", $"Bearer {token}");
+                },
+                cancellationToken);
+
+        return response?.ToUserData();
     }
 
     /// <inheritdoc />
@@ -112,6 +129,26 @@ public class UserManagementProvider(
             .Admin.PutAsync(new UpdateUserAdminRequest
                 {
                     IsAdmin = isAdmin
+                },
+                x =>
+                {
+                    x.Headers.Add("Authorization", $"Bearer {token}");
+                },
+                cancellationToken);
+    }
+
+    /// <inheritdoc />
+    public async Task UpdateUsernameAsync(Guid userId,
+        string username,
+        CancellationToken cancellationToken = default)
+    {
+        await IsAdminOrThrowAsync(cancellationToken);
+
+        string? token = await authenticationService.GetTokenAsync(cancellationToken);
+        await backendClient.System.Users[userId]
+            .Username.PutAsync(new UpdateUsernameRequest()
+                {
+                    NewUsername = username
                 },
                 x =>
                 {

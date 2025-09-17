@@ -20,6 +20,15 @@ public interface IUserManagementProvider
         CancellationToken cancellationToken = default);
 
     /// <summary>
+    /// returns a user by its id
+    /// </summary>
+    /// <param name="userId">the id of the user to return</param>
+    /// <param name="cancellationToken"></param>
+    /// <returns></returns>
+    Task<UserData?> GetUserByIdAsync(Guid userId,
+        CancellationToken cancellationToken = default);
+
+    /// <summary>
     /// creates a new user in the system
     /// </summary>
     /// <param name="username">the username of the new user</param>
@@ -61,6 +70,17 @@ public interface IUserManagementProvider
     /// <returns></returns>
     Task UpdateAdminFlagAsync(Guid userId,
         bool isAdmin,
+        CancellationToken cancellationToken = default);
+
+    /// <summary>
+    /// updates the username of a user
+    /// </summary>
+    /// <param name="userId">the id of the user to update</param>
+    /// <param name="username">the new username of the user</param>
+    /// <param name="cancellationToken"></param>
+    /// <returns></returns>
+    Task UpdateUsernameAsync(Guid userId,
+        string username,
         CancellationToken cancellationToken = default);
 
     /// <summary>

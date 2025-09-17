@@ -60,12 +60,41 @@ public static class SystemHandler
                 user.Disabled,
                 user.IsAdmin));
 
-            GetUsersResponse response = new(userResponses, totalCount, page, pageSize, totalPages);
+            UsersResponse response = new(userResponses, totalCount, page, pageSize, totalPages);
             return TypedResults.Ok(response);
         }
         catch (Exception)
         {
             return TypedResults.Problem("An error occurred while retrieving users.", statusCode: 500);
+        }
+    }
+
+    public static async Task<IResult> HandleGetUserById(Guid userId,
+        [FromServices] IUserRepository userRepository,
+        CancellationToken cancellationToken = default)
+    {
+        try
+        {
+            // Check if user exists
+            User? user = await userRepository.GetUserByIdAsync(userId, cancellationToken);
+            if (user == null)
+            {
+                return TypedResults.NotFound("User not found");
+            }
+
+            // Map to response model
+            UserResponse userResponse = new(
+                user.Id,
+                user.Username,
+                user.Created,
+                user.Disabled,
+                user.IsAdmin);
+
+            return TypedResults.Ok(userResponse);
+        }
+        catch (Exception)
+        {
+            return TypedResults.Problem("An error occurred while retrieving the user.", statusCode: 500);
         }
     }
 

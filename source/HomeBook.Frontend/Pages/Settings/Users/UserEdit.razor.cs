@@ -1,8 +1,9 @@
+using Microsoft.AspNetCore.Components;
+using Microsoft.AspNetCore.Components.Authorization;
+using MudBlazor;
 using System.ComponentModel.DataAnnotations;
 using System.Security.Claims;
-using HomeBook.Client.Models;
-using Microsoft.AspNetCore.Components;
-using MudBlazor;
+using HomeBook.Frontend.Abstractions.Models.System;
 
 namespace HomeBook.Frontend.Pages.Settings.Users;
 
@@ -11,41 +12,50 @@ public partial class UserEdit : ComponentBase
     [Parameter]
     public Guid UserId { get; set; }
 
-    private EditUserModel? _userModel;
-    private UserResponse? _originalUser;
+    private UserEditModel? _userModel;
+    private UserData? _originalUser;
     private bool _loading = true;
-    private bool _saving;
+    private bool _saving = false;
     private Guid? _currentUserId;
 
-    private List<BreadcrumbItem> _breadcrumbs = new()
+    // Password visibility toggles
+    private bool _showPassword = false;
+    private bool _showConfirmPassword = false;
+    private InputType _passwordInputType = InputType.Password;
+    private InputType _confirmPasswordInputType = InputType.Password;
+    private string _passwordIcon = Icons.Material.Filled.VisibilityOff;
+    private string _confirmPasswordIcon = Icons.Material.Filled.VisibilityOff;
+
+    private readonly List<BreadcrumbItem> _breadcrumbs = new()
     {
         new BreadcrumbItem("Settings", href: "/Settings", icon: Icons.Material.Filled.Settings),
         new BreadcrumbItem("Users", href: "/Settings/Users", icon: Icons.Material.Filled.People),
-        new BreadcrumbItem("Edit User", href: null, disabled: true, icon: Icons.Material.Filled.Edit)
+        new BreadcrumbItem("Edit User", href: null, disabled: true)
     };
 
     protected override async Task OnInitializedAsync()
     {
-        await GetCurrentUserIdAsync();
+        await LoadCurrentUserAsync();
         await LoadUserAsync();
     }
 
-    private async Task GetCurrentUserIdAsync()
+    private async Task LoadCurrentUserAsync()
     {
         try
         {
-            ClaimsPrincipal currentUser = await AuthenticationService.GetCurrentUserAsync();
-            string? userIdClaim = currentUser?.FindFirst("sub")?.Value
-                                  ?? currentUser?.FindFirst(ClaimTypes.NameIdentifier)?.Value;
-
-            if (Guid.TryParse(userIdClaim, out Guid userId))
+            AuthenticationState authState = await AuthenticationStateProvider.GetAuthenticationStateAsync();
+            if (authState.User.Identity?.IsAuthenticated == true)
             {
-                _currentUserId = userId;
+                Claim? userIdClaim = authState.User.FindFirst(ClaimTypes.NameIdentifier);
+                if (userIdClaim != null && Guid.TryParse(userIdClaim.Value, out Guid userId))
+                {
+                    _currentUserId = userId;
+                }
             }
         }
-        catch
+        catch (Exception ex)
         {
-            _currentUserId = null;
+            Snackbar.Add($"Error loading current user: {ex.Message}", Severity.Error);
         }
     }
 
@@ -54,37 +64,18 @@ public partial class UserEdit : ComponentBase
         try
         {
             _loading = true;
-            StateHasChanged();
 
-            string? token = await AuthenticationService.GetTokenAsync();
-            if (string.IsNullOrEmpty(token))
+            // Get users and find the specific one
+            _originalUser = await UserManagementProvider.GetUserByIdAsync(UserId, CancellationToken.None);
+
+            if (_originalUser != null)
             {
-                Snackbar.Add("Authentication token not found", Severity.Error);
-                return;
-            }
-
-            // TODO: Implement actual backend call when client is configured
-            // Need backend endpoint: GET /system/users/{userId}
-            // UserResponse user = await BackendClient.System.Users[UserId].GetAsync(x => x.Headers.Add("Authorization", $"Bearer {token}"));
-
-            // Mock user data for now - this should be replaced with actual backend call
-            UserResponse user = new()
-            {
-                Id = UserId,
-                Username = "MockUser",
-                Created = DateTimeOffset.Now,
-                Disabled = null,
-                IsAdmin = false
-            };
-
-            if (user != null)
-            {
-                _originalUser = user;
-                _userModel = new EditUserModel
+                _userModel = new UserEditModel
                 {
-                    Username = user.Username ?? string.Empty,
-                    Password = string.Empty, // Never populate password field
-                    IsAdmin = user.IsAdmin == true
+                    Username = _originalUser.UserName,
+                    Password = string.Empty,
+                    ConfirmPassword = string.Empty,
+                    IsAdmin = _originalUser.IsAdmin
                 };
             }
         }
@@ -95,45 +86,124 @@ public partial class UserEdit : ComponentBase
         finally
         {
             _loading = false;
-            StateHasChanged();
+        }
+    }
+
+    private bool IsCurrentUser()
+    {
+        return _currentUserId.HasValue && _currentUserId.Value == UserId;
+    }
+
+    private void TogglePasswordVisibility()
+    {
+        if (_showPassword)
+        {
+            _showPassword = false;
+            _passwordInputType = InputType.Password;
+            _passwordIcon = Icons.Material.Filled.VisibilityOff;
+        }
+        else
+        {
+            _showPassword = true;
+            _passwordInputType = InputType.Text;
+            _passwordIcon = Icons.Material.Filled.Visibility;
+        }
+    }
+
+    private void ToggleConfirmPasswordVisibility()
+    {
+        if (_showConfirmPassword)
+        {
+            _showConfirmPassword = false;
+            _confirmPasswordInputType = InputType.Password;
+            _confirmPasswordIcon = Icons.Material.Filled.VisibilityOff;
+        }
+        else
+        {
+            _showConfirmPassword = true;
+            _confirmPasswordInputType = InputType.Text;
+            _confirmPasswordIcon = Icons.Material.Filled.Visibility;
         }
     }
 
     private async Task HandleValidSubmitAsync()
     {
-        if (_saving || _userModel == null)
+        if (_userModel == null || _originalUser == null)
             return;
+
+        // Password validation only if password is being changed
+        if (!string.IsNullOrWhiteSpace(_userModel.Password))
+        {
+            if (_userModel.Password != _userModel.ConfirmPassword)
+            {
+                Snackbar.Add("Passwords do not match", Severity.Error);
+                return;
+            }
+
+            if (_userModel.Password.Length < 8)
+            {
+                Snackbar.Add("Password must be at least 8 characters long", Severity.Error);
+                return;
+            }
+        }
+
+        if (string.IsNullOrWhiteSpace(_userModel.Username))
+        {
+            Snackbar.Add("Username is required", Severity.Error);
+            return;
+        }
+
+        if (_userModel.Username.Length < 5 || _userModel.Username.Length > 20)
+        {
+            Snackbar.Add("Username must be between 5 and 20 characters", Severity.Error);
+            return;
+        }
 
         try
         {
             _saving = true;
-            StateHasChanged();
+            List<string> updateMessages = new();
 
-            string? token = await AuthenticationService.GetTokenAsync();
-            if (string.IsNullOrEmpty(token))
+            // Update username if changed
+            if (_userModel.Username != _originalUser.UserName)
             {
-                Snackbar.Add("Authentication token not found", Severity.Error);
-                return;
+                await UserManagementProvider.UpdateUsernameAsync(UserId,
+                    _userModel.Username,
+                    CancellationToken.None);
+                updateMessages.Add("username");
             }
 
-            // UpdateUserRequest request = new UpdateUserRequest
-            // {
-            //     Username = _userModel.Username,
-            //     IsAdmin = _userModel.IsAdmin
-            // };
+            // Update password if provided
+            if (!string.IsNullOrWhiteSpace(_userModel.Password))
+            {
+                await UserManagementProvider.UpdatePasswordAsync(UserId,
+                    _userModel.Password,
+                    CancellationToken.None);
+                updateMessages.Add("password");
+            }
 
-            // Only include password if it was changed
-            // if (!string.IsNullOrWhiteSpace(_userModel.Password))
-            // {
-            //     request.Password = _userModel.Password;
-            // }
+            // Update admin status if changed and not current user
+            if (_userModel.IsAdmin != _originalUser.IsAdmin
+                && !IsCurrentUser())
+            {
+                await UserManagementProvider.UpdateAdminFlagAsync(UserId,
+                    _userModel.IsAdmin,
+                    CancellationToken.None);
+                updateMessages.Add("admin status");
+            }
 
-            // TODO: Implement actual backend call when client is configured
-            // Need backend endpoint: PUT /system/users/{userId}
-            // await BackendClient.System.Users[UserId].PutAsync(request, x => x.Headers.Add("Authorization", $"Bearer {token}"));
+            if (updateMessages.Any())
+            {
+                string message = $"User updated successfully ({string.Join(", ", updateMessages)})";
+                Snackbar.Add(message, Severity.Success);
 
-            Snackbar.Add($"User '{_userModel.Username}' has been updated successfully", Severity.Success);
-            await LoadUserAsync(); // Refresh user data
+                // Reload user data
+                await LoadUserAsync();
+            }
+            else
+            {
+                Snackbar.Add("No changes to save", Severity.Info);
+            }
         }
         catch (Exception ex)
         {
@@ -142,46 +212,35 @@ public partial class UserEdit : ComponentBase
         finally
         {
             _saving = false;
-            StateHasChanged();
         }
     }
 
     private async Task ToggleUserStatusAsync()
     {
-        if (IsCurrentUser() || _originalUser == null)
-        {
-            Snackbar.Add("Cannot modify your own account status", Severity.Warning);
+        if (_originalUser == null || IsCurrentUser())
             return;
-        }
 
         try
         {
             _saving = true;
-            StateHasChanged();
 
-            string? token = await AuthenticationService.GetTokenAsync();
-            if (string.IsNullOrEmpty(token))
+            if (_originalUser.DisabledAt.HasValue)
             {
-                Snackbar.Add("Authentication token not found", Severity.Error);
-                return;
-            }
-
-            if (_originalUser.Disabled.HasValue)
-            {
-                // TODO: Implement actual backend calls when client is configured
-                // Need backend endpoint: PUT /system/users/{userId}/enable
-                // await BackendClient.System.Users[UserId].EnableAsync(x => x.Headers.Add("Authorization", $"Bearer {token}"));
-                Snackbar.Add($"User '{_originalUser.Username}' has been enabled", Severity.Success);
+                // Enable user
+                await UserManagementProvider.EnableUserAsync(UserId,
+                    CancellationToken.None);
+                Snackbar.Add($"User '{_originalUser.UserName}' has been enabled", Severity.Success);
             }
             else
             {
-                // TODO: Implement actual backend calls when client is configured
-                // Need backend endpoint: PUT /system/users/{userId}/disable
-                // await BackendClient.System.Users[UserId].DisableAsync(x => x.Headers.Add("Authorization", $"Bearer {token}"));
-                Snackbar.Add($"User '{_originalUser.Username}' has been disabled", Severity.Success);
+                // Disable user
+                await UserManagementProvider.DisableUserAsync(UserId,
+                    CancellationToken.None);
+                Snackbar.Add($"User '{_originalUser.UserName}' has been disabled", Severity.Success);
             }
 
-            await LoadUserAsync(); // Refresh user data
+            // Reload user data
+            await LoadUserAsync();
         }
         catch (Exception ex)
         {
@@ -190,21 +249,17 @@ public partial class UserEdit : ComponentBase
         finally
         {
             _saving = false;
-            StateHasChanged();
         }
     }
 
     private async Task ShowDeleteConfirmationAsync()
     {
-        if (IsCurrentUser() || _originalUser == null)
-        {
-            Snackbar.Add("Cannot delete your own account", Severity.Warning);
+        if (_originalUser == null || IsCurrentUser())
             return;
-        }
 
         bool? result = await DialogService.ShowMessageBox(
-            "Confirm Delete",
-            $"Are you sure you want to delete user '{_originalUser.Username}'? This action cannot be undone.",
+            "Delete User",
+            $"Are you sure you want to delete user '{_originalUser.UserName}'? This action cannot be undone.",
             yesText: "Delete",
             cancelText: "Cancel");
 
@@ -222,26 +277,12 @@ public partial class UserEdit : ComponentBase
         try
         {
             _saving = true;
-            StateHasChanged();
 
-            string? token = await AuthenticationService.GetTokenAsync();
-            if (string.IsNullOrEmpty(token))
-            {
-                Snackbar.Add("Authentication token not found", Severity.Error);
-                return;
-            }
+            await UserManagementProvider.DeleteUserAsync(UserId,
+                CancellationToken.None);
 
-            DeleteUserRequest request = new DeleteUserRequest
-            {
-                UserId = UserId
-            };
-
-            // TODO: Implement actual backend call when client is configured
-            // Need backend endpoint: DELETE /system/users
-            // await BackendClient.System.Users.DeleteAsync(request, x => x.Headers.Add("Authorization", $"Bearer {token}"));
-
-            Snackbar.Add($"User '{_originalUser.Username}' has been deleted", Severity.Success);
-            NavigationManager.NavigateTo("/Settings/Users");
+            Snackbar.Add($"User '{_originalUser.UserName}' has been deleted", Severity.Success);
+            NavigateBack();
         }
         catch (Exception ex)
         {
@@ -250,13 +291,7 @@ public partial class UserEdit : ComponentBase
         finally
         {
             _saving = false;
-            StateHasChanged();
         }
-    }
-
-    private bool IsCurrentUser()
-    {
-        return _currentUserId.HasValue && _currentUserId == UserId;
     }
 
     private void NavigateBack()
@@ -264,16 +299,17 @@ public partial class UserEdit : ComponentBase
         NavigationManager.NavigateTo("/Settings/Users");
     }
 
-    public class EditUserModel
+    private class UserEditModel
     {
         [Required(ErrorMessage = "Username is required")]
-        [MinLength(3, ErrorMessage = "Username must be at least 3 characters long")]
-        [MaxLength(50, ErrorMessage = "Username cannot be longer than 50 characters")]
+        [StringLength(20, MinimumLength = 5, ErrorMessage = "Username must be between 5 and 20 characters")]
         public string Username { get; set; } = string.Empty;
 
-        [MinLength(6, ErrorMessage = "Password must be at least 6 characters long")]
+        [StringLength(100, MinimumLength = 8, ErrorMessage = "Password must be at least 8 characters")]
         public string Password { get; set; } = string.Empty;
 
-        public bool IsAdmin { get; set; }
+        public string ConfirmPassword { get; set; } = string.Empty;
+
+        public bool IsAdmin { get; set; } = false;
     }
 }

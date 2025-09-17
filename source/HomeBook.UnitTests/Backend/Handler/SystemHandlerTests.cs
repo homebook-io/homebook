@@ -134,8 +134,8 @@ public class SystemHandlerTests
         IResult result = await SystemHandler.HandleGetUsers(_userRepository, 1, 2, _cancellationToken);
 
         // Assert
-        result.ShouldBeOfType<Ok<GetUsersResponse>>();
-        var okResult = (Ok<GetUsersResponse>)result;
+        result.ShouldBeOfType<Ok<UsersResponse>>();
+        var okResult = (Ok<UsersResponse>)result;
         okResult.Value.ShouldNotBeNull();
         okResult.Value.TotalCount.ShouldBe(3);
         okResult.Value.Page.ShouldBe(1);
@@ -155,8 +155,8 @@ public class SystemHandlerTests
         IResult result = await SystemHandler.HandleGetUsers(_userRepository, -1, 0, _cancellationToken);
 
         // Assert
-        result.ShouldBeOfType<Ok<GetUsersResponse>>();
-        var okResult = (Ok<GetUsersResponse>)result;
+        result.ShouldBeOfType<Ok<UsersResponse>>();
+        var okResult = (Ok<UsersResponse>)result;
         okResult.Value!.Page.ShouldBe(1);
         okResult.Value.PageSize.ShouldBe(10);
     }
@@ -172,8 +172,8 @@ public class SystemHandlerTests
         IResult result = await SystemHandler.HandleGetUsers(_userRepository, 1, 200, _cancellationToken);
 
         // Assert
-        result.ShouldBeOfType<Ok<GetUsersResponse>>();
-        var okResult = (Ok<GetUsersResponse>)result;
+        result.ShouldBeOfType<Ok<UsersResponse>>();
+        var okResult = (Ok<UsersResponse>)result;
         okResult.Value!.PageSize.ShouldBe(10);
     }
 
@@ -1209,6 +1209,120 @@ public class SystemHandlerTests
         // Assert
         result.ShouldBeOfType<BadRequest<string>>();
         ((BadRequest<string>)result).Value.ShouldBe("New username is required");
+    }
+
+    #endregion
+
+    #region HandleGetUserById Tests
+
+    [Test]
+    public async Task HandleGetUserById_ReturnsOk_WithUserResponse_WhenUserExists()
+    {
+        // Arrange
+        var userId = Guid.NewGuid();
+        var user = new User
+        {
+            Id = userId,
+            Username = "testuser",
+            PasswordHash = "hashedpassword",
+            PasswordHashType = "TestHashProvider",
+            Created = DateTime.UtcNow,
+            IsAdmin = true,
+            Disabled = null
+        };
+
+        _userRepository.GetUserByIdAsync(userId, _cancellationToken).Returns(user);
+
+        // Act
+        IResult result = await SystemHandler.HandleGetUserById(userId, _userRepository, _cancellationToken);
+
+        // Assert
+        result.ShouldBeOfType<Ok<UserResponse>>();
+        var okResult = (Ok<UserResponse>)result;
+        okResult.Value.ShouldNotBeNull();
+        okResult.Value.Id.ShouldBe(userId);
+        okResult.Value.Username.ShouldBe("testuser");
+        okResult.Value.Created.ShouldBe(user.Created);
+        okResult.Value.IsAdmin.ShouldBe(true);
+        okResult.Value.Disabled.ShouldBeNull();
+    }
+
+    [Test]
+    public async Task HandleGetUserById_ReturnsOk_WithDisabledUser_WhenUserIsDisabled()
+    {
+        // Arrange
+        var userId = Guid.NewGuid();
+        var disabledDate = DateTime.UtcNow.AddDays(-1);
+        var user = new User
+        {
+            Id = userId,
+            Username = "disableduser",
+            PasswordHash = "hashedpassword",
+            PasswordHashType = "TestHashProvider",
+            Created = DateTime.UtcNow.AddDays(-30),
+            IsAdmin = false,
+            Disabled = disabledDate
+        };
+
+        _userRepository.GetUserByIdAsync(userId, _cancellationToken).Returns(user);
+
+        // Act
+        IResult result = await SystemHandler.HandleGetUserById(userId, _userRepository, _cancellationToken);
+
+        // Assert
+        result.ShouldBeOfType<Ok<UserResponse>>();
+        var okResult = (Ok<UserResponse>)result;
+        okResult.Value.ShouldNotBeNull();
+        okResult.Value.Id.ShouldBe(userId);
+        okResult.Value.Username.ShouldBe("disableduser");
+        okResult.Value.IsAdmin.ShouldBe(false);
+        okResult.Value.Disabled.ShouldBe(disabledDate);
+    }
+
+    [Test]
+    public async Task HandleGetUserById_ReturnsNotFound_WhenUserDoesNotExist()
+    {
+        // Arrange
+        var userId = Guid.NewGuid();
+        _userRepository.GetUserByIdAsync(userId, _cancellationToken).Returns((User?)null);
+
+        // Act
+        IResult result = await SystemHandler.HandleGetUserById(userId, _userRepository, _cancellationToken);
+
+        // Assert
+        result.ShouldBeOfType<NotFound<string>>();
+        var notFoundResult = (NotFound<string>)result;
+        notFoundResult.Value.ShouldBe("User not found");
+    }
+
+    [Test]
+    public async Task HandleGetUserById_ReturnsProblem_WhenExceptionOccurs()
+    {
+        // Arrange
+        var userId = Guid.NewGuid();
+        _userRepository.GetUserByIdAsync(userId, _cancellationToken).ThrowsAsync<Exception>();
+
+        // Act
+        IResult result = await SystemHandler.HandleGetUserById(userId, _userRepository, _cancellationToken);
+
+        // Assert
+        result.ShouldBeOfType<ProblemHttpResult>();
+    }
+
+    [Test]
+    public async Task HandleGetUserById_ReturnsOk_WithCorrectUserResponse_WhenEmptyGuidProvided()
+    {
+        // Arrange
+        var emptyGuid = Guid.Empty;
+        _userRepository.GetUserByIdAsync(emptyGuid, _cancellationToken).Returns((User?)null);
+
+        // Act
+        IResult result = await SystemHandler.HandleGetUserById(emptyGuid, _userRepository, _cancellationToken);
+
+        // Assert
+        result.ShouldBeOfType<NotFound<string>>();
+        var notFoundResult = (NotFound<string>)result;
+        notFoundResult.Value.ShouldBe("User not found");
     }
 
     #endregion

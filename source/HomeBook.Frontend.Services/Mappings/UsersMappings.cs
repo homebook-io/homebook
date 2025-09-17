@@ -6,7 +6,7 @@ namespace HomeBook.Frontend.Services.Mappings;
 
 public static class UsersMappings
 {
-    public static PagedList<UserData> ToPagedResult(this GetUsersResponse response)
+    public static PagedList<UserData> ToPagedResult(this UsersResponse response)
     {
         PagedList<UserData> page = new()
         {
