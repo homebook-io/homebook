@@ -20,27 +20,27 @@ namespace HomeBook.Client.System.Users
     {
         /// <summary>Gets an item from the HomeBook.Client.system.users.item collection</summary>
         /// <param name="position">Unique identifier of the item</param>
-        /// <returns>A <see cref="global::HomeBook.Client.System.Users.Item.WithUserItemRequestBuilder"/></returns>
-        public global::HomeBook.Client.System.Users.Item.WithUserItemRequestBuilder this[Guid position]
+        /// <returns>A <see cref="global::HomeBook.Client.System.Users.Item.ItemRequestBuilder"/></returns>
+        public global::HomeBook.Client.System.Users.Item.ItemRequestBuilder this[Guid position]
         {
             get
             {
                 var urlTplParams = new Dictionary<string, object>(PathParameters);
-                urlTplParams.Add("userId", position);
-                return new global::HomeBook.Client.System.Users.Item.WithUserItemRequestBuilder(urlTplParams, RequestAdapter);
+                urlTplParams.Add("%2Did", position);
+                return new global::HomeBook.Client.System.Users.Item.ItemRequestBuilder(urlTplParams, RequestAdapter);
             }
         }
         /// <summary>Gets an item from the HomeBook.Client.system.users.item collection</summary>
         /// <param name="position">Unique identifier of the item</param>
-        /// <returns>A <see cref="global::HomeBook.Client.System.Users.Item.WithUserItemRequestBuilder"/></returns>
+        /// <returns>A <see cref="global::HomeBook.Client.System.Users.Item.ItemRequestBuilder"/></returns>
         [Obsolete("This indexer is deprecated and will be removed in the next major version. Use the one with the typed parameter instead.")]
-        public global::HomeBook.Client.System.Users.Item.WithUserItemRequestBuilder this[string position]
+        public global::HomeBook.Client.System.Users.Item.ItemRequestBuilder this[string position]
         {
             get
             {
                 var urlTplParams = new Dictionary<string, object>(PathParameters);
-                if (!string.IsNullOrWhiteSpace(position)) urlTplParams.Add("userId", position);
-                return new global::HomeBook.Client.System.Users.Item.WithUserItemRequestBuilder(urlTplParams, RequestAdapter);
+                if (!string.IsNullOrWhiteSpace(position)) urlTplParams.Add("%2Did", position);
+                return new global::HomeBook.Client.System.Users.Item.ItemRequestBuilder(urlTplParams, RequestAdapter);
             }
         }
         /// <summary>
@@ -48,7 +48,7 @@ namespace HomeBook.Client.System.Users
         /// </summary>
         /// <param name="pathParameters">Path parameters for the request</param>
         /// <param name="requestAdapter">The request adapter to use to execute the requests.</param>
-        public UsersRequestBuilder(Dictionary<string, object> pathParameters, IRequestAdapter requestAdapter) : base(requestAdapter, "{+baseurl}/system/users{?page*,pageSize*}", pathParameters)
+        public UsersRequestBuilder(Dictionary<string, object> pathParameters, IRequestAdapter requestAdapter) : base(requestAdapter, "{+baseurl}/system/users{?page*,pageSize*,username*}", pathParameters)
         {
         }
         /// <summary>
@@ -56,11 +56,11 @@ namespace HomeBook.Client.System.Users
         /// </summary>
         /// <param name="rawUrl">The raw URL to use for the request builder.</param>
         /// <param name="requestAdapter">The request adapter to use to execute the requests.</param>
-        public UsersRequestBuilder(string rawUrl, IRequestAdapter requestAdapter) : base(requestAdapter, "{+baseurl}/system/users{?page*,pageSize*}", rawUrl)
+        public UsersRequestBuilder(string rawUrl, IRequestAdapter requestAdapter) : base(requestAdapter, "{+baseurl}/system/users{?page*,pageSize*,username*}", rawUrl)
         {
         }
         /// <summary>
-        /// Returns all users with pagination (Admin only)
+        /// Returns all users with pagination, optionally filtered by username (Admin only)
         /// </summary>
         /// <returns>A <see cref="global::HomeBook.Client.Models.UsersResponse"/></returns>
         /// <param name="cancellationToken">Cancellation token to use when cancelling requests</param>
@@ -98,7 +98,7 @@ namespace HomeBook.Client.System.Users
             return await RequestAdapter.SendAsync<global::HomeBook.Client.Models.CreateUserResponse>(requestInfo, global::HomeBook.Client.Models.CreateUserResponse.CreateFromDiscriminatorValue, default, cancellationToken).ConfigureAwait(false);
         }
         /// <summary>
-        /// Returns all users with pagination (Admin only)
+        /// Returns all users with pagination, optionally filtered by username (Admin only)
         /// </summary>
         /// <returns>A <see cref="RequestInformation"/></returns>
         /// <param name="requestConfiguration">Configuration for the request such as headers, query parameters, and middleware options.</param>
@@ -148,7 +148,7 @@ namespace HomeBook.Client.System.Users
             return new global::HomeBook.Client.System.Users.UsersRequestBuilder(rawUrl, RequestAdapter);
         }
         /// <summary>
-        /// Returns all users with pagination (Admin only)
+        /// Returns all users with pagination, optionally filtered by username (Admin only)
         /// </summary>
         [global::System.CodeDom.Compiler.GeneratedCode("Kiota", "1.0.0")]
         public partial class UsersRequestBuilderGetQueryParameters 
@@ -157,6 +157,15 @@ namespace HomeBook.Client.System.Users
             public int? Page { get; set; }
             [QueryParameter("pageSize")]
             public int? PageSize { get; set; }
+#if NETSTANDARD2_1_OR_GREATER || NETCOREAPP3_1_OR_GREATER
+#nullable enable
+            [QueryParameter("username")]
+            public string? Username { get; set; }
+#nullable restore
+#else
+            [QueryParameter("username")]
+            public string Username { get; set; }
+#endif
         }
         /// <summary>
         /// Configuration for the request such as headers, query parameters, and middleware options.

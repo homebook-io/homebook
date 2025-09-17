@@ -12,7 +12,7 @@ using System;
 namespace HomeBook.Client.System.Users.Item.Admin
 {
     /// <summary>
-    /// Builds and executes requests for operations under \system\users\{userId}\admin
+    /// Builds and executes requests for operations under \system\users\{-id}\admin
     /// </summary>
     [global::System.CodeDom.Compiler.GeneratedCode("Kiota", "1.0.0")]
     public partial class AdminRequestBuilder : BaseRequestBuilder
@@ -22,7 +22,7 @@ namespace HomeBook.Client.System.Users.Item.Admin
         /// </summary>
         /// <param name="pathParameters">Path parameters for the request</param>
         /// <param name="requestAdapter">The request adapter to use to execute the requests.</param>
-        public AdminRequestBuilder(Dictionary<string, object> pathParameters, IRequestAdapter requestAdapter) : base(requestAdapter, "{+baseurl}/system/users/{userId}/admin", pathParameters)
+        public AdminRequestBuilder(Dictionary<string, object> pathParameters, IRequestAdapter requestAdapter) : base(requestAdapter, "{+baseurl}/system/users/{%2Did}/admin", pathParameters)
         {
         }
         /// <summary>
@@ -30,7 +30,7 @@ namespace HomeBook.Client.System.Users.Item.Admin
         /// </summary>
         /// <param name="rawUrl">The raw URL to use for the request builder.</param>
         /// <param name="requestAdapter">The request adapter to use to execute the requests.</param>
-        public AdminRequestBuilder(string rawUrl, IRequestAdapter requestAdapter) : base(requestAdapter, "{+baseurl}/system/users/{userId}/admin", rawUrl)
+        public AdminRequestBuilder(string rawUrl, IRequestAdapter requestAdapter) : base(requestAdapter, "{+baseurl}/system/users/{%2Did}/admin", rawUrl)
         {
         }
         /// <summary>

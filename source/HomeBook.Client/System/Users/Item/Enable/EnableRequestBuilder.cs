@@ -11,7 +11,7 @@ using System;
 namespace HomeBook.Client.System.Users.Item.Enable
 {
     /// <summary>
-    /// Builds and executes requests for operations under \system\users\{userId}\enable
+    /// Builds and executes requests for operations under \system\users\{-id}\enable
     /// </summary>
     [global::System.CodeDom.Compiler.GeneratedCode("Kiota", "1.0.0")]
     public partial class EnableRequestBuilder : BaseRequestBuilder
@@ -21,7 +21,7 @@ namespace HomeBook.Client.System.Users.Item.Enable
         /// </summary>
         /// <param name="pathParameters">Path parameters for the request</param>
         /// <param name="requestAdapter">The request adapter to use to execute the requests.</param>
-        public EnableRequestBuilder(Dictionary<string, object> pathParameters, IRequestAdapter requestAdapter) : base(requestAdapter, "{+baseurl}/system/users/{userId}/enable", pathParameters)
+        public EnableRequestBuilder(Dictionary<string, object> pathParameters, IRequestAdapter requestAdapter) : base(requestAdapter, "{+baseurl}/system/users/{%2Did}/enable", pathParameters)
         {
         }
         /// <summary>
@@ -29,7 +29,7 @@ namespace HomeBook.Client.System.Users.Item.Enable
         /// </summary>
         /// <param name="rawUrl">The raw URL to use for the request builder.</param>
         /// <param name="requestAdapter">The request adapter to use to execute the requests.</param>
-        public EnableRequestBuilder(string rawUrl, IRequestAdapter requestAdapter) : base(requestAdapter, "{+baseurl}/system/users/{userId}/enable", rawUrl)
+        public EnableRequestBuilder(string rawUrl, IRequestAdapter requestAdapter) : base(requestAdapter, "{+baseurl}/system/users/{%2Did}/enable", rawUrl)
         {
         }
         /// <summary>

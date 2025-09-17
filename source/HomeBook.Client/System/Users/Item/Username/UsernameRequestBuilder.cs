@@ -12,7 +12,7 @@ using System;
 namespace HomeBook.Client.System.Users.Item.Username
 {
     /// <summary>
-    /// Builds and executes requests for operations under \system\users\{userId}\username
+    /// Builds and executes requests for operations under \system\users\{-id}\username
     /// </summary>
     [global::System.CodeDom.Compiler.GeneratedCode("Kiota", "1.0.0")]
     public partial class UsernameRequestBuilder : BaseRequestBuilder
@@ -22,7 +22,7 @@ namespace HomeBook.Client.System.Users.Item.Username
         /// </summary>
         /// <param name="pathParameters">Path parameters for the request</param>
         /// <param name="requestAdapter">The request adapter to use to execute the requests.</param>
-        public UsernameRequestBuilder(Dictionary<string, object> pathParameters, IRequestAdapter requestAdapter) : base(requestAdapter, "{+baseurl}/system/users/{userId}/username", pathParameters)
+        public UsernameRequestBuilder(Dictionary<string, object> pathParameters, IRequestAdapter requestAdapter) : base(requestAdapter, "{+baseurl}/system/users/{%2Did}/username", pathParameters)
         {
         }
         /// <summary>
@@ -30,7 +30,7 @@ namespace HomeBook.Client.System.Users.Item.Username
         /// </summary>
         /// <param name="rawUrl">The raw URL to use for the request builder.</param>
         /// <param name="requestAdapter">The request adapter to use to execute the requests.</param>
-        public UsernameRequestBuilder(string rawUrl, IRequestAdapter requestAdapter) : base(requestAdapter, "{+baseurl}/system/users/{userId}/username", rawUrl)
+        public UsernameRequestBuilder(string rawUrl, IRequestAdapter requestAdapter) : base(requestAdapter, "{+baseurl}/system/users/{%2Did}/username", rawUrl)
         {
         }
         /// <summary>
