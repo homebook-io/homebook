@@ -1,0 +1,121 @@
+@page "/Settings/Users/Add"
+
+@attribute [Authorize(Roles = "Admin")]
+
+@using HomeBook.Client
+@using HomeBook.Frontend.Abstractions.Contracts
+
+@inject BackendClient BackendClient
+@inject ISnackbar Snackbar
+@inject NavigationManager NavigationManager
+@inject IUserManagementProvider UserManagementProvider
+
+<MudContainer Class="mt-4">
+
+    <MudGrid>
+
+        <MudItem xs="12" sm="12" md="4" lg="3" xl="3" xxl="2">
+
+            <SettingsNavMenu/>
+
+        </MudItem>
+
+        <MudItem xs="12" sm="12" md="8" lg="9" xl="9" xxl="10">
+
+            <MudCard Class="mb-4">
+                <MudBreadcrumbs Items="_breadcrumbs"/>
+            </MudCard>
+
+            <MudCard>
+                <MudCardHeader>
+                    <CardHeaderContent>
+                        <MudText Typo="Typo.h5">Add New User</MudText>
+                    </CardHeaderContent>
+                </MudCardHeader>
+
+                <MudCardContent>
+                    <EditForm Model="_userModel" OnValidSubmit="HandleValidSubmitAsync">
+                        <DataAnnotationsValidator/>
+
+                        <MudGrid>
+                            <MudItem xs="12">
+                                <MudTextField @bind-Value="_userModel.Username"
+                                              Label="Username"
+                                              Required="true"
+                                              Variant="Variant.Outlined"
+                                              Margin="Margin.Dense"
+                                              HelperText="Enter a unique username"
+                                              For="@(() => _userModel.Username)"/>
+                            </MudItem>
+
+                            <MudItem xs="12" md="6">
+                                <MudTextField @bind-Value="_userModel.Password"
+                                              Label="Password"
+                                              InputType="@_passwordInputType"
+                                              Required="true"
+                                              Variant="Variant.Outlined"
+                                              Margin="Margin.Dense"
+                                              HelperText="Enter a secure password"
+                                              For="@(() => _userModel.Password)"
+                                              Adornment="Adornment.End"
+                                              AdornmentIcon="@_passwordIcon"
+                                              OnAdornmentClick="TogglePasswordVisibility"/>
+                            </MudItem>
+
+                            <MudItem xs="12" md="6">
+                                <MudTextField @bind-Value="_userModel.ConfirmPassword"
+                                              Label="Confirm Password"
+                                              InputType="@_confirmPasswordInputType"
+                                              Required="true"
+                                              Variant="Variant.Outlined"
+                                              Margin="Margin.Dense"
+                                              HelperText="Confirm your password"
+                                              For="@(() => _userModel.ConfirmPassword)"
+                                              Adornment="Adornment.End"
+                                              AdornmentIcon="@_confirmPasswordIcon"
+                                              OnAdornmentClick="ToggleConfirmPasswordVisibility"/>
+                            </MudItem>
+
+                            <MudItem xs="12">
+                                <MudSwitch T="bool" @bind-Checked="_userModel.IsAdmin"
+                                           Label="Administrator"
+                                           Color="Color.Primary"
+                                           UnCheckedColor="Color.Default"/>
+                                <MudText Typo="Typo.caption" Class="mud-text-secondary">
+                                    Administrators have full access to all features
+                                </MudText>
+                            </MudItem>
+                        </MudGrid>
+                    </EditForm>
+                </MudCardContent>
+
+                <MudCardActions>
+                    <MudButton Variant="Variant.Filled"
+                               Color="Color.Default"
+                               OnClick="NavigateBack">
+                        Cancel
+                    </MudButton>
+                    <MudSpacer/>
+                    <MudButton Variant="Variant.Filled"
+                               Color="Color.Primary"
+                               StartIcon="@Icons.Material.Filled.Save"
+                               Disabled="_saving"
+                               OnClick="HandleValidSubmitAsync">
+                        @if (_saving)
+                        {
+                            <MudProgressCircular Size="Size.Small" Indeterminate="true" Class="mr-2"/>
+                            <span>Creating...</span>
+                        }
+                        else
+                        {
+                            <span>Create User</span>
+                        }
+                    </MudButton>
+                </MudCardActions>
+            </MudCard>
+
+        </MudItem>
+
+    </MudGrid>
+
+</MudContainer>

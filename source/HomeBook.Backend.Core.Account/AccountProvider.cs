@@ -64,7 +64,7 @@ public class AccountProvider(
                 user.Username,
                 user.IsAdmin);
 
-            logger.LogInformation("Login successful for user '{Username}'", username);
+            logger.LogInformation("Token generated for user '{Username}'", username);
             return tokenResult;
         }
         catch (Exception ex)

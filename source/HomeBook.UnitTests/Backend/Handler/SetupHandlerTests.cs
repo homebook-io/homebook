@@ -1,5 +1,3 @@
-using FluentDataBuilder;
-using FluentDataBuilder.Microsoft.Extensions.Configuration;
 using FluentValidation;
 using FluentValidation.Results;
 using HomeBook.Backend.Abstractions.Contracts;
@@ -129,7 +127,7 @@ public class SetupHandlerTests
     }
 
     [Test]
-    public async Task HandleGetDatabaseCheck_returns_Ok_with_all_values()
+    public void HandleGetDatabaseCheck_returns_Ok_with_all_values()
     {
         // Arrange
         _setupConfigurationProvider.GetValue(EnvironmentVariables.DATABASE_HOST).Returns("db.example.local");
@@ -139,8 +137,7 @@ public class SetupHandlerTests
         _setupConfigurationProvider.GetValue(EnvironmentVariables.DATABASE_PASSWORD).Returns("s3cr3t");
 
         // Act
-        var result =
-            await SetupHandler.HandleGetDatabaseCheck(_logger, _setupConfigurationProvider, CancellationToken.None);
+        var result = SetupHandler.HandleGetDatabaseCheck(_logger, _setupConfigurationProvider, CancellationToken.None);
 
         // Assert
         var ok = result.ShouldBeOfType<Ok<GetDatabaseCheckResponse>>();
@@ -160,7 +157,7 @@ public class SetupHandlerTests
     }
 
     [Test]
-    public async Task HandleGetDatabaseCheck_returns_NotFound_ifNotAllIsFilledOut()
+    public void HandleGetDatabaseCheck_returns_NotFound_ifNotAllIsFilledOut()
     {
         // Arrange: deliberately set some to null and some to empty
         _setupConfigurationProvider.GetValue(EnvironmentVariables.DATABASE_HOST).Returns((string?)null);
@@ -170,8 +167,7 @@ public class SetupHandlerTests
         _setupConfigurationProvider.GetValue(EnvironmentVariables.DATABASE_PASSWORD).Returns((string?)null);
 
         // Act
-        var result =
-            await SetupHandler.HandleGetDatabaseCheck(_logger, _setupConfigurationProvider, CancellationToken.None);
+        var result = SetupHandler.HandleGetDatabaseCheck(_logger, _setupConfigurationProvider, CancellationToken.None);
 
         // Assert: The current implementation always returns Ok with whatever it read
         var ok = result.ShouldBeOfType<NotFound>();
@@ -179,7 +175,7 @@ public class SetupHandlerTests
     }
 
     [Test]
-    public async Task HandleGetDatabaseCheck_returns_InternalServerError_when_provider_throws()
+    public void HandleGetDatabaseCheck_returns_InternalServerError_when_provider_throws()
     {
         // Arrange: throw on first var; could be any
         _setupConfigurationProvider
@@ -187,8 +183,7 @@ public class SetupHandlerTests
             .Do(_ => throw new InvalidOperationException("boom"));
 
         // Act
-        var result =
-            await SetupHandler.HandleGetDatabaseCheck(_logger, _setupConfigurationProvider, CancellationToken.None);
+        var result = SetupHandler.HandleGetDatabaseCheck(_logger, _setupConfigurationProvider, CancellationToken.None);
 
         // Assert
         var internalErr = result.ShouldBeOfType<InternalServerError<string>>();
@@ -196,7 +191,7 @@ public class SetupHandlerTests
     }
 
     [Test]
-    public async Task HandleGetDatabaseCheck_ThrowsValidationException_Returns()
+    public void HandleGetDatabaseCheck_ThrowsValidationException_Returns()
     {
         // Arrange: throw on first var; could be any
         _setupConfigurationProvider
@@ -209,8 +204,7 @@ public class SetupHandlerTests
                 }));
 
         // Act
-        var result =
-            await SetupHandler.HandleGetDatabaseCheck(_logger, _setupConfigurationProvider, CancellationToken.None);
+        var result = SetupHandler.HandleGetDatabaseCheck(_logger, _setupConfigurationProvider, CancellationToken.None);
 
         // Assert
         var badRequestErr = result.ShouldBeOfType<BadRequest<string[]>>();

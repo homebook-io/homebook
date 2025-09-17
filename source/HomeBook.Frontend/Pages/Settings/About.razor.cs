@@ -1,5 +1,6 @@
 using HomeBook.Client.Models;
 using HomeBook.Frontend.Abstractions.Models;
+using HomeBook.Frontend.Abstractions.Models.System;
 using HomeBook.Frontend.Components;
 using HomeBook.Frontend.Mappings;
 using HomeBook.Frontend.Models.Setup;
@@ -24,7 +25,7 @@ public partial class About : ComponentBase
 
         CancellationToken cancellationToken = CancellationToken.None;
 
-        await LoadUIInfoAsync(cancellationToken);
+        await LoadUiInfoAsync(cancellationToken);
         await LoadBackendInfoAsync(cancellationToken);
         await LoadLicensesAsync(cancellationToken);
     }
@@ -37,34 +38,34 @@ public partial class About : ComponentBase
             .ToList();
     }
 
-    private async Task LoadUIInfoAsync(CancellationToken cancellationToken)
+    private async Task LoadUiInfoAsync(CancellationToken cancellationToken)
     {
         _uiVersion = Configuration["AppVersion"] ?? "1.0.0";
-        _uiDotnetVersion = System.Environment.Version.ToString();
+        _uiDotnetVersion = Environment.Version.ToString();
     }
 
     private async Task LoadBackendInfoAsync(CancellationToken cancellationToken)
     {
-        GetSystemInfoResponse? response = await BackendClient.System.GetAsync(x =>
-            {
-            },
-            cancellationToken);
-
-        _backendVersion = response.AppVersion;
-        _backendDotnetVersion = response.DotnetRuntimeVersion;
-
-        _databaseProvider = response.DatabaseProvider.ToUpperInvariant() switch
+        try
         {
-            "POSTGRESQL" => "PostgreSQL",
-            "MYSQL" => "MySQL",
-            "MARIADBl" => "MariaDB",
-            _ => response.DatabaseProvider
-        };
-        _deploymentType = response.DeploymentType.ToUpperInvariant() switch
+            SystemInfo systemInfo = await SystemManagementProvider.GetSystemInfoAsync(cancellationToken);
+
+            _backendVersion = systemInfo.AppVersion.ToString();
+            _backendDotnetVersion = systemInfo.DotNetVersion;
+
+            _databaseProvider = systemInfo.DatabaseProvider;
+            _deploymentType = systemInfo.DeploymentType;
+        }
+        catch (UnauthorizedAccessException)
         {
-            "DOCKER" => "Docker",
-            _ => response.DeploymentType
-        };
+            // user is no admin
+            Snackbar.Add("You are not authorized to view system information.", Severity.Warning);
+        }
+        catch (Exception err)
+        {
+            // display error
+            Snackbar.Add($"Loading system information failed: {err.Message}", Severity.Error);
+        }
     }
 
     private async Task OpenLicensesDialogAsync()
