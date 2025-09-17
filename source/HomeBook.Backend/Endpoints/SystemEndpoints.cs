@@ -23,7 +23,7 @@ public static class SystemEndpoints
 
         group.MapGet("/users", SystemHandler.HandleGetUsers)
             .WithName("GetUsers")
-            .WithDescription("Returns all users with pagination (Admin only)")
+            .WithDescription("Returns all users with pagination, optionally filtered by username (Admin only)")
             .WithMetadata(new RequireAdminAttribute())
             .WithOpenApi()
             .Produces<UsersResponse>()
@@ -42,7 +42,7 @@ public static class SystemEndpoints
             .Produces<string>(StatusCodes.Status403Forbidden)
             .Produces<string>(StatusCodes.Status500InternalServerError);
 
-        group.MapGet("/users/{userId:guid}", SystemHandler.HandleGetUserById)
+        group.MapGet("/users/{id:guid}", SystemHandler.HandleGetUserById)
             .WithName("GetUserById")
             .WithDescription("Returns a user by its id (Admin only)")
             .WithMetadata(new RequireAdminAttribute())
@@ -50,6 +50,7 @@ public static class SystemEndpoints
             .Produces<UserResponse>()
             .Produces<string>(StatusCodes.Status401Unauthorized)
             .Produces<string>(StatusCodes.Status403Forbidden)
+            .Produces<string>(StatusCodes.Status404NotFound)
             .Produces<string>(StatusCodes.Status500InternalServerError);
 
         group.MapDelete("/users/{userId:guid}", SystemHandler.HandleDeleteUser)

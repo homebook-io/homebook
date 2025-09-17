@@ -34,16 +34,27 @@ public static class SystemHandler
     public static async Task<IResult> HandleGetUsers([FromServices] IUserRepository userRepository,
         [FromQuery] int page = 1,
         [FromQuery] int pageSize = 10,
+        [FromQuery] string? username = null,
         CancellationToken cancellationToken = default)
     {
         try
         {
             // Validate pagination parameters
-            if (page < 1) page = 1;
-            if (pageSize < 1 || pageSize > 100) pageSize = 10;
+            if (page < 1)
+                page = 1;
+            if (pageSize < 1 || pageSize > 100)
+                pageSize = 10;
 
             // Get all users from repository and materialize to avoid multiple enumeration
             List<User> allUsers = (await userRepository.GetAllAsync(cancellationToken)).ToList();
+
+            // Apply username filter if provided
+            if (!string.IsNullOrWhiteSpace(username))
+            {
+                allUsers = allUsers.Where(u => u.Username.Contains(username, StringComparison.OrdinalIgnoreCase))
+                    .ToList();
+            }
+
             int totalCount = allUsers.Count;
             int totalPages = (int)Math.Ceiling((double)totalCount / pageSize);
 
@@ -350,7 +361,8 @@ public static class SystemHandler
 
             // Enable user by clearing the Disabled timestamp
             await userRepository.UpdateAsync(userId,
-                u => u.Disabled = null, cancellationToken);
+                u => u.Disabled = null,
+                cancellationToken);
 
             return TypedResults.Ok("User enabled successfully");
         }
@@ -371,40 +383,31 @@ public static class SystemHandler
             // Get current user ID from JWT token
             string? authHeader = httpContext.Request.Headers.Authorization.FirstOrDefault();
             if (authHeader == null || !authHeader.StartsWith("Bearer "))
-            {
                 return TypedResults.Unauthorized();
-            }
 
             string token = authHeader.Substring("Bearer ".Length).Trim();
             Guid? currentUserId = jwtService.GetUserIdFromToken(token);
 
             if (currentUserId == null)
-            {
                 return TypedResults.Unauthorized();
-            }
 
             // Check if user is trying to disable themselves
             if (currentUserId == userId)
-            {
                 return TypedResults.BadRequest("You cannot disable your own account");
-            }
 
             // Check if target user exists
             User? user = await userRepository.GetUserByIdAsync(userId, cancellationToken);
             if (user == null)
-            {
                 return TypedResults.NotFound("User not found");
-            }
 
             // Check if user is already disabled
             if (user.Disabled.HasValue)
-            {
                 return TypedResults.BadRequest("User is already disabled");
-            }
 
             // Disable user by setting the Disabled timestamp
             await userRepository.UpdateAsync(userId,
-                u => u.Disabled = DateTime.UtcNow, cancellationToken);
+                u => u.Disabled = DateTime.UtcNow,
+                cancellationToken);
 
             return TypedResults.Ok("User disabled successfully");
         }
@@ -423,28 +426,20 @@ public static class SystemHandler
         {
             // Validate input
             if (string.IsNullOrWhiteSpace(request.NewUsername))
-            {
                 return TypedResults.BadRequest("New username is required");
-            }
 
-            if (request.NewUsername.Length < 5 || request.NewUsername.Length > 20)
-            {
+            if (request.NewUsername.Length is < 5 or > 20)
                 return TypedResults.BadRequest("Username must be between 5 and 20 characters");
-            }
 
             // Check if username already exists (case-insensitive)
             bool usernameExists = await userRepository.ContainsUserAsync(request.NewUsername, cancellationToken);
             if (usernameExists)
-            {
                 return TypedResults.Conflict("Username already exists");
-            }
 
             // Retrieve the user to update
             User? user = await userRepository.GetUserByIdAsync(userId, cancellationToken);
             if (user == null)
-            {
                 return TypedResults.NotFound("User not found");
-            }
 
             // Update the username
             user.Username = request.NewUsername;

@@ -131,7 +131,7 @@ public class SystemHandlerTests
         _userRepository.GetAllAsync(_cancellationToken).Returns(users);
 
         // Act
-        IResult result = await SystemHandler.HandleGetUsers(_userRepository, 1, 2, _cancellationToken);
+        IResult result = await SystemHandler.HandleGetUsers(_userRepository, 1, 2, null, _cancellationToken);
 
         // Assert
         result.ShouldBeOfType<Ok<UsersResponse>>();
@@ -152,7 +152,7 @@ public class SystemHandlerTests
         _userRepository.GetAllAsync(_cancellationToken).Returns(users);
 
         // Act
-        IResult result = await SystemHandler.HandleGetUsers(_userRepository, -1, 0, _cancellationToken);
+        IResult result = await SystemHandler.HandleGetUsers(_userRepository, -1, 0, null, _cancellationToken);
 
         // Assert
         result.ShouldBeOfType<Ok<UsersResponse>>();
@@ -169,7 +169,7 @@ public class SystemHandlerTests
         _userRepository.GetAllAsync(_cancellationToken).Returns(users);
 
         // Act
-        IResult result = await SystemHandler.HandleGetUsers(_userRepository, 1, 200, _cancellationToken);
+        IResult result = await SystemHandler.HandleGetUsers(_userRepository, 1, 200, null, _cancellationToken);
 
         // Assert
         result.ShouldBeOfType<Ok<UsersResponse>>();
@@ -184,10 +184,129 @@ public class SystemHandlerTests
         _userRepository.GetAllAsync(_cancellationToken).ThrowsAsync<Exception>();
 
         // Act
-        IResult result = await SystemHandler.HandleGetUsers(_userRepository, 1, 10, _cancellationToken);
+        IResult result = await SystemHandler.HandleGetUsers(_userRepository, 1, 10, null, _cancellationToken);
 
         // Assert
         result.ShouldBeOfType<ProblemHttpResult>();
+    }
+
+    [Test]
+    public async Task HandleGetUsers_ReturnsOk_WithFilteredUsers_WhenUsernameProvided()
+    {
+        // Arrange
+        var users = new List<User>
+        {
+            new()
+            {
+                Id = Guid.NewGuid(),
+                Username = "administrator",
+                PasswordHash = "hash1",
+                PasswordHashType = "Test",
+                Created = DateTime.UtcNow,
+                IsAdmin = true
+            },
+            new()
+            {
+                Id = Guid.NewGuid(),
+                Username = "admin",
+                PasswordHash = "hash2",
+                PasswordHashType = "Test",
+                Created = DateTime.UtcNow,
+                IsAdmin = true
+            },
+            new()
+            {
+                Id = Guid.NewGuid(),
+                Username = "testuser",
+                PasswordHash = "hash3",
+                PasswordHashType = "Test",
+                Created = DateTime.UtcNow,
+                IsAdmin = false
+            }
+        };
+
+        _userRepository.GetAllAsync(_cancellationToken).Returns(users);
+
+        // Act
+        IResult result = await SystemHandler.HandleGetUsers(_userRepository, 1, 10, "admin", _cancellationToken);
+
+        // Assert
+        result.ShouldBeOfType<Ok<UsersResponse>>();
+        var okResult = (Ok<UsersResponse>)result;
+        okResult.Value.ShouldNotBeNull();
+        okResult.Value.TotalCount.ShouldBe(2); // "administrator" and "admin" match "admin"
+        okResult.Value.Page.ShouldBe(1);
+        okResult.Value.PageSize.ShouldBe(10);
+        okResult.Value.TotalPages.ShouldBe(1);
+        okResult.Value.Users.Count().ShouldBe(2);
+        okResult.Value.Users.All(u => u.Username.Contains("admin", StringComparison.OrdinalIgnoreCase)).ShouldBeTrue();
+    }
+
+    [Test]
+    public async Task HandleGetUsers_ReturnsOk_WithEmptyList_WhenUsernameNotFound()
+    {
+        // Arrange
+        var users = new List<User>
+        {
+            new()
+            {
+                Id = Guid.NewGuid(),
+                Username = "administrator",
+                PasswordHash = "hash1",
+                PasswordHashType = "Test",
+                Created = DateTime.UtcNow,
+                IsAdmin = true
+            }
+        };
+
+        _userRepository.GetAllAsync(_cancellationToken).Returns(users);
+
+        // Act
+        IResult result = await SystemHandler.HandleGetUsers(_userRepository, 1, 10, "nonexistent", _cancellationToken);
+
+        // Assert
+        result.ShouldBeOfType<Ok<UsersResponse>>();
+        var okResult = (Ok<UsersResponse>)result;
+        okResult.Value.ShouldNotBeNull();
+        okResult.Value.TotalCount.ShouldBe(0);
+        okResult.Value.Page.ShouldBe(1);
+        okResult.Value.PageSize.ShouldBe(10);
+        okResult.Value.TotalPages.ShouldBe(0);
+        okResult.Value.Users.Count().ShouldBe(0);
+    }
+
+    [Test]
+    public async Task HandleGetUsers_ReturnsOk_WithFilteredAndPaginatedUsers_WhenUsernameAndPaginationProvided()
+    {
+        // Arrange
+        var users = new List<User>();
+        for (int i = 1; i <= 15; i++)
+        {
+            users.Add(new User
+            {
+                Id = Guid.NewGuid(),
+                Username = $"testuser{i}",
+                PasswordHash = $"hash{i}",
+                PasswordHashType = "Test",
+                Created = DateTime.UtcNow,
+                IsAdmin = false
+            });
+        }
+
+        _userRepository.GetAllAsync(_cancellationToken).Returns(users);
+
+        // Act
+        IResult result = await SystemHandler.HandleGetUsers(_userRepository, 2, 5, "testuser", _cancellationToken);
+
+        // Assert
+        result.ShouldBeOfType<Ok<UsersResponse>>();
+        var okResult = (Ok<UsersResponse>)result;
+        okResult.Value.ShouldNotBeNull();
+        okResult.Value.TotalCount.ShouldBe(15); // All users match "testuser"
+        okResult.Value.Page.ShouldBe(2);
+        okResult.Value.PageSize.ShouldBe(5);
+        okResult.Value.TotalPages.ShouldBe(3);
+        okResult.Value.Users.Count().ShouldBe(5); // Second page with 5 items
     }
 
     #endregion
