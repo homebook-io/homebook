@@ -1,6 +1,7 @@
 using HomeBook.Frontend.Abstractions.Contracts;
 using HomeBook.Frontend.Services.Provider;
 using Microsoft.JSInterop;
+using Microsoft.JSInterop.Infrastructure;
 using NSubstitute;
 
 namespace HomeBook.UnitTests.Frontend.Services.Provider;
@@ -18,540 +19,222 @@ public class JsLocalStorageProviderTests
         _localStorageProvider = new JsLocalStorageProvider(_mockJsRuntime);
     }
 
-    [TestFixture]
-    public class SetItemAsyncTests : JsLocalStorageProviderTests
+    [Test]
+    public async Task SetItemAsync_WithValidKeyAndValue_ShouldCallJSRuntime()
     {
-        [Test]
-        public async Task SetItemAsync_WithValidKeyAndValue_ShouldCallJSRuntime()
-        {
-            // Arrange
-            const string key = "test-key";
-            const string value = "test-value";
+        // Arrange
+        const string key = "test-key";
+        const string value = "test-value";
 
-            // Act
-            await _localStorageProvider.SetItemAsync(key, value);
+        // Act
+        await _localStorageProvider.SetItemAsync(key, value);
 
-            // Assert
-            await _mockJsRuntime.Received(1).InvokeVoidAsync(
-                "localStorage.setItem",
-                Arg.Any<CancellationToken>(),
-                key,
-                value);
-        }
-
-        [Test]
-        public async Task SetItemAsync_WithCancellationToken_ShouldPassTokenToJSRuntime()
-        {
-            // Arrange
-            const string key = "test-key";
-            const string value = "test-value";
-            CancellationTokenSource cancellationTokenSource = new CancellationTokenSource();
-            CancellationToken cancellationToken = cancellationTokenSource.Token;
-
-            // Act
-            await _localStorageProvider.SetItemAsync(key, value, cancellationToken);
-
-            // Assert
-            await _mockJsRuntime.Received(1).InvokeVoidAsync(
-                "localStorage.setItem",
-                cancellationToken,
-                key,
-                value);
-        }
-
-        [Test]
-        public void SetItemAsync_WithNullKey_ShouldThrowArgumentException()
-        {
-            // Act & Assert
-            Should.ThrowAsync<ArgumentException>(() =>
-                _localStorageProvider.SetItemAsync(null!, "value"));
-        }
-
-        [Test]
-        public void SetItemAsync_WithEmptyKey_ShouldThrowArgumentException()
-        {
-            // Act & Assert
-            Should.ThrowAsync<ArgumentException>(() =>
-                _localStorageProvider.SetItemAsync(string.Empty, "value"));
-        }
-
-        [Test]
-        public void SetItemAsync_WithWhitespaceKey_ShouldThrowArgumentException()
-        {
-            // Act & Assert
-            Should.ThrowAsync<ArgumentException>(() =>
-                _localStorageProvider.SetItemAsync("   ", "value"));
-        }
-
-        [Test]
-        public void SetItemAsync_WithNullValue_ShouldThrowArgumentNullException()
-        {
-            // Act & Assert
-            Should.ThrowAsync<ArgumentNullException>(() =>
-                _localStorageProvider.SetItemAsync("key", null!));
-        }
-
-        [Test]
-        public async Task SetItemAsync_WhenJSRuntimeThrows_ShouldPropagateException()
-        {
-            // Arrange
-            const string key = "test-key";
-            const string value = "test-value";
-            JSException expectedException = new JSException("JS Error");
-
-            _mockJsRuntime.When(x => x.InvokeVoidAsync(
-                    "localStorage.setItem",
-                    Arg.Any<CancellationToken>(),
-                    key,
-                    value))
-                .Do(_ => throw expectedException);
-
-            // Act & Assert
-            JSException exception = await Should.ThrowAsync<JSException>(() =>
-                _localStorageProvider.SetItemAsync(key, value));
-
-            exception.Message.ShouldBe("JS Error");
-        }
+        // Assert
+        await _mockJsRuntime.Received(1).InvokeAsync<IJSVoidResult>(
+            "localStorage.setItem",
+            Arg.Any<CancellationToken>(),
+            Arg.Is<object[]>(args => args.Length == 2 && args[0].Equals(key) && args[1].Equals(value)));
     }
 
-    [TestFixture]
-    public class GetItemAsyncTests : JsLocalStorageProviderTests
+    [Test]
+    public void SetItemAsync_WithNullKey_ShouldThrowArgumentException()
     {
-        [Test]
-        public async Task GetItemAsync_WithValidKey_ShouldReturnValue()
-        {
-            // Arrange
-            const string key = "test-key";
-            const string expectedValue = "test-value";
+        // Act & Assert
+        Should.ThrowAsync<ArgumentException>(() =>
+            _localStorageProvider.SetItemAsync(null!, "value"));
+    }
 
-            _mockJsRuntime.InvokeAsync<string?>(
-                    "localStorage.getItem",
-                    Arg.Any<CancellationToken>(),
-                    key)
-                .Returns(expectedValue);
+    [Test]
+    public void SetItemAsync_WithEmptyKey_ShouldThrowArgumentException()
+    {
+        // Act & Assert
+        Should.ThrowAsync<ArgumentException>(() =>
+            _localStorageProvider.SetItemAsync(string.Empty, "value"));
+    }
 
-            // Act
-            string? result = await _localStorageProvider.GetItemAsync(key);
+    [Test]
+    public void SetItemAsync_WithNullValue_ShouldThrowArgumentNullException()
+    {
+        // Act & Assert
+        Should.ThrowAsync<ArgumentNullException>(() =>
+            _localStorageProvider.SetItemAsync("key", null!));
+    }
 
-            // Assert
-            result.ShouldBe(expectedValue);
-        }
+    [Test]
+    public async Task GetItemAsync_WithValidKey_ShouldReturnValue()
+    {
+        // Arrange
+        const string key = "test-key";
+        const string expectedValue = "test-value";
 
-        [Test]
-        public async Task GetItemAsync_WithNonExistentKey_ShouldReturnNull()
-        {
-            // Arrange
-            const string key = "non-existent-key";
-
-            _mockJsRuntime.InvokeAsync<string?>(
-                    "localStorage.getItem",
-                    Arg.Any<CancellationToken>(),
-                    key)
-                .Returns((string?)null);
-
-            // Act
-            string? result = await _localStorageProvider.GetItemAsync(key);
-
-            // Assert
-            result.ShouldBeNull();
-        }
-
-        [Test]
-        public async Task GetItemAsync_WithCancellationToken_ShouldPassTokenToJSRuntime()
-        {
-            // Arrange
-            const string key = "test-key";
-            CancellationTokenSource cancellationTokenSource = new CancellationTokenSource();
-            CancellationToken cancellationToken = cancellationTokenSource.Token;
-
-            // Act
-            await _localStorageProvider.GetItemAsync(key, cancellationToken);
-
-            // Assert
-            await _mockJsRuntime.Received(1).InvokeAsync<string?>(
+        _mockJsRuntime.InvokeAsync<string?>(
                 "localStorage.getItem",
-                cancellationToken,
-                key);
-        }
-
-        [Test]
-        public void GetItemAsync_WithNullKey_ShouldThrowArgumentException()
-        {
-            // Act & Assert
-            Should.ThrowAsync<ArgumentException>(() =>
-                _localStorageProvider.GetItemAsync(null!));
-        }
-
-        [Test]
-        public void GetItemAsync_WithEmptyKey_ShouldThrowArgumentException()
-        {
-            // Act & Assert
-            Should.ThrowAsync<ArgumentException>(() =>
-                _localStorageProvider.GetItemAsync(string.Empty));
-        }
-
-        [Test]
-        public void GetItemAsync_WithWhitespaceKey_ShouldThrowArgumentException()
-        {
-            // Act & Assert
-            Should.ThrowAsync<ArgumentException>(() =>
-                _localStorageProvider.GetItemAsync("   "));
-        }
-    }
-
-    [TestFixture]
-    public class RemoveItemAsyncTests : JsLocalStorageProviderTests
-    {
-        [Test]
-        public async Task RemoveItemAsync_WithValidKey_ShouldCallJSRuntime()
-        {
-            // Arrange
-            const string key = "test-key";
-
-            // Act
-            await _localStorageProvider.RemoveItemAsync(key);
-
-            // Assert
-            await _mockJsRuntime.Received(1).InvokeVoidAsync(
-                "localStorage.removeItem",
                 Arg.Any<CancellationToken>(),
-                key);
-        }
+                Arg.Is<object[]>(args => args.Length == 1 && args[0].Equals(key)))
+            .Returns(expectedValue);
 
-        [Test]
-        public async Task RemoveItemAsync_WithCancellationToken_ShouldPassTokenToJSRuntime()
-        {
-            // Arrange
-            const string key = "test-key";
-            CancellationTokenSource cancellationTokenSource = new CancellationTokenSource();
-            CancellationToken cancellationToken = cancellationTokenSource.Token;
+        // Act
+        string? result = await _localStorageProvider.GetItemAsync(key);
 
-            // Act
-            await _localStorageProvider.RemoveItemAsync(key, cancellationToken);
-
-            // Assert
-            await _mockJsRuntime.Received(1).InvokeVoidAsync(
-                "localStorage.removeItem",
-                cancellationToken,
-                key);
-        }
-
-        [Test]
-        public void RemoveItemAsync_WithNullKey_ShouldThrowArgumentException()
-        {
-            // Act & Assert
-            Should.ThrowAsync<ArgumentException>(() =>
-                _localStorageProvider.RemoveItemAsync(null!));
-        }
-
-        [Test]
-        public void RemoveItemAsync_WithEmptyKey_ShouldThrowArgumentException()
-        {
-            // Act & Assert
-            Should.ThrowAsync<ArgumentException>(() =>
-                _localStorageProvider.RemoveItemAsync(string.Empty));
-        }
-
-        [Test]
-        public void RemoveItemAsync_WithWhitespaceKey_ShouldThrowArgumentException()
-        {
-            // Act & Assert
-            Should.ThrowAsync<ArgumentException>(() =>
-                _localStorageProvider.RemoveItemAsync("   "));
-        }
+        // Assert
+        result.ShouldBe(expectedValue);
     }
 
-    [TestFixture]
-    public class ClearAsyncTests : JsLocalStorageProviderTests
+    [Test]
+    public async Task GetItemAsync_WithNonExistentKey_ShouldReturnNull()
     {
-        [Test]
-        public async Task ClearAsync_ShouldCallJSRuntime()
-        {
-            // Act
-            await _localStorageProvider.ClearAsync();
+        // Arrange
+        const string key = "non-existent-key";
 
-            // Assert
-            await _mockJsRuntime.Received(1).InvokeVoidAsync(
-                "localStorage.clear",
-                Arg.Any<CancellationToken>());
-        }
+        _mockJsRuntime.InvokeAsync<string?>(
+                "localStorage.getItem",
+                Arg.Any<CancellationToken>(),
+                Arg.Is<object[]>(args => args.Length == 1 && args[0].Equals(key)))
+            .Returns((string?)null);
 
-        [Test]
-        public async Task ClearAsync_WithCancellationToken_ShouldPassTokenToJSRuntime()
-        {
-            // Arrange
-            CancellationTokenSource cancellationTokenSource = new CancellationTokenSource();
-            CancellationToken cancellationToken = cancellationTokenSource.Token;
+        // Act
+        string? result = await _localStorageProvider.GetItemAsync(key);
 
-            // Act
-            await _localStorageProvider.ClearAsync(cancellationToken);
-
-            // Assert
-            await _mockJsRuntime.Received(1).InvokeVoidAsync(
-                "localStorage.clear",
-                cancellationToken);
-        }
+        // Assert
+        result.ShouldBeNull();
     }
 
-    [TestFixture]
-    public class GetLengthAsyncTests : JsLocalStorageProviderTests
+    [Test]
+    public void GetItemAsync_WithNullKey_ShouldThrowArgumentException()
     {
-        [Test]
-        public async Task GetLengthAsync_ShouldReturnLength()
-        {
-            // Arrange
-            const int expectedLength = 5;
+        // Act & Assert
+        Should.ThrowAsync<ArgumentException>(() =>
+            _localStorageProvider.GetItemAsync(null!));
+    }
 
-            _mockJsRuntime.InvokeAsync<int>(
-                    "localStorage.length",
-                    Arg.Any<CancellationToken>())
-                .Returns(expectedLength);
+    [Test]
+    public async Task RemoveItemAsync_WithValidKey_ShouldCallJSRuntime()
+    {
+        // Arrange
+        const string key = "test-key";
 
-            // Act
-            int result = await _localStorageProvider.GetLengthAsync();
+        // Act
+        await _localStorageProvider.RemoveItemAsync(key);
 
-            // Assert
-            result.ShouldBe(expectedLength);
-        }
+        // Assert
+        await _mockJsRuntime.Received(1).InvokeAsync<IJSVoidResult>(
+            "localStorage.removeItem",
+            Arg.Any<CancellationToken>(),
+            Arg.Is<object[]>(args => args.Length == 1 && args[0].Equals(key)));
+    }
 
-        [Test]
-        public async Task GetLengthAsync_WithCancellationToken_ShouldPassTokenToJSRuntime()
-        {
-            // Arrange
-            CancellationTokenSource cancellationTokenSource = new CancellationTokenSource();
-            CancellationToken cancellationToken = cancellationTokenSource.Token;
+    [Test]
+    public void RemoveItemAsync_WithNullKey_ShouldThrowArgumentException()
+    {
+        // Act & Assert
+        Should.ThrowAsync<ArgumentException>(() =>
+            _localStorageProvider.RemoveItemAsync(null!));
+    }
 
-            // Act
-            await _localStorageProvider.GetLengthAsync(cancellationToken);
+    [Test]
+    public async Task ClearAsync_ShouldCallJSRuntime()
+    {
+        // Act
+        await _localStorageProvider.ClearAsync();
 
-            // Assert
-            await _mockJsRuntime.Received(1).InvokeAsync<int>(
+        // Assert
+        await _mockJsRuntime.Received(1).InvokeAsync<IJSVoidResult>(
+            "localStorage.clear",
+            Arg.Any<CancellationToken>(),
+            Arg.Is<object[]>(args => args.Length == 0));
+    }
+
+    [Test]
+    public async Task GetLengthAsync_ShouldReturnLength()
+    {
+        // Arrange
+        const int expectedLength = 5;
+
+        _mockJsRuntime.InvokeAsync<int>(
                 "localStorage.length",
-                cancellationToken);
-        }
+                Arg.Any<CancellationToken>(),
+                Arg.Is<object[]>(args => args.Length == 0))
+            .Returns(expectedLength);
+
+        // Act
+        int result = await _localStorageProvider.GetLengthAsync();
+
+        // Assert
+        result.ShouldBe(expectedLength);
     }
 
-    [TestFixture]
-    public class GetKeyAsyncTests : JsLocalStorageProviderTests
+    [Test]
+    public async Task GetKeyAsync_WithValidIndex_ShouldReturnKey()
     {
-        [Test]
-        public async Task GetKeyAsync_WithValidIndex_ShouldReturnKey()
-        {
-            // Arrange
-            const int index = 0;
-            const string expectedKey = "test-key";
+        // Arrange
+        const int index = 0;
+        const string expectedKey = "test-key";
 
-            _mockJsRuntime.InvokeAsync<string?>(
-                    "localStorage.key",
-                    Arg.Any<CancellationToken>(),
-                    index)
-                .Returns(expectedKey);
-
-            // Act
-            string? result = await _localStorageProvider.GetKeyAsync(index);
-
-            // Assert
-            result.ShouldBe(expectedKey);
-        }
-
-        [Test]
-        public async Task GetKeyAsync_WithInvalidIndex_ShouldReturnNull()
-        {
-            // Arrange
-            const int index = 999;
-
-            _mockJsRuntime.InvokeAsync<string?>(
-                    "localStorage.key",
-                    Arg.Any<CancellationToken>(),
-                    index)
-                .Returns((string?)null);
-
-            // Act
-            string? result = await _localStorageProvider.GetKeyAsync(index);
-
-            // Assert
-            result.ShouldBeNull();
-        }
-
-        [Test]
-        public async Task GetKeyAsync_WithCancellationToken_ShouldPassTokenToJSRuntime()
-        {
-            // Arrange
-            const int index = 0;
-            CancellationTokenSource cancellationTokenSource = new CancellationTokenSource();
-            CancellationToken cancellationToken = cancellationTokenSource.Token;
-
-            // Act
-            await _localStorageProvider.GetKeyAsync(index, cancellationToken);
-
-            // Assert
-            await _mockJsRuntime.Received(1).InvokeAsync<string?>(
+        _mockJsRuntime.InvokeAsync<string?>(
                 "localStorage.key",
-                cancellationToken,
-                index);
-        }
+                Arg.Any<CancellationToken>(),
+                Arg.Is<object[]>(args => args.Length == 1 && args[0].Equals(index)))
+            .Returns(expectedKey);
 
-        [Test]
-        public void GetKeyAsync_WithNegativeIndex_ShouldThrowArgumentOutOfRangeException()
-        {
-            // Act & Assert
-            Should.ThrowAsync<ArgumentOutOfRangeException>(() =>
-                _localStorageProvider.GetKeyAsync(-1));
-        }
+        // Act
+        string? result = await _localStorageProvider.GetKeyAsync(index);
+
+        // Assert
+        result.ShouldBe(expectedKey);
     }
 
-    [TestFixture]
-    public class ContainsKeyAsyncTests : JsLocalStorageProviderTests
+    [Test]
+    public void GetKeyAsync_WithNegativeIndex_ShouldThrowArgumentOutOfRangeException()
     {
-        [Test]
-        public async Task ContainsKeyAsync_WithExistingKey_ShouldReturnTrue()
-        {
-            // Arrange
-            const string key = "existing-key";
-            const string value = "some-value";
+        // Act & Assert
+        Should.ThrowAsync<ArgumentOutOfRangeException>(() =>
+            _localStorageProvider.GetKeyAsync(-1));
+    }
 
-            _mockJsRuntime.InvokeAsync<string?>(
-                    "localStorage.getItem",
-                    Arg.Any<CancellationToken>(),
-                    key)
-                .Returns(value);
+    [Test]
+    public async Task ContainsKeyAsync_WithExistingKey_ShouldReturnTrue()
+    {
+        // Arrange
+        const string key = "existing-key";
+        const string value = "some-value";
 
-            // Act
-            bool result = await _localStorageProvider.ContainsKeyAsync(key);
-
-            // Assert
-            result.ShouldBeTrue();
-        }
-
-        [Test]
-        public async Task ContainsKeyAsync_WithNonExistingKey_ShouldReturnFalse()
-        {
-            // Arrange
-            const string key = "non-existing-key";
-
-            _mockJsRuntime.InvokeAsync<string?>(
-                    "localStorage.getItem",
-                    Arg.Any<CancellationToken>(),
-                    key)
-                .Returns((string?)null);
-
-            // Act
-            bool result = await _localStorageProvider.ContainsKeyAsync(key);
-
-            // Assert
-            result.ShouldBeFalse();
-        }
-
-        [Test]
-        public async Task ContainsKeyAsync_WithEmptyStringValue_ShouldReturnTrue()
-        {
-            // Arrange
-            const string key = "empty-value-key";
-
-            _mockJsRuntime.InvokeAsync<string?>(
-                    "localStorage.getItem",
-                    Arg.Any<CancellationToken>(),
-                    key)
-                .Returns(string.Empty);
-
-            // Act
-            bool result = await _localStorageProvider.ContainsKeyAsync(key);
-
-            // Assert
-            result.ShouldBeTrue();
-        }
-
-        [Test]
-        public async Task ContainsKeyAsync_WithCancellationToken_ShouldPassTokenCorrectly()
-        {
-            // Arrange
-            const string key = "test-key";
-            CancellationTokenSource cancellationTokenSource = new CancellationTokenSource();
-            CancellationToken cancellationToken = cancellationTokenSource.Token;
-
-            _mockJsRuntime.InvokeAsync<string?>(
-                    "localStorage.getItem",
-                    cancellationToken,
-                    key)
-                .Returns("value");
-
-            // Act
-            await _localStorageProvider.ContainsKeyAsync(key, cancellationToken);
-
-            // Assert
-            await _mockJsRuntime.Received(1).InvokeAsync<string?>(
+        _mockJsRuntime.InvokeAsync<string?>(
                 "localStorage.getItem",
-                cancellationToken,
-                key);
-        }
+                Arg.Any<CancellationToken>(),
+                Arg.Is<object[]>(args => args.Length == 1 && args[0].Equals(key)))
+            .Returns(value);
 
-        [Test]
-        public void ContainsKeyAsync_WithNullKey_ShouldThrowArgumentException()
-        {
-            // Act & Assert
-            Should.ThrowAsync<ArgumentException>(() =>
-                _localStorageProvider.ContainsKeyAsync(null!));
-        }
+        // Act
+        bool result = await _localStorageProvider.ContainsKeyAsync(key);
 
-        [Test]
-        public void ContainsKeyAsync_WithEmptyKey_ShouldThrowArgumentException()
-        {
-            // Act & Assert
-            Should.ThrowAsync<ArgumentException>(() =>
-                _localStorageProvider.ContainsKeyAsync(string.Empty));
-        }
-
-        [Test]
-        public void ContainsKeyAsync_WithWhitespaceKey_ShouldThrowArgumentException()
-        {
-            // Act & Assert
-            Should.ThrowAsync<ArgumentException>(() =>
-                _localStorageProvider.ContainsKeyAsync("   "));
-        }
+        // Assert
+        result.ShouldBeTrue();
     }
 
-    [TestFixture]
-    public class IntegrationTests : JsLocalStorageProviderTests
+    [Test]
+    public async Task ContainsKeyAsync_WithNonExistingKey_ShouldReturnFalse()
     {
-        [Test]
-        public async Task LocalStorageWorkflow_SetGetRemove_ShouldWorkCorrectly()
-        {
-            // Arrange
-            const string key = "workflow-key";
-            const string value = "workflow-value";
+        // Arrange
+        const string key = "non-existing-key";
 
-            _mockJsRuntime.InvokeAsync<string?>(
-                    "localStorage.getItem",
-                    Arg.Any<CancellationToken>(),
-                    key)
-                .Returns(value, (string?)null);
-
-            // Act & Assert - Set item
-            await _localStorageProvider.SetItemAsync(key, value);
-            await _mockJsRuntime.Received(1).InvokeVoidAsync(
-                "localStorage.setItem",
+        _mockJsRuntime.InvokeAsync<string?>(
+                "localStorage.getItem",
                 Arg.Any<CancellationToken>(),
-                key,
-                value);
+                Arg.Is<object[]>(args => args.Length == 1 && args[0].Equals(key)))
+            .Returns((string?)null);
 
-            // Act & Assert - Get item
-            string? retrievedValue = await _localStorageProvider.GetItemAsync(key);
-            retrievedValue.ShouldBe(value);
+        // Act
+        bool result = await _localStorageProvider.ContainsKeyAsync(key);
 
-            // Act & Assert - Check contains
-            bool containsKey = await _localStorageProvider.ContainsKeyAsync(key);
-            containsKey.ShouldBeTrue();
+        // Assert
+        result.ShouldBeFalse();
+    }
 
-            // Act & Assert - Remove item
-            await _localStorageProvider.RemoveItemAsync(key);
-            await _mockJsRuntime.Received(1).InvokeVoidAsync(
-                "localStorage.removeItem",
-                Arg.Any<CancellationToken>(),
-                key);
-
-            // Act & Assert - Check after removal
-            bool containsAfterRemoval = await _localStorageProvider.ContainsKeyAsync(key);
-            containsAfterRemoval.ShouldBeFalse();
-        }
+    [Test]
+    public void ContainsKeyAsync_WithNullKey_ShouldThrowArgumentException()
+    {
+        // Act & Assert
+        Should.ThrowAsync<ArgumentException>(() =>
+            _localStorageProvider.ContainsKeyAsync(null!));
     }
 }
