@@ -17,7 +17,7 @@ public class SystemManagementProvider(
         await authenticationService.IsAdminOrThrowAsync(cancellationToken);
 
         string? token = await authenticationService.GetTokenAsync(cancellationToken);
-        GetSystemInfoResponse? response = await backendClient.System.Instance.GetAsync(x =>
+        GetSystemInfoResponse? response = await backendClient.System.Instance.Info.GetAsync(x =>
             {
                 x.Headers.Add("Authorization", $"Bearer {token}");
             },

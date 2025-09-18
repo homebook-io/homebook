@@ -59,6 +59,12 @@
     [Inject]
     private IAuthenticationService AuthenticationService { get; set; }
 
+    [Inject]
+    private IInstanceManagementProvider InstanceManagementProvider { get; set; }
+
+    [Inject]
+    private IJsLocalStorageProvider JsLocalStorageProvider { get; set; }
+
     private bool _setupServiceInitialized = false;
     private bool _isRedirecting;
     private InstanceStatus? _instanceStatus;
@@ -73,9 +79,24 @@
             await SetupService.InitializeAsync();
             await WaitForServerAndGetSetupStatusAsync();
 
+            if (_instanceStatus == InstanceStatus.Running)
+            {
+                // load instance data into cache
+                await LoadInstanceDataAsync();
+            }
+
             _setupServiceInitialized = true;
+
             StateHasChanged();
         });
+    }
+
+    private async Task LoadInstanceDataAsync()
+    {
+        CancellationToken cancellationToken = CancellationToken.None;
+
+        string instanceName = await InstanceManagementProvider.GetInstanceNameAsync(cancellationToken);
+        await JsLocalStorageProvider.SetItemAsync(JsLocalStorageKeys.HomeBookInstanceName, instanceName, cancellationToken);
     }
 
     private async Task WaitForServerAndGetSetupStatusAsync()
