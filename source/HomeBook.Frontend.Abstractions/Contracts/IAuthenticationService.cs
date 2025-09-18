@@ -8,6 +8,11 @@ namespace HomeBook.Frontend.Abstractions.Contracts;
 public interface IAuthenticationService
 {
     /// <summary>
+    /// event triggered when the authentication state changes (e.g., login or logout).
+    /// </summary>
+    event Action<bool>? AuthenticationStateChanged;
+
+    /// <summary>
     /// logs in a user with the provided username and password.
     /// </summary>
     /// <param name="username"></param>
@@ -52,7 +57,9 @@ public interface IAuthenticationService
     Task<bool> IsCurrentUserAdminAsync(CancellationToken cancellationToken = default);
 
     /// <summary>
-    /// event triggered when the authentication state changes (e.g., login or logout).
+    /// throws an UnauthorizedAccessException if the current user is not an admin.
     /// </summary>
-    event Action<bool>? AuthenticationStateChanged;
+    /// <param name="cancellationToken"></param>
+    /// <returns></returns>
+    Task IsAdminOrThrowAsync(CancellationToken cancellationToken = default);
 }

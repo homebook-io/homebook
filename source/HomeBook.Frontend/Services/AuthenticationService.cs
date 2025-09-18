@@ -197,7 +197,8 @@ public class AuthenticationService(
                 claims.Add(new Claim("IsAdmin", isAdminElement.GetBoolean().ToString() ?? "false"));
 
             // Extract role claim
-            if (jsonDocument.RootElement.TryGetProperty("http://schemas.microsoft.com/ws/2008/06/identity/claims/role", out JsonElement roleElement))
+            if (jsonDocument.RootElement.TryGetProperty("http://schemas.microsoft.com/ws/2008/06/identity/claims/role",
+                    out JsonElement roleElement))
                 claims.Add(new Claim(ClaimTypes.Role, roleElement.GetString() ?? "User"));
 
             ClaimsIdentity identity = new(claims, "jwt");
@@ -222,5 +223,13 @@ public class AuthenticationService(
         }
 
         return false;
+    }
+
+    /// <inheritdoc />
+    public async Task IsAdminOrThrowAsync(CancellationToken cancellationToken = default)
+    {
+        bool isUserAdmin = await IsCurrentUserAdminAsync(cancellationToken);
+        if (!isUserAdmin)
+            throw new UnauthorizedAccessException("User is not authorized to access system information.");
     }
 }

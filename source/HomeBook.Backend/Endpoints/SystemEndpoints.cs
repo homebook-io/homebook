@@ -42,7 +42,7 @@ public static class SystemEndpoints
             .Produces<string>(StatusCodes.Status403Forbidden)
             .Produces<string>(StatusCodes.Status500InternalServerError);
 
-        group.MapGet("/users/{id:guid}", SystemHandler.HandleGetUserById)
+        group.MapGet("/users/{userId:guid}", SystemHandler.HandleGetUserById)
             .WithName("GetUserById")
             .WithDescription("Returns a user by its id (Admin only)")
             .WithMetadata(new RequireAdminAttribute())

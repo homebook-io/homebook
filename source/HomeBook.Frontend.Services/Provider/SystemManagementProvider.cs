@@ -14,7 +14,7 @@ public class SystemManagementProvider(
     /// <inheritdoc />
     public async Task<SystemInfo> GetSystemInfoAsync(CancellationToken cancellationToken = default)
     {
-        await IsAdminOrThrowAsync(cancellationToken);
+        await authenticationService.IsAdminOrThrowAsync(cancellationToken);
 
         string? token = await authenticationService.GetTokenAsync(cancellationToken);
         GetSystemInfoResponse? response = await backendClient.System.GetAsync(x =>
@@ -25,12 +25,5 @@ public class SystemManagementProvider(
 
         SystemInfo result = response.ToSystemInfo();
         return result;
-    }
-
-    private async Task IsAdminOrThrowAsync(CancellationToken cancellationToken)
-    {
-        bool isUserAdmin = await authenticationService.IsCurrentUserAdminAsync(cancellationToken);
-        if (!isUserAdmin)
-            throw new UnauthorizedAccessException("User is not authorized to access system information.");
     }
 }

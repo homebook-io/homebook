@@ -153,7 +153,7 @@ public static class SystemHandler
             {
                 Username = request.Username,
                 PasswordHash = passwordHash,
-                PasswordHashType = hashProvider.GetType().Name,
+                PasswordHashType = hashProvider.AlgorithmName,
                 IsAdmin = request.IsAdmin,
                 Created = DateTime.UtcNow
             };
@@ -255,7 +255,7 @@ public static class SystemHandler
 
             // Update user password
             user.PasswordHash = passwordHash;
-            user.PasswordHashType = hashProvider.GetType().Name;
+            user.PasswordHashType = hashProvider.AlgorithmName;
 
             await userRepository.UpdateUserAsync(user, cancellationToken);
 
