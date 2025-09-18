@@ -5,7 +5,6 @@ using HomeBook.Backend.Core.DataProvider.Validators;
 using HomeBook.Backend.Data.Entities;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
-using IConfigurationProvider = HomeBook.Backend.Abstractions.Contracts.IConfigurationProvider;
 
 namespace HomeBook.Backend.Core.DataProvider.Extensions;
 
@@ -16,7 +15,7 @@ public static class ServiceCollectionExtensions
         InstanceStatus instanceStatus)
     {
         services.AddScoped<IUserProvider, UserProvider>();
-        services.AddScoped<IConfigurationProvider, ConfigurationProvider>();
+        services.AddScoped<IInstanceConfigurationProvider, InstanceConfigurationProvider>();
 
         return services;
     }

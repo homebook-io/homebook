@@ -14,4 +14,20 @@ public interface IConfigurationRepository
     /// <param name="cancellationToken"></param>
     /// <returns></returns>
     Task WriteConfigurationAsync(Configuration configuration, CancellationToken cancellationToken = default);
+
+    /// <summary>
+    /// returns all configurations
+    /// </summary>
+    /// <param name="cancellationToken"></param>
+    /// <returns></returns>
+    Task<IReadOnlyList<Configuration>> GetAllConfigurationAsync(CancellationToken cancellationToken = default);
+
+    /// <summary>
+    /// returns the configuration by key
+    /// </summary>
+    /// <param name="key"></param>
+    /// <param name="cancellationToken"></param>
+    /// <returns></returns>
+    Task<Configuration?> GetConfigurationByKeyAsync(string key,
+        CancellationToken cancellationToken = default);
 }

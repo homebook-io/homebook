@@ -452,4 +452,26 @@ public static class SystemHandler
             return TypedResults.Problem("An error occurred while updating the username", statusCode: 500);
         }
     }
+
+    public static async Task<IResult> HandleUpdateInstanceName(
+        [FromServices] HomeBook.Backend.Abstractions.Contracts.IInstanceConfigurationProvider instanceConfigurationProvider,
+        [FromBody] UpdateInstanceNameRequest request,
+        CancellationToken cancellationToken = default)
+    {
+        try
+        {
+            // Validate input
+            if (string.IsNullOrWhiteSpace(request.Name))
+                return TypedResults.BadRequest("Instance name is required and cannot be empty");
+
+            // Update the instance name
+            await instanceConfigurationProvider.WriteHomeBookInstanceNameAsync(request.Name, cancellationToken);
+
+            return TypedResults.Ok("Instance name updated successfully");
+        }
+        catch (Exception)
+        {
+            return TypedResults.Problem("An error occurred while updating the instance name", statusCode: 500);
+        }
+    }
 }
