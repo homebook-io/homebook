@@ -1,0 +1,25 @@
+@page "/Settings/Instance"
+
+@attribute [Authorize(Roles = "Admin")]
+
+<MudContainer Class="mt-4">
+
+    <MudGrid>
+
+        <MudItem xs="12" sm="12" md="4" lg="3" xl="3" xxl="2">
+
+            <SettingsNavMenu/>
+
+        </MudItem>
+
+        <MudItem xs="12" sm="12" md="8" lg="9" xl="9" xxl="10">
+
+            <MudPaper Class="pa-4">
+
+            </MudPaper>
+
+        </MudItem>
+
+    </MudGrid>
+
+</MudContainer>

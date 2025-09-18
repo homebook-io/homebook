@@ -4,7 +4,8 @@
 <MudPaper>
 
     <MudNavMenu Bordered="true"
-                Class="mud-navmenu-first-level"
+                Dense="true"
+                Class="mud-navmenu-first-level mud-navmenu-xxl"
                 Color="Color.Secondary">
 
         <MudNavLink Match="NavLinkMatch.All"
@@ -13,12 +14,42 @@
             General
         </MudNavLink>
 
+        <MudNavLink Match="NavLinkMatch.All"
+                    Href="/Settings/About"
+                    Icon="@HomeBookIcons.Icons8.GlassMorphism.Design">
+            Appearance
+        </MudNavLink>
+
+        <MudNavLink Match="NavLinkMatch.All"
+                    Href="/Settings/About"
+                    Icon="@HomeBookIcons.Icons8.GlassMorphism.Queue">
+            About
+        </MudNavLink>
+
+        <MudDivider Class="my-1"/>
+
         <AuthorizeView Roles="Admin">
+
             <MudNavLink Match="NavLinkMatch.Prefix"
                         Href="/Settings/Users"
                         Icon="@HomeBookIcons.Icons8.GlassMorphism.PeopleAlt">
                 Users
             </MudNavLink>
+
+            <MudNavLink Match="NavLinkMatch.Prefix"
+                        Href="/Settings/Instance"
+                        Icon="@HomeBookIcons.Icons8.GlassMorphism.Database">
+                Homebook Configuration
+            </MudNavLink>
+
+            <MudNavLink Match="NavLinkMatch.Prefix"
+                        Href="/Settings/Instance"
+                        Icon="@HomeBookIcons.Icons8.GlassMorphism.AI">
+                AI Configuration
+            </MudNavLink>
+
+            <MudDivider Class="my-1"/>
+
         </AuthorizeView>
 
         @* <MudNavLink Href="/Settings/billing" Disabled="true">Billing</MudNavLink> *@
@@ -29,8 +60,8 @@
 
         <MudNavLink Match="NavLinkMatch.All"
                     Href="/Settings/About"
-                    Icon="@HomeBookIcons.Icons8.GlassMorphism.Queue">
-            About
+                    Icon="@HomeBookIcons.Icons8.GlassMorphism.LoveLetter">
+            Feedback
         </MudNavLink>
 
     </MudNavMenu>

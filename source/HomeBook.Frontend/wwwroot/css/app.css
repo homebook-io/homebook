@@ -250,6 +250,18 @@
 .mud-navmenu.mud-navmenu-first-level > .mud-nav-item > .mud-nav-link {
   border-radius: inherit;
 }
+.mud-navmenu.mud-navmenu-xxl .mud-nav-link {
+  display: flex !important;
+  align-items: center !important;
+}
+.mud-navmenu.mud-navmenu-xxl .mud-icon-root {
+  width: 3rem;
+  height: 3rem;
+}
+.mud-navmenu.mud-navmenu-xxl .mud-nav-link-text {
+  font-size: 1rem;
+  color: var(--mud-palette-text-primary);
+}
 
 .ui-wavebackground-container {
   width: 100vw;

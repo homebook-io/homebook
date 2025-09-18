@@ -19,4 +19,22 @@
             }
         }
     }
+
+    &.mud-navmenu-xxl {
+
+        .mud-nav-link {
+            display: flex !important;
+            align-items: center !important;
+        }
+
+        .mud-icon-root {
+            width: 3rem;
+            height: 3rem;
+        }
+
+        .mud-nav-link-text {
+            font-size: 1rem;
+            color: var(--mud-palette-primary);
+        }
+    }
 }
