@@ -9,7 +9,7 @@ I want to manage the system settings
         And I have valid test user
 
     Scenario: Get system informations without jwt token
-        When I request HTTP GET system
+        When I request HTTP GET system instance info
         Then the response status code should be 401
 
     Scenario: Get system informations with non admin
@@ -18,7 +18,7 @@ I want to manage the system settings
         Then the login should succeed
         And an access token should be provided
 
-        When I request HTTP GET system
+        When I request HTTP GET system instance info
         Then the response status code should be 401
 
     Scenario: Get system informations with admin
@@ -27,7 +27,7 @@ I want to manage the system settings
         Then the login should succeed
         And an access token should be provided
 
-        When I request HTTP GET system
+        When I request HTTP GET system instance info
         Then the response status code should be 200
         And the system info should be valid
 
