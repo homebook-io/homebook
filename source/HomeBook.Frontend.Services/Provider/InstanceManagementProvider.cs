@@ -1,9 +1,12 @@
 using HomeBook.Client;
+using HomeBook.Client.Models;
 using HomeBook.Frontend.Abstractions.Contracts;
 
 namespace HomeBook.Frontend.Services.Provider;
 
-public class InstanceManagementProvider(BackendClient backendClient) : IInstanceManagementProvider
+public class InstanceManagementProvider(
+    BackendClient backendClient,
+    IAuthenticationService authenticationService) : IInstanceManagementProvider
 {
     private string? _instanceName;
 
@@ -13,6 +16,25 @@ public class InstanceManagementProvider(BackendClient backendClient) : IInstance
             await LoadInstanceInfoAsync(cancellationToken);
 
         return _instanceName ?? string.Empty;
+    }
+
+    public async Task UpdateInstanceNameAsync(string newName, CancellationToken cancellationToken = default)
+    {
+        await authenticationService.IsAdminOrThrowAsync(cancellationToken);
+
+        if (string.IsNullOrEmpty(newName))
+            throw new ArgumentException("Instance name cannot be null or empty.", nameof(newName));
+
+        string? token = await authenticationService.GetTokenAsync(cancellationToken);
+        await backendClient.System.Instance.Name.PutAsync(new UpdateInstanceNameRequest()
+            {
+                Name = newName
+            },
+            x =>
+            {
+                x.Headers.Add("Authorization", $"Bearer {token}");
+            },
+            cancellationToken);
     }
 
     private async Task LoadInstanceInfoAsync(CancellationToken cancellationToken)

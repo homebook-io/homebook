@@ -10,4 +10,13 @@ public interface IInstanceManagementProvider
     /// </summary>
     /// <returns></returns>
     Task<string> GetInstanceNameAsync(CancellationToken cancellationToken = default);
+
+    /// <summary>
+    /// updates the name of the homebook instance
+    /// </summary>
+    /// <param name="newName"></param>
+    /// <param name="cancellationToken"></param>
+    /// <returns></returns>
+    Task UpdateInstanceNameAsync(string newName,
+        CancellationToken cancellationToken = default);
 }
