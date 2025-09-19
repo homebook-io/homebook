@@ -10,19 +10,19 @@
 
         <MudNavLink Match="NavLinkMatch.All"
                     Href="/Settings"
-                    Icon="@HomeBookIcons.Icons8.GlassMorphism.Adjust">
+                    Icon="@HomeBookIcons.Icons8.LiquidGlassColor.Gear">
             General
         </MudNavLink>
 
         <MudNavLink Match="NavLinkMatch.All"
-                    Href="/Settings/About"
-                    Icon="@HomeBookIcons.Icons8.GlassMorphism.Design">
+                    Href="/Settings/Appearance"
+                    Icon="@HomeBookIcons.Icons8.LiquidGlassColor.PaintRoller">
             Appearance
         </MudNavLink>
 
         <MudNavLink Match="NavLinkMatch.All"
                     Href="/Settings/About"
-                    Icon="@HomeBookIcons.Icons8.GlassMorphism.Queue">
+                    Icon="@HomeBookIcons.Icons8.LiquidGlassColor.SystemInformation">
             About
         </MudNavLink>
 
@@ -32,35 +32,49 @@
 
             <MudNavLink Match="NavLinkMatch.Prefix"
                         Href="/Settings/Users"
-                        Icon="@HomeBookIcons.Icons8.GlassMorphism.PeopleAlt">
+                        Icon="@HomeBookIcons.Icons8.LiquidGlassColor.People">
                 Users
             </MudNavLink>
 
             <MudNavLink Match="NavLinkMatch.Prefix"
                         Href="/Settings/Instance"
-                        Icon="@HomeBookIcons.Icons8.GlassMorphism.Database">
+                        Icon="@HomeBookIcons.Icons8.LiquidGlassColor.LaptopSettings">
                 Homebook Configuration
             </MudNavLink>
 
             <MudNavLink Match="NavLinkMatch.Prefix"
-                        Href="/Settings/Instance"
-                        Icon="@HomeBookIcons.Icons8.GlassMorphism.AI">
+                        Href="/Settings/Database"
+                        Icon="@HomeBookIcons.Icons8.LiquidGlassColor.Database">
+                Database
+            </MudNavLink>
+
+            <MudNavLink Match="NavLinkMatch.Prefix"
+                        Href="/Settings/Ai"
+                        Icon="@HomeBookIcons.Icons8.LiquidGlassColor.Ai">
                 AI Configuration
+            </MudNavLink>
+
+            <MudDivider Class="my-1"/>
+
+            <MudNavLink Match="NavLinkMatch.Prefix"
+                        Href="/Settings/Developer"
+                        Icon="@HomeBookIcons.Icons8.LiquidGlassColor.SourceCode">
+                Developer
+            </MudNavLink>
+
+            <MudNavLink Match="NavLinkMatch.Prefix"
+                        Href="/Settings/Developer/Icons"
+                        Icon="@HomeBookIcons.Icons8.LiquidGlassColor.Image">
+                Icons
             </MudNavLink>
 
             <MudDivider Class="my-1"/>
 
         </AuthorizeView>
 
-        @* <MudNavLink Href="/Settings/billing" Disabled="true">Billing</MudNavLink> *@
-        @* <MudNavGroup Title="Settings" Expanded="true"> *@
-        @*     <MudNavLink Href="/Settings/users">Users</MudNavLink> *@
-        @*     <MudNavLink Href="/Settings/security">Security</MudNavLink> *@
-        @* </MudNavGroup> *@
-
         <MudNavLink Match="NavLinkMatch.All"
-                    Href="/Settings/About"
-                    Icon="@HomeBookIcons.Icons8.GlassMorphism.LoveLetter">
+                    Href="/Settings/Feedback"
+                    Icon="@HomeBookIcons.Icons8.LiquidGlassColor.Communication">
             Feedback
         </MudNavLink>
 

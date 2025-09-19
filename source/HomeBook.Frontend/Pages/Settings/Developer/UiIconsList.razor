@@ -1,0 +1,24 @@
+@inject IJSRuntime JsRuntime
+@inject ISnackbar Snackbar
+
+<MudText Typo="Typo.h5"
+         Color="Color.Primary">@IconClass?.Name Icons</MudText>
+
+<div class="d-flex flex-wrap gap-2 my-5 ui-dev-icons-container">
+
+    @foreach (IconInfo icon in _allIcons)
+    {
+        <MudTooltip Text="@icon.Name"
+                    Placement="Placement.Bottom"
+                    Color="Color.Primary">
+
+            <MudButton Variant="Variant.Text"
+                       Class="pa-2 d-flex flex-column align-center"
+                       OnClick="() => CopyIconName(icon.Name)">
+                <MudIcon Icon="@icon.Value"/>
+            </MudButton>
+
+        </MudTooltip>
+    }
+
+</div>
