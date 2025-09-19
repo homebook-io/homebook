@@ -12,6 +12,10 @@
 
 **from:** https://icons8.com/icons/all--style-glassmorphism
 
+### icons8 - liquid-glass-color
+
+**from:** https://icons8.com/icons/all--style-liquid-glass-color
+
 ## Theme
 
 | Color         | Hex Code | Preview                                                         |
