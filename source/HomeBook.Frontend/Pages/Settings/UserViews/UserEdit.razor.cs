@@ -5,7 +5,7 @@ using System.ComponentModel.DataAnnotations;
 using System.Security.Claims;
 using HomeBook.Frontend.Abstractions.Models.System;
 
-namespace HomeBook.Frontend.Pages.Settings.Users;
+namespace HomeBook.Frontend.Pages.Settings.UserViews;
 
 public partial class UserEdit : ComponentBase
 {

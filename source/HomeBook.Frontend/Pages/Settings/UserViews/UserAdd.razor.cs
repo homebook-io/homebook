@@ -2,7 +2,7 @@ using Microsoft.AspNetCore.Components;
 using MudBlazor;
 using System.ComponentModel.DataAnnotations;
 
-namespace HomeBook.Frontend.Pages.Settings.Users;
+namespace HomeBook.Frontend.Pages.Settings.UserViews;
 
 public partial class UserAdd : ComponentBase
 {
