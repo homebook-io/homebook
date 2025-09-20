@@ -1,3 +1,11 @@
+---
+name: Codex Task
+about: Describe a coding task for Codex to work on
+title: "Feature: "
+labels: ["codex"]
+assignees: []
+---
+
 # 🎯 Title
 <!-- Short, concise summary of the task -->
 Feature: [Brief description]

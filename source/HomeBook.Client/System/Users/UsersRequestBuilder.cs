@@ -20,27 +20,27 @@ namespace HomeBook.Client.System.Users
     {
         /// <summary>Gets an item from the HomeBook.Client.system.users.item collection</summary>
         /// <param name="position">Unique identifier of the item</param>
-        /// <returns>A <see cref="global::HomeBook.Client.System.Users.Item.ItemRequestBuilder"/></returns>
-        public global::HomeBook.Client.System.Users.Item.ItemRequestBuilder this[Guid position]
+        /// <returns>A <see cref="global::HomeBook.Client.System.Users.Item.WithUserItemRequestBuilder"/></returns>
+        public global::HomeBook.Client.System.Users.Item.WithUserItemRequestBuilder this[Guid position]
         {
             get
             {
                 var urlTplParams = new Dictionary<string, object>(PathParameters);
-                urlTplParams.Add("%2Did", position);
-                return new global::HomeBook.Client.System.Users.Item.ItemRequestBuilder(urlTplParams, RequestAdapter);
+                urlTplParams.Add("userId", position);
+                return new global::HomeBook.Client.System.Users.Item.WithUserItemRequestBuilder(urlTplParams, RequestAdapter);
             }
         }
         /// <summary>Gets an item from the HomeBook.Client.system.users.item collection</summary>
         /// <param name="position">Unique identifier of the item</param>
-        /// <returns>A <see cref="global::HomeBook.Client.System.Users.Item.ItemRequestBuilder"/></returns>
+        /// <returns>A <see cref="global::HomeBook.Client.System.Users.Item.WithUserItemRequestBuilder"/></returns>
         [Obsolete("This indexer is deprecated and will be removed in the next major version. Use the one with the typed parameter instead.")]
-        public global::HomeBook.Client.System.Users.Item.ItemRequestBuilder this[string position]
+        public global::HomeBook.Client.System.Users.Item.WithUserItemRequestBuilder this[string position]
         {
             get
             {
                 var urlTplParams = new Dictionary<string, object>(PathParameters);
-                if (!string.IsNullOrWhiteSpace(position)) urlTplParams.Add("%2Did", position);
-                return new global::HomeBook.Client.System.Users.Item.ItemRequestBuilder(urlTplParams, RequestAdapter);
+                if (!string.IsNullOrWhiteSpace(position)) urlTplParams.Add("userId", position);
+                return new global::HomeBook.Client.System.Users.Item.WithUserItemRequestBuilder(urlTplParams, RequestAdapter);
             }
         }
         /// <summary>

@@ -1,0 +1,66 @@
+@page "/Settings/Instance"
+
+@using HomeBook.Frontend.Abstractions.Contracts
+
+@inject ISnackbar Snackbar
+@inject IInstanceManagementProvider InstanceManagementProvider
+@inject IJsLocalStorageProvider JsLocalStorageProvider
+
+<MudContainer Class="mt-4">
+
+    <MudGrid>
+
+        <MudItem xs="12" sm="12" md="4" lg="3" xl="3" xxl="2">
+
+            <SettingsNavMenu/>
+
+        </MudItem>
+
+        <MudItem xs="12" sm="12" md="8" lg="9" xl="9" xxl="10">
+
+            <MudPaper Class="pa-4 mud-width-full">
+
+                <MudText Typo="Typo.h5" Class="mb-4">Instance Configuration</MudText>
+
+                <MudForm @ref="_form" Model="_configurationModel" @bind-IsValid="_isValid">
+
+                    <MudGrid Spacing="0">
+
+                        <MudItem xs="12">
+                            <MudText Typo="Typo.h6">HomeBook Name</MudText>
+                        </MudItem>
+
+                        <MudItem xs="12" sm="9" md="10">
+                            <MudTextField @bind-Value="_configurationModel.InstanceName"
+                                          Margin="Margin.Dense"
+                                          Variant="Variant.Outlined"
+                                          For="@(() => _configurationModel.InstanceName)"
+                                          Immediate="true"/>
+                        </MudItem>
+
+                        <MudItem xs="12" sm="3" md="2" Class="d-flex align-center">
+                            <MudButton Color="Color.Primary"
+                                       Class="ms-3"
+                                       Variant="Variant.Filled"
+                                       OnClick="UpdateInstanceNameAsync"
+                                       Disabled="@(!_isValid || _isLoading)"
+                                       FullWidth="true">
+                                @if (_isLoading)
+                                {
+                                    <MudProgressCircular Size="Size.Small" Indeterminate="true" Class="mr-2"/>
+                                }
+                                Update
+                            </MudButton>
+                        </MudItem>
+
+                    </MudGrid>
+
+                </MudForm>
+
+            </MudPaper>
+
+        </MudItem>
+
+    </MudGrid>
+
+</MudContainer>

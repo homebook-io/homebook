@@ -153,7 +153,7 @@ public static class SystemHandler
             {
                 Username = request.Username,
                 PasswordHash = passwordHash,
-                PasswordHashType = hashProvider.GetType().Name,
+                PasswordHashType = hashProvider.AlgorithmName,
                 IsAdmin = request.IsAdmin,
                 Created = DateTime.UtcNow
             };
@@ -255,7 +255,7 @@ public static class SystemHandler
 
             // Update user password
             user.PasswordHash = passwordHash;
-            user.PasswordHashType = hashProvider.GetType().Name;
+            user.PasswordHashType = hashProvider.AlgorithmName;
 
             await userRepository.UpdateUserAsync(user, cancellationToken);
 
@@ -450,6 +450,28 @@ public static class SystemHandler
         catch (Exception)
         {
             return TypedResults.Problem("An error occurred while updating the username", statusCode: 500);
+        }
+    }
+
+    public static async Task<IResult> HandleUpdateInstanceName(
+        [FromServices] HomeBook.Backend.Abstractions.Contracts.IInstanceConfigurationProvider instanceConfigurationProvider,
+        [FromBody] UpdateInstanceNameRequest request,
+        CancellationToken cancellationToken = default)
+    {
+        try
+        {
+            // Validate input
+            if (string.IsNullOrWhiteSpace(request.Name))
+                return TypedResults.BadRequest("Instance name is required and cannot be empty");
+
+            // Update the instance name
+            await instanceConfigurationProvider.WriteHomeBookInstanceNameAsync(request.Name, cancellationToken);
+
+            return TypedResults.Ok("Instance name updated successfully");
+        }
+        catch (Exception)
+        {
+            return TypedResults.Problem("An error occurred while updating the instance name", statusCode: 500);
         }
     }
 }

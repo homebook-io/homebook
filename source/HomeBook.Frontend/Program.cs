@@ -36,7 +36,10 @@ builder.Services.AddScoped(sp =>
 builder.Services.AddAuthorizationCore();
 builder.Services.AddScoped<AuthenticationStateProvider, CustomAuthenticationStateProvider>();
 
-builder.Services.AddMudServices();
+builder.Services.AddMudServices(x =>
+{
+    x.SnackbarConfiguration.PositionClass = MudBlazor.Defaults.Classes.Position.BottomRight;
+});
 builder.Services.AddFrontendUiServices(builder.Configuration)
     .AddFrontendServices(builder.Configuration)
     .AddBackendClient(builder.Configuration);

@@ -250,6 +250,19 @@
 .mud-navmenu.mud-navmenu-first-level > .mud-nav-item > .mud-nav-link {
   border-radius: inherit;
 }
+.mud-navmenu.mud-navmenu-xxl .mud-nav-link {
+  display: flex !important;
+  align-items: center !important;
+  padding: 8px 8px !important;
+}
+.mud-navmenu.mud-navmenu-xxl .mud-icon-root {
+  width: 2rem;
+  height: 2rem;
+}
+.mud-navmenu.mud-navmenu-xxl .mud-nav-link-text {
+  font-size: 1rem;
+  color: var(--mud-palette-primary);
+}
 
 .ui-wavebackground-container {
   width: 100vw;
@@ -385,6 +398,10 @@
   bottom: 0;
   left: 0;
   width: 100%;
+}
+
+.ui-dev-icons-container .mud-icon-root {
+  font-size: 60px;
 }
 
 .hb-setup-container {

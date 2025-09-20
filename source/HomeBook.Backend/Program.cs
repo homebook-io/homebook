@@ -104,7 +104,8 @@ switch (instanceStatus)
     case InstanceStatus.RUNNING:
         app.MapSetupEndpoints()
             .MapUpdateEndpoints()
-            .MapAccountEndpoints();
+            .MapAccountEndpoints()
+            .MapInfoEndpoints();
         break;
 }
 

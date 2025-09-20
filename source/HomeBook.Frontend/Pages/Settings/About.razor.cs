@@ -46,6 +46,9 @@ public partial class About : ComponentBase
 
     private async Task LoadBackendInfoAsync(CancellationToken cancellationToken)
     {
+        if (!await AuthenticationService.IsCurrentUserAdminAsync(cancellationToken))
+            return;
+
         try
         {
             SystemInfo systemInfo = await SystemManagementProvider.GetSystemInfoAsync(cancellationToken);

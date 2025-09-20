@@ -19,6 +19,9 @@ public static class ServiceCollectionExtensions
 
         services.AddScoped<ISystemManagementProvider, SystemManagementProvider>();
         services.AddScoped<IUserManagementProvider, UserManagementProvider>();
+        services.AddScoped<IInstanceManagementProvider, InstanceManagementProvider>();
+
+        services.AddScoped<IJsLocalStorageProvider, JsLocalStorageProvider>();
 
         services.AddSingleton<IDatabaseSetupService, DatabaseSetupService>();
         services.AddSingleton<ILicensesService, LicensesService>();
