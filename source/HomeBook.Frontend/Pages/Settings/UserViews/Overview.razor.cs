@@ -5,7 +5,7 @@ using Microsoft.AspNetCore.Components;
 using Microsoft.AspNetCore.Components.Authorization;
 using MudBlazor;
 
-namespace HomeBook.Frontend.Pages.Settings.Users;
+namespace HomeBook.Frontend.Pages.Settings.UserViews;
 
 public partial class Overview : ComponentBase
 {
