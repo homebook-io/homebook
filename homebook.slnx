@@ -48,7 +48,6 @@
     <File Path=".github\workflows\pull-request.yml" />
   </Folder>
   <Folder Name="/Tests/">
-    <Project Path="source\HomeBook.E2ETests\HomeBook.E2ETests.csproj" Type="Classic C#" />
     <Project Path="source\HomeBook.UnitTests\HomeBook.UnitTests.csproj" Type="Classic C#" />
   </Folder>
 </Solution>
