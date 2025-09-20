@@ -7,12 +7,9 @@ using Microsoft.Kiota.Abstractions;
 
 namespace HomeBook.Frontend.Setup;
 
-public class SetupService(
-    IRequestAdapter requestAdapter,
-    BackendClient backendClient) : ISetupService
+public class SetupService(BackendClient backendClient) : ISetupService
 {
     public Guid Id { get; } = Guid.NewGuid();
-    private bool _isDone = false;
     private Dictionary<string, object> _storage = new();
     private List<ISetupStep> _setupSteps = [];
     public Func<Task>? OnSetupSuccessful { get; set; }
@@ -111,8 +108,9 @@ public class SetupService(
                 _ => null // unknown error
             };
         }
-        catch (ApiException err)
+        catch (ApiException)
         {
+            // TODO: handle error or log error
             // unknown error
             return null;
         }

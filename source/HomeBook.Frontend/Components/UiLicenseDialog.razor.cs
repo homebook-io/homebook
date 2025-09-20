@@ -7,7 +7,7 @@ namespace HomeBook.Frontend.Components;
 public partial class UiLicenseDialog : ComponentBase
 {
     [CascadingParameter]
-    private IMudDialogInstance MudDialog { get; set; }
+    private IMudDialogInstance MudDialog { get; set; } = null!;
 
     [Parameter]
     public EventCallback OnCanceled { get; set; }

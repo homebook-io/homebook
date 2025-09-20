@@ -30,7 +30,7 @@ public class AuthenticationService(
         try
         {
             // Call backend login endpoint
-            LoginResponse? loginResponse = await backendClient.Account.Login.PostAsync(new LoginRequest
+            LoginResponse? response = await backendClient.Account.Login.PostAsync(new LoginRequest
                 {
                     Username = username,
                     Password = password
@@ -40,19 +40,22 @@ public class AuthenticationService(
                 },
                 cancellationToken);
 
+            if (response is null)
+                return false;
+
             // Store tokens securely in localStorage
             await jsRuntime.InvokeVoidAsync("localStorage.setItem",
                 cancellationToken,
                 TOKEN_KEY,
-                loginResponse.Token);
+                response.Token);
             await jsRuntime.InvokeVoidAsync("localStorage.setItem",
                 cancellationToken,
                 REFRESH_TOKEN_KEY,
-                loginResponse.RefreshToken);
+                response.RefreshToken);
             await jsRuntime.InvokeVoidAsync("localStorage.setItem",
                 cancellationToken,
                 EXPIRES_AT_KEY,
-                loginResponse.ExpiresAt.Value.DateTime.ToString("O"));
+                response.ExpiresAt!.Value.DateTime.ToString("O"));
 
             // Notify authentication state changed
             AuthenticationStateChanged?.Invoke(true);

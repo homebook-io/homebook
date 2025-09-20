@@ -19,8 +19,7 @@
                              Class="mt-20">
                         <MudItem Class="pa-0">
                             <MudAlert Severity="Severity.Error"
-                                      Variant="Variant.Filled"
-                                      Width="400px">
+                                      Variant="Variant.Filled">
                                 MainLayout_NotAuthorizedText
                             </MudAlert>
                         </MudItem>
@@ -51,19 +50,19 @@
 @code {
 
     [Inject]
-    private NavigationManager NavigationManager { get; set; }
+    private NavigationManager NavigationManager { get; set; } = null!;
 
     [Inject]
-    private ISetupService SetupService { get; set; }
+    private ISetupService SetupService { get; set; } = null!;
 
     [Inject]
-    private IAuthenticationService AuthenticationService { get; set; }
+    private IAuthenticationService AuthenticationService { get; set; } = null!;
 
     [Inject]
-    private IInstanceManagementProvider InstanceManagementProvider { get; set; }
+    private IInstanceManagementProvider InstanceManagementProvider { get; set; } = null!;
 
     [Inject]
-    private IJsLocalStorageProvider JsLocalStorageProvider { get; set; }
+    private IJsLocalStorageProvider JsLocalStorageProvider { get; set; } = null!;
 
     private bool _setupServiceInitialized = false;
     private bool _isRedirecting;
@@ -109,7 +108,7 @@
         {
             await WaitForServerAndGetSetupStatusAsync();
         }
-        catch (Exception err)
+        catch (Exception)
         {
             // TODO: display error or log error
         }

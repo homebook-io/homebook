@@ -4,16 +4,16 @@ using HomeBook.Client;
 
 namespace HomeBook.E2ETests.StepDefinitions;
 
-/// <summary>
-/// Step definitions for authentication feature tests using Reqnroll
-/// </summary>
-[Binding]
-public class AuthenticationStepDefinitions(ScenarioContext scenarioContext)
-{
-    private ApiTestConfiguration Configuration => (ApiTestConfiguration)scenarioContext["Configuration"];
-    private BackendClient ApiClient => (BackendClient)scenarioContext["ApiClient"];
+// /// <summary>
+// /// Step definitions for authentication feature tests using Reqnroll
+// /// </summary>
+// [Binding]
+// public class AuthenticationStepDefinitions(ScenarioContext scenarioContext)
+// {
+    // private ApiTestConfiguration Configuration => (ApiTestConfiguration)scenarioContext["Configuration"];
+    // private BackendClient ApiClient => (BackendClient)scenarioContext["ApiClient"];
 
-    private TimeSpan _loginDuration;
+    // private TimeSpan _loginDuration;
 
     // [Given(@"I have invalid user credentials")]
     // public void GivenIHaveInvalidUserCredentials()
@@ -148,4 +148,4 @@ public class AuthenticationStepDefinitions(ScenarioContext scenarioContext)
     // {
     //     _loginResponse.ShouldNotBeNull("All login attempts should succeed");
     // }
-}
+// }

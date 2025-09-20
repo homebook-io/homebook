@@ -45,7 +45,7 @@ public class SetupStepViewModel(string title, ISetupStep step) : IAsyncDisposabl
             await OnUIDispatchRequired.Invoke(async () =>
             {
                 if (Completed)
-                    await SetIsCompleted();
+                    SetIsCompleted();
 
                 if (HasError)
                     await SetHasError();
@@ -53,13 +53,17 @@ public class SetupStepViewModel(string title, ISetupStep step) : IAsyncDisposabl
         }
     }
 
-    public async Task SetIsCompleted()
+    public void SetIsCompleted()
     {
-        StepRef.Completed = true;
+        if (StepRef is not null)
+#pragma warning disable BL0005
+            StepRef.Completed = true;
+#pragma warning restore BL0005
     }
 
     public async Task SetHasError()
     {
-        await StepRef.SetHasErrorAsync(true, true);
+        if (StepRef is not null)
+            await StepRef.SetHasErrorAsync(true, true);
     }
 }

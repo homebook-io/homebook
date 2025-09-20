@@ -57,14 +57,16 @@ public partial class Overview : ComponentBase
         try
         {
             _loading = true;
-            PagedList<UserData> response =
+            PagedList<UserData>? response =
                 await UserManagementProvider.GetAllUsersAsync((ushort)_currentPage,
                     (ushort)_pageSize,
                     CancellationToken.None);
-
-            _users = response.Items.ToList();
-            _totalCount = response.TotalCount;
-            _totalPages = response.TotalPages;
+            if (response is not null)
+            {
+                _users = response.Items.ToList();
+                _totalCount = response.TotalCount;
+                _totalPages = response.TotalPages;
+            }
         }
         catch (Exception ex)
         {

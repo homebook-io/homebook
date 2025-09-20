@@ -5,7 +5,6 @@
 @using HomeBook.Client
 @using HomeBook.Frontend.Abstractions.Contracts
 
-@inject BackendClient BackendClient
 @inject ISnackbar Snackbar
 @inject NavigationManager NavigationManager
 @inject IUserManagementProvider UserManagementProvider
@@ -77,7 +76,7 @@
                             </MudItem>
 
                             <MudItem xs="12">
-                                <MudSwitch T="bool" @bind-Checked="_userModel.IsAdmin"
+                                <MudSwitch T="bool" @bind-Value="_userModel.IsAdmin"
                                            Label="Administrator"
                                            Color="Color.Primary"
                                            UnCheckedColor="Color.Default"/>

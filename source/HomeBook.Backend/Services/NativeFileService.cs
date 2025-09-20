@@ -3,7 +3,7 @@ using HomeBook.Backend.EnvironmentHandler;
 
 namespace HomeBook.Backend.Services;
 
-public class NativeFileService(ILogger<NativeFileService> logger) : IApplicationPathProvider, IFileSystemService
+public class NativeFileService : IApplicationPathProvider, IFileSystemService
 {
     public string ConfigurationPath { get; } = PathHandler.ConfigurationPath;
     public string RuntimeConfigurationFilePath { get; } = PathHandler.RuntimeConfigurationFilePath;
@@ -17,10 +17,12 @@ public class NativeFileService(ILogger<NativeFileService> logger) : IApplication
     public bool FileExists(string path) => File.Exists(path);
 
     /// <inheritdoc />
-    public async Task<string> FileReadAllTextAsync(string path, CancellationToken cancellationToken) => await File.ReadAllTextAsync(path, cancellationToken);
+    public async Task<string> FileReadAllTextAsync(string path, CancellationToken cancellationToken) =>
+        await File.ReadAllTextAsync(path, cancellationToken);
 
     /// <inheritdoc />
-    public async Task FileWriteAllTextAsync(string path, string content, CancellationToken cancellationToken) => await File.WriteAllTextAsync(path, content, cancellationToken);
+    public async Task FileWriteAllTextAsync(string path, string content, CancellationToken cancellationToken) =>
+        await File.WriteAllTextAsync(path, content, cancellationToken);
 
     /// <inheritdoc />
     public bool DirectoryExists(string path) => Directory.Exists(path);
@@ -28,5 +30,3 @@ public class NativeFileService(ILogger<NativeFileService> logger) : IApplication
     /// <inheritdoc />
     public DirectoryInfo CreateDirectory(string path) => Directory.CreateDirectory(path);
 }
-
-

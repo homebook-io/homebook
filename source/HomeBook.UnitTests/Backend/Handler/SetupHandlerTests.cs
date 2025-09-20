@@ -208,6 +208,8 @@ public class SetupHandlerTests
 
         // Assert
         var badRequestErr = result.ShouldBeOfType<BadRequest<string[]>>();
+        badRequestErr.ShouldNotBeNull();
+        badRequestErr.Value.ShouldNotBeNull();
         badRequestErr.Value.ShouldContain("Property1, A Error");
         badRequestErr.Value.ShouldContain("Property2, Another Error");
     }
@@ -379,7 +381,7 @@ public class SetupHandlerTests
     }
 
     [Test]
-    public async Task HandleGetPreConfiguredUser_WithUserNameAndPassword_Returns()
+    public void HandleGetPreConfiguredUser_WithUserNameAndPassword_Returns()
     {
         // Arrange
         _setupConfigurationProvider
@@ -390,8 +392,9 @@ public class SetupHandlerTests
             .Returns("s3cr3t");
 
         // Act
-        var result =
-            SetupHandler.HandleGetPreConfiguredUser(_logger, _setupConfigurationProvider, CancellationToken.None);
+        var result = SetupHandler.HandleGetPreConfiguredUser(_logger,
+            _setupConfigurationProvider,
+            CancellationToken.None);
 
         // Assert
         var ok = result.ShouldBeOfType<Ok>();
@@ -399,7 +402,7 @@ public class SetupHandlerTests
     }
 
     [Test]
-    public async Task HandleGetPreConfiguredUser_WithEmptyUserNameAndPassword_Returns()
+    public void HandleGetPreConfiguredUser_WithEmptyUserNameAndPassword_Returns()
     {
         // Arrange
         _setupConfigurationProvider
@@ -410,8 +413,9 @@ public class SetupHandlerTests
             .Returns("");
 
         // Act
-        var result =
-            SetupHandler.HandleGetPreConfiguredUser(_logger, _setupConfigurationProvider, CancellationToken.None);
+        var result = SetupHandler.HandleGetPreConfiguredUser(_logger,
+            _setupConfigurationProvider,
+            CancellationToken.None);
 
         // Assert
         var status = result.ShouldBeOfType<StatusCodeHttpResult>();
@@ -420,7 +424,7 @@ public class SetupHandlerTests
     }
 
     [Test]
-    public async Task HandleGetPreConfiguredUser_WithNullUserNameAndPassword_Returns()
+    public void HandleGetPreConfiguredUser_WithNullUserNameAndPassword_Returns()
     {
         // Arrange
         _setupConfigurationProvider
@@ -432,7 +436,9 @@ public class SetupHandlerTests
 
         // Act
         var result =
-            SetupHandler.HandleGetPreConfiguredUser(_logger, _setupConfigurationProvider, CancellationToken.None);
+            SetupHandler.HandleGetPreConfiguredUser(_logger,
+                _setupConfigurationProvider,
+                CancellationToken.None);
 
         // Assert
         var status = result.ShouldBeOfType<StatusCodeHttpResult>();
@@ -441,7 +447,7 @@ public class SetupHandlerTests
     }
 
     [Test]
-    public async Task HandleGetPreConfiguredUser_WithEmptyUserName_Returns()
+    public void HandleGetPreConfiguredUser_WithEmptyUserName_Returns()
     {
         // Arrange
         _setupConfigurationProvider
@@ -452,8 +458,9 @@ public class SetupHandlerTests
             .Returns("s3cr3t");
 
         // Act
-        var result =
-            SetupHandler.HandleGetPreConfiguredUser(_logger, _setupConfigurationProvider, CancellationToken.None);
+        var result = SetupHandler.HandleGetPreConfiguredUser(_logger,
+            _setupConfigurationProvider,
+            CancellationToken.None);
 
         // Assert
         var status = result.ShouldBeOfType<StatusCodeHttpResult>();
@@ -462,7 +469,7 @@ public class SetupHandlerTests
     }
 
     [Test]
-    public async Task HandleGetPreConfiguredUser_WithEmptyPassword_Returns()
+    public void HandleGetPreConfiguredUser_WithEmptyPassword_Returns()
     {
         // Arrange
         _setupConfigurationProvider
@@ -473,8 +480,9 @@ public class SetupHandlerTests
             .Returns("");
 
         // Act
-        var result =
-            SetupHandler.HandleGetPreConfiguredUser(_logger, _setupConfigurationProvider, CancellationToken.None);
+        var result = SetupHandler.HandleGetPreConfiguredUser(_logger,
+            _setupConfigurationProvider,
+            CancellationToken.None);
 
         // Assert
         var status = result.ShouldBeOfType<StatusCodeHttpResult>();
@@ -483,7 +491,7 @@ public class SetupHandlerTests
     }
 
     [Test]
-    public async Task HandleGetPreConfiguredUser_WithException_Returns()
+    public void HandleGetPreConfiguredUser_WithException_Returns()
     {
         // Arrange
         const string boom = "boom";
@@ -492,8 +500,9 @@ public class SetupHandlerTests
             .Throws(new InvalidOperationException(boom));
 
         // Act
-        var result =
-            SetupHandler.HandleGetPreConfiguredUser(_logger, _setupConfigurationProvider, CancellationToken.None);
+        var result = SetupHandler.HandleGetPreConfiguredUser(_logger,
+            _setupConfigurationProvider,
+            CancellationToken.None);
 
         // Assert
         var status = result.ShouldBeOfType<InternalServerError<string>>();

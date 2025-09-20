@@ -13,7 +13,7 @@ public class UserManagementProvider(
     IAuthenticationService authenticationService) : IUserManagementProvider
 {
     /// <inheritdoc />
-    public async Task<PagedList<UserData>> GetAllUsersAsync(ushort page = 1,
+    public async Task<PagedList<UserData>?> GetAllUsersAsync(ushort page = 1,
         ushort pageSize = 10,
         CancellationToken cancellationToken = default)
     {
@@ -31,7 +31,7 @@ public class UserManagementProvider(
                 cancellationToken);
 
         if (response is null)
-            return new();
+            return null;
 
         return response.ToPagedResult();
     }

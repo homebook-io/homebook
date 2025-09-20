@@ -75,7 +75,7 @@ public partial class DatabaseConfigurationSetupStep : ComponentBase, ISetupStep
 
             _databaseIsOk = true;
         }
-        catch (HttpRequestException err)
+        catch (HttpRequestException)
         {
             // DE => Verbindung zum Server konnte nicht hergestellt werden. Stellen Sie sicher, dass der Server läuft und korrekt konfiguriert wurde und versuchen Sie es erneut.
             _errorMessage = "Unable to connect to the server. Make sure that the server is running and has been configured correctly, then try again.";
