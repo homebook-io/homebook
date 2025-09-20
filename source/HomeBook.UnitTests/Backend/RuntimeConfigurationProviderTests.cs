@@ -57,21 +57,6 @@ public class RuntimeConfigurationProviderTests
                      """;
         _fileSystemService.FileReadAllTextAsync(configFilePath, Arg.Any<CancellationToken>())
             .Returns(actual);
-        var expected = """
-                           {
-                               "instance": {
-                                   "id": "12345",
-                                   "name": "Test Instance"
-                               },
-                               "Database": {
-                                   "Test": {
-                                       "Section": {
-                                           "Section": "a-value"
-                                       }
-                                   }
-                               },
-                           }
-                       """;
 
         // Act
         await _instance.UpdateConfigurationAsync("Database:Test:Section:Section",

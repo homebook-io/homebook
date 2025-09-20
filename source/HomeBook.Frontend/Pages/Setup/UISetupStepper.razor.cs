@@ -35,7 +35,8 @@ public partial class UISetupStepper : ComponentBase, IAsyncDisposable
             string localizedName = GetStepTitle(setupStep.Key);
             SetupStepViewModel stepVM = new(localizedName, setupStep)
             {
-                Completed = setupStep.IsSuccessful, HasError = setupStep.HasError
+                Completed = setupStep.IsSuccessful,
+                HasError = setupStep.HasError
             };
             stepVM.OnUIDispatchRequired += OnUiDispatchRequired;
             _setupSteps.Add(stepVM);
@@ -127,7 +128,8 @@ public partial class UISetupStepper : ComponentBase, IAsyncDisposable
             return;
 
         SetupStepViewModel? stepVM = _setupSteps.FirstOrDefault(x => x.SetupStep.Key == activeStatus.Key);
-        await SetActiveStepAsync(stepVM, cancellationToken);
+        if (stepVM is not null)
+            await SetActiveStepAsync(stepVM, cancellationToken);
 
         await InvokeAsync(StateHasChanged);
     }
@@ -171,6 +173,7 @@ public partial class UISetupStepper : ComponentBase, IAsyncDisposable
         // _setupStepper.ActiveStep.Completed = true;
         StateHasChanged();
 
-        await _setupStepper.NextStepAsync();
+        if (_setupStepper is not null)
+            await _setupStepper.NextStepAsync();
     }
 }

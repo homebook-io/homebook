@@ -20,11 +20,4 @@ public interface ILicensesService
     /// <param name="cancellationToken"></param>
     /// <returns></returns>
     Task<bool> AreLicensesAcceptedAsync(CancellationToken cancellationToken);
-
-    /// <summary>
-    /// accept all licenses
-    /// </summary>
-    /// <param name="cancellationToken"></param>
-    /// <returns></returns>
-    Task AcceptLicensesAsync(CancellationToken cancellationToken);
 }

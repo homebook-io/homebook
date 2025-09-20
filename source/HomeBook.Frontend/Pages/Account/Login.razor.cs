@@ -86,7 +86,7 @@ public partial class Login : ComponentBase
                 Snackbar.Add("Login failed!", Severity.Error);
             }
         }
-        catch (Exception ex)
+        catch (Exception)
         {
             _errorMessage = "An error occurred during login. Please try again later.";
             Snackbar.Add("Login error occurred!", Severity.Error);

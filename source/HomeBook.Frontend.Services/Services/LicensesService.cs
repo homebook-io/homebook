@@ -31,12 +31,6 @@ public class LicensesService(BackendClient backendClient) : ILicensesService
         return _licensesAccepted ?? false;
     }
 
-    /// <inheritdoc />
-    public async Task AcceptLicensesAsync(CancellationToken cancellationToken)
-    {
-        throw new NotImplementedException();
-    }
-
     private async Task LoadLicensesAsync(CancellationToken cancellationToken)
     {
         GetLicensesResponse? licensesResponse = await backendClient.Setup.Licenses.GetAsync(x =>

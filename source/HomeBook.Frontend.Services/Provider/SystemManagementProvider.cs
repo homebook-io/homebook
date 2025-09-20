@@ -12,7 +12,7 @@ public class SystemManagementProvider(
     IAuthenticationService authenticationService) : ISystemManagementProvider
 {
     /// <inheritdoc />
-    public async Task<SystemInfo> GetSystemInfoAsync(CancellationToken cancellationToken = default)
+    public async Task<SystemInfo?> GetSystemInfoAsync(CancellationToken cancellationToken = default)
     {
         await authenticationService.IsAdminOrThrowAsync(cancellationToken);
 
@@ -23,7 +23,7 @@ public class SystemManagementProvider(
             },
             cancellationToken);
 
-        SystemInfo result = response.ToSystemInfo();
+        SystemInfo? result = response?.ToSystemInfo();
         return result;
     }
 }

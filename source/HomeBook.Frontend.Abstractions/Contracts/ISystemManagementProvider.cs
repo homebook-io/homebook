@@ -12,5 +12,5 @@ public interface ISystemManagementProvider
     /// </summary>
     /// <param name="cancellationToken"></param>
     /// <returns></returns>
-    Task<SystemInfo> GetSystemInfoAsync(CancellationToken cancellationToken = default);
+    Task<SystemInfo?> GetSystemInfoAsync(CancellationToken cancellationToken = default);
 }

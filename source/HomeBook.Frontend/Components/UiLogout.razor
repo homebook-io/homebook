@@ -41,7 +41,7 @@
             Snackbar.Add("Successfully logged out.", Severity.Success);
             NavigationManager.NavigateTo("/Login", true);
         }
-        catch (Exception ex)
+        catch (Exception)
         {
             Snackbar.Add("Error during logout. Please try again.", Severity.Error);
         }
