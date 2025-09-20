@@ -17,7 +17,7 @@ public class UserManagementProvider(
         ushort pageSize = 10,
         CancellationToken cancellationToken = default)
     {
-        await IsAdminOrThrowAsync(cancellationToken);
+        await authenticationService.IsAdminOrThrowAsync(cancellationToken);
 
         string? token = await authenticationService.GetTokenAsync(cancellationToken);
         UsersResponse? response = await backendClient.System.Users
@@ -40,7 +40,7 @@ public class UserManagementProvider(
     public async Task<UserData?> GetUserByIdAsync(Guid userId,
         CancellationToken cancellationToken = default)
     {
-        await IsAdminOrThrowAsync(cancellationToken);
+        await authenticationService.IsAdminOrThrowAsync(cancellationToken);
 
         string? token = await authenticationService.GetTokenAsync(cancellationToken);
         UserResponse? response = await backendClient.System.Users[userId]
@@ -59,7 +59,7 @@ public class UserManagementProvider(
         bool isAdmin = false,
         CancellationToken cancellationToken = default)
     {
-        await IsAdminOrThrowAsync(cancellationToken);
+        await authenticationService.IsAdminOrThrowAsync(cancellationToken);
 
         CreateUserRequest request = new()
         {
@@ -86,7 +86,7 @@ public class UserManagementProvider(
     public async Task DeleteUserAsync(Guid userId,
         CancellationToken cancellationToken = default)
     {
-        await IsAdminOrThrowAsync(cancellationToken);
+        await authenticationService.IsAdminOrThrowAsync(cancellationToken);
 
         string? token = await authenticationService.GetTokenAsync(cancellationToken);
         await backendClient.System.Users[userId]
@@ -102,7 +102,7 @@ public class UserManagementProvider(
         string newPassword,
         CancellationToken cancellationToken = default)
     {
-        await IsAdminOrThrowAsync(cancellationToken);
+        await authenticationService.IsAdminOrThrowAsync(cancellationToken);
 
         string? token = await authenticationService.GetTokenAsync(cancellationToken);
         await backendClient.System.Users[userId]
@@ -122,7 +122,7 @@ public class UserManagementProvider(
         bool isAdmin,
         CancellationToken cancellationToken = default)
     {
-        await IsAdminOrThrowAsync(cancellationToken);
+        await authenticationService.IsAdminOrThrowAsync(cancellationToken);
 
         string? token = await authenticationService.GetTokenAsync(cancellationToken);
         await backendClient.System.Users[userId]
@@ -142,7 +142,7 @@ public class UserManagementProvider(
         string username,
         CancellationToken cancellationToken = default)
     {
-        await IsAdminOrThrowAsync(cancellationToken);
+        await authenticationService.IsAdminOrThrowAsync(cancellationToken);
 
         string? token = await authenticationService.GetTokenAsync(cancellationToken);
         await backendClient.System.Users[userId]
@@ -161,7 +161,7 @@ public class UserManagementProvider(
     public async Task EnableUserAsync(Guid userId,
         CancellationToken cancellationToken = default)
     {
-        await IsAdminOrThrowAsync(cancellationToken);
+        await authenticationService.IsAdminOrThrowAsync(cancellationToken);
 
         string? token = await authenticationService.GetTokenAsync(cancellationToken);
         await backendClient.System.Users[userId]
@@ -176,7 +176,7 @@ public class UserManagementProvider(
     public async Task DisableUserAsync(Guid userId,
         CancellationToken cancellationToken = default)
     {
-        await IsAdminOrThrowAsync(cancellationToken);
+        await authenticationService.IsAdminOrThrowAsync(cancellationToken);
 
         string? token = await authenticationService.GetTokenAsync(cancellationToken);
         await backendClient.System.Users[userId]
@@ -185,12 +185,5 @@ public class UserManagementProvider(
                     x.Headers.Add("Authorization", $"Bearer {token}");
                 },
                 cancellationToken);
-    }
-
-    private async Task IsAdminOrThrowAsync(CancellationToken cancellationToken)
-    {
-        bool isUserAdmin = await authenticationService.IsCurrentUserAdminAsync(cancellationToken);
-        if (!isUserAdmin)
-            throw new UnauthorizedAccessException("User is not authorized to access system information.");
     }
 }

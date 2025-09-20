@@ -8,7 +8,6 @@ using HomeBook.Backend.Data.Extensions;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
-using IConfigurationProvider = HomeBook.Backend.Abstractions.Contracts.IConfigurationProvider;
 
 namespace Homebook.Backend.Core.Setup;
 
@@ -79,8 +78,8 @@ public class SetupProcessor(
         if (string.IsNullOrEmpty(configurationName))
             throw new SetupException("homebook configuration name is not set");
 
-        IConfigurationProvider configurationProvider = serviceProvider.GetRequiredService<IConfigurationProvider>();
-        await configurationProvider.WriteHomeBookInstanceNameAsync(configurationName, cancellationToken);
+        IInstanceConfigurationProvider instanceConfigurationProvider = serviceProvider.GetRequiredService<IInstanceConfigurationProvider>();
+        await instanceConfigurationProvider.WriteHomeBookInstanceNameAsync(configurationName, cancellationToken);
 
         // 4. execute available updates
         IUpdateProcessor updateProcessor = serviceProvider.GetRequiredService<IUpdateProcessor>();

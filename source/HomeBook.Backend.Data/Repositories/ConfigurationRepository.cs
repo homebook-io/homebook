@@ -13,7 +13,8 @@ public class ConfigurationRepository(IDbContextFactory<AppDbContext> factory) : 
     {
         await using AppDbContext dbContext = await factory.CreateDbContextAsync(cancellationToken);
 
-        Configuration? existingConfiguration = dbContext.Set<Configuration>().FirstOrDefault();
+        Configuration? existingConfiguration = await dbContext.Set<Configuration>()
+            .FirstOrDefaultAsync(c => c.Key == configuration.Key, cancellationToken);
 
         if (existingConfiguration is null)
         {
@@ -21,11 +22,33 @@ public class ConfigurationRepository(IDbContextFactory<AppDbContext> factory) : 
         }
         else
         {
-            existingConfiguration.Key = configuration.Key;
             existingConfiguration.Value = configuration.Value;
             dbContext.Update(existingConfiguration);
         }
 
         await dbContext.SaveChangesAsync(cancellationToken);
+    }
+
+    /// <inheritdoc />
+    public async Task<IReadOnlyList<Configuration>> GetAllConfigurationAsync(CancellationToken cancellationToken =
+        default)
+    {
+        await using AppDbContext dbContext = await factory.CreateDbContextAsync(cancellationToken);
+
+        List<Configuration> configurations = await dbContext.Set<Configuration>()
+            .ToListAsync(cancellationToken);
+
+        return configurations;
+    }
+
+    /// <inheritdoc />
+    public async Task<Configuration?> GetConfigurationByKeyAsync(string key, CancellationToken cancellationToken = default)
+    {
+        await using AppDbContext dbContext = await factory.CreateDbContextAsync(cancellationToken);
+
+        Configuration? configuration = await dbContext.Set<Configuration>()
+            .FirstOrDefaultAsync(c => c.Key == key, cancellationToken);
+
+        return configuration;
     }
 }

@@ -6,14 +6,15 @@ using HomeBook.Backend.Data.Entities;
 namespace HomeBook.Backend.Core.DataProvider;
 
 /// <inheritdoc />
-public class ConfigurationProvider(
+public class InstanceConfigurationProvider(
     IConfigurationRepository configurationRepository,
-    IValidator<Configuration> configurationValidator) : IConfigurationProvider
+    IValidator<Configuration> configurationValidator) : IInstanceConfigurationProvider
 {
     private static readonly string HOMEBOOK_INSTANCE_NAME = "HOMEBOOK_INSTANCE_NAME";
 
     /// <inheritdoc />
-    public async Task WriteHomeBookInstanceNameAsync(string instanceName, CancellationToken cancellationToken = default)
+    public async Task WriteHomeBookInstanceNameAsync(string instanceName,
+        CancellationToken cancellationToken = default)
     {
         Configuration config = new()
         {
@@ -24,5 +25,14 @@ public class ConfigurationProvider(
             cancellationToken: cancellationToken);
 
         await configurationRepository.WriteConfigurationAsync(config, cancellationToken);
+    }
+
+    /// <inheritdoc />
+    public async Task<string> GetHomeBookInstanceNameAsync(CancellationToken cancellationToken = default)
+    {
+        Configuration? instanceName = await configurationRepository
+            .GetConfigurationByKeyAsync(HOMEBOOK_INSTANCE_NAME,
+                cancellationToken);
+        return instanceName?.Value ?? string.Empty;
     }
 }

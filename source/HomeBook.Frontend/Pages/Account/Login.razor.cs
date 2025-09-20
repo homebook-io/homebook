@@ -1,5 +1,5 @@
+using HomeBook.Frontend.Abstractions.Enums;
 using HomeBook.Frontend.Models.Account;
-using HomeBook.Frontend.Services;
 using Microsoft.AspNetCore.Components;
 using Microsoft.AspNetCore.Components.Authorization;
 using MudBlazor;
@@ -14,6 +14,7 @@ public partial class Login : ComponentBase
     private readonly LoginModel _loginModel = new();
     private bool _isLoading = false;
     private string _errorMessage = string.Empty;
+    private string _homebookInstanceName = string.Empty;
 
     [Parameter]
     [SupplyParameterFromQuery]
@@ -46,7 +47,19 @@ public partial class Login : ComponentBase
             return;
         }
 
+        await LoadInstanceInfoAsync();
+
         await base.OnInitializedAsync();
+    }
+
+    private async Task LoadInstanceInfoAsync()
+    {
+        CancellationToken cancellationToken = CancellationToken.None;
+
+        _homebookInstanceName = await JsLocalStorageProvider.GetItemAsync(JsLocalStorageKeys.HomeBookInstanceName,
+            cancellationToken) ?? string.Empty;
+
+        StateHasChanged();
     }
 
     private async Task HandleLoginAsync()

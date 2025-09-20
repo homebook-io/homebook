@@ -15,12 +15,12 @@ public class SystemStepDefinitions(ScenarioContext scenarioContext)
     private ApiTestConfiguration Configuration => (ApiTestConfiguration)scenarioContext["Configuration"];
     private BackendClient ApiClient => (BackendClient)scenarioContext["ApiClient"];
 
-    [When("I request HTTP GET system")]
-    public async Task WhenIRequestHttpgetSystem()
+    [When("I request HTTP GET system instance info")]
+    public async Task WhenIRequestHttpgetSystemInstanceInfo()
     {
         string accessToken = scenarioContext.Get<string>("AccessToken");
         NativeResponseHandler native = new();
-        await ApiClient.System.GetAsync(x =>
+        await ApiClient.System.Instance.Info.GetAsync(x =>
             {
                 x.Headers.Add("Authorization", $"Bearer {accessToken}");
                 x.Options.Add(new ResponseHandlerOption
