@@ -44,7 +44,7 @@ public partial class SetupProcessSetupStep : ComponentBase, ISetupStep
             _setupSuccessful = true;
             await SetupService.SetStepStatusAsync(false, false, cancellationToken);
         }
-        catch (HttpRequestException err)
+        catch (HttpRequestException)
         {
             _setupFailed = true;
             // DE => Verbindung zum Server konnte nicht hergestellt werden. Stellen Sie sicher, dass der Server läuft und korrekt konfiguriert wurde und versuchen Sie es erneut.
@@ -181,7 +181,6 @@ public partial class SetupProcessSetupStep : ComponentBase, ISetupStep
             catch
             {
                 // ignore exceptions and wait for the next retry
-                int j = 0;
             }
 
             // wait before the next retry

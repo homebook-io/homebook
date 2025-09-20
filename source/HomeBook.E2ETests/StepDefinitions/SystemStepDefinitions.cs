@@ -31,8 +31,10 @@ public class SystemStepDefinitions(ScenarioContext scenarioContext)
             CancellationToken.None);
 
         var response = (native.Value as HttpResponseMessage);
+        if (response is null)
+            throw new InvalidOperationException("response from ApiClient.System.Instance.Info.GetAsync is null");
 
-        int? statusCode = (int?)response?.StatusCode;
+        var statusCode = (int)response.StatusCode;
         scenarioContext.Set(statusCode, "ResponseStatusCode");
 
         try
@@ -61,8 +63,10 @@ public class SystemStepDefinitions(ScenarioContext scenarioContext)
             CancellationToken.None);
 
         var response = (native.Value as HttpResponseMessage);
+        if (response is null)
+            throw new InvalidOperationException("response from ApiClient.System.Users.GetAsync is null");
 
-        int? statusCode = (int?)response?.StatusCode;
+        var statusCode = (int)response.StatusCode;
         scenarioContext.Set(statusCode, "ResponseStatusCode");
 
         try
@@ -92,8 +96,10 @@ public class SystemStepDefinitions(ScenarioContext scenarioContext)
             CancellationToken.None);
 
         var response = (native.Value as HttpResponseMessage);
+        if (response is null)
+            throw new InvalidOperationException("response from ApiClient.System.Users[userId].Disable.PutAsync is null");
 
-        int? statusCode = (int?)response?.StatusCode;
+        var statusCode = (int)response.StatusCode;
         scenarioContext.Set(statusCode, "ResponseStatusCode");
 
         try
@@ -123,8 +129,10 @@ public class SystemStepDefinitions(ScenarioContext scenarioContext)
             CancellationToken.None);
 
         var response = (native.Value as HttpResponseMessage);
+        if (response is null)
+            throw new InvalidOperationException("response from ApiClient.System.Users[userId].Disable.PutAsync is null");
 
-        int? statusCode = (int?)response?.StatusCode;
+        var statusCode = (int)response.StatusCode;
         scenarioContext.Set(statusCode, "ResponseStatusCode");
 
         try

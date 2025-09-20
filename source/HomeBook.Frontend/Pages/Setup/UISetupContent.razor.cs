@@ -7,11 +7,13 @@ public partial class UISetupContent : ComponentBase, IDisposable
 {
     private ISetupStep? _activeSetupStep = null;
 
-    protected override async Task OnInitializedAsync()
+    protected override void OnInitialized()
     {
         SetupService.OnSetupStepsInitialized += OnSetupStepsInitialized;
         SetupService.OnStepSuccessful += OnStepSuccessful;
         SetupService.OnStepFailed += OnStepFailed;
+
+        base.OnInitialized();
     }
 
     public void Dispose()
@@ -40,6 +42,7 @@ public partial class UISetupContent : ComponentBase, IDisposable
 
     private async Task OnStepFailed(ISetupStep arg, bool isError)
     {
+        await Task.CompletedTask;
         // TODO: display error
     }
 

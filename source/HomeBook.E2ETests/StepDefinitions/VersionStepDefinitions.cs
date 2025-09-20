@@ -28,11 +28,13 @@ public class VersionStepDefinitions(ScenarioContext scenarioContext)
             CancellationToken.None);
 
         var response = (native.Value as HttpResponseMessage);
+        if (response is null)
+            throw new InvalidOperationException("response from ApiClient.Version.GetAsync is null");
 
-        int? statusCode = (int?)response?.StatusCode;
+        var statusCode = (int)response.StatusCode;
         scenarioContext.Set(statusCode, "ResponseStatusCode");
 
-        string responseContent = await response.Content.ReadFromJsonAsync<string>();
+        string responseContent = await response.Content.ReadFromJsonAsync<string>() ?? string.Empty;
         scenarioContext.Set(responseContent, "ResponseContent");
     }
 

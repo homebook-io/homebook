@@ -24,7 +24,7 @@ public class StringExtensionsTests
     public void ToCssClass_WithNullString_Returns()
     {
         // Arrange
-        var input = (string)null;
+        var input = (string)null!;
         var expected = string.Empty;
 
         // Act

@@ -25,7 +25,7 @@ public partial class About : ComponentBase
 
         CancellationToken cancellationToken = CancellationToken.None;
 
-        await LoadUiInfoAsync(cancellationToken);
+        LoadUiInfoAsync();
         await LoadBackendInfoAsync(cancellationToken);
         await LoadLicensesAsync(cancellationToken);
     }
@@ -38,7 +38,7 @@ public partial class About : ComponentBase
             .ToList();
     }
 
-    private async Task LoadUiInfoAsync(CancellationToken cancellationToken)
+    private void LoadUiInfoAsync()
     {
         _uiVersion = Configuration["AppVersion"] ?? "1.0.0";
         _uiDotnetVersion = Environment.Version.ToString();
@@ -51,13 +51,15 @@ public partial class About : ComponentBase
 
         try
         {
-            SystemInfo systemInfo = await SystemManagementProvider.GetSystemInfoAsync(cancellationToken);
+            SystemInfo? systemInfo = await SystemManagementProvider.GetSystemInfoAsync(cancellationToken);
+            if (systemInfo is not null)
+            {
+                _backendVersion = systemInfo.AppVersion.ToString();
+                _backendDotnetVersion = systemInfo.DotNetVersion;
 
-            _backendVersion = systemInfo.AppVersion.ToString();
-            _backendDotnetVersion = systemInfo.DotNetVersion;
-
-            _databaseProvider = systemInfo.DatabaseProvider;
-            _deploymentType = systemInfo.DeploymentType;
+                _databaseProvider = systemInfo.DatabaseProvider;
+                _deploymentType = systemInfo.DeploymentType;
+            }
         }
         catch (UnauthorizedAccessException)
         {
@@ -94,7 +96,8 @@ public partial class About : ComponentBase
             });
 
         DialogResult? licenseDialogResult = await licenseDialog.Result;
-        if (licenseDialogResult.Canceled)
+        if (licenseDialogResult is null
+            || licenseDialogResult.Canceled)
             return;
     }
 }

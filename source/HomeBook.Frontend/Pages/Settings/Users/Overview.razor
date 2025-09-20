@@ -24,10 +24,12 @@
 
             <MudPaper Class="pa-4">
 
-                <MudGrid Class="mb-4" AlignItems="Center">
+                <MudGrid Class="mb-4">
+
                     <MudItem xs="6">
                         <MudText Typo="Typo.h4">User Management</MudText>
                     </MudItem>
+
                     <MudItem xs="6" Class="d-flex justify-end">
                         <MudButton Variant="Variant.Filled"
                                    Color="Color.Primary"
@@ -36,6 +38,7 @@
                             Add User
                         </MudButton>
                     </MudItem>
+
                 </MudGrid>
 
                 @if (_loading)
@@ -46,13 +49,18 @@
                 else if (_users.Any())
                 {
                     <!-- Page Size Selection -->
-                    <MudGrid Class="mb-4" AlignItems="Center">
+                    <MudGrid Class="mb-4">
+
                         <MudItem xs="6">
+
                             <MudText Typo="Typo.body1">
                                 Showing @(_users.Count) of @(_totalCount) users
                             </MudText>
+
                         </MudItem>
+
                         <MudItem xs="6" Class="d-flex justify-end">
+
                             <MudSelect T="string"
                                        Value="@_pageSize.ToString()"
                                        ValueChanged="OnPageSizeChangedAsync"
@@ -65,7 +73,9 @@
                                     <MudSelectItem Value="@option">@option</MudSelectItem>
                                 }
                             </MudSelect>
+
                         </MudItem>
+
                     </MudGrid>
 
                     <!-- Users Table -->

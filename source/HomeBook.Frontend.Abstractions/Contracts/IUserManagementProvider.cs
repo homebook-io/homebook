@@ -15,7 +15,7 @@ public interface IUserManagementProvider
     /// <param name="pageSize">the size of the page</param>
     /// <param name="cancellationToken"></param>
     /// <returns></returns>
-    Task<PagedList<UserData>> GetAllUsersAsync(ushort page = 1,
+    Task<PagedList<UserData>?> GetAllUsersAsync(ushort page = 1,
         ushort pageSize = 10,
         CancellationToken cancellationToken = default);
 

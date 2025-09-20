@@ -111,11 +111,13 @@ public partial class LicenseAgreementSetupStep : ComponentBase, ISetupStep
             parameters,
             new DialogOptions()
             {
-                MaxWidth = MaxWidth.Medium, FullWidth = true,
+                MaxWidth = MaxWidth.Medium,
+                FullWidth = true,
             });
 
         DialogResult? licenseDialogResult = await licenseDialog.Result;
-        if (licenseDialogResult.Canceled)
+        if (licenseDialogResult is null
+            || licenseDialogResult.Canceled)
             return;
 
         // license is accepted
