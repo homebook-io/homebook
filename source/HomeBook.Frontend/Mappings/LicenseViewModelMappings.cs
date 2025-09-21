@@ -1,6 +1,6 @@
 using HomeBook.Client.Models;
 using HomeBook.Frontend.Abstractions.Models;
-using HomeBook.Frontend.Models.Setup;
+using HomeBook.Frontend.Core.Models.Setup;
 
 namespace HomeBook.Frontend.Mappings;
 

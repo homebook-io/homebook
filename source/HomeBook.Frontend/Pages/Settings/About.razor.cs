@@ -1,9 +1,8 @@
-using HomeBook.Client.Models;
 using HomeBook.Frontend.Abstractions.Models;
 using HomeBook.Frontend.Abstractions.Models.System;
 using HomeBook.Frontend.Components;
+using HomeBook.Frontend.Core.Models.Setup;
 using HomeBook.Frontend.Mappings;
-using HomeBook.Frontend.Models.Setup;
 using Microsoft.AspNetCore.Components;
 using MudBlazor;
 

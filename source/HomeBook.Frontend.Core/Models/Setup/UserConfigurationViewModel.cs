@@ -1,14 +1,14 @@
 using System.ComponentModel.DataAnnotations;
 
-namespace HomeBook.Frontend.Models.Account;
+namespace HomeBook.Frontend.Core.Models.Setup;
 
-public class LoginModel
+public class UserConfigurationViewModel
 {
     [Required(ErrorMessage = "Username is required")]
-    [MinLength(3, ErrorMessage = "Username must be at least 3 characters")]
+    [StringLength(255, ErrorMessage = "Username cannot exceed 255 characters")]
     public string Username { get; set; } = string.Empty;
 
     [Required(ErrorMessage = "Password is required")]
-    [MinLength(5, ErrorMessage = "Password must be at least 5 characters")]
+    [StringLength(255, ErrorMessage = "Password cannot exceed 255 characters")]
     public string Password { get; set; } = string.Empty;
 }
