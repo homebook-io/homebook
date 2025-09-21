@@ -1,6 +1,6 @@
 using System.Collections.ObjectModel;
 using HomeBook.Frontend.Abstractions.Contracts;
-using HomeBook.Frontend.Models.Setup;
+using HomeBook.Frontend.ViewModels.Setup;
 using Microsoft.AspNetCore.Components;
 using MudBlazor;
 

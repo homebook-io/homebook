@@ -1,5 +1,5 @@
 using HomeBook.Frontend.Abstractions.Enums;
-using HomeBook.Frontend.Models.Account;
+using HomeBook.Frontend.Core.Models.Account;
 using Microsoft.AspNetCore.Components;
 using Microsoft.AspNetCore.Components.Authorization;
 using MudBlazor;

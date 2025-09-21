@@ -1,4 +1,4 @@
-namespace HomeBook.Frontend.Models.Setup;
+namespace HomeBook.Frontend.Core.Models.Setup;
 
 public class LicenseViewModel(string name, string htmlContent)
 {

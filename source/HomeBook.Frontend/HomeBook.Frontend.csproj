@@ -26,6 +26,7 @@
     </ItemGroup>
 
     <ItemGroup>
+        <ProjectReference Include="..\HomeBook.Frontend.Core\HomeBook.Frontend.Core.csproj" />
         <ProjectReference Include="..\HomeBook.Frontend.Services\HomeBook.Frontend.Services.csproj"/>
     </ItemGroup>
 

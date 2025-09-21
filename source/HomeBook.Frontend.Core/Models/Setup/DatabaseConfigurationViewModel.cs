@@ -1,6 +1,6 @@
 using System.ComponentModel.DataAnnotations;
 
-namespace HomeBook.Frontend.Models.Setup;
+namespace HomeBook.Frontend.Core.Models.Setup;
 
 public class DatabaseConfigurationViewModel
 {
