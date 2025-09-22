@@ -1,4 +1,6 @@
 using HomeBook.Frontend.Abstractions.Contracts;
+using HomeBook.Frontend.ModuleCore;
+using HomeBook.Frontend.Modules.Abstractions;
 using HomeBook.Frontend.Properties;
 using HomeBook.Frontend.Provider;
 using HomeBook.Frontend.Services;
@@ -28,6 +30,8 @@ public static class ServiceCollectionExtensions
             IStringLocalizer localizer = (IStringLocalizer)x.GetRequiredService(localizerType);
             return new LocalizationProvider(localizer);
         });
+
+        services.AddSingleton<IWidgetFactory, WidgetFactory>();
 
         return services;
     }

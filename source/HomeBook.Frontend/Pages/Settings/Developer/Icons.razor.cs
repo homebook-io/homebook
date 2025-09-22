@@ -1,6 +1,6 @@
 using Microsoft.AspNetCore.Components;
 
-namespace HomeBook.Frontend.Pages.Settings.DeveloperViews;
+namespace HomeBook.Frontend.Pages.Settings.Developer;
 
 public partial class Icons : ComponentBase
 {

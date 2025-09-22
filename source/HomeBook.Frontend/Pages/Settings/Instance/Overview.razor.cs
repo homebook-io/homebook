@@ -3,7 +3,7 @@ using HomeBook.Frontend.Abstractions.Enums;
 using Microsoft.AspNetCore.Components;
 using MudBlazor;
 
-namespace HomeBook.Frontend.Pages.Settings.InstanceViews;
+namespace HomeBook.Frontend.Pages.Settings.Instance;
 
 public partial class Overview : ComponentBase
 {

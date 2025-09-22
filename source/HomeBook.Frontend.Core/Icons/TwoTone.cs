@@ -1,4 +1,4 @@
-namespace HomeBook.Frontend.Defaults;
+namespace HomeBook.Frontend.Core.Icons;
 
 public partial class HomeBookIcons
 {
