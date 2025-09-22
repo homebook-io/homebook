@@ -1,0 +1,19 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+    <PropertyGroup>
+        <TargetFramework>net9.0</TargetFramework>
+        <ImplicitUsings>enable</ImplicitUsings>
+        <Nullable>enable</Nullable>
+    </PropertyGroup>
+
+    <ItemGroup>
+        <ProjectReference Include="..\HomeBook.Frontend.Abstractions\HomeBook.Frontend.Abstractions.csproj" />
+        <ProjectReference Include="..\HomeBook.Frontend.Core\HomeBook.Frontend.Core.csproj" />
+        <ProjectReference Include="..\HomeBook.Frontend.Modules.Abstractions\HomeBook.Frontend.Modules.Abstractions.csproj" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <Folder Include="Widgets\" />
+    </ItemGroup>
+
+</Project>

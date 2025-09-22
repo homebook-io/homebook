@@ -3,6 +3,8 @@ using Microsoft.AspNetCore.Components.WebAssembly.Hosting;
 using Microsoft.AspNetCore.Components.Authorization;
 using HomeBook.Frontend;
 using HomeBook.Frontend.Extensions;
+using HomeBook.Frontend.ModuleCore;
+using HomeBook.Frontend.Pages;
 using HomeBook.Frontend.Services.Extensions;
 using HomeBook.Frontend.Provider;
 using MudBlazor.Services;
@@ -44,4 +46,16 @@ builder.Services.AddFrontendUiServices(builder.Configuration)
     .AddFrontendServices(builder.Configuration)
     .AddBackendClient(builder.Configuration);
 
-await builder.Build().RunAsync();
+builder.AddModules((moduleBuilder) =>
+{
+    moduleBuilder
+        // app modules
+        .AddModule<HomeBook.Frontend.Module.Finances.Module>()
+        .AddModule<HomeBook.Frontend.Module.PlatformInfo.Module>();
+});
+
+WebAssemblyHost app = builder.Build();
+
+await app.RunModulesPostBuild();
+
+await app.RunAsync();
