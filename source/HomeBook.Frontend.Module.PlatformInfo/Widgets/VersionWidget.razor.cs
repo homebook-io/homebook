@@ -19,7 +19,7 @@ public partial class VersionWidget : ComponentBase, IWidget
         if (!firstRender)
             return;
 
-        _version = Configuration["AppVersion"] ?? "1.0.0";
+        _version = Configuration["Version"] ?? "-";
         StateHasChanged();
     }
 }
