@@ -31,7 +31,7 @@ public class Module : IModule, IModuleWidgetRegistration, IModuleDependencyRegis
 
     public static void RegisterWidgets(IWidgetBuilder builder, IConfiguration configuration)
     {
-
+        builder.AddWidget<Widgets.VersionWidget>();
     }
 
     public static void RegisterServices(IServiceCollection services, IConfiguration configuration)

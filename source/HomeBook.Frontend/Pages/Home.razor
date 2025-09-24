@@ -2,6 +2,33 @@
 
 <PageTitle>Home</PageTitle>
 
-<h1>Hello, world!</h1>
+<MudButton Variant="Variant.Filled"
+           Class="ma-5"
+           Color="Color.Primary"
+           OnClick="@(() => OpenDrawer())">Start
+</MudButton>
 
-Welcome to your new app.
+<MudDrawer Anchor="Anchor.End"
+           @bind-Open="@_open"
+           Elevation="1"
+           Variant="@DrawerVariant.Temporary"
+           OverlayAutoClose="true"
+           Width="var(--ui-widget-drawer-width)">
+
+    <MudDrawerHeader>
+        <MudText Typo="Typo.h6">Widgets</MudText>
+    </MudDrawerHeader>
+
+    <UiWidgetSelector/>
+
+</MudDrawer>
+
+@code
+{
+    private bool _open;
+
+    private void OpenDrawer()
+    {
+        _open = true;
+    }
+}
