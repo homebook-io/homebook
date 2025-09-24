@@ -6,4 +6,8 @@
         <Nullable>enable</Nullable>
     </PropertyGroup>
 
+    <ItemGroup>
+      <ProjectReference Include="..\HomeBook.Frontend.Modules.Abstractions\HomeBook.Frontend.Modules.Abstractions.csproj" />
+    </ItemGroup>
+
 </Project>

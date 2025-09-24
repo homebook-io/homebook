@@ -1,8 +1,8 @@
 using HomeBook.Client.Models;
 using HomeBook.Frontend.Abstractions.Contracts;
 using HomeBook.Frontend.Abstractions.Models;
+using HomeBook.Frontend.Core.Models.Setup;
 using HomeBook.Frontend.Mappings;
-using HomeBook.Frontend.Models.Setup;
 using HomeBook.Frontend.Services.Exceptions;
 using HomeBook.Frontend.Setup.Exceptions;
 using Microsoft.AspNetCore.Components;

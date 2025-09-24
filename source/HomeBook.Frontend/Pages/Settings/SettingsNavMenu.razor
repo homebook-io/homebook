@@ -1,4 +1,4 @@
-@using HomeBookIcons = HomeBook.Frontend.Defaults.HomeBookIcons
+@using HomeBookIcons = HomeBook.Frontend.Core.Icons.HomeBookIcons
 @using Microsoft.AspNetCore.Components.Authorization
 
 <MudPaper>
@@ -40,6 +40,12 @@
                         Href="/Settings/Instance"
                         Icon="@HomeBookIcons.Icons8.LiquidGlassColor.LaptopSettings">
                 Homebook Configuration
+            </MudNavLink>
+
+            <MudNavLink Match="NavLinkMatch.Prefix"
+                        Href="/Settings/Modules"
+                        Icon="@HomeBookIcons.Icons8.LiquidGlassColor.Module">
+                Homebook Modules
             </MudNavLink>
 
             <MudNavLink Match="NavLinkMatch.Prefix"

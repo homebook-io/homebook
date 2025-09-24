@@ -1,0 +1,28 @@
+@inject IJSRuntime JSRuntime
+@implements IAsyncDisposable
+
+<div class="hb-widget-container">
+
+    <div class="hb-widget-grid" @ref="gridElement">
+
+        @if (ShowGridCells && gridCells != null && gridCells.Count > 0)
+        {
+            @for (int i = 0; i < gridCells.Count; i++)
+            {
+                var cellIndex = i;
+                <div class="hb-grid-cell" data-cell-index="@cellIndex">
+                    @if (cellIndex < childWidgets.Count)
+                    {
+                        @childWidgets[cellIndex]
+                    }
+                </div>
+            }
+        }
+        else
+        {
+            @ChildContent
+        }
+
+    </div>
+
+</div>

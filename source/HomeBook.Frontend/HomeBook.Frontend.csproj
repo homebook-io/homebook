@@ -8,7 +8,7 @@
     </PropertyGroup>
 
     <ItemGroup>
-        <PackageReference Include="AspNetCore.SassCompiler" Version="1.92.1" />
+        <PackageReference Include="AspNetCore.SassCompiler" Version="1.93.2" />
         <PackageReference Include="Microsoft.AspNetCore.Components.WebAssembly" Version="9.0.9" />
         <PackageReference Include="Microsoft.AspNetCore.Components.WebAssembly.Authentication" Version="9.0.9" />
         <PackageReference Include="Microsoft.AspNetCore.Components.WebAssembly.DevServer" Version="9.0.9" PrivateAssets="all" />
@@ -26,6 +26,9 @@
     </ItemGroup>
 
     <ItemGroup>
+        <ProjectReference Include="..\HomeBook.Frontend.Core\HomeBook.Frontend.Core.csproj" />
+        <ProjectReference Include="..\HomeBook.Frontend.Module.Finances\HomeBook.Frontend.Module.Finances.csproj" />
+        <ProjectReference Include="..\HomeBook.Frontend.Module.PlatformInfo\HomeBook.Frontend.Module.PlatformInfo.csproj" />
         <ProjectReference Include="..\HomeBook.Frontend.Services\HomeBook.Frontend.Services.csproj"/>
     </ItemGroup>
 
