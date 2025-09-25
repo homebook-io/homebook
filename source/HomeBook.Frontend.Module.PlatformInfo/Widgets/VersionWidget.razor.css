@@ -6,6 +6,6 @@
     align-items: center;
 }
 
-.hb-module-platform-version-widget > * {
-
+.hb-module-platform-version-widget ::deep > * {
+    align-self: stretch;
 }

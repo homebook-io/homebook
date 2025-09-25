@@ -3,7 +3,7 @@ using Microsoft.AspNetCore.Components;
 
 namespace HomeBook.Frontend.Module.Finances.Widgets;
 
-public partial class CurrentBudgetWidget : ComponentBase, IWidget
+public partial class CurrentBudgetWidget : WidgetBase, IWidget
 {
     public static WidgetSize[] AvailableSizes { get; } =
     [

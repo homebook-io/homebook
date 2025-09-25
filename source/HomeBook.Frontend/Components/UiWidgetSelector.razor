@@ -1,12 +1,14 @@
 @using HomeBook.Frontend.Abstractions.Contracts
 @using HomeBook.Frontend.Core.Models.Widgets
+
 @inject IWidgetFactory WidgetFactory
 
 <UiWidgetList>
     @foreach (WidgetConfiguration widgetConfiguration in _availableWidgets)
     {
         <UiWidgetContainer Size="@widgetConfiguration.Size">
-            <DynamicComponent Type="widgetConfiguration.WidgetType"/>
+            <DynamicComponent Type="widgetConfiguration.WidgetType"
+                              Parameters="widgetConfiguration.Parameters"/>
         </UiWidgetContainer>
     }
 </UiWidgetList>

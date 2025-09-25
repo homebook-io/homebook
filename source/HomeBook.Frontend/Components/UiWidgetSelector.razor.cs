@@ -32,9 +32,17 @@ public partial class UiWidgetSelector : ComponentBase
                     BindingFlags.Public | BindingFlags.Static)
                 ?.GetValue(null)!;
 
+            Dictionary<string, object> parameters = new()
+            {
+                {
+                    "IsPreview", true
+                }
+            };
+
             configurations.AddRange(widgetSizes
                 .Select(widgetSize => new WidgetConfiguration(widgetType,
-                    widgetSize)));
+                    widgetSize,
+                    parameters)));
         }
 
         _availableWidgets = configurations;
