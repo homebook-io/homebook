@@ -465,7 +465,7 @@ public static class SystemHandler
                 return TypedResults.BadRequest("Instance name is required and cannot be empty");
 
             // Update the instance name
-            await instanceConfigurationProvider.WriteHomeBookInstanceNameAsync(request.Name, cancellationToken);
+            await instanceConfigurationProvider.SetHomeBookInstanceNameAsync(request.Name, cancellationToken);
 
             return TypedResults.Ok("Instance name updated successfully");
         }

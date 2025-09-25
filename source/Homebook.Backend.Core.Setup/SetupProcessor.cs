@@ -79,7 +79,7 @@ public class SetupProcessor(
             throw new SetupException("homebook configuration name is not set");
 
         IInstanceConfigurationProvider instanceConfigurationProvider = serviceProvider.GetRequiredService<IInstanceConfigurationProvider>();
-        await instanceConfigurationProvider.WriteHomeBookInstanceNameAsync(configurationName, cancellationToken);
+        await instanceConfigurationProvider.SetHomeBookInstanceNameAsync(configurationName, cancellationToken);
 
         // 4. execute available updates
         IUpdateProcessor updateProcessor = serviceProvider.GetRequiredService<IUpdateProcessor>();

@@ -6,17 +6,32 @@ namespace HomeBook.Backend.Abstractions.Contracts;
 public interface IInstanceConfigurationProvider
 {
     /// <summary>
-    /// writes the homebook instance name to the configuration
+    /// set the homebook instance name to the configuration
     /// </summary>
     /// <param name="instanceName"></param>
     /// <param name="cancellationToken"></param>
     /// <returns></returns>
-    Task WriteHomeBookInstanceNameAsync(string instanceName, CancellationToken cancellationToken = default);
+    Task SetHomeBookInstanceNameAsync(string instanceName, CancellationToken cancellationToken = default);
 
     /// <summary>
-    /// reads the homebook instance name from the configuration
+    /// gets the homebook instance name from the configuration
     /// </summary>
     /// <param name="cancellationToken"></param>
     /// <returns>the instance name or null if not set</returns>
     Task<string> GetHomeBookInstanceNameAsync(CancellationToken cancellationToken = default);
+
+    /// <summary>
+    /// set the default language for the homebook instance
+    /// </summary>
+    /// <param name="instanceName"></param>
+    /// <param name="cancellationToken"></param>
+    /// <returns></returns>
+    Task SetHomeBookInstanceDefaultLanguageAsync(string defaultLanguage, CancellationToken cancellationToken = default);
+
+    /// <summary>
+    /// gets the default language for the homebook instance
+    /// </summary>
+    /// <param name="cancellationToken"></param>
+    /// <returns>the instance name or null if not set</returns>
+    Task<string> GetHomeBookInstanceDefaultLanguageAsync(CancellationToken cancellationToken = default);
 }
