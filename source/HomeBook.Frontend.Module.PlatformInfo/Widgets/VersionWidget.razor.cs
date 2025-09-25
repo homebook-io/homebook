@@ -26,7 +26,7 @@ public partial class VersionWidget : WidgetBase, IWidget
 
             await LoadAsync();
         }
-        catch (Exception err)
+        catch (Exception)
         {
         }
         finally
