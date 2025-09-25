@@ -1,6 +1,8 @@
-@use "blazorbase";
+@import "blazorbase";
 
-@use "styles";
-@use "components";
+@import "variables";
 
-@use "views";
+@import "styles";
+@import "components";
+
+@import "views";

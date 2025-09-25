@@ -1,0 +1,21 @@
+$frosted-color: rgb(255, 255, 255); // Base color (RGB)
+$frosted-alpha-min: 0.05; // Alpha for b1
+$frosted-alpha-step: 0.05; // Fixed alpha step per class
+$frosted-blur: 6px; // Blur strength
+$frosted-steps: 10; // Number of classes
+$frosted-border-alpha: 0.05; // Extra alpha for border
+$frosted-gradient-deg: 160deg; // Gradient angle
+$frosted-gradient-add: 0.25; // Extra alpha at gradient end
+$frosted-inner-shadow-alpha: 0.3; // Strength of the white inner shadow
+
+:root {
+    --#{$hb-prefix}-frosted-color: #{$frosted-color};
+    --#{$hb-prefix}-frosted-alpha-min: #{$frosted-alpha-min};
+    --#{$hb-prefix}-frosted-alpha-step: #{$frosted-alpha-step};
+    --#{$hb-prefix}-frosted-blur: #{$frosted-blur};
+    --#{$hb-prefix}-frosted-steps: #{$frosted-steps};
+    --#{$hb-prefix}-frosted-border-alpha: #{$frosted-border-alpha};
+    --#{$hb-prefix}-frosted-gradient-deg: #{$frosted-gradient-deg};
+    --#{$hb-prefix}-frosted-gradient-add: #{$frosted-gradient-add};
+    --#{$hb-prefix}-frosted-inner-shadow-alpha: #{$frosted-inner-shadow-alpha};
+}

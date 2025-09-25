@@ -62,6 +62,18 @@
   content: var(--blazor-load-percentage-text, "Loading");
 }
 
+:root {
+  --hb-frosted-color: rgb(255, 255, 255);
+  --hb-frosted-alpha-min: 0.05;
+  --hb-frosted-alpha-step: 0.05;
+  --hb-frosted-blur: 6px;
+  --hb-frosted-steps: 10;
+  --hb-frosted-border-alpha: 0.05;
+  --hb-frosted-gradient-deg: 160deg;
+  --hb-frosted-gradient-add: 0.25;
+  --hb-frosted-inner-shadow-alpha: 0.3;
+}
+
 .frosted-b1 {
   position: relative;
   background: radial-gradient(ellipse 80% 30% at top center, rgba(255, 255, 255, 0.15) 0%, transparent 80%), linear-gradient(160deg, rgba(255, 255, 255, 0.05) 0%, rgba(255, 255, 255, 0.3) 100%), rgba(255, 255, 255, 0.05) !important;
@@ -69,6 +81,19 @@
   border: 1px solid rgba(255, 255, 255, 0.1);
 }
 .frosted-b1::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  box-shadow: inset 0px 4px 48px rgba(255, 255, 255, 0.35);
+  border-radius: inherit;
+}
+
+.frosted-bg-b1 {
+  background: radial-gradient(ellipse 80% 30% at top center, rgba(255, 255, 255, 0.15) 0%, transparent 80%), linear-gradient(160deg, rgba(255, 255, 255, 0.05) 0%, rgba(255, 255, 255, 0.3) 100%), rgba(255, 255, 255, 0.05) !important;
+  backdrop-filter: blur(6px);
+}
+.frosted-bg-b1::before {
   content: "";
   position: absolute;
   inset: 0;
@@ -92,6 +117,19 @@
   border-radius: inherit;
 }
 
+.frosted-bg-b2 {
+  background: radial-gradient(ellipse 80% 30% at top center, rgba(255, 255, 255, 0.15) 0%, transparent 80%), linear-gradient(160deg, rgba(255, 255, 255, 0.1) 0%, rgba(255, 255, 255, 0.35) 100%), rgba(255, 255, 255, 0.1) !important;
+  backdrop-filter: blur(6px);
+}
+.frosted-bg-b2::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  box-shadow: inset 0px 4px 48px rgba(255, 255, 255, 0.4);
+  border-radius: inherit;
+}
+
 .frosted-b3 {
   position: relative;
   background: radial-gradient(ellipse 80% 30% at top center, rgba(255, 255, 255, 0.15) 0%, transparent 80%), linear-gradient(160deg, rgba(255, 255, 255, 0.15) 0%, rgba(255, 255, 255, 0.4) 100%), rgba(255, 255, 255, 0.15) !important;
@@ -99,6 +137,19 @@
   border: 1px solid rgba(255, 255, 255, 0.2);
 }
 .frosted-b3::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  box-shadow: inset 0px 4px 48px rgba(255, 255, 255, 0.45);
+  border-radius: inherit;
+}
+
+.frosted-bg-b3 {
+  background: radial-gradient(ellipse 80% 30% at top center, rgba(255, 255, 255, 0.15) 0%, transparent 80%), linear-gradient(160deg, rgba(255, 255, 255, 0.15) 0%, rgba(255, 255, 255, 0.4) 100%), rgba(255, 255, 255, 0.15) !important;
+  backdrop-filter: blur(6px);
+}
+.frosted-bg-b3::before {
   content: "";
   position: absolute;
   inset: 0;
@@ -122,6 +173,19 @@
   border-radius: inherit;
 }
 
+.frosted-bg-b4 {
+  background: radial-gradient(ellipse 80% 30% at top center, rgba(255, 255, 255, 0.15) 0%, transparent 80%), linear-gradient(160deg, rgba(255, 255, 255, 0.2) 0%, rgba(255, 255, 255, 0.45) 100%), rgba(255, 255, 255, 0.2) !important;
+  backdrop-filter: blur(6px);
+}
+.frosted-bg-b4::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  box-shadow: inset 0px 4px 48px rgba(255, 255, 255, 0.5);
+  border-radius: inherit;
+}
+
 .frosted-b5 {
   position: relative;
   background: radial-gradient(ellipse 80% 30% at top center, rgba(255, 255, 255, 0.15) 0%, transparent 80%), linear-gradient(160deg, rgba(255, 255, 255, 0.25) 0%, rgba(255, 255, 255, 0.5) 100%), rgba(255, 255, 255, 0.25) !important;
@@ -129,6 +193,19 @@
   border: 1px solid rgba(255, 255, 255, 0.3);
 }
 .frosted-b5::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  box-shadow: inset 0px 4px 48px rgba(255, 255, 255, 0.55);
+  border-radius: inherit;
+}
+
+.frosted-bg-b5, .mud-drawer.frosted {
+  background: radial-gradient(ellipse 80% 30% at top center, rgba(255, 255, 255, 0.15) 0%, transparent 80%), linear-gradient(160deg, rgba(255, 255, 255, 0.25) 0%, rgba(255, 255, 255, 0.5) 100%), rgba(255, 255, 255, 0.25) !important;
+  backdrop-filter: blur(6px);
+}
+.frosted-bg-b5::before, .mud-drawer.frosted::before {
   content: "";
   position: absolute;
   inset: 0;
@@ -152,6 +229,19 @@
   border-radius: inherit;
 }
 
+.frosted-bg-b6 {
+  background: radial-gradient(ellipse 80% 30% at top center, rgba(255, 255, 255, 0.15) 0%, transparent 80%), linear-gradient(160deg, rgba(255, 255, 255, 0.3) 0%, rgba(255, 255, 255, 0.55) 100%), rgba(255, 255, 255, 0.3) !important;
+  backdrop-filter: blur(6px);
+}
+.frosted-bg-b6::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  box-shadow: inset 0px 4px 48px rgba(255, 255, 255, 0.6);
+  border-radius: inherit;
+}
+
 .frosted-b7 {
   position: relative;
   background: radial-gradient(ellipse 80% 30% at top center, rgba(255, 255, 255, 0.15) 0%, transparent 80%), linear-gradient(160deg, rgba(255, 255, 255, 0.35) 0%, rgba(255, 255, 255, 0.6) 100%), rgba(255, 255, 255, 0.35) !important;
@@ -159,6 +249,19 @@
   border: 1px solid rgba(255, 255, 255, 0.4);
 }
 .frosted-b7::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  box-shadow: inset 0px 4px 48px rgba(255, 255, 255, 0.65);
+  border-radius: inherit;
+}
+
+.frosted-bg-b7 {
+  background: radial-gradient(ellipse 80% 30% at top center, rgba(255, 255, 255, 0.15) 0%, transparent 80%), linear-gradient(160deg, rgba(255, 255, 255, 0.35) 0%, rgba(255, 255, 255, 0.6) 100%), rgba(255, 255, 255, 0.35) !important;
+  backdrop-filter: blur(6px);
+}
+.frosted-bg-b7::before {
   content: "";
   position: absolute;
   inset: 0;
@@ -182,6 +285,19 @@
   border-radius: inherit;
 }
 
+.frosted-bg-b8 {
+  background: radial-gradient(ellipse 80% 30% at top center, rgba(255, 255, 255, 0.15) 0%, transparent 80%), linear-gradient(160deg, rgba(255, 255, 255, 0.4) 0%, rgba(255, 255, 255, 0.65) 100%), rgba(255, 255, 255, 0.4) !important;
+  backdrop-filter: blur(6px);
+}
+.frosted-bg-b8::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  box-shadow: inset 0px 4px 48px rgba(255, 255, 255, 0.7);
+  border-radius: inherit;
+}
+
 .frosted-b9 {
   position: relative;
   background: radial-gradient(ellipse 80% 30% at top center, rgba(255, 255, 255, 0.15) 0%, transparent 80%), linear-gradient(160deg, rgba(255, 255, 255, 0.45) 0%, rgba(255, 255, 255, 0.7) 100%), rgba(255, 255, 255, 0.45) !important;
@@ -189,6 +305,19 @@
   border: 1px solid rgba(255, 255, 255, 0.5);
 }
 .frosted-b9::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  box-shadow: inset 0px 4px 48px rgba(255, 255, 255, 0.75);
+  border-radius: inherit;
+}
+
+.frosted-bg-b9 {
+  background: radial-gradient(ellipse 80% 30% at top center, rgba(255, 255, 255, 0.15) 0%, transparent 80%), linear-gradient(160deg, rgba(255, 255, 255, 0.45) 0%, rgba(255, 255, 255, 0.7) 100%), rgba(255, 255, 255, 0.45) !important;
+  backdrop-filter: blur(6px);
+}
+.frosted-bg-b9::before {
   content: "";
   position: absolute;
   inset: 0;
@@ -210,6 +339,25 @@
   pointer-events: none;
   box-shadow: inset 0px 4px 48px rgba(255, 255, 255, 0.8);
   border-radius: inherit;
+}
+
+.frosted-bg-b10 {
+  background: radial-gradient(ellipse 80% 30% at top center, rgba(255, 255, 255, 0.15) 0%, transparent 80%), linear-gradient(160deg, rgba(255, 255, 255, 0.5) 0%, rgba(255, 255, 255, 0.75) 100%), rgba(255, 255, 255, 0.5) !important;
+  backdrop-filter: blur(6px);
+}
+.frosted-bg-b10::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  box-shadow: inset 0px 4px 48px rgba(255, 255, 255, 0.8);
+  border-radius: inherit;
+}
+
+:root {
+  --hb-github-color: #24292e;
+  --hb-docker-color: #2496ed;
+  --hb-ubuntu-color: #e95420;
 }
 
 .github-bg {
@@ -271,6 +419,28 @@
 .mud-paper > .mud-navmenu.mud-navmenu-first-level > .mud-nav-item:last-child {
   border-bottom-left-radius: var(--mud-default-borderradius);
   border-bottom-right-radius: var(--mud-default-borderradius);
+}
+
+.mud-drawer.frosted.mud-theme-primary {
+  color: var(--mud-palette-primary-text) !important;
+  background: rgb(from var(--mud-palette-primary) r g b/0.7) !important;
+}
+.mud-drawer.frosted.mud-theme-primary::before {
+  content: none !important;
+}
+.mud-drawer.frosted.mud-theme-secondary {
+  color: var(--mud-palette-secondary-text) !important;
+  background: rgb(from var(--mud-palette-secondary) r g b/0.7) !important;
+}
+.mud-drawer.frosted.mud-theme-secondary::before {
+  content: none !important;
+}
+.mud-drawer.frosted.mud-theme-tertiary {
+  color: var(--mud-palette-tertiary-text) !important;
+  background: rgb(from var(--mud-palette-tertiary) r g b/0.7) !important;
+}
+.mud-drawer.frosted.mud-theme-tertiary::before {
+  content: none !important;
 }
 
 .ui-wavebackground-container {
@@ -419,6 +589,7 @@
   --cell-gap: 24px;
   --widget-border-radius: 12px;
   --ui-widget-drawer-width: calc((var(--cell-size) * 8) + (var(--cell-gap) * 7) + var(--cell-gap));
+  --hb-widget-padding: calc(var(--widget-border-radius) / 3);
 }
 
 .hb-widget-container {
@@ -444,8 +615,12 @@
 }
 
 .ui-widget {
-  padding: calc(var(--widget-border-radius) / 3);
   overflow: hidden;
+  display: flex;
+  flex-direction: column;
+}
+.ui-widget > * {
+  flex: 1 1 auto;
 }
 .ui-widget.w-2 {
   width: calc(var(--cell-size) * 2 + var(--cell-gap) * 1);

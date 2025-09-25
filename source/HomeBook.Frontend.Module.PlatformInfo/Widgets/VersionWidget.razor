@@ -1,6 +1,25 @@
 @using Microsoft.Extensions.Configuration
+
+@inherits HomeBook.Frontend.Modules.Abstractions.WidgetBase
+
 @inject IConfiguration Configuration
 
-<MudText Typo="Typo.overline">
-    version: @_version
-</MudText>
+<div class="hb-module-platform-version-widget">
+
+    <MudText Typo="Typo.subtitle1" Align="Align.Center">
+        HomeBook Version:
+    </MudText>
+
+    @if (IsBusy)
+    {
+        <MudSkeleton Height="30px"/>
+    }
+
+    @if (!IsBusy)
+    {
+        <MudText Typo="Typo.h6" Align="Align.Center">
+            @_version
+        </MudText>
+    }
+
+</div>

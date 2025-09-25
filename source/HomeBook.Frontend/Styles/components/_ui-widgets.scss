@@ -4,6 +4,8 @@
     --cell-gap: 24px;
     --widget-border-radius: 12px;
     --ui-widget-drawer-width: calc((var(--cell-size) * 8) + (var(--cell-gap) * 7) + var(--cell-gap));
+
+    --hb-widget-padding: calc(var(--widget-border-radius) / 3);
 }
 
 .hb-widget-container {
@@ -35,8 +37,13 @@
 }
 
 .ui-widget {
-    padding: calc(var(--widget-border-radius) / 3);
     overflow: hidden;
+    display: flex;
+    flex-direction: column;
+
+    > * {
+        flex: 1 1 auto;
+    }
 
     &.w-2 {
         width: calc(var(--cell-size) * 2 + var(--cell-gap) * 1);

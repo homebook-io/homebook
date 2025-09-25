@@ -1,0 +1,11 @@
+.hb-module-platform-version-widget {
+    padding: var(--hb-widget-padding);
+    display: flex;
+    flex-direction: column;
+    row-gap: 4px;
+    align-items: center;
+}
+
+.hb-module-platform-version-widget ::deep > * {
+    align-self: stretch;
+}

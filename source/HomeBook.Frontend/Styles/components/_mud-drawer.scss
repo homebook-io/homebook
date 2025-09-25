@@ -1,0 +1,33 @@
+.mud-drawer {
+
+    &.frosted {
+        @extend .frosted-bg-b5;
+
+        &.mud-theme-primary {
+            color: var(--mud-palette-primary-text) !important;
+            background: rgb(from var(--mud-palette-primary) r g b / 0.7) !important;
+
+            &::before {
+                content: none !important;
+            }
+        }
+
+        &.mud-theme-secondary {
+            color: var(--mud-palette-secondary-text) !important;
+            background: rgb(from var(--mud-palette-secondary) r g b / 0.7) !important;
+
+            &::before {
+                content: none !important;
+            }
+        }
+
+        &.mud-theme-tertiary {
+            color: var(--mud-palette-tertiary-text) !important;
+            background: rgb(from var(--mud-palette-tertiary) r g b / 0.7) !important;
+
+            &::before {
+                content: none !important;
+            }
+        }
+    }
+}

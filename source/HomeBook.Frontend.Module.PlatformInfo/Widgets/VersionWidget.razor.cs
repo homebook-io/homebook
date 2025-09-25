@@ -3,7 +3,7 @@ using Microsoft.AspNetCore.Components;
 
 namespace HomeBook.Frontend.Module.PlatformInfo.Widgets;
 
-public partial class VersionWidget : ComponentBase, IWidget
+public partial class VersionWidget : WidgetBase, IWidget
 {
     private string _version = string.Empty;
 
@@ -19,7 +19,40 @@ public partial class VersionWidget : ComponentBase, IWidget
         if (!firstRender)
             return;
 
-        _version = Configuration["AppVersion"] ?? "1.0.0";
-        StateHasChanged();
+        try
+        {
+            IsBusy = true;
+            StateHasChanged();
+
+            await LoadAsync();
+        }
+        catch (Exception)
+        {
+        }
+        finally
+        {
+            IsBusy = false;
+            StateHasChanged();
+        }
+    }
+
+    private async Task LoadAsync()
+    {
+        if (IsPreview)
+        {
+            await Task.Delay(5000);
+
+            _version = "1.0.0";
+
+            return;
+        }
+
+        await LoadVersionAsync();
+    }
+
+    private async Task LoadVersionAsync()
+    {
+        await Task.CompletedTask;
+        _version = Configuration["Version"] ?? "-";
     }
 }

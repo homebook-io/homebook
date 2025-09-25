@@ -24,7 +24,7 @@ public partial class UiWidgetSelector : ComponentBase
         CancellationToken cancellationToken = CancellationToken.None;
 
         IReadOnlyList<Type> widgetTypes = WidgetFactory.GetAllWidgetTypes();
-        List<WidgetConfiguration> configurations = new List<WidgetConfiguration>();
+        List<WidgetConfiguration> configurations = [];
         foreach (Type widgetType in widgetTypes)
         {
             WidgetSize[] widgetSizes = (WidgetSize[])widgetType
@@ -32,9 +32,19 @@ public partial class UiWidgetSelector : ComponentBase
                     BindingFlags.Public | BindingFlags.Static)
                 ?.GetValue(null)!;
 
+            Dictionary<string, object> parameters = new()
+            {
+                {
+                    "IsPreview", true
+                }
+            };
+
             configurations.AddRange(widgetSizes
                 .Select(widgetSize => new WidgetConfiguration(widgetType,
-                    widgetSize)));
+                    widgetSize,
+                    parameters,
+                    "",
+                    "")));
         }
 
         _availableWidgets = configurations;
