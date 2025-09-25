@@ -24,7 +24,7 @@ public partial class UiWidgetSelector : ComponentBase
         CancellationToken cancellationToken = CancellationToken.None;
 
         IReadOnlyList<Type> widgetTypes = WidgetFactory.GetAllWidgetTypes();
-        List<WidgetConfiguration> configurations = new List<WidgetConfiguration>();
+        List<WidgetConfiguration> configurations = [];
         foreach (Type widgetType in widgetTypes)
         {
             WidgetSize[] widgetSizes = (WidgetSize[])widgetType
@@ -42,7 +42,9 @@ public partial class UiWidgetSelector : ComponentBase
             configurations.AddRange(widgetSizes
                 .Select(widgetSize => new WidgetConfiguration(widgetType,
                     widgetSize,
-                    parameters)));
+                    parameters,
+                    "",
+                    "")));
         }
 
         _availableWidgets = configurations;
