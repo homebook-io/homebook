@@ -73,9 +73,12 @@ Log.Information("HomeBook Backend application starting up - Version: {Version}",
 
 app.UseSerilogRequestLogging();
 
-app.UseAuthentication();
-app.UseMiddleware<AdminAuthorizationMiddleware>();
-app.UseAuthorization();
+if (instanceStatus == InstanceStatus.RUNNING)
+{
+    app.UseAuthentication();
+    app.UseMiddleware<AdminAuthorizationMiddleware>();
+    app.UseAuthorization();
+}
 
 if (app.Environment.IsDevelopment())
 {

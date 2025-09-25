@@ -66,8 +66,9 @@ public class SetupInstanceManager(
         try
         {
             // get the version from the instance file
-            installedInstanceVersion =
-                await fileSystemService.FileReadAllTextAsync(_homebookInstanceFileName, cancellationToken);
+            if (fileSystemService.FileExists(_homebookInstanceFileName))
+                installedInstanceVersion = await fileSystemService.FileReadAllTextAsync(_homebookInstanceFileName,
+                    cancellationToken);
         }
         catch (Exception err)
         {
