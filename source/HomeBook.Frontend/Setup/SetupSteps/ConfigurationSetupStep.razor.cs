@@ -12,6 +12,13 @@ public partial class ConfigurationSetupStep : ComponentBase, ISetupStep
     private bool _preConfigured = false;
     private string? _errorMessage = null;
     private HomebookConfigurationViewModel _homebookConfiguration = new();
+
+    private readonly List<LanguageViewModel> _availableLanguages =
+    [
+        new("EN", "Englisch (English)"),
+        new("DE", "German (Deutsch)")
+    ];
+
     public string Key { get; } = nameof(ConfigurationSetupStep);
     public bool HasError { get; set; }
     public bool IsSuccessful { get; set; }
@@ -66,7 +73,12 @@ public partial class ConfigurationSetupStep : ComponentBase, ISetupStep
     {
         CancellationToken cancellationToken = CancellationToken.None;
 
-        await SetupService.SetStorageValueAsync("HOMEBOOK_CONFIGURATION_NAME", _homebookConfiguration.InstanceName, cancellationToken);
+        await SetupService.SetStorageValueAsync("HOMEBOOK_CONFIGURATION_NAME",
+            _homebookConfiguration.InstanceName,
+            cancellationToken);
+        await SetupService.SetStorageValueAsync("HOMEBOOK_CONFIGURATION_DEFAULT_LANG",
+            _homebookConfiguration.InstanceDefaultLang,
+            cancellationToken);
 
         _errorMessage = null;
         _configurationIsOk = true;

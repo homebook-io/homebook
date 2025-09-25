@@ -325,6 +325,7 @@ public class SetupHandler
             "",
             "",
             "",
+            "",
             false);
 
         string? databaseTypeValue = request.DatabaseType
@@ -360,6 +361,10 @@ public class SetupHandler
             request.HomebookConfigurationName
             ?? scp.GetValue(EnvironmentVariables.HOMEBOOK_INSTANCE_NAME)
             ?? defaultConfiguration.HomebookConfigurationName,
+            // HOMEBOOK_INSTANCE_NAME
+            request.HomebookConfigurationDefaultLanguage
+            ?? scp.GetValue(EnvironmentVariables.HOMEBOOK_INSTANCE_DEFAULT_LANG)
+            ?? defaultConfiguration.HomebookConfigurationDefaultLanguage,
             // HOMEBOOK_USER_NAME
             request.HomebookUserName
             ?? scp.GetValue(EnvironmentVariables.HOMEBOOK_USER_NAME)

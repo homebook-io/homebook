@@ -524,7 +524,8 @@ public class SetupHandlerTests
             DatabaseUserPassword: null,
             HomebookUserName: null,
             HomebookUserPassword: null,
-            HomebookConfigurationName: null);
+            HomebookConfigurationName: null,
+            HomebookConfigurationDefaultLanguage: null);
         _setupConfigurationProvider.GetValue(EnvironmentVariables.DATABASE_TYPE).Returns("POSTGRESQL");
         _setupConfigurationProvider.GetValue(EnvironmentVariables.DATABASE_HOST).Returns("test-server");
         _setupConfigurationProvider.GetValue<ushort>(EnvironmentVariables.DATABASE_PORT).Returns((ushort)5432);
@@ -567,7 +568,8 @@ public class SetupHandlerTests
             DatabaseUserPassword: "test-password",
             HomebookUserName: "user",
             HomebookUserPassword: "s3cr3t",
-            HomebookConfigurationName: "test-homebook");
+            HomebookConfigurationName: "test-homebook",
+            HomebookConfigurationDefaultLanguage: "EN");
         _setupConfigurationProvider.GetValue(EnvironmentVariables.DATABASE_TYPE).Returns((string?)null);
         _setupConfigurationProvider.GetValue(EnvironmentVariables.DATABASE_HOST).Returns((string?)null);
         _setupConfigurationProvider.GetValue<ushort>(EnvironmentVariables.DATABASE_PORT).Returns((ushort)default);
@@ -611,7 +613,8 @@ public class SetupHandlerTests
             DatabaseUserPassword: "another-password",
             HomebookUserName: "another-user",
             HomebookUserPassword: "another-s3cr3t",
-            HomebookConfigurationName: "another-homebook");
+            HomebookConfigurationName: "another-homebook",
+            HomebookConfigurationDefaultLanguage: "EN");
         _setupConfigurationProvider.GetValue(EnvironmentVariables.DATABASE_TYPE).Returns("POSTGRESQL");
         _setupConfigurationProvider.GetValue(EnvironmentVariables.DATABASE_HOST).Returns("test-server");
         _setupConfigurationProvider.GetValue<ushort>(EnvironmentVariables.DATABASE_PORT).Returns((ushort)5432);
@@ -654,7 +657,8 @@ public class SetupHandlerTests
             DatabaseUserPassword: null,
             HomebookUserName: null,
             HomebookUserPassword: null,
-            HomebookConfigurationName: null);
+            HomebookConfigurationName: null,
+            HomebookConfigurationDefaultLanguage: null);
         _setupConfigurationProvider.GetValue(EnvironmentVariables.DATABASE_TYPE).Returns((string?)null);
         _setupConfigurationProvider.GetValue(EnvironmentVariables.DATABASE_HOST).Returns((string?)null);
         _setupConfigurationProvider.GetValue<ushort>(EnvironmentVariables.DATABASE_PORT).Returns((ushort)default);
@@ -769,7 +773,8 @@ public class SetupHandlerTests
             "this-is-s3cr3t",
             "auser",
             "as3cr3tpassword",
-            "Test Homebook");
+            "Test Homebook",
+            "EN");
         var setupConfigurationValidator = new SetupConfigurationValidator();
         var configuration = Substitute.For<IConfiguration, IConfigurationRoot>();
 
@@ -834,7 +839,8 @@ public class SetupHandlerTests
             "this-is-s3cr3t",
             "auser",
             "as3cr3tpassword",
-            "Test Homebook");
+            "Test Homebook",
+            "EN");
         var setupConfigurationValidator = new SetupConfigurationValidator();
         var configuration = Substitute.For<IConfiguration, IConfigurationRoot>();
 
@@ -868,6 +874,7 @@ public class SetupHandlerTests
             "",
             "",
             0,
+            "",
             "",
             "",
             "",
@@ -911,7 +918,8 @@ public class SetupHandlerTests
             "this-is-s3cr3t",
             "auser",
             "as3cr3tpassword",
-            "Test Homebook");
+            "Test Homebook",
+            "EN");
         var setupConfigurationValidator = new SetupConfigurationValidator();
         var configuration = Substitute.For<IConfiguration, IConfigurationRoot>();
 
@@ -955,7 +963,8 @@ public class SetupHandlerTests
             "this-is-s3cr3t",
             "auser",
             "as3cr3tpassword",
-            "Test Homebook");
+            "Test Homebook",
+            "EN");
         var setupConfigurationValidator = new SetupConfigurationValidator();
         var configuration = Substitute.For<IConfiguration, IConfigurationRoot>();
 

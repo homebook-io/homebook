@@ -12,6 +12,7 @@ namespace HomeBook.Backend.Abstractions.Models;
 /// <param name="DatabaseUserName">the username for accessing the database.</param>
 /// <param name="DatabaseUserPassword">the password for the database user.</param>
 /// <param name="HomebookConfigurationName">the name for the Homebook instance.</param>
+/// <param name="HomebookConfigurationDefaultLanguage">the default language for the Homebook instance, e.g. "en", "de", etc.</param>
 /// <param name="HomebookUserName">the username for the Homebook user, which is used as primary administrator.</param>
 /// <param name="HomebookUserPassword">the password for the Homebook user, which is used as primary administrator.</param>
 /// <param name="HomebookAcceptLicenses">if not null the licenses are accepted.</param>
@@ -23,6 +24,7 @@ public record SetupConfiguration(
     string DatabaseUserName,
     string DatabaseUserPassword,
     string HomebookConfigurationName,
+    string HomebookConfigurationDefaultLanguage,
     string HomebookUserName,
     string HomebookUserPassword,
     bool HomebookAcceptLicenses);

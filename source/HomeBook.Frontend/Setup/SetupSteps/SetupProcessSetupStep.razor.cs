@@ -77,49 +77,58 @@ public partial class SetupProcessSetupStep : ComponentBase, ISetupStep
         {
             StartSetupRequest request = new();
 
-            string? homebookUserName =
-                await SetupService.GetStorageValueAsync<string>("HOMEBOOK_USERNAME", cancellationToken);
+            string? homebookUserName = await SetupService
+                .GetStorageValueAsync<string>("HOMEBOOK_USERNAME", cancellationToken);
             if (!string.IsNullOrEmpty(homebookUserName))
                 request.HomebookUserName = homebookUserName;
 
-            string? homebookUserPassword =
-                await SetupService.GetStorageValueAsync<string>("HOMEBOOK_PASSWORD", cancellationToken);
+            string? homebookUserPassword = await SetupService
+                .GetStorageValueAsync<string>("HOMEBOOK_PASSWORD", cancellationToken);
             if (!string.IsNullOrEmpty(homebookUserPassword))
                 request.HomebookUserPassword = homebookUserPassword;
 
-            string? homebookConfigurationName =
-                await SetupService.GetStorageValueAsync<string>("HOMEBOOK_CONFIGURATION_NAME", cancellationToken);
+            string? homebookConfigurationName = await SetupService
+                .GetStorageValueAsync<string>("HOMEBOOK_CONFIGURATION_NAME", cancellationToken);
             if (!string.IsNullOrEmpty(homebookConfigurationName))
                 request.HomebookConfigurationName = homebookConfigurationName;
 
-            string? databaseType = await SetupService.GetStorageValueAsync<string>("DATABASE_TYPE", cancellationToken);
+            string? homebookConfigurationDefaultLanguage = await SetupService
+                .GetStorageValueAsync<string>("HOMEBOOK_CONFIGURATION_DEFAULT_LANG", cancellationToken);
+            if (!string.IsNullOrEmpty(homebookConfigurationDefaultLanguage))
+                request.HomebookConfigurationDefaultLanguage = homebookConfigurationDefaultLanguage;
+
+            string? databaseType = await SetupService
+                .GetStorageValueAsync<string>("DATABASE_TYPE", cancellationToken);
             if (!string.IsNullOrEmpty(databaseType))
                 request.DatabaseType = databaseType;
 
-            string? databaseHost = await SetupService.GetStorageValueAsync<string>("DATABASE_HOST", cancellationToken);
+            string? databaseHost = await SetupService
+                .GetStorageValueAsync<string>("DATABASE_HOST", cancellationToken);
             if (!string.IsNullOrEmpty(databaseHost))
                 request.DatabaseHost = databaseHost;
 
-            ushort? databasePort = await SetupService.GetStorageValueAsync<ushort>("DATABASE_PORT", cancellationToken);
+            ushort? databasePort = await SetupService
+                .GetStorageValueAsync<ushort>("DATABASE_PORT", cancellationToken);
             if (databasePort > 0)
                 request.DatabasePort = databasePort;
 
-            string? databaseName = await SetupService.GetStorageValueAsync<string>("DATABASE_NAME", cancellationToken);
+            string? databaseName = await SetupService
+                .GetStorageValueAsync<string>("DATABASE_NAME", cancellationToken);
             if (!string.IsNullOrEmpty(databaseName))
                 request.DatabaseName = databaseName;
 
-            string? databaseUsername =
-                await SetupService.GetStorageValueAsync<string>("DATABASE_USERNAME", cancellationToken);
+            string? databaseUsername = await SetupService
+                .GetStorageValueAsync<string>("DATABASE_USERNAME", cancellationToken);
             if (!string.IsNullOrEmpty(databaseUsername))
                 request.DatabaseUserName = databaseUsername;
 
-            string? databasePassword =
-                await SetupService.GetStorageValueAsync<string>("DATABASE_PASSWORD", cancellationToken);
+            string? databasePassword = await SetupService
+                .GetStorageValueAsync<string>("DATABASE_PASSWORD", cancellationToken);
             if (!string.IsNullOrEmpty(databasePassword))
                 request.DatabaseUserPassword = databasePassword;
 
-            bool? licensesAccepted =
-                await SetupService.GetStorageValueAsync<bool>("HOMEBOOK_LICENSES_ACCEPTED", cancellationToken);
+            bool? licensesAccepted = await SetupService
+                .GetStorageValueAsync<bool>("HOMEBOOK_LICENSES_ACCEPTED", cancellationToken);
             request.LicensesAccepted = licensesAccepted;
 
             // 1. start setup (it will restart the server at the end of the setup process)

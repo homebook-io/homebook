@@ -61,14 +61,31 @@
             {
                 <MudGrid>
 
-                    <MudItem xs="12" md="12">
+                    <MudItem xs="12">
                         <MudTextField @bind-Value="_homebookConfiguration.InstanceName"
                                       Margin="Margin.Dense"
                                       Label="HomeBook Instance Name"
                                       HelperText="Enter the name for your homebook"
                                       For="@(() => _homebookConfiguration.InstanceName)"
                                       Required="true"
+                                      Clearable="true"
                                       Variant="Variant.Outlined"/>
+                    </MudItem>
+
+                    <MudItem xs="12">
+                        <MudSelect @bind-Value="_homebookConfiguration.InstanceDefaultLang"
+                                   Variant="Variant.Outlined"
+                                   Label="Default Language for UI"
+                                   Margin="Margin.Dense"
+                                   Dense="true"
+                                   HelperText="Select the default language for the app"
+                                   Required="true"
+                                   Clearable="true">
+                            @foreach (var language in _availableLanguages)
+                            {
+                                <MudSelectItem Value="language.Key">@language.DisplayName</MudSelectItem>
+                            }
+                        </MudSelect>
                     </MudItem>
 
                 </MudGrid>
@@ -82,7 +99,7 @@
                                Class="mt-3"
                                Disabled="@_isChecking">
 
-                        <MudText>Save User</MudText>
+                        <MudText>Save Configuration</MudText>
 
                     </MudButton>
 

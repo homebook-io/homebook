@@ -72,6 +72,7 @@ public class SetupProcessorTests
             "user",
             "password",
             "my homebook",
+            "EN",
             "admin",
             "password",
             true);

@@ -87,16 +87,18 @@ open your domain and you should see the HomeBook Setup.
 
 if all environment variables are set, correctly, the setup will be running automatically.
 
-| Variable                   | Description                                                             |
-|----------------------------|-------------------------------------------------------------------------|
-| `DATABASE_HOST`            | the database host (e.g., `my-db.server.com`)                            |
-| `DATABASE_PORT`            | the database port (e.g., `5432`)                                        |
-| `DATABASE_NAME`            | the database name (e.g., `homebook`)                                    |
-| `DATABASE_USER`            | the database user (e.g., `db_user`)                                     |
-| `DATABASE_PASSWORD`        | the database password (e.g., `db_password`)                             |
-| `HOMEBOOK_USER_NAME`       | the admin username (e.g., `admin`)                                      |
-| `HOMEBOOK_USER_PASSWORD`   | the admin password (e.g., `password`)                                   |
-| `HOMEBOOK_ACCEPT_LICENSES` | no value needed. if added, the licenses will be accepted automatically. |
+| Variable                         | Description                                                             |
+|----------------------------------|-------------------------------------------------------------------------|
+| `DATABASE_HOST`                  | the database host (e.g., `my-db.server.com`)                            |
+| `DATABASE_PORT`                  | the database port (e.g., `5432`)                                        |
+| `DATABASE_NAME`                  | the database name (e.g., `homebook`)                                    |
+| `DATABASE_USER`                  | the database user (e.g., `db_user`)                                     |
+| `DATABASE_PASSWORD`              | the database password (e.g., `db_password`)                             |
+| `HOMEBOOK_USER_NAME`             | the admin username (e.g., `admin`)                                      |
+| `HOMEBOOK_USER_PASSWORD`         | the admin password (e.g., `password`)                                   |
+| `HOMEBOOK_ACCEPT_LICENSES`       | no value needed. if added, the licenses will be accepted automatically. |
+| `HOMEBOOK_INSTANCE_NAME`         | the name of the homebook instance (e.g., `My HomeBook`)                 |
+| `HOMEBOOK_INSTANCE_DEFAULT_LANG` | the default ui language (see languages)                                 |
 
 ### Allowed Password Characters
 
@@ -123,3 +125,19 @@ services:
     volumes:
       - /host/path/homebook:/var/lib/homebook
 ```
+
+## Languages
+
+### Available Languages
+
+**notice:** use the ENV VALUE in the environment variable `HOMEBOOK_INSTANCE_DEFAULT_LANG`
+
+| Language | ENV VALUE |
+|----------|-----------|
+| English  | EN        |
+| German   | DE        |
+
+### Translation Process
+
+we plan to support more languages in the future. For translations, we plan to use a community-driven approach via
+Weblate.

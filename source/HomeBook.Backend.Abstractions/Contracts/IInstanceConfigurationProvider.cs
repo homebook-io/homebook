@@ -33,5 +33,5 @@ public interface IInstanceConfigurationProvider
     /// </summary>
     /// <param name="cancellationToken"></param>
     /// <returns>the instance name or null if not set</returns>
-    Task<string> GetHomeBookInstanceDefaultLanguageAsync(CancellationToken cancellationToken = default);
+    Task<string?> GetHomeBookInstanceDefaultLanguageAsync(CancellationToken cancellationToken = default);
 }

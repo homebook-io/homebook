@@ -51,11 +51,11 @@ public class InstanceConfigurationProvider(
         await configurationRepository.WriteConfigurationAsync(config, cancellationToken);
     }
 
-    public async Task<string> GetHomeBookInstanceDefaultLanguageAsync(CancellationToken cancellationToken = default)
+    public async Task<string?> GetHomeBookInstanceDefaultLanguageAsync(CancellationToken cancellationToken = default)
     {
         Configuration? defaultLanguage = await configurationRepository
             .GetConfigurationByKeyAsync(HOMEBOOK_INSTANCE_DEFAULT_LANG,
                 cancellationToken);
-        return defaultLanguage?.Value ?? string.Empty;
+        return defaultLanguage?.Value ?? null;
     }
 }

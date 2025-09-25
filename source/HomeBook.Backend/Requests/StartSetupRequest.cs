@@ -13,6 +13,7 @@ namespace HomeBook.Backend.Requests;
 /// <param name="HomebookUserName">the username for the Homebook user</param>
 /// <param name="HomebookUserPassword">the password for the Homebook user</param>
 /// <param name="HomebookConfigurationName">the name of the Homebook instance</param>
+/// <param name="HomebookConfigurationDefaultLanguage">the default language of the Homebook instance, e.g. "en", "de", etc.</param>
 public record StartSetupRequest(
     bool? LicensesAccepted,
     string? DatabaseType,
@@ -23,4 +24,5 @@ public record StartSetupRequest(
     string? DatabaseUserPassword,
     string? HomebookUserName,
     string? HomebookUserPassword,
-    string? HomebookConfigurationName);
+    string? HomebookConfigurationName,
+    string? HomebookConfigurationDefaultLanguage);

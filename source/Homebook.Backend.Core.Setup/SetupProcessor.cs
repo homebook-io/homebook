@@ -73,15 +73,23 @@ public class SetupProcessor(
             adminPassword,
             cancellationToken);
 
+        IInstanceConfigurationProvider instanceConfigurationProvider = serviceProvider.GetRequiredService<IInstanceConfigurationProvider>();
+
         // 3. write homebook configuration
         string? configurationName = setupConfiguration.HomebookConfigurationName;
         if (string.IsNullOrEmpty(configurationName))
             throw new SetupException("homebook configuration name is not set");
 
-        IInstanceConfigurationProvider instanceConfigurationProvider = serviceProvider.GetRequiredService<IInstanceConfigurationProvider>();
         await instanceConfigurationProvider.SetHomeBookInstanceNameAsync(configurationName, cancellationToken);
 
-        // 4. execute available updates
+        // 4. set default language
+        string? defaultLanguage = setupConfiguration.HomebookConfigurationDefaultLanguage;
+        if (string.IsNullOrEmpty(defaultLanguage))
+            throw new SetupException("homebook default language name is not set");
+
+        await instanceConfigurationProvider.SetHomeBookInstanceDefaultLanguageAsync(defaultLanguage, cancellationToken);
+
+        // 5. execute available updates
         IUpdateProcessor updateProcessor = serviceProvider.GetRequiredService<IUpdateProcessor>();
         await updateProcessor.ProcessAsync(cancellationToken);
     }
