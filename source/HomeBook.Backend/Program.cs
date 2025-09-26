@@ -9,7 +9,7 @@ using Scalar.AspNetCore;
 using Serilog;
 
 #if DEBUG
-string developmentEnvFile = $"env{Path.DirectorySeparatorChar}Development.env";
+string developmentEnvFile = Path.Combine("env", "Development.env");
 EnvironmentLoader.LoadEnvFile(developmentEnvFile);
 #endif
 
