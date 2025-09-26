@@ -42,7 +42,7 @@ public class InstanceConfigurationProvider(
     {
         Configuration config = new()
         {
-            Key = HOMEBOOK_INSTANCE_NAME,
+            Key = HOMEBOOK_INSTANCE_DEFAULT_LANG,
             Value = defaultLanguage
         };
         await configurationValidator.ValidateAndThrowAsync<Configuration>(config,

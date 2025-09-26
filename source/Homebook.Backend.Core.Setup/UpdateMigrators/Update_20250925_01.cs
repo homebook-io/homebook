@@ -8,7 +8,7 @@ public class Update_20250925_01(
     IInstanceConfigurationProvider instanceConfigurationProvider) : IUpdateMigrator
 {
     /// <inheritdoc />
-    public Version Version { get; } = new(1, 0, 11);
+    public Version Version { get; } = new(1, 0, 96);
 
     /// <inheritdoc />
     public string Description { get; } = "Add IsAdmin to oldest homebook user";
