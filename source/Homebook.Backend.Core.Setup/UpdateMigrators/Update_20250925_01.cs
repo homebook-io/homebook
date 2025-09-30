@@ -1,4 +1,5 @@
 using HomeBook.Backend.Abstractions.Contracts;
+using HomeBook.Backend.Abstractions.Setup;
 using Microsoft.Extensions.Logging;
 
 namespace Homebook.Backend.Core.Setup.UpdateMigrators;
@@ -8,12 +9,10 @@ public class Update_20250925_01(
     IInstanceConfigurationProvider instanceConfigurationProvider) : IUpdateMigrator
 {
     /// <inheritdoc />
-    public Version Version { get; } = new(1, 0, 96);
+    public Version Version { get; } = new(1, 0, 96, 1);
 
     /// <inheritdoc />
-    public string Description { get; } = "Add IsAdmin to oldest homebook user";
-
-    private const string DefaultLanguage = "EN";
+    public string Description { get; } = "Set Default Language if not set";
 
     /// <inheritdoc />
     public async Task ExecuteAsync(CancellationToken cancellationToken)
@@ -27,7 +26,10 @@ public class Update_20250925_01(
         // update users and add created timestamp
         logger.LogInformation("Updating Default Language");
 
-        await instanceConfigurationProvider.SetHomeBookInstanceDefaultLanguageAsync(DefaultLanguage,
+        // TODO: try to load load from env
+        string defaultLang = "EN";
+        await instanceConfigurationProvider.SetHomeBookInstanceDefaultLanguageAsync(
+            defaultLang,
             cancellationToken);
     }
 }

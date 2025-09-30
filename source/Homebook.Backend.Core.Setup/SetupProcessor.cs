@@ -52,6 +52,8 @@ public class SetupProcessor(
         // Add the same configuration as in Program.cs
         services.AddSingleton(injectedConfiguration);
 
+        // TODO: add IRuntimeConfigurationProvider
+
         // Add the same file system services as in Program.cs
         services.AddSingleton(fileSystemService);
         services.AddSingleton(applicationPathProvider);

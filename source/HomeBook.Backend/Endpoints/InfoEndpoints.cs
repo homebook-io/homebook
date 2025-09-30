@@ -30,6 +30,14 @@ public static class InfoEndpoints
             .Produces<string>()
             .Produces<string>(StatusCodes.Status500InternalServerError);
 
+        group.MapGet("/default-language", InfoHandler.HandleGetInstanceDefaultLanguage)
+            .WithName("GetInstanceDefaultLanguage")
+            .WithDescription("Returns the instance default language as a string (public endpoint) e.g. 'EN', 'DE' ...")
+            .AllowAnonymous()
+            .WithOpenApi()
+            .Produces<string>()
+            .Produces<string>(StatusCodes.Status500InternalServerError);
+
         return routeBuilder;
     }
 }

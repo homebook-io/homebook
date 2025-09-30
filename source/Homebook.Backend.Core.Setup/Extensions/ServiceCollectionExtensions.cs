@@ -40,6 +40,7 @@ public static class ServiceCollectionExtensions
         services.AddScoped<IUpdateMigrator, Update_20250910_01>();
         services.AddScoped<IUpdateMigrator, Update_20250912_01>();
         services.AddScoped<IUpdateMigrator, Update_20250925_01>();
+        services.AddScoped<IUpdateMigrator, Update_20250925_02>();
 
         return services;
     }

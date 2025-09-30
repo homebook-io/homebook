@@ -20,6 +20,7 @@ namespace HomeBook.UnitTests.Backend.Handler;
 [TestFixture]
 public class SetupHandlerTests
 {
+    private ILoggerFactory _loggerFactory = null!;
     private ILogger<SetupHandler> _logger;
     private ISetupInstanceManager _setupInstanceManager = null!;
     private IFileSystemService _fileService = null!;
@@ -33,7 +34,7 @@ public class SetupHandlerTests
     [SetUp]
     public void SetUpSubstitutes()
     {
-        var factory = LoggerFactory.Create(builder =>
+        _loggerFactory = LoggerFactory.Create(builder =>
         {
             builder.AddSimpleConsole(options =>
                 {
@@ -44,7 +45,7 @@ public class SetupHandlerTests
                 .SetMinimumLevel(LogLevel.Debug);
         });
 
-        _logger = factory.CreateLogger<SetupHandler>();
+        _logger = _loggerFactory.CreateLogger<SetupHandler>();
         _setupInstanceManager = Substitute.For<ISetupInstanceManager>();
         _fileService = Substitute.For<IFileSystemService>();
         _setupConfigurationProvider = Substitute.For<ISetupConfigurationProvider>();
@@ -53,6 +54,12 @@ public class SetupHandlerTests
         _licenseProvider = Substitute.For<ILicenseProvider>();
         _hostApplicationLifetime = Substitute.For<IHostApplicationLifetime>();
         _setupProcessorFactory = Substitute.For<ISetupProcessorFactory>();
+    }
+
+    [TearDown]
+    public void TearDown()
+    {
+        _loggerFactory.Dispose();
     }
 
     [Test]

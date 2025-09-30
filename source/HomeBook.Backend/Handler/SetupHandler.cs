@@ -361,7 +361,7 @@ public class SetupHandler
             request.HomebookConfigurationName
             ?? scp.GetValue(EnvironmentVariables.HOMEBOOK_INSTANCE_NAME)
             ?? defaultConfiguration.HomebookConfigurationName,
-            // HOMEBOOK_INSTANCE_NAME
+            // HOMEBOOK_INSTANCE_DEFAULT_LANG
             request.HomebookConfigurationDefaultLanguage
             ?? scp.GetValue(EnvironmentVariables.HOMEBOOK_INSTANCE_DEFAULT_LANG)
             ?? defaultConfiguration.HomebookConfigurationDefaultLanguage,
