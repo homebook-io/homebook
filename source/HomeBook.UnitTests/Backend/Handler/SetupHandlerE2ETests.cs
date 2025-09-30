@@ -1,5 +1,4 @@
-using FluentDataBuilder;
-using FluentDataBuilder.Microsoft.Extensions.Configuration;
+using HomeBook.Backend.Abstractions.Contracts;
 using HomeBook.Backend.Core.HashProvider;
 using HomeBook.Backend.Core.Licenses;
 using Homebook.Backend.Core.Setup;
@@ -13,7 +12,10 @@ using HomeBook.Backend.Requests;
 using HomeBook.UnitTests.TestCore;
 using HomeBook.UnitTests.TestCore.Backend.Services;
 using Microsoft.AspNetCore.Http.HttpResults;
+using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Logging;
+using System.Text.Json;
+using Microsoft.Extensions.DependencyInjection;
 
 namespace HomeBook.UnitTests.Backend.Handler;
 
@@ -48,7 +50,7 @@ public class SetupHandlerE2ETests
     {
         // Arrange
         var request = new StartSetupRequest(true,
-            "POSTGRESQL",
+            "UNITTESTDB",
             "localhost",
             5432,
             "homebook-test",
@@ -58,12 +60,24 @@ public class SetupHandlerE2ETests
             "s3cr3t-p1ssw0rd",
             "Test Homebook",
             "DE");
-        var configuration = new DataBuilder()
-            // .Add("", "")
-            .ToConfiguration();
 
-        var applicationPathProvider = new TestFileService();
-        var fileSystemService = new TestFileService();
+        // Create initial configuration with JSON content that can be updated at runtime
+        var initialConfigJson = new Dictionary<string, string?>
+        {
+            ["Environment"] = "UnitTests",
+        };
+
+        var builder = new ConfigurationBuilder()
+            .AddInMemoryCollection(initialConfigJson);
+
+        IConfigurationRoot configuration = builder.Build();
+        IServiceProvider serviceProvider = new ServiceCollection()
+            .AddSingleton(configuration)
+            .AddKeyedSingleton<IDatabaseMigrator, UnitTestDbMigrator>("UNITTESTDB")
+            .BuildServiceProvider();
+
+        var applicationPathProvider = (IApplicationPathProvider)new TestFileService();
+        var fileSystemService = (IFileSystemService)new TestFileService();
         var runtimeConfigurationProvider = new RuntimeConfigurationProvider(
             _loggerFactory.CreateLogger<RuntimeConfigurationProvider>(),
             applicationPathProvider,
@@ -82,7 +96,7 @@ public class SetupHandlerE2ETests
             _loggerFactory.CreateLogger<SetupConfigurationProvider>(),
             new EnvironmentValidator());
         var hostApplicationLifetime = new TestHostApplicationLifetime();
-        var databaseMigratorFactory = new DatabaseMigratorFactory(configuration);
+        var databaseMigratorFactory = new DatabaseMigratorFactory(serviceProvider);
         var hashProviderFactory = new HashProviderFactory();
         var setupProcessorFactory = new SetupProcessorFactory(
             databaseMigratorFactory,
@@ -91,6 +105,48 @@ public class SetupHandlerE2ETests
             configuration,
             fileSystemService,
             applicationPathProvider);
+
+        (fileSystemService as TestFileService).FileChanged += (sender, args) =>
+        {
+            string fileName = Path.GetFileName(args.FilePath);
+            switch (fileName.ToLowerInvariant())
+            {
+                case "homebook.appsettings.json":
+                {
+                    // Parse the updated JSON content and rebuild configuration
+                    try
+                    {
+                        var jsonContent = args.Content;
+                        if (!string.IsNullOrEmpty(jsonContent))
+                        {
+                            // Parse JSON to dictionary
+                            var jsonDocument = JsonDocument.Parse(jsonContent);
+                            var flattenedConfig = FlattenJsonElement(jsonDocument.RootElement);
+
+                            // Rebuild configuration with updated values
+                            var newBuilder = new ConfigurationBuilder()
+                                .AddInMemoryCollection(flattenedConfig);
+
+                            // Replace the current configuration's values
+                            var newConfig = newBuilder.Build();
+                            foreach (var kvp in flattenedConfig)
+                            {
+                                configuration[kvp.Key] = kvp.Value;
+                            }
+
+                            // Force reload to notify all configuration consumers
+                            // configuration.Reload();
+                        }
+                    }
+                    catch (JsonException ex)
+                    {
+                        // Log JSON parsing error but don't fail the test
+                        Console.WriteLine($"Failed to parse updated configuration JSON: {ex.Message}");
+                    }
+                }
+                    break;
+            }
+        };
 
         // Act
         var result = await SetupHandler.HandleStartSetup(request,
@@ -106,7 +162,52 @@ public class SetupHandlerE2ETests
             CancellationToken.None);
 
         // Assert
+        (fileSystemService as TestFileService).FileChanged -= null;
         var response = result.ShouldBeOfType<Ok>();
         response.ShouldNotBeNull();
+
+        // Verify that configuration was updated
+        configuration["Database:Provider"].ShouldBe("POSTGRESQL");
+        configuration["Database:Host"].ShouldBe("localhost");
+        configuration["Database:Port"].ShouldBe("5432");
+        configuration["Database:InstanceDbName"].ShouldBe("homebook-test");
+        configuration["Database:Username"].ShouldBe("root");
+        configuration["Database:Password"].ShouldBe("s3cr3t-p1ssw0rd");
+    }
+
+    // Helper method to flatten JSON structure into configuration key-value pairs
+    private static Dictionary<string, string?> FlattenJsonElement(JsonElement element, string prefix = "")
+    {
+        var result = new Dictionary<string, string?>();
+
+        foreach (var property in element.EnumerateObject())
+        {
+            string key = string.IsNullOrEmpty(prefix) ? property.Name : $"{prefix}:{property.Name}";
+
+            if (property.Value.ValueKind == JsonValueKind.Object)
+            {
+                // Recursively flatten nested objects
+                var nested = FlattenJsonElement(property.Value, key);
+                foreach (var kvp in nested)
+                {
+                    result[kvp.Key] = kvp.Value;
+                }
+            }
+            else
+            {
+                // Convert value to string
+                result[key] = property.Value.ValueKind switch
+                {
+                    JsonValueKind.String => property.Value.GetString(),
+                    JsonValueKind.Number => property.Value.GetRawText(),
+                    JsonValueKind.True => "true",
+                    JsonValueKind.False => "false",
+                    JsonValueKind.Null => null,
+                    _ => property.Value.GetRawText()
+                };
+            }
+        }
+
+        return result;
     }
 }

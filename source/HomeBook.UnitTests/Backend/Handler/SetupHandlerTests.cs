@@ -236,7 +236,7 @@ public class SetupHandlerTests
                 databaseUserName,
                 databaseUserPassword,
                 Arg.Any<CancellationToken>())
-            .Returns(DatabaseProvider.POSTGRESQL);
+            .Returns("POSTGRESQL");
 
         // Act
         var request = new CheckDatabaseRequest(databaseHost,
@@ -267,7 +267,7 @@ public class SetupHandlerTests
                 databaseUserName,
                 databaseUserPassword,
                 Arg.Any<CancellationToken>())
-            .Returns((DatabaseProvider?)null);
+            .Returns((string?)null);
 
         // Act
         var request = new CheckDatabaseRequest(databaseHost,
@@ -549,7 +549,7 @@ public class SetupHandlerTests
 
         // Assert
         actual.ShouldNotBeNull();
-        actual.DatabaseType.ShouldBe(DatabaseProvider.POSTGRESQL);
+        actual.DatabaseType.ShouldBe("POSTGRESQL");
         actual.DatabaseHost.ShouldBe("test-server");
         actual.DatabasePort.ShouldBe((ushort)5432);
         actual.DatabaseName.ShouldBe("test-database");
@@ -594,7 +594,7 @@ public class SetupHandlerTests
 
         // Assert
         actual.ShouldNotBeNull();
-        actual.DatabaseType.ShouldBe(DatabaseProvider.POSTGRESQL);
+        actual.DatabaseType.ShouldBe("POSTGRESQL");
         actual.DatabaseHost.ShouldBe("test-server");
         actual.DatabasePort.ShouldBe((ushort)5432);
         actual.DatabaseName.ShouldBe("test-database");
@@ -638,7 +638,7 @@ public class SetupHandlerTests
 
         // Assert
         actual.ShouldNotBeNull();
-        actual.DatabaseType.ShouldBe(DatabaseProvider.MYSQL);
+        actual.DatabaseType.ShouldBe("MYSQL");
         actual.DatabaseHost.ShouldBe("another-server");
         actual.DatabasePort.ShouldBe((ushort)3306);
         actual.DatabaseName.ShouldBe("another-database");
@@ -683,7 +683,7 @@ public class SetupHandlerTests
 
         // Assert
         actual.ShouldNotBeNull();
-        actual.DatabaseType.ShouldBe(DatabaseProvider.UNKNOWN);
+        actual.DatabaseType.ShouldBe("UNKNOWN");
         actual.DatabaseHost.ShouldBe("");
         actual.DatabasePort.ShouldBe((ushort)0);
         actual.DatabaseName.ShouldBe("");
@@ -826,7 +826,7 @@ public class SetupHandlerTests
         await setupProcessor
             .Received(1)
             .ProcessAsync(configuration,
-                Arg.Is<SetupConfiguration>(u => u.DatabaseType == DatabaseProvider.POSTGRESQL),
+                Arg.Is<SetupConfiguration>(u => u.DatabaseType == "POSTGRESQL"),
                 Arg.Any<CancellationToken>());
         _hostApplicationLifetime
             .Received(1)

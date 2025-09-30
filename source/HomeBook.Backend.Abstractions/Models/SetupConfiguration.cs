@@ -17,7 +17,7 @@ namespace HomeBook.Backend.Abstractions.Models;
 /// <param name="HomebookUserPassword">the password for the Homebook user, which is used as primary administrator.</param>
 /// <param name="HomebookAcceptLicenses">if not null the licenses are accepted.</param>
 public record SetupConfiguration(
-    DatabaseProvider DatabaseType,
+    string DatabaseType,
     string DatabaseHost,
     ushort DatabasePort,
     string DatabaseName,

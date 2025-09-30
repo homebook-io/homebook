@@ -65,7 +65,7 @@ public class SetupProcessorTests
     public void ProcessAsync_WithoutDatabaseType_Throws()
     {
         // Arrange
-        var setupConfiguration = new SetupConfiguration(DatabaseProvider.POSTGRESQL,
+        var setupConfiguration = new SetupConfiguration("POSTGRESQL",
             "192.168.0.1",
             5432,
             "homebook",

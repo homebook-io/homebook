@@ -4,35 +4,59 @@ namespace HomeBook.UnitTests.TestCore;
 
 public class TestHostApplicationLifetime : IHostApplicationLifetime
 {
-    private readonly CancellationTokenSource _applicationStartedTokenSource = new();
-    private readonly CancellationTokenSource _applicationStoppingTokenSource = new();
-    private readonly CancellationTokenSource _applicationStoppedTokenSource = new();
+    private readonly CancellationTokenSource _applicationStartedSource = new();
+    private readonly CancellationTokenSource _applicationStoppingSource = new();
+    private readonly CancellationTokenSource _applicationStoppedSource = new();
+
+    public CancellationToken ApplicationStarted => _applicationStartedSource.Token;
+    public CancellationToken ApplicationStopping => _applicationStoppingSource.Token;
+    public CancellationToken ApplicationStopped => _applicationStoppedSource.Token;
+
+    // Events for observing application lifecycle changes
+    public event EventHandler? ApplicationStartedTriggered;
+    public event EventHandler? ApplicationStoppingTriggered;
+    public event EventHandler? ApplicationStoppedTriggered;
+
+    // Properties to track the current state
+    public bool IsApplicationStarted { get; private set; }
+    public bool IsApplicationStopping { get; private set; }
+    public bool IsApplicationStopped { get; private set; }
 
     public void StopApplication()
     {
-        if (!_applicationStoppingTokenSource.IsCancellationRequested)
+        if (!IsApplicationStopping && !IsApplicationStopped)
         {
-            _applicationStoppingTokenSource.Cancel();
-        }
+            IsApplicationStopping = true;
+            ApplicationStoppingTriggered?.Invoke(this, EventArgs.Empty);
+            _applicationStoppingSource.Cancel();
 
-        if (!_applicationStoppedTokenSource.IsCancellationRequested)
-        {
-            _applicationStoppedTokenSource.Cancel();
+            // Simulate the stopping process completing
+            IsApplicationStopped = true;
+            ApplicationStoppedTriggered?.Invoke(this, EventArgs.Empty);
+            _applicationStoppedSource.Cancel();
         }
     }
 
-    public CancellationToken ApplicationStarted => _applicationStartedTokenSource.Token;
-    public CancellationToken ApplicationStopped => _applicationStoppedTokenSource.Token;
-    public CancellationToken ApplicationStopping => _applicationStoppingTokenSource.Token;
-
     /// <summary>
-    /// Simulates the application start by canceling the ApplicationStarted token
+    /// Simulates the application startup process (for testing purposes)
     /// </summary>
     public void SimulateApplicationStarted()
     {
-        if (!_applicationStartedTokenSource.IsCancellationRequested)
+        if (!IsApplicationStarted)
         {
-            _applicationStartedTokenSource.Cancel();
+            IsApplicationStarted = true;
+            ApplicationStartedTriggered?.Invoke(this, EventArgs.Empty);
+            _applicationStartedSource.Cancel();
         }
+    }
+
+    /// <summary>
+    /// Resets the application lifecycle state (for testing purposes)
+    /// </summary>
+    public void Reset()
+    {
+        IsApplicationStarted = false;
+        IsApplicationStopping = false;
+        IsApplicationStopped = false;
     }
 }

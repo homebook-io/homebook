@@ -1,6 +1,9 @@
+using HomeBook.Backend.Abstractions.Contracts;
 using HomeBook.Backend.Abstractions.Exceptions;
 using HomeBook.Backend.Factories;
+using HomeBook.UnitTests.TestCore.Backend.Services;
 using Microsoft.Extensions.Configuration;
+using Microsoft.Extensions.DependencyInjection;
 using NSubstitute;
 
 namespace HomeBook.UnitTests.Backend.Factories;
@@ -8,37 +11,39 @@ namespace HomeBook.UnitTests.Backend.Factories;
 [TestFixture]
 public class DatabaseMigratorFactoryTests
 {
-    private IConfiguration _configuration;
+    private IServiceProvider _serviceProvider;
     private DatabaseMigratorFactory _instance;
 
     [SetUp]
     public void SetUp()
     {
-        _configuration = Substitute.For<IConfiguration>();
-        SetupBasicConfiguration();
-        _instance = new DatabaseMigratorFactory(_configuration);
+        _serviceProvider = new ServiceCollection()
+            .AddSingleton(Substitute.For<IDatabaseMigratorFactory>())
+            .AddKeyedSingleton<IDatabaseMigrator, UnitTestDbMigrator>("UNITDB")
+            .AddSingleton(Substitute.For<IConfiguration>())
+            .BuildServiceProvider();
+
+        _instance = new DatabaseMigratorFactory(_serviceProvider);
+    }
+
+    [TearDown]
+    public void TearDown()
+    {
+        if (_serviceProvider is IDisposable disposable)
+        {
+            disposable.Dispose();
+        }
     }
 
     [Test]
-    public void CreateMigrator_WithPostgreSQL_ShouldReturnPostgreSqlMigrator()
+    public void CreateMigrator_L_ShouldReturnMigrator()
     {
         // Act
-        var result = _instance.CreateMigrator("POSTGRESQL");
+        var result = _instance.CreateMigrator("UNITDB");
 
         // Assert
         result.ShouldNotBeNull();
-        result.ShouldBeOfType<HomeBook.Backend.Data.PostgreSql.DatabaseMigrator>();
-    }
-
-    [Test]
-    public void CreateMigrator_WithMySQL_ShouldReturnMySqlMigrator()
-    {
-        // Act
-        var result = _instance.CreateMigrator("MYSQL");
-
-        // Assert
-        result.ShouldNotBeNull();
-        result.ShouldBeOfType<HomeBook.Backend.Data.Mysql.DatabaseMigrator>();
+        result.ShouldBeOfType<UnitTestDbMigrator>();
     }
 
     [Test]
@@ -47,14 +52,5 @@ public class DatabaseMigratorFactoryTests
         // Act & Assert
         var exception = Should.Throw<UnsupportedDatabaseException>(() => _instance.CreateMigrator("INVALID"));
         exception.Message.ShouldContain("Unsupported database provider: INVALID");
-    }
-
-    private void SetupBasicConfiguration()
-    {
-        _configuration["Database:Host"].Returns("localhost");
-        _configuration["Database:Port"].Returns("5432");
-        _configuration["Database:InstanceDbName"].Returns("testdb");
-        _configuration["Database:Username"].Returns("testuser");
-        _configuration["Database:Password"].Returns("testpass");
     }
 }

@@ -9,7 +9,7 @@ namespace HomeBook.Backend.Data.PostgreSql;
 public class PostgreSqlProbe : IDatabaseProbe
 {
     /// <inheritdoc />
-    public DatabaseProvider ProviderName { get; } = DatabaseProvider.POSTGRESQL;
+    public string ProviderName { get; } = "POSTGRESQL";
 
     /// <inheritdoc />
     public async Task<bool> CanConnectAsync(string host,

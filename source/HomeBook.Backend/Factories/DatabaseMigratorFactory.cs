@@ -4,16 +4,17 @@ using HomeBook.Backend.Abstractions.Exceptions;
 namespace HomeBook.Backend.Factories;
 
 /// <inheritdoc />
-public class DatabaseMigratorFactory(IConfiguration configuration) : IDatabaseMigratorFactory
+public class DatabaseMigratorFactory(IServiceProvider serviceProvider)
+    : IDatabaseMigratorFactory
 {
     /// <inheritdoc />
     public IDatabaseMigrator CreateMigrator(string databaseType)
     {
-        return databaseType.ToUpperInvariant() switch
-        {
-            "POSTGRESQL" => new Data.PostgreSql.DatabaseMigrator(configuration),
-            "MYSQL" => new Data.Mysql.DatabaseMigrator(configuration),
-            _ => throw new UnsupportedDatabaseException($"Unsupported database provider: {databaseType}")
-        };
+        string key = databaseType.ToUpperInvariant();
+        IDatabaseMigrator migrator = serviceProvider.GetKeyedService<IDatabaseMigrator>(key)
+                                     ?? throw new UnsupportedDatabaseException(
+                                         $"Unsupported database provider: {databaseType}");
+
+        return migrator;
     }
 }

@@ -150,7 +150,7 @@ public class SetupHandler
     {
         try
         {
-            DatabaseProvider? resolvedDatabaseProvider = await databaseProviderResolver.ResolveAsync(
+            string? resolvedDatabaseProvider = await databaseProviderResolver.ResolveAsync(
                 request.DatabaseHost,
                 request.DatabasePort,
                 request.DatabaseName,
@@ -316,7 +316,7 @@ public class SetupHandler
         StartSetupRequest request)
     {
         SetupConfiguration defaultConfiguration = new(
-            DatabaseProvider.UNKNOWN,
+            "UNKNOWN",
             "",
             0,
             "",
@@ -328,11 +328,14 @@ public class SetupHandler
             "",
             false);
 
-        string? databaseTypeValue = request.DatabaseType
-                                    ?? scp.GetValue(EnvironmentVariables.DATABASE_TYPE);
-        DatabaseProvider databaseType = defaultConfiguration.DatabaseType;
-        if (!string.IsNullOrEmpty(databaseTypeValue))
-            Enum.TryParse(databaseTypeValue, true, out databaseType);
+        string? databaseType = request.DatabaseType
+                               ?? scp.GetValue(EnvironmentVariables.DATABASE_TYPE);
+        // DatabaseProvider databaseType = defaultConfiguration.DatabaseType;
+        // if (!string.IsNullOrEmpty(databaseTypeValue))
+        //     Enum.TryParse(databaseTypeValue, true, out databaseType);
+
+        if(string.IsNullOrEmpty(databaseType))
+            databaseType = "UNKNOWN";
 
         SetupConfiguration setupConfiguration = new(
             // DATABASE_TYPE

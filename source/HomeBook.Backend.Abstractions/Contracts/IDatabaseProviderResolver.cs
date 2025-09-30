@@ -17,7 +17,7 @@ public interface IDatabaseProviderResolver
     /// <param name="password"></param>
     /// <param name="cancellationToken"></param>
     /// <returns></returns>
-    Task<DatabaseProvider?> ResolveAsync(string host,
+    Task<string?> ResolveAsync(string host,
         ushort port,
         string databaseName,
         string username,
