@@ -33,8 +33,8 @@ public static class ServiceCollectionExtensions
         IConfiguration configuration,
         InstanceStatus instanceStatus)
     {
-        services.AddScoped<IUpdateProcessor, UpdateProcessor>();
         services.AddScoped<IUpdateManager, UpdateManager>();
+        services.AddScoped<IUpdateProcessor, UpdateProcessor>();
 
         // update migrators
         services.AddScoped<IUpdateMigrator, Update_20250910_01>();

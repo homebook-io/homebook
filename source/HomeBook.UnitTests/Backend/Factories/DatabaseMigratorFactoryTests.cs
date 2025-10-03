@@ -1,5 +1,6 @@
 using HomeBook.Backend.Abstractions.Contracts;
 using HomeBook.Backend.Abstractions.Exceptions;
+using HomeBook.Backend.Data.Sqlite;
 using HomeBook.Backend.Factories;
 using HomeBook.UnitTests.TestCore.Backend.Services;
 using Microsoft.Extensions.Configuration;
@@ -19,7 +20,7 @@ public class DatabaseMigratorFactoryTests
     {
         _serviceProvider = new ServiceCollection()
             .AddSingleton(Substitute.For<IDatabaseMigratorFactory>())
-            .AddKeyedSingleton<IDatabaseMigrator, UnitTestDbMigrator>("UNITDB")
+            .AddKeyedSingleton<IDatabaseMigrator, DatabaseMigrator>("UNITDB")
             .AddSingleton(Substitute.For<IConfiguration>())
             .BuildServiceProvider();
 
@@ -43,7 +44,7 @@ public class DatabaseMigratorFactoryTests
 
         // Assert
         result.ShouldNotBeNull();
-        result.ShouldBeOfType<UnitTestDbMigrator>();
+        result.ShouldBeOfType<DatabaseMigrator>();
     }
 
     [Test]

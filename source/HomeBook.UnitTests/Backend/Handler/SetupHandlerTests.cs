@@ -529,6 +529,7 @@ public class SetupHandlerTests
             DatabaseName: null,
             DatabaseUserName: null,
             DatabaseUserPassword: null,
+            DatabaseFile: null,
             HomebookUserName: null,
             HomebookUserPassword: null,
             HomebookConfigurationName: null,
@@ -573,6 +574,7 @@ public class SetupHandlerTests
             DatabaseName: "test-database",
             DatabaseUserName: "test-user",
             DatabaseUserPassword: "test-password",
+            DatabaseFile: null,
             HomebookUserName: "user",
             HomebookUserPassword: "s3cr3t",
             HomebookConfigurationName: "test-homebook",
@@ -618,6 +620,7 @@ public class SetupHandlerTests
             DatabaseName: "another-database",
             DatabaseUserName: "another-user",
             DatabaseUserPassword: "another-password",
+            DatabaseFile: null,
             HomebookUserName: "another-user",
             HomebookUserPassword: "another-s3cr3t",
             HomebookConfigurationName: "another-homebook",
@@ -684,11 +687,11 @@ public class SetupHandlerTests
         // Assert
         actual.ShouldNotBeNull();
         actual.DatabaseType.ShouldBe("UNKNOWN");
-        actual.DatabaseHost.ShouldBe("");
+        actual.DatabaseHost.ShouldBe(null);
         actual.DatabasePort.ShouldBe((ushort)0);
-        actual.DatabaseName.ShouldBe("");
-        actual.DatabaseUserName.ShouldBe("");
-        actual.DatabaseUserPassword.ShouldBe("");
+        actual.DatabaseName.ShouldBe(null);
+        actual.DatabaseUserName.ShouldBe(null);
+        actual.DatabaseUserPassword.ShouldBe(null);
         actual.HomebookConfigurationName.ShouldBe("");
         actual.HomebookUserName.ShouldBe("");
         actual.HomebookUserPassword.ShouldBe("");

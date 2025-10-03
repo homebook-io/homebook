@@ -21,4 +21,13 @@ public interface IDatabaseManager
         string databaseUserName,
         string databaseUserPassword,
         CancellationToken cancellationToken);
+
+    /// <summary>
+    /// checks if the database is available with the given configuration.
+    /// </summary>
+    /// <param name="databaseFilePath"></param>
+    /// <param name="cancellationToken"></param>
+    /// <returns></returns>
+    Task<bool> IsDatabaseFileAvailableAsync(string databaseFilePath,
+        CancellationToken cancellationToken);
 }

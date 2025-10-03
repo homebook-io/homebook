@@ -26,4 +26,13 @@ public interface IDatabaseProbe
         string username,
         string password,
         CancellationToken cancellationToken = default);
+
+    /// <summary>
+    /// checks if a connection to the database can be established with the provided file path.
+    /// </summary>
+    /// <param name="filePath">the path to the database file</param>
+    /// <param name="cancellationToken"></param>
+    /// <returns></returns>
+    Task<bool> CanConnectAsync(string filePath,
+        CancellationToken cancellationToken = default);
 }

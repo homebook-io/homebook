@@ -75,7 +75,8 @@ public class SetupProcessor(
             adminPassword,
             cancellationToken);
 
-        IInstanceConfigurationProvider instanceConfigurationProvider = serviceProvider.GetRequiredService<IInstanceConfigurationProvider>();
+        IInstanceConfigurationProvider instanceConfigurationProvider =
+            serviceProvider.GetRequiredService<IInstanceConfigurationProvider>();
 
         // 3. write homebook configuration
         string? configurationName = setupConfiguration.HomebookConfigurationName;

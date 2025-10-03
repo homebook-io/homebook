@@ -23,6 +23,7 @@ public class SetupConfigurationProvider(
         _valuesByEnum.Clear();
         EnvironmentConfiguration environmentConfiguration = new(
             Environment.GetEnvironmentVariable(nameof(EnvironmentVariables.DATABASE_TYPE)),
+            Environment.GetEnvironmentVariable(nameof(EnvironmentVariables.DATABASE_FILE)),
             Environment.GetEnvironmentVariable(nameof(EnvironmentVariables.DATABASE_HOST)),
             Environment.GetEnvironmentVariable(nameof(EnvironmentVariables.DATABASE_PORT)),
             Environment.GetEnvironmentVariable(nameof(EnvironmentVariables.DATABASE_NAME)),

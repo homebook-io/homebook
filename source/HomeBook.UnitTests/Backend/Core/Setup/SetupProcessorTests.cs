@@ -65,17 +65,20 @@ public class SetupProcessorTests
     public void ProcessAsync_WithoutDatabaseType_Throws()
     {
         // Arrange
-        var setupConfiguration = new SetupConfiguration("POSTGRESQL",
-            "192.168.0.1",
-            5432,
-            "homebook",
-            "user",
-            "password",
-            "my homebook",
-            "EN",
-            "admin",
-            "password",
-            true);
+        var setupConfiguration = new SetupConfiguration()
+        {
+            DatabaseType = "POSTGRESQL",
+            DatabaseHost = "192.168.0.1",
+            DatabasePort = 5432,
+            DatabaseName = "homebook",
+            DatabaseUserName = "user",
+            DatabaseUserPassword = "password",
+            HomebookConfigurationName = "my homebook",
+            HomebookConfigurationDefaultLanguage = "EN",
+            HomebookUserName = "admin",
+            HomebookUserPassword = "password",
+            HomebookAcceptLicenses = true
+        };
         var _configuration = new DataBuilder()
             .ToConfiguration();
 

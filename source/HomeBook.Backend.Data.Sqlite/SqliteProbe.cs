@@ -1,27 +1,33 @@
 using HomeBook.Backend.Abstractions.Contracts;
-using Npgsql;
+using Microsoft.Data.Sqlite;
 
-namespace HomeBook.Backend.Data.PostgreSql;
+namespace HomeBook.Backend.Data.Sqlite;
 
-/// <inheritdoc />
-public class PostgreSqlProbe : IDatabaseProbe
+public class SqliteProbe : IDatabaseProbe
 {
     /// <inheritdoc />
-    public string ProviderName { get; } = "POSTGRESQL";
+    public string ProviderName { get; } = "SQLITE";
 
     /// <inheritdoc />
-    public async Task<bool> CanConnectAsync(string host,
+    public Task<bool> CanConnectAsync(string host,
         ushort port,
         string databaseName,
         string username,
         string password,
         CancellationToken cancellationToken = default)
     {
+        throw new NotImplementedException();
+    }
+
+    /// <inheritdoc />
+    public async Task<bool> CanConnectAsync(string filePath,
+        CancellationToken cancellationToken = default)
+    {
         try
         {
-            string connectionString = $"Host={host};Port={port};Database={databaseName};Username={username};Password={password};Timeout=5;";
+            string connectionString = ConnectionStringBuilder.Build(filePath);
 
-            await using NpgsqlConnection connection = new(connectionString);
+            await using SqliteConnection connection = new(connectionString);
             await connection.OpenAsync(cancellationToken);
 
             bool isConnected = connection.State == System.Data.ConnectionState.Open;
@@ -36,11 +42,5 @@ public class PostgreSqlProbe : IDatabaseProbe
         {
             return false;
         }
-    }
-
-    /// <inheritdoc />
-    public Task<bool> CanConnectAsync(string filePath, CancellationToken cancellationToken = default)
-    {
-        throw new NotImplementedException();
     }
 }

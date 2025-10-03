@@ -15,6 +15,7 @@ using Microsoft.AspNetCore.Http.HttpResults;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Logging;
 using System.Text.Json;
+using HomeBook.Backend.Data.Sqlite;
 using Microsoft.Extensions.DependencyInjection;
 
 namespace HomeBook.UnitTests.Backend.Handler;
@@ -50,16 +51,17 @@ public class SetupHandlerE2ETests
     {
         // Arrange
         var request = new StartSetupRequest(true,
-            "UNITTESTDB",
-            "localhost",
-            5432,
-            "homebook-test",
-            "root",
-            "s3cr3t-p1ssw0rd",
+            "SQLITE",
+            null,
+            null,
+            null,
+            null,
+            null,
             "testuser",
             "s3cr3t-p1ssw0rd",
             "Test Homebook",
-            "DE");
+            "DE",
+            "~/homebook-test.db");
 
         // Create initial configuration with JSON content that can be updated at runtime
         var initialConfigJson = new Dictionary<string, string?>
@@ -73,7 +75,7 @@ public class SetupHandlerE2ETests
         IConfigurationRoot configuration = builder.Build();
         IServiceProvider serviceProvider = new ServiceCollection()
             .AddSingleton(configuration)
-            .AddKeyedSingleton<IDatabaseMigrator, UnitTestDbMigrator>("UNITTESTDB")
+            .AddKeyedSingleton<IDatabaseMigrator, DatabaseMigrator>("SQLITE")
             .BuildServiceProvider();
 
         var applicationPathProvider = (IApplicationPathProvider)new TestFileService();
@@ -106,7 +108,7 @@ public class SetupHandlerE2ETests
             fileSystemService,
             applicationPathProvider);
 
-        (fileSystemService as TestFileService).FileChanged += (sender, args) =>
+        ((fileSystemService as TestFileService)!).FileChanged += (sender, args) =>
         {
             string fileName = Path.GetFileName(args.FilePath);
             switch (fileName.ToLowerInvariant())
@@ -162,7 +164,7 @@ public class SetupHandlerE2ETests
             CancellationToken.None);
 
         // Assert
-        (fileSystemService as TestFileService).FileChanged -= null;
+        ((fileSystemService as TestFileService)!).FileChanged -= null;
         var response = result.ShouldBeOfType<Ok>();
         response.ShouldNotBeNull();
 

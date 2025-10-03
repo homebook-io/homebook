@@ -1,222 +1,75 @@
-using System.Text.RegularExpressions;
 using FluentValidation;
 using HomeBook.Backend.Abstractions.Models;
-using Homebook.Backend.Core.Setup.Models;
+using Homebook.Backend.Core.Setup.Extensions;
 
 namespace Homebook.Backend.Core.Setup.Validators;
 
 public class SetupConfigurationValidator : AbstractValidator<SetupConfiguration>
 {
+    private static readonly string[] ValidDatabaseTypes =
+    [
+        "MYSQL",
+        "POSTGRESQL",
+        "SQLITE"
+    ];
+
     public SetupConfigurationValidator()
     {
-        // Database Host validation
+        // DatabaseType validation - must be MYSQL, POSTGRESQL or SQLITE in uppercase
+        RuleFor(x => x.DatabaseType)
+            .NotEmpty()
+            .WithMessage("DatabaseType is required")
+            .Must(databaseType =>
+                !string.IsNullOrEmpty(databaseType) && ValidDatabaseTypes.Contains(databaseType.ToUpper()))
+            .WithMessage("DatabaseType must be one of: MYSQL, POSTGRESQL, SQLITE");
+
+        // Always required fields
+        RuleFor(x => x.HomebookUserName)
+            .NotEmpty()
+            .WithMessage("HomebookUserName is required");
+
+        RuleFor(x => x.HomebookUserPassword)
+            .NotEmpty()
+            .WithMessage("HomebookUserPassword is required");
+
+        RuleFor(x => x.HomebookConfigurationName)
+            .NotEmpty()
+            .WithMessage("HomebookConfigurationName is required");
+
+        RuleFor(x => x.HomebookConfigurationDefaultLanguage)
+            .NotEmpty()
+            .WithMessage("HomebookConfigurationDefaultLanguage is required");
+
+        // SQLite specific validation
+        RuleFor(x => x.DatabaseFile)
+            .NotEmpty()
+            .WithMessage("DatabaseFile is required")
+            .WhenFileBasedDatabase();
+
+        // Non-SQLite database validation (MYSQL, POSTGRESQL)
         RuleFor(x => x.DatabaseHost)
-            .Must(BeValidHostname)
-            .WithMessage("DatabaseHost must be a valid hostname or IP address")
-            .When(x => !string.IsNullOrEmpty(x.DatabaseHost));
+            .NotEmpty()
+            .WithMessage("DatabaseHost is required")
+            .WhenServerDatabase();
 
-        // Database Port validation
         RuleFor(x => x.DatabasePort)
-            .Must(BeValidPort)
-            .WithMessage("DatabasePort must be a valid port number between 1 and 65535");
+            .NotNull()
+            .WithMessage("DatabasePort is required")
+            .WhenServerDatabase();
 
-        // Database Name validation+
         RuleFor(x => x.DatabaseName)
-            .Must(BeValidDatabaseName)
-            .WithMessage("DatabaseName can only contain alphanumeric characters, underscores and hyphens")
-            .Length(1, 63)
-            .WithMessage("DatabaseName must be between 1 and 63 characters long")
-            .When(x => !string.IsNullOrEmpty(x.DatabaseName));
+            .NotEmpty()
+            .WithMessage("DatabaseName is required")
+            .WhenServerDatabase();
 
-        // Database Username validation
         RuleFor(x => x.DatabaseUserName)
-            .Must(BeValidUsername)
-            .WithMessage("DatabaseUserName can only contain alphanumeric characters, underscores, dots and hyphens")
-            .Length(1, 63)
-            .WithMessage("DatabaseUserName must be between 1 and 63 characters long")
-            .When(x => !string.IsNullOrEmpty(x.DatabaseUserName));
+            .NotEmpty()
+            .WithMessage("DatabaseUserName is required")
+            .WhenServerDatabase();
 
-        // Database Password validation
         RuleFor(x => x.DatabaseUserPassword)
-            .Must(BeValidPassword)
-            .WithMessage("DatabaseUserPassword contains invalid characters")
-            .MinimumLength(8)
-            .WithMessage("DatabaseUserPassword must be at least 8 characters long")
-            .When(x => !string.IsNullOrEmpty(x.DatabaseUserPassword));
-    }
-
-    private static bool BeValidHostname(string hostname)
-    {
-        if (string.IsNullOrEmpty(hostname))
-            return true;
-
-        // 1. Check for valid IPv4 (3 dots, 4 numbers between 1-255)
-        if (IsValidIPv4(hostname))
-            return true;
-
-        // 2. Check for valid IPv6 (valid format, only 0-9 and a-f)
-        if (IsValidIPv6(hostname))
-            return true;
-
-        // 3. Check for valid hostname (only a-z and 0-9, with dots and hyphens for structure)
-        if (IsValidHostnameOnly(hostname))
-            return true;
-
-        // 4. Otherwise return false
-        return false;
-    }
-
-    private static bool IsValidHostnameOnly(string hostname)
-    {
-        if (string.IsNullOrEmpty(hostname) || hostname.Length > 253)
-            return false;
-
-        // Split by dots to check each label
-        var labels = hostname.Split('.');
-
-        return labels.All(label =>
-        {
-            // Each label must be 1-63 characters
-            if (string.IsNullOrEmpty(label) || label.Length > 63)
-                return false;
-
-            // Only alphanumeric characters and hyphens allowed
-            if (!label.All(c => char.IsLetterOrDigit(c) || c == '-'))
-                return false;
-
-            // Cannot start or end with hyphen
-            if (label.StartsWith('-') || label.EndsWith('-'))
-                return false;
-
-            return true;
-        });
-    }
-
-    private static bool IsValidIPv4(string ip)
-    {
-        if (string.IsNullOrWhiteSpace(ip))
-            return false;
-
-        // Split and check each octet individually for better validation
-        var parts = ip.Split('.');
-        if (parts.Length != 4)
-            return false;
-
-        return parts.All(part =>
-        {
-            // Check for empty parts
-            if (string.IsNullOrEmpty(part))
-                return false;
-
-            // Check if it's a valid number
-            if (!int.TryParse(part, out int num))
-                return false;
-
-            // Check range (1-255)
-            if (num < 1 || num > 255)
-                return false;
-
-            // Prevent leading zeros (except for single digit numbers)
-            if (part.Length > 1 && part[0] == '0')
-                return false;
-
-            // Ensure the parsed number matches the original string
-            return part == num.ToString();
-        });
-    }
-
-    private static bool IsValidIPv6(string ip)
-    {
-        if (string.IsNullOrWhiteSpace(ip))
-            return false;
-
-        // Comprehensive IPv6 regex pattern
-        var ipv6Regex = new Regex(
-            @"^(?:" +
-            // Standard IPv6 (8 groups of 4 hex digits)
-            @"(?:[0-9a-fA-F]{1,4}:){7}[0-9a-fA-F]{1,4}|" +
-            // IPv6 with :: compression (various positions)
-            @"(?:[0-9a-fA-F]{1,4}:){1,7}:|" +
-            @"(?:[0-9a-fA-F]{1,4}:){1,6}:[0-9a-fA-F]{1,4}|" +
-            @"(?:[0-9a-fA-F]{1,4}:){1,5}(?::[0-9a-fA-F]{1,4}){1,2}|" +
-            @"(?:[0-9a-fA-F]{1,4}:){1,4}(?::[0-9a-fA-F]{1,4}){1,3}|" +
-            @"(?:[0-9a-fA-F]{1,4}:){1,3}(?::[0-9a-fA-F]{1,4}){1,4}|" +
-            @"(?:[0-9a-fA-F]{1,4}:){1,2}(?::[0-9a-fA-F]{1,4}){1,5}|" +
-            @"[0-9a-fA-F]{1,4}:(?:(?::[0-9a-fA-F]{1,4}){1,6})|" +
-            @":(?:(?::[0-9a-fA-F]{1,4}){1,7}|:)|" +
-            // IPv6 with IPv4 suffix (like ::ffff:192.168.1.1)
-            @"(?:[0-9a-fA-F]{1,4}:){1,4}:(?:(?:25[0-5]|2[0-4][0-9]|1[0-9][0-9]|[1-9]?[0-9])\.){3}(?:25[0-5]|2[0-4][0-9]|1[0-9][0-9]|[1-9]?[0-9])|"
-            +
-            // Special cases
-            @"::1|::" +
-            @")$",
-            RegexOptions.Compiled | RegexOptions.IgnoreCase,
-            TimeSpan.FromMilliseconds(250));
-
-        return ipv6Regex.IsMatch(ip);
-    }
-
-    private static bool BeValidPort(ushort port)
-    {
-        return port >= 1 && port <= 65535;
-    }
-
-    private static bool BeValidDatabaseName(string databaseName)
-    {
-        if (string.IsNullOrEmpty(databaseName))
-            return true;
-
-        // Only allow alphanumeric characters, underscores and hyphens
-        var regex = new Regex(@"^[a-zA-Z0-9_-]+$",
-            RegexOptions.Compiled,
-            TimeSpan.FromMilliseconds(250));
-        return regex.IsMatch(databaseName) &&
-               !databaseName.StartsWith("-") &&
-               !databaseName.EndsWith("-");
-    }
-
-    private static bool BeValidUsername(string username)
-    {
-        if (string.IsNullOrEmpty(username))
-            return true;
-
-        // Alphanumeric characters, underscores, dots and hyphens
-        var regex = new Regex(@"^[a-zA-Z0-9_.-]+$",
-            RegexOptions.Compiled,
-            TimeSpan.FromMilliseconds(250));
-        return regex.IsMatch(username) &&
-               !username.StartsWith(".") &&
-               !username.EndsWith(".") &&
-               !username.StartsWith("-") &&
-               !username.EndsWith("-");
-    }
-
-    private static bool BeValidPassword(string password)
-    {
-        if (string.IsNullOrEmpty(password))
-            return true;
-
-        // Regex pattern for allowed characters:
-        // - a-z, A-Z (letters)
-        // - 0-9 (digits)
-        // - Safe special characters commonly used in passwords
-        var allowedCharsRegex =
-            new Regex(@"^[a-zA-Z0-9!@#$%^&*()_+\-=\[\]{};':""\\|,.<>/?`~]+$",
-                RegexOptions.Compiled,
-                TimeSpan.FromMilliseconds(250));
-
-        // Check if password contains only allowed characters
-        if (!allowedCharsRegex.IsMatch(password))
-            return false;
-
-        // Additional check: ensure no control characters (ASCII 0-31 and 127)
-        // This prevents invisible characters like null bytes, tabs, newlines, etc.
-        foreach (char c in password)
-        {
-            if (char.IsControl(c))
-                return false;
-        }
-
-        return true;
+            .NotEmpty()
+            .WithMessage("DatabaseUserPassword is required")
+            .WhenServerDatabase();
     }
 }

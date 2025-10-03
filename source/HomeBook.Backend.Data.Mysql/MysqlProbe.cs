@@ -39,4 +39,10 @@ public class MysqlProbe : IDatabaseProbe
             return false;
         }
     }
+
+    /// <inheritdoc />
+    public Task<bool> CanConnectAsync(string filePath, CancellationToken cancellationToken = default)
+    {
+        throw new NotImplementedException();
+    }
 }

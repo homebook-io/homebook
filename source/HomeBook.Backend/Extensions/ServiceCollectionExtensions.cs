@@ -18,6 +18,7 @@ using HomeBook.Backend.Data.Entities;
 using HomeBook.Backend.Data.Extensions;
 using HomeBook.Backend.Data.Mysql.Extensions;
 using HomeBook.Backend.Data.PostgreSql.Extensions;
+using HomeBook.Backend.Data.Sqlite.Extensions;
 using HomeBook.Backend.Factories;
 using HomeBook.Backend.Provider;
 using HomeBook.Backend.Services;
@@ -85,6 +86,7 @@ public static class ServiceCollectionExtensions
     {
         services.AddKeyedSingleton<IDatabaseMigrator, Data.PostgreSql.DatabaseMigrator>("POSTGRESQL");
         services.AddKeyedSingleton<IDatabaseMigrator, Data.Mysql.DatabaseMigrator>("MYSQL");
+        services.AddKeyedSingleton<IDatabaseMigrator, Data.Sqlite.DatabaseMigrator>("SQLITE");
 
         return services;
     }
@@ -96,6 +98,7 @@ public static class ServiceCollectionExtensions
         services.AddSingleton<IDatabaseProviderResolver, DatabaseProviderResolver>();
         services.AddBackendDataPostgreSqlProbe(configuration);
         services.AddBackendDataMysqlProbe(configuration);
+        services.AddBackendDataSqliteProbe(configuration);
 
         return services;
     }
@@ -118,6 +121,9 @@ public static class ServiceCollectionExtensions
                     break;
                 case "mysql":
                     services.AddBackendDataMysql(configuration);
+                    break;
+                case "sqlite":
+                    services.AddBackendDataSqlite(configuration);
                     break;
                 default:
                     throw new UnsupportedDatabaseException($"Unsupported database provider: {databaseType}");
