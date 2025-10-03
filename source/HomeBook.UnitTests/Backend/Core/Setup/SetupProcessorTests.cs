@@ -24,6 +24,7 @@ public class SetupProcessorTests
     private IConfiguration _injectedConfiguration;
     private IFileSystemService _fileSystemService;
     private IApplicationPathProvider _applicationPathProvider;
+    private IRuntimeConfigurationProvider _runtimeConfigurationProvider;
     private SetupProcessor _instance;
 
     [SetUp]
@@ -47,12 +48,15 @@ public class SetupProcessorTests
         _injectedConfiguration = Substitute.For<IConfiguration>();
         _fileSystemService = Substitute.For<IFileSystemService>();
         _applicationPathProvider = Substitute.For<IApplicationPathProvider>();
+        _runtimeConfigurationProvider = Substitute.For<IRuntimeConfigurationProvider>();
+
         _instance = new SetupProcessor(_databaseMigratorFactory,
             _hashProviderFactory,
             _loggerFactory,
             _injectedConfiguration,
             _fileSystemService,
-            _applicationPathProvider);
+            _applicationPathProvider,
+            _runtimeConfigurationProvider);
     }
 
     [TearDown]

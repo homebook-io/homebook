@@ -18,6 +18,7 @@ public class SetupProcessorFactoryTests
     private IConfiguration _injectedConfiguration;
     private IFileSystemService _fileSystemService;
     private IApplicationPathProvider _applicationPathProvider;
+    private IRuntimeConfigurationProvider _runtimeConfigurationProvider;
     private SetupProcessorFactory _factory;
 
     [SetUp]
@@ -29,6 +30,7 @@ public class SetupProcessorFactoryTests
         _injectedConfiguration = Substitute.For<IConfiguration>();
         _fileSystemService = Substitute.For<IFileSystemService>();
         _applicationPathProvider = Substitute.For<IApplicationPathProvider>();
+        _runtimeConfigurationProvider = Substitute.For<IRuntimeConfigurationProvider>();
 
         _factory = new SetupProcessorFactory(
             _databaseMigratorFactory,
@@ -36,7 +38,8 @@ public class SetupProcessorFactoryTests
             _loggerFactory,
             _injectedConfiguration,
             _fileSystemService,
-            _applicationPathProvider);
+            _applicationPathProvider,
+            _runtimeConfigurationProvider);
     }
 
     [TearDown]

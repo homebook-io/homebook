@@ -16,7 +16,10 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Logging;
 using System.Text.Json;
 using HomeBook.Backend.Data.Sqlite;
+using HomeBook.UnitTests.TestCore.Helper;
+using Microsoft.Data.Sqlite;
 using Microsoft.Extensions.DependencyInjection;
+using NSubstitute;
 
 namespace HomeBook.UnitTests.Backend.Handler;
 
@@ -24,10 +27,12 @@ namespace HomeBook.UnitTests.Backend.Handler;
 public class SetupHandlerE2ETests
 {
     private ILoggerFactory _loggerFactory;
+    private SqliteConnection _keepAlive = null!;
 
     [SetUp]
     public void SetUpSubstitutes()
     {
+        // create logger
         _loggerFactory = LoggerFactory.Create(builder =>
         {
             builder.AddSimpleConsole(options =>
@@ -38,11 +43,21 @@ public class SetupHandlerE2ETests
                 })
                 .SetMinimumLevel(LogLevel.Debug);
         });
+
+        // create sqlite in memory
+        var connectionString = ConnectionStringBuilder.BuildInMemory();
+
+        _keepAlive = new SqliteConnection(connectionString);
+        _keepAlive.Open();
     }
 
     [TearDown]
     public void TearDown()
     {
+        // delete sqlite in memory
+        _keepAlive.Close();
+
+        // dispose logger
         _loggerFactory.Dispose();
     }
 
@@ -67,6 +82,7 @@ public class SetupHandlerE2ETests
         var initialConfigJson = new Dictionary<string, string?>
         {
             ["Environment"] = "UnitTests",
+            ["Database:UseInMemory"] = "true"
         };
 
         var builder = new ConfigurationBuilder()
@@ -74,6 +90,7 @@ public class SetupHandlerE2ETests
 
         IConfigurationRoot configuration = builder.Build();
         IServiceProvider serviceProvider = new ServiceCollection()
+            .AddSingleton<IConfiguration>(configuration)
             .AddSingleton(configuration)
             .AddKeyedSingleton<IDatabaseMigrator, DatabaseMigrator>("SQLITE")
             .BuildServiceProvider();
@@ -106,7 +123,8 @@ public class SetupHandlerE2ETests
             _loggerFactory,
             configuration,
             fileSystemService,
-            applicationPathProvider);
+            applicationPathProvider,
+            runtimeConfigurationProvider);
 
         ((fileSystemService as TestFileService)!).FileChanged += (sender, args) =>
         {
@@ -169,12 +187,34 @@ public class SetupHandlerE2ETests
         response.ShouldNotBeNull();
 
         // Verify that configuration was updated
-        configuration["Database:Provider"].ShouldBe("POSTGRESQL");
-        configuration["Database:Host"].ShouldBe("localhost");
-        configuration["Database:Port"].ShouldBe("5432");
-        configuration["Database:InstanceDbName"].ShouldBe("homebook-test");
-        configuration["Database:Username"].ShouldBe("root");
-        configuration["Database:Password"].ShouldBe("s3cr3t-p1ssw0rd");
+        var tables = SqliteHelper.GetAllTableNames(_keepAlive)
+            .Split(Environment.NewLine)
+            .Where(line => !string.IsNullOrWhiteSpace(line))
+            .ToList();
+
+        tables.ShouldContain("__EFMigrationsHistory");
+        tables.ShouldContain("Users");
+        tables.ShouldContain("Configurations");
+
+        // users
+        var userDbEntries = SqliteHelper.DumpTable(_keepAlive, "Users");
+        userDbEntries.Count.ShouldBe(2); // header + 1 user
+
+        // configurations
+        var configurationDbEntries = SqliteHelper.DumpTable(_keepAlive, "Configurations");
+        configurationDbEntries.Count.ShouldBe(3); // header + 2 entries
+        var expected = new string[,]
+        {
+            { "HOMEBOOK_INSTANCE_NAME", "Test Homebook" },
+            { "HOMEBOOK_INSTANCE_DEFAULT_LANG", "DE" }
+        };
+        var actual = configurationDbEntries.Select(r => (r[1], r[2])).ToList();
+        for (int i = 0; i < expected.GetLength(0); i++)
+        {
+            var first = expected[i, 0];
+            var second = expected[i, 1];
+            actual.ShouldContain((first, second));
+        }
     }
 
     // Helper method to flatten JSON structure into configuration key-value pairs

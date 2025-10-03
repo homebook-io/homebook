@@ -18,7 +18,8 @@ public class SetupProcessor(
     ILoggerFactory loggerFactory,
     IConfiguration injectedConfiguration,
     IFileSystemService fileSystemService,
-    IApplicationPathProvider applicationPathProvider) : ISetupProcessor
+    IApplicationPathProvider applicationPathProvider,
+    IRuntimeConfigurationProvider runtimeConfigurationProvider) : ISetupProcessor
 {
     /// <inheritdoc />
     public async Task ProcessAsync(IConfiguration configuration,
@@ -59,6 +60,7 @@ public class SetupProcessor(
         services.AddSingleton(applicationPathProvider);
         services.AddSingleton(hashProviderFactory);
         services.AddSingleton(databaseMigratorFactory);
+        services.AddSingleton(runtimeConfigurationProvider);
 
         databaseMigrator.ConfigureForServiceCollection(services, configuration);
 

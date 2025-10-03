@@ -14,6 +14,7 @@ public static class ServiceCollectionExtensions
 
         return services;
     }
+
     public static IServiceCollection AddBackendDataSqlite(this IServiceCollection services,
         IConfiguration configuration)
     {
@@ -32,9 +33,12 @@ public static class ServiceCollectionExtensions
     public static void CreateDbContextOptionsBuilder(IConfiguration configuration,
         DbContextOptionsBuilder optionsBuilder)
     {
-        string? file = configuration["Database:File"];
-
-        string connectionString = ConnectionStringBuilder.Build(file!);
+        bool useInMemory = configuration["Database:UseInMemory"] == "true";
+        string connectionString = string.Empty;
+        if (useInMemory)
+            connectionString = ConnectionStringBuilder.BuildInMemory();
+        else
+            connectionString = ConnectionStringBuilder.Build(configuration["Database:File"]);
 
         optionsBuilder.SetDbOptions(connectionString);
     }

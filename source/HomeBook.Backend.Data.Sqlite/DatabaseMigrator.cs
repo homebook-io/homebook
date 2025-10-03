@@ -25,7 +25,8 @@ public class DatabaseMigrator(IConfiguration configuration) : IDatabaseMigrator
         return context;
     }
 
-    public void ConfigureForServiceCollection(ServiceCollection services, IConfiguration configuration)
+    public void ConfigureForServiceCollection(ServiceCollection services,
+        IConfiguration configuration)
     {
         services.AddBackendDataSqlite(configuration);
     }

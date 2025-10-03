@@ -403,7 +403,7 @@ public class SetupHandler
             case "SQLITE":
             {
                 await runtimeConfigurationProvider.UpdateConfigurationAsync("Database:FilePath",
-                    setupConfiguration.DatabaseType,
+                    setupConfiguration.DatabaseFile,
                     cancellationToken);
             }
                 break;
