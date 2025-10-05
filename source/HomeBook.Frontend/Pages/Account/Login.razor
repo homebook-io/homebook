@@ -34,7 +34,7 @@
                 <MudCard Elevation="10"
                          Class="hb-account-login-card frosted-b5 mud-elevation-24 mud-text-primary">
 
-                    <MudCardHeader>
+                    <MudCardHeader Class="no-divider pb-0">
 
                         <CardHeaderContent>
                             <MudText Typo="Typo.h4"
@@ -45,7 +45,7 @@
 
                     </MudCardHeader>
 
-                    <MudCardContent>
+                    <MudCardContent Class="no-divider">
 
                         @if (!string.IsNullOrEmpty(_errorMessage))
                         {
@@ -79,7 +79,7 @@
 
                     </MudCardContent>
 
-                    <MudCardActions>
+                    <MudCardActions Class="frosted-b1 mud-elevation-24 no-backdrop-blur">
 
                         <MudButton ButtonType="ButtonType.Submit"
                                    Variant="Variant.Filled"

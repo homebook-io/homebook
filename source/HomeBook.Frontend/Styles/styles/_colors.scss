@@ -8,11 +8,29 @@ $ubuntu-color: #e95420;
     --#{$hb-prefix}-ubuntu-color: #{$ubuntu-color};
 }
 
-.github-bg   { background-color: $github-color !important; color: #ffffff !important; }
-.github-text { color: $github-color !important; }
+.github-bg {
+    background-color: $github-color !important;
+    color: #ffffff !important;
+}
 
-.docker-bg   { background-color: $docker-color !important; color: #ffffff !important; }
-.docker-text { color: $docker-color !important; }
+.github-text {
+    color: $github-color !important;
+}
 
-.ubuntu-bg   { background-color: $ubuntu-color !important; color: #ffffff !important; }
-.ubuntu-text { color: $ubuntu-color !important; }
+.docker-bg {
+    background-color: $docker-color !important;
+    color: #ffffff !important;
+}
+
+.docker-text {
+    color: $docker-color !important;
+}
+
+.ubuntu-bg {
+    background-color: $ubuntu-color !important;
+    color: #ffffff !important;
+}
+
+.ubuntu-text {
+    color: $ubuntu-color !important;
+}

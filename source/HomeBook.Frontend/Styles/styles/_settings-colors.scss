@@ -1,0 +1,7 @@
+$settings-color-instance-name: #2563EB;
+$settings-color-default-language: #16A34A;
+
+:root {
+    --#{$hb-prefix}-settings-color-instance-name: #{$settings-color-instance-name};
+    --#{$hb-prefix}-settings-color-default-language: #{$settings-color-default-language};
+}

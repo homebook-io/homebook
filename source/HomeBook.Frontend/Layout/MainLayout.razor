@@ -1,5 +1,6 @@
 ﻿@using HomeBook.Frontend.Abstractions.Contracts
 @using HomeBook.Frontend.Abstractions.Enums
+@using HomeBook.Frontend.Core.Icons
 @using HomeBook.Frontend.Themes
 @using Microsoft.AspNetCore.Components.Authorization
 
@@ -24,7 +25,7 @@
 
     <MudAppBar Color="Color.Primary" Elevation="1">
 
-        <MudIconButton Icon="@Icons.Material.TwoTone.Home"
+        <MudIconButton Icon="@HomeBookIcons.Icons8.Windows11.Filled.Home"
                        Href="/"
                        Color="Color.Inherit"/>
         <MudText Typo="Typo.h5" Class="ml-3">@(_homebookInstanceName + " - " ?? string.Empty)HomeBook</MudText>
@@ -36,16 +37,16 @@
             <Authorized>
 
                 <MudMenu Dense
-                         Icon="@Icons.Material.TwoTone.AccountCircle"
+                         Icon="@HomeBookIcons.Icons8.Windows11.Filled.Profile"
                          Color="Color.Inherit">
 
-                    <MudMenuItem Icon="@Icons.Material.Filled.Person"
+                    <MudMenuItem Icon="@HomeBookIcons.Icons8.Windows11.Filled.User"
                                  IconColor="Color.Primary"
                                  Label="@context.User.Identity?.Name"/>
 
                     <MudDivider/>
 
-                    <MudMenuItem Icon="@Icons.Material.TwoTone.Logout"
+                    <MudMenuItem Icon="@HomeBookIcons.Icons8.Windows11.Filled.LogoutRounded"
                                  IconColor="Color.Primary"
                                  OnClick="HandleLogoutAsync"
                                  Label="Logout"/>
@@ -56,9 +57,9 @@
                          Variant="Variant.Text"
                          Size="Size.Medium"
                          Color="Color.Inherit"
-                         Icon="@Icons.Material.TwoTone.MoreVert">
+                         Icon="@HomeBookIcons.Icons8.Windows11.Filled.More">
 
-                    <MudMenuItem Icon="@Icons.Material.TwoTone.Settings"
+                    <MudMenuItem Icon="@HomeBookIcons.Icons8.Windows11.Filled.Gear"
                                  IconColor="Color.Primary"
                                  Href="/Settings"
                                  Label="Settings"/>
@@ -67,7 +68,7 @@
             </Authorized>
 
             <NotAuthorized>
-                <MudIconButton Icon="@Icons.Material.Filled.Login"
+                <MudIconButton Icon="@HomeBookIcons.Icons8.Windows11.Filled.LoginRounded"
                                Color="Color.Inherit"
                                Edge="Edge.End"
                                OnClick="NavigateToLogin"/>
