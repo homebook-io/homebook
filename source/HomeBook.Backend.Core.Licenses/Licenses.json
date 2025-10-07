@@ -11,7 +11,7 @@
   },
   {
     "PackageId": "AspNetCore.SassCompiler",
-    "PackageVersion": "1.92.1",
+    "PackageVersion": "1.93.2",
     "Authors": "koenvzeijl,sleeuwen,Michaelvs97",
     "License": "MIT",
     "LicenseUrl": "https://licenses.nuget.org/MIT",
@@ -42,36 +42,6 @@
     "PackageVersion": "6.0.4",
     "PackageProjectUrl": "https://github.com/coverlet-coverage/coverlet",
     "Authors": "tonerdo",
-    "License": "MIT",
-    "LicenseUrl": "https://licenses.nuget.org/MIT",
-    "LicenseInformationOrigin": 0
-  },
-  {
-    "PackageId": "Cucumber.CucumberExpressions",
-    "PackageVersion": "17.1.0",
-    "PackageProjectUrl": "https://github.com/cucumber/cucumber-expressions/tree/main/dotnet",
-    "Copyright": "Copyright \u00A9 Cucumber Ltd, Gaspar Nagy",
-    "Authors": "Cucumber Ltd, Gaspar Nagy",
-    "License": "MIT",
-    "LicenseUrl": "https://licenses.nuget.org/MIT",
-    "LicenseInformationOrigin": 0
-  },
-  {
-    "PackageId": "Cucumber.HtmlFormatter",
-    "PackageVersion": "21.14.0",
-    "PackageProjectUrl": "https://github.com/cucumber/html-formatter",
-    "Copyright": "Copyright \u00A9 Cucumber Ltd",
-    "Authors": "Cucumber Ltd",
-    "License": "MIT",
-    "LicenseUrl": "https://licenses.nuget.org/MIT",
-    "LicenseInformationOrigin": 0
-  },
-  {
-    "PackageId": "Cucumber.Messages",
-    "PackageVersion": "28.0.0",
-    "PackageProjectUrl": "https://github.com/cucumber/messages",
-    "Copyright": "Copyright \u00A9 Cucumber Ltd, TechTalk",
-    "Authors": "Cucumber Ltd, TechTalk",
     "License": "MIT",
     "LicenseUrl": "https://licenses.nuget.org/MIT",
     "LicenseInformationOrigin": 0
@@ -137,16 +107,6 @@
     "LicenseInformationOrigin": 0
   },
   {
-    "PackageId": "Gherkin",
-    "PackageVersion": "34.0.0",
-    "PackageProjectUrl": "https://github.com/cucumber/gherkin",
-    "Copyright": "Copyright \u00A9 Cucumber Ltd, Gaspar Nagy",
-    "Authors": "Cucumber Ltd, Gaspar Nagy",
-    "License": "MIT",
-    "LicenseUrl": "https://licenses.nuget.org/MIT",
-    "LicenseInformationOrigin": 0
-  },
-  {
     "PackageId": "Google.Protobuf",
     "PackageVersion": "3.30.0",
     "PackageProjectUrl": "https://github.com/protocolbuffers/protobuf",
@@ -174,28 +134,29 @@
     "Authors": "Michael Heyman",
     "ValidationErrors": [
       {
-        "Error": "Validation for licenses of type File not yet supported",
+        "Error": "Unable to determine license from the given license file",
         "Context": "/Volumes/Daten SSD/Repos/lk-code/homebook/source/HomeBook.Backend/HomeBook.Backend.csproj"
       },
       {
-        "Error": "Validation for licenses of type File not yet supported",
+        "Error": "Unable to determine license from the given license file",
         "Context": "/Volumes/Daten SSD/Repos/lk-code/homebook/source/HomeBook.Backend.Core.HashProvider/HomeBook.Backend.Core.HashProvider.csproj"
       },
       {
-        "Error": "Validation for licenses of type File not yet supported",
+        "Error": "Unable to determine license from the given license file",
         "Context": "/Volumes/Daten SSD/Repos/lk-code/homebook/source/Homebook.Backend.Core.Setup/Homebook.Backend.Core.Setup.csproj"
       },
       {
-        "Error": "Validation for licenses of type File not yet supported",
+        "Error": "Unable to determine license from the given license file",
         "Context": "/Volumes/Daten SSD/Repos/lk-code/homebook/source/HomeBook.Backend.Core/HomeBook.Backend.Core.csproj"
       },
       {
-        "Error": "Validation for licenses of type File not yet supported",
+        "Error": "Unable to determine license from the given license file",
         "Context": "/Volumes/Daten SSD/Repos/lk-code/homebook/source/HomeBook.UnitTests/HomeBook.UnitTests.csproj"
       }
     ],
+    "License": "Isopoh.Cryptography.Argon2 by Michael Heyman is licensed \nunder a Creative Commons Attributeion 4.0 International \nLicense, http://creativecommons.org/licenses/by/4.0/.",
     "LicenseUrl": "https://aka.ms/deprecateLicenseUrl",
-    "LicenseInformationOrigin": 2
+    "LicenseInformationOrigin": 5
   },
   {
     "PackageId": "Isopoh.Cryptography.Blake2b",
@@ -205,28 +166,29 @@
     "Authors": "Michael Heyman",
     "ValidationErrors": [
       {
-        "Error": "Validation for licenses of type File not yet supported",
+        "Error": "Unable to determine license from the given license file",
         "Context": "/Volumes/Daten SSD/Repos/lk-code/homebook/source/HomeBook.Backend/HomeBook.Backend.csproj"
       },
       {
-        "Error": "Validation for licenses of type File not yet supported",
+        "Error": "Unable to determine license from the given license file",
         "Context": "/Volumes/Daten SSD/Repos/lk-code/homebook/source/HomeBook.Backend.Core.HashProvider/HomeBook.Backend.Core.HashProvider.csproj"
       },
       {
-        "Error": "Validation for licenses of type File not yet supported",
+        "Error": "Unable to determine license from the given license file",
         "Context": "/Volumes/Daten SSD/Repos/lk-code/homebook/source/Homebook.Backend.Core.Setup/Homebook.Backend.Core.Setup.csproj"
       },
       {
-        "Error": "Validation for licenses of type File not yet supported",
+        "Error": "Unable to determine license from the given license file",
         "Context": "/Volumes/Daten SSD/Repos/lk-code/homebook/source/HomeBook.Backend.Core/HomeBook.Backend.Core.csproj"
       },
       {
-        "Error": "Validation for licenses of type File not yet supported",
+        "Error": "Unable to determine license from the given license file",
         "Context": "/Volumes/Daten SSD/Repos/lk-code/homebook/source/HomeBook.UnitTests/HomeBook.UnitTests.csproj"
       }
     ],
+    "License": "Isopoh.Cryptography.Argon2 by Michael Heyman is licensed \nunder a Creative Commons Attributeion 4.0 International \nLicense, http://creativecommons.org/licenses/by/4.0/.",
     "LicenseUrl": "https://aka.ms/deprecateLicenseUrl",
-    "LicenseInformationOrigin": 2
+    "LicenseInformationOrigin": 5
   },
   {
     "PackageId": "Isopoh.Cryptography.SecureArray",
@@ -236,28 +198,29 @@
     "Authors": "Michael Heyman",
     "ValidationErrors": [
       {
-        "Error": "Validation for licenses of type File not yet supported",
+        "Error": "Unable to determine license from the given license file",
         "Context": "/Volumes/Daten SSD/Repos/lk-code/homebook/source/HomeBook.Backend/HomeBook.Backend.csproj"
       },
       {
-        "Error": "Validation for licenses of type File not yet supported",
+        "Error": "Unable to determine license from the given license file",
         "Context": "/Volumes/Daten SSD/Repos/lk-code/homebook/source/HomeBook.Backend.Core.HashProvider/HomeBook.Backend.Core.HashProvider.csproj"
       },
       {
-        "Error": "Validation for licenses of type File not yet supported",
+        "Error": "Unable to determine license from the given license file",
         "Context": "/Volumes/Daten SSD/Repos/lk-code/homebook/source/Homebook.Backend.Core.Setup/Homebook.Backend.Core.Setup.csproj"
       },
       {
-        "Error": "Validation for licenses of type File not yet supported",
+        "Error": "Unable to determine license from the given license file",
         "Context": "/Volumes/Daten SSD/Repos/lk-code/homebook/source/HomeBook.Backend.Core/HomeBook.Backend.Core.csproj"
       },
       {
-        "Error": "Validation for licenses of type File not yet supported",
+        "Error": "Unable to determine license from the given license file",
         "Context": "/Volumes/Daten SSD/Repos/lk-code/homebook/source/HomeBook.UnitTests/HomeBook.UnitTests.csproj"
       }
     ],
+    "License": "Isopoh.Cryptography.Argon2 by Michael Heyman is licensed \nunder a Creative Commons Attributeion 4.0 International \nLicense, http://creativecommons.org/licenses/by/4.0/.",
     "LicenseUrl": "https://aka.ms/deprecateLicenseUrl",
-    "LicenseInformationOrigin": 2
+    "LicenseInformationOrigin": 5
   },
   {
     "PackageId": "K4os.Compression.LZ4",
@@ -400,6 +363,46 @@
     "LicenseInformationOrigin": 0
   },
   {
+    "PackageId": "Microsoft.AspNetCore.Http.Abstractions",
+    "PackageVersion": "2.3.0",
+    "PackageProjectUrl": "https://asp.net/",
+    "Copyright": "\u00A9 Microsoft Corporation. All rights reserved.",
+    "Authors": "Microsoft",
+    "License": "https://raw.githubusercontent.com/aspnet/AspNetCore/2.0.0/LICENSE.txt",
+    "LicenseUrl": "https://raw.githubusercontent.com/aspnet/AspNetCore/2.0.0/LICENSE.txt",
+    "LicenseInformationOrigin": 1
+  },
+  {
+    "PackageId": "Microsoft.AspNetCore.Http.Extensions",
+    "PackageVersion": "2.3.0",
+    "PackageProjectUrl": "https://asp.net/",
+    "Copyright": "\u00A9 Microsoft Corporation. All rights reserved.",
+    "Authors": "Microsoft",
+    "License": "https://raw.githubusercontent.com/aspnet/AspNetCore/2.0.0/LICENSE.txt",
+    "LicenseUrl": "https://raw.githubusercontent.com/aspnet/AspNetCore/2.0.0/LICENSE.txt",
+    "LicenseInformationOrigin": 1
+  },
+  {
+    "PackageId": "Microsoft.AspNetCore.Http.Features",
+    "PackageVersion": "2.3.0",
+    "PackageProjectUrl": "https://asp.net/",
+    "Copyright": "\u00A9 Microsoft Corporation. All rights reserved.",
+    "Authors": "Microsoft",
+    "License": "https://raw.githubusercontent.com/aspnet/AspNetCore/2.0.0/LICENSE.txt",
+    "LicenseUrl": "https://raw.githubusercontent.com/aspnet/AspNetCore/2.0.0/LICENSE.txt",
+    "LicenseInformationOrigin": 1
+  },
+  {
+    "PackageId": "Microsoft.AspNetCore.Localization",
+    "PackageVersion": "2.3.0",
+    "PackageProjectUrl": "https://asp.net/",
+    "Copyright": "\u00A9 Microsoft Corporation. All rights reserved.",
+    "Authors": "Microsoft",
+    "License": "https://raw.githubusercontent.com/aspnet/AspNetCore/2.0.0/LICENSE.txt",
+    "LicenseUrl": "https://raw.githubusercontent.com/aspnet/AspNetCore/2.0.0/LICENSE.txt",
+    "LicenseInformationOrigin": 1
+  },
+  {
     "PackageId": "Microsoft.AspNetCore.Metadata",
     "PackageVersion": "9.0.9",
     "PackageProjectUrl": "https://asp.net/",
@@ -422,16 +425,6 @@
   {
     "PackageId": "Microsoft.Bcl.AsyncInterfaces",
     "PackageVersion": "7.0.0",
-    "PackageProjectUrl": "https://dot.net/",
-    "Copyright": "\u00A9 Microsoft Corporation. All rights reserved.",
-    "Authors": "Microsoft",
-    "License": "MIT",
-    "LicenseUrl": "https://licenses.nuget.org/MIT",
-    "LicenseInformationOrigin": 0
-  },
-  {
-    "PackageId": "Microsoft.Bcl.AsyncInterfaces",
-    "PackageVersion": "9.0.6",
     "PackageProjectUrl": "https://dot.net/",
     "Copyright": "\u00A9 Microsoft Corporation. All rights reserved.",
     "Authors": "Microsoft",
@@ -521,8 +514,18 @@
   },
   {
     "PackageId": "Microsoft.CodeCoverage",
-    "PackageVersion": "17.14.1",
+    "PackageVersion": "18.0.0",
     "PackageProjectUrl": "https://github.com/microsoft/vstest",
+    "Copyright": "\u00A9 Microsoft Corporation. All rights reserved.",
+    "Authors": "Microsoft",
+    "License": "MIT",
+    "LicenseUrl": "https://licenses.nuget.org/MIT",
+    "LicenseInformationOrigin": 0
+  },
+  {
+    "PackageId": "Microsoft.Data.Sqlite.Core",
+    "PackageVersion": "9.0.9",
+    "PackageProjectUrl": "https://docs.microsoft.com/dotnet/standard/data/sqlite/",
     "Copyright": "\u00A9 Microsoft Corporation. All rights reserved.",
     "Authors": "Microsoft",
     "License": "MIT",
@@ -571,6 +574,26 @@
   },
   {
     "PackageId": "Microsoft.EntityFrameworkCore.Relational",
+    "PackageVersion": "9.0.9",
+    "PackageProjectUrl": "https://docs.microsoft.com/ef/core/",
+    "Copyright": "\u00A9 Microsoft Corporation. All rights reserved.",
+    "Authors": "Microsoft",
+    "License": "MIT",
+    "LicenseUrl": "https://licenses.nuget.org/MIT",
+    "LicenseInformationOrigin": 0
+  },
+  {
+    "PackageId": "Microsoft.EntityFrameworkCore.Sqlite",
+    "PackageVersion": "9.0.9",
+    "PackageProjectUrl": "https://docs.microsoft.com/ef/core/",
+    "Copyright": "\u00A9 Microsoft Corporation. All rights reserved.",
+    "Authors": "Microsoft",
+    "License": "MIT",
+    "LicenseUrl": "https://licenses.nuget.org/MIT",
+    "LicenseInformationOrigin": 0
+  },
+  {
+    "PackageId": "Microsoft.EntityFrameworkCore.Sqlite.Core",
     "PackageVersion": "9.0.9",
     "PackageProjectUrl": "https://docs.microsoft.com/ef/core/",
     "Copyright": "\u00A9 Microsoft Corporation. All rights reserved.",
@@ -641,26 +664,6 @@
   },
   {
     "PackageId": "Microsoft.Extensions.Configuration.Binder",
-    "PackageVersion": "9.0.0",
-    "PackageProjectUrl": "https://dot.net/",
-    "Copyright": "\u00A9 Microsoft Corporation. All rights reserved.",
-    "Authors": "Microsoft",
-    "License": "MIT",
-    "LicenseUrl": "https://licenses.nuget.org/MIT",
-    "LicenseInformationOrigin": 0
-  },
-  {
-    "PackageId": "Microsoft.Extensions.Configuration.Binder",
-    "PackageVersion": "9.0.9",
-    "PackageProjectUrl": "https://dot.net/",
-    "Copyright": "\u00A9 Microsoft Corporation. All rights reserved.",
-    "Authors": "Microsoft",
-    "License": "MIT",
-    "LicenseUrl": "https://licenses.nuget.org/MIT",
-    "LicenseInformationOrigin": 0
-  },
-  {
-    "PackageId": "Microsoft.Extensions.Configuration.EnvironmentVariables",
     "PackageVersion": "9.0.9",
     "PackageProjectUrl": "https://dot.net/",
     "Copyright": "\u00A9 Microsoft Corporation. All rights reserved.",
@@ -702,26 +705,6 @@
   {
     "PackageId": "Microsoft.Extensions.DependencyInjection.Abstractions",
     "PackageVersion": "9.0.9",
-    "PackageProjectUrl": "https://dot.net/",
-    "Copyright": "\u00A9 Microsoft Corporation. All rights reserved.",
-    "Authors": "Microsoft",
-    "License": "MIT",
-    "LicenseUrl": "https://licenses.nuget.org/MIT",
-    "LicenseInformationOrigin": 0
-  },
-  {
-    "PackageId": "Microsoft.Extensions.DependencyModel",
-    "PackageVersion": "8.0.2",
-    "PackageProjectUrl": "https://dot.net/",
-    "Copyright": "\u00A9 Microsoft Corporation. All rights reserved.",
-    "Authors": "Microsoft",
-    "License": "MIT",
-    "LicenseUrl": "https://licenses.nuget.org/MIT",
-    "LicenseInformationOrigin": 0
-  },
-  {
-    "PackageId": "Microsoft.Extensions.DependencyModel",
-    "PackageVersion": "9.0.0",
     "PackageProjectUrl": "https://dot.net/",
     "Copyright": "\u00A9 Microsoft Corporation. All rights reserved.",
     "Authors": "Microsoft",
@@ -941,7 +924,7 @@
   },
   {
     "PackageId": "Microsoft.Kiota.Abstractions",
-    "PackageVersion": "1.19.1",
+    "PackageVersion": "1.20.1",
     "PackageProjectUrl": "https://aka.ms/kiota/docs",
     "Copyright": "\u00A9 Microsoft Corporation. All rights reserved.",
     "Authors": "Microsoft",
@@ -951,7 +934,7 @@
   },
   {
     "PackageId": "Microsoft.Kiota.Bundle",
-    "PackageVersion": "1.19.1",
+    "PackageVersion": "1.20.1",
     "PackageProjectUrl": "https://aka.ms/kiota/docs",
     "Copyright": "\u00A9 Microsoft Corporation. All rights reserved.",
     "Authors": "Microsoft",
@@ -961,7 +944,7 @@
   },
   {
     "PackageId": "Microsoft.Kiota.Http.HttpClientLibrary",
-    "PackageVersion": "1.19.1",
+    "PackageVersion": "1.20.1",
     "PackageProjectUrl": "https://aka.ms/kiota/docs",
     "Copyright": "\u00A9 Microsoft Corporation. All rights reserved.",
     "Authors": "Microsoft",
@@ -971,7 +954,7 @@
   },
   {
     "PackageId": "Microsoft.Kiota.Serialization.Form",
-    "PackageVersion": "1.19.1",
+    "PackageVersion": "1.20.1",
     "PackageProjectUrl": "https://aka.ms/kiota/docs",
     "Copyright": "\u00A9 Microsoft Corporation. All rights reserved.",
     "Authors": "Microsoft",
@@ -981,7 +964,7 @@
   },
   {
     "PackageId": "Microsoft.Kiota.Serialization.Json",
-    "PackageVersion": "1.19.1",
+    "PackageVersion": "1.20.1",
     "PackageProjectUrl": "https://aka.ms/kiota/docs",
     "Copyright": "\u00A9 Microsoft Corporation. All rights reserved.",
     "Authors": "Microsoft",
@@ -991,7 +974,7 @@
   },
   {
     "PackageId": "Microsoft.Kiota.Serialization.Multipart",
-    "PackageVersion": "1.19.1",
+    "PackageVersion": "1.20.1",
     "PackageProjectUrl": "https://aka.ms/kiota/docs",
     "Copyright": "\u00A9 Microsoft Corporation. All rights reserved.",
     "Authors": "Microsoft",
@@ -1001,13 +984,23 @@
   },
   {
     "PackageId": "Microsoft.Kiota.Serialization.Text",
-    "PackageVersion": "1.19.1",
+    "PackageVersion": "1.20.1",
     "PackageProjectUrl": "https://aka.ms/kiota/docs",
     "Copyright": "\u00A9 Microsoft Corporation. All rights reserved.",
     "Authors": "Microsoft",
     "License": "MIT",
     "LicenseUrl": "https://licenses.nuget.org/MIT",
     "LicenseInformationOrigin": 0
+  },
+  {
+    "PackageId": "Microsoft.Net.Http.Headers",
+    "PackageVersion": "2.3.0",
+    "PackageProjectUrl": "https://asp.net/",
+    "Copyright": "\u00A9 Microsoft Corporation. All rights reserved.",
+    "Authors": "Microsoft",
+    "License": "https://raw.githubusercontent.com/aspnet/AspNetCore/2.0.0/LICENSE.txt",
+    "LicenseUrl": "https://raw.githubusercontent.com/aspnet/AspNetCore/2.0.0/LICENSE.txt",
+    "LicenseInformationOrigin": 1
   },
   {
     "PackageId": "Microsoft.NET.ILLink.Tasks",
@@ -1031,7 +1024,7 @@
   },
   {
     "PackageId": "Microsoft.NET.Test.Sdk",
-    "PackageVersion": "17.14.1",
+    "PackageVersion": "18.0.0",
     "PackageProjectUrl": "https://github.com/microsoft/vstest",
     "Copyright": "\u00A9 Microsoft Corporation. All rights reserved.",
     "Authors": "Microsoft",
@@ -1070,38 +1063,8 @@
     "LicenseInformationOrigin": 0
   },
   {
-    "PackageId": "Microsoft.Playwright",
-    "PackageVersion": "1.55.0",
-    "PackageProjectUrl": "https://github.com/microsoft/playwright-dotnet",
-    "Copyright": "\u00A9 Microsoft Corporation. All rights reserved.",
-    "Authors": "Microsoft",
-    "License": "MIT",
-    "LicenseUrl": "https://licenses.nuget.org/MIT",
-    "LicenseInformationOrigin": 0
-  },
-  {
-    "PackageId": "Microsoft.Playwright.NUnit",
-    "PackageVersion": "1.55.0",
-    "PackageProjectUrl": "https://github.com/microsoft/playwright-dotnet",
-    "Copyright": "\u00A9 Microsoft Corporation. All rights reserved.",
-    "Authors": "Microsoft",
-    "License": "MIT",
-    "LicenseUrl": "https://licenses.nuget.org/MIT",
-    "LicenseInformationOrigin": 0
-  },
-  {
-    "PackageId": "Microsoft.Playwright.TestAdapter",
-    "PackageVersion": "1.55.0",
-    "PackageProjectUrl": "https://github.com/microsoft/playwright-dotnet",
-    "Copyright": "\u00A9 Microsoft Corporation. All rights reserved.",
-    "Authors": "Microsoft",
-    "License": "MIT",
-    "LicenseUrl": "https://licenses.nuget.org/MIT",
-    "LicenseInformationOrigin": 0
-  },
-  {
     "PackageId": "Microsoft.Testing.Extensions.Telemetry",
-    "PackageVersion": "1.7.3",
+    "PackageVersion": "1.9.0",
     "PackageProjectUrl": "https://github.com/microsoft/testfx",
     "Copyright": "\u00A9 Microsoft Corporation. All rights reserved.",
     "Authors": "Microsoft",
@@ -1111,7 +1074,7 @@
   },
   {
     "PackageId": "Microsoft.Testing.Extensions.TrxReport.Abstractions",
-    "PackageVersion": "1.7.3",
+    "PackageVersion": "1.9.0",
     "PackageProjectUrl": "https://github.com/microsoft/testfx",
     "Copyright": "\u00A9 Microsoft Corporation. All rights reserved.",
     "Authors": "Microsoft",
@@ -1121,7 +1084,7 @@
   },
   {
     "PackageId": "Microsoft.Testing.Extensions.VSTestBridge",
-    "PackageVersion": "1.7.3",
+    "PackageVersion": "1.9.0",
     "PackageProjectUrl": "https://github.com/microsoft/testfx",
     "Copyright": "\u00A9 Microsoft Corporation. All rights reserved.",
     "Authors": "Microsoft",
@@ -1131,7 +1094,7 @@
   },
   {
     "PackageId": "Microsoft.Testing.Platform",
-    "PackageVersion": "1.7.3",
+    "PackageVersion": "1.9.0",
     "PackageProjectUrl": "https://github.com/microsoft/testfx",
     "Copyright": "\u00A9 Microsoft Corporation. All rights reserved.",
     "Authors": "Microsoft",
@@ -1141,7 +1104,7 @@
   },
   {
     "PackageId": "Microsoft.Testing.Platform.MSBuild",
-    "PackageVersion": "1.7.3",
+    "PackageVersion": "1.9.0",
     "PackageProjectUrl": "https://github.com/microsoft/testfx",
     "Copyright": "\u00A9 Microsoft Corporation. All rights reserved.",
     "Authors": "Microsoft",
@@ -1161,7 +1124,7 @@
   },
   {
     "PackageId": "Microsoft.TestPlatform.ObjectModel",
-    "PackageVersion": "17.14.1",
+    "PackageVersion": "18.0.0",
     "PackageProjectUrl": "https://github.com/microsoft/vstest",
     "Copyright": "\u00A9 Microsoft Corporation. All rights reserved.",
     "Authors": "Microsoft",
@@ -1171,7 +1134,7 @@
   },
   {
     "PackageId": "Microsoft.TestPlatform.TestHost",
-    "PackageVersion": "17.14.1",
+    "PackageVersion": "18.0.0",
     "PackageProjectUrl": "https://github.com/microsoft/vstest",
     "Copyright": "\u00A9 Microsoft Corporation. All rights reserved.",
     "Authors": "Microsoft",
@@ -1190,7 +1153,7 @@
   },
   {
     "PackageId": "MudBlazor",
-    "PackageVersion": "8.12.0",
+    "PackageVersion": "8.13.0",
     "PackageProjectUrl": "https://mudblazor.com/",
     "Copyright": "Copyright 2024 MudBlazor",
     "Authors": "Garderoben, Henon and Contributors",
@@ -1279,7 +1242,7 @@
   },
   {
     "PackageId": "NUnit3TestAdapter",
-    "PackageVersion": "5.1.0",
+    "PackageVersion": "5.2.0",
     "PackageProjectUrl": "https://docs.nunit.org/articles/vs-test-adapter/Index.html",
     "Copyright": "Copyright (c) 2011-2021 Charlie Poole, 2014-2025 Terje Sandstrom",
     "Authors": "Charlie Poole, Terje Sandstrom",
@@ -1288,38 +1251,8 @@
     "LicenseInformationOrigin": 0
   },
   {
-    "PackageId": "Reqnroll",
-    "PackageVersion": "3.0.2",
-    "PackageProjectUrl": "https://www.reqnroll.net/",
-    "Copyright": "Copyright \u00A9 Reqnroll",
-    "Authors": "Reqnroll",
-    "License": "BSD-3-Clause",
-    "LicenseUrl": "https://licenses.nuget.org/BSD-3-Clause",
-    "LicenseInformationOrigin": 0
-  },
-  {
-    "PackageId": "Reqnroll.NUnit",
-    "PackageVersion": "3.0.2",
-    "PackageProjectUrl": "https://www.reqnroll.net/",
-    "Copyright": "Copyright \u00A9 Reqnroll",
-    "Authors": "Reqnroll",
-    "License": "BSD-3-Clause",
-    "LicenseUrl": "https://licenses.nuget.org/BSD-3-Clause",
-    "LicenseInformationOrigin": 0
-  },
-  {
-    "PackageId": "Reqnroll.Tools.MsBuild.Generation",
-    "PackageVersion": "3.0.2",
-    "PackageProjectUrl": "https://www.reqnroll.net/",
-    "Copyright": "Copyright \u00A9 Reqnroll",
-    "Authors": "Reqnroll",
-    "License": "BSD-3-Clause",
-    "LicenseUrl": "https://licenses.nuget.org/BSD-3-Clause",
-    "LicenseInformationOrigin": 0
-  },
-  {
     "PackageId": "Scalar.AspNetCore",
-    "PackageVersion": "2.8.4",
+    "PackageVersion": "2.8.10",
     "PackageProjectUrl": "https://scalar.com/",
     "Authors": "Scalar",
     "License": "MIT",
@@ -1418,6 +1351,42 @@
     "LicenseInformationOrigin": 0
   },
   {
+    "PackageId": "SQLitePCLRaw.bundle_e_sqlite3",
+    "PackageVersion": "2.1.10",
+    "Copyright": "Copyright 2014-2024 SourceGear, LLC",
+    "Authors": "Eric Sink",
+    "License": "Apache-2.0",
+    "LicenseUrl": "https://licenses.nuget.org/Apache-2.0",
+    "LicenseInformationOrigin": 0
+  },
+  {
+    "PackageId": "SQLitePCLRaw.core",
+    "PackageVersion": "2.1.10",
+    "Copyright": "Copyright 2014-2024 SourceGear, LLC",
+    "Authors": "Eric Sink",
+    "License": "Apache-2.0",
+    "LicenseUrl": "https://licenses.nuget.org/Apache-2.0",
+    "LicenseInformationOrigin": 0
+  },
+  {
+    "PackageId": "SQLitePCLRaw.lib.e_sqlite3",
+    "PackageVersion": "2.1.10",
+    "Copyright": "Copyright 2014-2024 SourceGear, LLC",
+    "Authors": "Eric Sink",
+    "License": "Apache-2.0",
+    "LicenseUrl": "https://licenses.nuget.org/Apache-2.0",
+    "LicenseInformationOrigin": 0
+  },
+  {
+    "PackageId": "SQLitePCLRaw.provider.e_sqlite3",
+    "PackageVersion": "2.1.10",
+    "Copyright": "Copyright 2014-2024 SourceGear, LLC",
+    "Authors": "Eric Sink",
+    "License": "Apache-2.0",
+    "LicenseUrl": "https://licenses.nuget.org/Apache-2.0",
+    "LicenseInformationOrigin": 0
+  },
+  {
     "PackageId": "Std.UriTemplate",
     "PackageVersion": "2.0.5",
     "Authors": "Std.UriTemplate",
@@ -1434,6 +1403,16 @@
     "License": "MIT",
     "LicenseUrl": "https://github.com/dotnet/corefx/blob/master/LICENSE.TXT",
     "LicenseInformationOrigin": 1
+  },
+  {
+    "PackageId": "System.Buffers",
+    "PackageVersion": "4.6.0",
+    "PackageProjectUrl": "https://github.com/dotnet/maintenance-packages",
+    "Copyright": "\u00A9 Microsoft Corporation. All rights reserved.",
+    "Authors": "Microsoft",
+    "License": "MIT",
+    "LicenseUrl": "https://licenses.nuget.org/MIT",
+    "LicenseInformationOrigin": 0
   },
   {
     "PackageId": "System.CodeDom",
@@ -1459,16 +1438,6 @@
     "PackageId": "System.Collections.Immutable",
     "PackageVersion": "8.0.0",
     "PackageProjectUrl": "https://dot.net/",
-    "Copyright": "\u00A9 Microsoft Corporation. All rights reserved.",
-    "Authors": "Microsoft",
-    "License": "MIT",
-    "LicenseUrl": "https://licenses.nuget.org/MIT",
-    "LicenseInformationOrigin": 0
-  },
-  {
-    "PackageId": "System.ComponentModel.Annotations",
-    "PackageVersion": "5.0.0",
-    "PackageProjectUrl": "https://github.com/dotnet/runtime",
     "Copyright": "\u00A9 Microsoft Corporation. All rights reserved.",
     "Authors": "Microsoft",
     "License": "MIT",
@@ -1547,16 +1516,6 @@
   },
   {
     "PackageId": "System.Diagnostics.DiagnosticSource",
-    "PackageVersion": "5.0.0",
-    "PackageProjectUrl": "https://github.com/dotnet/runtime",
-    "Copyright": "\u00A9 Microsoft Corporation. All rights reserved.",
-    "Authors": "Microsoft",
-    "License": "MIT",
-    "LicenseUrl": "https://licenses.nuget.org/MIT",
-    "LicenseInformationOrigin": 0
-  },
-  {
-    "PackageId": "System.Diagnostics.DiagnosticSource",
     "PackageVersion": "8.0.1",
     "PackageProjectUrl": "https://dot.net/",
     "Copyright": "\u00A9 Microsoft Corporation. All rights reserved.",
@@ -1624,6 +1583,16 @@
     "License": "MIT",
     "LicenseUrl": "https://licenses.nuget.org/MIT",
     "LicenseInformationOrigin": 0
+  },
+  {
+    "PackageId": "System.Memory",
+    "PackageVersion": "4.5.3",
+    "PackageProjectUrl": "https://dot.net/",
+    "Copyright": "\u00A9 Microsoft Corporation. All rights reserved.",
+    "Authors": "Microsoft",
+    "License": "MIT",
+    "LicenseUrl": "https://github.com/dotnet/corefx/blob/master/LICENSE.TXT",
+    "LicenseInformationOrigin": 1
   },
   {
     "PackageId": "System.Reflection",
@@ -1736,18 +1705,8 @@
     "LicenseInformationOrigin": 0
   },
   {
-    "PackageId": "System.Text.Json",
-    "PackageVersion": "8.0.5",
-    "PackageProjectUrl": "https://dot.net/",
-    "Copyright": "\u00A9 Microsoft Corporation. All rights reserved.",
-    "Authors": "Microsoft",
-    "License": "MIT",
-    "LicenseUrl": "https://licenses.nuget.org/MIT",
-    "LicenseInformationOrigin": 0
-  },
-  {
-    "PackageId": "System.Text.Json",
-    "PackageVersion": "9.0.0",
+    "PackageId": "System.Text.Encodings.Web",
+    "PackageVersion": "8.0.0",
     "PackageProjectUrl": "https://dot.net/",
     "Copyright": "\u00A9 Microsoft Corporation. All rights reserved.",
     "Authors": "Microsoft",
@@ -1768,16 +1727,6 @@
   {
     "PackageId": "System.Threading.Channels",
     "PackageVersion": "7.0.0",
-    "PackageProjectUrl": "https://dot.net/",
-    "Copyright": "\u00A9 Microsoft Corporation. All rights reserved.",
-    "Authors": "Microsoft",
-    "License": "MIT",
-    "LicenseUrl": "https://licenses.nuget.org/MIT",
-    "LicenseInformationOrigin": 0
-  },
-  {
-    "PackageId": "System.Threading.Channels",
-    "PackageVersion": "9.0.6",
     "PackageProjectUrl": "https://dot.net/",
     "Copyright": "\u00A9 Microsoft Corporation. All rights reserved.",
     "Authors": "Microsoft",
