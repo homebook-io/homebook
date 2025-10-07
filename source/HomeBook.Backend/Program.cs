@@ -94,7 +94,8 @@ app.UseDefaultFiles();
 
 // map endpoints that are always available
 app.MapVersionEndpoints()
-    .MapSystemEndpoints();
+    .MapSystemEndpoints()
+    .MapPlatformEndpoints();
 
 switch (instanceStatus)
 {

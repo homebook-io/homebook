@@ -1,34 +1,34 @@
 {
-    "descriptionHash": "CF0AFED5B20834AD6A4C35D98E3D4CE59CE2FFE22E77812126236FDBDEF39D603C0041A1C6A019E33F05524165394F0D0B58CB8FD6B89289A450616A16E7CCC4",
-    "descriptionLocation": "../HomeBook.Backend/HomeBook.Backend.json",
-    "lockFileVersion": "1.0.0",
-    "kiotaVersion": "1.28.0",
-    "clientClassName": "BackendClient",
-    "typeAccessModifier": "Public",
-    "clientNamespaceName": "HomeBook.Client",
-    "language": "CSharp",
-    "usesBackingStore": false,
-    "excludeBackwardCompatible": false,
-    "includeAdditionalData": true,
-    "disableSSLValidation": false,
-    "serializers": [
-        "Microsoft.Kiota.Serialization.Json.JsonSerializationWriterFactory",
-        "Microsoft.Kiota.Serialization.Text.TextSerializationWriterFactory",
-        "Microsoft.Kiota.Serialization.Form.FormSerializationWriterFactory",
-        "Microsoft.Kiota.Serialization.Multipart.MultipartSerializationWriterFactory"
-    ],
-    "deserializers": [
-        "Microsoft.Kiota.Serialization.Json.JsonParseNodeFactory",
-        "Microsoft.Kiota.Serialization.Text.TextParseNodeFactory",
-        "Microsoft.Kiota.Serialization.Form.FormParseNodeFactory"
-    ],
-    "structuredMimeTypes": [
-        "application/json",
-        "text/plain;q=0.9",
-        "application/x-www-form-urlencoded;q=0.2",
-        "multipart/form-data;q=0.1"
-    ],
-    "includePatterns": [],
-    "excludePatterns": [],
-    "disabledValidationRules": []
+  "descriptionHash": "B55D4FF7E567C5EBD2561462FC3224431B4C3EE4F2666805B67C7492E5D47CF0F03859CAD2BA73037C6C858E5041B174A9FF8883018F2240436BB692D2D6F491",
+  "descriptionLocation": "../HomeBook.Backend/HomeBook.Backend.json",
+  "lockFileVersion": "1.0.0",
+  "kiotaVersion": "1.28.0",
+  "clientClassName": "BackendClient",
+  "typeAccessModifier": "Public",
+  "clientNamespaceName": "HomeBook.Client",
+  "language": "CSharp",
+  "usesBackingStore": false,
+  "excludeBackwardCompatible": false,
+  "includeAdditionalData": true,
+  "disableSSLValidation": false,
+  "serializers": [
+    "Microsoft.Kiota.Serialization.Json.JsonSerializationWriterFactory",
+    "Microsoft.Kiota.Serialization.Text.TextSerializationWriterFactory",
+    "Microsoft.Kiota.Serialization.Form.FormSerializationWriterFactory",
+    "Microsoft.Kiota.Serialization.Multipart.MultipartSerializationWriterFactory"
+  ],
+  "deserializers": [
+    "Microsoft.Kiota.Serialization.Json.JsonParseNodeFactory",
+    "Microsoft.Kiota.Serialization.Text.TextParseNodeFactory",
+    "Microsoft.Kiota.Serialization.Form.FormParseNodeFactory"
+  ],
+  "structuredMimeTypes": [
+    "application/json",
+    "text/plain;q=0.9",
+    "application/x-www-form-urlencoded;q=0.2",
+    "multipart/form-data;q=0.1"
+  ],
+  "includePatterns": [],
+  "excludePatterns": [],
+  "disabledValidationRules": []
 }

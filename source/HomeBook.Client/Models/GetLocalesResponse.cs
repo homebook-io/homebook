@@ -9,43 +9,35 @@ namespace HomeBook.Client.Models
 {
     [global::System.CodeDom.Compiler.GeneratedCode("Kiota", "1.0.0")]
     #pragma warning disable CS1591
-    public partial class GetInstanceInfoResponse : IAdditionalDataHolder, IParsable
+    public partial class GetLocalesResponse : IAdditionalDataHolder, IParsable
     #pragma warning restore CS1591
     {
         /// <summary>Stores additional data not described in the OpenAPI description found when deserializing. Can be used for serialization as well.</summary>
         public IDictionary<string, object> AdditionalData { get; set; }
-        /// <summary>The defaultLanguage property</summary>
+        /// <summary>The locales property</summary>
 #if NETSTANDARD2_1_OR_GREATER || NETCOREAPP3_1_OR_GREATER
 #nullable enable
-        public string? DefaultLanguage { get; set; }
+        public List<global::HomeBook.Client.Models.LocaleResponse>? Locales { get; set; }
 #nullable restore
 #else
-        public string DefaultLanguage { get; set; }
-#endif
-        /// <summary>The name property</summary>
-#if NETSTANDARD2_1_OR_GREATER || NETCOREAPP3_1_OR_GREATER
-#nullable enable
-        public string? Name { get; set; }
-#nullable restore
-#else
-        public string Name { get; set; }
+        public List<global::HomeBook.Client.Models.LocaleResponse> Locales { get; set; }
 #endif
         /// <summary>
-        /// Instantiates a new <see cref="global::HomeBook.Client.Models.GetInstanceInfoResponse"/> and sets the default values.
+        /// Instantiates a new <see cref="global::HomeBook.Client.Models.GetLocalesResponse"/> and sets the default values.
         /// </summary>
-        public GetInstanceInfoResponse()
+        public GetLocalesResponse()
         {
             AdditionalData = new Dictionary<string, object>();
         }
         /// <summary>
         /// Creates a new instance of the appropriate class based on discriminator value
         /// </summary>
-        /// <returns>A <see cref="global::HomeBook.Client.Models.GetInstanceInfoResponse"/></returns>
+        /// <returns>A <see cref="global::HomeBook.Client.Models.GetLocalesResponse"/></returns>
         /// <param name="parseNode">The parse node to use to read the discriminator value and create the object</param>
-        public static global::HomeBook.Client.Models.GetInstanceInfoResponse CreateFromDiscriminatorValue(IParseNode parseNode)
+        public static global::HomeBook.Client.Models.GetLocalesResponse CreateFromDiscriminatorValue(IParseNode parseNode)
         {
             _ = parseNode ?? throw new ArgumentNullException(nameof(parseNode));
-            return new global::HomeBook.Client.Models.GetInstanceInfoResponse();
+            return new global::HomeBook.Client.Models.GetLocalesResponse();
         }
         /// <summary>
         /// The deserialization information for the current model
@@ -55,8 +47,7 @@ namespace HomeBook.Client.Models
         {
             return new Dictionary<string, Action<IParseNode>>
             {
-                { "defaultLanguage", n => { DefaultLanguage = n.GetStringValue(); } },
-                { "name", n => { Name = n.GetStringValue(); } },
+                { "locales", n => { Locales = n.GetCollectionOfObjectValues<global::HomeBook.Client.Models.LocaleResponse>(global::HomeBook.Client.Models.LocaleResponse.CreateFromDiscriminatorValue)?.AsList(); } },
             };
         }
         /// <summary>
@@ -66,8 +57,7 @@ namespace HomeBook.Client.Models
         public virtual void Serialize(ISerializationWriter writer)
         {
             _ = writer ?? throw new ArgumentNullException(nameof(writer));
-            writer.WriteStringValue("defaultLanguage", DefaultLanguage);
-            writer.WriteStringValue("name", Name);
+            writer.WriteCollectionOfObjectValues<global::HomeBook.Client.Models.LocaleResponse>("locales", Locales);
             writer.WriteAdditionalData(AdditionalData);
         }
     }

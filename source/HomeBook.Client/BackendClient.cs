@@ -2,6 +2,7 @@
 #pragma warning disable CS0618
 using HomeBook.Client.Account;
 using HomeBook.Client.Info;
+using HomeBook.Client.Platform;
 using HomeBook.Client.Setup;
 using HomeBook.Client.System;
 using HomeBook.Client.Update;
@@ -33,6 +34,11 @@ namespace HomeBook.Client
         public global::HomeBook.Client.Info.InfoRequestBuilder Info
         {
             get => new global::HomeBook.Client.Info.InfoRequestBuilder(PathParameters, RequestAdapter);
+        }
+        /// <summary>The platform property</summary>
+        public global::HomeBook.Client.Platform.PlatformRequestBuilder Platform
+        {
+            get => new global::HomeBook.Client.Platform.PlatformRequestBuilder(PathParameters, RequestAdapter);
         }
         /// <summary>The setup property</summary>
         public global::HomeBook.Client.Setup.SetupRequestBuilder Setup

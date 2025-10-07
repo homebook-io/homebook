@@ -454,7 +454,7 @@ public static class SystemHandler
     }
 
     public static async Task<IResult> HandleUpdateInstanceName(
-        [FromServices] HomeBook.Backend.Abstractions.Contracts.IInstanceConfigurationProvider instanceConfigurationProvider,
+        [FromServices] IInstanceConfigurationProvider instanceConfigurationProvider,
         [FromBody] UpdateInstanceNameRequest request,
         CancellationToken cancellationToken = default)
     {

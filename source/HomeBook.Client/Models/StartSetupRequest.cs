@@ -14,6 +14,14 @@ namespace HomeBook.Client.Models
     {
         /// <summary>Stores additional data not described in the OpenAPI description found when deserializing. Can be used for serialization as well.</summary>
         public IDictionary<string, object> AdditionalData { get; set; }
+        /// <summary>The databaseFile property</summary>
+#if NETSTANDARD2_1_OR_GREATER || NETCOREAPP3_1_OR_GREATER
+#nullable enable
+        public string? DatabaseFile { get; set; }
+#nullable restore
+#else
+        public string DatabaseFile { get; set; }
+#endif
         /// <summary>The databaseHost property</summary>
 #if NETSTANDARD2_1_OR_GREATER || NETCOREAPP3_1_OR_GREATER
 #nullable enable
@@ -115,6 +123,7 @@ namespace HomeBook.Client.Models
         {
             return new Dictionary<string, Action<IParseNode>>
             {
+                { "databaseFile", n => { DatabaseFile = n.GetStringValue(); } },
                 { "databaseHost", n => { DatabaseHost = n.GetStringValue(); } },
                 { "databaseName", n => { DatabaseName = n.GetStringValue(); } },
                 { "databasePort", n => { DatabasePort = n.GetIntValue(); } },
@@ -135,6 +144,7 @@ namespace HomeBook.Client.Models
         public virtual void Serialize(ISerializationWriter writer)
         {
             _ = writer ?? throw new ArgumentNullException(nameof(writer));
+            writer.WriteStringValue("databaseFile", DatabaseFile);
             writer.WriteStringValue("databaseHost", DatabaseHost);
             writer.WriteStringValue("databaseName", DatabaseName);
             writer.WriteIntValue("databasePort", DatabasePort);
