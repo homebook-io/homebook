@@ -30,9 +30,9 @@ public static class InfoEndpoints
             .Produces<string>()
             .Produces<string>(StatusCodes.Status500InternalServerError);
 
-        group.MapGet("/default-language", InfoHandler.HandleGetInstanceDefaultLanguage)
-            .WithName("GetInstanceDefaultLanguage")
-            .WithDescription("Returns the instance default language as a string (public endpoint) e.g. 'EN', 'DE' ...")
+        group.MapGet("/default-locale", InfoHandler.HandleGetInstanceDefaultLocale)
+            .WithName("GetInstanceDefaultLocale")
+            .WithDescription("Returns the instance default locale as a string (public endpoint) e.g. 'en-EN', 'de-DE' ...")
             .AllowAnonymous()
             .WithOpenApi()
             .Produces<string>()

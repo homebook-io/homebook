@@ -36,7 +36,7 @@ public class SetupConfigurationValidator : AbstractValidator<SetupConfiguration>
             .NotEmpty()
             .WithMessage("HomebookConfigurationName is required");
 
-        RuleFor(x => x.HomebookConfigurationDefaultLanguage)
+        RuleFor(x => x.HomebookConfigurationDefaultLocale)
             .NotEmpty()
             .WithMessage("HomebookConfigurationDefaultLanguage is required");
 

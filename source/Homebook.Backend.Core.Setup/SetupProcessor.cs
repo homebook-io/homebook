@@ -87,12 +87,12 @@ public class SetupProcessor(
 
         await instanceConfigurationProvider.SetHomeBookInstanceNameAsync(configurationName, cancellationToken);
 
-        // 4. set default language
-        string? defaultLanguage = setupConfiguration.HomebookConfigurationDefaultLanguage;
-        if (string.IsNullOrEmpty(defaultLanguage))
-            throw new SetupException("homebook default language name is not set");
+        // 4. set default locale
+        string? defaultLocale = setupConfiguration.HomebookConfigurationDefaultLocale;
+        if (string.IsNullOrEmpty(defaultLocale))
+            throw new SetupException("homebook default locale is not set");
 
-        await instanceConfigurationProvider.SetHomeBookInstanceDefaultLanguageAsync(defaultLanguage, cancellationToken);
+        await instanceConfigurationProvider.SetHomeBookInstanceDefaultLocaleAsync(defaultLocale, cancellationToken);
 
         // 5. execute available updates
         IUpdateProcessor updateProcessor = serviceProvider.GetRequiredService<IUpdateProcessor>();

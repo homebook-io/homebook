@@ -16,9 +16,9 @@ public class SetupConfiguration
     public required string HomebookConfigurationName { get; init; }
 
     /// <summary>
-    /// the default language for the Homebook instance, e.g. "en", "de", etc.
+    /// the default locale for the Homebook instance, e.g. "en-EN", "de-DE", etc.
     /// </summary>
-    public required string HomebookConfigurationDefaultLanguage { get; init; }
+    public required string HomebookConfigurationDefaultLocale { get; init; }
 
     /// <summary>
     /// the username for the Homebook user, which is used as primary administrator.

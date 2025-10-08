@@ -319,7 +319,7 @@ public class SetupHandler
         {
             DatabaseType = "UNKNOWN",
             HomebookConfigurationName = "",
-            HomebookConfigurationDefaultLanguage = "",
+            HomebookConfigurationDefaultLocale = "",
             HomebookUserName = "",
             HomebookUserPassword = "",
             HomebookAcceptLicenses = false
@@ -343,9 +343,9 @@ public class SetupHandler
                                         ?? scp.GetValue(EnvironmentVariables.HOMEBOOK_INSTANCE_NAME)
                                         ?? defaultConfiguration.HomebookConfigurationName,
 
-            HomebookConfigurationDefaultLanguage = request.HomebookConfigurationDefaultLanguage
+            HomebookConfigurationDefaultLocale = request.HomebookConfigurationDefaultLocale
                                                    ?? scp.GetValue(EnvironmentVariables.HOMEBOOK_INSTANCE_DEFAULT_LANG)
-                                                   ?? defaultConfiguration.HomebookConfigurationDefaultLanguage,
+                                                   ?? defaultConfiguration.HomebookConfigurationDefaultLocale,
 
             HomebookUserName = request.HomebookUserName
                                ?? scp.GetValue(EnvironmentVariables.HOMEBOOK_USER_NAME)

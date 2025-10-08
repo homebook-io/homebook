@@ -78,7 +78,7 @@ public class SetupProcessorTests
             DatabaseUserName = "user",
             DatabaseUserPassword = "password",
             HomebookConfigurationName = "my homebook",
-            HomebookConfigurationDefaultLanguage = "EN",
+            HomebookConfigurationDefaultLocale = "EN",
             HomebookUserName = "admin",
             HomebookUserPassword = "password",
             HomebookAcceptLicenses = true

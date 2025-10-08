@@ -64,13 +64,13 @@ namespace HomeBook.Client.Models
 #else
         public string DatabaseUserPassword { get; set; }
 #endif
-        /// <summary>The homebookConfigurationDefaultLanguage property</summary>
+        /// <summary>The homebookConfigurationDefaultLocale property</summary>
 #if NETSTANDARD2_1_OR_GREATER || NETCOREAPP3_1_OR_GREATER
 #nullable enable
-        public string? HomebookConfigurationDefaultLanguage { get; set; }
+        public string? HomebookConfigurationDefaultLocale { get; set; }
 #nullable restore
 #else
-        public string HomebookConfigurationDefaultLanguage { get; set; }
+        public string HomebookConfigurationDefaultLocale { get; set; }
 #endif
         /// <summary>The homebookConfigurationName property</summary>
 #if NETSTANDARD2_1_OR_GREATER || NETCOREAPP3_1_OR_GREATER
@@ -130,7 +130,7 @@ namespace HomeBook.Client.Models
                 { "databaseType", n => { DatabaseType = n.GetStringValue(); } },
                 { "databaseUserName", n => { DatabaseUserName = n.GetStringValue(); } },
                 { "databaseUserPassword", n => { DatabaseUserPassword = n.GetStringValue(); } },
-                { "homebookConfigurationDefaultLanguage", n => { HomebookConfigurationDefaultLanguage = n.GetStringValue(); } },
+                { "homebookConfigurationDefaultLocale", n => { HomebookConfigurationDefaultLocale = n.GetStringValue(); } },
                 { "homebookConfigurationName", n => { HomebookConfigurationName = n.GetStringValue(); } },
                 { "homebookUserName", n => { HomebookUserName = n.GetStringValue(); } },
                 { "homebookUserPassword", n => { HomebookUserPassword = n.GetStringValue(); } },
@@ -151,7 +151,7 @@ namespace HomeBook.Client.Models
             writer.WriteStringValue("databaseType", DatabaseType);
             writer.WriteStringValue("databaseUserName", DatabaseUserName);
             writer.WriteStringValue("databaseUserPassword", DatabaseUserPassword);
-            writer.WriteStringValue("homebookConfigurationDefaultLanguage", HomebookConfigurationDefaultLanguage);
+            writer.WriteStringValue("homebookConfigurationDefaultLocale", HomebookConfigurationDefaultLocale);
             writer.WriteStringValue("homebookConfigurationName", HomebookConfigurationName);
             writer.WriteStringValue("homebookUserName", HomebookUserName);
             writer.WriteStringValue("homebookUserPassword", HomebookUserPassword);

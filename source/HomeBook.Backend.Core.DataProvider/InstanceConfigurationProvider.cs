@@ -37,13 +37,13 @@ public class InstanceConfigurationProvider(
         return instanceName?.Value ?? string.Empty;
     }
 
-    public async Task SetHomeBookInstanceDefaultLanguageAsync(string defaultLanguage,
+    public async Task SetHomeBookInstanceDefaultLocaleAsync(string defaultLocale,
         CancellationToken cancellationToken = default)
     {
         Configuration config = new()
         {
             Key = HOMEBOOK_INSTANCE_DEFAULT_LANG,
-            Value = defaultLanguage
+            Value = defaultLocale
         };
         await configurationValidator.ValidateAndThrowAsync<Configuration>(config,
             cancellationToken: cancellationToken);
@@ -51,7 +51,7 @@ public class InstanceConfigurationProvider(
         await configurationRepository.WriteConfigurationAsync(config, cancellationToken);
     }
 
-    public async Task<string?> GetHomeBookInstanceDefaultLanguageAsync(CancellationToken cancellationToken = default)
+    public async Task<string?> GetHomeBookInstanceDefaultLocaleAsync(CancellationToken cancellationToken = default)
     {
         Configuration? defaultLanguage = await configurationRepository
             .GetConfigurationByKeyAsync(HOMEBOOK_INSTANCE_DEFAULT_LANG,

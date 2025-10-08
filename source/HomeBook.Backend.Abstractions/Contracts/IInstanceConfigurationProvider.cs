@@ -21,17 +21,17 @@ public interface IInstanceConfigurationProvider
     Task<string> GetHomeBookInstanceNameAsync(CancellationToken cancellationToken = default);
 
     /// <summary>
-    /// set the default language for the homebook instance
+    /// set the default locale for the homebook instance
     /// </summary>
-    /// <param name="instanceName"></param>
+    /// <param name="defaultLocale"></param>
     /// <param name="cancellationToken"></param>
     /// <returns></returns>
-    Task SetHomeBookInstanceDefaultLanguageAsync(string defaultLanguage, CancellationToken cancellationToken = default);
+    Task SetHomeBookInstanceDefaultLocaleAsync(string defaultLocale, CancellationToken cancellationToken = default);
 
     /// <summary>
-    /// gets the default language for the homebook instance
+    /// gets the default locale for the homebook instance
     /// </summary>
     /// <param name="cancellationToken"></param>
     /// <returns>the instance name or null if not set</returns>
-    Task<string?> GetHomeBookInstanceDefaultLanguageAsync(CancellationToken cancellationToken = default);
+    Task<string?> GetHomeBookInstanceDefaultLocaleAsync(CancellationToken cancellationToken = default);
 }

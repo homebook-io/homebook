@@ -15,7 +15,7 @@ public static class InfoHandler
             string instanceName = await instanceConfigurationProvider
                 .GetHomeBookInstanceNameAsync(cancellationToken);
             string? instanceDefaultName = await instanceConfigurationProvider
-                .GetHomeBookInstanceDefaultLanguageAsync(cancellationToken);
+                .GetHomeBookInstanceDefaultLocaleAsync(cancellationToken);
 
             GetInstanceInfoResponse response = new(instanceName,
                 (instanceDefaultName ?? string.Empty));
@@ -43,15 +43,15 @@ public static class InfoHandler
         }
     }
 
-    public static async Task<IResult> HandleGetInstanceDefaultLanguage(
+    public static async Task<IResult> HandleGetInstanceDefaultLocale(
         [FromServices] IInstanceConfigurationProvider instanceConfigurationProvider,
         CancellationToken cancellationToken = default)
     {
         try
         {
-            string? instanceName = await instanceConfigurationProvider.GetHomeBookInstanceNameAsync(cancellationToken);
+            string? defaultLanguage = await instanceConfigurationProvider.GetHomeBookInstanceDefaultLocaleAsync(cancellationToken);
 
-            return TypedResults.Ok(instanceName);
+            return TypedResults.Ok(defaultLanguage);
         }
         catch (Exception)
         {

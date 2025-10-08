@@ -18,7 +18,7 @@ public class Update_20250925_01(
     public async Task ExecuteAsync(CancellationToken cancellationToken)
     {
         string? existingDefaultLanguage = await instanceConfigurationProvider
-            .GetHomeBookInstanceDefaultLanguageAsync(cancellationToken);
+            .GetHomeBookInstanceDefaultLocaleAsync(cancellationToken);
 
         if (!string.IsNullOrEmpty(existingDefaultLanguage))
             return;
@@ -27,8 +27,8 @@ public class Update_20250925_01(
         logger.LogInformation("Updating Default Language");
 
         // TODO: try to load load from env
-        string defaultLang = "EN";
-        await instanceConfigurationProvider.SetHomeBookInstanceDefaultLanguageAsync(
+        string defaultLang = "en-EN";
+        await instanceConfigurationProvider.SetHomeBookInstanceDefaultLocaleAsync(
             defaultLang,
             cancellationToken);
     }

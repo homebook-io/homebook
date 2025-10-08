@@ -533,7 +533,7 @@ public class SetupHandlerTests
             HomebookUserName: null,
             HomebookUserPassword: null,
             HomebookConfigurationName: null,
-            HomebookConfigurationDefaultLanguage: null);
+            HomebookConfigurationDefaultLocale: null);
         _setupConfigurationProvider.GetValue(EnvironmentVariables.DATABASE_TYPE).Returns("POSTGRESQL");
         _setupConfigurationProvider.GetValue(EnvironmentVariables.DATABASE_HOST).Returns("test-server");
         _setupConfigurationProvider.GetValue<ushort>(EnvironmentVariables.DATABASE_PORT).Returns((ushort)5432);
@@ -578,7 +578,7 @@ public class SetupHandlerTests
             HomebookUserName: "user",
             HomebookUserPassword: "s3cr3t",
             HomebookConfigurationName: "test-homebook",
-            HomebookConfigurationDefaultLanguage: "EN");
+            HomebookConfigurationDefaultLocale: "EN");
         _setupConfigurationProvider.GetValue(EnvironmentVariables.DATABASE_TYPE).Returns((string?)null);
         _setupConfigurationProvider.GetValue(EnvironmentVariables.DATABASE_HOST).Returns((string?)null);
         _setupConfigurationProvider.GetValue<ushort>(EnvironmentVariables.DATABASE_PORT).Returns((ushort)default);
@@ -624,7 +624,7 @@ public class SetupHandlerTests
             HomebookUserName: "another-user",
             HomebookUserPassword: "another-s3cr3t",
             HomebookConfigurationName: "another-homebook",
-            HomebookConfigurationDefaultLanguage: "EN");
+            HomebookConfigurationDefaultLocale: "EN");
         _setupConfigurationProvider.GetValue(EnvironmentVariables.DATABASE_TYPE).Returns("POSTGRESQL");
         _setupConfigurationProvider.GetValue(EnvironmentVariables.DATABASE_HOST).Returns("test-server");
         _setupConfigurationProvider.GetValue<ushort>(EnvironmentVariables.DATABASE_PORT).Returns((ushort)5432);
@@ -668,7 +668,7 @@ public class SetupHandlerTests
             HomebookUserName: null,
             HomebookUserPassword: null,
             HomebookConfigurationName: null,
-            HomebookConfigurationDefaultLanguage: null);
+            HomebookConfigurationDefaultLocale: null);
         _setupConfigurationProvider.GetValue(EnvironmentVariables.DATABASE_TYPE).Returns((string?)null);
         _setupConfigurationProvider.GetValue(EnvironmentVariables.DATABASE_HOST).Returns((string?)null);
         _setupConfigurationProvider.GetValue<ushort>(EnvironmentVariables.DATABASE_PORT).Returns((ushort)default);
