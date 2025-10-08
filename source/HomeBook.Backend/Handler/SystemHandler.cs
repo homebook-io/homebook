@@ -465,13 +465,37 @@ public static class SystemHandler
                 return TypedResults.BadRequest("Instance name is required and cannot be empty");
 
             // Update the instance name
-            await instanceConfigurationProvider.SetHomeBookInstanceNameAsync(request.Name, cancellationToken);
+            await instanceConfigurationProvider.SetHomeBookInstanceNameAsync(request.Name,
+                cancellationToken);
 
             return TypedResults.Ok("Instance name updated successfully");
         }
         catch (Exception)
         {
             return TypedResults.Problem("An error occurred while updating the instance name", statusCode: 500);
+        }
+    }
+
+    public static async Task<IResult> HandleUpdateInstanceDefaultLocale(
+        [FromServices] IInstanceConfigurationProvider instanceConfigurationProvider,
+        [FromBody] UpdateInstanceDefaultLocaleRequest request,
+        CancellationToken cancellationToken = default)
+    {
+        try
+        {
+            // Validate input
+            if (string.IsNullOrWhiteSpace(request.Locale))
+                return TypedResults.BadRequest("Locale is required and cannot be empty");
+
+            // Update the instance name
+            await instanceConfigurationProvider.SetHomeBookInstanceDefaultLocaleAsync(request.Locale,
+                cancellationToken);
+
+            return TypedResults.Ok("Default locale updated successfully");
+        }
+        catch (Exception)
+        {
+            return TypedResults.Problem("An error occurred while updating the default locale", statusCode: 500);
         }
     }
 }

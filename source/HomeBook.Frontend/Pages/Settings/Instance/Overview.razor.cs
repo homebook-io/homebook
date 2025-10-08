@@ -67,8 +67,7 @@ public partial class Overview : ComponentBase
     {
         try
         {
-            // TODO: get default locale from server
-            string defaultLocale = await InstanceManagementProvider.GetInstanceNameAsync(cancellationToken);
+            string defaultLocale = await InstanceManagementProvider.GetDefaultLocaleAsync(cancellationToken);
 
             _configurationModel.InstanceDefaultLocale = defaultLocale;
             StateHasChanged();
