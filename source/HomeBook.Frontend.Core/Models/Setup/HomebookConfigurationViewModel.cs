@@ -9,6 +9,6 @@ public class HomebookConfigurationViewModel
     public string InstanceName { get; set; } = string.Empty;
 
     [Required(ErrorMessage = "InstanceDefaultLang is required")]
-    [StringLength(3, ErrorMessage = "InstanceDefaultLang cannot exceed 3 characters")]
+    [StringLength(5, ErrorMessage = "InstanceDefaultLang cannot exceed 5 characters")]
     public string InstanceDefaultLang { get; set; } = string.Empty;
 }

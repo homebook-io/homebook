@@ -14,14 +14,12 @@ public static class ServiceCollectionExtensions
     public static IServiceCollection AddFrontendUiServices(this IServiceCollection services,
         IConfiguration configuration)
     {
-        services.AddAuthorizationCore();
-        services.AddCascadingAuthenticationState();
-        services.AddScoped<IAuthenticationService, AuthenticationService>();
-        services.AddScoped<AuthenticationStateProvider, CustomAuthenticationStateProvider>();
+        services.AddAuthentication(configuration)
+            .AddLocalization();
 
         services.AddSingleton<ISetupService, SetupService>();
+        services.AddSingleton<IStartupService, StartupService>();
 
-        services.AddLocalization();
         services.AddSingleton<ILocalizationProvider, LocalizationProvider>(x =>
         {
             Type localizerType = typeof(IStringLocalizer<>).MakeGenericType(typeof(LocalizationStrings));
@@ -30,6 +28,17 @@ public static class ServiceCollectionExtensions
         });
 
         services.AddSingleton<IWidgetFactory, WidgetFactory>();
+
+        return services;
+    }
+
+    private static IServiceCollection AddAuthentication(this IServiceCollection services,
+        IConfiguration configuration)
+    {
+        services.AddAuthorizationCore();
+        services.AddCascadingAuthenticationState();
+        services.AddSingleton<IAuthenticationService, AuthenticationService>();
+        services.AddSingleton<AuthenticationStateProvider, CustomAuthenticationStateProvider>();
 
         return services;
     }

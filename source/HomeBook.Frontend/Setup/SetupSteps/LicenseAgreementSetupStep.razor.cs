@@ -1,5 +1,6 @@
 using HomeBook.Client.Models;
 using HomeBook.Frontend.Abstractions.Contracts;
+using HomeBook.Frontend.Abstractions.Models;
 using HomeBook.Frontend.Components;
 using HomeBook.Frontend.Core.Models.Setup;
 using HomeBook.Frontend.Mappings;
@@ -44,21 +45,11 @@ public partial class LicenseAgreementSetupStep : ComponentBase, ISetupStep
 
         try
         {
-            GetLicensesResponse? licensesResponse = await BackendClient.Setup.Licenses.GetAsync(x =>
-                {
-                },
-                cancellationToken
-            );
-
-            if (licensesResponse is null)
-                throw new SetupCheckException("Server did not return valid licenses.");
-
-            _licensesAccepted = licensesResponse.LicensesAccepted ?? false;
-            _licenses.Clear();
-            _licenses = (licensesResponse.Licenses ?? [])
-                .OrderBy(x => x.Name)
-                .Select(license => license.ToViewModel())
+            License[] licenses = await LicensesService.GetAllLicensesAsync(cancellationToken);
+            _licenses = licenses.OrderBy(x => x.Name)
+                .Select(x => x.ToViewModel())
                 .ToList();
+            _licensesAccepted = await LicensesService.AreLicensesAcceptedAsync(cancellationToken);
             await InvokeAsync(StateHasChanged);
         }
         catch (ApiException err) when (err.ResponseStatusCode == 500)

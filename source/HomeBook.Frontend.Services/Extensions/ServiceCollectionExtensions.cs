@@ -15,13 +15,13 @@ public static class ServiceCollectionExtensions
     public static IServiceCollection AddFrontendServices(this IServiceCollection services,
         IConfiguration configuration)
     {
-        services.AddScoped<IContentProvider, ContentProvider>();
+        services.AddSingleton<IContentProvider, ContentProvider>();
 
-        services.AddScoped<ISystemManagementProvider, SystemManagementProvider>();
-        services.AddScoped<IUserManagementProvider, UserManagementProvider>();
-        services.AddScoped<IInstanceManagementProvider, InstanceManagementProvider>();
+        services.AddSingleton<ISystemManagementProvider, SystemManagementProvider>();
+        services.AddSingleton<IUserManagementProvider, UserManagementProvider>();
+        services.AddSingleton<IInstanceManagementProvider, InstanceManagementProvider>();
 
-        services.AddScoped<IJsLocalStorageProvider, JsLocalStorageProvider>();
+        services.AddSingleton<IJsLocalStorageProvider, JsLocalStorageProvider>();
 
         services.AddSingleton<IDatabaseSetupService, DatabaseSetupService>();
         services.AddSingleton<ILicensesService, LicensesService>();

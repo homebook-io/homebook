@@ -53,16 +53,13 @@
     private NavigationManager NavigationManager { get; set; } = null!;
 
     [Inject]
+    private IStartupService StartupService { get; set; } = null!;
+
+    [Inject]
     private ISetupService SetupService { get; set; } = null!;
 
     [Inject]
     private IAuthenticationService AuthenticationService { get; set; } = null!;
-
-    [Inject]
-    private IInstanceManagementProvider InstanceManagementProvider { get; set; } = null!;
-
-    [Inject]
-    private IJsLocalStorageProvider JsLocalStorageProvider { get; set; } = null!;
 
     private bool _setupServiceInitialized = false;
     private bool _isRedirecting;
@@ -75,38 +72,28 @@
         // initialize the setup service in background
         _ = Task.Run(async () =>
         {
-            await SetupService.InitializeAsync();
-            await WaitForServerAndGetSetupStatusAsync();
+            CancellationToken cancellationToken = CancellationToken.None;
 
-            if (_instanceStatus == InstanceStatus.Running)
-            {
-                // load instance data into cache
-                await LoadInstanceDataAsync();
-            }
+            await SetupService.InitializeAsync(cancellationToken);
+            await WaitForServerAndGetSetupStatusAsync(cancellationToken);
+
+            await StartupService.StartAsync(_instanceStatus!.Value,
+                cancellationToken);
 
             _setupServiceInitialized = true;
-
             StateHasChanged();
         });
     }
 
-    private async Task LoadInstanceDataAsync()
-    {
-        CancellationToken cancellationToken = CancellationToken.None;
-
-        string instanceName = await InstanceManagementProvider.GetInstanceNameAsync(cancellationToken);
-        await JsLocalStorageProvider.SetItemAsync(JsLocalStorageKeys.HomeBookInstanceName, instanceName, cancellationToken);
-    }
-
-    private async Task WaitForServerAndGetSetupStatusAsync()
+    private async Task WaitForServerAndGetSetupStatusAsync(CancellationToken cancellationToken)
     {
         try
         {
-            _instanceStatus = await SetupService.GetInstanceStatusAsync();
+            _instanceStatus = await SetupService.GetInstanceStatusAsync(cancellationToken);
         }
         catch (HttpRequestException err) when (err.Message.ToLowerInvariant().Contains("failed to fetch"))
         {
-            await WaitForServerAndGetSetupStatusAsync();
+            await WaitForServerAndGetSetupStatusAsync(cancellationToken);
         }
         catch (Exception)
         {

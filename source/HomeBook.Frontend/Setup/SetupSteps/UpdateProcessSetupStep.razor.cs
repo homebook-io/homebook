@@ -162,5 +162,9 @@ public partial class UpdateProcessSetupStep : ComponentBase, ISetupStep
         }
     }
 
-    private async Task OnStartHomeBookAsync() => await SetupService.TriggerSetupFinishedAsync();
+    private async Task OnStartHomeBookAsync()
+    {
+        CancellationToken cancellationToken = CancellationToken.None;
+        await SetupService.TriggerSetupFinishedAsync(cancellationToken);
+    }
 }

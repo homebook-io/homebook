@@ -8,7 +8,6 @@ using HomeBook.Backend.Core.DataProvider.Validators;
 using HomeBook.Backend.Core.HashProvider;
 using HomeBook.Backend.Core.Licenses;
 using Homebook.Backend.Core.Setup;
-using Homebook.Backend.Core.Setup.Extensions;
 using Homebook.Backend.Core.Setup.Factories;
 using Homebook.Backend.Core.Setup.Models;
 using Homebook.Backend.Core.Setup.Provider;

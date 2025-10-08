@@ -66,7 +66,6 @@ if (builder.Environment.IsDevelopment())
 
 var app = builder.Build();
 
-// Log application startup - guaranteed to be written to Serilog text file
 Log.Information("HomeBook Backend application starting up - Version: {Version}",
     app.Configuration["Version"] ?? "Unknown");
 
@@ -87,8 +86,6 @@ if (app.Environment.IsDevelopment())
 }
 
 app.UseDefaultFiles();
-// app.UseStaticFiles();
-// app.MapFallbackToFile("index.html"); // <- important for Blazor Routing
 
 #region map endpoints
 
