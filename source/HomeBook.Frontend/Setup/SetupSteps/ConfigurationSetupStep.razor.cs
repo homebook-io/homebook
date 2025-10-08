@@ -1,5 +1,6 @@
 using HomeBook.Client.Models;
 using HomeBook.Frontend.Abstractions.Contracts;
+using HomeBook.Frontend.Core.Models.Configuration;
 using HomeBook.Frontend.Core.Models.Setup;
 using HomeBook.Frontend.Mappings;
 using Microsoft.AspNetCore.Components;
@@ -71,6 +72,7 @@ public partial class ConfigurationSetupStep : ComponentBase, ISetupStep
 
     private async Task LoadAvailableLocalesAsync(CancellationToken cancellationToken)
     {
+        // TODO: move loading locales to service
         GetLocalesResponse? localeResponse = await BackendClient.Platform.Locales.GetAsync(x =>
             {
             },
@@ -96,8 +98,8 @@ public partial class ConfigurationSetupStep : ComponentBase, ISetupStep
         await SetupService.SetStorageValueAsync("HOMEBOOK_CONFIGURATION_NAME",
             _homebookConfiguration.InstanceName,
             cancellationToken);
-        await SetupService.SetStorageValueAsync("HOMEBOOK_CONFIGURATION_DEFAULT_LANG",
-            _homebookConfiguration.InstanceDefaultLang,
+        await SetupService.SetStorageValueAsync("HOMEBOOK_CONFIGURATION_DEFAULT_LOCALE",
+            _homebookConfiguration.InstanceDefaultLocale,
             cancellationToken);
 
         _errorMessage = null;

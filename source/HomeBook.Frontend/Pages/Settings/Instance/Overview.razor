@@ -1,11 +1,14 @@
 @page "/Settings/Instance"
 
+@using HomeBook.Client
 @using HomeBook.Frontend.Abstractions.Contracts
 @using HomeBook.Frontend.Core.Icons
+@using HomeBook.Frontend.Core.Models.Setup
 
 @inject ISnackbar Snackbar
 @inject IInstanceManagementProvider InstanceManagementProvider
 @inject IJsLocalStorageProvider JsLocalStorageProvider
+@inject BackendClient BackendClient
 
 <MudContainer Class="mt-4">
 
@@ -40,6 +43,8 @@
                                           Margin="Margin.Dense"
                                           Variant="Variant.Outlined"
                                           For="@(() => _configurationModel.InstanceName)"
+                                          Required="true"
+                                          Clearable="true"
                                           Immediate="true"/>
                         </UiSettingsItem>
 
@@ -49,11 +54,17 @@
                                         IconHexColor="var(--hb-settings-color-default-language)"
                                         Title="Language"
                                         Caption="Choose your preferred language">
-                            <MudSelect T="string"
+                            <MudSelect @bind-Value="_configurationModel.InstanceDefaultLocale"
+                                       Variant="Variant.Outlined"
                                        Margin="Margin.Dense"
-                                       Variant="Variant.Outlined">
-                                <MudSelectItem T="string">English</MudSelectItem>
-                                <MudSelectItem T="string">Deutsch</MudSelectItem>
+                                       Dense="true"
+                                       For="@(() => _configurationModel.InstanceDefaultLocale)"
+                                       Required="true"
+                                       Clearable="true">
+                                @foreach (LanguageViewModel language in _availableLanguages)
+                                {
+                                    <MudSelectItem Value="language.Key">@language.DisplayName</MudSelectItem>
+                                }
                             </MudSelect>
                         </UiSettingsItem>
 

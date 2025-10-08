@@ -74,6 +74,7 @@
         {
             CancellationToken cancellationToken = CancellationToken.None;
 
+            // TODO: improve loading from instance status and after loading logic (it makes two times the request for availablity)
             await SetupService.InitializeAsync(cancellationToken);
             await WaitForServerAndGetSetupStatusAsync(cancellationToken);
 

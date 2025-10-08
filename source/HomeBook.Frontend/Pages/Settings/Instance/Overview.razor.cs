@@ -1,5 +1,8 @@
-using System.ComponentModel.DataAnnotations;
+using HomeBook.Client.Models;
 using HomeBook.Frontend.Abstractions.Enums;
+using HomeBook.Frontend.Core.Models.Configuration;
+using HomeBook.Frontend.Core.Models.Setup;
+using HomeBook.Frontend.Mappings;
 using Microsoft.AspNetCore.Components;
 using MudBlazor;
 
@@ -10,34 +13,79 @@ public partial class Overview : ComponentBase
     private MudForm _form = new();
     private bool _isValid;
     private bool _isLoading;
-    private InstanceConfigurationModel _configurationModel = new();
-
-    /// <summary>
-    /// Instance configuration model for the form
-    /// </summary>
-    public class InstanceConfigurationModel
-    {
-        [Required(ErrorMessage = "Instance name is required")]
-        [StringLength(255, ErrorMessage = "Instance name cannot exceed 255 characters")]
-        [MinLength(1, ErrorMessage = "Instance name must have at least 1 character")]
-        public string InstanceName { get; set; } = string.Empty;
-    }
+    private readonly HomebookConfigurationViewModel _configurationModel = new();
+    private readonly List<LanguageViewModel> _availableLanguages = [];
 
     protected override async Task OnInitializedAsync()
     {
-        await LoadCurrentInstanceNameAsync();
+        _isLoading = true;
+        StateHasChanged();
+
+        CancellationToken cancellationToken = CancellationToken.None;
+
+        // load needed data
+        await LoadAvailableLocalesAsync(cancellationToken);
+
+        // load current configuration
+        await LoadCurrentInstanceNameAsync(cancellationToken);
+        await LoadCurrentInstanceDefaultLocaleAsync(cancellationToken);
+
+        _isLoading = false;
+        StateHasChanged();
+    }
+
+    private async Task LoadAvailableLocalesAsync(CancellationToken cancellationToken)
+    {
+        try
+        {
+            // TODO: move loading locales to service
+            GetLocalesResponse? localeResponse = await BackendClient.Platform.Locales.GetAsync(x =>
+                {
+                },
+                cancellationToken);
+
+            if (localeResponse is not null)
+            {
+                List<LocaleResponse>? locales = localeResponse.Locales;
+                _availableLanguages.Clear();
+                foreach (LocaleResponse locale in (locales ?? []).OfType<LocaleResponse>())
+                {
+                    _availableLanguages.Add(locale.ToViewModel());
+                }
+            }
+        }
+        catch (Exception ex)
+        {
+            Snackbar.Add($"Error loading instance configuration: {ex.Message}", Severity.Error);
+        }
+    }
+
+    /// <summary>
+    /// Load the current instance locale
+    /// </summary>
+    private async Task LoadCurrentInstanceDefaultLocaleAsync(CancellationToken cancellationToken)
+    {
+        try
+        {
+            // TODO: get default locale from server
+            string defaultLocale = await InstanceManagementProvider.GetInstanceNameAsync(cancellationToken);
+
+            _configurationModel.InstanceDefaultLocale = defaultLocale;
+            StateHasChanged();
+        }
+        catch (Exception ex)
+        {
+            Snackbar.Add($"Error loading instance configuration: {ex.Message}", Severity.Error);
+        }
     }
 
     /// <summary>
     /// Load the current instance name from the server
     /// </summary>
-    private async Task LoadCurrentInstanceNameAsync()
+    private async Task LoadCurrentInstanceNameAsync(CancellationToken cancellationToken)
     {
         try
         {
-            _isLoading = true;
-
-            CancellationToken cancellationToken = CancellationToken.None;
             string instanceName = await InstanceManagementProvider.GetInstanceNameAsync(cancellationToken);
 
             _configurationModel.InstanceName = instanceName;
@@ -46,10 +94,6 @@ public partial class Overview : ComponentBase
         catch (Exception ex)
         {
             Snackbar.Add($"Error loading instance configuration: {ex.Message}", Severity.Error);
-        }
-        finally
-        {
-            _isLoading = false;
         }
     }
 

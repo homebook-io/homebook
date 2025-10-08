@@ -92,10 +92,10 @@ public partial class SetupProcessSetupStep : ComponentBase, ISetupStep
             if (!string.IsNullOrEmpty(homebookConfigurationName))
                 request.HomebookConfigurationName = homebookConfigurationName;
 
-            string? homebookConfigurationDefaultLanguage = await SetupService
-                .GetStorageValueAsync<string>("HOMEBOOK_CONFIGURATION_DEFAULT_LANG", cancellationToken);
-            if (!string.IsNullOrEmpty(homebookConfigurationDefaultLanguage))
-                request.HomebookConfigurationDefaultLanguage = homebookConfigurationDefaultLanguage;
+            string? homebookConfigurationDefaultLocale = await SetupService
+                .GetStorageValueAsync<string>("HOMEBOOK_CONFIGURATION_DEFAULT_LOCALE", cancellationToken);
+            if (!string.IsNullOrEmpty(homebookConfigurationDefaultLocale))
+                request.HomebookConfigurationDefaultLocale = homebookConfigurationDefaultLocale;
 
             string? databaseType = await SetupService
                 .GetStorageValueAsync<string>("DATABASE_TYPE", cancellationToken);

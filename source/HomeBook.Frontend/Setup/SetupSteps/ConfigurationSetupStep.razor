@@ -1,5 +1,6 @@
 @using HomeBook.Client
 @using HomeBook.Frontend.Abstractions.Contracts
+@using HomeBook.Frontend.Core.Models.Setup
 
 @inject ILocalizationProvider Loc
 @inject ISetupService SetupService
@@ -73,15 +74,16 @@
                     </MudItem>
 
                     <MudItem xs="12">
-                        <MudSelect @bind-Value="_homebookConfiguration.InstanceDefaultLang"
+                        <MudSelect @bind-Value="_homebookConfiguration.InstanceDefaultLocale"
                                    Variant="Variant.Outlined"
                                    Label="Default Language for UI"
                                    Margin="Margin.Dense"
                                    Dense="true"
                                    HelperText="Select the default language for the app"
+                                   For="@(() => _homebookConfiguration.InstanceDefaultLocale)"
                                    Required="true"
                                    Clearable="true">
-                            @foreach (var language in _availableLanguages)
+                            @foreach (LanguageViewModel language in _availableLanguages)
                             {
                                 <MudSelectItem Value="language.Key">@language.DisplayName</MudSelectItem>
                             }
