@@ -205,8 +205,8 @@ public class SetupHandlerE2ETests
         configurationDbEntries.Count.ShouldBe(3); // header + 2 entries
         var expected = new string[,]
         {
-            { "HOMEBOOK_INSTANCE_NAME", "Test Homebook" },
-            { "HOMEBOOK_INSTANCE_DEFAULT_LANG", "DE" }
+            { "HOMEBOOK_CONFIGURATION_NAME", "Test Homebook" },
+            { "HOMEBOOK_CONFIGURATION_DEFAULT_LOCALE", "de-DE" }
         };
         var actual = configurationDbEntries.Select(r => (r[1], r[2])).ToList();
         for (int i = 0; i < expected.GetLength(0); i++)

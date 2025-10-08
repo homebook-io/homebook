@@ -93,20 +93,20 @@ open your domain and you should see the HomeBook Setup.
 
 if all environment variables are set, correctly, the setup will be running automatically.
 
-| Variable                         | Description                                                               |
-|----------------------------------|---------------------------------------------------------------------------|
-| `DATABASE_PROVIDER`              | the database provider (one of `POSTGRESQL`,`SQLITE` or `MYSQL`)           |
-| `DATABASE_HOST`                  | the database host (e.g., `my-db.server.com`)                              |
-| `DATABASE_PORT`                  | the database port (e.g., `5432`)                                          |
-| `DATABASE_NAME`                  | the database name (e.g., `homebook`)                                      |
-| `DATABASE_USER`                  | the database user (e.g., `db_user`)                                       |
-| `DATABASE_PASSWORD`              | the database password (e.g., `db_password`)                               |
-| `DATABASE_FILE`                  | the database file path (e.g. for sqlite, `/var/lib/homebook/homebook.db`) |
-| `HOMEBOOK_USER_NAME`             | the admin username (e.g., `admin`)                                        |
-| `HOMEBOOK_USER_PASSWORD`         | the admin password (e.g., `password`)                                     |
-| `HOMEBOOK_ACCEPT_LICENSES`       | no value needed. if added, the licenses will be accepted automatically.   |
-| `HOMEBOOK_INSTANCE_NAME`         | the name of the homebook instance (e.g., `My HomeBook`)                   |
-| `HOMEBOOK_INSTANCE_DEFAULT_LANG` | the default ui language (see languages)                                   |
+| Variable                                 | Description                                                               |
+|------------------------------------------|---------------------------------------------------------------------------|
+| `DATABASE_PROVIDER`                      | the database provider (one of `POSTGRESQL`,`SQLITE` or `MYSQL`)           |
+| `DATABASE_HOST`                          | the database host (e.g., `my-db.server.com`)                              |
+| `DATABASE_PORT`                          | the database port (e.g., `5432`)                                          |
+| `DATABASE_NAME`                          | the database name (e.g., `homebook`)                                      |
+| `DATABASE_USER`                          | the database user (e.g., `db_user`)                                       |
+| `DATABASE_PASSWORD`                      | the database password (e.g., `db_password`)                               |
+| `DATABASE_FILE`                          | the database file path (e.g. for sqlite, `/var/lib/homebook/homebook.db`) |
+| `HOMEBOOK_USER_NAME`                     | the admin username (e.g., `admin`)                                        |
+| `HOMEBOOK_USER_PASSWORD`                 | the admin password (e.g., `password`)                                     |
+| `HOMEBOOK_CONFIGURATION_ACCEPT_LICENSES` | no value needed. if added, the licenses will be accepted automatically.   |
+| `HOMEBOOK_CONFIGURATION_NAME`            | the name of the homebook instance (e.g., `My HomeBook`)                   |
+| `HOMEBOOK_CONFIGURATION_DEFAULT_LOCALE`  | the default ui locale (see languages)                                     |
 
 ### Allowed Password Characters
 
@@ -138,12 +138,12 @@ services:
 
 ### Available Languages
 
-**notice:** use the ENV VALUE in the environment variable `HOMEBOOK_INSTANCE_DEFAULT_LANG`
+**notice:** use the ENV VALUE in the environment variable `HOMEBOOK_CONFIGURATION_DEFAULT_LOCALE`
 
 | Language | ENV VALUE |
 |----------|-----------|
-| English  | EN        |
-| German   | DE        |
+| English  | en-EN     |
+| German   | de-DE     |
 
 ### Translation Process
 

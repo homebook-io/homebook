@@ -119,10 +119,10 @@ public class SetupConfigurationProviderTests
                 EnvironmentVariables.HOMEBOOK_USER_PASSWORD, "adminpass"
             },
             {
-                EnvironmentVariables.HOMEBOOK_ACCEPT_LICENSES, "true"
+                EnvironmentVariables.HOMEBOOK_CONFIGURATION_ACCEPT_LICENSES, "true"
             },
             {
-                EnvironmentVariables.HOMEBOOK_INSTANCE_NAME, "test-instance"
+                EnvironmentVariables.HOMEBOOK_CONFIGURATION_NAME, "test-instance"
             }
         };
 
@@ -186,10 +186,10 @@ public class SetupConfigurationProviderTests
     {
         // Arrange
         // Ensure the environment variable doesn't exist
-        Environment.SetEnvironmentVariable(nameof(EnvironmentVariables.HOMEBOOK_INSTANCE_NAME), null);
+        Environment.SetEnvironmentVariable(nameof(EnvironmentVariables.HOMEBOOK_CONFIGURATION_NAME), null);
 
         // Act
-        var result = _provider.GetValue(EnvironmentVariables.HOMEBOOK_INSTANCE_NAME);
+        var result = _provider.GetValue(EnvironmentVariables.HOMEBOOK_CONFIGURATION_NAME);
 
         // Assert
         result.ShouldBeNull();

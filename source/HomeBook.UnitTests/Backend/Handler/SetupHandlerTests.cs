@@ -325,7 +325,7 @@ public class SetupHandlerTests
             new DependencyLicense("License2", "License-Content")
         };
 
-        _setupConfigurationProvider.GetValue(EnvironmentVariables.HOMEBOOK_ACCEPT_LICENSES).Returns("true");
+        _setupConfigurationProvider.GetValue(EnvironmentVariables.HOMEBOOK_CONFIGURATION_ACCEPT_LICENSES).Returns("true");
         var licenseProvider = Substitute.For<ILicenseProvider>();
         licenseProvider.GetLicensesAsync(Arg.Any<CancellationToken>()).Returns(licenses);
 
@@ -352,7 +352,7 @@ public class SetupHandlerTests
             new DependencyLicense("License2", "License-Content")
         };
 
-        _setupConfigurationProvider.GetValue(EnvironmentVariables.HOMEBOOK_ACCEPT_LICENSES).Returns((string?)null);
+        _setupConfigurationProvider.GetValue(EnvironmentVariables.HOMEBOOK_CONFIGURATION_ACCEPT_LICENSES).Returns((string?)null);
         var licenseProvider = Substitute.For<ILicenseProvider>();
         licenseProvider.GetLicensesAsync(Arg.Any<CancellationToken>()).Returns(licenses);
 
@@ -540,10 +540,10 @@ public class SetupHandlerTests
         _setupConfigurationProvider.GetValue(EnvironmentVariables.DATABASE_NAME).Returns("test-database");
         _setupConfigurationProvider.GetValue(EnvironmentVariables.DATABASE_USER).Returns("test-user");
         _setupConfigurationProvider.GetValue(EnvironmentVariables.DATABASE_PASSWORD).Returns("test-password");
-        _setupConfigurationProvider.GetValue(EnvironmentVariables.HOMEBOOK_INSTANCE_NAME).Returns("test-homebook");
+        _setupConfigurationProvider.GetValue(EnvironmentVariables.HOMEBOOK_CONFIGURATION_NAME).Returns("test-homebook");
         _setupConfigurationProvider.GetValue(EnvironmentVariables.HOMEBOOK_USER_NAME).Returns("user");
         _setupConfigurationProvider.GetValue(EnvironmentVariables.HOMEBOOK_USER_PASSWORD).Returns("s3cr3t");
-        _setupConfigurationProvider.GetValue<bool>(EnvironmentVariables.HOMEBOOK_ACCEPT_LICENSES).Returns(true);
+        _setupConfigurationProvider.GetValue<bool>(EnvironmentVariables.HOMEBOOK_CONFIGURATION_ACCEPT_LICENSES).Returns(true);
 
         // Act
         var actual = SetupHandler.MapConfiguration(_setupConfigurationProvider, startSetupRequest);
@@ -585,10 +585,10 @@ public class SetupHandlerTests
         _setupConfigurationProvider.GetValue(EnvironmentVariables.DATABASE_NAME).Returns((string?)null);
         _setupConfigurationProvider.GetValue(EnvironmentVariables.DATABASE_USER).Returns((string?)null);
         _setupConfigurationProvider.GetValue(EnvironmentVariables.DATABASE_PASSWORD).Returns((string?)null);
-        _setupConfigurationProvider.GetValue(EnvironmentVariables.HOMEBOOK_INSTANCE_NAME).Returns((string?)null);
+        _setupConfigurationProvider.GetValue(EnvironmentVariables.HOMEBOOK_CONFIGURATION_NAME).Returns((string?)null);
         _setupConfigurationProvider.GetValue(EnvironmentVariables.HOMEBOOK_USER_NAME).Returns((string?)null);
         _setupConfigurationProvider.GetValue(EnvironmentVariables.HOMEBOOK_USER_PASSWORD).Returns((string?)null);
-        _setupConfigurationProvider.GetValue<bool>(EnvironmentVariables.HOMEBOOK_ACCEPT_LICENSES)
+        _setupConfigurationProvider.GetValue<bool>(EnvironmentVariables.HOMEBOOK_CONFIGURATION_ACCEPT_LICENSES)
             .Returns((bool)default);
 
         // Act
@@ -631,10 +631,10 @@ public class SetupHandlerTests
         _setupConfigurationProvider.GetValue(EnvironmentVariables.DATABASE_NAME).Returns("test-database");
         _setupConfigurationProvider.GetValue(EnvironmentVariables.DATABASE_USER).Returns("test-user");
         _setupConfigurationProvider.GetValue(EnvironmentVariables.DATABASE_PASSWORD).Returns("test-password");
-        _setupConfigurationProvider.GetValue(EnvironmentVariables.HOMEBOOK_INSTANCE_NAME).Returns("test-homebook");
+        _setupConfigurationProvider.GetValue(EnvironmentVariables.HOMEBOOK_CONFIGURATION_NAME).Returns("test-homebook");
         _setupConfigurationProvider.GetValue(EnvironmentVariables.HOMEBOOK_USER_NAME).Returns("user");
         _setupConfigurationProvider.GetValue(EnvironmentVariables.HOMEBOOK_USER_PASSWORD).Returns("s3cr3t");
-        _setupConfigurationProvider.GetValue<bool>(EnvironmentVariables.HOMEBOOK_ACCEPT_LICENSES).Returns(true);
+        _setupConfigurationProvider.GetValue<bool>(EnvironmentVariables.HOMEBOOK_CONFIGURATION_ACCEPT_LICENSES).Returns(true);
 
         // Act
         var actual = SetupHandler.MapConfiguration(_setupConfigurationProvider, startSetupRequest);
@@ -675,10 +675,10 @@ public class SetupHandlerTests
         _setupConfigurationProvider.GetValue(EnvironmentVariables.DATABASE_NAME).Returns((string?)null);
         _setupConfigurationProvider.GetValue(EnvironmentVariables.DATABASE_USER).Returns((string?)null);
         _setupConfigurationProvider.GetValue(EnvironmentVariables.DATABASE_PASSWORD).Returns((string?)null);
-        _setupConfigurationProvider.GetValue(EnvironmentVariables.HOMEBOOK_INSTANCE_NAME).Returns((string?)null);
+        _setupConfigurationProvider.GetValue(EnvironmentVariables.HOMEBOOK_CONFIGURATION_NAME).Returns((string?)null);
         _setupConfigurationProvider.GetValue(EnvironmentVariables.HOMEBOOK_USER_NAME).Returns((string?)null);
         _setupConfigurationProvider.GetValue(EnvironmentVariables.HOMEBOOK_USER_PASSWORD).Returns((string?)null);
-        _setupConfigurationProvider.GetValue(EnvironmentVariables.HOMEBOOK_ACCEPT_LICENSES)
+        _setupConfigurationProvider.GetValue(EnvironmentVariables.HOMEBOOK_CONFIGURATION_ACCEPT_LICENSES)
             .Returns((string?)null);
 
         // Act
@@ -703,7 +703,7 @@ public class SetupHandlerTests
     {
         // Arrange
         _setupConfigurationProvider
-            .GetValue(EnvironmentVariables.HOMEBOOK_INSTANCE_NAME)
+            .GetValue(EnvironmentVariables.HOMEBOOK_CONFIGURATION_NAME)
             .Returns((string?)null);
 
         // Act
@@ -721,7 +721,7 @@ public class SetupHandlerTests
     {
         // Arrange
         _setupConfigurationProvider
-            .GetValue(EnvironmentVariables.HOMEBOOK_INSTANCE_NAME)
+            .GetValue(EnvironmentVariables.HOMEBOOK_CONFIGURATION_NAME)
             .Returns(string.Empty);
 
         // Act
@@ -739,7 +739,7 @@ public class SetupHandlerTests
     {
         // Arrange
         _setupConfigurationProvider
-            .GetValue(EnvironmentVariables.HOMEBOOK_INSTANCE_NAME)
+            .GetValue(EnvironmentVariables.HOMEBOOK_CONFIGURATION_NAME)
             .Returns("test instance");
 
         // Act
@@ -757,7 +757,7 @@ public class SetupHandlerTests
     {
         // Arrange
         _setupConfigurationProvider
-            .GetValue(EnvironmentVariables.HOMEBOOK_INSTANCE_NAME)
+            .GetValue(EnvironmentVariables.HOMEBOOK_CONFIGURATION_NAME)
             .Throws(new InvalidOperationException("boom"));
 
         // Act

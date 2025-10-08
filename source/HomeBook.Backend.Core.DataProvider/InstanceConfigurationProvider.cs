@@ -10,8 +10,8 @@ public class InstanceConfigurationProvider(
     IConfigurationRepository configurationRepository,
     IValidator<Configuration> configurationValidator) : IInstanceConfigurationProvider
 {
-    private static readonly string HOMEBOOK_INSTANCE_NAME = "HOMEBOOK_INSTANCE_NAME";
-    private static readonly string HOMEBOOK_INSTANCE_DEFAULT_LANG = "HOMEBOOK_INSTANCE_DEFAULT_LANG";
+    private static readonly string HOMEBOOK_CONFIGURATION_NAME = "HOMEBOOK_CONFIGURATION_NAME";
+    private static readonly string HOMEBOOK_CONFIGURATION_DEFAULT_LOCALE = "HOMEBOOK_CONFIGURATION_DEFAULT_LOCALE";
 
     /// <inheritdoc />
     public async Task SetHomeBookInstanceNameAsync(string instanceName,
@@ -19,7 +19,7 @@ public class InstanceConfigurationProvider(
     {
         Configuration config = new()
         {
-            Key = HOMEBOOK_INSTANCE_NAME,
+            Key = HOMEBOOK_CONFIGURATION_NAME,
             Value = instanceName
         };
         await configurationValidator.ValidateAndThrowAsync<Configuration>(config,
@@ -32,7 +32,7 @@ public class InstanceConfigurationProvider(
     public async Task<string> GetHomeBookInstanceNameAsync(CancellationToken cancellationToken = default)
     {
         Configuration? instanceName = await configurationRepository
-            .GetConfigurationByKeyAsync(HOMEBOOK_INSTANCE_NAME,
+            .GetConfigurationByKeyAsync(HOMEBOOK_CONFIGURATION_NAME,
                 cancellationToken);
         return instanceName?.Value ?? string.Empty;
     }
@@ -42,7 +42,7 @@ public class InstanceConfigurationProvider(
     {
         Configuration config = new()
         {
-            Key = HOMEBOOK_INSTANCE_DEFAULT_LANG,
+            Key = HOMEBOOK_CONFIGURATION_DEFAULT_LOCALE,
             Value = defaultLocale
         };
         await configurationValidator.ValidateAndThrowAsync<Configuration>(config,
@@ -54,7 +54,7 @@ public class InstanceConfigurationProvider(
     public async Task<string?> GetHomeBookInstanceDefaultLocaleAsync(CancellationToken cancellationToken = default)
     {
         Configuration? defaultLanguage = await configurationRepository
-            .GetConfigurationByKeyAsync(HOMEBOOK_INSTANCE_DEFAULT_LANG,
+            .GetConfigurationByKeyAsync(HOMEBOOK_CONFIGURATION_DEFAULT_LOCALE,
                 cancellationToken);
         return defaultLanguage?.Value ?? null;
     }

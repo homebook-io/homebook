@@ -72,7 +72,7 @@ public class SetupHandler
         try
         {
             string? licensesAreAcceptedValue =
-                setupConfigurationProvider.GetValue(EnvironmentVariables.HOMEBOOK_ACCEPT_LICENSES);
+                setupConfigurationProvider.GetValue(EnvironmentVariables.HOMEBOOK_CONFIGURATION_ACCEPT_LICENSES);
             DependencyLicense[] licenses = await licenseProvider.GetLicensesAsync(cancellationToken);
             GetLicensesResponse response = new(
                 (licensesAreAcceptedValue is not null),
@@ -216,7 +216,7 @@ public class SetupHandler
         try
         {
             string? homebookInstanceName = setupConfigurationProvider
-                .GetValue(EnvironmentVariables.HOMEBOOK_INSTANCE_NAME);
+                .GetValue(EnvironmentVariables.HOMEBOOK_CONFIGURATION_NAME);
 
             if (!string.IsNullOrEmpty(homebookInstanceName))
                 return TypedResults.Ok();
@@ -340,11 +340,11 @@ public class SetupHandler
             DatabaseType = databaseType.ToUpperInvariant(),
 
             HomebookConfigurationName = request.HomebookConfigurationName
-                                        ?? scp.GetValue(EnvironmentVariables.HOMEBOOK_INSTANCE_NAME)
+                                        ?? scp.GetValue(EnvironmentVariables.HOMEBOOK_CONFIGURATION_NAME)
                                         ?? defaultConfiguration.HomebookConfigurationName,
 
             HomebookConfigurationDefaultLocale = request.HomebookConfigurationDefaultLocale
-                                                   ?? scp.GetValue(EnvironmentVariables.HOMEBOOK_INSTANCE_DEFAULT_LANG)
+                                                   ?? scp.GetValue(EnvironmentVariables.HOMEBOOK_CONFIGURATION_DEFAULT_LOCALE)
                                                    ?? defaultConfiguration.HomebookConfigurationDefaultLocale,
 
             HomebookUserName = request.HomebookUserName
@@ -356,7 +356,7 @@ public class SetupHandler
                                    ?? defaultConfiguration.HomebookUserPassword,
 
             HomebookAcceptLicenses = request.LicensesAccepted ?? false
-                || scp.GetValue(EnvironmentVariables.HOMEBOOK_ACCEPT_LICENSES) is not null
+                || scp.GetValue(EnvironmentVariables.HOMEBOOK_CONFIGURATION_ACCEPT_LICENSES) is not null
                 || defaultConfiguration.HomebookAcceptLicenses
         };
 
