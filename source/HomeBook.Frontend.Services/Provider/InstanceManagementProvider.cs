@@ -46,6 +46,25 @@ public class InstanceManagementProvider(
             cancellationToken);
     }
 
+    public async Task UpdateDefaultLocaleAsync(string locale, CancellationToken cancellationToken = default)
+    {
+        await authenticationService.IsAdminOrThrowAsync(cancellationToken);
+
+        if (string.IsNullOrEmpty(locale))
+            throw new ArgumentException("Locale cannot be null or empty.", nameof(locale));
+
+        string? token = await authenticationService.GetTokenAsync(cancellationToken);
+        await backendClient.System.Instance.DefaultLocale.PutAsync(new UpdateInstanceDefaultLocaleRequest()
+            {
+                Locale = locale
+            },
+            x =>
+            {
+                x.Headers.Add("Authorization", $"Bearer {token}");
+            },
+            cancellationToken);
+    }
+
     private async Task LoadInstanceInfoAsync(CancellationToken cancellationToken)
     {
         string? instanceName = await backendClient.Info.Name.GetAsync(x =>

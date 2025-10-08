@@ -32,6 +32,7 @@ public static class ServiceCollectionExtensions
     public static IServiceCollection AddBackendClient(this IServiceCollection services,
         IConfiguration configuration)
     {
+        // TODO: Replace with own auth provider which implements own jwt token if user is logged in
         services.AddSingleton<IAuthenticationProvider, AnonymousAuthenticationProvider>();
 
         services.AddSingleton<IRequestAdapter>(sp =>

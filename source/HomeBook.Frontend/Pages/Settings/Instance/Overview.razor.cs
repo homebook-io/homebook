@@ -99,7 +99,7 @@ public partial class Overview : ComponentBase
     /// <summary>
     /// Update the instance name on the server
     /// </summary>
-    private async Task UpdateInstanceNameAsync()
+    private async Task UpdateInstanceConfigurationAsync()
     {
         if (!_isValid)
             return;
@@ -113,14 +113,8 @@ public partial class Overview : ComponentBase
             if (!_form.IsValid)
                 return;
 
-            string instanceName = _configurationModel.InstanceName.Trim();
-            CancellationToken cancellationToken = CancellationToken.None;
-
-            await InstanceManagementProvider.UpdateInstanceNameAsync(instanceName, cancellationToken);
-
-            await JsLocalStorageProvider.SetItemAsync(JsLocalStorageKeys.HomeBookInstanceName,
-                instanceName,
-                cancellationToken);
+            await UpdateInstanceNameAsync(_configurationModel.InstanceName);
+            await UpdateInstanceDefaultLocaleAsync(_configurationModel.InstanceDefaultLocale);
 
             Snackbar.Add("Instance name updated successfully!", Severity.Success);
         }
@@ -132,5 +126,29 @@ public partial class Overview : ComponentBase
         {
             _isLoading = false;
         }
+    }
+
+    private async Task UpdateInstanceDefaultLocaleAsync(string defaultLocale)
+    {
+        string defaultLocaleValue = defaultLocale.Trim();
+        CancellationToken cancellationToken = CancellationToken.None;
+
+        await InstanceManagementProvider.UpdateDefaultLocaleAsync(defaultLocaleValue, cancellationToken);
+
+        await JsLocalStorageProvider.SetItemAsync(JsLocalStorageKeys.HomeBookDefaultLocale,
+            defaultLocaleValue,
+            cancellationToken);
+    }
+
+    private async Task UpdateInstanceNameAsync(string instanceName)
+    {
+        string instanceNameValue = instanceName.Trim();
+        CancellationToken cancellationToken = CancellationToken.None;
+
+        await InstanceManagementProvider.UpdateInstanceNameAsync(instanceNameValue, cancellationToken);
+
+        await JsLocalStorageProvider.SetItemAsync(JsLocalStorageKeys.HomeBookInstanceName,
+            instanceNameValue,
+            cancellationToken);
     }
 }
