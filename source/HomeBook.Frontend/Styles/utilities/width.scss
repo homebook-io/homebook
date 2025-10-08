@@ -1,0 +1,51 @@
+// Width utilities based on Bootstrap
+// Generate width classes for all breakpoints
+
+// Base width utilities (no breakpoint prefix)
+.w-0 { width: 0% !important; }
+.w-25 { width: 25% !important; }
+.w-50 { width: 50% !important; }
+.w-75 { width: 75% !important; }
+.w-100 { width: 100% !important; }
+.w-auto { width: auto !important; }
+
+// Mixin to generate responsive width utilities
+@mixin generate-width-utilities($prefix: '') {
+  $class-prefix: if($prefix == '', '', '#{$prefix}-');
+
+  .w-#{$class-prefix}0 { width: 0% !important; }
+  .w-#{$class-prefix}25 { width: 25% !important; }
+  .w-#{$class-prefix}50 { width: 50% !important; }
+  .w-#{$class-prefix}75 { width: 75% !important; }
+  .w-#{$class-prefix}100 { width: 100% !important; }
+  .w-#{$class-prefix}auto { width: auto !important; }
+}
+
+// Generate responsive utilities for each breakpoint
+@media (min-width: $breakpoint-sm) {
+  @include generate-width-utilities('sm');
+}
+
+@media (min-width: $breakpoint-md) {
+  @include generate-width-utilities('md');
+}
+
+@media (min-width: $breakpoint-lg) {
+  @include generate-width-utilities('lg');
+}
+
+@media (min-width: $breakpoint-xl) {
+  @include generate-width-utilities('xl');
+}
+
+@media (min-width: $breakpoint-xxl) {
+  @include generate-width-utilities('xxl');
+}
+
+@media (min-width: $breakpoint-xxxl) {
+  @include generate-width-utilities('xxxl');
+}
+
+@media (min-width: $breakpoint-xxxxl) {
+  @include generate-width-utilities('xxxxl');
+}

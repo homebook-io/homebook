@@ -1,0 +1,22 @@
+.ui-settings-item {
+
+    .ui-settings-item-icon {
+
+    }
+
+    .ui-settings-item-title {
+
+    }
+
+    .ui-settings-item-caption {
+
+    }
+
+    .ui-settings-item-content {
+        width: 100%;
+
+        @media (min-width: $breakpoint-md) {
+            width: 240px;
+        }
+    }
+}

@@ -1,10 +1,8 @@
 using HomeBook.Frontend.Abstractions.Contracts;
 using HomeBook.Frontend.ModuleCore;
-using HomeBook.Frontend.Modules.Abstractions;
 using HomeBook.Frontend.Properties;
 using HomeBook.Frontend.Provider;
 using HomeBook.Frontend.Services;
-using HomeBook.Frontend.Services.Provider;
 using HomeBook.Frontend.Setup;
 using Microsoft.AspNetCore.Components.Authorization;
 using Microsoft.Extensions.Localization;

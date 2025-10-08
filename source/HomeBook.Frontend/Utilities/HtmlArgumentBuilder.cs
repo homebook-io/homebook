@@ -2,7 +2,7 @@ using System.Text;
 
 namespace HomeBook.Frontend.Utilities;
 
-public struct CssBuilder
+public struct HtmlArgumentBuilder
 {
     private StringBuilder? _stringBuilder;
 
@@ -13,8 +13,8 @@ public struct CssBuilder
     /// Call <see cref="Build"/> to return the completed CSS classes as a string.
     /// </remarks>
     /// <param name="value">The initial CSS class value.</param>
-    /// <returns>The <see cref="CssBuilder"/> instance.</returns>
-    public static CssBuilder Default(string value) => new(value);
+    /// <returns>The <see cref="HtmlArgumentBuilder"/> instance.</returns>
+    public static HtmlArgumentBuilder Default(string value) => new(value);
 
     /// <summary>
     /// Creates an empty instance of CssBuilder.
@@ -22,8 +22,8 @@ public struct CssBuilder
     /// <remarks>
     /// Call <see cref="Build"/> to return the completed CSS classes as a string.
     /// </remarks>
-    /// <returns>The <see cref="CssBuilder"/> instance.</returns>
-    public static CssBuilder Empty() => new();
+    /// <returns>The <see cref="HtmlArgumentBuilder"/> instance.</returns>
+    public static HtmlArgumentBuilder Empty() => new();
 
     /// <summary>
     /// Creates an empty instance of CssBuilder.
@@ -31,8 +31,8 @@ public struct CssBuilder
     /// <remarks>
     /// Call <see cref="Build"/> to return the completed CSS classes as a string.
     /// </remarks>
-    /// <returns>The <see cref="CssBuilder"/> instance.</returns>
-    public CssBuilder()
+    /// <returns>The <see cref="HtmlArgumentBuilder"/> instance.</returns>
+    public HtmlArgumentBuilder()
     {
         _stringBuilder = EnsureCreated();
     }
@@ -44,8 +44,8 @@ public struct CssBuilder
     /// Call <see cref="Build"/> to return the completed CSS classes as a string.
     /// </remarks>
     /// <param name="value">The initial CSS class value.</param>
-    /// <returns>The <see cref="CssBuilder"/> instance.</returns>
-    public CssBuilder(string? value) : this()
+    /// <returns>The <see cref="HtmlArgumentBuilder"/> instance.</returns>
+    public HtmlArgumentBuilder(string? value) : this()
     {
         if (value is not null)
         {
@@ -57,8 +57,8 @@ public struct CssBuilder
     /// Adds a raw string to the builder that will be concatenated with the next class or value added to the builder.
     /// </summary>
     /// <param name="value">The string value to add.</param>
-    /// <returns>The <see cref="CssBuilder"/> instance.</returns>
-    public CssBuilder AddValue(string? value)
+    /// <returns>The <see cref="HtmlArgumentBuilder"/> instance.</returns>
+    public HtmlArgumentBuilder AddValue(string? value)
     {
         if (value is not null)
         {
@@ -72,8 +72,8 @@ public struct CssBuilder
     /// Adds a CSS class to the builder with a space separator.
     /// </summary>
     /// <param name="value">The CSS class to add.</param>
-    /// <returns>The <see cref="CssBuilder"/> instance.</returns>
-    public CssBuilder AddClass(string? value)
+    /// <returns>The <see cref="HtmlArgumentBuilder"/> instance.</returns>
+    public HtmlArgumentBuilder AddClass(string? value)
     {
         AddValue(" ");
         AddValue(value);
@@ -85,40 +85,40 @@ public struct CssBuilder
     /// </summary>
     /// <param name="value">The CSS class to conditionally add.</param>
     /// <param name="when">The nullable condition in which the CSS class is added.</param>
-    /// <returns>The <see cref="CssBuilder"/> instance.</returns>
-    public CssBuilder AddClass(string? value, bool when) => when ? AddClass(value) : this;
+    /// <returns>The <see cref="HtmlArgumentBuilder"/> instance.</returns>
+    public HtmlArgumentBuilder AddClass(string? value, bool when) => when ? AddClass(value) : this;
 
     /// <summary>
     /// Adds a conditional CSS class to the builder with space separator.
     /// </summary>
     /// <param name="value">CSS class to conditionally add.</param>
     /// <param name="when">Nullable condition in which the CSS class is added.</param>
-    /// <returns>The <see cref="CssBuilder"/> instance.</returns>
-    public CssBuilder AddClass(string? value, bool? when) => when == true ? AddClass(value) : this;
+    /// <returns>The <see cref="HtmlArgumentBuilder"/> instance.</returns>
+    public HtmlArgumentBuilder AddClass(string? value, bool? when) => when == true ? AddClass(value) : this;
 
     /// <summary>
     /// Adds a conditional CSS class to the builder with a space separator.
     /// </summary>
     /// <param name="value">The CSS class to conditionally add.</param>
     /// <param name="when">The condition in which the CSS class is added.</param>
-    /// <returns>The <see cref="CssBuilder"/> instance.</returns>
-    public CssBuilder AddClass(string? value, Func<bool>? when) => AddClass(value, when is not null && when());
+    /// <returns>The <see cref="HtmlArgumentBuilder"/> instance.</returns>
+    public HtmlArgumentBuilder AddClass(string? value, Func<bool>? when) => AddClass(value, when is not null && when());
 
     /// <summary>
     /// Adds a conditional CSS class to the builder with a space separator.
     /// </summary>
     /// <param name="value">The function that returns a CSS class to conditionally add.</param>
     /// <param name="when">The condition in which the CSS class is added.</param>
-    /// <returns>The <see cref="CssBuilder"/> instance.</returns>
-    public CssBuilder AddClass(Func<string?> value, bool when = true) => when ? AddClass(value()) : this;
+    /// <returns>The <see cref="HtmlArgumentBuilder"/> instance.</returns>
+    public HtmlArgumentBuilder AddClass(Func<string?> value, bool when = true) => when ? AddClass(value()) : this;
 
     /// <summary>
     /// Adds a conditional CSS class to the builder with a space separator.
     /// </summary>
     /// <param name="value">The function that returns a CSS class to conditionally add.</param>
     /// <param name="when">The condition in which the CSS class is added.</param>
-    /// <returns>The <see cref="CssBuilder"/> instance.</returns>
-    public CssBuilder AddClass(Func<string?> value, Func<bool>? when = null) =>
+    /// <returns>The <see cref="HtmlArgumentBuilder"/> instance.</returns>
+    public HtmlArgumentBuilder AddClass(Func<string?> value, Func<bool>? when = null) =>
         AddClass(value, when is not null && when());
 
     /// <summary>
@@ -126,16 +126,16 @@ public struct CssBuilder
     /// </summary>
     /// <param name="builder">The CssBuilder to conditionally add.</param>
     /// <param name="when">The condition in which the CssBuilder is added.</param>
-    /// <returns>The <see cref="CssBuilder"/> instance.</returns>
-    public CssBuilder AddClass(CssBuilder builder, bool when = true) => when ? AddClass(builder.Build()) : this;
+    /// <returns>The <see cref="HtmlArgumentBuilder"/> instance.</returns>
+    public HtmlArgumentBuilder AddClass(HtmlArgumentBuilder builder, bool when = true) => when ? AddClass(builder.Build()) : this;
 
     /// <summary>
     /// Adds a conditional CSS class to the builder with a space separator.
     /// </summary>
     /// <param name="builder">The CssBuilder to conditionally add.</param>
     /// <param name="when">The condition in which the CSS class is added.</param>
-    /// <returns>The <see cref="CssBuilder"/> instance.</returns>
-    public CssBuilder AddClass(CssBuilder builder, Func<bool>? when = null) =>
+    /// <returns>The <see cref="HtmlArgumentBuilder"/> instance.</returns>
+    public HtmlArgumentBuilder AddClass(HtmlArgumentBuilder builder, Func<bool>? when = null) =>
         AddClass(builder, when is not null && when());
 
     /// <summary>
@@ -143,8 +143,8 @@ public struct CssBuilder
     /// This is a null-safe operation.
     /// </summary>
     /// <param name="additionalAttributes">Additional attribute splat parameters.</param>
-    /// <returns>The <see cref="CssBuilder"/> instance.</returns>
-    public CssBuilder AddClassFromAttributes(IReadOnlyDictionary<string, object>? additionalAttributes)
+    /// <returns>The <see cref="HtmlArgumentBuilder"/> instance.</returns>
+    public HtmlArgumentBuilder AddClassFromAttributes(IReadOnlyDictionary<string, object>? additionalAttributes)
     {
         return additionalAttributes is null
             ? this

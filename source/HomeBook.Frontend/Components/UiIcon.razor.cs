@@ -7,7 +7,7 @@ namespace HomeBook.Frontend.Components;
 public partial class UiIcon : ComponentBase
 {
     protected string ContainerCss =>
-        new CssBuilder("ui-icon")
+        new HtmlArgumentBuilder("ui-icon")
             .AddClass("ui-icon-filled", IconStyle == UiIconStyle.Filled)
             .AddClass("ui-icon-outlined", IconStyle == UiIconStyle.Outlined)
             .AddClass("ui-icon-plain", IconStyle == UiIconStyle.Plain)
@@ -15,7 +15,7 @@ public partial class UiIcon : ComponentBase
             .Build();
 
     protected string IconCss =>
-        new CssBuilder("ui-icon-el")
+        new HtmlArgumentBuilder("ui-icon-el")
 
             .AddClass("ui-icon-filled",
                 IconStyle == UiIconStyle.Filled)
@@ -41,7 +41,7 @@ public partial class UiIcon : ComponentBase
             .Build();
 
     protected string Style =>
-        new CssBuilder("")
+        new HtmlArgumentBuilder("")
 
             /* UiIconStyle == Filled */
             .AddClass($"background-color: {ColorValue};",

@@ -42,6 +42,10 @@
             <Generator>ResXFileCodeGenerator</Generator>
             <LastGenOutput>LocalizationStrings.Designer.cs</LastGenOutput>
         </EmbeddedResource>
+        <EmbeddedResource Update="Properties\LocalizationStrings.fr-fr.resx">
+          <Generator>ResXFileCodeGenerator</Generator>
+          <LastGenOutput>LocalizationStrings.fr-fr.Designer.cs</LastGenOutput>
+        </EmbeddedResource>
     </ItemGroup>
 
     <ItemGroup>
@@ -49,6 +53,11 @@
             <DesignTime>True</DesignTime>
             <AutoGen>True</AutoGen>
             <DependentUpon>LocalizationStrings.resx</DependentUpon>
+        </Compile>
+        <Compile Update="Properties\LocalizationStrings.fr-fr.Designer.cs">
+          <DesignTime>True</DesignTime>
+          <AutoGen>True</AutoGen>
+          <DependentUpon>LocalizationStrings.fr-fr.resx</DependentUpon>
         </Compile>
     </ItemGroup>
 
