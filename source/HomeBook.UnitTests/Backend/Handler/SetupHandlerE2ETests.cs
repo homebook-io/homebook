@@ -75,7 +75,7 @@ public class SetupHandlerE2ETests
             "testuser",
             "s3cr3t-p1ssw0rd",
             "Test Homebook",
-            "DE",
+            "de-DE",
             "~/homebook-test.db");
 
         // Create initial configuration with JSON content that can be updated at runtime
