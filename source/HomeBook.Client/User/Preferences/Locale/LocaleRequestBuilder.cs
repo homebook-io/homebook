@@ -36,20 +36,20 @@ namespace HomeBook.Client.User.Preferences.Locale
         /// <summary>
         /// returns the user preference for localeHTTP 200: User preference was foundHTTP 401: User is not authorizedHTTP 500: Unknown error while getting preference
         /// </summary>
-        /// <returns>A <see cref="Stream"/></returns>
+        /// <returns>A <see cref="global::HomeBook.Client.Models.GetUserPreferenceLocaleResponse"/></returns>
         /// <param name="cancellationToken">Cancellation token to use when cancelling requests</param>
         /// <param name="requestConfiguration">Configuration for the request such as headers, query parameters, and middleware options.</param>
 #if NETSTANDARD2_1_OR_GREATER || NETCOREAPP3_1_OR_GREATER
 #nullable enable
-        public async Task<Stream?> GetAsync(Action<RequestConfiguration<DefaultQueryParameters>>? requestConfiguration = default, CancellationToken cancellationToken = default)
+        public async Task<global::HomeBook.Client.Models.GetUserPreferenceLocaleResponse?> GetAsync(Action<RequestConfiguration<DefaultQueryParameters>>? requestConfiguration = default, CancellationToken cancellationToken = default)
         {
 #nullable restore
 #else
-        public async Task<Stream> GetAsync(Action<RequestConfiguration<DefaultQueryParameters>> requestConfiguration = default, CancellationToken cancellationToken = default)
+        public async Task<global::HomeBook.Client.Models.GetUserPreferenceLocaleResponse> GetAsync(Action<RequestConfiguration<DefaultQueryParameters>> requestConfiguration = default, CancellationToken cancellationToken = default)
         {
 #endif
             var requestInfo = ToGetRequestInformation(requestConfiguration);
-            return await RequestAdapter.SendPrimitiveAsync<Stream>(requestInfo, default, cancellationToken).ConfigureAwait(false);
+            return await RequestAdapter.SendAsync<global::HomeBook.Client.Models.GetUserPreferenceLocaleResponse>(requestInfo, global::HomeBook.Client.Models.GetUserPreferenceLocaleResponse.CreateFromDiscriminatorValue, default, cancellationToken).ConfigureAwait(false);
         }
         /// <summary>
         /// updates the user preference for localeHTTP 200: User preference was updatedHTTP 401: User is not authorizedHTTP 500: Unknown error while updating preference

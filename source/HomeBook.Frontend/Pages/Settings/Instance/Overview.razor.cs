@@ -135,7 +135,7 @@ public partial class Overview : ComponentBase
 
         await InstanceManagementProvider.UpdateDefaultLocaleAsync(defaultLocaleValue, cancellationToken);
 
-        await JsLocalStorageProvider.SetItemAsync(JsLocalStorageKeys.HomeBookDefaultLocale,
+        await JsLocalStorageProvider.SetItemAsync(JsLocalStorageKeys.HomeBookInstanceDefaultLocale,
             defaultLocaleValue,
             cancellationToken);
     }

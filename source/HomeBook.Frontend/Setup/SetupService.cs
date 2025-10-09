@@ -21,18 +21,18 @@ public class SetupService(BackendClient backendClient) : ISetupService
     {
         List<ISetupStep> setupSteps = [];
 
-        InstanceStatus? instanceStatus = await GetInstanceStatusAsync(cancellationToken);
+        AppStatus? instanceStatus = await GetInstanceStatusAsync(cancellationToken);
 
         // homebook is running, no setup or update required
-        if (instanceStatus == InstanceStatus.Running)
+        if (instanceStatus == AppStatus.Running)
             return;
 
         // setup is already running, cannot be started again
-        if (instanceStatus == InstanceStatus.ErrorSetupRunning)
+        if (instanceStatus == AppStatus.ErrorSetupRunning)
             return;
 
         // ONLY ON FIRST SETUP
-        if (instanceStatus == InstanceStatus.SetupRequired)
+        if (instanceStatus == AppStatus.SetupRequired)
         {
             setupSteps.Add(new BackendConnectionSetupStep());
             setupSteps.Add(new LicenseAgreementSetupStep());
@@ -43,7 +43,7 @@ public class SetupService(BackendClient backendClient) : ISetupService
         }
 
         // ONLY ON UPDATE
-        if (instanceStatus == InstanceStatus.UpdateRequired)
+        if (instanceStatus == AppStatus.UpdateRequired)
         {
             setupSteps.Add(new BackendConnectionSetupStep());
             setupSteps.Add(new UpdateProcessSetupStep());
@@ -89,7 +89,7 @@ public class SetupService(BackendClient backendClient) : ISetupService
         return (int)(status ?? HttpStatusCode.InternalServerError);
     }
 
-    public async Task<InstanceStatus?> GetInstanceStatusAsync(CancellationToken cancellationToken)
+    public async Task<AppStatus?> GetInstanceStatusAsync(CancellationToken cancellationToken)
     {
         try
         {
@@ -98,13 +98,13 @@ public class SetupService(BackendClient backendClient) : ISetupService
             return status switch
             {
                 // setup can be started
-                HttpStatusCode.OK => InstanceStatus.SetupRequired,
+                HttpStatusCode.OK => AppStatus.SetupRequired,
                 // setup is done, but an update is required
-                HttpStatusCode.Created => InstanceStatus.UpdateRequired,
+                HttpStatusCode.Created => AppStatus.UpdateRequired,
                 // setup is finished and no update is required => Homebook is ready to use
-                HttpStatusCode.NoContent => InstanceStatus.Running,
+                HttpStatusCode.NoContent => AppStatus.Running,
                 // setup is not available (already running)
-                HttpStatusCode.Conflict => InstanceStatus.ErrorSetupRunning,
+                HttpStatusCode.Conflict => AppStatus.ErrorSetupRunning,
                 _ => null // unknown error
             };
         }

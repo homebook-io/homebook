@@ -4,17 +4,18 @@
         <TargetFramework>net9.0</TargetFramework>
         <Nullable>enable</Nullable>
         <ImplicitUsings>enable</ImplicitUsings>
-        <NeutralLanguage>en-US</NeutralLanguage>
+        <NeutralLanguage>en-EN</NeutralLanguage>
+        <BlazorWebAssemblyLoadAllGlobalizationData>true</BlazorWebAssemblyLoadAllGlobalizationData>
     </PropertyGroup>
 
     <ItemGroup>
-        <PackageReference Include="AspNetCore.SassCompiler" Version="1.93.2" />
-        <PackageReference Include="Microsoft.AspNetCore.Components.WebAssembly" Version="9.0.9" />
-        <PackageReference Include="Microsoft.AspNetCore.Components.WebAssembly.Authentication" Version="9.0.9" />
-        <PackageReference Include="Microsoft.AspNetCore.Components.WebAssembly.DevServer" Version="9.0.9" PrivateAssets="all" />
-        <PackageReference Include="Microsoft.AspNetCore.Components.Authorization" Version="9.0.9" />
-        <PackageReference Include="Microsoft.AspNetCore.Localization" Version="2.3.0" />
-        <PackageReference Include="MudBlazor" Version="8.13.0" />
+        <PackageReference Include="AspNetCore.SassCompiler" Version="1.93.2"/>
+        <PackageReference Include="Microsoft.AspNetCore.Components.WebAssembly" Version="9.0.9"/>
+        <PackageReference Include="Microsoft.AspNetCore.Components.WebAssembly.Authentication" Version="9.0.9"/>
+        <PackageReference Include="Microsoft.AspNetCore.Components.WebAssembly.DevServer" Version="9.0.9" PrivateAssets="all"/>
+        <PackageReference Include="Microsoft.AspNetCore.Components.Authorization" Version="9.0.9"/>
+        <PackageReference Include="Microsoft.AspNetCore.Localization" Version="2.3.0"/>
+        <PackageReference Include="MudBlazor" Version="8.13.0"/>
     </ItemGroup>
 
     <ItemGroup>
@@ -27,9 +28,9 @@
     </ItemGroup>
 
     <ItemGroup>
-        <ProjectReference Include="..\HomeBook.Frontend.Core\HomeBook.Frontend.Core.csproj" />
-        <ProjectReference Include="..\HomeBook.Frontend.Module.Finances\HomeBook.Frontend.Module.Finances.csproj" />
-        <ProjectReference Include="..\HomeBook.Frontend.Module.PlatformInfo\HomeBook.Frontend.Module.PlatformInfo.csproj" />
+        <ProjectReference Include="..\HomeBook.Frontend.Core\HomeBook.Frontend.Core.csproj"/>
+        <ProjectReference Include="..\HomeBook.Frontend.Module.Finances\HomeBook.Frontend.Module.Finances.csproj"/>
+        <ProjectReference Include="..\HomeBook.Frontend.Module.PlatformInfo\HomeBook.Frontend.Module.PlatformInfo.csproj"/>
         <ProjectReference Include="..\HomeBook.Frontend.Services\HomeBook.Frontend.Services.csproj"/>
     </ItemGroup>
 
@@ -39,25 +40,16 @@
 
     <ItemGroup>
         <EmbeddedResource Update="Properties\LocalizationStrings.resx">
-            <Generator>ResXFileCodeGenerator</Generator>
+            <Generator>PublicResXFileCodeGenerator</Generator>
             <LastGenOutput>LocalizationStrings.Designer.cs</LastGenOutput>
-        </EmbeddedResource>
-        <EmbeddedResource Update="Properties\LocalizationStrings.fr-fr.resx">
-          <Generator>ResXFileCodeGenerator</Generator>
-          <LastGenOutput>LocalizationStrings.fr-fr.Designer.cs</LastGenOutput>
         </EmbeddedResource>
     </ItemGroup>
 
     <ItemGroup>
-        <Compile Update="Properties\LocalizationStrings.Designer.cs">
+        <Compile Update="Properties\Resources.Designer.cs">
             <DesignTime>True</DesignTime>
             <AutoGen>True</AutoGen>
             <DependentUpon>LocalizationStrings.resx</DependentUpon>
-        </Compile>
-        <Compile Update="Properties\LocalizationStrings.fr-fr.Designer.cs">
-          <DesignTime>True</DesignTime>
-          <AutoGen>True</AutoGen>
-          <DependentUpon>LocalizationStrings.fr-fr.resx</DependentUpon>
         </Compile>
     </ItemGroup>
 

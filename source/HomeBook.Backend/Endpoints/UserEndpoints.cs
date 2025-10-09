@@ -1,5 +1,6 @@
 using HomeBook.Backend.Handler;
 using HomeBook.Backend.OpenApi;
+using HomeBook.Backend.Responses;
 
 namespace HomeBook.Backend.Endpoints;
 
@@ -24,7 +25,7 @@ public static class UserEndpoints
             .WithOpenApi(operation => new(operation)
             {
             })
-            .Produces(StatusCodes.Status200OK)
+            .Produces<GetUserPreferenceLocaleResponse>(StatusCodes.Status200OK)
             .Produces(StatusCodes.Status401Unauthorized)
             .Produces<string>(StatusCodes.Status500InternalServerError);
 

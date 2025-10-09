@@ -17,6 +17,7 @@
     <ItemGroup>
       <ProjectReference Include="..\HomeBook.Client\HomeBook.Client.csproj" />
       <ProjectReference Include="..\HomeBook.Frontend.Abstractions\HomeBook.Frontend.Abstractions.csproj" />
+      <ProjectReference Include="..\HomeBook.Frontend.Core\HomeBook.Frontend.Core.csproj" />
     </ItemGroup>
 
 </Project>

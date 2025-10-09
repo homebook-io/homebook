@@ -44,7 +44,7 @@ public interface ISetupService
     /// </summary>
     /// <param name="cancellationToken"></param>
     /// <returns></returns>
-    Task<InstanceStatus?> GetInstanceStatusAsync(CancellationToken cancellationToken);
+    Task<AppStatus?> GetInstanceStatusAsync(CancellationToken cancellationToken);
 
     /// <summary>
     /// set the status of the current step.

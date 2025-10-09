@@ -1,11 +1,13 @@
 ﻿@using HomeBook.Frontend.Abstractions.Contracts
 @using HomeBook.Frontend.Abstractions.Enums
 @using HomeBook.Frontend.Core.Icons
+@using HomeBook.Frontend.Properties
 @using HomeBook.Frontend.Themes
 @using Microsoft.AspNetCore.Components.Authorization
 
 @inherits LayoutComponentBase
 
+@inject ILocalizationProvider Loc
 @inject IAuthenticationService AuthenticationService
 @inject NavigationManager NavigationManager
 @inject ISnackbar Snackbar
@@ -23,12 +25,16 @@
 
 <MudLayout Class="pb-20">
 
-    <MudAppBar Color="Color.Primary" Elevation="1">
+    <MudAppBar Color="Color.Primary"
+               Elevation="1">
 
         <MudIconButton Icon="@HomeBookIcons.Icons8.Windows11.Filled.Home"
                        Href="/"
                        Color="Color.Inherit"/>
-        <MudText Typo="Typo.h5" Class="ml-3">@(_homebookInstanceName + " - " ?? string.Empty)HomeBook</MudText>
+        <MudText Typo="Typo.h5"
+                 Class="ml-3">
+            @(_homebookInstanceName + " - " ?? string.Empty)@Loc[nameof(LocalizationStrings.AppTitle)]
+        </MudText>
 
         <MudSpacer/>
 
