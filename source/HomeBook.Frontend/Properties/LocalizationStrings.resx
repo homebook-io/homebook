@@ -24,7 +24,7 @@
         </value>
     </resheader>
     <data name="AppTitle" xml:space="preserve">
-        <value>HomeBook en</value>
+        <value>HomeBook</value>
     </data>
     <data name="UISetupStepper_BackendConnectionSetupStep_Title" xml:space="preserve">
         <value>Check Server</value>
@@ -64,5 +64,35 @@
     </data>
     <data name="Settings_About_AppSlogan_Text" xml:space="preserve">
         <value>Your Self-Hosted Household &amp; Finance Organizer</value>
+    </data>
+    <data name="AuthorName" xml:space="preserve">
+        <value>lk-code</value>
+    </data>
+    <data name="AuthorLink" xml:space="preserve">
+        <value>https://www.lk-code.dev/</value>
+    </data>
+    <data name="AuthorMadeWithText" xml:space="preserve">
+        <value>made with ❤️ by</value>
+    </data>
+    <data name="AccountMenu_Logout" xml:space="preserve">
+        <value>Logout</value>
+    </data>
+    <data name="AccountMenu_Settings" xml:space="preserve">
+        <value>Settings</value>
+    </data>
+    <data name="Logout_SuccessMessage" xml:space="preserve">
+        <value>Logged out successfully!</value>
+    </data>
+    <data name="Logout_ErrorMessage" xml:space="preserve">
+        <value>Error during logout!</value>
+    </data>
+    <data name="UiLicenseDialog_Close" xml:space="preserve">
+        <value>Close</value>
+    </data>
+    <data name="UiLicenseDialog_AcceptContinue" xml:space="preserve">
+        <value>Accept and Continue</value>
+    </data>
+    <data name="UiLicenseDialog_Title" xml:space="preserve">
+        <value>HomeBook Licenses</value>
     </data>
 </root>

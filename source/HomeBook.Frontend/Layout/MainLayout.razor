@@ -33,7 +33,7 @@
                        Color="Color.Inherit"/>
         <MudText Typo="Typo.h5"
                  Class="ml-3">
-            @(_homebookInstanceName + " - " ?? string.Empty)@Loc[nameof(LocalizationStrings.AppTitle)]
+            @(_homebookInstanceName + " - " + Loc[nameof(LocalizationStrings.AppTitle)])
         </MudText>
 
         <MudSpacer/>
@@ -55,7 +55,7 @@
                     <MudMenuItem Icon="@HomeBookIcons.Icons8.Windows11.Filled.LogoutRounded"
                                  IconColor="Color.Primary"
                                  OnClick="HandleLogoutAsync"
-                                 Label="Logout"/>
+                                 Label="@Loc[nameof(LocalizationStrings.AccountMenu_Logout)]"/>
 
                 </MudMenu>
 
@@ -68,7 +68,7 @@
                     <MudMenuItem Icon="@HomeBookIcons.Icons8.Windows11.Filled.Gear"
                                  IconColor="Color.Primary"
                                  Href="/Settings"
-                                 Label="Settings"/>
+                                 Label="@Loc[nameof(LocalizationStrings.AccountMenu_Settings)]"/>
                 </MudMenu>
 
             </Authorized>
@@ -90,13 +90,13 @@
 
     <MudAppBar Bottom="true" Color="Color.Tertiary" Elevation="1">
 
-        <MudText Class="me-5" Typo="Typo.caption">HomeBook</MudText>
-        <MudText Typo="Typo.caption">made with ❤️ by&nbsp;</MudText>
-        <MudLink Href="https://www.lk-code.dev"
+        <MudText Class="me-5" Typo="Typo.caption">@Loc[nameof(LocalizationStrings.AppTitle)]</MudText>
+        <MudText Typo="Typo.caption" Class="me-1">@Loc[nameof(LocalizationStrings.AuthorMadeWithText)]</MudText>
+        <MudLink Href="@Loc[nameof(LocalizationStrings.AuthorLink)]"
                  Target="_blank"
                  Color="Color.Inherit"
                  Typo="Typo.caption">
-            <MudText Typo="Typo.caption">lk-code</MudText>
+            <MudText Typo="Typo.caption">@Loc[nameof(LocalizationStrings.AuthorName)]</MudText>
         </MudLink>
 
         <MudSpacer/>
@@ -125,12 +125,12 @@
         try
         {
             await AuthenticationService.LogoutAsync();
-            Snackbar.Add("Logged out successfully!", Severity.Success);
+            Snackbar.Add(Loc[nameof(LocalizationStrings.Logout_SuccessMessage)], Severity.Success);
             NavigationManager.NavigateTo("/Login");
         }
         catch
         {
-            Snackbar.Add("Error during logout!", Severity.Error);
+            Snackbar.Add(Loc[nameof(LocalizationStrings.Logout_ErrorMessage)], Severity.Error);
         }
     }
 

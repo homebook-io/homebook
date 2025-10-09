@@ -5,6 +5,7 @@
 @attribute [AllowAnonymous]
 
 @using HomeBook.Frontend.Abstractions.Contracts
+@using HomeBook.Frontend.Properties
 @using Microsoft.AspNetCore.Components.Authorization
 
 @inject ILocalizationProvider Loc
@@ -14,7 +15,7 @@
 @inject AuthenticationStateProvider AuthenticationStateProvider
 @inject IJsLocalStorageProvider JsLocalStorageProvider
 
-<PageTitle>@Loc["Setup_Title"]</PageTitle>
+<UiPageTitle>@Loc[nameof(LocalizationStrings.Account_Login_Title)]</UiPageTitle>
 
 <div class="account-login-background @_accountBackgroundClass">
     <UiStripeBackground CanvasCssClass="@_uiStripeBackgroundClass"/>
@@ -38,9 +39,9 @@
 
                         <CardHeaderContent>
                             <MudText Typo="Typo.h4"
-                                     Color="Color.Primary">@_homebookInstanceName</MudText>
+                                     Color="Color.Primary">@Loc[nameof(LocalizationStrings.AppTitle)] @_homebookInstanceName</MudText>
                             <MudText Typo="Typo.h3"
-                                     Color="Color.Primary">@Loc["Account_Login_Title"]</MudText>
+                                     Color="Color.Primary">@Loc[nameof(LocalizationStrings.Account_Login_Title)]</MudText>
                         </CardHeaderContent>
 
                     </MudCardHeader>

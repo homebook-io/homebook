@@ -1,11 +1,9 @@
 using Microsoft.AspNetCore.Components.Web;
 using Microsoft.AspNetCore.Components.WebAssembly.Hosting;
-using Microsoft.AspNetCore.Components.Authorization;
 using HomeBook.Frontend;
 using HomeBook.Frontend.Extensions;
 using HomeBook.Frontend.ModuleCore;
 using HomeBook.Frontend.Services.Extensions;
-using HomeBook.Frontend.Provider;
 using MudBlazor.Services;
 
 var builder = WebAssemblyHostBuilder.CreateDefault(args);

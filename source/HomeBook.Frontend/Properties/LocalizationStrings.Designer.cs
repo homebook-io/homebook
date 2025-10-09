@@ -14,7 +14,7 @@ namespace HomeBook.Frontend.Properties {
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Resources.Tools.StronglyTypedResourceBuilder", "4.0.0.0")]
     [System.Diagnostics.DebuggerNonUserCodeAttribute()]
     [System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
-    internal class LocalizationStrings {
+    public class LocalizationStrings {
         
         private static System.Resources.ResourceManager resourceMan;
         
@@ -25,7 +25,7 @@ namespace HomeBook.Frontend.Properties {
         }
         
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
-        internal static System.Resources.ResourceManager ResourceManager {
+        public static System.Resources.ResourceManager ResourceManager {
             get {
                 if (object.Equals(null, resourceMan)) {
                     System.Resources.ResourceManager temp = new System.Resources.ResourceManager("HomeBook.Frontend.Properties.LocalizationStrings", typeof(LocalizationStrings).Assembly);
@@ -36,7 +36,7 @@ namespace HomeBook.Frontend.Properties {
         }
         
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
-        internal static System.Globalization.CultureInfo Culture {
+        public static System.Globalization.CultureInfo Culture {
             get {
                 return resourceCulture;
             }
@@ -45,87 +45,147 @@ namespace HomeBook.Frontend.Properties {
             }
         }
         
-        internal static string AppTitle {
+        public static string AppTitle {
             get {
                 return ResourceManager.GetString("AppTitle", resourceCulture);
             }
         }
         
-        internal static string UISetupStepper_BackendConnectionSetupStep_Title {
+        public static string UISetupStepper_BackendConnectionSetupStep_Title {
             get {
                 return ResourceManager.GetString("UISetupStepper_BackendConnectionSetupStep_Title", resourceCulture);
             }
         }
         
-        internal static string UISetupStepper_LicenseAgreementSetupStep_Title {
+        public static string UISetupStepper_LicenseAgreementSetupStep_Title {
             get {
                 return ResourceManager.GetString("UISetupStepper_LicenseAgreementSetupStep_Title", resourceCulture);
             }
         }
         
-        internal static string UISetupStepper_DatabaseConfigurationSetupStep_Title {
+        public static string UISetupStepper_DatabaseConfigurationSetupStep_Title {
             get {
                 return ResourceManager.GetString("UISetupStepper_DatabaseConfigurationSetupStep_Title", resourceCulture);
             }
         }
         
-        internal static string UISetupStepper_DatabaseMigrationSetupStep_Title {
+        public static string UISetupStepper_DatabaseMigrationSetupStep_Title {
             get {
                 return ResourceManager.GetString("UISetupStepper_DatabaseMigrationSetupStep_Title", resourceCulture);
             }
         }
         
-        internal static string UISetupStepper_AdminUserSetupStep_Title {
+        public static string UISetupStepper_AdminUserSetupStep_Title {
             get {
                 return ResourceManager.GetString("UISetupStepper_AdminUserSetupStep_Title", resourceCulture);
             }
         }
         
-        internal static string UISetupStepper_ConfigurationSetupStep_Title {
+        public static string UISetupStepper_ConfigurationSetupStep_Title {
             get {
                 return ResourceManager.GetString("UISetupStepper_ConfigurationSetupStep_Title", resourceCulture);
             }
         }
         
-        internal static string Setup_Title {
+        public static string Setup_Title {
             get {
                 return ResourceManager.GetString("Setup_Title", resourceCulture);
             }
         }
         
-        internal static string Setup_CardActions_Server {
+        public static string Setup_CardActions_Server {
             get {
                 return ResourceManager.GetString("Setup_CardActions_Server", resourceCulture);
             }
         }
         
-        internal static string Setup_CardActions_Version {
+        public static string Setup_CardActions_Version {
             get {
                 return ResourceManager.GetString("Setup_CardActions_Version", resourceCulture);
             }
         }
         
-        internal static string UISetupStepper_SetupProcessSetupStep_Title {
+        public static string UISetupStepper_SetupProcessSetupStep_Title {
             get {
                 return ResourceManager.GetString("UISetupStepper_SetupProcessSetupStep_Title", resourceCulture);
             }
         }
         
-        internal static string UISetupStepper_UpdateProcessSetupStep_Title {
+        public static string UISetupStepper_UpdateProcessSetupStep_Title {
             get {
                 return ResourceManager.GetString("UISetupStepper_UpdateProcessSetupStep_Title", resourceCulture);
             }
         }
         
-        internal static string Account_Login_Title {
+        public static string Account_Login_Title {
             get {
                 return ResourceManager.GetString("Account_Login_Title", resourceCulture);
             }
         }
         
-        internal static string Settings_About_AppSlogan_Text {
+        public static string Settings_About_AppSlogan_Text {
             get {
                 return ResourceManager.GetString("Settings_About_AppSlogan_Text", resourceCulture);
+            }
+        }
+        
+        public static string AuthorName {
+            get {
+                return ResourceManager.GetString("AuthorName", resourceCulture);
+            }
+        }
+        
+        public static string AuthorLink {
+            get {
+                return ResourceManager.GetString("AuthorLink", resourceCulture);
+            }
+        }
+        
+        public static string AuthorMadeWithText {
+            get {
+                return ResourceManager.GetString("AuthorMadeWithText", resourceCulture);
+            }
+        }
+        
+        public static string AccountMenu_Logout {
+            get {
+                return ResourceManager.GetString("AccountMenu_Logout", resourceCulture);
+            }
+        }
+        
+        public static string AccountMenu_Settings {
+            get {
+                return ResourceManager.GetString("AccountMenu_Settings", resourceCulture);
+            }
+        }
+        
+        public static string Logout_SuccessMessage {
+            get {
+                return ResourceManager.GetString("Logout_SuccessMessage", resourceCulture);
+            }
+        }
+        
+        public static string Logout_ErrorMessage {
+            get {
+                return ResourceManager.GetString("Logout_ErrorMessage", resourceCulture);
+            }
+        }
+        
+        public static string UiLicenseDialog_Close {
+            get {
+                return ResourceManager.GetString("UiLicenseDialog_Close", resourceCulture);
+            }
+        }
+        
+        public static string UiLicenseDialog_AcceptContinue {
+            get {
+                return ResourceManager.GetString("UiLicenseDialog_AcceptContinue", resourceCulture);
+            }
+        }
+        
+        public static string UiLicenseDialog_Title {
+            get {
+                return ResourceManager.GetString("UiLicenseDialog_Title", resourceCulture);
             }
         }
     }
