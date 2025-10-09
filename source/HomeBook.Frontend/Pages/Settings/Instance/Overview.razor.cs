@@ -96,9 +96,6 @@ public partial class Overview : ComponentBase
         }
     }
 
-    /// <summary>
-    /// Update the instance name on the server
-    /// </summary>
     private async Task UpdateInstanceConfigurationAsync()
     {
         if (!_isValid)

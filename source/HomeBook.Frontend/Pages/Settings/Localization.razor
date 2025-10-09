@@ -1,4 +1,4 @@
-@page "/Settings/Instance"
+@page "/Settings/Localization"
 
 @using HomeBook.Client
 @using HomeBook.Frontend.Abstractions.Contracts
@@ -6,9 +6,9 @@
 @using HomeBook.Frontend.Core.Models.Setup
 
 @inject ISnackbar Snackbar
-@inject IInstanceManagementProvider InstanceManagementProvider
-@inject IJsLocalStorageProvider JsLocalStorageProvider
+@inject IUserPreferencesProvider UserPreferencesProvider
 @inject BackendClient BackendClient
+@inject ILocalizationService LocalizationService
 
 <MudContainer Class="mt-4">
 
@@ -37,30 +37,15 @@
 
                     <MudCardContent Class="pa-0">
 
-                        <UiSettingsItem Icon="@HomeBookIcons.Icons8.Windows11.Filled.Tag"
-                                        IconHexColor="var(--hb-settings-color-instance-name)"
-                                        Title="HomeBook Name"
-                                        Caption="set a custom name for your homebook">
-                            <MudTextField @bind-Value="_configurationModel.InstanceName"
-                                          Margin="Margin.Dense"
-                                          Variant="Variant.Outlined"
-                                          For="@(() => _configurationModel.InstanceName)"
-                                          Required="true"
-                                          Clearable="true"
-                                          Immediate="true"/>
-                        </UiSettingsItem>
-
-                        <MudDivider/>
-
                         <UiSettingsItem Icon="@HomeBookIcons.Icons8.Windows11.Filled.Translation"
                                         IconHexColor="var(--hb-settings-color-default-language)"
                                         Title="Language"
                                         Caption="Choose your preferred language">
-                            <MudSelect @bind-Value="_configurationModel.InstanceDefaultLocale"
+                            <MudSelect @bind-Value="_configurationModel.Locale"
                                        Variant="Variant.Outlined"
                                        Margin="Margin.Dense"
                                        Dense="true"
-                                       For="@(() => _configurationModel.InstanceDefaultLocale)"
+                                       For="@(() => _configurationModel.Locale)"
                                        Required="true"
                                        Clearable="true">
                                 @foreach (LanguageViewModel language in _availableLanguages)

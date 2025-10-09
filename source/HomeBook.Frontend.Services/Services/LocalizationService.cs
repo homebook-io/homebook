@@ -12,8 +12,8 @@ namespace HomeBook.Frontend.Services.Services;
 public class LocalizationService(
     IAuthenticationService authenticationService,
     IInstanceManagementProvider instanceManagementProvider,
-    BackendClient backendClient,
     NavigationManager navigationManager,
+    IUserPreferencesProvider userPreferencesProvider,
     IJSRuntime jsRuntime) : ILocalizationService, IAsyncDisposable
 {
     private string _defaultLocale;
@@ -23,10 +23,6 @@ public class LocalizationService(
     {
         string defaultLocale = await instanceManagementProvider.GetDefaultLocaleAsync(cancellationToken);
         _defaultLocale = defaultLocale;
-
-        await SetCultureAsync(_defaultLocale,
-            false,
-            cancellationToken);
 
         authenticationService.AuthenticationStateChanged += OnAuthenticationStateChanged;
     }
@@ -38,7 +34,7 @@ public class LocalizationService(
     }
 
     /// <inheritdoc />
-    public async Task<CultureInfo?> GetCultureAsync(CancellationToken cancellationToken = default)
+    public async Task<CultureInfo> GetCultureAsync(CancellationToken cancellationToken = default)
     {
         string culture = await jsRuntime.InvokeAsync<string>("localStorage.getItem",
             cancellationToken,
@@ -47,7 +43,7 @@ public class LocalizationService(
         if (!string.IsNullOrEmpty(culture))
             return new CultureInfo(culture);
 
-        return null;
+        return new CultureInfo(_defaultLocale);
     }
 
     /// <inheritdoc />
@@ -88,17 +84,7 @@ public class LocalizationService(
         if (!await authenticationService.IsAuthenticatedAsync(cancellationToken))
             return;
 
-        string? locale = null;
-
-        string? token = await authenticationService.GetTokenAsync(cancellationToken);
-        GetUserPreferenceLocaleResponse? response = await backendClient.User.Preferences.Locale.GetAsync(x =>
-            {
-                x.Headers.Add("Authorization", $"Bearer {token}");
-            },
-            cancellationToken);
-
-        if (response is not null)
-            locale = response.Locale;
+        string? locale = await userPreferencesProvider.GetLocaleAsync(cancellationToken);
 
         if (string.IsNullOrEmpty(locale))
             locale = _defaultLocale;

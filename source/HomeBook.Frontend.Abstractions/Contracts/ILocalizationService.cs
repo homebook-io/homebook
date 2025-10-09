@@ -19,7 +19,7 @@ public interface ILocalizationService
     /// </summary>
     /// <param name="cancellationToken"></param>
     /// <returns></returns>
-    Task<CultureInfo?> GetCultureAsync(CancellationToken cancellationToken = default);
+    Task<CultureInfo> GetCultureAsync(CancellationToken cancellationToken = default);
 
     /// <summary>
     ///

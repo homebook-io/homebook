@@ -49,11 +49,10 @@ public class StartupService(
     {
         await localizationService.InitializeAsync(cancellationToken);
 
-        CultureInfo? culture = await localizationService.GetCultureAsync(cancellationToken);
-        if (culture is not null)
-            await localizationService.SetCultureAsync(culture,
-                false,
-                cancellationToken);
+        CultureInfo culture = await localizationService.GetCultureAsync(cancellationToken);
+        await localizationService.SetCultureAsync(culture,
+            false,
+            cancellationToken);
     }
 
     private async Task WaitForServerAndGetSetupStatusAsync(CancellationToken cancellationToken)

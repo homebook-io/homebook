@@ -20,6 +20,7 @@ public static class ServiceCollectionExtensions
         services.AddSingleton<ISystemManagementProvider, SystemManagementProvider>();
         services.AddSingleton<IUserManagementProvider, UserManagementProvider>();
         services.AddSingleton<IInstanceManagementProvider, InstanceManagementProvider>();
+        services.AddSingleton<IUserPreferencesProvider, UserPreferencesProvider>();
 
         services.AddSingleton<IJsLocalStorageProvider, JsLocalStorageProvider>();
 
