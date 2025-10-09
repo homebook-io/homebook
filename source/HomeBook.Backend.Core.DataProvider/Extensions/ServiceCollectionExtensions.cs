@@ -16,6 +16,7 @@ public static class ServiceCollectionExtensions
     {
         services.AddScoped<IUserProvider, UserProvider>();
         services.AddScoped<IInstanceConfigurationProvider, InstanceConfigurationProvider>();
+        services.AddScoped<IUserPreferenceProvider, UserPreferenceProvider>();
 
         return services;
     }
@@ -26,6 +27,7 @@ public static class ServiceCollectionExtensions
     {
         services.AddSingleton<IValidator<User>, UserValidator>();
         services.AddSingleton<IValidator<Configuration>, ConfigurationValidator>();
+        services.AddSingleton<IValidator<UserPreference>, UserPreferenceValidator>();
 
         return services;
     }

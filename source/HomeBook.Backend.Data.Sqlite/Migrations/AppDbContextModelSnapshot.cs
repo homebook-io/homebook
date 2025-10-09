@@ -72,6 +72,35 @@ namespace HomeBook.Backend.Data.Sqlite.Migrations
 
                     b.ToTable("Users");
                 });
+
+            modelBuilder.Entity("HomeBook.Backend.Data.Entities.UserPreference", b =>
+                {
+                    b.Property<Guid>("UserId")
+                        .HasColumnType("TEXT");
+
+                    b.Property<string>("Key")
+                        .HasMaxLength(50)
+                        .HasColumnType("TEXT");
+
+                    b.Property<string>("Value")
+                        .IsRequired()
+                        .HasColumnType("TEXT");
+
+                    b.HasKey("UserId", "Key");
+
+                    b.ToTable("UserPreferences");
+                });
+
+            modelBuilder.Entity("HomeBook.Backend.Data.Entities.UserPreference", b =>
+                {
+                    b.HasOne("HomeBook.Backend.Data.Entities.User", "User")
+                        .WithMany()
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("User");
+                });
 #pragma warning restore 612, 618
         }
     }

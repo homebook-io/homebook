@@ -6,7 +6,6 @@ namespace HomeBook.Backend.Handler;
 
 public static class UpdateHandler
 {
-
     /// <summary>
     /// starts the homebook update process.
     /// </summary>

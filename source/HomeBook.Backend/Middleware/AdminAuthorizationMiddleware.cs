@@ -1,32 +1,19 @@
 using HomeBook.Backend.Abstractions.Contracts;
+using HomeBook.Backend.Attributes;
 using HomeBook.Backend.Data.Contracts;
+using HomeBook.Backend.Data.Entities;
 
 namespace HomeBook.Backend.Middleware;
 
 /// <summary>
-/// Attribute to mark endpoints that require admin authorization
-/// </summary>
-[AttributeUsage(AttributeTargets.Method)]
-public class RequireAdminAttribute : Attribute
-{
-}
-
-/// <summary>
 /// Middleware to ensure only admin users can access protected endpoints
 /// </summary>
-public class AdminAuthorizationMiddleware
+public class AdminAuthorizationMiddleware(RequestDelegate next)
 {
-    private readonly RequestDelegate _next;
-
-    public AdminAuthorizationMiddleware(RequestDelegate next)
-    {
-        _next = next;
-    }
-
     public async Task InvokeAsync(HttpContext context, IJwtService jwtService, IUserRepository userRepository)
     {
         // Check if the endpoint requires admin authorization
-        var endpoint = context.GetEndpoint();
+        Endpoint? endpoint = context.GetEndpoint();
         bool requiresAdmin = endpoint?.Metadata.GetMetadata<RequireAdminAttribute>() != null;
 
         if (requiresAdmin)
@@ -57,7 +44,7 @@ public class AdminAuthorizationMiddleware
             }
 
             // Get user from database to check admin status
-            var user = await userRepository.GetUserByIdAsync(userId.Value);
+            User? user = await userRepository.GetUserByIdAsync(userId.Value);
             if (user == null)
             {
                 context.Response.StatusCode = 401;
@@ -77,6 +64,6 @@ public class AdminAuthorizationMiddleware
             context.Items["User"] = user;
         }
 
-        await _next(context);
+        await next(context);
     }
 }

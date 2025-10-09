@@ -7,6 +7,7 @@ public class AppDbContext : DbContext
 {
     public DbSet<User> Users { get; set; } = null!;
     public DbSet<Configuration> Configurations { get; set; } = null!;
+    public DbSet<UserPreference> UserPreferences { get; set; } = null!;
 
     public AppDbContext()
     {

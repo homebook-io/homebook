@@ -105,7 +105,8 @@ switch (instanceStatus)
         app.MapSetupEndpoints()
             .MapUpdateEndpoints()
             .MapAccountEndpoints()
-            .MapInfoEndpoints();
+            .MapInfoEndpoints()
+            .MapUserEndpoints();
         break;
 }
 
