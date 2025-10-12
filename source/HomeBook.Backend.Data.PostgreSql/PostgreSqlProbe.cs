@@ -1,6 +1,4 @@
-using HomeBook.Backend.Abstractions;
 using HomeBook.Backend.Abstractions.Contracts;
-using HomeBook.Backend.Abstractions.Setup;
 using Npgsql;
 
 namespace HomeBook.Backend.Data.PostgreSql;
@@ -9,7 +7,7 @@ namespace HomeBook.Backend.Data.PostgreSql;
 public class PostgreSqlProbe : IDatabaseProbe
 {
     /// <inheritdoc />
-    public DatabaseProvider ProviderName { get; } = DatabaseProvider.POSTGRESQL;
+    public string ProviderName { get; } = "POSTGRESQL";
 
     /// <inheritdoc />
     public async Task<bool> CanConnectAsync(string host,
@@ -38,5 +36,11 @@ public class PostgreSqlProbe : IDatabaseProbe
         {
             return false;
         }
+    }
+
+    /// <inheritdoc />
+    public Task<bool> CanConnectAsync(string filePath, CancellationToken cancellationToken = default)
+    {
+        throw new NotImplementedException();
     }
 }

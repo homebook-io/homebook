@@ -14,4 +14,6 @@ public class UserEditModel
     public string ConfirmPassword { get; set; } = string.Empty;
 
     public bool IsAdmin { get; set; } = false;
+
+    public bool IsEnabled { get; set; } = false;
 }

@@ -2,9 +2,11 @@
 #pragma warning disable CS0618
 using HomeBook.Client.Account;
 using HomeBook.Client.Info;
+using HomeBook.Client.Platform;
 using HomeBook.Client.Setup;
 using HomeBook.Client.System;
 using HomeBook.Client.Update;
+using HomeBook.Client.User;
 using HomeBook.Client.VersionNamespace;
 using Microsoft.Kiota.Abstractions.Extensions;
 using Microsoft.Kiota.Abstractions;
@@ -34,6 +36,11 @@ namespace HomeBook.Client
         {
             get => new global::HomeBook.Client.Info.InfoRequestBuilder(PathParameters, RequestAdapter);
         }
+        /// <summary>The platform property</summary>
+        public global::HomeBook.Client.Platform.PlatformRequestBuilder Platform
+        {
+            get => new global::HomeBook.Client.Platform.PlatformRequestBuilder(PathParameters, RequestAdapter);
+        }
         /// <summary>The setup property</summary>
         public global::HomeBook.Client.Setup.SetupRequestBuilder Setup
         {
@@ -48,6 +55,11 @@ namespace HomeBook.Client
         public global::HomeBook.Client.Update.UpdateRequestBuilder Update
         {
             get => new global::HomeBook.Client.Update.UpdateRequestBuilder(PathParameters, RequestAdapter);
+        }
+        /// <summary>The user property</summary>
+        public global::HomeBook.Client.User.UserRequestBuilder User
+        {
+            get => new global::HomeBook.Client.User.UserRequestBuilder(PathParameters, RequestAdapter);
         }
         /// <summary>The version property</summary>
         public global::HomeBook.Client.VersionNamespace.VersionRequestBuilder Version

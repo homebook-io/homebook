@@ -14,7 +14,7 @@ public interface ISetupService
     /// </summary>
     /// <param name="cancellationToken"></param>
     /// <returns></returns>
-    Task InitializeAsync(CancellationToken cancellationToken = default);
+    Task InitializeAsync(CancellationToken cancellationToken);
 
     /// <summary>
     /// triggers by ui component which handles the MudStepper component
@@ -22,11 +22,11 @@ public interface ISetupService
     /// </summary>
     /// <param name="cancellationToken"></param>
     /// <returns></returns>
-    Task TriggerOnMudStepInitialized(CancellationToken cancellationToken = default);
+    Task TriggerOnMudStepInitialized(CancellationToken cancellationToken);
 
-    Task<ISetupStep[]> GetSetupStepsAsync(CancellationToken cancellationToken = default);
+    Task<ISetupStep[]> GetSetupStepsAsync(CancellationToken cancellationToken);
 
-    Task<ISetupStep?> GetActiveSetupStepAsync(CancellationToken cancellationToken = default);
+    Task<ISetupStep?> GetActiveSetupStepAsync(CancellationToken cancellationToken);
 
     /// <summary>
     /// returns the status code of the setup availability.
@@ -37,14 +37,14 @@ public interface ISetupService
     /// </summary>
     /// <param name="cancellationToken"></param>
     /// <returns></returns>
-    Task<int> GetSetupAvailabilityAsync(CancellationToken cancellationToken = default);
+    Task<int> GetSetupAvailabilityAsync(CancellationToken cancellationToken);
 
     /// <summary>
     /// returns true if the setup is done, otherwise false.
     /// </summary>
     /// <param name="cancellationToken"></param>
     /// <returns></returns>
-    Task<InstanceStatus?> GetInstanceStatusAsync(CancellationToken cancellationToken = default);
+    Task<AppStatus?> GetInstanceStatusAsync(CancellationToken cancellationToken);
 
     /// <summary>
     /// set the status of the current step.
@@ -53,7 +53,7 @@ public interface ISetupService
     /// <param name="hasError"></param>
     /// <param name="cancellationToken"></param>
     /// <returns></returns>
-    Task SetStepStatusAsync(bool success, bool hasError, CancellationToken cancellationToken = default);
+    Task SetStepStatusAsync(bool success, bool hasError, CancellationToken cancellationToken);
 
     /// <summary>
     /// stores a setup value by the given key.
@@ -62,7 +62,7 @@ public interface ISetupService
     /// <param name="value"></param>
     /// <param name="cancellationToken"></param>
     /// <returns></returns>
-    Task SetStorageValueAsync(string key, object value, CancellationToken cancellationToken = default);
+    Task SetStorageValueAsync(string key, object value, CancellationToken cancellationToken);
 
     /// <summary>
     /// returns a setup value by the given key.
@@ -70,12 +70,12 @@ public interface ISetupService
     /// <param name="key"></param>
     /// <param name="cancellationToken"></param>
     /// <returns></returns>
-    Task<T?> GetStorageValueAsync<T>(string key, CancellationToken cancellationToken = default);
+    Task<T?> GetStorageValueAsync<T>(string key, CancellationToken cancellationToken);
 
     /// <summary>
     /// trigger the setup finished event.
     /// </summary>
     /// <param name="cancellationToken"></param>
     /// <returns></returns>
-    Task TriggerSetupFinishedAsync(CancellationToken cancellationToken = default);
+    Task TriggerSetupFinishedAsync(CancellationToken cancellationToken);
 }

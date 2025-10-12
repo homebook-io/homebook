@@ -1,9 +1,15 @@
+@using HomeBook.Frontend.Abstractions.Contracts
 @using HomeBook.Frontend.Core.Models.Setup
+@using HomeBook.Frontend.Properties
+
+@inject ILocalizationProvider Loc
 
 <MudDialog>
 
     <TitleContent>
-        HomeBook Application Licenses
+        <MudText Typo="Typo.h6" Color="Color.Primary">
+            @Loc[nameof(LocalizationStrings.UiLicenseDialog_Title)]
+        </MudText>
     </TitleContent>
 
     <DialogContent>
@@ -33,7 +39,7 @@
                    Class="mt-3"
                    StartIcon="@Icons.Material.TwoTone.Close"
                    OnClick="async () => await CancelAsync()">
-            Close
+            @Loc[nameof(LocalizationStrings.UiLicenseDialog_Close)]
         </MudButton>
 
         @if (ShowAcceptButton)
@@ -43,7 +49,7 @@
                        Class="ms-3 mt-3"
                        StartIcon="@Icons.Material.TwoTone.Check"
                        OnClick="async () => await AcceptLicensesAsync()">
-                Accept and Continue
+                @Loc[nameof(LocalizationStrings.UiLicenseDialog_AcceptContinue)]
             </MudButton>
         }
 

@@ -1,6 +1,7 @@
 using System.Security.Claims;
 using HomeBook.Frontend.Abstractions.Models;
 using HomeBook.Frontend.Abstractions.Models.System;
+using HomeBook.Frontend.Properties;
 using Microsoft.AspNetCore.Components;
 using Microsoft.AspNetCore.Components.Authorization;
 using MudBlazor;
@@ -46,9 +47,12 @@ public partial class Overview : ComponentBase
                 }
             }
         }
-        catch (Exception ex)
+        catch (Exception err)
         {
-            Snackbar.Add($"Error loading current user: {ex.Message}", Severity.Error);
+            Snackbar.Add(string.Format(
+                    Loc[nameof(LocalizationStrings.Settings_User_Overview_LoadCurrentUserError_MessageTemplate)],
+                    err.Message),
+                Severity.Error);
         }
     }
 
@@ -68,9 +72,12 @@ public partial class Overview : ComponentBase
                 _totalPages = response.TotalPages;
             }
         }
-        catch (Exception ex)
+        catch (Exception err)
         {
-            Snackbar.Add($"Error loading users: {ex.Message}", Severity.Error);
+            Snackbar.Add(string.Format(
+                    Loc[nameof(LocalizationStrings.Settings_User_Overview_LoadAllUsersError_MessageTemplate)],
+                    err.Message),
+                Severity.Error);
             _users = [];
         }
         finally
@@ -114,7 +121,8 @@ public partial class Overview : ComponentBase
     {
         if (IsCurrentUser(user.Id))
         {
-            Snackbar.Add("You cannot modify your own account status", Severity.Warning);
+            Snackbar.Add(Loc[nameof(LocalizationStrings.Settings_User_Overview_OwnUserError_Message)],
+                Severity.Warning);
             return;
         }
 
@@ -124,31 +132,51 @@ public partial class Overview : ComponentBase
             {
                 // Enable user
                 await UserManagementProvider.EnableUserAsync(user.Id, CancellationToken.None);
-                Snackbar.Add($"User '{user.UserName}' has been enabled", Severity.Success);
+                Snackbar.Add(string.Format(
+                        Loc[nameof(LocalizationStrings.Settings_User_Overview_UserEnabled_MessageTemplate)],
+                        user.UserName),
+                    Severity.Success);
             }
             else
             {
                 // Disable user
                 await UserManagementProvider.DisableUserAsync(user.Id, CancellationToken.None);
-                Snackbar.Add($"User '{user.UserName}' has been disabled", Severity.Success);
+                Snackbar.Add(string.Format(
+                        Loc[nameof(LocalizationStrings.Settings_User_Overview_UserDisabled_MessageTemplate)],
+                        user.UserName),
+                    Severity.Success);
             }
 
             // Reload users to reflect the changes
             await LoadUsersAsync();
         }
-        catch (Exception ex)
+        catch (Exception err)
         {
-            Snackbar.Add($"Error updating user status: {ex.Message}", Severity.Error);
+            Snackbar.Add(string.Format(
+                    Loc[nameof(LocalizationStrings.Settings_User_Overview_UserUpdatingError_MessageTemplate)],
+                    err.Message),
+                Severity.Error);
         }
     }
 
-    private Color GetUserStatusColor(UserData user)
-    {
-        return user.DisabledAt.HasValue ? Color.Error : Color.Success;
-    }
+    private Color GetUserStatusColor(UserData user) =>
+        user.DisabledAt.HasValue
+            ? Color.Error
+            : Color.Success;
 
-    private string GetUserStatusText(UserData user)
-    {
-        return user.DisabledAt.HasValue ? "Disabled" : "Active";
-    }
+    private string GetUserStatusText(UserData user) =>
+        user.DisabledAt.HasValue
+            ? Loc[nameof(LocalizationStrings.Settings_User_Overview_UserStatus_Disabled_Text)]
+            : Loc[nameof(LocalizationStrings.Settings_User_Overview_UserStatus_Active_Text)];
+
+
+    private string GetUserRoleText(UserData user) =>
+        user.IsAdmin
+            ? Loc[nameof(LocalizationStrings.Settings_User_Overview_UserRole_Admin_Text)]
+            : Loc[nameof(LocalizationStrings.Settings_User_Overview_UserRole_User_Text)];
+
+    private string GetToggleStatusTooltipText(UserData user) =>
+        user.DisabledAt.HasValue
+            ? Loc[nameof(LocalizationStrings.Settings_User_Overview_ToggleStatusTooltip_Enable_Text)]
+            : Loc[nameof(LocalizationStrings.Settings_User_Overview_ToggleStatusTooltip_Disable_Text)];
 }

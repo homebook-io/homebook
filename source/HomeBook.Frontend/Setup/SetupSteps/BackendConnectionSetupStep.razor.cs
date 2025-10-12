@@ -1,4 +1,5 @@
 using HomeBook.Frontend.Abstractions.Contracts;
+using HomeBook.Frontend.Properties;
 using HomeBook.Frontend.Setup.Exceptions;
 using Microsoft.AspNetCore.Components;
 using Microsoft.Kiota.Abstractions;
@@ -44,12 +45,12 @@ public partial class BackendConnectionSetupStep : ComponentBase, ISetupStep
                 ConnectToServerAsync(cancellationToken));
 
             _serverIsOk = true;
+            StateHasChanged();
             await SetupService.SetStepStatusAsync(false, false, cancellationToken);
         }
         catch (HttpRequestException)
         {
-            // DE => Verbindung zum Server konnte nicht hergestellt werden. Stellen Sie sicher, dass der Server läuft und korrekt konfiguriert wurde und versuchen Sie es erneut.
-            _errorMessage = "Unable to connect to the server. Make sure that the server is running and has been configured correctly, then try again.";
+            _errorMessage = Loc[nameof(LocalizationStrings.Setup_BackendConnectionFailed_Message)];
             await StepErrorAsync(cancellationToken);
         }
         catch (SetupCheckException err)
@@ -59,7 +60,9 @@ public partial class BackendConnectionSetupStep : ComponentBase, ISetupStep
         }
         catch (Exception err)
         {
-            _errorMessage = "error while connecting to server: " + err.Message;
+            _errorMessage = string.Format(
+                Loc[nameof(LocalizationStrings.Setup_BackendConnection_CheckError_MessageTemplate)],
+                err.Message);
             await StepErrorAsync(cancellationToken);
         }
         finally
@@ -74,17 +77,18 @@ public partial class BackendConnectionSetupStep : ComponentBase, ISetupStep
         var versionResponse = await BackendClient
             .Version
             .GetAsync((x) =>
-            {
-            }, cancellationToken);
+                {
+                },
+                cancellationToken);
 
         if (string.IsNullOrEmpty(versionResponse))
-            // DE => Der Server hat keine gültige Version zurückgegeben.
-            throw new SetupCheckException("Server did not return a valid version.");
+            throw new SetupCheckException(
+                Loc[nameof(LocalizationStrings.Setup_BackendConnection_Check_VersionError_Message)]);
 
         string appVersion = Configuration.GetSection("Version").Value ?? "";
         if (appVersion != versionResponse)
-            // DE => Die Version des Servers stimmt nicht mit der Version der App überein. Bitte aktualisieren Sie die App oder den Server.
-            throw new SetupCheckException("The server version does not match the app version. Please update the app.");
+            throw new SetupCheckException(
+                Loc[nameof(LocalizationStrings.Setup_BackendConnection_Check_VersionMatchError_Message)]);
 
         try
         {
@@ -96,15 +100,19 @@ public partial class BackendConnectionSetupStep : ComponentBase, ISetupStep
         }
         catch (ApiException err) when (err.ResponseStatusCode == 409)
         {
-            throw new SetupCheckException("Setup is already in progress. Please wait until the setup is finished or reset the setup.");
+            throw new SetupCheckException(
+                Loc[nameof(LocalizationStrings.Setup_BackendConnection_Check_SetupInProgressError_Message)]);
         }
         catch (ApiException err) when (err.ResponseStatusCode == 500)
         {
-            throw new SetupCheckException("Unknown Server Error while checking Server Requirements.");
+            throw new SetupCheckException(
+                Loc[nameof(LocalizationStrings.Setup_BackendConnection_Check_UnknownError_Message)]);
         }
         catch (Exception err)
         {
-            throw new SetupCheckException(err.Message);
+            throw new SetupCheckException(string.Format(
+                Loc[nameof(LocalizationStrings.Setup_BackendConnection_Check_UnknownError_MessageTemplate)],
+                err.Message));
         }
     }
 

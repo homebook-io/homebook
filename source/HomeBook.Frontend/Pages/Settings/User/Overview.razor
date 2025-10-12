@@ -1,10 +1,12 @@
 @page "/Settings/Users"
 
 @using HomeBook.Frontend.Abstractions.Contracts
+@using HomeBook.Frontend.Properties
 @using Microsoft.AspNetCore.Components.Authorization
 
 @attribute [Authorize(Roles = "Admin")]
 
+@inject ILocalizationProvider Loc
 @inject AuthenticationStateProvider AuthenticationStateProvider
 @inject ISnackbar Snackbar
 @inject NavigationManager NavigationManager
@@ -14,20 +16,22 @@
 
     <MudGrid>
 
-        <MudItem xs="12" sm="12" md="4" lg="3" xl="3" xxl="2">
+        <MudItem xs="12" sm="12" md="4" lg="3" xl="3" xxl="3">
 
             <SettingsNavMenu/>
 
         </MudItem>
 
-        <MudItem xs="12" sm="12" md="8" lg="9" xl="9" xxl="10">
+        <MudItem xs="12" sm="12" md="8" lg="9" xl="9" xxl="9">
 
             <MudPaper Class="pa-4">
 
                 <MudGrid Class="mb-4">
 
                     <MudItem xs="6">
-                        <MudText Typo="Typo.h4">User Management</MudText>
+                        <MudText Typo="Typo.h5">
+                            @Loc[nameof(LocalizationStrings.Settings_User_Overview_PageTitle)]
+                        </MudText>
                     </MudItem>
 
                     <MudItem xs="6" Class="d-flex justify-end">
@@ -35,7 +39,7 @@
                                    Color="Color.Primary"
                                    StartIcon="@Icons.Material.Filled.PersonAdd"
                                    OnClick="NavigateToAddUser">
-                            Add User
+                            @Loc[nameof(LocalizationStrings.Settings_User_Overview_AddUserButton_Text)]
                         </MudButton>
                     </MudItem>
 
@@ -44,7 +48,9 @@
                 @if (_loading)
                 {
                     <MudProgressLinear Indeterminate="true" Class="mb-4"/>
-                    <MudText Align="Align.Center">Loading users...</MudText>
+                    <MudText Align="Align.Center">
+                        @Loc[nameof(LocalizationStrings.Settings_User_Overview_Loading_Message)]
+                    </MudText>
                 }
                 else if (_users.Any())
                 {
@@ -54,7 +60,9 @@
                         <MudItem xs="6">
 
                             <MudText Typo="Typo.body1">
-                                Showing @(_users.Count) of @(_totalCount) users
+                                @string.Format(Loc[nameof(LocalizationStrings.Settings_User_Overview_CurrentCount_MessageTemplate)],
+                                    _users.Count,
+                                    _totalCount)
                             </MudText>
 
                         </MudItem>
@@ -64,7 +72,7 @@
                             <MudSelect T="string"
                                        Value="@_pageSize.ToString()"
                                        ValueChanged="OnPageSizeChangedAsync"
-                                       Label="Items per page"
+                                       Label="@Loc[nameof(LocalizationStrings.Settings_User_Overview_ItemsPerPageSelect_Label)]"
                                        Variant="Variant.Outlined"
                                        Margin="Margin.Dense"
                                        Style="min-width: 120px;">
@@ -85,23 +93,25 @@
                               Dense="true">
 
                         <HeaderContent>
-                            <MudTh>Username</MudTh>
-                            <MudTh>Status</MudTh>
-                            <MudTh>Role</MudTh>
-                            <MudTh>Created</MudTh>
-                            <MudTh>Actions</MudTh>
+                            <MudTh>@Loc[nameof(LocalizationStrings.Settings_User_Overview_ResultsTable_Username_TableHeader)]</MudTh>
+                            <MudTh>@Loc[nameof(LocalizationStrings.Settings_User_Overview_ResultsTable_Status_TableHeader)]</MudTh>
+                            <MudTh>@Loc[nameof(LocalizationStrings.Settings_User_Overview_ResultsTable_Role_TableHeader)]</MudTh>
+                            <MudTh>@Loc[nameof(LocalizationStrings.Settings_User_Overview_ResultsTable_Created_TableHeader)]</MudTh>
+                            <MudTh>@Loc[nameof(LocalizationStrings.Settings_User_Overview_ResultsTable_Actions_TableHeader)]</MudTh>
                         </HeaderContent>
 
                         <RowTemplate>
 
-                            <MudTd DataLabel="Username">
+                            <MudTd
+                                DataLabel="@Loc[nameof(LocalizationStrings.Settings_User_Overview_ResultsTable_Username_TableHeader)]">
                                 <div class="d-flex align-center">
                                     <MudIcon Icon="@Icons.Material.Filled.Person" Class="mr-2" Size="Size.Small"/>
                                     <MudText Typo="Typo.body2">@context.UserName</MudText>
                                 </div>
                             </MudTd>
 
-                            <MudTd DataLabel="Status">
+                            <MudTd
+                                DataLabel="@Loc[nameof(LocalizationStrings.Settings_User_Overview_ResultsTable_Status_TableHeader)]">
                                 <MudChip T="string"
                                          Color="@GetUserStatusColor(context)"
                                          Size="Size.Small"
@@ -111,30 +121,34 @@
                                 </MudChip>
                             </MudTd>
 
-                            <MudTd DataLabel="Role">
-                                <MudChip T="string" Color="@(context.IsAdmin == true ? Color.Warning : Color.Default)"
+                            <MudTd
+                                DataLabel="@Loc[nameof(LocalizationStrings.Settings_User_Overview_ResultsTable_Role_TableHeader)]">
+                                <MudChip T="string" Color="@(context.IsAdmin ? Color.Warning : Color.Default)"
                                          Size="Size.Small"
-                                         Icon="@(context.IsAdmin == true ? Icons.Material.Filled.AdminPanelSettings : Icons.Material.Filled.Person)">
-                                    @(context.IsAdmin == true ? "Admin" : "User")
+                                         Icon="@(context.IsAdmin ? Icons.Material.Filled.AdminPanelSettings : Icons.Material.Filled.Person)">
+                                    @GetUserRoleText(context)
                                 </MudChip>
                             </MudTd>
 
-                            <MudTd DataLabel="Created">
+                            <MudTd
+                                DataLabel="@Loc[nameof(LocalizationStrings.Settings_User_Overview_ResultsTable_Created_TableHeader)]">
                                 <MudText Typo="Typo.body2">
-                                    @(context.CreatedAt.ToString("yyyy-MM-dd HH:mm") ?? "Unknown")
+                                    @context.CreatedAt.ToString("g")
                                 </MudText>
                             </MudTd>
 
-                            <MudTd DataLabel="Actions">
+                            <MudTd
+                                DataLabel="@Loc[nameof(LocalizationStrings.Settings_User_Overview_ResultsTable_Actions_TableHeader)]">
 
-                                <MudTooltip Text="Edit User">
+                                <MudTooltip
+                                    Text="@Loc[nameof(LocalizationStrings.Settings_User_Overview_ResultsTable_Actions_EditUser_ToolTipText)]">
                                     <MudIconButton Icon="@Icons.Material.Filled.Edit"
                                                    Size="Size.Small"
                                                    Color="Color.Primary"
                                                    OnClick="() => NavigateToEditUser(context.Id)"/>
                                 </MudTooltip>
 
-                                <MudTooltip Text="@(context.DisabledAt.HasValue ? "Enable User" : "Disable User")">
+                                <MudTooltip Text="@GetToggleStatusTooltipText(context)">
                                     <MudIconButton
                                         Icon="@(context.DisabledAt.HasValue ? Icons.Material.Filled.PersonAdd : Icons.Material.Filled.PersonOff)"
                                         Size="Size.Small"
@@ -166,7 +180,9 @@
                 else
                 {
                     <MudAlert Severity="Severity.Info" Class="mt-4">
-                        <MudText>No users found.</MudText>
+                        <MudText Typo="Typo.body2">
+                            @Loc[nameof(LocalizationStrings.Settings_User_Overview_ResultsTable_NoResult_Message)]
+                        </MudText>
                     </MudAlert>
                 }
 

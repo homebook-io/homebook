@@ -1,5 +1,6 @@
 @using HomeBook.Client
 @using HomeBook.Frontend.Abstractions.Contracts
+@using HomeBook.Frontend.Properties
 
 @inject ILocalizationProvider Loc
 @inject IDatabaseSetupService DatabaseSetupService
@@ -8,13 +9,15 @@
 
 <MudCard Class="frosted-b3 mud-elevation-6">
 
-    <MudCardHeader>
+    <MudCardHeader Class="no-divider">
         <CardHeaderContent>
-            <MudText Typo="Typo.h4" Color="Color.Inherit">Database</MudText>
+            <MudText Typo="Typo.h4" Color="Color.Inherit">
+                @Loc[nameof(LocalizationStrings.Setup_Database_Title)]
+            </MudText>
         </CardHeaderContent>
     </MudCardHeader>
 
-    <MudCardContent>
+    <MudCardContent Class="no-divider">
 
         @if (_isChecking)
         {
@@ -36,7 +39,7 @@
                                       Duration="TimeSpan.FromSeconds(5)"
                                       OnFinished="async () => await OnCountdownFinishedAsync()"
                                       Severity="Severity.Info">
-                        Database recognized as @_databaseType and is reachable.
+                        @string.Format(Loc[nameof(LocalizationStrings.Setup_Database_Provider_MessageTemplate)], _databaseType)
                     </UiCountdownAlert>
                 }
 
@@ -51,16 +54,16 @@
 
             <DataAnnotationsValidator/>
 
-            @if (!_isChecking && !_databaseIsOk)
+            @if (!_isChecking
+                 && !_databaseIsOk)
             {
                 <MudGrid>
 
                     <MudItem xs="12" md="10">
                         <MudTextField @bind-Value="_databaseConfig.Host"
                                       Margin="Margin.Dense"
-                                      Label="Database Host"
-                                      Placeholder="localhost"
-                                      HelperText="Enter the database server hostname or IP address and it's port"
+                                      Label="@Loc[nameof(LocalizationStrings.Setup_Database_Form_Host_Label)]"
+                                      HelperText="@Loc[nameof(LocalizationStrings.Setup_Database_Form_Host_HelperText)]"
                                       For="@(() => _databaseConfig.Host)"
                                       Required="true"
                                       Variant="Variant.Outlined"/>
@@ -69,8 +72,7 @@
                     <MudItem xs="12" md="2">
                         <MudTextField @bind-Value="_databaseConfig.Port"
                                       Margin="Margin.Dense"
-                                      Label="Port"
-                                      Placeholder="5432"
+                                      Label="@Loc[nameof(LocalizationStrings.Setup_Database_Form_Port_Label)]"
                                       For="@(() => _databaseConfig.Port)"
                                       Required="true"
                                       Variant="Variant.Outlined"/>
@@ -79,9 +81,8 @@
                     <MudItem xs="12" md="12">
                         <MudTextField @bind-Value="_databaseConfig.DatabaseName"
                                       Margin="Margin.Dense"
-                                      Label="Database Name"
-                                      Placeholder="homebook"
-                                      HelperText="Enter the name of the database"
+                                      Label="@Loc[nameof(LocalizationStrings.Setup_Database_Form_DatabaseName_Label)]"
+                                      HelperText="@Loc[nameof(LocalizationStrings.Setup_Database_Form_DatabaseName_HelperText)]"
                                       For="@(() => _databaseConfig.DatabaseName)"
                                       Required="true"
                                       Variant="Variant.Outlined"/>
@@ -90,9 +91,8 @@
                     <MudItem xs="12" md="6">
                         <MudTextField @bind-Value="_databaseConfig.Username"
                                       Margin="Margin.Dense"
-                                      Label="Username"
-                                      Placeholder="homebook_user"
-                                      HelperText="Enter the database username"
+                                      Label="@Loc[nameof(LocalizationStrings.Setup_Database_Form_DatabaseUsername_Label)]"
+                                      HelperText="@Loc[nameof(LocalizationStrings.Setup_Database_Form_DatabaseUsername_HelperText)]"
                                       For="@(() => _databaseConfig.Username)"
                                       Required="true"
                                       Variant="Variant.Outlined"/>
@@ -101,9 +101,9 @@
                     <MudItem xs="12" md="6">
                         <MudTextField @bind-Value="_databaseConfig.Password"
                                       Margin="Margin.Dense"
-                                      Label="Password"
+                                      Label="@Loc[nameof(LocalizationStrings.Setup_Database_Form_DatabasePassword_Label)]"
+                                      HelperText="@Loc[nameof(LocalizationStrings.Setup_Database_Form_DatabasePassword_HelperText)]"
                                       InputType="InputType.Password"
-                                      HelperText="Enter the database password"
                                       For="@(() => _databaseConfig.Password)"
                                       Required="true"
                                       Variant="Variant.Outlined"/>
@@ -120,7 +120,9 @@
                                Class="mt-3"
                                Disabled="@_isChecking">
 
-                        <MudText>Test Connection</MudText>
+                        <MudText>
+                            @Loc[nameof(LocalizationStrings.Setup_Database_TestConnection_Button)]
+                        </MudText>
 
                     </MudButton>
 

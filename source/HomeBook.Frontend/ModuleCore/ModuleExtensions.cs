@@ -46,7 +46,12 @@ public static class ModuleExtensions
     /// <param name="host"></param>
     public static async Task RunModulesPostBuild(this WebAssemblyHost host)
     {
+        CancellationToken cancellationToken = CancellationToken.None;
+
         await host.Services.RunSupportModulesPostBuild(host.Configuration);
+
+        IStartupService startupService = host.Services.GetRequiredService<IStartupService>();
+        await startupService.StartAsync(cancellationToken);
     }
 
     /// <summary>

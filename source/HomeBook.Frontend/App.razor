@@ -53,65 +53,32 @@
     private NavigationManager NavigationManager { get; set; } = null!;
 
     [Inject]
-    private ISetupService SetupService { get; set; } = null!;
+    private IStartupService StartupService { get; set; } = null!;
 
     [Inject]
     private IAuthenticationService AuthenticationService { get; set; } = null!;
 
-    [Inject]
-    private IInstanceManagementProvider InstanceManagementProvider { get; set; } = null!;
-
-    [Inject]
-    private IJsLocalStorageProvider JsLocalStorageProvider { get; set; } = null!;
-
-    private bool _setupServiceInitialized = false;
+    private bool _applicationInitialized = false;
     private bool _isRedirecting;
-    private InstanceStatus? _instanceStatus;
+    private AppStatus _appStatus = AppStatus.Initializing;
 
     protected override async Task OnInitializedAsync()
     {
         await base.OnInitializedAsync();
 
-        // initialize the setup service in background
-        _ = Task.Run(async () =>
-        {
-            await SetupService.InitializeAsync();
-            await WaitForServerAndGetSetupStatusAsync();
-
-            if (_instanceStatus == InstanceStatus.Running)
-            {
-                // load instance data into cache
-                await LoadInstanceDataAsync();
-            }
-
-            _setupServiceInitialized = true;
-
-            StateHasChanged();
-        });
+        _appStatus = StartupService.Status;
+        if (_appStatus == AppStatus.Initializing)
+            StartupService.ApplicationInitialized += StartupServiceOnApplicationInitialized;
+        else
+            StartupServiceOnApplicationInitialized(_appStatus);
     }
 
-    private async Task LoadInstanceDataAsync()
+    private void StartupServiceOnApplicationInitialized(AppStatus appStatus)
     {
-        CancellationToken cancellationToken = CancellationToken.None;
+        _appStatus = appStatus;
 
-        string instanceName = await InstanceManagementProvider.GetInstanceNameAsync(cancellationToken);
-        await JsLocalStorageProvider.SetItemAsync(JsLocalStorageKeys.HomeBookInstanceName, instanceName, cancellationToken);
-    }
-
-    private async Task WaitForServerAndGetSetupStatusAsync()
-    {
-        try
-        {
-            _instanceStatus = await SetupService.GetInstanceStatusAsync();
-        }
-        catch (HttpRequestException err) when (err.Message.ToLowerInvariant().Contains("failed to fetch"))
-        {
-            await WaitForServerAndGetSetupStatusAsync();
-        }
-        catch (Exception)
-        {
-            // TODO: display error or log error
-        }
+        _applicationInitialized = true;
+        StateHasChanged();
     }
 
     private async Task HandleNavigationAsync(NavigationContext context)
@@ -123,14 +90,14 @@
         }
 
         // wait until SetupService is initialized
-        while (!_setupServiceInitialized)
+        while (!_applicationInitialized)
         {
             await Task.Delay(50);
         }
 
         bool isOnSetupPage = context.Path.StartsWith("setup", StringComparison.OrdinalIgnoreCase);
-        if ((_instanceStatus == InstanceStatus.SetupRequired
-             || _instanceStatus == InstanceStatus.UpdateRequired)
+        if ((_appStatus == AppStatus.SetupRequired
+             || _appStatus == AppStatus.UpdateRequired)
             && !isOnSetupPage)
         {
             _isRedirecting = true;
@@ -138,7 +105,7 @@
             return;
         }
 
-        if (_instanceStatus != InstanceStatus.Running)
+        if (_appStatus != AppStatus.Running)
             return;
 
         bool isOnLoginPage = context.Path.StartsWith("login", StringComparison.OrdinalIgnoreCase);

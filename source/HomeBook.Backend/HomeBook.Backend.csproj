@@ -15,19 +15,19 @@
 
     <!-- Make internal methods visible to test projects -->
     <ItemGroup>
-        <InternalsVisibleTo Include="HomeBook.UnitTests" />
+        <InternalsVisibleTo Include="HomeBook.UnitTests"/>
     </ItemGroup>
 
     <ItemGroup>
-        <PackageReference Include="Microsoft.AspNetCore.OpenApi" Version="9.0.9" />
+        <PackageReference Include="Microsoft.AspNetCore.OpenApi" Version="9.0.9"/>
         <PackageReference Include="Microsoft.Extensions.ApiDescription.Server" Version="9.0.9">
             <PrivateAssets>all</PrivateAssets>
             <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
         </PackageReference>
-        <PackageReference Include="Scalar.AspNetCore" Version="2.8.6" />
-        <PackageReference Include="Serilog.AspNetCore" Version="9.0.0" />
-        <PackageReference Include="Serilog.Sinks.Console" Version="6.0.0" />
-        <PackageReference Include="Serilog.Sinks.File" Version="7.0.0" />
+        <PackageReference Include="Scalar.AspNetCore" Version="2.8.10" />
+        <PackageReference Include="Serilog.AspNetCore" Version="9.0.0"/>
+        <PackageReference Include="Serilog.Sinks.Console" Version="6.0.0"/>
+        <PackageReference Include="Serilog.Sinks.File" Version="7.0.0"/>
     </ItemGroup>
 
     <ItemGroup>
@@ -43,11 +43,12 @@
     </ItemGroup>
 
     <ItemGroup>
-        <ProjectReference Include="..\HomeBook.Backend.Abstractions\HomeBook.Backend.Abstractions.csproj" />
-        <ProjectReference Include="..\HomeBook.Backend.Core\HomeBook.Backend.Core.csproj" />
-        <ProjectReference Include="..\HomeBook.Backend.Data.Mysql\HomeBook.Backend.Data.Mysql.csproj" />
-        <ProjectReference Include="..\HomeBook.Backend.Data.PostgreSql\HomeBook.Backend.Data.PostgreSql.csproj" />
-        <ProjectReference Include="..\HomeBook.Backend.Core.Account\HomeBook.Backend.Core.Account.csproj" />
+        <ProjectReference Include="..\HomeBook.Backend.Abstractions\HomeBook.Backend.Abstractions.csproj"/>
+        <ProjectReference Include="..\HomeBook.Backend.Core\HomeBook.Backend.Core.csproj"/>
+        <ProjectReference Include="..\HomeBook.Backend.Core.Account\HomeBook.Backend.Core.Account.csproj"/>
+        <ProjectReference Include="..\HomeBook.Backend.Data.Mysql\HomeBook.Backend.Data.Mysql.csproj"/>
+        <ProjectReference Include="..\HomeBook.Backend.Data.PostgreSql\HomeBook.Backend.Data.PostgreSql.csproj"/>
+        <ProjectReference Include="..\HomeBook.Backend.Data.Sqlite\HomeBook.Backend.Data.Sqlite.csproj"/>
     </ItemGroup>
 
     <ItemGroup>

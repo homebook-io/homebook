@@ -9,7 +9,7 @@ using Scalar.AspNetCore;
 using Serilog;
 
 #if DEBUG
-string developmentEnvFile = $"env{Path.DirectorySeparatorChar}Development.env";
+string developmentEnvFile = Path.Combine("env", "Development.env");
 EnvironmentLoader.LoadEnvFile(developmentEnvFile);
 #endif
 
@@ -18,7 +18,6 @@ builder.Configuration.Sources.Clear();
 builder.Configuration
     .AddJsonFile("appsettings.json", optional: false, reloadOnChange: true)
     .AddJsonFile($"appsettings.{builder.Environment.EnvironmentName}.json", optional: true, reloadOnChange: true)
-    .AddJsonFile("appsettings.jwt.json", optional: true, reloadOnChange: true)
     .AddJsonFile(PathHandler.RuntimeConfigurationFilePath, optional: true, reloadOnChange: true)
     .AddEnvironmentVariables(prefix: "HB_");
 
@@ -67,15 +66,17 @@ if (builder.Environment.IsDevelopment())
 
 var app = builder.Build();
 
-// Log application startup - guaranteed to be written to Serilog text file
 Log.Information("HomeBook Backend application starting up - Version: {Version}",
     app.Configuration["Version"] ?? "Unknown");
 
 app.UseSerilogRequestLogging();
 
-app.UseAuthentication();
-app.UseMiddleware<AdminAuthorizationMiddleware>();
-app.UseAuthorization();
+if (instanceStatus == InstanceStatus.RUNNING)
+{
+    app.UseAuthentication();
+    app.UseMiddleware<AdminAuthorizationMiddleware>();
+    app.UseAuthorization();
+}
 
 if (app.Environment.IsDevelopment())
 {
@@ -85,14 +86,13 @@ if (app.Environment.IsDevelopment())
 }
 
 app.UseDefaultFiles();
-// app.UseStaticFiles();
-// app.MapFallbackToFile("index.html"); // <- important for Blazor Routing
 
 #region map endpoints
 
 // map endpoints that are always available
 app.MapVersionEndpoints()
-    .MapSystemEndpoints();
+    .MapSystemEndpoints()
+    .MapPlatformEndpoints();
 
 switch (instanceStatus)
 {
@@ -105,7 +105,8 @@ switch (instanceStatus)
         app.MapSetupEndpoints()
             .MapUpdateEndpoints()
             .MapAccountEndpoints()
-            .MapInfoEndpoints();
+            .MapInfoEndpoints()
+            .MapUserEndpoints();
         break;
 }
 

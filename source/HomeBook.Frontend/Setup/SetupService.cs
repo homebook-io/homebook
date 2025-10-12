@@ -17,22 +17,22 @@ public class SetupService(BackendClient backendClient) : ISetupService
     public Func<ISetupStep, bool, Task>? OnStepFailed { get; set; }
     public Func<Task>? OnSetupStepsInitialized { get; set; }
 
-    public async Task InitializeAsync(CancellationToken cancellationToken = default)
+    public async Task InitializeAsync(CancellationToken cancellationToken)
     {
         List<ISetupStep> setupSteps = [];
 
-        InstanceStatus? instanceStatus = await GetInstanceStatusAsync(cancellationToken);
+        AppStatus? instanceStatus = await GetInstanceStatusAsync(cancellationToken);
 
         // homebook is running, no setup or update required
-        if (instanceStatus == InstanceStatus.Running)
+        if (instanceStatus == AppStatus.Running)
             return;
 
         // setup is already running, cannot be started again
-        if (instanceStatus == InstanceStatus.ErrorSetupRunning)
+        if (instanceStatus == AppStatus.ErrorSetupRunning)
             return;
 
         // ONLY ON FIRST SETUP
-        if (instanceStatus == InstanceStatus.SetupRequired)
+        if (instanceStatus == AppStatus.SetupRequired)
         {
             setupSteps.Add(new BackendConnectionSetupStep());
             setupSteps.Add(new LicenseAgreementSetupStep());
@@ -43,7 +43,7 @@ public class SetupService(BackendClient backendClient) : ISetupService
         }
 
         // ONLY ON UPDATE
-        if (instanceStatus == InstanceStatus.UpdateRequired)
+        if (instanceStatus == AppStatus.UpdateRequired)
         {
             setupSteps.Add(new BackendConnectionSetupStep());
             setupSteps.Add(new UpdateProcessSetupStep());
@@ -52,20 +52,20 @@ public class SetupService(BackendClient backendClient) : ISetupService
         _setupSteps = setupSteps;
     }
 
-    public async Task TriggerOnMudStepInitialized(CancellationToken cancellationToken = default)
+    public async Task TriggerOnMudStepInitialized(CancellationToken cancellationToken)
     {
         if (OnSetupStepsInitialized is not null)
             await OnSetupStepsInitialized.Invoke();
     }
 
-    public async Task<ISetupStep[]> GetSetupStepsAsync(CancellationToken cancellationToken = default)
+    public async Task<ISetupStep[]> GetSetupStepsAsync(CancellationToken cancellationToken)
     {
         await Task.CompletedTask;
 
         return _setupSteps.ToArray();
     }
 
-    public async Task<ISetupStep?> GetActiveSetupStepAsync(CancellationToken cancellationToken = default)
+    public async Task<ISetupStep?> GetActiveSetupStepAsync(CancellationToken cancellationToken)
     {
         await Task.CompletedTask;
 
@@ -74,7 +74,7 @@ public class SetupService(BackendClient backendClient) : ISetupService
         return activeStep;
     }
 
-    public async Task<int> GetSetupAvailabilityAsync(CancellationToken cancellationToken = default)
+    public async Task<int> GetSetupAvailabilityAsync(CancellationToken cancellationToken)
     {
         NativeResponseHandler native = new();
         await backendClient.Setup.Availability.GetAsync(cfg =>
@@ -89,7 +89,7 @@ public class SetupService(BackendClient backendClient) : ISetupService
         return (int)(status ?? HttpStatusCode.InternalServerError);
     }
 
-    public async Task<InstanceStatus?> GetInstanceStatusAsync(CancellationToken cancellationToken = default)
+    public async Task<AppStatus?> GetInstanceStatusAsync(CancellationToken cancellationToken)
     {
         try
         {
@@ -98,13 +98,13 @@ public class SetupService(BackendClient backendClient) : ISetupService
             return status switch
             {
                 // setup can be started
-                HttpStatusCode.OK => InstanceStatus.SetupRequired,
+                HttpStatusCode.OK => AppStatus.SetupRequired,
                 // setup is done, but an update is required
-                HttpStatusCode.Created => InstanceStatus.UpdateRequired,
+                HttpStatusCode.Created => AppStatus.UpdateRequired,
                 // setup is finished and no update is required => Homebook is ready to use
-                HttpStatusCode.NoContent => InstanceStatus.Running,
+                HttpStatusCode.NoContent => AppStatus.Running,
                 // setup is not available (already running)
-                HttpStatusCode.Conflict => InstanceStatus.ErrorSetupRunning,
+                HttpStatusCode.Conflict => AppStatus.ErrorSetupRunning,
                 _ => null // unknown error
             };
         }
@@ -118,7 +118,7 @@ public class SetupService(BackendClient backendClient) : ISetupService
 
     public async Task SetStepStatusAsync(bool success,
         bool hasError,
-        CancellationToken cancellationToken = default)
+        CancellationToken cancellationToken)
     {
         ISetupStep? activeStep = await GetActiveSetupStepAsync(cancellationToken);
         if (activeStep is null)
@@ -148,7 +148,9 @@ public class SetupService(BackendClient backendClient) : ISetupService
         }
     }
 
-    public Task SetStorageValueAsync(string key, object value, CancellationToken cancellationToken = default)
+    public Task SetStorageValueAsync(string key,
+        object value,
+        CancellationToken cancellationToken)
     {
         if (string.IsNullOrWhiteSpace(key))
             throw new ArgumentException("Key cannot be null or whitespace.", nameof(key));
@@ -157,7 +159,8 @@ public class SetupService(BackendClient backendClient) : ISetupService
         return Task.CompletedTask;
     }
 
-    public Task<T?> GetStorageValueAsync<T>(string key, CancellationToken cancellationToken = default)
+    public Task<T?> GetStorageValueAsync<T>(string key,
+        CancellationToken cancellationToken)
     {
         if (string.IsNullOrWhiteSpace(key))
             throw new ArgumentException("Key cannot be null or whitespace.", nameof(key));
@@ -168,7 +171,7 @@ public class SetupService(BackendClient backendClient) : ISetupService
         return Task.FromResult<T?>(default);
     }
 
-    public async Task TriggerSetupFinishedAsync(CancellationToken cancellationToken = default)
+    public async Task TriggerSetupFinishedAsync(CancellationToken cancellationToken)
     {
         if (OnSetupSuccessful != null)
             await OnSetupSuccessful.Invoke();

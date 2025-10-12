@@ -13,6 +13,8 @@ namespace HomeBook.Backend.Requests;
 /// <param name="HomebookUserName">the username for the Homebook user</param>
 /// <param name="HomebookUserPassword">the password for the Homebook user</param>
 /// <param name="HomebookConfigurationName">the name of the Homebook instance</param>
+/// <param name="HomebookConfigurationDefaultLocale">the default locale of the Homebook instance, e.g. "en-EN", "de-DE", etc.</param>
+/// <param name="DatabaseFile">the file path for the SQLite database file, e.g. "/var/lib/homebook/homebook.db"</param>
 public record StartSetupRequest(
     bool? LicensesAccepted,
     string? DatabaseType,
@@ -23,4 +25,6 @@ public record StartSetupRequest(
     string? DatabaseUserPassword,
     string? HomebookUserName,
     string? HomebookUserPassword,
-    string? HomebookConfigurationName);
+    string? HomebookConfigurationName,
+    string? HomebookConfigurationDefaultLocale,
+    string? DatabaseFile = null);

@@ -72,7 +72,7 @@ public class SetupHandler
         try
         {
             string? licensesAreAcceptedValue =
-                setupConfigurationProvider.GetValue(EnvironmentVariables.HOMEBOOK_ACCEPT_LICENSES);
+                setupConfigurationProvider.GetValue(EnvironmentVariables.HOMEBOOK_CONFIGURATION_ACCEPT_LICENSES);
             DependencyLicense[] licenses = await licenseProvider.GetLicensesAsync(cancellationToken);
             GetLicensesResponse response = new(
                 (licensesAreAcceptedValue is not null),
@@ -150,7 +150,7 @@ public class SetupHandler
     {
         try
         {
-            DatabaseProvider? resolvedDatabaseProvider = await databaseProviderResolver.ResolveAsync(
+            string? resolvedDatabaseProvider = await databaseProviderResolver.ResolveAsync(
                 request.DatabaseHost,
                 request.DatabasePort,
                 request.DatabaseName,
@@ -216,7 +216,7 @@ public class SetupHandler
         try
         {
             string? homebookInstanceName = setupConfigurationProvider
-                .GetValue(EnvironmentVariables.HOMEBOOK_INSTANCE_NAME);
+                .GetValue(EnvironmentVariables.HOMEBOOK_CONFIGURATION_NAME);
 
             if (!string.IsNullOrEmpty(homebookInstanceName))
                 return TypedResults.Ok();
@@ -315,63 +315,77 @@ public class SetupHandler
     internal static SetupConfiguration MapConfiguration(ISetupConfigurationProvider scp,
         StartSetupRequest request)
     {
-        SetupConfiguration defaultConfiguration = new(
-            DatabaseProvider.UNKNOWN,
-            "",
-            0,
-            "",
-            "",
-            "",
-            "",
-            "",
-            "",
-            false);
+        SetupConfiguration defaultConfiguration = new()
+        {
+            DatabaseType = "UNKNOWN",
+            HomebookConfigurationName = "",
+            HomebookConfigurationDefaultLocale = "",
+            HomebookUserName = "",
+            HomebookUserPassword = "",
+            HomebookAcceptLicenses = false
+        };
 
-        string? databaseTypeValue = request.DatabaseType
-                                    ?? scp.GetValue(EnvironmentVariables.DATABASE_TYPE);
-        DatabaseProvider databaseType = defaultConfiguration.DatabaseType;
-        if (!string.IsNullOrEmpty(databaseTypeValue))
-            Enum.TryParse(databaseTypeValue, true, out databaseType);
+        string? databaseType = request.DatabaseType
+                               ?? scp.GetValue(EnvironmentVariables.DATABASE_TYPE);
+        // DatabaseProvider databaseType = defaultConfiguration.DatabaseType;
+        // if (!string.IsNullOrEmpty(databaseTypeValue))
+        //     Enum.TryParse(databaseTypeValue, true, out databaseType);
 
-        SetupConfiguration setupConfiguration = new(
-            // DATABASE_TYPE
-            databaseType,
-            // DATABASE_HOST
-            request.DatabaseHost
-            ?? scp.GetValue(EnvironmentVariables.DATABASE_HOST)
-            ?? defaultConfiguration.DatabaseHost,
-            // DATABASE_PORT
-            request.DatabasePort
-            ?? (ushort?)scp.GetValue<ushort>(EnvironmentVariables.DATABASE_PORT)
-            ?? defaultConfiguration.DatabasePort,
-            // DATABASE_NAME
-            request.DatabaseName
-            ?? scp.GetValue(EnvironmentVariables.DATABASE_NAME)
-            ?? defaultConfiguration.DatabaseName,
-            // DATABASE_USER
-            request.DatabaseUserName
-            ?? scp.GetValue(EnvironmentVariables.DATABASE_USER)
-            ?? defaultConfiguration.DatabaseUserName,
-            // DATABASE_PASSWORD
-            request.DatabaseUserPassword
-            ?? scp.GetValue(EnvironmentVariables.DATABASE_PASSWORD)
-            ?? defaultConfiguration.DatabaseUserPassword,
-            // HOMEBOOK_INSTANCE_NAME
-            request.HomebookConfigurationName
-            ?? scp.GetValue(EnvironmentVariables.HOMEBOOK_INSTANCE_NAME)
-            ?? defaultConfiguration.HomebookConfigurationName,
-            // HOMEBOOK_USER_NAME
-            request.HomebookUserName
-            ?? scp.GetValue(EnvironmentVariables.HOMEBOOK_USER_NAME)
-            ?? defaultConfiguration.HomebookUserName,
-            // HOMEBOOK_USER_PASSWORD
-            request.HomebookUserPassword
-            ?? scp.GetValue(EnvironmentVariables.HOMEBOOK_USER_PASSWORD)
-            ?? defaultConfiguration.HomebookUserPassword,
-            // HOMEBOOK_ACCEPT_LICENSES
-            request.LicensesAccepted ?? false
-            || scp.GetValue(EnvironmentVariables.HOMEBOOK_ACCEPT_LICENSES) is not null
-            || defaultConfiguration.HomebookAcceptLicenses);
+        if (string.IsNullOrEmpty(databaseType))
+            databaseType = "UNKNOWN";
+
+
+        SetupConfiguration setupConfiguration = new()
+        {
+            DatabaseType = databaseType.ToUpperInvariant(),
+
+            HomebookConfigurationName = request.HomebookConfigurationName
+                                        ?? scp.GetValue(EnvironmentVariables.HOMEBOOK_CONFIGURATION_NAME)
+                                        ?? defaultConfiguration.HomebookConfigurationName,
+
+            HomebookConfigurationDefaultLocale = request.HomebookConfigurationDefaultLocale
+                                                   ?? scp.GetValue(EnvironmentVariables.HOMEBOOK_CONFIGURATION_DEFAULT_LOCALE)
+                                                   ?? defaultConfiguration.HomebookConfigurationDefaultLocale,
+
+            HomebookUserName = request.HomebookUserName
+                               ?? scp.GetValue(EnvironmentVariables.HOMEBOOK_USER_NAME)
+                               ?? defaultConfiguration.HomebookUserName,
+
+            HomebookUserPassword = request.HomebookUserPassword
+                                   ?? scp.GetValue(EnvironmentVariables.HOMEBOOK_USER_PASSWORD)
+                                   ?? defaultConfiguration.HomebookUserPassword,
+
+            HomebookAcceptLicenses = request.LicensesAccepted ?? false
+                || scp.GetValue(EnvironmentVariables.HOMEBOOK_CONFIGURATION_ACCEPT_LICENSES) is not null
+                || defaultConfiguration.HomebookAcceptLicenses
+        };
+
+        if (setupConfiguration.DatabaseType == "SQLITE")
+        {
+            // add file settings
+            setupConfiguration.DatabaseFile = request.DatabaseFile
+                                              ?? scp.GetValue(EnvironmentVariables.DATABASE_FILE)
+                                              ?? defaultConfiguration.DatabaseFile;
+        }
+        else
+        {
+            // add server settings
+            setupConfiguration.DatabaseHost = request.DatabaseHost
+                                              ?? scp.GetValue(EnvironmentVariables.DATABASE_HOST)
+                                              ?? defaultConfiguration.DatabaseHost;
+            setupConfiguration.DatabasePort = request.DatabasePort
+                                              ?? (ushort?)scp.GetValue<ushort>(EnvironmentVariables.DATABASE_PORT)
+                                              ?? defaultConfiguration.DatabasePort;
+            setupConfiguration.DatabaseName = request.DatabaseName
+                                              ?? scp.GetValue(EnvironmentVariables.DATABASE_NAME)
+                                              ?? defaultConfiguration.DatabaseName;
+            setupConfiguration.DatabaseUserName = request.DatabaseUserName
+                                                  ?? scp.GetValue(EnvironmentVariables.DATABASE_USER)
+                                                  ?? defaultConfiguration.DatabaseUserName;
+            setupConfiguration.DatabaseUserPassword = request.DatabaseUserPassword
+                                                      ?? scp.GetValue(EnvironmentVariables.DATABASE_PASSWORD)
+                                                      ?? defaultConfiguration.DatabaseUserPassword;
+        }
 
         return setupConfiguration;
     }
@@ -381,28 +395,45 @@ public class SetupHandler
         CancellationToken cancellationToken)
     {
         await runtimeConfigurationProvider.UpdateConfigurationAsync("Database:Provider",
-            setupConfiguration.DatabaseType.ToString(),
+            setupConfiguration.DatabaseType,
             cancellationToken);
 
-        await runtimeConfigurationProvider.UpdateConfigurationAsync("Database:Host",
-            setupConfiguration.DatabaseHost,
-            cancellationToken);
+        switch (setupConfiguration.DatabaseType.ToUpperInvariant())
+        {
+            case "SQLITE":
+            {
+                await runtimeConfigurationProvider.UpdateConfigurationAsync("Database:FilePath",
+                    setupConfiguration.DatabaseFile,
+                    cancellationToken);
+            }
+                break;
+            case "MYSQL":
+            case "POSTGRESQL":
+            {
+                await runtimeConfigurationProvider.UpdateConfigurationAsync("Database:Host",
+                    setupConfiguration.DatabaseHost,
+                    cancellationToken);
 
-        await runtimeConfigurationProvider.UpdateConfigurationAsync("Database:Port",
-            setupConfiguration.DatabasePort,
-            cancellationToken);
+                await runtimeConfigurationProvider.UpdateConfigurationAsync("Database:Port",
+                    setupConfiguration.DatabasePort,
+                    cancellationToken);
 
-        await runtimeConfigurationProvider.UpdateConfigurationAsync("Database:InstanceDbName",
-            setupConfiguration.DatabaseName,
-            cancellationToken);
+                await runtimeConfigurationProvider.UpdateConfigurationAsync("Database:InstanceDbName",
+                    setupConfiguration.DatabaseName,
+                    cancellationToken);
 
-        await runtimeConfigurationProvider.UpdateConfigurationAsync("Database:Username",
-            setupConfiguration.DatabaseUserName,
-            cancellationToken);
+                await runtimeConfigurationProvider.UpdateConfigurationAsync("Database:Username",
+                    setupConfiguration.DatabaseUserName,
+                    cancellationToken);
 
-        // TODO: store password as encrypted value in .secret file
-        await runtimeConfigurationProvider.UpdateConfigurationAsync("Database:Password",
-            setupConfiguration.DatabaseUserPassword,
-            cancellationToken);
+                // TODO: store password as encrypted value in .secret file
+                await runtimeConfigurationProvider.UpdateConfigurationAsync("Database:Password",
+                    setupConfiguration.DatabaseUserPassword,
+                    cancellationToken);
+            }
+                break;
+            default:
+                throw new NotSupportedException("Given database provider is not supported");
+        }
     }
 }

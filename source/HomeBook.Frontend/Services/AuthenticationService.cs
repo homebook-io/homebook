@@ -25,7 +25,9 @@ public class AuthenticationService(
     public event Action<bool>? AuthenticationStateChanged;
 
     /// <inheritdoc />
-    public async Task<bool> LoginAsync(string username, string password, CancellationToken cancellationToken = default)
+    public async Task<bool> LoginAsync(string username,
+        string password,
+        CancellationToken cancellationToken = default)
     {
         try
         {
@@ -157,21 +159,21 @@ public class AuthenticationService(
     }
 
     /// <inheritdoc />
-    public async Task<ClaimsPrincipal> GetCurrentUserAsync(CancellationToken cancellationToken = default)
+    public async Task<ClaimsPrincipal?> GetCurrentUserAsync(CancellationToken cancellationToken = default)
     {
         if (!await IsAuthenticatedAsync(cancellationToken))
-            return new ClaimsPrincipal(new ClaimsIdentity());
+            return null;
 
         string? token = await GetTokenAsync(cancellationToken);
         if (string.IsNullOrEmpty(token))
-            return new ClaimsPrincipal(new ClaimsIdentity());
+            return null;
 
         try
         {
             // Parse JWT token to extract claims
             string[] tokenParts = token.Split('.');
             if (tokenParts.Length != 3)
-                return new ClaimsPrincipal(new ClaimsIdentity());
+                return null;
 
             // Decode payload
             string payload = tokenParts[1];
@@ -210,7 +212,7 @@ public class AuthenticationService(
         catch (Exception ex)
         {
             logger.LogError(ex, "Error parsing JWT token");
-            return new ClaimsPrincipal(new ClaimsIdentity());
+            return null;
         }
     }
 

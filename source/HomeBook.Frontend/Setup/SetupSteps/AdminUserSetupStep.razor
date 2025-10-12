@@ -1,5 +1,6 @@
 @using HomeBook.Client
 @using HomeBook.Frontend.Abstractions.Contracts
+@using HomeBook.Frontend.Properties
 
 @inject ILocalizationProvider Loc
 @inject ISetupService SetupService
@@ -7,13 +8,15 @@
 
 <MudCard Class="frosted-b3 mud-elevation-6">
 
-    <MudCardHeader>
+    <MudCardHeader Class="no-divider">
         <CardHeaderContent>
-            <MudText Typo="Typo.h4" Color="Color.Inherit">HomeBook User</MudText>
+            <MudText Typo="Typo.h4" Color="Color.Inherit">
+                @Loc[nameof(LocalizationStrings.Setup_AdminUser_Title)]
+            </MudText>
         </CardHeaderContent>
     </MudCardHeader>
 
-    <MudCardContent>
+    <MudCardContent Class="no-divider">
 
         @if (_isChecking)
         {
@@ -37,11 +40,15 @@
                                       Severity="Severity.Info">
                         @if (_preConfigured)
                         {
-                            <MudText>User configuration was found.</MudText>
+                            <MudText>
+                                @Loc[nameof(LocalizationStrings.Setup_AdminUser_ConfigurationFound_Text)]
+                            </MudText>
                         }
                         else
                         {
-                            <MudText>User configuration saved successfully.</MudText>
+                            <MudText>
+                                @Loc[nameof(LocalizationStrings.Setup_AdminUser_ConfigurationSaved_Text)]
+                            </MudText>
                         }
                     </UiCountdownAlert>
                 }
@@ -57,15 +64,16 @@
 
             <DataAnnotationsValidator/>
 
-            @if (!_isChecking && !_userIsOk)
+            @if (!_isChecking
+                 && !_userIsOk)
             {
                 <MudGrid>
 
                     <MudItem xs="12" md="6">
                         <MudTextField @bind-Value="_userConfiguration.Username"
                                       Margin="Margin.Dense"
-                                      Label="Username"
-                                      HelperText="Enter the homebook username"
+                                      Label="@Loc[nameof(LocalizationStrings.Setup_AdminUser_Form_Username_Label)]"
+                                      HelperText="@Loc[nameof(LocalizationStrings.Setup_AdminUser_Form_Username_HelperText)]"
                                       For="@(() => _userConfiguration.Username)"
                                       Required="true"
                                       Variant="Variant.Outlined"/>
@@ -74,9 +82,9 @@
                     <MudItem xs="12" md="6">
                         <MudTextField @bind-Value="_userConfiguration.Password"
                                       Margin="Margin.Dense"
-                                      Label="Password"
+                                      Label="@Loc[nameof(LocalizationStrings.Setup_AdminUser_Form_Password_Label)]"
+                                      HelperText="@Loc[nameof(LocalizationStrings.Setup_AdminUser_Form_Password_HelperText)]"
                                       InputType="InputType.Password"
-                                      HelperText="Enter the homebook password"
                                       For="@(() => _userConfiguration.Password)"
                                       Required="true"
                                       Variant="Variant.Outlined"/>
@@ -92,9 +100,7 @@
                                Variant="Variant.Filled"
                                Class="mt-3"
                                Disabled="@_isChecking">
-
-                        <MudText>Save User</MudText>
-
+                        @Loc[nameof(LocalizationStrings.Setup_AdminUser_Save_Button_Text)]
                     </MudButton>
 
                 </MudStack>

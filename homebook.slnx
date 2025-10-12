@@ -14,6 +14,7 @@
   <Folder Name="/Backend/Data/">
     <Project Path="source\HomeBook.Backend.Data.Mysql\HomeBook.Backend.Data.Mysql.csproj" Type="Classic C#" />
     <Project Path="source\HomeBook.Backend.Data.PostgreSql\HomeBook.Backend.Data.PostgreSql.csproj" Type="Classic C#" />
+    <Project Path="source\HomeBook.Backend.Data.Sqlite\HomeBook.Backend.Data.Sqlite.csproj" Type="Classic C#" />
     <Project Path="source\HomeBook.Backend.Data\HomeBook.Backend.Data.csproj" Type="Classic C#" />
   </Folder>
   <Folder Name="/Frontend/">

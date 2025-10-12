@@ -1,5 +1,9 @@
-using System.ComponentModel.DataAnnotations;
+using HomeBook.Client.Models;
 using HomeBook.Frontend.Abstractions.Enums;
+using HomeBook.Frontend.Core.Models.Configuration;
+using HomeBook.Frontend.Core.Models.Setup;
+using HomeBook.Frontend.Mappings;
+using HomeBook.Frontend.Properties;
 using Microsoft.AspNetCore.Components;
 using MudBlazor;
 
@@ -10,53 +14,99 @@ public partial class Overview : ComponentBase
     private MudForm _form = new();
     private bool _isValid;
     private bool _isLoading;
-    private InstanceConfigurationModel _configurationModel = new();
-
-    /// <summary>
-    /// Instance configuration model for the form
-    /// </summary>
-    public class InstanceConfigurationModel
-    {
-        [Required(ErrorMessage = "Instance name is required")]
-        [StringLength(255, ErrorMessage = "Instance name cannot exceed 255 characters")]
-        [MinLength(1, ErrorMessage = "Instance name must have at least 1 character")]
-        public string InstanceName { get; set; } = string.Empty;
-    }
+    private readonly HomebookConfigurationViewModel _configurationModel = new();
+    private readonly List<LanguageViewModel> _availableLanguages = [];
 
     protected override async Task OnInitializedAsync()
     {
-        await LoadCurrentInstanceNameAsync();
+        _isLoading = true;
+        StateHasChanged();
+
+        CancellationToken cancellationToken = CancellationToken.None;
+
+        // load needed data
+        await LoadAvailableLocalesAsync(cancellationToken);
+
+        // load current configuration
+        await LoadCurrentInstanceNameAsync(cancellationToken);
+        await LoadCurrentInstanceDefaultLocaleAsync(cancellationToken);
+
+        _isLoading = false;
+        StateHasChanged();
+    }
+
+    private async Task LoadAvailableLocalesAsync(CancellationToken cancellationToken)
+    {
+        try
+        {
+            // TODO: move loading locales to service
+            GetLocalesResponse? localeResponse = await BackendClient.Platform.Locales.GetAsync(x =>
+                {
+                },
+                cancellationToken);
+
+            if (localeResponse is not null)
+            {
+                List<LocaleResponse>? locales = localeResponse.Locales;
+                _availableLanguages.Clear();
+                foreach (LocaleResponse locale in (locales ?? []).OfType<LocaleResponse>())
+                {
+                    _availableLanguages.Add(locale.ToViewModel());
+                }
+            }
+        }
+        catch (Exception err)
+        {
+            Snackbar.Add(string.Format(
+                    Loc[nameof(LocalizationStrings.Settings_Instance_LoadPreferences_Error_MessageTemplate)],
+                    err.Message),
+                Severity.Error);
+        }
+    }
+
+    /// <summary>
+    /// Load the current instance locale
+    /// </summary>
+    private async Task LoadCurrentInstanceDefaultLocaleAsync(CancellationToken cancellationToken)
+    {
+        try
+        {
+            string defaultLocale = await InstanceManagementProvider.GetDefaultLocaleAsync(cancellationToken);
+
+            _configurationModel.InstanceDefaultLocale = defaultLocale;
+            StateHasChanged();
+        }
+        catch (Exception err)
+        {
+            Snackbar.Add(string.Format(
+                    Loc[nameof(LocalizationStrings.Settings_Instance_LoadPreferences_Error_MessageTemplate)],
+                    err.Message),
+                Severity.Error);
+        }
     }
 
     /// <summary>
     /// Load the current instance name from the server
     /// </summary>
-    private async Task LoadCurrentInstanceNameAsync()
+    private async Task LoadCurrentInstanceNameAsync(CancellationToken cancellationToken)
     {
         try
         {
-            _isLoading = true;
-
-            CancellationToken cancellationToken = CancellationToken.None;
             string instanceName = await InstanceManagementProvider.GetInstanceNameAsync(cancellationToken);
 
             _configurationModel.InstanceName = instanceName;
             StateHasChanged();
         }
-        catch (Exception ex)
+        catch (Exception err)
         {
-            Snackbar.Add($"Error loading instance configuration: {ex.Message}", Severity.Error);
-        }
-        finally
-        {
-            _isLoading = false;
+            Snackbar.Add(string.Format(
+                    Loc[nameof(LocalizationStrings.Settings_Instance_LoadPreferences_Error_MessageTemplate)],
+                    err.Message),
+                Severity.Error);
         }
     }
 
-    /// <summary>
-    /// Update the instance name on the server
-    /// </summary>
-    private async Task UpdateInstanceNameAsync()
+    private async Task UpdateInstanceConfigurationAsync()
     {
         if (!_isValid)
             return;
@@ -70,24 +120,46 @@ public partial class Overview : ComponentBase
             if (!_form.IsValid)
                 return;
 
-            string instanceName = _configurationModel.InstanceName.Trim();
-            CancellationToken cancellationToken = CancellationToken.None;
+            await UpdateInstanceNameAsync(_configurationModel.InstanceName);
+            await UpdateInstanceDefaultLocaleAsync(_configurationModel.InstanceDefaultLocale);
 
-            await InstanceManagementProvider.UpdateInstanceNameAsync(instanceName, cancellationToken);
-
-            await JsLocalStorageProvider.SetItemAsync(JsLocalStorageKeys.HomeBookInstanceName,
-                instanceName,
-                cancellationToken);
-
-            Snackbar.Add("Instance name updated successfully!", Severity.Success);
+            Snackbar.Add(Loc[nameof(LocalizationStrings.Settings_Instance_PreferencesUpdated_Success_Message)],
+                Severity.Success);
         }
-        catch (Exception ex)
+        catch (Exception err)
         {
-            Snackbar.Add($"Error updating instance name: {ex.Message}", Severity.Error);
+            Snackbar.Add(string.Format(
+                    Loc[nameof(LocalizationStrings.Settings_Instance_PreferencesUpdated_Error_MessageTemplate)],
+                    err.Message),
+                Severity.Error);
         }
         finally
         {
             _isLoading = false;
         }
+    }
+
+    private async Task UpdateInstanceDefaultLocaleAsync(string defaultLocale)
+    {
+        string defaultLocaleValue = defaultLocale.Trim();
+        CancellationToken cancellationToken = CancellationToken.None;
+
+        await InstanceManagementProvider.UpdateDefaultLocaleAsync(defaultLocaleValue, cancellationToken);
+
+        await JsLocalStorageProvider.SetItemAsync(JsLocalStorageKeys.HomeBookInstanceDefaultLocale,
+            defaultLocaleValue,
+            cancellationToken);
+    }
+
+    private async Task UpdateInstanceNameAsync(string instanceName)
+    {
+        string instanceNameValue = instanceName.Trim();
+        CancellationToken cancellationToken = CancellationToken.None;
+
+        await InstanceManagementProvider.UpdateInstanceNameAsync(instanceNameValue, cancellationToken);
+
+        await JsLocalStorageProvider.SetItemAsync(JsLocalStorageKeys.HomeBookInstanceName,
+            instanceNameValue,
+            cancellationToken);
     }
 }

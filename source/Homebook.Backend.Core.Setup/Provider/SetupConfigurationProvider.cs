@@ -23,6 +23,7 @@ public class SetupConfigurationProvider(
         _valuesByEnum.Clear();
         EnvironmentConfiguration environmentConfiguration = new(
             Environment.GetEnvironmentVariable(nameof(EnvironmentVariables.DATABASE_TYPE)),
+            Environment.GetEnvironmentVariable(nameof(EnvironmentVariables.DATABASE_FILE)),
             Environment.GetEnvironmentVariable(nameof(EnvironmentVariables.DATABASE_HOST)),
             Environment.GetEnvironmentVariable(nameof(EnvironmentVariables.DATABASE_PORT)),
             Environment.GetEnvironmentVariable(nameof(EnvironmentVariables.DATABASE_NAME)),
@@ -30,7 +31,7 @@ public class SetupConfigurationProvider(
             Environment.GetEnvironmentVariable(nameof(EnvironmentVariables.DATABASE_PASSWORD)),
             Environment.GetEnvironmentVariable(nameof(EnvironmentVariables.HOMEBOOK_USER_NAME)),
             Environment.GetEnvironmentVariable(nameof(EnvironmentVariables.HOMEBOOK_USER_PASSWORD)),
-            Environment.GetEnvironmentVariable(nameof(EnvironmentVariables.HOMEBOOK_ACCEPT_LICENSES))
+            Environment.GetEnvironmentVariable(nameof(EnvironmentVariables.HOMEBOOK_CONFIGURATION_ACCEPT_LICENSES))
         );
         environmentValidator.ValidateAndThrow(environmentConfiguration);
 

@@ -12,9 +12,13 @@ public static class InfoHandler
     {
         try
         {
-            string? instanceName = await instanceConfigurationProvider.GetHomeBookInstanceNameAsync(cancellationToken);
+            string instanceName = await instanceConfigurationProvider
+                .GetHomeBookInstanceNameAsync(cancellationToken);
+            string? instanceDefaultName = await instanceConfigurationProvider
+                .GetHomeBookInstanceDefaultLocaleAsync(cancellationToken);
 
-            GetInstanceInfoResponse response = new(instanceName);
+            GetInstanceInfoResponse response = new(instanceName,
+                (instanceDefaultName ?? string.Empty));
             return TypedResults.Ok(response);
         }
         catch (Exception)
@@ -32,6 +36,22 @@ public static class InfoHandler
             string? instanceName = await instanceConfigurationProvider.GetHomeBookInstanceNameAsync(cancellationToken);
 
             return TypedResults.Ok(instanceName);
+        }
+        catch (Exception)
+        {
+            return TypedResults.Problem("An error occurred while retrieving instance name.", statusCode: 500);
+        }
+    }
+
+    public static async Task<IResult> HandleGetInstanceDefaultLocale(
+        [FromServices] IInstanceConfigurationProvider instanceConfigurationProvider,
+        CancellationToken cancellationToken = default)
+    {
+        try
+        {
+            string? defaultLanguage = await instanceConfigurationProvider.GetHomeBookInstanceDefaultLocaleAsync(cancellationToken);
+
+            return TypedResults.Ok(defaultLanguage);
         }
         catch (Exception)
         {

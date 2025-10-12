@@ -8,7 +8,8 @@ namespace Homebook.Backend.Core.Setup.UpdateMigrators;
 /// 1. updated the created timestamp for all existing users
 /// </summary>
 /// <param name="userProvider"></param>
-public class Update_20250910_01(ILogger<Update_20250910_01> logger,
+public class Update_20250910_01(
+    ILogger<Update_20250910_01> logger,
     IUserProvider userProvider) : IUpdateMigrator
 {
     /// <inheritdoc />

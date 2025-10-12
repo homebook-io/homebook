@@ -37,10 +37,6 @@ public partial class UiCountdownAlert : ComponentBase
     [Parameter]
     public EasingMode Easing { get; set; } = EasingMode.EaseOutSine;
 
-    /// <summary>
-    /// Optional benutzerdefinierte Easing-Funktion. Wenn gesetzt, überschreibt sie den Wert von <see cref="Easing"/>.
-    /// Erwartet t im Bereich [0,1] und gibt [0,1] zurück.
-    /// </summary>
     [Parameter]
     public Func<double, double>? EasingFunc { get; set; }
 

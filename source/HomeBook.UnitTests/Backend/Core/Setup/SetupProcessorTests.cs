@@ -24,6 +24,7 @@ public class SetupProcessorTests
     private IConfiguration _injectedConfiguration;
     private IFileSystemService _fileSystemService;
     private IApplicationPathProvider _applicationPathProvider;
+    private IRuntimeConfigurationProvider _runtimeConfigurationProvider;
     private SetupProcessor _instance;
 
     [SetUp]
@@ -47,12 +48,15 @@ public class SetupProcessorTests
         _injectedConfiguration = Substitute.For<IConfiguration>();
         _fileSystemService = Substitute.For<IFileSystemService>();
         _applicationPathProvider = Substitute.For<IApplicationPathProvider>();
+        _runtimeConfigurationProvider = Substitute.For<IRuntimeConfigurationProvider>();
+
         _instance = new SetupProcessor(_databaseMigratorFactory,
             _hashProviderFactory,
             _loggerFactory,
             _injectedConfiguration,
             _fileSystemService,
-            _applicationPathProvider);
+            _applicationPathProvider,
+            _runtimeConfigurationProvider);
     }
 
     [TearDown]
@@ -65,16 +69,20 @@ public class SetupProcessorTests
     public void ProcessAsync_WithoutDatabaseType_Throws()
     {
         // Arrange
-        var setupConfiguration = new SetupConfiguration(DatabaseProvider.POSTGRESQL,
-            "192.168.0.1",
-            5432,
-            "homebook",
-            "user",
-            "password",
-            "my homebook",
-            "admin",
-            "password",
-            true);
+        var setupConfiguration = new SetupConfiguration()
+        {
+            DatabaseType = "POSTGRESQL",
+            DatabaseHost = "192.168.0.1",
+            DatabasePort = 5432,
+            DatabaseName = "homebook",
+            DatabaseUserName = "user",
+            DatabaseUserPassword = "password",
+            HomebookConfigurationName = "my homebook",
+            HomebookConfigurationDefaultLocale = "EN",
+            HomebookUserName = "admin",
+            HomebookUserPassword = "password",
+            HomebookAcceptLicenses = true
+        };
         var _configuration = new DataBuilder()
             .ToConfiguration();
 

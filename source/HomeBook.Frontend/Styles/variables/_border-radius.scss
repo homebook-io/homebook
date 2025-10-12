@@ -1,0 +1,5 @@
+$ui-icon-border-radius: 6px;
+
+:root {
+    --#{$hb-prefix}-ui-icon-border-radius: #{$ui-icon-border-radius};
+}

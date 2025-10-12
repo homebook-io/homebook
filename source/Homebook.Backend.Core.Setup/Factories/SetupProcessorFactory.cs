@@ -11,7 +11,8 @@ public class SetupProcessorFactory(
     ILoggerFactory loggerFactory,
     IConfiguration injectedConfiguration,
     IFileSystemService fileSystemService,
-    IApplicationPathProvider applicationPathProvider) : ISetupProcessorFactory
+    IApplicationPathProvider applicationPathProvider,
+    IRuntimeConfigurationProvider runtimeConfigurationProvider) : ISetupProcessorFactory
 {
     /// <inheritdoc />
     public ISetupProcessor Create() =>
@@ -20,5 +21,6 @@ public class SetupProcessorFactory(
             loggerFactory,
             injectedConfiguration,
             fileSystemService,
-            applicationPathProvider);
+            applicationPathProvider,
+            runtimeConfigurationProvider);
 }

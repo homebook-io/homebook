@@ -11,8 +11,10 @@ public class Update_20250912_01(
     /// <inheritdoc />
     public Version Version { get; } = new(1, 0, 11);
 
+    /// <inheritdoc />
     public string Description { get; } = "Add IsAdmin to oldest homebook user";
 
+    /// <inheritdoc />
     public async Task ExecuteAsync(CancellationToken cancellationToken)
     {
         // update users and add created timestamp

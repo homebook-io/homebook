@@ -1,20 +1,22 @@
-@using HomeBook.Client
 @using HomeBook.Frontend.Abstractions.Contracts
+@using HomeBook.Frontend.Properties
 
 @inject ILocalizationProvider Loc
 @inject ISetupService SetupService
-@inject BackendClient BackendClient
 @inject IDialogService DialogService
+@inject ILicensesService LicensesService
 
 <MudCard Class="frosted-b3 mud-elevation-6">
 
-    <MudCardHeader>
+    <MudCardHeader Class="no-divider">
         <CardHeaderContent>
-            <MudText Typo="Typo.h4">Check Server Connection</MudText>
+            <MudText Typo="Typo.h4">
+                @Loc[nameof(LocalizationStrings.Setup_Licenses_Title)]
+            </MudText>
         </CardHeaderContent>
     </MudCardHeader>
 
-    <MudCardContent>
+    <MudCardContent Class="no-divider">
 
         @if (_isLoading)
         {
@@ -33,7 +35,7 @@
                                   Duration="TimeSpan.FromSeconds(5)"
                                   OnFinished="async () => await OnCountdownFinishedAsync()"
                                   Severity="Severity.Info">
-                    Licenses are already accepted (The licenses can be viewed again later).
+                    @Loc[nameof(LocalizationStrings.Setup_Licenses_AlreadyAccepted_Text)]
                 </UiCountdownAlert>
             }
 
@@ -49,7 +51,7 @@
                            Class="mt-3"
                            StartIcon="@Icons.Material.TwoTone.Autorenew"
                            OnClick="async () => await LoadLicensesAsync()">
-                    Retry
+                    @Loc[nameof(LocalizationStrings.Setup_Licenses_Retry_Button_Text)]
                 </MudButton>
             }
 
@@ -60,7 +62,7 @@
                            Class="mt-3"
                            StartIcon="@Icons.Material.TwoTone.TextSnippet"
                            OnClick="async () => await OpenLicensesDialogAsync()">
-                    Show Licenses
+                    @Loc[nameof(LocalizationStrings.Setup_Licenses_ShowLicenses_Button_Text)]
                 </MudButton>
 
                 <MudButton Color="Color.Primary"
@@ -68,7 +70,7 @@
                            Class="ms-3 mt-3"
                            StartIcon="@Icons.Material.TwoTone.Check"
                            OnClick="async () => await AcceptLicensesAsync()">
-                    Accept and Continue
+                    @Loc[nameof(LocalizationStrings.Setup_Licenses_AcceptContinue_Button_Text)]
                 </MudButton>
             }
         }

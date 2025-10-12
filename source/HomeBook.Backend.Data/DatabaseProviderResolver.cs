@@ -8,7 +8,7 @@ namespace HomeBook.Backend.Data;
 public class DatabaseProviderResolver(IEnumerable<IDatabaseProbe> databaseProbes) : IDatabaseProviderResolver
 {
     /// <inheritdoc />
-    public async Task<DatabaseProvider?> ResolveAsync(string host,
+    public async Task<string?> ResolveAsync(string host,
         ushort port,
         string databaseName,
         string username,
@@ -18,12 +18,12 @@ public class DatabaseProviderResolver(IEnumerable<IDatabaseProbe> databaseProbes
         using CancellationTokenSource cts = CancellationTokenSource.CreateLinkedTokenSource(cancellationToken);
 
         // Run all database probes in parallel
-        IEnumerable<Task<DatabaseProvider?>> probeTasks = databaseProbes.Select(async probe =>
+        IEnumerable<Task<string?>> probeTasks = databaseProbes.Select(async probe =>
         {
             try
             {
                 bool canConnect = await probe.CanConnectAsync(host, port, databaseName, username, password, cts.Token);
-                return canConnect ? probe.ProviderName : (DatabaseProvider?)null;
+                return canConnect ? probe.ProviderName : (string?)null;
             }
             catch (OperationCanceledException)
             {
@@ -37,15 +37,15 @@ public class DatabaseProviderResolver(IEnumerable<IDatabaseProbe> databaseProbes
             }
         });
 
-        Task<DatabaseProvider?>[] taskArray = probeTasks.ToArray();
+        Task<string?>[] taskArray = probeTasks.ToArray();
 
         // Wait for the first successful result
         while (taskArray.Length > 0)
         {
-            Task<DatabaseProvider?> completedTask = await Task.WhenAny(taskArray);
-            DatabaseProvider? result = await completedTask;
+            Task<string?> completedTask = await Task.WhenAny(taskArray);
+            string? result = await completedTask;
 
-            if (result.HasValue)
+            if (!string.IsNullOrEmpty(result))
             {
                 // Cancel all remaining tasks since we found a valid provider
                 await cts.CancelAsync();

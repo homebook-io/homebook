@@ -4,6 +4,7 @@ namespace Homebook.Backend.Core.Setup.Models;
 /// contains the environment configuration for the setup process.
 /// </summary>
 /// <param name="DatabaseType">the type of the database which should used by the application, e.g. "PostgreSQL", "MySQL", etc.</param>
+/// <param name="DatabaseFile">the file path for the SQLite database file, e.g. "/var/lib/homebook/homebook.db".</param>
 /// <param name="DatabaseHost">the hostname or IP address of the database server.</param>
 /// <param name="DatabasePort">the port number on which the database server is listening.</param>
 /// <param name="DatabaseName">the name of the database which should used by the application.</param>
@@ -14,6 +15,7 @@ namespace Homebook.Backend.Core.Setup.Models;
 /// <param name="HomebookAcceptLicenses">if not null the licenses are accepted.</param>
 public record EnvironmentConfiguration(
     string? DatabaseType,
+    string? DatabaseFile,
     string? DatabaseHost,
     string? DatabasePort,
     string? DatabaseName,

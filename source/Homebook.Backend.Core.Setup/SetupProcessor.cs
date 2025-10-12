@@ -18,7 +18,8 @@ public class SetupProcessor(
     ILoggerFactory loggerFactory,
     IConfiguration injectedConfiguration,
     IFileSystemService fileSystemService,
-    IApplicationPathProvider applicationPathProvider) : ISetupProcessor
+    IApplicationPathProvider applicationPathProvider,
+    IRuntimeConfigurationProvider runtimeConfigurationProvider) : ISetupProcessor
 {
     /// <inheritdoc />
     public async Task ProcessAsync(IConfiguration configuration,
@@ -52,11 +53,14 @@ public class SetupProcessor(
         // Add the same configuration as in Program.cs
         services.AddSingleton(injectedConfiguration);
 
+        // TODO: add IRuntimeConfigurationProvider
+
         // Add the same file system services as in Program.cs
         services.AddSingleton(fileSystemService);
         services.AddSingleton(applicationPathProvider);
         services.AddSingleton(hashProviderFactory);
         services.AddSingleton(databaseMigratorFactory);
+        services.AddSingleton(runtimeConfigurationProvider);
 
         databaseMigrator.ConfigureForServiceCollection(services, configuration);
 
@@ -73,15 +77,24 @@ public class SetupProcessor(
             adminPassword,
             cancellationToken);
 
+        IInstanceConfigurationProvider instanceConfigurationProvider =
+            serviceProvider.GetRequiredService<IInstanceConfigurationProvider>();
+
         // 3. write homebook configuration
         string? configurationName = setupConfiguration.HomebookConfigurationName;
         if (string.IsNullOrEmpty(configurationName))
             throw new SetupException("homebook configuration name is not set");
 
-        IInstanceConfigurationProvider instanceConfigurationProvider = serviceProvider.GetRequiredService<IInstanceConfigurationProvider>();
-        await instanceConfigurationProvider.WriteHomeBookInstanceNameAsync(configurationName, cancellationToken);
+        await instanceConfigurationProvider.SetHomeBookInstanceNameAsync(configurationName, cancellationToken);
 
-        // 4. execute available updates
+        // 4. set default locale
+        string? defaultLocale = setupConfiguration.HomebookConfigurationDefaultLocale;
+        if (string.IsNullOrEmpty(defaultLocale))
+            throw new SetupException("homebook default locale is not set");
+
+        await instanceConfigurationProvider.SetHomeBookInstanceDefaultLocaleAsync(defaultLocale, cancellationToken);
+
+        // 5. execute available updates
         IUpdateProcessor updateProcessor = serviceProvider.GetRequiredService<IUpdateProcessor>();
         await updateProcessor.ProcessAsync(cancellationToken);
     }

@@ -1,8 +1,10 @@
 using HomeBook.Client.Models;
 using HomeBook.Frontend.Abstractions.Contracts;
+using HomeBook.Frontend.Abstractions.Models;
 using HomeBook.Frontend.Components;
 using HomeBook.Frontend.Core.Models.Setup;
 using HomeBook.Frontend.Mappings;
+using HomeBook.Frontend.Properties;
 using HomeBook.Frontend.Setup.Exceptions;
 using Microsoft.AspNetCore.Components;
 using Microsoft.Kiota.Abstractions;
@@ -44,31 +46,17 @@ public partial class LicenseAgreementSetupStep : ComponentBase, ISetupStep
 
         try
         {
-            GetLicensesResponse? licensesResponse = await BackendClient.Setup.Licenses.GetAsync(x =>
-                {
-                },
-                cancellationToken
-            );
-
-            if (licensesResponse is null)
-                throw new SetupCheckException("Server did not return valid licenses.");
-
-            _licensesAccepted = licensesResponse.LicensesAccepted ?? false;
-            _licenses.Clear();
-            _licenses = (licensesResponse.Licenses ?? [])
-                .OrderBy(x => x.Name)
-                .Select(license => license.ToViewModel())
+            License[] licenses = await LicensesService.GetAllLicensesAsync(cancellationToken);
+            _licenses = licenses.OrderBy(x => x.Name)
+                .Select(x => x.ToViewModel())
                 .ToList();
+            _licensesAccepted = await LicensesService.AreLicensesAcceptedAsync(cancellationToken);
             await InvokeAsync(StateHasChanged);
-        }
-        catch (ApiException err) when (err.ResponseStatusCode == 500)
-        {
-            _errorMessage = "Unknown Server Error while loading Licenses: " + err.Message;
-            await StepErrorAsync(cancellationToken);
         }
         catch (Exception err)
         {
-            _errorMessage = "error while loading licenses: " + err.Message;
+            _errorMessage = string.Format(Loc[nameof(LocalizationStrings.Setup_Licenses_LoadingError_MessageTemplate)],
+                err.Message);
             await StepErrorAsync(cancellationToken);
         }
         finally
@@ -107,7 +95,7 @@ public partial class LicenseAgreementSetupStep : ComponentBase, ISetupStep
             }
         };
 
-        IDialogReference licenseDialog = await DialogService.ShowAsync<UiLicenseDialog>("HomeBook Licenses",
+        IDialogReference licenseDialog = await DialogService.ShowAsync<UiLicenseDialog>(string.Empty,
             parameters,
             new DialogOptions()
             {

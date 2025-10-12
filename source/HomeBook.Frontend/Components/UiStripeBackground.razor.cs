@@ -5,7 +5,9 @@ namespace HomeBook.Frontend.Components;
 
 public partial class UiStripeBackground : ComponentBase, IAsyncDisposable
 {
-    [Inject] private IJSRuntime JSRuntime { get; set; } = null!;
+    [Inject]
+    private IJSRuntime JSRuntime { get; set; } = null!;
+
     [Parameter]
     public string CanvasCssClass { get; set; } = string.Empty;
 
@@ -25,7 +27,8 @@ public partial class UiStripeBackground : ComponentBase, IAsyncDisposable
         try
         {
             // JavaScript-Modul laden
-            _jsModule = await JSRuntime.InvokeAsync<IJSObjectReference>("import", "./Components/UiStripeBackground.razor.js");
+            _jsModule = await JSRuntime.InvokeAsync<IJSObjectReference>("import",
+                "./Components/UiStripeBackground.razor.js");
 
             // UiStripeBackground-Instanz mit Helper-Funktion erstellen
             _gradientInstance = await _jsModule.InvokeAsync<IJSObjectReference>("createUiStripeBackground");
@@ -35,7 +38,7 @@ public partial class UiStripeBackground : ComponentBase, IAsyncDisposable
         }
         catch (Exception ex)
         {
-            Console.WriteLine($"Fehler beim Initialisieren des Gradients: {ex.Message}");
+            Logger.LogError($"Error initializing gradient: {ex.Message}");
         }
     }
 
@@ -56,7 +59,7 @@ public partial class UiStripeBackground : ComponentBase, IAsyncDisposable
         }
         catch (Exception ex)
         {
-            Console.WriteLine($"Fehler beim Entsorgen der Gradient-Komponente: {ex.Message}");
+            Logger.LogError($"Error disposing gradient: {ex.Message}");
         }
     }
 }

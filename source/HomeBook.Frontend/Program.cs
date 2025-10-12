@@ -1,12 +1,9 @@
 using Microsoft.AspNetCore.Components.Web;
 using Microsoft.AspNetCore.Components.WebAssembly.Hosting;
-using Microsoft.AspNetCore.Components.Authorization;
 using HomeBook.Frontend;
 using HomeBook.Frontend.Extensions;
 using HomeBook.Frontend.ModuleCore;
-using HomeBook.Frontend.Pages;
 using HomeBook.Frontend.Services.Extensions;
-using HomeBook.Frontend.Provider;
 using MudBlazor.Services;
 
 var builder = WebAssemblyHostBuilder.CreateDefault(args);
@@ -33,10 +30,6 @@ builder.Services.AddScoped(sp =>
         BaseAddress = new Uri(webAddress)
     };
 });
-
-// Add Authorization services
-builder.Services.AddAuthorizationCore();
-builder.Services.AddScoped<AuthenticationStateProvider, CustomAuthenticationStateProvider>();
 
 builder.Services.AddMudServices(x =>
 {

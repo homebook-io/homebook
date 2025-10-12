@@ -1,5 +1,8 @@
+using HomeBook.Client.Models;
 using HomeBook.Frontend.Abstractions.Contracts;
+using HomeBook.Frontend.Core.Models.Configuration;
 using HomeBook.Frontend.Core.Models.Setup;
+using HomeBook.Frontend.Mappings;
 using Microsoft.AspNetCore.Components;
 using Microsoft.Kiota.Abstractions;
 
@@ -12,6 +15,9 @@ public partial class ConfigurationSetupStep : ComponentBase, ISetupStep
     private bool _preConfigured = false;
     private string? _errorMessage = null;
     private HomebookConfigurationViewModel _homebookConfiguration = new();
+
+    private readonly List<LanguageViewModel> _availableLanguages = [];
+
     public string Key { get; } = nameof(ConfigurationSetupStep);
     public bool HasError { get; set; }
     public bool IsSuccessful { get; set; }
@@ -35,6 +41,8 @@ public partial class ConfigurationSetupStep : ComponentBase, ISetupStep
             StateHasChanged();
 
             CancellationToken cancellationToken = CancellationToken.None;
+
+            await LoadAvailableLocalesAsync(cancellationToken);
 
             await BackendClient.Setup.Configuration.GetAsync(x =>
                 {
@@ -62,11 +70,37 @@ public partial class ConfigurationSetupStep : ComponentBase, ISetupStep
         }
     }
 
+    private async Task LoadAvailableLocalesAsync(CancellationToken cancellationToken)
+    {
+        // TODO: move loading locales to service
+        GetLocalesResponse? localeResponse = await BackendClient.Platform.Locales.GetAsync(x =>
+            {
+            },
+            cancellationToken);
+
+        if (localeResponse is not null)
+        {
+            List<LocaleResponse>? locales = localeResponse.Locales;
+            _availableLanguages.Clear();
+            foreach (LocaleResponse locale in (locales ?? []).OfType<LocaleResponse>())
+            {
+                _availableLanguages.Add(locale.ToViewModel());
+            }
+
+            StateHasChanged();
+        }
+    }
+
     private async Task OnValidSubmit()
     {
         CancellationToken cancellationToken = CancellationToken.None;
 
-        await SetupService.SetStorageValueAsync("HOMEBOOK_CONFIGURATION_NAME", _homebookConfiguration.InstanceName, cancellationToken);
+        await SetupService.SetStorageValueAsync("HOMEBOOK_CONFIGURATION_NAME",
+            _homebookConfiguration.InstanceName,
+            cancellationToken);
+        await SetupService.SetStorageValueAsync("HOMEBOOK_CONFIGURATION_DEFAULT_LOCALE",
+            _homebookConfiguration.InstanceDefaultLocale,
+            cancellationToken);
 
         _errorMessage = null;
         _configurationIsOk = true;

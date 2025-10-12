@@ -8,7 +8,6 @@ using HomeBook.Backend.Core.DataProvider.Validators;
 using HomeBook.Backend.Core.HashProvider;
 using HomeBook.Backend.Core.Licenses;
 using Homebook.Backend.Core.Setup;
-using Homebook.Backend.Core.Setup.Extensions;
 using Homebook.Backend.Core.Setup.Factories;
 using Homebook.Backend.Core.Setup.Models;
 using Homebook.Backend.Core.Setup.Provider;
@@ -18,6 +17,7 @@ using HomeBook.Backend.Data.Entities;
 using HomeBook.Backend.Data.Extensions;
 using HomeBook.Backend.Data.Mysql.Extensions;
 using HomeBook.Backend.Data.PostgreSql.Extensions;
+using HomeBook.Backend.Data.Sqlite.Extensions;
 using HomeBook.Backend.Factories;
 using HomeBook.Backend.Provider;
 using HomeBook.Backend.Services;
@@ -57,6 +57,7 @@ public static class ServiceCollectionExtensions
 
         // database dependencies
         services.AddBackendDatabaseProbes(configuration, instanceStatus);
+        services.AddBackendDatabaseMigrators(configuration, instanceStatus);
         services.AddSingleton<IDatabaseMigratorFactory, DatabaseMigratorFactory>();
 
         return services;
@@ -69,10 +70,22 @@ public static class ServiceCollectionExtensions
         // Register the file service
         services.AddSingleton<IApplicationPathProvider, NativeFileService>();
         services.AddSingleton<IFileSystemService, NativeFileService>();
+        services.AddBackendDatabaseMigrators(configuration, instanceStatus);
         services.AddSingleton<IDatabaseMigratorFactory, DatabaseMigratorFactory>();
 
         // Register other services as needed
         services.AddSingleton<IRuntimeConfigurationProvider, RuntimeConfigurationProvider>();
+
+        return services;
+    }
+
+    public static IServiceCollection AddBackendDatabaseMigrators(this IServiceCollection services,
+        IConfiguration configuration,
+        InstanceStatus instanceStatus)
+    {
+        services.AddKeyedSingleton<IDatabaseMigrator, Data.PostgreSql.DatabaseMigrator>("POSTGRESQL");
+        services.AddKeyedSingleton<IDatabaseMigrator, Data.Mysql.DatabaseMigrator>("MYSQL");
+        services.AddKeyedSingleton<IDatabaseMigrator, Data.Sqlite.DatabaseMigrator>("SQLITE");
 
         return services;
     }
@@ -84,6 +97,7 @@ public static class ServiceCollectionExtensions
         services.AddSingleton<IDatabaseProviderResolver, DatabaseProviderResolver>();
         services.AddBackendDataPostgreSqlProbe(configuration);
         services.AddBackendDataMysqlProbe(configuration);
+        services.AddBackendDataSqliteProbe(configuration);
 
         return services;
     }
@@ -106,6 +120,9 @@ public static class ServiceCollectionExtensions
                     break;
                 case "mysql":
                     services.AddBackendDataMysql(configuration);
+                    break;
+                case "sqlite":
+                    services.AddBackendDataSqlite(configuration);
                     break;
                 default:
                     throw new UnsupportedDatabaseException($"Unsupported database provider: {databaseType}");

@@ -25,7 +25,7 @@ public class UpdateProcessor(
             // 1. create directory structure ( to create new directories from this update)
             setupInstanceManager.CreateRequiredDirectories();
 
-            // 2. execute databae migrations
+            // 2. execute database migrations
             logger.LogInformation("Starting database migration for provider: {DatabaseType}", databaseType);
             IDatabaseMigrator databaseMigrator = databaseMigratorFactory.CreateMigrator(databaseType);
             await databaseMigrator.MigrateAsync(cancellationToken);

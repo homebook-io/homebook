@@ -62,6 +62,19 @@
   content: var(--blazor-load-percentage-text, "Loading");
 }
 
+/* mudblazor breakpoints */
+/* own breakpoints */
+:root {
+  --hb-breakpoint-xs: 0px;
+  --hb-breakpoint-sm: 600px;
+  --hb-breakpoint-md: 960px;
+  --hb-breakpoint-lg: 1280px;
+  --hb-breakpoint-xl: 1920px;
+  --hb-breakpoint-xxl: 2560px;
+  --hb-breakpoint-xxxl: 3840px;
+  --hb-breakpoint-xxxxl: 5120px;
+}
+
 :root {
   --hb-frosted-color: rgb(255, 255, 255);
   --hb-frosted-alpha-min: 0.05;
@@ -74,6 +87,174 @@
   --hb-frosted-inner-shadow-alpha: 0.3;
 }
 
+:root {
+  --hb-ui-icon-border-radius: 6px;
+}
+
+.w-0 {
+  width: 0% !important;
+}
+
+.w-25 {
+  width: 25% !important;
+}
+
+.w-50 {
+  width: 50% !important;
+}
+
+.w-75 {
+  width: 75% !important;
+}
+
+.w-100 {
+  width: 100% !important;
+}
+
+.w-auto {
+  width: auto !important;
+}
+
+@media (min-width: 600px) {
+  .w-sm-0 {
+    width: 0% !important;
+  }
+  .w-sm-25 {
+    width: 25% !important;
+  }
+  .w-sm-50 {
+    width: 50% !important;
+  }
+  .w-sm-75 {
+    width: 75% !important;
+  }
+  .w-sm-100 {
+    width: 100% !important;
+  }
+  .w-sm-auto {
+    width: auto !important;
+  }
+}
+@media (min-width: 960px) {
+  .w-md-0 {
+    width: 0% !important;
+  }
+  .w-md-25 {
+    width: 25% !important;
+  }
+  .w-md-50 {
+    width: 50% !important;
+  }
+  .w-md-75 {
+    width: 75% !important;
+  }
+  .w-md-100 {
+    width: 100% !important;
+  }
+  .w-md-auto {
+    width: auto !important;
+  }
+}
+@media (min-width: 1280px) {
+  .w-lg-0 {
+    width: 0% !important;
+  }
+  .w-lg-25 {
+    width: 25% !important;
+  }
+  .w-lg-50 {
+    width: 50% !important;
+  }
+  .w-lg-75 {
+    width: 75% !important;
+  }
+  .w-lg-100 {
+    width: 100% !important;
+  }
+  .w-lg-auto {
+    width: auto !important;
+  }
+}
+@media (min-width: 1920px) {
+  .w-xl-0 {
+    width: 0% !important;
+  }
+  .w-xl-25 {
+    width: 25% !important;
+  }
+  .w-xl-50 {
+    width: 50% !important;
+  }
+  .w-xl-75 {
+    width: 75% !important;
+  }
+  .w-xl-100 {
+    width: 100% !important;
+  }
+  .w-xl-auto {
+    width: auto !important;
+  }
+}
+@media (min-width: 2560px) {
+  .w-xxl-0 {
+    width: 0% !important;
+  }
+  .w-xxl-25 {
+    width: 25% !important;
+  }
+  .w-xxl-50 {
+    width: 50% !important;
+  }
+  .w-xxl-75 {
+    width: 75% !important;
+  }
+  .w-xxl-100 {
+    width: 100% !important;
+  }
+  .w-xxl-auto {
+    width: auto !important;
+  }
+}
+@media (min-width: 3840px) {
+  .w-xxxl-0 {
+    width: 0% !important;
+  }
+  .w-xxxl-25 {
+    width: 25% !important;
+  }
+  .w-xxxl-50 {
+    width: 50% !important;
+  }
+  .w-xxxl-75 {
+    width: 75% !important;
+  }
+  .w-xxxl-100 {
+    width: 100% !important;
+  }
+  .w-xxxl-auto {
+    width: auto !important;
+  }
+}
+@media (min-width: 5120px) {
+  .w-xxxxl-0 {
+    width: 0% !important;
+  }
+  .w-xxxxl-25 {
+    width: 25% !important;
+  }
+  .w-xxxxl-50 {
+    width: 50% !important;
+  }
+  .w-xxxxl-75 {
+    width: 75% !important;
+  }
+  .w-xxxxl-100 {
+    width: 100% !important;
+  }
+  .w-xxxxl-auto {
+    width: auto !important;
+  }
+}
 .frosted-b1 {
   position: relative;
   background: radial-gradient(ellipse 80% 30% at top center, rgba(255, 255, 255, 0.15) 0%, transparent 80%), linear-gradient(160deg, rgba(255, 255, 255, 0.05) 0%, rgba(255, 255, 255, 0.3) 100%), rgba(255, 255, 255, 0.05) !important;
@@ -87,6 +268,9 @@
   pointer-events: none;
   box-shadow: inset 0px 4px 48px rgba(255, 255, 255, 0.35);
   border-radius: inherit;
+}
+.frosted-b1.no-backdrop-blur {
+  backdrop-filter: none;
 }
 
 .frosted-bg-b1 {
@@ -116,6 +300,9 @@
   box-shadow: inset 0px 4px 48px rgba(255, 255, 255, 0.4);
   border-radius: inherit;
 }
+.frosted-b2.no-backdrop-blur {
+  backdrop-filter: none;
+}
 
 .frosted-bg-b2 {
   background: radial-gradient(ellipse 80% 30% at top center, rgba(255, 255, 255, 0.15) 0%, transparent 80%), linear-gradient(160deg, rgba(255, 255, 255, 0.1) 0%, rgba(255, 255, 255, 0.35) 100%), rgba(255, 255, 255, 0.1) !important;
@@ -143,6 +330,9 @@
   pointer-events: none;
   box-shadow: inset 0px 4px 48px rgba(255, 255, 255, 0.45);
   border-radius: inherit;
+}
+.frosted-b3.no-backdrop-blur {
+  backdrop-filter: none;
 }
 
 .frosted-bg-b3 {
@@ -172,6 +362,9 @@
   box-shadow: inset 0px 4px 48px rgba(255, 255, 255, 0.5);
   border-radius: inherit;
 }
+.frosted-b4.no-backdrop-blur {
+  backdrop-filter: none;
+}
 
 .frosted-bg-b4 {
   background: radial-gradient(ellipse 80% 30% at top center, rgba(255, 255, 255, 0.15) 0%, transparent 80%), linear-gradient(160deg, rgba(255, 255, 255, 0.2) 0%, rgba(255, 255, 255, 0.45) 100%), rgba(255, 255, 255, 0.2) !important;
@@ -199,6 +392,9 @@
   pointer-events: none;
   box-shadow: inset 0px 4px 48px rgba(255, 255, 255, 0.55);
   border-radius: inherit;
+}
+.frosted-b5.no-backdrop-blur {
+  backdrop-filter: none;
 }
 
 .frosted-bg-b5, .mud-drawer.frosted {
@@ -228,6 +424,9 @@
   box-shadow: inset 0px 4px 48px rgba(255, 255, 255, 0.6);
   border-radius: inherit;
 }
+.frosted-b6.no-backdrop-blur {
+  backdrop-filter: none;
+}
 
 .frosted-bg-b6 {
   background: radial-gradient(ellipse 80% 30% at top center, rgba(255, 255, 255, 0.15) 0%, transparent 80%), linear-gradient(160deg, rgba(255, 255, 255, 0.3) 0%, rgba(255, 255, 255, 0.55) 100%), rgba(255, 255, 255, 0.3) !important;
@@ -255,6 +454,9 @@
   pointer-events: none;
   box-shadow: inset 0px 4px 48px rgba(255, 255, 255, 0.65);
   border-radius: inherit;
+}
+.frosted-b7.no-backdrop-blur {
+  backdrop-filter: none;
 }
 
 .frosted-bg-b7 {
@@ -284,6 +486,9 @@
   box-shadow: inset 0px 4px 48px rgba(255, 255, 255, 0.7);
   border-radius: inherit;
 }
+.frosted-b8.no-backdrop-blur {
+  backdrop-filter: none;
+}
 
 .frosted-bg-b8 {
   background: radial-gradient(ellipse 80% 30% at top center, rgba(255, 255, 255, 0.15) 0%, transparent 80%), linear-gradient(160deg, rgba(255, 255, 255, 0.4) 0%, rgba(255, 255, 255, 0.65) 100%), rgba(255, 255, 255, 0.4) !important;
@@ -312,6 +517,9 @@
   box-shadow: inset 0px 4px 48px rgba(255, 255, 255, 0.75);
   border-radius: inherit;
 }
+.frosted-b9.no-backdrop-blur {
+  backdrop-filter: none;
+}
 
 .frosted-bg-b9 {
   background: radial-gradient(ellipse 80% 30% at top center, rgba(255, 255, 255, 0.15) 0%, transparent 80%), linear-gradient(160deg, rgba(255, 255, 255, 0.45) 0%, rgba(255, 255, 255, 0.7) 100%), rgba(255, 255, 255, 0.45) !important;
@@ -339,6 +547,9 @@
   pointer-events: none;
   box-shadow: inset 0px 4px 48px rgba(255, 255, 255, 0.8);
   border-radius: inherit;
+}
+.frosted-b10.no-backdrop-blur {
+  backdrop-filter: none;
 }
 
 .frosted-bg-b10 {
@@ -385,6 +596,13 @@
 
 .ubuntu-text {
   color: #e95420 !important;
+}
+
+:root {
+  --hb-settings-color-instance-name: #2563EB;
+  --hb-settings-color-default-language: #16A34A;
+  --hb-settings-color-user-actions-disable: #FFA726;
+  --hb-settings-color-user-actions-delete: #E53935;
 }
 
 .mud-navmenu.mud-navmenu-first-level > .mud-nav-item > .mud-nav-link {
@@ -441,6 +659,25 @@
 }
 .mud-drawer.frosted.mud-theme-tertiary::before {
   content: none !important;
+}
+
+.mud-card > .mud-card-header {
+  border-color: var(--mud-palette-divider);
+  border-width: 1px;
+  border-style: solid none none none;
+}
+.mud-card > .mud-card-content {
+  border-color: var(--mud-palette-divider);
+  border-width: 1px;
+  border-style: solid none none none;
+}
+.mud-card > .mud-card-actions {
+  border-bottom-left-radius: var(--mud-default-borderradius);
+  border-bottom-right-radius: var(--mud-default-borderradius);
+  background-color: var(--mud-palette-background-gray);
+}
+.mud-card .no-divider {
+  border: none;
 }
 
 .ui-wavebackground-container {
@@ -643,6 +880,30 @@
 
 .hb-widget-selection-drawer {
   width: var(--ui-widget-drawer-width);
+}
+
+.ui-icon > .ui-icon-el {
+  border-radius: var(--hb-ui-icon-border-radius, 0);
+}
+.ui-icon > .ui-icon-el.ui-icon-filled {
+  color: #ffffff;
+  padding: 2px;
+}
+.ui-icon > .ui-icon-el.ui-icon-outlined {
+  border-width: 1px;
+  border-style: solid;
+  padding: 1px;
+}
+.ui-icon > .ui-icon-el.ui-icon-outlined.mud-icon-size-large {
+  border-width: 2px;
+}
+.ui-settings-item .ui-settings-item-content {
+  width: 100%;
+}
+@media (min-width: 960px) {
+  .ui-settings-item .ui-settings-item-content {
+    width: 240px;
+  }
 }
 
 .hb-setup-container {

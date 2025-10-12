@@ -1,0 +1,77 @@
+using Microsoft.AspNetCore.Mvc;
+using System.Security.Claims;
+using HomeBook.Backend.Abstractions.Contracts;
+using HomeBook.Backend.Requests;
+using HomeBook.Backend.Responses;
+using HomeBook.Backend.Utilities;
+
+namespace HomeBook.Backend.Handler;
+
+public class UserHandler
+{
+    /// <summary>
+    /// gets the user preference for locale
+    /// </summary>
+    /// <param name="user"></param>
+    /// <param name="logger"></param>
+    /// <param name="userPreferenceProvider"></param>
+    /// <param name="instanceConfigurationProvider"></param>
+    /// <param name="cancellationToken"></param>
+    /// <returns></returns>
+    public static async Task<IResult> HandleGetUserPreferenceForLocale(ClaimsPrincipal user,
+        [FromServices] ILogger<UserHandler> logger,
+        [FromServices] IUserPreferenceProvider userPreferenceProvider,
+        [FromServices] IInstanceConfigurationProvider instanceConfigurationProvider,
+        CancellationToken cancellationToken)
+    {
+        try
+        {
+            Guid userId = user.GetUserId();
+
+            string? locale = await userPreferenceProvider.GetUserPreferredLocaleAsync(userId,
+                cancellationToken);
+
+            if (string.IsNullOrEmpty(locale))
+                locale = await instanceConfigurationProvider.GetHomeBookInstanceDefaultLocaleAsync(cancellationToken);
+
+            return TypedResults.Ok(new GetUserPreferenceLocaleResponse(locale!));
+        }
+        catch (Exception err)
+        {
+            logger.LogError(err, "Error while getting user preference");
+            return TypedResults.InternalServerError(err.Message);
+        }
+    }
+
+    /// <summary>
+    /// updates the user preference for locale
+    /// </summary>
+    /// <param name="user"></param>
+    /// <param name="logger"></param>
+    /// <param name="userPreferenceProvider"></param>
+    /// <param name="request"></param>
+    /// <param name="cancellationToken"></param>
+    /// <returns></returns>
+    public static async Task<IResult> HandleUpdateUserPreferenceForLocale(ClaimsPrincipal user,
+        [FromServices] ILogger<UserHandler> logger,
+        [FromServices] IUserPreferenceProvider userPreferenceProvider,
+        [FromBody] UpdateUserPreferenceLocaleRequest request,
+        CancellationToken cancellationToken)
+    {
+        try
+        {
+            Guid userId = user.GetUserId();
+
+            await userPreferenceProvider.SetUserPreferredLocaleAsync(userId,
+                request.Locale,
+                cancellationToken);
+
+            return TypedResults.Ok();
+        }
+        catch (Exception err)
+        {
+            logger.LogError(err, "Error while updating user preference");
+            return TypedResults.InternalServerError(err.Message);
+        }
+    }
+}

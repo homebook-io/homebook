@@ -22,6 +22,7 @@ public class EnvironmentValidatorTests
         // Arrange
         var config = new EnvironmentConfiguration(
             DatabaseType: "POSTGRESQL",
+            DatabaseFile: null,
             DatabaseHost: "localhost",
             DatabasePort: "5432",
             DatabaseName: "homebook",
@@ -46,6 +47,7 @@ public class EnvironmentValidatorTests
         // Arrange
         var config = new EnvironmentConfiguration(
             DatabaseType: "MYSQL",
+            DatabaseFile: null,
             DatabaseHost: "192.168.1.100",
             DatabasePort: "3306",
             DatabaseName: "my_database",
@@ -70,6 +72,7 @@ public class EnvironmentValidatorTests
         // Arrange
         var config = new EnvironmentConfiguration(
             DatabaseType: "POSTGRESQL",
+            DatabaseFile: null,
             DatabaseHost: "database.example.com",
             DatabasePort: "1521",
             DatabaseName: "production-db",
@@ -94,6 +97,7 @@ public class EnvironmentValidatorTests
         // Arrange
         var config = new EnvironmentConfiguration(
             DatabaseType: "POSTGRESQL",
+            DatabaseFile: null,
             DatabaseHost: "localhost",
             DatabasePort: null,
             DatabaseName: "testdb",
@@ -118,6 +122,7 @@ public class EnvironmentValidatorTests
         // Arrange
         var config = new EnvironmentConfiguration(
             DatabaseType: null,
+            DatabaseFile: null,
             DatabaseHost: null,
             DatabasePort: null,
             DatabaseName: null,
@@ -142,6 +147,7 @@ public class EnvironmentValidatorTests
         // Arrange
         var config = new EnvironmentConfiguration(
             DatabaseType: "",
+            DatabaseFile: null,
             DatabaseHost: "",
             DatabasePort: "",
             DatabaseName: "",
@@ -195,6 +201,7 @@ public class EnvironmentValidatorTests
     {
         // Arrange
         var config = new EnvironmentConfiguration(null,
+            null,
             host,
             null,
             null,
@@ -226,6 +233,7 @@ public class EnvironmentValidatorTests
     {
         // Arrange
         var config = new EnvironmentConfiguration(null,
+            null,
             host,
             null,
             null,
@@ -266,6 +274,7 @@ public class EnvironmentValidatorTests
         // Arrange
         var config = new EnvironmentConfiguration(null,
             null,
+            null,
             port,
             null,
             null,
@@ -293,6 +302,7 @@ public class EnvironmentValidatorTests
     {
         // Arrange
         var config = new EnvironmentConfiguration(null,
+            null,
             null,
             port,
             null,
@@ -328,6 +338,7 @@ public class EnvironmentValidatorTests
         var config = new EnvironmentConfiguration(null,
             null,
             null,
+            null,
             dbName,
             null,
             null,
@@ -357,6 +368,7 @@ public class EnvironmentValidatorTests
         var config = new EnvironmentConfiguration(null,
             null,
             null,
+            null,
             dbName,
             null,
             null,
@@ -371,7 +383,8 @@ public class EnvironmentValidatorTests
         result.IsValid.ShouldBeFalse();
         var dbNameErrors = result.Errors.Where(e => e.PropertyName == nameof(EnvironmentConfiguration.DatabaseName));
         dbNameErrors.ShouldNotBeEmpty();
-        dbNameErrors.First().ErrorMessage.ShouldBe("DatabaseName can only contain alphanumeric characters, underscores and hyphens");
+        dbNameErrors.First()
+            .ErrorMessage.ShouldBe("DatabaseName can only contain alphanumeric characters, underscores and hyphens");
     }
 
     [Test]
@@ -380,6 +393,7 @@ public class EnvironmentValidatorTests
         // Arrange
         var longName = new string('a', 64);
         var config = new EnvironmentConfiguration(null,
+            null,
             null,
             null,
             longName,
@@ -417,6 +431,7 @@ public class EnvironmentValidatorTests
             null,
             null,
             null,
+            null,
             username,
             null,
             null,
@@ -448,6 +463,7 @@ public class EnvironmentValidatorTests
             null,
             null,
             null,
+            null,
             username,
             null,
             null,
@@ -458,9 +474,12 @@ public class EnvironmentValidatorTests
 
         // Assert
         result.IsValid.ShouldBeFalse();
-        var usernameErrors = result.Errors.Where(e => e.PropertyName == nameof(EnvironmentConfiguration.DatabaseUserName));
+        var usernameErrors =
+            result.Errors.Where(e => e.PropertyName == nameof(EnvironmentConfiguration.DatabaseUserName));
         usernameErrors.ShouldNotBeEmpty();
-        usernameErrors.First().ErrorMessage.ShouldBe("DatabaseUserName can only contain alphanumeric characters, underscores, dots and hyphens");
+        usernameErrors.First()
+            .ErrorMessage
+            .ShouldBe("DatabaseUserName can only contain alphanumeric characters, underscores, dots and hyphens");
     }
 
     [Test]
@@ -469,6 +488,7 @@ public class EnvironmentValidatorTests
         // Arrange
         var longUsername = new string('a', 64);
         var config = new EnvironmentConfiguration(null,
+            null,
             null,
             null,
             null,
@@ -483,9 +503,11 @@ public class EnvironmentValidatorTests
 
         // Assert
         result.IsValid.ShouldBeFalse();
-        var usernameErrors = result.Errors.Where(e => e.PropertyName == nameof(EnvironmentConfiguration.DatabaseUserName));
+        var usernameErrors =
+            result.Errors.Where(e => e.PropertyName == nameof(EnvironmentConfiguration.DatabaseUserName));
         usernameErrors.ShouldNotBeEmpty();
-        usernameErrors.Any(e => e.ErrorMessage == "DatabaseUserName must be between 1 and 63 characters long").ShouldBeTrue();
+        usernameErrors.Any(e => e.ErrorMessage == "DatabaseUserName must be between 1 and 63 characters long")
+            .ShouldBeTrue();
     }
 
     #endregion
@@ -507,6 +529,7 @@ public class EnvironmentValidatorTests
             null,
             null,
             null,
+            null,
             password,
             null,
             null,
@@ -517,7 +540,8 @@ public class EnvironmentValidatorTests
 
         // Assert
         result.IsValid.ShouldBeTrue();
-        result.Errors.Where(e => e.PropertyName == nameof(EnvironmentConfiguration.DatabaseUserPassword)).ShouldBeEmpty();
+        result.Errors.Where(e => e.PropertyName == nameof(EnvironmentConfiguration.DatabaseUserPassword))
+            .ShouldBeEmpty();
     }
 
     [TestCase("short")]
@@ -526,6 +550,7 @@ public class EnvironmentValidatorTests
     {
         // Arrange
         var config = new EnvironmentConfiguration(null,
+            null,
             null,
             null,
             null,
@@ -540,9 +565,11 @@ public class EnvironmentValidatorTests
 
         // Assert
         result.IsValid.ShouldBeFalse();
-        var passwordErrors = result.Errors.Where(e => e.PropertyName == nameof(EnvironmentConfiguration.DatabaseUserPassword));
+        var passwordErrors =
+            result.Errors.Where(e => e.PropertyName == nameof(EnvironmentConfiguration.DatabaseUserPassword));
         passwordErrors.ShouldNotBeEmpty();
-        passwordErrors.Any(e => e.ErrorMessage == "DatabaseUserPassword must be at least 8 characters long").ShouldBeTrue();
+        passwordErrors.Any(e => e.ErrorMessage == "DatabaseUserPassword must be at least 8 characters long")
+            .ShouldBeTrue();
     }
 
     [Test]
@@ -551,6 +578,7 @@ public class EnvironmentValidatorTests
         // Empty passwords are allowed due to .When condition
         // Arrange
         var config = new EnvironmentConfiguration(null,
+            null,
             null,
             null,
             null,
@@ -565,7 +593,8 @@ public class EnvironmentValidatorTests
 
         // Assert
         result.IsValid.ShouldBeTrue();
-        result.Errors.Where(e => e.PropertyName == nameof(EnvironmentConfiguration.DatabaseUserPassword)).ShouldBeEmpty();
+        result.Errors.Where(e => e.PropertyName == nameof(EnvironmentConfiguration.DatabaseUserPassword))
+            .ShouldBeEmpty();
     }
 
     [Test]
@@ -574,6 +603,7 @@ public class EnvironmentValidatorTests
         // Arrange
         var passwordWithControlChar = "password\x00test";
         var config = new EnvironmentConfiguration(null,
+            null,
             null,
             null,
             null,
@@ -588,7 +618,8 @@ public class EnvironmentValidatorTests
 
         // Assert
         result.IsValid.ShouldBeFalse();
-        var passwordErrors = result.Errors.Where(e => e.PropertyName == nameof(EnvironmentConfiguration.DatabaseUserPassword));
+        var passwordErrors =
+            result.Errors.Where(e => e.PropertyName == nameof(EnvironmentConfiguration.DatabaseUserPassword));
         passwordErrors.ShouldNotBeEmpty();
         passwordErrors.First().ErrorMessage.ShouldBe("DatabaseUserPassword contains invalid characters");
     }
@@ -597,14 +628,23 @@ public class EnvironmentValidatorTests
 
     #region Complex Injection Attack Tests
 
-    [TestCase("192.168.1.1 OR 1=1", "5432 UNION SELECT", "db\" OR \"1\"=\"1", "user\" OR \"1\"=\"1", "pass\" OR \"1\"=\"1")]
+    [TestCase("192.168.1.1 OR 1=1",
+        "5432 UNION SELECT",
+        "db\" OR \"1\"=\"1",
+        "user\" OR \"1\"=\"1",
+        "pass\" OR \"1\"=\"1")]
     [TestCase("host<script>alert('xss')</script>", "80<script>", "db<script>", "user<script>", "pass<script>")]
     [TestCase("${jndi:ldap://evil.com}", "8080|whoami", "db`rm -rf /`", "user${PATH}", "pass|cat /etc/passwd")]
-    public void Validate_ComplexInjectionAttempts_ShouldFailOnAllFields(string host, string port, string dbName, string username, string password)
+    public void Validate_ComplexInjectionAttempts_ShouldFailOnAllFields(string host,
+        string port,
+        string dbName,
+        string username,
+        string password)
     {
         // Arrange
         var config = new EnvironmentConfiguration(
             "MYSQL",
+            null,
             host,
             port,
             dbName,
@@ -622,7 +662,8 @@ public class EnvironmentValidatorTests
         result.Errors.Where(e => e.PropertyName == nameof(EnvironmentConfiguration.DatabaseHost)).ShouldNotBeEmpty();
         result.Errors.Where(e => e.PropertyName == nameof(EnvironmentConfiguration.DatabasePort)).ShouldNotBeEmpty();
         result.Errors.Where(e => e.PropertyName == nameof(EnvironmentConfiguration.DatabaseName)).ShouldNotBeEmpty();
-        result.Errors.Where(e => e.PropertyName == nameof(EnvironmentConfiguration.DatabaseUserName)).ShouldNotBeEmpty();
+        result.Errors.Where(e => e.PropertyName == nameof(EnvironmentConfiguration.DatabaseUserName))
+            .ShouldNotBeEmpty();
     }
 
     [Test]
@@ -631,8 +672,12 @@ public class EnvironmentValidatorTests
         // This specific case was failing because the hostname regex was too permissive
         // Arrange
         var config = new EnvironmentConfiguration("MYSQL",
+            null,
             "evil.com'; DROP DATABASE homebook; --",
-            "3306", null, null, null,
+            "3306",
+            null,
+            null,
+            null,
             null,
             null,
             null);
@@ -655,8 +700,13 @@ public class EnvironmentValidatorTests
     public void Validate_IPv6LocalhostAddresses_ShouldPass()
     {
         // Arrange
-        var config = new EnvironmentConfiguration("MYSQL","::1", null, null,
-            null, null,
+        var config = new EnvironmentConfiguration("MYSQL",
+            null,
+            "::1",
+            null,
+            null,
+            null,
+            null,
             null,
             null,
             null);
@@ -673,8 +723,13 @@ public class EnvironmentValidatorTests
     public void Validate_IPv6AllZeros_ShouldPass()
     {
         // Arrange
-        var config = new EnvironmentConfiguration("MYSQL","::", null, null,
-            null, null,
+        var config = new EnvironmentConfiguration("MYSQL",
+            null,
+            "::",
+            null,
+            null,
+            null,
+            null,
             null,
             null,
             null);
@@ -693,8 +748,13 @@ public class EnvironmentValidatorTests
         // Arrange
         var maxDbName = new string('a', 63);
         var maxUsername = new string('u', 63);
-        var config = new EnvironmentConfiguration("MYSQL","localhost", "5432", maxDbName,
-            maxUsername, "ValidPassword123",
+        var config = new EnvironmentConfiguration("MYSQL",
+            null,
+            "localhost",
+            "5432",
+            maxDbName,
+            maxUsername,
+            "ValidPassword123",
             null,
             null,
             null);
@@ -712,8 +772,13 @@ public class EnvironmentValidatorTests
     {
         // Arrange
         var password = "P@ssw0rd!#%*+=?^_~()-[]{}";
-        var config = new EnvironmentConfiguration(null, null, null, null,
-            null, password,
+        var config = new EnvironmentConfiguration(null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            password,
             null,
             null,
             null);
@@ -723,7 +788,8 @@ public class EnvironmentValidatorTests
 
         // Assert
         result.IsValid.ShouldBeTrue();
-        result.Errors.Where(e => e.PropertyName == nameof(EnvironmentConfiguration.DatabaseUserPassword)).ShouldBeEmpty();
+        result.Errors.Where(e => e.PropertyName == nameof(EnvironmentConfiguration.DatabaseUserPassword))
+            .ShouldBeEmpty();
     }
 
     #endregion

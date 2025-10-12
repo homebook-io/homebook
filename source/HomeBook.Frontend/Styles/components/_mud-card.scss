@@ -1,0 +1,24 @@
+.mud-card {
+
+    > .mud-card-header {
+        border-color: var(--mud-palette-divider);
+        border-width: 1px;
+        border-style: solid none none none;
+    }
+
+    > .mud-card-content {
+        border-color: var(--mud-palette-divider);
+        border-width: 1px;
+        border-style: solid none none none;
+    }
+
+    > .mud-card-actions {
+        border-bottom-left-radius: var(--mud-default-borderradius);
+        border-bottom-right-radius: var(--mud-default-borderradius);
+        background-color: var(--mud-palette-background-gray);
+    }
+
+    .no-divider {
+        border: none;
+    }
+}

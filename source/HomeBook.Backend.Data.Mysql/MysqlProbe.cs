@@ -9,7 +9,7 @@ namespace HomeBook.Backend.Data.Mysql;
 public class MysqlProbe : IDatabaseProbe
 {
     /// <inheritdoc />
-    public DatabaseProvider ProviderName { get; } = DatabaseProvider.MYSQL;
+    public string ProviderName { get; } = "MYSQL";
 
     /// <inheritdoc />
     public async Task<bool> CanConnectAsync(string host,
@@ -38,5 +38,11 @@ public class MysqlProbe : IDatabaseProbe
         {
             return false;
         }
+    }
+
+    /// <inheritdoc />
+    public Task<bool> CanConnectAsync(string filePath, CancellationToken cancellationToken = default)
+    {
+        throw new NotImplementedException();
     }
 }

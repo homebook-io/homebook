@@ -149,6 +149,8 @@ public class SetupInstanceManagerTests
         _configuration.GetSection("Version").Returns(configSection);
 
         const string instanceVersion = "1.0.0";
+        _fileSystemService.FileExists(Arg.Any<string>())
+            .Returns(true);
         _fileSystemService.FileReadAllTextAsync(Arg.Any<string>(),
                 Arg.Any<CancellationToken>())
             .Returns(instanceVersion);

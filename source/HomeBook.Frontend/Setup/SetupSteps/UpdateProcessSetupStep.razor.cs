@@ -1,5 +1,6 @@
 using HomeBook.Client.Models;
 using HomeBook.Frontend.Abstractions.Contracts;
+using HomeBook.Frontend.Properties;
 using HomeBook.Frontend.Setup.Exceptions;
 using Microsoft.AspNetCore.Components;
 using Microsoft.Kiota.Abstractions;
@@ -47,8 +48,7 @@ public partial class UpdateProcessSetupStep : ComponentBase, ISetupStep
         catch (HttpRequestException)
         {
             _updateFailed = true;
-            // DE => Verbindung zum Server konnte nicht hergestellt werden. Stellen Sie sicher, dass der Server läuft und korrekt konfiguriert wurde und versuchen Sie es erneut.
-            _errorMessage = "Unable to connect to the server. Make sure that the server is running and has been configured correctly, then try again.";
+            _errorMessage = Loc[nameof(LocalizationStrings.Setup_BackendConnectionFailed_Message)];
             await StepErrorAsync(cancellationToken);
         }
         catch (SetupCheckException err)
@@ -60,7 +60,9 @@ public partial class UpdateProcessSetupStep : ComponentBase, ISetupStep
         catch (Exception err)
         {
             _updateFailed = true;
-            _errorMessage = "error while updating homebook: " + err.Message;
+            _errorMessage = string.Format(
+                Loc[nameof(LocalizationStrings.Update_Process_ProcessingError_MessageTemplate)],
+                err.Message);
             await StepErrorAsync(cancellationToken);
         }
         finally
@@ -86,22 +88,26 @@ public partial class UpdateProcessSetupStep : ComponentBase, ISetupStep
             // 3. wait until the server is available again and check that the status is correct
             bool isUpdateDone = await WaitForServerRestartAndGetStatusAsync(cancellationToken);
             if (!isUpdateDone)
-                // display error message
-                throw new SetupCheckException("Server did not restart correctly after update.");
+                throw new SetupCheckException(
+                    Loc[nameof(LocalizationStrings.Update_Process_ProcessingServerRestartError_Message)]);
 
             // otherwise the update was successful
         }
         catch (ApiException err) when (err.ResponseStatusCode == 409)
         {
-            throw new SetupCheckException("Run Setup first");
+            throw new SetupCheckException(
+                Loc[nameof(LocalizationStrings.Update_Process_ProcessingSetupMissingError_Message)]);
         }
         catch (ApiException err) when (err.ResponseStatusCode == 500)
         {
-            throw new SetupCheckException("Unknown error while updating");
+            throw new SetupCheckException(
+                Loc[nameof(LocalizationStrings.Update_Process_ProcessingUnknownError_Message)]);
         }
         catch (Exception err)
         {
-            throw new SetupCheckException(err.Message);
+            throw new SetupCheckException(
+                string.Format(Loc[nameof(LocalizationStrings.Update_Process_ProcessingUnknownError_MessageTemplate)],
+                    err.Message));
         }
     }
 
@@ -162,5 +168,9 @@ public partial class UpdateProcessSetupStep : ComponentBase, ISetupStep
         }
     }
 
-    private async Task OnStartHomeBookAsync() => await SetupService.TriggerSetupFinishedAsync();
+    private async Task OnStartHomeBookAsync()
+    {
+        CancellationToken cancellationToken = CancellationToken.None;
+        await SetupService.TriggerSetupFinishedAsync(cancellationToken);
+    }
 }

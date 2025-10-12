@@ -5,6 +5,7 @@
 @attribute [AllowAnonymous]
 
 @using HomeBook.Frontend.Abstractions.Contracts
+@using HomeBook.Frontend.Properties
 @using Microsoft.AspNetCore.Components.Authorization
 
 @inject ILocalizationProvider Loc
@@ -14,7 +15,7 @@
 @inject AuthenticationStateProvider AuthenticationStateProvider
 @inject IJsLocalStorageProvider JsLocalStorageProvider
 
-<PageTitle>@Loc["Setup_Title"]</PageTitle>
+<UiPageTitle>@Loc[nameof(LocalizationStrings.Account_Login_Title)]</UiPageTitle>
 
 <div class="account-login-background @_accountBackgroundClass">
     <UiStripeBackground CanvasCssClass="@_uiStripeBackgroundClass"/>
@@ -34,18 +35,18 @@
                 <MudCard Elevation="10"
                          Class="hb-account-login-card frosted-b5 mud-elevation-24 mud-text-primary">
 
-                    <MudCardHeader>
+                    <MudCardHeader Class="no-divider pb-0">
 
                         <CardHeaderContent>
                             <MudText Typo="Typo.h4"
+                                     Color="Color.Primary">@Loc[nameof(LocalizationStrings.Account_Login_Title)]</MudText>
+                            <MudText Typo="Typo.h6"
                                      Color="Color.Primary">@_homebookInstanceName</MudText>
-                            <MudText Typo="Typo.h3"
-                                     Color="Color.Primary">@Loc["Account_Login_Title"]</MudText>
                         </CardHeaderContent>
 
                     </MudCardHeader>
 
-                    <MudCardContent>
+                    <MudCardContent Class="no-divider">
 
                         @if (!string.IsNullOrEmpty(_errorMessage))
                         {
@@ -79,7 +80,7 @@
 
                     </MudCardContent>
 
-                    <MudCardActions>
+                    <MudCardActions Class="frosted-b1 mud-elevation-24 no-backdrop-blur">
 
                         <MudButton ButtonType="ButtonType.Submit"
                                    Variant="Variant.Filled"
@@ -89,13 +90,20 @@
                                    Disabled="@_isLoading">
                             @if (_isLoading)
                             {
-                                <MudProgressCircular Class="ms-n1" Size="Size.Small" Indeterminate="true"/>
-                                <MudText Class="ms-2">Signing in...</MudText>
+                                <MudProgressCircular Class="ms-n1"
+                                                     Size="Size.Small"
+                                                     Indeterminate="true"/>
+                                <MudText Class="ms-2">
+                                    @Loc[nameof(LocalizationStrings.Account_Login_SigningInButton_Text)]
+                                </MudText>
                             }
                             else
                             {
-                                <MudIcon Icon="Icons.Material.Filled.Login" Class="mr-2"/>
-                                <MudText>Sign In</MudText>
+                                <MudIcon Icon="Icons.Material.Filled.Login"
+                                         Class="mr-2"/>
+                                <MudText>
+                                    @Loc[nameof(LocalizationStrings.Account_Login_SignInButton_Text)]
+                                </MudText>
                             }
                         </MudButton>
 

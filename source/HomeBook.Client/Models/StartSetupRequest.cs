@@ -14,6 +14,14 @@ namespace HomeBook.Client.Models
     {
         /// <summary>Stores additional data not described in the OpenAPI description found when deserializing. Can be used for serialization as well.</summary>
         public IDictionary<string, object> AdditionalData { get; set; }
+        /// <summary>The databaseFile property</summary>
+#if NETSTANDARD2_1_OR_GREATER || NETCOREAPP3_1_OR_GREATER
+#nullable enable
+        public string? DatabaseFile { get; set; }
+#nullable restore
+#else
+        public string DatabaseFile { get; set; }
+#endif
         /// <summary>The databaseHost property</summary>
 #if NETSTANDARD2_1_OR_GREATER || NETCOREAPP3_1_OR_GREATER
 #nullable enable
@@ -55,6 +63,14 @@ namespace HomeBook.Client.Models
 #nullable restore
 #else
         public string DatabaseUserPassword { get; set; }
+#endif
+        /// <summary>The homebookConfigurationDefaultLocale property</summary>
+#if NETSTANDARD2_1_OR_GREATER || NETCOREAPP3_1_OR_GREATER
+#nullable enable
+        public string? HomebookConfigurationDefaultLocale { get; set; }
+#nullable restore
+#else
+        public string HomebookConfigurationDefaultLocale { get; set; }
 #endif
         /// <summary>The homebookConfigurationName property</summary>
 #if NETSTANDARD2_1_OR_GREATER || NETCOREAPP3_1_OR_GREATER
@@ -107,12 +123,14 @@ namespace HomeBook.Client.Models
         {
             return new Dictionary<string, Action<IParseNode>>
             {
+                { "databaseFile", n => { DatabaseFile = n.GetStringValue(); } },
                 { "databaseHost", n => { DatabaseHost = n.GetStringValue(); } },
                 { "databaseName", n => { DatabaseName = n.GetStringValue(); } },
                 { "databasePort", n => { DatabasePort = n.GetIntValue(); } },
                 { "databaseType", n => { DatabaseType = n.GetStringValue(); } },
                 { "databaseUserName", n => { DatabaseUserName = n.GetStringValue(); } },
                 { "databaseUserPassword", n => { DatabaseUserPassword = n.GetStringValue(); } },
+                { "homebookConfigurationDefaultLocale", n => { HomebookConfigurationDefaultLocale = n.GetStringValue(); } },
                 { "homebookConfigurationName", n => { HomebookConfigurationName = n.GetStringValue(); } },
                 { "homebookUserName", n => { HomebookUserName = n.GetStringValue(); } },
                 { "homebookUserPassword", n => { HomebookUserPassword = n.GetStringValue(); } },
@@ -126,12 +144,14 @@ namespace HomeBook.Client.Models
         public virtual void Serialize(ISerializationWriter writer)
         {
             _ = writer ?? throw new ArgumentNullException(nameof(writer));
+            writer.WriteStringValue("databaseFile", DatabaseFile);
             writer.WriteStringValue("databaseHost", DatabaseHost);
             writer.WriteStringValue("databaseName", DatabaseName);
             writer.WriteIntValue("databasePort", DatabasePort);
             writer.WriteStringValue("databaseType", DatabaseType);
             writer.WriteStringValue("databaseUserName", DatabaseUserName);
             writer.WriteStringValue("databaseUserPassword", DatabaseUserPassword);
+            writer.WriteStringValue("homebookConfigurationDefaultLocale", HomebookConfigurationDefaultLocale);
             writer.WriteStringValue("homebookConfigurationName", HomebookConfigurationName);
             writer.WriteStringValue("homebookUserName", HomebookUserName);
             writer.WriteStringValue("homebookUserPassword", HomebookUserPassword);

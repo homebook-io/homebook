@@ -34,4 +34,10 @@ public class DatabaseManager(ILogger<DatabaseManager> logger) : IDatabaseManager
             return false;
         }
     }
+
+    /// <inheritdoc />
+    public Task<bool> IsDatabaseFileAvailableAsync(string databaseFilePath, CancellationToken cancellationToken)
+    {
+        throw new NotImplementedException();
+    }
 }

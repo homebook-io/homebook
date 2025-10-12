@@ -1,5 +1,3 @@
-using HomeBook.Backend.Abstractions.Setup;
-
 namespace HomeBook.Backend.Abstractions.Contracts;
 
 /// <summary>
@@ -10,7 +8,7 @@ public interface IDatabaseProbe
     /// <summary>
     /// the database provider this probe is for.
     /// </summary>
-    DatabaseProvider ProviderName { get; }
+    string ProviderName { get; }
 
     /// <summary>
     /// checks if a connection to the database can be established with the provided parameters.
@@ -27,5 +25,14 @@ public interface IDatabaseProbe
         string databaseName,
         string username,
         string password,
+        CancellationToken cancellationToken = default);
+
+    /// <summary>
+    /// checks if a connection to the database can be established with the provided file path.
+    /// </summary>
+    /// <param name="filePath">the path to the database file</param>
+    /// <param name="cancellationToken"></param>
+    /// <returns></returns>
+    Task<bool> CanConnectAsync(string filePath,
         CancellationToken cancellationToken = default);
 }

@@ -1,3 +1,4 @@
+using HomeBook.Backend.Attributes;
 using HomeBook.Backend.Handler;
 using HomeBook.Backend.Responses;
 using HomeBook.Backend.Middleware;
@@ -149,6 +150,17 @@ public static class SystemEndpoints
         group.MapPut("/name", SystemHandler.HandleUpdateInstanceName)
             .WithName("UpdateInstanceName")
             .WithDescription("Updates the instance name (Admin only)")
+            .WithMetadata(new RequireAdminAttribute())
+            .WithOpenApi()
+            .Produces<string>(StatusCodes.Status200OK)
+            .Produces<string>(StatusCodes.Status400BadRequest)
+            .Produces<string>(StatusCodes.Status401Unauthorized)
+            .Produces<string>(StatusCodes.Status403Forbidden)
+            .Produces<string>(StatusCodes.Status500InternalServerError);
+
+        group.MapPut("/default-locale", SystemHandler.HandleUpdateInstanceDefaultLocale)
+            .WithName("UpdateInstanceDefaultLocale")
+            .WithDescription("Updates the instance default locale (Admin only)")
             .WithMetadata(new RequireAdminAttribute())
             .WithOpenApi()
             .Produces<string>(StatusCodes.Status200OK)

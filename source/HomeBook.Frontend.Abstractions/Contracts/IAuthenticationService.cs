@@ -47,7 +47,7 @@ public interface IAuthenticationService
     /// </summary>
     /// <param name="cancellationToken"></param>
     /// <returns></returns>
-    Task<ClaimsPrincipal> GetCurrentUserAsync(CancellationToken cancellationToken = default);
+    Task<ClaimsPrincipal?> GetCurrentUserAsync(CancellationToken cancellationToken = default);
 
     /// <summary>
     /// checks if the current user has admin privileges.

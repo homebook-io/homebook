@@ -1,0 +1,23 @@
+// see https://mudblazor.com/features/breakpoints#breakpoints
+
+/* mudblazor breakpoints */
+$breakpoint-xs: 0px !default; // Extra small devices (portrait phones, less than 576px)
+$breakpoint-sm: 600px !default; // Small devices (landscape phones, 576px and up)
+$breakpoint-md: 960px !default; // Medium devices
+$breakpoint-lg: 1280px !default; // Large devices (desktops, 992px and up)
+$breakpoint-xl: 1920px !default; // Extra large devices (large desktops, 1200px and up)
+$breakpoint-xxl: 2560px !default; // Extra extra large devices (larger desktops, 1400px and up)
+/* own breakpoints */
+$breakpoint-xxxl: 3840px !default; // Extra extra extra large devices (4K and up)
+$breakpoint-xxxxl: 5120px !default; // Extra extra extra extra large devices (5K and up)
+
+:root {
+    --#{$hb-prefix}-breakpoint-xs: #{$breakpoint-xs};
+    --#{$hb-prefix}-breakpoint-sm: #{$breakpoint-sm};
+    --#{$hb-prefix}-breakpoint-md: #{$breakpoint-md};
+    --#{$hb-prefix}-breakpoint-lg: #{$breakpoint-lg};
+    --#{$hb-prefix}-breakpoint-xl: #{$breakpoint-xl};
+    --#{$hb-prefix}-breakpoint-xxl: #{$breakpoint-xxl};
+    --#{$hb-prefix}-breakpoint-xxxl: #{$breakpoint-xxxl};
+    --#{$hb-prefix}-breakpoint-xxxxl: #{$breakpoint-xxxxl};
+}

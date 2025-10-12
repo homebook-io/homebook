@@ -67,6 +67,10 @@
 
     .frosted-b#{$i} {
         @include frosted-base($alpha);
+
+        &.no-backdrop-blur {
+            backdrop-filter: none;
+        }
     }
 
     .frosted-bg-b#{$i} {

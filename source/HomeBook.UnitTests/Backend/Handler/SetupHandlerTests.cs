@@ -20,6 +20,7 @@ namespace HomeBook.UnitTests.Backend.Handler;
 [TestFixture]
 public class SetupHandlerTests
 {
+    private ILoggerFactory _loggerFactory = null!;
     private ILogger<SetupHandler> _logger;
     private ISetupInstanceManager _setupInstanceManager = null!;
     private IFileSystemService _fileService = null!;
@@ -33,7 +34,7 @@ public class SetupHandlerTests
     [SetUp]
     public void SetUpSubstitutes()
     {
-        var factory = LoggerFactory.Create(builder =>
+        _loggerFactory = LoggerFactory.Create(builder =>
         {
             builder.AddSimpleConsole(options =>
                 {
@@ -44,7 +45,7 @@ public class SetupHandlerTests
                 .SetMinimumLevel(LogLevel.Debug);
         });
 
-        _logger = factory.CreateLogger<SetupHandler>();
+        _logger = _loggerFactory.CreateLogger<SetupHandler>();
         _setupInstanceManager = Substitute.For<ISetupInstanceManager>();
         _fileService = Substitute.For<IFileSystemService>();
         _setupConfigurationProvider = Substitute.For<ISetupConfigurationProvider>();
@@ -53,6 +54,12 @@ public class SetupHandlerTests
         _licenseProvider = Substitute.For<ILicenseProvider>();
         _hostApplicationLifetime = Substitute.For<IHostApplicationLifetime>();
         _setupProcessorFactory = Substitute.For<ISetupProcessorFactory>();
+    }
+
+    [TearDown]
+    public void TearDown()
+    {
+        _loggerFactory.Dispose();
     }
 
     [Test]
@@ -229,7 +236,7 @@ public class SetupHandlerTests
                 databaseUserName,
                 databaseUserPassword,
                 Arg.Any<CancellationToken>())
-            .Returns(DatabaseProvider.POSTGRESQL);
+            .Returns("POSTGRESQL");
 
         // Act
         var request = new CheckDatabaseRequest(databaseHost,
@@ -260,7 +267,7 @@ public class SetupHandlerTests
                 databaseUserName,
                 databaseUserPassword,
                 Arg.Any<CancellationToken>())
-            .Returns((DatabaseProvider?)null);
+            .Returns((string?)null);
 
         // Act
         var request = new CheckDatabaseRequest(databaseHost,
@@ -318,7 +325,7 @@ public class SetupHandlerTests
             new DependencyLicense("License2", "License-Content")
         };
 
-        _setupConfigurationProvider.GetValue(EnvironmentVariables.HOMEBOOK_ACCEPT_LICENSES).Returns("true");
+        _setupConfigurationProvider.GetValue(EnvironmentVariables.HOMEBOOK_CONFIGURATION_ACCEPT_LICENSES).Returns("true");
         var licenseProvider = Substitute.For<ILicenseProvider>();
         licenseProvider.GetLicensesAsync(Arg.Any<CancellationToken>()).Returns(licenses);
 
@@ -345,7 +352,7 @@ public class SetupHandlerTests
             new DependencyLicense("License2", "License-Content")
         };
 
-        _setupConfigurationProvider.GetValue(EnvironmentVariables.HOMEBOOK_ACCEPT_LICENSES).Returns((string?)null);
+        _setupConfigurationProvider.GetValue(EnvironmentVariables.HOMEBOOK_CONFIGURATION_ACCEPT_LICENSES).Returns((string?)null);
         var licenseProvider = Substitute.For<ILicenseProvider>();
         licenseProvider.GetLicensesAsync(Arg.Any<CancellationToken>()).Returns(licenses);
 
@@ -522,26 +529,28 @@ public class SetupHandlerTests
             DatabaseName: null,
             DatabaseUserName: null,
             DatabaseUserPassword: null,
+            DatabaseFile: null,
             HomebookUserName: null,
             HomebookUserPassword: null,
-            HomebookConfigurationName: null);
+            HomebookConfigurationName: null,
+            HomebookConfigurationDefaultLocale: null);
         _setupConfigurationProvider.GetValue(EnvironmentVariables.DATABASE_TYPE).Returns("POSTGRESQL");
         _setupConfigurationProvider.GetValue(EnvironmentVariables.DATABASE_HOST).Returns("test-server");
         _setupConfigurationProvider.GetValue<ushort>(EnvironmentVariables.DATABASE_PORT).Returns((ushort)5432);
         _setupConfigurationProvider.GetValue(EnvironmentVariables.DATABASE_NAME).Returns("test-database");
         _setupConfigurationProvider.GetValue(EnvironmentVariables.DATABASE_USER).Returns("test-user");
         _setupConfigurationProvider.GetValue(EnvironmentVariables.DATABASE_PASSWORD).Returns("test-password");
-        _setupConfigurationProvider.GetValue(EnvironmentVariables.HOMEBOOK_INSTANCE_NAME).Returns("test-homebook");
+        _setupConfigurationProvider.GetValue(EnvironmentVariables.HOMEBOOK_CONFIGURATION_NAME).Returns("test-homebook");
         _setupConfigurationProvider.GetValue(EnvironmentVariables.HOMEBOOK_USER_NAME).Returns("user");
         _setupConfigurationProvider.GetValue(EnvironmentVariables.HOMEBOOK_USER_PASSWORD).Returns("s3cr3t");
-        _setupConfigurationProvider.GetValue<bool>(EnvironmentVariables.HOMEBOOK_ACCEPT_LICENSES).Returns(true);
+        _setupConfigurationProvider.GetValue<bool>(EnvironmentVariables.HOMEBOOK_CONFIGURATION_ACCEPT_LICENSES).Returns(true);
 
         // Act
         var actual = SetupHandler.MapConfiguration(_setupConfigurationProvider, startSetupRequest);
 
         // Assert
         actual.ShouldNotBeNull();
-        actual.DatabaseType.ShouldBe(DatabaseProvider.POSTGRESQL);
+        actual.DatabaseType.ShouldBe("POSTGRESQL");
         actual.DatabaseHost.ShouldBe("test-server");
         actual.DatabasePort.ShouldBe((ushort)5432);
         actual.DatabaseName.ShouldBe("test-database");
@@ -565,19 +574,21 @@ public class SetupHandlerTests
             DatabaseName: "test-database",
             DatabaseUserName: "test-user",
             DatabaseUserPassword: "test-password",
+            DatabaseFile: null,
             HomebookUserName: "user",
             HomebookUserPassword: "s3cr3t",
-            HomebookConfigurationName: "test-homebook");
+            HomebookConfigurationName: "test-homebook",
+            HomebookConfigurationDefaultLocale: "EN");
         _setupConfigurationProvider.GetValue(EnvironmentVariables.DATABASE_TYPE).Returns((string?)null);
         _setupConfigurationProvider.GetValue(EnvironmentVariables.DATABASE_HOST).Returns((string?)null);
         _setupConfigurationProvider.GetValue<ushort>(EnvironmentVariables.DATABASE_PORT).Returns((ushort)default);
         _setupConfigurationProvider.GetValue(EnvironmentVariables.DATABASE_NAME).Returns((string?)null);
         _setupConfigurationProvider.GetValue(EnvironmentVariables.DATABASE_USER).Returns((string?)null);
         _setupConfigurationProvider.GetValue(EnvironmentVariables.DATABASE_PASSWORD).Returns((string?)null);
-        _setupConfigurationProvider.GetValue(EnvironmentVariables.HOMEBOOK_INSTANCE_NAME).Returns((string?)null);
+        _setupConfigurationProvider.GetValue(EnvironmentVariables.HOMEBOOK_CONFIGURATION_NAME).Returns((string?)null);
         _setupConfigurationProvider.GetValue(EnvironmentVariables.HOMEBOOK_USER_NAME).Returns((string?)null);
         _setupConfigurationProvider.GetValue(EnvironmentVariables.HOMEBOOK_USER_PASSWORD).Returns((string?)null);
-        _setupConfigurationProvider.GetValue<bool>(EnvironmentVariables.HOMEBOOK_ACCEPT_LICENSES)
+        _setupConfigurationProvider.GetValue<bool>(EnvironmentVariables.HOMEBOOK_CONFIGURATION_ACCEPT_LICENSES)
             .Returns((bool)default);
 
         // Act
@@ -585,7 +596,7 @@ public class SetupHandlerTests
 
         // Assert
         actual.ShouldNotBeNull();
-        actual.DatabaseType.ShouldBe(DatabaseProvider.POSTGRESQL);
+        actual.DatabaseType.ShouldBe("POSTGRESQL");
         actual.DatabaseHost.ShouldBe("test-server");
         actual.DatabasePort.ShouldBe((ushort)5432);
         actual.DatabaseName.ShouldBe("test-database");
@@ -609,26 +620,28 @@ public class SetupHandlerTests
             DatabaseName: "another-database",
             DatabaseUserName: "another-user",
             DatabaseUserPassword: "another-password",
+            DatabaseFile: null,
             HomebookUserName: "another-user",
             HomebookUserPassword: "another-s3cr3t",
-            HomebookConfigurationName: "another-homebook");
+            HomebookConfigurationName: "another-homebook",
+            HomebookConfigurationDefaultLocale: "EN");
         _setupConfigurationProvider.GetValue(EnvironmentVariables.DATABASE_TYPE).Returns("POSTGRESQL");
         _setupConfigurationProvider.GetValue(EnvironmentVariables.DATABASE_HOST).Returns("test-server");
         _setupConfigurationProvider.GetValue<ushort>(EnvironmentVariables.DATABASE_PORT).Returns((ushort)5432);
         _setupConfigurationProvider.GetValue(EnvironmentVariables.DATABASE_NAME).Returns("test-database");
         _setupConfigurationProvider.GetValue(EnvironmentVariables.DATABASE_USER).Returns("test-user");
         _setupConfigurationProvider.GetValue(EnvironmentVariables.DATABASE_PASSWORD).Returns("test-password");
-        _setupConfigurationProvider.GetValue(EnvironmentVariables.HOMEBOOK_INSTANCE_NAME).Returns("test-homebook");
+        _setupConfigurationProvider.GetValue(EnvironmentVariables.HOMEBOOK_CONFIGURATION_NAME).Returns("test-homebook");
         _setupConfigurationProvider.GetValue(EnvironmentVariables.HOMEBOOK_USER_NAME).Returns("user");
         _setupConfigurationProvider.GetValue(EnvironmentVariables.HOMEBOOK_USER_PASSWORD).Returns("s3cr3t");
-        _setupConfigurationProvider.GetValue<bool>(EnvironmentVariables.HOMEBOOK_ACCEPT_LICENSES).Returns(true);
+        _setupConfigurationProvider.GetValue<bool>(EnvironmentVariables.HOMEBOOK_CONFIGURATION_ACCEPT_LICENSES).Returns(true);
 
         // Act
         var actual = SetupHandler.MapConfiguration(_setupConfigurationProvider, startSetupRequest);
 
         // Assert
         actual.ShouldNotBeNull();
-        actual.DatabaseType.ShouldBe(DatabaseProvider.MYSQL);
+        actual.DatabaseType.ShouldBe("MYSQL");
         actual.DatabaseHost.ShouldBe("another-server");
         actual.DatabasePort.ShouldBe((ushort)3306);
         actual.DatabaseName.ShouldBe("another-database");
@@ -654,17 +667,18 @@ public class SetupHandlerTests
             DatabaseUserPassword: null,
             HomebookUserName: null,
             HomebookUserPassword: null,
-            HomebookConfigurationName: null);
+            HomebookConfigurationName: null,
+            HomebookConfigurationDefaultLocale: null);
         _setupConfigurationProvider.GetValue(EnvironmentVariables.DATABASE_TYPE).Returns((string?)null);
         _setupConfigurationProvider.GetValue(EnvironmentVariables.DATABASE_HOST).Returns((string?)null);
         _setupConfigurationProvider.GetValue<ushort>(EnvironmentVariables.DATABASE_PORT).Returns((ushort)default);
         _setupConfigurationProvider.GetValue(EnvironmentVariables.DATABASE_NAME).Returns((string?)null);
         _setupConfigurationProvider.GetValue(EnvironmentVariables.DATABASE_USER).Returns((string?)null);
         _setupConfigurationProvider.GetValue(EnvironmentVariables.DATABASE_PASSWORD).Returns((string?)null);
-        _setupConfigurationProvider.GetValue(EnvironmentVariables.HOMEBOOK_INSTANCE_NAME).Returns((string?)null);
+        _setupConfigurationProvider.GetValue(EnvironmentVariables.HOMEBOOK_CONFIGURATION_NAME).Returns((string?)null);
         _setupConfigurationProvider.GetValue(EnvironmentVariables.HOMEBOOK_USER_NAME).Returns((string?)null);
         _setupConfigurationProvider.GetValue(EnvironmentVariables.HOMEBOOK_USER_PASSWORD).Returns((string?)null);
-        _setupConfigurationProvider.GetValue(EnvironmentVariables.HOMEBOOK_ACCEPT_LICENSES)
+        _setupConfigurationProvider.GetValue(EnvironmentVariables.HOMEBOOK_CONFIGURATION_ACCEPT_LICENSES)
             .Returns((string?)null);
 
         // Act
@@ -672,12 +686,12 @@ public class SetupHandlerTests
 
         // Assert
         actual.ShouldNotBeNull();
-        actual.DatabaseType.ShouldBe(DatabaseProvider.UNKNOWN);
-        actual.DatabaseHost.ShouldBe("");
+        actual.DatabaseType.ShouldBe("UNKNOWN");
+        actual.DatabaseHost.ShouldBe(null);
         actual.DatabasePort.ShouldBe((ushort)0);
-        actual.DatabaseName.ShouldBe("");
-        actual.DatabaseUserName.ShouldBe("");
-        actual.DatabaseUserPassword.ShouldBe("");
+        actual.DatabaseName.ShouldBe(null);
+        actual.DatabaseUserName.ShouldBe(null);
+        actual.DatabaseUserPassword.ShouldBe(null);
         actual.HomebookConfigurationName.ShouldBe("");
         actual.HomebookUserName.ShouldBe("");
         actual.HomebookUserPassword.ShouldBe("");
@@ -689,7 +703,7 @@ public class SetupHandlerTests
     {
         // Arrange
         _setupConfigurationProvider
-            .GetValue(EnvironmentVariables.HOMEBOOK_INSTANCE_NAME)
+            .GetValue(EnvironmentVariables.HOMEBOOK_CONFIGURATION_NAME)
             .Returns((string?)null);
 
         // Act
@@ -707,7 +721,7 @@ public class SetupHandlerTests
     {
         // Arrange
         _setupConfigurationProvider
-            .GetValue(EnvironmentVariables.HOMEBOOK_INSTANCE_NAME)
+            .GetValue(EnvironmentVariables.HOMEBOOK_CONFIGURATION_NAME)
             .Returns(string.Empty);
 
         // Act
@@ -725,7 +739,7 @@ public class SetupHandlerTests
     {
         // Arrange
         _setupConfigurationProvider
-            .GetValue(EnvironmentVariables.HOMEBOOK_INSTANCE_NAME)
+            .GetValue(EnvironmentVariables.HOMEBOOK_CONFIGURATION_NAME)
             .Returns("test instance");
 
         // Act
@@ -743,7 +757,7 @@ public class SetupHandlerTests
     {
         // Arrange
         _setupConfigurationProvider
-            .GetValue(EnvironmentVariables.HOMEBOOK_INSTANCE_NAME)
+            .GetValue(EnvironmentVariables.HOMEBOOK_CONFIGURATION_NAME)
             .Throws(new InvalidOperationException("boom"));
 
         // Act
@@ -769,7 +783,8 @@ public class SetupHandlerTests
             "this-is-s3cr3t",
             "auser",
             "as3cr3tpassword",
-            "Test Homebook");
+            "Test Homebook",
+            "EN");
         var setupConfigurationValidator = new SetupConfigurationValidator();
         var configuration = Substitute.For<IConfiguration, IConfigurationRoot>();
 
@@ -814,7 +829,7 @@ public class SetupHandlerTests
         await setupProcessor
             .Received(1)
             .ProcessAsync(configuration,
-                Arg.Is<SetupConfiguration>(u => u.DatabaseType == DatabaseProvider.POSTGRESQL),
+                Arg.Is<SetupConfiguration>(u => u.DatabaseType == "POSTGRESQL"),
                 Arg.Any<CancellationToken>());
         _hostApplicationLifetime
             .Received(1)
@@ -834,7 +849,8 @@ public class SetupHandlerTests
             "this-is-s3cr3t",
             "auser",
             "as3cr3tpassword",
-            "Test Homebook");
+            "Test Homebook",
+            "EN");
         var setupConfigurationValidator = new SetupConfigurationValidator();
         var configuration = Substitute.For<IConfiguration, IConfigurationRoot>();
 
@@ -868,6 +884,7 @@ public class SetupHandlerTests
             "",
             "",
             0,
+            "",
             "",
             "",
             "",
@@ -911,7 +928,8 @@ public class SetupHandlerTests
             "this-is-s3cr3t",
             "auser",
             "as3cr3tpassword",
-            "Test Homebook");
+            "Test Homebook",
+            "EN");
         var setupConfigurationValidator = new SetupConfigurationValidator();
         var configuration = Substitute.For<IConfiguration, IConfigurationRoot>();
 
@@ -955,7 +973,8 @@ public class SetupHandlerTests
             "this-is-s3cr3t",
             "auser",
             "as3cr3tpassword",
-            "Test Homebook");
+            "Test Homebook",
+            "EN");
         var setupConfigurationValidator = new SetupConfigurationValidator();
         var configuration = Substitute.For<IConfiguration, IConfigurationRoot>();
 
