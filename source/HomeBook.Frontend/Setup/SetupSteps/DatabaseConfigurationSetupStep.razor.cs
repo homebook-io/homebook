@@ -3,6 +3,7 @@ using HomeBook.Frontend.Abstractions.Contracts;
 using HomeBook.Frontend.Abstractions.Models;
 using HomeBook.Frontend.Core.Models.Setup;
 using HomeBook.Frontend.Mappings;
+using HomeBook.Frontend.Properties;
 using HomeBook.Frontend.Services.Exceptions;
 using HomeBook.Frontend.Setup.Exceptions;
 using Microsoft.AspNetCore.Components;
@@ -77,8 +78,7 @@ public partial class DatabaseConfigurationSetupStep : ComponentBase, ISetupStep
         }
         catch (HttpRequestException)
         {
-            // DE => Verbindung zum Server konnte nicht hergestellt werden. Stellen Sie sicher, dass der Server läuft und korrekt konfiguriert wurde und versuchen Sie es erneut.
-            _errorMessage = "Unable to connect to the server. Make sure that the server is running and has been configured correctly, then try again.";
+            _errorMessage = Loc[nameof(LocalizationStrings.Setup_BackendConnectionFailed_Message)];
             await StepErrorAsync(cancellationToken);
         }
         catch (SetupCheckException err)
@@ -88,7 +88,8 @@ public partial class DatabaseConfigurationSetupStep : ComponentBase, ISetupStep
         }
         catch (Exception err)
         {
-            _errorMessage = "error while connecting to database: " + err.Message;
+            _errorMessage = string.Format(Loc[nameof(LocalizationStrings.Setup_Database_UnknownError_MessageTemplate)],
+                err.Message);
             await StepErrorAsync(cancellationToken);
         }
         finally
@@ -117,17 +118,20 @@ public partial class DatabaseConfigurationSetupStep : ComponentBase, ISetupStep
                 cancellationToken);
 
             if (databaseType is null)
-                throw new SetupCheckException("Database is not available or not supported.");
+                throw new SetupCheckException(
+                    Loc[nameof(LocalizationStrings.Setup_Database_Check_NotAvailableOrSupportedError_Message)]);
 
             _databaseType = databaseType;
         }
         catch (ApiException err) when (err.ResponseStatusCode == 500)
         {
-            throw new SetupCheckException("Unknown error while database connection check.");
+            throw new SetupCheckException(
+                Loc[nameof(LocalizationStrings.Setup_Database_Check_UnknownError_Message)]);
         }
         catch (ApiException err) when (err.ResponseStatusCode == 503)
         {
-            throw new SetupCheckException("Database is not available.");
+            throw new SetupCheckException(
+                Loc[nameof(LocalizationStrings.Setup_Database_Check_NotAvailableError_Message)]);
         }
         catch (Exception err)
         {

@@ -123,9 +123,9 @@ namespace HomeBook.Frontend.Properties {
             }
         }
         
-        public static string Settings_About_AppSlogan_Text {
+        public static string AppSlogan {
             get {
-                return ResourceManager.GetString("Settings_About_AppSlogan_Text", resourceCulture);
+                return ResourceManager.GetString("AppSlogan", resourceCulture);
             }
         }
         
@@ -186,6 +186,1206 @@ namespace HomeBook.Frontend.Properties {
         public static string UiLicenseDialog_Title {
             get {
                 return ResourceManager.GetString("UiLicenseDialog_Title", resourceCulture);
+            }
+        }
+        
+        public static string Settings_About_VersionToolTip_Text_Template {
+            get {
+                return ResourceManager.GetString("Settings_About_VersionToolTip_Text_Template", resourceCulture);
+            }
+        }
+        
+        public static string Settings_About_Version_Text_Template {
+            get {
+                return ResourceManager.GetString("Settings_About_Version_Text_Template", resourceCulture);
+            }
+        }
+        
+        public static string Settings_About_ApplicationArea_Title {
+            get {
+                return ResourceManager.GetString("Settings_About_ApplicationArea_Title", resourceCulture);
+            }
+        }
+        
+        public static string Settings_About_ApplicationArea_Backend_Text {
+            get {
+                return ResourceManager.GetString("Settings_About_ApplicationArea_Backend_Text", resourceCulture);
+            }
+        }
+        
+        public static string Settings_About_ApplicationArea_Database_Text {
+            get {
+                return ResourceManager.GetString("Settings_About_ApplicationArea_Database_Text", resourceCulture);
+            }
+        }
+        
+        public static string Settings_About_ApplicationArea_UI_Text {
+            get {
+                return ResourceManager.GetString("Settings_About_ApplicationArea_UI_Text", resourceCulture);
+            }
+        }
+        
+        public static string Settings_About_ApplicationArea_Deployment_Text {
+            get {
+                return ResourceManager.GetString("Settings_About_ApplicationArea_Deployment_Text", resourceCulture);
+            }
+        }
+        
+        public static string Settings_About_LicensesArea_Title {
+            get {
+                return ResourceManager.GetString("Settings_About_LicensesArea_Title", resourceCulture);
+            }
+        }
+        
+        public static string Settings_About_LicensesArea_ShowLicenses_Button_Text {
+            get {
+                return ResourceManager.GetString("Settings_About_LicensesArea_ShowLicenses_Button_Text", resourceCulture);
+            }
+        }
+        
+        public static string Settings_About_LicensesArea_Copyright_TextTemplate {
+            get {
+                return ResourceManager.GetString("Settings_About_LicensesArea_Copyright_TextTemplate", resourceCulture);
+            }
+        }
+        
+        public static string Settings_About_ExternalLink_GitHubProject_Href {
+            get {
+                return ResourceManager.GetString("Settings_About_ExternalLink_GitHubProject_Href", resourceCulture);
+            }
+        }
+        
+        public static string Settings_About_Error_MessageTemplate {
+            get {
+                return ResourceManager.GetString("Settings_About_Error_MessageTemplate", resourceCulture);
+            }
+        }
+        
+        public static string Settings_NavMenu_LanguageRegion_Text {
+            get {
+                return ResourceManager.GetString("Settings_NavMenu_LanguageRegion_Text", resourceCulture);
+            }
+        }
+        
+        public static string Settings_NavMenu_About_Text {
+            get {
+                return ResourceManager.GetString("Settings_NavMenu_About_Text", resourceCulture);
+            }
+        }
+        
+        public static string Settings_NavMenu_Users_Text {
+            get {
+                return ResourceManager.GetString("Settings_NavMenu_Users_Text", resourceCulture);
+            }
+        }
+        
+        public static string Settings_NavMenu_HomebookConfiguration_Text {
+            get {
+                return ResourceManager.GetString("Settings_NavMenu_HomebookConfiguration_Text", resourceCulture);
+            }
+        }
+        
+        public static string Settings_NavMenu_HomebookModules_Text {
+            get {
+                return ResourceManager.GetString("Settings_NavMenu_HomebookModules_Text", resourceCulture);
+            }
+        }
+        
+        public static string Settings_NavMenu_DeveloperComponents_Text {
+            get {
+                return ResourceManager.GetString("Settings_NavMenu_DeveloperComponents_Text", resourceCulture);
+            }
+        }
+        
+        public static string Settings_NavMenu_DeveloperIcons_Text {
+            get {
+                return ResourceManager.GetString("Settings_NavMenu_DeveloperIcons_Text", resourceCulture);
+            }
+        }
+        
+        public static string Settings_NavMenu_Feedback_Text {
+            get {
+                return ResourceManager.GetString("Settings_NavMenu_Feedback_Text", resourceCulture);
+            }
+        }
+        
+        public static string Settings_NavMenu_Developer_Text {
+            get {
+                return ResourceManager.GetString("Settings_NavMenu_Developer_Text", resourceCulture);
+            }
+        }
+        
+        public static string Settings_Localization_PageTitle {
+            get {
+                return ResourceManager.GetString("Settings_Localization_PageTitle", resourceCulture);
+            }
+        }
+        
+        public static string Settings_Localization_PageCaption {
+            get {
+                return ResourceManager.GetString("Settings_Localization_PageCaption", resourceCulture);
+            }
+        }
+        
+        public static string Settings_About_PageTitle {
+            get {
+                return ResourceManager.GetString("Settings_About_PageTitle", resourceCulture);
+            }
+        }
+        
+        public static string Settings_Localization_DisplayLanguage_Title {
+            get {
+                return ResourceManager.GetString("Settings_Localization_DisplayLanguage_Title", resourceCulture);
+            }
+        }
+        
+        public static string Settings_Localization_DisplayLanguage_Caption {
+            get {
+                return ResourceManager.GetString("Settings_Localization_DisplayLanguage_Caption", resourceCulture);
+            }
+        }
+        
+        public static string Settings_Localization_SaveChanges_Button {
+            get {
+                return ResourceManager.GetString("Settings_Localization_SaveChanges_Button", resourceCulture);
+            }
+        }
+        
+        public static string Settings_Localization_PreferencesUpdated_Success_Message {
+            get {
+                return ResourceManager.GetString("Settings_Localization_PreferencesUpdated_Success_Message", resourceCulture);
+            }
+        }
+        
+        public static string Settings_Localization_PreferencesUpdated_Error_MessageTemplate {
+            get {
+                return ResourceManager.GetString("Settings_Localization_PreferencesUpdated_Error_MessageTemplate", resourceCulture);
+            }
+        }
+        
+        public static string Settings_Localization_LoadPreferences_Error_MessageTemplate {
+            get {
+                return ResourceManager.GetString("Settings_Localization_LoadPreferences_Error_MessageTemplate", resourceCulture);
+            }
+        }
+        
+        public static string Setup_Licenses_Title {
+            get {
+                return ResourceManager.GetString("Setup_Licenses_Title", resourceCulture);
+            }
+        }
+        
+        public static string Setup_Licenses_AlreadyAccepted_Text {
+            get {
+                return ResourceManager.GetString("Setup_Licenses_AlreadyAccepted_Text", resourceCulture);
+            }
+        }
+        
+        public static string Setup_Licenses_Retry_Button_Text {
+            get {
+                return ResourceManager.GetString("Setup_Licenses_Retry_Button_Text", resourceCulture);
+            }
+        }
+        
+        public static string Setup_Licenses_ShowLicenses_Button_Text {
+            get {
+                return ResourceManager.GetString("Setup_Licenses_ShowLicenses_Button_Text", resourceCulture);
+            }
+        }
+        
+        public static string Setup_Licenses_AcceptContinue_Button_Text {
+            get {
+                return ResourceManager.GetString("Setup_Licenses_AcceptContinue_Button_Text", resourceCulture);
+            }
+        }
+        
+        public static string Setup_Licenses_LoadingError_MessageTemplate {
+            get {
+                return ResourceManager.GetString("Setup_Licenses_LoadingError_MessageTemplate", resourceCulture);
+            }
+        }
+        
+        public static string Setup_BackendConnection_Title {
+            get {
+                return ResourceManager.GetString("Setup_BackendConnection_Title", resourceCulture);
+            }
+        }
+        
+        public static string Setup_BackendConnection_ServerFound_Text {
+            get {
+                return ResourceManager.GetString("Setup_BackendConnection_ServerFound_Text", resourceCulture);
+            }
+        }
+        
+        public static string Setup_BackendConnection_Retry_Button_Text {
+            get {
+                return ResourceManager.GetString("Setup_BackendConnection_Retry_Button_Text", resourceCulture);
+            }
+        }
+        
+        public static string Setup_BackendConnectionFailed_Message {
+            get {
+                return ResourceManager.GetString("Setup_BackendConnectionFailed_Message", resourceCulture);
+            }
+        }
+        
+        public static string Setup_BackendConnection_CheckError_MessageTemplate {
+            get {
+                return ResourceManager.GetString("Setup_BackendConnection_CheckError_MessageTemplate", resourceCulture);
+            }
+        }
+        
+        public static string Setup_BackendConnection_Check_VersionError_Message {
+            get {
+                return ResourceManager.GetString("Setup_BackendConnection_Check_VersionError_Message", resourceCulture);
+            }
+        }
+        
+        public static string Setup_BackendConnection_Check_VersionMatchError_Message {
+            get {
+                return ResourceManager.GetString("Setup_BackendConnection_Check_VersionMatchError_Message", resourceCulture);
+            }
+        }
+        
+        public static string Setup_BackendConnection_Check_SetupInProgressError_Message {
+            get {
+                return ResourceManager.GetString("Setup_BackendConnection_Check_SetupInProgressError_Message", resourceCulture);
+            }
+        }
+        
+        public static string Setup_BackendConnection_Check_UnknownError_Message {
+            get {
+                return ResourceManager.GetString("Setup_BackendConnection_Check_UnknownError_Message", resourceCulture);
+            }
+        }
+        
+        public static string Setup_BackendConnection_Check_UnknownError_MessageTemplate {
+            get {
+                return ResourceManager.GetString("Setup_BackendConnection_Check_UnknownError_MessageTemplate", resourceCulture);
+            }
+        }
+        
+        public static string Setup_Database_Title {
+            get {
+                return ResourceManager.GetString("Setup_Database_Title", resourceCulture);
+            }
+        }
+        
+        public static string Setup_Database_Provider_MessageTemplate {
+            get {
+                return ResourceManager.GetString("Setup_Database_Provider_MessageTemplate", resourceCulture);
+            }
+        }
+        
+        public static string Setup_Database_Form_Host_Label {
+            get {
+                return ResourceManager.GetString("Setup_Database_Form_Host_Label", resourceCulture);
+            }
+        }
+        
+        public static string Setup_Database_Form_Port_Label {
+            get {
+                return ResourceManager.GetString("Setup_Database_Form_Port_Label", resourceCulture);
+            }
+        }
+        
+        public static string Setup_Database_Form_DatabaseName_Label {
+            get {
+                return ResourceManager.GetString("Setup_Database_Form_DatabaseName_Label", resourceCulture);
+            }
+        }
+        
+        public static string Setup_Database_Form_DatabaseUsername_Label {
+            get {
+                return ResourceManager.GetString("Setup_Database_Form_DatabaseUsername_Label", resourceCulture);
+            }
+        }
+        
+        public static string Setup_Database_Form_DatabasePassword_Label {
+            get {
+                return ResourceManager.GetString("Setup_Database_Form_DatabasePassword_Label", resourceCulture);
+            }
+        }
+        
+        public static string Setup_Database_TestConnection_Button {
+            get {
+                return ResourceManager.GetString("Setup_Database_TestConnection_Button", resourceCulture);
+            }
+        }
+        
+        public static string Setup_Database_Form_Host_HelperText {
+            get {
+                return ResourceManager.GetString("Setup_Database_Form_Host_HelperText", resourceCulture);
+            }
+        }
+        
+        public static string Setup_Database_Form_DatabaseName_HelperText {
+            get {
+                return ResourceManager.GetString("Setup_Database_Form_DatabaseName_HelperText", resourceCulture);
+            }
+        }
+        
+        public static string Setup_Database_Form_DatabaseUsername_HelperText {
+            get {
+                return ResourceManager.GetString("Setup_Database_Form_DatabaseUsername_HelperText", resourceCulture);
+            }
+        }
+        
+        public static string Setup_Database_Form_DatabasePassword_HelperText {
+            get {
+                return ResourceManager.GetString("Setup_Database_Form_DatabasePassword_HelperText", resourceCulture);
+            }
+        }
+        
+        public static string Setup_Database_UnknownError_MessageTemplate {
+            get {
+                return ResourceManager.GetString("Setup_Database_UnknownError_MessageTemplate", resourceCulture);
+            }
+        }
+        
+        public static string Setup_Database_Check_NotAvailableOrSupportedError_Message {
+            get {
+                return ResourceManager.GetString("Setup_Database_Check_NotAvailableOrSupportedError_Message", resourceCulture);
+            }
+        }
+        
+        public static string Setup_Database_Check_UnknownError_Message {
+            get {
+                return ResourceManager.GetString("Setup_Database_Check_UnknownError_Message", resourceCulture);
+            }
+        }
+        
+        public static string Setup_Database_Check_NotAvailableError_Message {
+            get {
+                return ResourceManager.GetString("Setup_Database_Check_NotAvailableError_Message", resourceCulture);
+            }
+        }
+        
+        public static string Setup_AdminUser_Title {
+            get {
+                return ResourceManager.GetString("Setup_AdminUser_Title", resourceCulture);
+            }
+        }
+        
+        public static string Setup_AdminUser_ConfigurationFound_Text {
+            get {
+                return ResourceManager.GetString("Setup_AdminUser_ConfigurationFound_Text", resourceCulture);
+            }
+        }
+        
+        public static string Setup_AdminUser_ConfigurationSaved_Text {
+            get {
+                return ResourceManager.GetString("Setup_AdminUser_ConfigurationSaved_Text", resourceCulture);
+            }
+        }
+        
+        public static string Setup_AdminUser_Form_Username_Label {
+            get {
+                return ResourceManager.GetString("Setup_AdminUser_Form_Username_Label", resourceCulture);
+            }
+        }
+        
+        public static string Setup_AdminUser_Form_Username_HelperText {
+            get {
+                return ResourceManager.GetString("Setup_AdminUser_Form_Username_HelperText", resourceCulture);
+            }
+        }
+        
+        public static string Setup_AdminUser_Form_Password_Label {
+            get {
+                return ResourceManager.GetString("Setup_AdminUser_Form_Password_Label", resourceCulture);
+            }
+        }
+        
+        public static string Setup_AdminUser_Form_Password_HelperText {
+            get {
+                return ResourceManager.GetString("Setup_AdminUser_Form_Password_HelperText", resourceCulture);
+            }
+        }
+        
+        public static string Setup_AdminUser_Save_Button_Text {
+            get {
+                return ResourceManager.GetString("Setup_AdminUser_Save_Button_Text", resourceCulture);
+            }
+        }
+        
+        public static string Setup_Configuration_Title {
+            get {
+                return ResourceManager.GetString("Setup_Configuration_Title", resourceCulture);
+            }
+        }
+        
+        public static string Setup_Configuration_ConfigurationFound_Title {
+            get {
+                return ResourceManager.GetString("Setup_Configuration_ConfigurationFound_Title", resourceCulture);
+            }
+        }
+        
+        public static string Setup_Configuration_ConfigurationSaved_Title {
+            get {
+                return ResourceManager.GetString("Setup_Configuration_ConfigurationSaved_Title", resourceCulture);
+            }
+        }
+        
+        public static string Setup_Configuration_Form_InstanceName_Label {
+            get {
+                return ResourceManager.GetString("Setup_Configuration_Form_InstanceName_Label", resourceCulture);
+            }
+        }
+        
+        public static string Setup_Configuration_Form_InstanceName_HelperText {
+            get {
+                return ResourceManager.GetString("Setup_Configuration_Form_InstanceName_HelperText", resourceCulture);
+            }
+        }
+        
+        public static string Setup_Configuration_Form_InstanceDefaultLocale_Label {
+            get {
+                return ResourceManager.GetString("Setup_Configuration_Form_InstanceDefaultLocale_Label", resourceCulture);
+            }
+        }
+        
+        public static string Setup_Configuration_Form_InstanceDefaultLocale_HelperText {
+            get {
+                return ResourceManager.GetString("Setup_Configuration_Form_InstanceDefaultLocale_HelperText", resourceCulture);
+            }
+        }
+        
+        public static string Setup_Configuration_Save_Button_Text {
+            get {
+                return ResourceManager.GetString("Setup_Configuration_Save_Button_Text", resourceCulture);
+            }
+        }
+        
+        public static string Setup_Process_Title {
+            get {
+                return ResourceManager.GetString("Setup_Process_Title", resourceCulture);
+            }
+        }
+        
+        public static string Setup_ProcessFinished_Title {
+            get {
+                return ResourceManager.GetString("Setup_ProcessFinished_Title", resourceCulture);
+            }
+        }
+        
+        public static string Setup_Process_SetupIsPrepared_Message {
+            get {
+                return ResourceManager.GetString("Setup_Process_SetupIsPrepared_Message", resourceCulture);
+            }
+        }
+        
+        public static string Setup_Process_Retry_Button_Text {
+            get {
+                return ResourceManager.GetString("Setup_Process_Retry_Button_Text", resourceCulture);
+            }
+        }
+        
+        public static string Setup_Process_Finished_Success_Message {
+            get {
+                return ResourceManager.GetString("Setup_Process_Finished_Success_Message", resourceCulture);
+            }
+        }
+        
+        public static string Setup_Process_Finished_StartHomeBook_Message {
+            get {
+                return ResourceManager.GetString("Setup_Process_Finished_StartHomeBook_Message", resourceCulture);
+            }
+        }
+        
+        public static string Setup_Process_Finished_RemoveEnvironmentVariables_Message {
+            get {
+                return ResourceManager.GetString("Setup_Process_Finished_RemoveEnvironmentVariables_Message", resourceCulture);
+            }
+        }
+        
+        public static string Setup_Process_ProcessingError_MessageTemplate {
+            get {
+                return ResourceManager.GetString("Setup_Process_ProcessingError_MessageTemplate", resourceCulture);
+            }
+        }
+        
+        public static string Setup_Process_ProcessingServerRestartError_Message {
+            get {
+                return ResourceManager.GetString("Setup_Process_ProcessingServerRestartError_Message", resourceCulture);
+            }
+        }
+        
+        public static string Setup_Process_ProcessingValidationError_Message {
+            get {
+                return ResourceManager.GetString("Setup_Process_ProcessingValidationError_Message", resourceCulture);
+            }
+        }
+        
+        public static string Setup_Process_ProcessingLicenseError_Message {
+            get {
+                return ResourceManager.GetString("Setup_Process_ProcessingLicenseError_Message", resourceCulture);
+            }
+        }
+        
+        public static string Setup_Process_ProcessingUnknownError_Message {
+            get {
+                return ResourceManager.GetString("Setup_Process_ProcessingUnknownError_Message", resourceCulture);
+            }
+        }
+        
+        public static string Setup_Process_ProcessingUnknownError_MessageTemplate {
+            get {
+                return ResourceManager.GetString("Setup_Process_ProcessingUnknownError_MessageTemplate", resourceCulture);
+            }
+        }
+        
+        public static string Update_ProcessFinished_Title {
+            get {
+                return ResourceManager.GetString("Update_ProcessFinished_Title", resourceCulture);
+            }
+        }
+        
+        public static string Update_Process_Title {
+            get {
+                return ResourceManager.GetString("Update_Process_Title", resourceCulture);
+            }
+        }
+        
+        public static string Update_Process_UpdateIsPrepared_Message {
+            get {
+                return ResourceManager.GetString("Update_Process_UpdateIsPrepared_Message", resourceCulture);
+            }
+        }
+        
+        public static string Update_Process_Finished_Success_Message {
+            get {
+                return ResourceManager.GetString("Update_Process_Finished_Success_Message", resourceCulture);
+            }
+        }
+        
+        public static string Update_Process_Finished_StartHomeBook_Message {
+            get {
+                return ResourceManager.GetString("Update_Process_Finished_StartHomeBook_Message", resourceCulture);
+            }
+        }
+        
+        public static string Update_Process_Retry_Button_Text {
+            get {
+                return ResourceManager.GetString("Update_Process_Retry_Button_Text", resourceCulture);
+            }
+        }
+        
+        public static string Update_Process_ProcessingError_MessageTemplate {
+            get {
+                return ResourceManager.GetString("Update_Process_ProcessingError_MessageTemplate", resourceCulture);
+            }
+        }
+        
+        public static string Update_Process_ProcessingServerRestartError_Message {
+            get {
+                return ResourceManager.GetString("Update_Process_ProcessingServerRestartError_Message", resourceCulture);
+            }
+        }
+        
+        public static string Update_Process_ProcessingUnknownError_Message {
+            get {
+                return ResourceManager.GetString("Update_Process_ProcessingUnknownError_Message", resourceCulture);
+            }
+        }
+        
+        public static string Update_Process_ProcessingSetupMissingError_Message {
+            get {
+                return ResourceManager.GetString("Update_Process_ProcessingSetupMissingError_Message", resourceCulture);
+            }
+        }
+        
+        public static string Update_Process_ProcessingUnknownError_MessageTemplate {
+            get {
+                return ResourceManager.GetString("Update_Process_ProcessingUnknownError_MessageTemplate", resourceCulture);
+            }
+        }
+        
+        public static string Settings_Instance_PageTitle {
+            get {
+                return ResourceManager.GetString("Settings_Instance_PageTitle", resourceCulture);
+            }
+        }
+        
+        public static string Settings_Instance_PageCaption {
+            get {
+                return ResourceManager.GetString("Settings_Instance_PageCaption", resourceCulture);
+            }
+        }
+        
+        public static string Settings_Instance_InstanceName_Title {
+            get {
+                return ResourceManager.GetString("Settings_Instance_InstanceName_Title", resourceCulture);
+            }
+        }
+        
+        public static string Settings_Instance_InstanceName_Caption {
+            get {
+                return ResourceManager.GetString("Settings_Instance_InstanceName_Caption", resourceCulture);
+            }
+        }
+        
+        public static string Settings_Instance_InstanceDefaultLocale_Title {
+            get {
+                return ResourceManager.GetString("Settings_Instance_InstanceDefaultLocale_Title", resourceCulture);
+            }
+        }
+        
+        public static string Settings_Instance_InstanceDefaultLocale_Caption {
+            get {
+                return ResourceManager.GetString("Settings_Instance_InstanceDefaultLocale_Caption", resourceCulture);
+            }
+        }
+        
+        public static string Settings_Instance_SaveChanges_Button {
+            get {
+                return ResourceManager.GetString("Settings_Instance_SaveChanges_Button", resourceCulture);
+            }
+        }
+        
+        public static string Settings_Instance_LoadPreferences_Error_MessageTemplate {
+            get {
+                return ResourceManager.GetString("Settings_Instance_LoadPreferences_Error_MessageTemplate", resourceCulture);
+            }
+        }
+        
+        public static string Settings_Instance_PreferencesUpdated_Success_Message {
+            get {
+                return ResourceManager.GetString("Settings_Instance_PreferencesUpdated_Success_Message", resourceCulture);
+            }
+        }
+        
+        public static string Settings_Instance_PreferencesUpdated_Error_MessageTemplate {
+            get {
+                return ResourceManager.GetString("Settings_Instance_PreferencesUpdated_Error_MessageTemplate", resourceCulture);
+            }
+        }
+        
+        public static string Settings_User_Overview_PageTitle {
+            get {
+                return ResourceManager.GetString("Settings_User_Overview_PageTitle", resourceCulture);
+            }
+        }
+        
+        public static string Settings_User_Overview_AddUserButton_Text {
+            get {
+                return ResourceManager.GetString("Settings_User_Overview_AddUserButton_Text", resourceCulture);
+            }
+        }
+        
+        public static string Settings_User_Overview_Loading_Message {
+            get {
+                return ResourceManager.GetString("Settings_User_Overview_Loading_Message", resourceCulture);
+            }
+        }
+        
+        public static string Settings_User_Overview_CurrentCount_MessageTemplate {
+            get {
+                return ResourceManager.GetString("Settings_User_Overview_CurrentCount_MessageTemplate", resourceCulture);
+            }
+        }
+        
+        public static string Settings_User_Overview_ItemsPerPageSelect_Label {
+            get {
+                return ResourceManager.GetString("Settings_User_Overview_ItemsPerPageSelect_Label", resourceCulture);
+            }
+        }
+        
+        public static string Settings_User_Overview_ResultsTable_Username_TableHeader {
+            get {
+                return ResourceManager.GetString("Settings_User_Overview_ResultsTable_Username_TableHeader", resourceCulture);
+            }
+        }
+        
+        public static string Settings_User_Overview_ResultsTable_Status_TableHeader {
+            get {
+                return ResourceManager.GetString("Settings_User_Overview_ResultsTable_Status_TableHeader", resourceCulture);
+            }
+        }
+        
+        public static string Settings_User_Overview_ResultsTable_Role_TableHeader {
+            get {
+                return ResourceManager.GetString("Settings_User_Overview_ResultsTable_Role_TableHeader", resourceCulture);
+            }
+        }
+        
+        public static string Settings_User_Overview_ResultsTable_Created_TableHeader {
+            get {
+                return ResourceManager.GetString("Settings_User_Overview_ResultsTable_Created_TableHeader", resourceCulture);
+            }
+        }
+        
+        public static string Settings_User_Overview_ResultsTable_Actions_TableHeader {
+            get {
+                return ResourceManager.GetString("Settings_User_Overview_ResultsTable_Actions_TableHeader", resourceCulture);
+            }
+        }
+        
+        public static string Settings_User_Overview_ResultsTable_Actions_EditUser_ToolTipText {
+            get {
+                return ResourceManager.GetString("Settings_User_Overview_ResultsTable_Actions_EditUser_ToolTipText", resourceCulture);
+            }
+        }
+        
+        public static string Settings_User_Overview_ResultsTable_NoResult_Message {
+            get {
+                return ResourceManager.GetString("Settings_User_Overview_ResultsTable_NoResult_Message", resourceCulture);
+            }
+        }
+        
+        public static string Settings_User_Overview_ToggleStatusTooltip_Enable_Text {
+            get {
+                return ResourceManager.GetString("Settings_User_Overview_ToggleStatusTooltip_Enable_Text", resourceCulture);
+            }
+        }
+        
+        public static string Settings_User_Overview_ToggleStatusTooltip_Disable_Text {
+            get {
+                return ResourceManager.GetString("Settings_User_Overview_ToggleStatusTooltip_Disable_Text", resourceCulture);
+            }
+        }
+        
+        public static string Settings_User_Overview_UserStatus_Disabled_Text {
+            get {
+                return ResourceManager.GetString("Settings_User_Overview_UserStatus_Disabled_Text", resourceCulture);
+            }
+        }
+        
+        public static string Settings_User_Overview_UserStatus_Active_Text {
+            get {
+                return ResourceManager.GetString("Settings_User_Overview_UserStatus_Active_Text", resourceCulture);
+            }
+        }
+        
+        public static string Settings_User_Overview_UserRole_Admin_Text {
+            get {
+                return ResourceManager.GetString("Settings_User_Overview_UserRole_Admin_Text", resourceCulture);
+            }
+        }
+        
+        public static string Settings_User_Overview_UserRole_User_Text {
+            get {
+                return ResourceManager.GetString("Settings_User_Overview_UserRole_User_Text", resourceCulture);
+            }
+        }
+        
+        public static string Settings_User_Overview_LoadCurrentUserError_MessageTemplate {
+            get {
+                return ResourceManager.GetString("Settings_User_Overview_LoadCurrentUserError_MessageTemplate", resourceCulture);
+            }
+        }
+        
+        public static string Settings_User_Overview_LoadAllUsersError_MessageTemplate {
+            get {
+                return ResourceManager.GetString("Settings_User_Overview_LoadAllUsersError_MessageTemplate", resourceCulture);
+            }
+        }
+        
+        public static string Settings_User_Overview_OwnUserError_Message {
+            get {
+                return ResourceManager.GetString("Settings_User_Overview_OwnUserError_Message", resourceCulture);
+            }
+        }
+        
+        public static string Settings_User_Overview_UserEnabled_MessageTemplate {
+            get {
+                return ResourceManager.GetString("Settings_User_Overview_UserEnabled_MessageTemplate", resourceCulture);
+            }
+        }
+        
+        public static string Settings_User_Overview_UserDisabled_MessageTemplate {
+            get {
+                return ResourceManager.GetString("Settings_User_Overview_UserDisabled_MessageTemplate", resourceCulture);
+            }
+        }
+        
+        public static string Settings_User_Overview_UserUpdatingError_MessageTemplate {
+            get {
+                return ResourceManager.GetString("Settings_User_Overview_UserUpdatingError_MessageTemplate", resourceCulture);
+            }
+        }
+        
+        public static string Settings_User_Add_PageTitle {
+            get {
+                return ResourceManager.GetString("Settings_User_Add_PageTitle", resourceCulture);
+            }
+        }
+        
+        public static string Settings_User_Edit_PageTitle {
+            get {
+                return ResourceManager.GetString("Settings_User_Edit_PageTitle", resourceCulture);
+            }
+        }
+        
+        public static string Settings_User_Add_Creating_Message {
+            get {
+                return ResourceManager.GetString("Settings_User_Add_Creating_Message", resourceCulture);
+            }
+        }
+        
+        public static string Settings_User_Add_CreateButton_Text {
+            get {
+                return ResourceManager.GetString("Settings_User_Add_CreateButton_Text", resourceCulture);
+            }
+        }
+        
+        public static string Settings_User_Add_CancelButton_Text {
+            get {
+                return ResourceManager.GetString("Settings_User_Add_CancelButton_Text", resourceCulture);
+            }
+        }
+        
+        public static string Settings_User_Add_AdministratorFlag_Label {
+            get {
+                return ResourceManager.GetString("Settings_User_Add_AdministratorFlag_Label", resourceCulture);
+            }
+        }
+        
+        public static string Settings_User_Add_AdministratorFlag_Caption {
+            get {
+                return ResourceManager.GetString("Settings_User_Add_AdministratorFlag_Caption", resourceCulture);
+            }
+        }
+        
+        public static string Settings_User_Add_Form_Username_Label {
+            get {
+                return ResourceManager.GetString("Settings_User_Add_Form_Username_Label", resourceCulture);
+            }
+        }
+        
+        public static string Settings_User_Add_Form_Username_Caption {
+            get {
+                return ResourceManager.GetString("Settings_User_Add_Form_Username_Caption", resourceCulture);
+            }
+        }
+        
+        public static string Settings_User_Add_Form_Password_Label {
+            get {
+                return ResourceManager.GetString("Settings_User_Add_Form_Password_Label", resourceCulture);
+            }
+        }
+        
+        public static string Settings_User_Add_Form_Password_Caption {
+            get {
+                return ResourceManager.GetString("Settings_User_Add_Form_Password_Caption", resourceCulture);
+            }
+        }
+        
+        public static string Settings_User_Add_Form_ConfirmPassword_Label {
+            get {
+                return ResourceManager.GetString("Settings_User_Add_Form_ConfirmPassword_Label", resourceCulture);
+            }
+        }
+        
+        public static string Settings_User_Add_Form_ConfirmPassword_Caption {
+            get {
+                return ResourceManager.GetString("Settings_User_Add_Form_ConfirmPassword_Caption", resourceCulture);
+            }
+        }
+        
+        public static string Settings_PageTitle {
+            get {
+                return ResourceManager.GetString("Settings_PageTitle", resourceCulture);
+            }
+        }
+        
+        public static string Settings_User_Edit_LoadingUser_Message {
+            get {
+                return ResourceManager.GetString("Settings_User_Edit_LoadingUser_Message", resourceCulture);
+            }
+        }
+        
+        public static string Settings_User_Edit_UserNotFound_Message {
+            get {
+                return ResourceManager.GetString("Settings_User_Edit_UserNotFound_Message", resourceCulture);
+            }
+        }
+        
+        public static string Settings_User_Edit_Form_Username_Label {
+            get {
+                return ResourceManager.GetString("Settings_User_Edit_Form_Username_Label", resourceCulture);
+            }
+        }
+        
+        public static string Settings_User_Edit_Form_Username_Caption {
+            get {
+                return ResourceManager.GetString("Settings_User_Edit_Form_Username_Caption", resourceCulture);
+            }
+        }
+        
+        public static string Settings_User_Edit_Form_Password_Label {
+            get {
+                return ResourceManager.GetString("Settings_User_Edit_Form_Password_Label", resourceCulture);
+            }
+        }
+        
+        public static string Settings_User_Edit_Form_Password_Caption {
+            get {
+                return ResourceManager.GetString("Settings_User_Edit_Form_Password_Caption", resourceCulture);
+            }
+        }
+        
+        public static string Settings_User_Edit_Form_ConfirmPassword_Label {
+            get {
+                return ResourceManager.GetString("Settings_User_Edit_Form_ConfirmPassword_Label", resourceCulture);
+            }
+        }
+        
+        public static string Settings_User_Edit_Form_ConfirmPassword_Caption {
+            get {
+                return ResourceManager.GetString("Settings_User_Edit_Form_ConfirmPassword_Caption", resourceCulture);
+            }
+        }
+        
+        public static string Settings_User_Edit_AdministratorFlag_Label {
+            get {
+                return ResourceManager.GetString("Settings_User_Edit_AdministratorFlag_Label", resourceCulture);
+            }
+        }
+        
+        public static string Settings_User_Edit_AdministratorFlag_Caption {
+            get {
+                return ResourceManager.GetString("Settings_User_Edit_AdministratorFlag_Caption", resourceCulture);
+            }
+        }
+        
+        public static string Settings_User_Edit_CantChangeOwnAdministratorFlag_Caption {
+            get {
+                return ResourceManager.GetString("Settings_User_Edit_CantChangeOwnAdministratorFlag_Caption", resourceCulture);
+            }
+        }
+        
+        public static string Settings_User_Edit_CancelButton_Text {
+            get {
+                return ResourceManager.GetString("Settings_User_Edit_CancelButton_Text", resourceCulture);
+            }
+        }
+        
+        public static string Settings_User_Edit_Saving_Message {
+            get {
+                return ResourceManager.GetString("Settings_User_Edit_Saving_Message", resourceCulture);
+            }
+        }
+        
+        public static string Settings_User_Edit_SaveButton_Text {
+            get {
+                return ResourceManager.GetString("Settings_User_Edit_SaveButton_Text", resourceCulture);
+            }
+        }
+        
+        public static string Settings_User_Edit_ActionsHeader_Text {
+            get {
+                return ResourceManager.GetString("Settings_User_Edit_ActionsHeader_Text", resourceCulture);
+            }
+        }
+        
+        public static string Settings_User_Edit_Actions_EnableDisable_Title {
+            get {
+                return ResourceManager.GetString("Settings_User_Edit_Actions_EnableDisable_Title", resourceCulture);
+            }
+        }
+        
+        public static string Settings_User_Edit_Actions_Delete_Title {
+            get {
+                return ResourceManager.GetString("Settings_User_Edit_Actions_Delete_Title", resourceCulture);
+            }
+        }
+        
+        public static string Settings_User_Edit_Actions_EnableDisable_Caption {
+            get {
+                return ResourceManager.GetString("Settings_User_Edit_Actions_EnableDisable_Caption", resourceCulture);
+            }
+        }
+        
+        public static string Settings_User_Edit_Actions_Delete_Caption {
+            get {
+                return ResourceManager.GetString("Settings_User_Edit_Actions_Delete_Caption", resourceCulture);
+            }
+        }
+        
+        public static string Settings_User_Edit_Actions_DeleteButton_Text {
+            get {
+                return ResourceManager.GetString("Settings_User_Edit_Actions_DeleteButton_Text", resourceCulture);
+            }
+        }
+        
+        public static string Settings_User_Edit_Actions_Delete_CantDeleteOwnUser_Message {
+            get {
+                return ResourceManager.GetString("Settings_User_Edit_Actions_Delete_CantDeleteOwnUser_Message", resourceCulture);
+            }
+        }
+        
+        public static string Settings_User_Edit_Actions_Delete_CantDisableOwnUser_Message {
+            get {
+                return ResourceManager.GetString("Settings_User_Edit_Actions_Delete_CantDisableOwnUser_Message", resourceCulture);
+            }
+        }
+        
+        public static string Settings_User_Edit_LoadingUserError_MessageTemplate {
+            get {
+                return ResourceManager.GetString("Settings_User_Edit_LoadingUserError_MessageTemplate", resourceCulture);
+            }
+        }
+        
+        public static string Settings_User_Edit_GetUserIdError_MessageTemplate {
+            get {
+                return ResourceManager.GetString("Settings_User_Edit_GetUserIdError_MessageTemplate", resourceCulture);
+            }
+        }
+        
+        public static string Settings_User_Edit_PasswordsDoNotMatchError_Message {
+            get {
+                return ResourceManager.GetString("Settings_User_Edit_PasswordsDoNotMatchError_Message", resourceCulture);
+            }
+        }
+        
+        public static string Settings_User_Edit_PasswordTooShortError_MessageTemplate {
+            get {
+                return ResourceManager.GetString("Settings_User_Edit_PasswordTooShortError_MessageTemplate", resourceCulture);
+            }
+        }
+        
+        public static string Settings_User_Edit_UsernameRequiredError_Message {
+            get {
+                return ResourceManager.GetString("Settings_User_Edit_UsernameRequiredError_Message", resourceCulture);
+            }
+        }
+        
+        public static string Settings_User_Edit_UsernameLengthError_MessageTemplate {
+            get {
+                return ResourceManager.GetString("Settings_User_Edit_UsernameLengthError_MessageTemplate", resourceCulture);
+            }
+        }
+        
+        public static string Settings_User_Edit_UpdateSuccess_Message {
+            get {
+                return ResourceManager.GetString("Settings_User_Edit_UpdateSuccess_Message", resourceCulture);
+            }
+        }
+        
+        public static string Settings_User_Edit_NoChanges_Message {
+            get {
+                return ResourceManager.GetString("Settings_User_Edit_NoChanges_Message", resourceCulture);
+            }
+        }
+        
+        public static string Settings_User_Edit_UpdatingError_MessageTemplate {
+            get {
+                return ResourceManager.GetString("Settings_User_Edit_UpdatingError_MessageTemplate", resourceCulture);
+            }
+        }
+        
+        public static string Settings_User_Edit_UserEnabledSuccess_Message {
+            get {
+                return ResourceManager.GetString("Settings_User_Edit_UserEnabledSuccess_Message", resourceCulture);
+            }
+        }
+        
+        public static string Settings_User_Edit_UserDisabledSuccess_Message {
+            get {
+                return ResourceManager.GetString("Settings_User_Edit_UserDisabledSuccess_Message", resourceCulture);
+            }
+        }
+        
+        public static string Settings_User_Edit_User_StatusUpdatingError_MessageTemplate {
+            get {
+                return ResourceManager.GetString("Settings_User_Edit_User_StatusUpdatingError_MessageTemplate", resourceCulture);
+            }
+        }
+        
+        public static string Settings_User_Edit_User_DeletingError_MessageTemplate {
+            get {
+                return ResourceManager.GetString("Settings_User_Edit_User_DeletingError_MessageTemplate", resourceCulture);
+            }
+        }
+        
+        public static string Settings_User_Edit_UserDeleteSuccess_Message {
+            get {
+                return ResourceManager.GetString("Settings_User_Edit_UserDeleteSuccess_Message", resourceCulture);
+            }
+        }
+        
+        public static string Settings_User_Edit_DeleteUserDialog_Title {
+            get {
+                return ResourceManager.GetString("Settings_User_Edit_DeleteUserDialog_Title", resourceCulture);
+            }
+        }
+        
+        public static string Settings_User_Edit_DeleteUserDialog_MessageTemplate {
+            get {
+                return ResourceManager.GetString("Settings_User_Edit_DeleteUserDialog_MessageTemplate", resourceCulture);
+            }
+        }
+        
+        public static string Settings_User_Edit_DeleteUserDialog_YesText {
+            get {
+                return ResourceManager.GetString("Settings_User_Edit_DeleteUserDialog_YesText", resourceCulture);
+            }
+        }
+        
+        public static string Settings_User_Edit_DeleteUserDialog_CancelText {
+            get {
+                return ResourceManager.GetString("Settings_User_Edit_DeleteUserDialog_CancelText", resourceCulture);
+            }
+        }
+        
+        public static string Settings_User_Add_PasswordsDoNotMatchError_Message {
+            get {
+                return ResourceManager.GetString("Settings_User_Add_PasswordsDoNotMatchError_Message", resourceCulture);
+            }
+        }
+        
+        public static string Settings_User_Add_PasswordRequiredError_MessageTemplate {
+            get {
+                return ResourceManager.GetString("Settings_User_Add_PasswordRequiredError_MessageTemplate", resourceCulture);
+            }
+        }
+        
+        public static string Settings_User_Add_UsernameRequiredError_Message {
+            get {
+                return ResourceManager.GetString("Settings_User_Add_UsernameRequiredError_Message", resourceCulture);
+            }
+        }
+        
+        public static string Settings_User_Add_UsernameLengthError_MessageTemplate {
+            get {
+                return ResourceManager.GetString("Settings_User_Add_UsernameLengthError_MessageTemplate", resourceCulture);
+            }
+        }
+        
+        public static string Settings_User_Add_PasswordTooShortError_MessageTemplate {
+            get {
+                return ResourceManager.GetString("Settings_User_Add_PasswordTooShortError_MessageTemplate", resourceCulture);
+            }
+        }
+        
+        public static string Settings_User_Add_UserCouldNotCreatedError_MessageTemplate {
+            get {
+                return ResourceManager.GetString("Settings_User_Add_UserCouldNotCreatedError_MessageTemplate", resourceCulture);
+            }
+        }
+        
+        public static string Settings_User_Add_UserCreatedSuccess_MessageTemplate {
+            get {
+                return ResourceManager.GetString("Settings_User_Add_UserCreatedSuccess_MessageTemplate", resourceCulture);
+            }
+        }
+        
+        public static string Settings_User_Add_CreationUnknownError_MessageTemplate {
+            get {
+                return ResourceManager.GetString("Settings_User_Add_CreationUnknownError_MessageTemplate", resourceCulture);
+            }
+        }
+        
+        public static string Account_Login_SigningInButton_Text {
+            get {
+                return ResourceManager.GetString("Account_Login_SigningInButton_Text", resourceCulture);
+            }
+        }
+        
+        public static string Account_Login_SignInButton_Text {
+            get {
+                return ResourceManager.GetString("Account_Login_SignInButton_Text", resourceCulture);
             }
         }
     }

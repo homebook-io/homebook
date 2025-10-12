@@ -20,6 +20,7 @@ public static class PlatformHandler
 
             LocaleResponse[] localeResponse = availableLocales
                 .Select(x => x.ToLocalResponse())
+                .OrderBy(x => x.Name)
                 .ToArray();
             GetLocalesResponse response = new(localeResponse);
 

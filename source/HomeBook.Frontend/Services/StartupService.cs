@@ -6,7 +6,6 @@ namespace HomeBook.Frontend.Services;
 
 /// <inheritdoc />
 public class StartupService(
-    IServiceProvider serviceProvider,
     IInstanceManagementProvider instanceManagementProvider,
     IJsLocalStorageProvider jsLocalStorageProvider,
     ILocalizationService localizationService,
@@ -37,9 +36,8 @@ public class StartupService(
         {
             // load instance data into cache
             await LoadInstanceDataAsync(cancellationToken);
+            await InitializeLocalizing(cancellationToken);
         }
-
-        await InitializeLocalizing(cancellationToken);
 
         // Notify authentication state changed
         ApplicationInitialized?.Invoke(Status);

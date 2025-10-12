@@ -1,5 +1,6 @@
 @using HomeBook.Client
 @using HomeBook.Frontend.Abstractions.Contracts
+@using HomeBook.Frontend.Properties
 
 @inject ILocalizationProvider Loc
 @inject ISetupService SetupService
@@ -11,11 +12,15 @@
         <CardHeaderContent>
             @if (_updateSuccessful && !_updateFailed)
             {
-                <MudText Typo="Typo.h4">HomeBook Update is finished</MudText>
+                <MudText Typo="Typo.h4">
+                    @Loc[nameof(LocalizationStrings.Update_ProcessFinished_Title)]
+                </MudText>
             }
             else
             {
-                <MudText Typo="Typo.h4">HomeBook Update</MudText>
+                <MudText Typo="Typo.h4">
+                    @Loc[nameof(LocalizationStrings.Update_Process_Title)]
+                </MudText>
             }
         </CardHeaderContent>
     </MudCardHeader>
@@ -39,7 +44,7 @@
                                   Duration="TimeSpan.FromSeconds(5)"
                                   OnFinished="async () => await OnStartUpdateCountdownFinishedAsync()"
                                   Severity="Severity.Info">
-                    The update is prepared and is starting now.
+                    @Loc[nameof(LocalizationStrings.Update_Process_UpdateIsPrepared_Message)]
                 </UiCountdownAlert>
             }
 
@@ -48,21 +53,15 @@
                 <div class="d-flex flex-column justify-center flex-grow-1 gap-4">
                     <MudText Typo="Typo.body1"
                              Class="mb-3">
-                        The update was successful.
+                        @Loc[nameof(LocalizationStrings.Update_Process_Finished_Success_Message)]
                     </MudText>
                     <MudButton OnClick="OnStartHomeBookAsync"
                                Size="Size.Large"
                                Variant="Variant.Filled"
                                Color="Color.Primary">
-                        Start HomeBook
+                        @Loc[nameof(LocalizationStrings.Update_Process_Finished_StartHomeBook_Message)]
                     </MudButton>
                 </div>
-                @* <UiCountdownAlert Class="mt-3" *@
-                @*                   Duration="TimeSpan.FromSeconds(5)" *@
-                @*                   OnFinished="async () => await OnCountdownFinishedAsync()" *@
-                @*                   Severity="Severity.Info"> *@
-                @*     Update was successful. *@
-                @* </UiCountdownAlert> *@
             }
 
             @if (!string.IsNullOrEmpty(_errorMessage))
@@ -77,7 +76,7 @@
                            Class="mt-3"
                            StartIcon="@Icons.Material.TwoTone.Autorenew"
                            OnClick="async () => await StartUpdateAsync()">
-                    Retry Update
+                    @Loc[nameof(LocalizationStrings.Update_Process_Retry_Button_Text)]
                 </MudButton>
             }
         }

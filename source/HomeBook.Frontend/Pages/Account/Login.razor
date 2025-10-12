@@ -39,9 +39,9 @@
 
                         <CardHeaderContent>
                             <MudText Typo="Typo.h4"
-                                     Color="Color.Primary">@Loc[nameof(LocalizationStrings.AppTitle)] @_homebookInstanceName</MudText>
-                            <MudText Typo="Typo.h3"
                                      Color="Color.Primary">@Loc[nameof(LocalizationStrings.Account_Login_Title)]</MudText>
+                            <MudText Typo="Typo.h6"
+                                     Color="Color.Primary">@_homebookInstanceName</MudText>
                         </CardHeaderContent>
 
                     </MudCardHeader>
@@ -90,13 +90,20 @@
                                    Disabled="@_isLoading">
                             @if (_isLoading)
                             {
-                                <MudProgressCircular Class="ms-n1" Size="Size.Small" Indeterminate="true"/>
-                                <MudText Class="ms-2">Signing in...</MudText>
+                                <MudProgressCircular Class="ms-n1"
+                                                     Size="Size.Small"
+                                                     Indeterminate="true"/>
+                                <MudText Class="ms-2">
+                                    @Loc[nameof(LocalizationStrings.Account_Login_SigningInButton_Text)]
+                                </MudText>
                             }
                             else
                             {
-                                <MudIcon Icon="Icons.Material.Filled.Login" Class="mr-2"/>
-                                <MudText>Sign In</MudText>
+                                <MudIcon Icon="Icons.Material.Filled.Login"
+                                         Class="mr-2"/>
+                                <MudText>
+                                    @Loc[nameof(LocalizationStrings.Account_Login_SignInButton_Text)]
+                                </MudText>
                             }
                         </MudButton>
 

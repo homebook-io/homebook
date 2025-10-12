@@ -3,6 +3,7 @@ using HomeBook.Frontend.Abstractions.Models.System;
 using HomeBook.Frontend.Components;
 using HomeBook.Frontend.Core.Models.Setup;
 using HomeBook.Frontend.Mappings;
+using HomeBook.Frontend.Properties;
 using Microsoft.AspNetCore.Components;
 using MudBlazor;
 
@@ -11,9 +12,9 @@ namespace HomeBook.Frontend.Pages.Settings;
 public partial class About : ComponentBase
 {
     private string _uiVersion = "1.0.0";
-    private string _uiDotnetVersion = "1.0.0";
+    private string _uiDotnetVersion = ".NET 1.0.0";
     private string _backendVersion = "1.0.0";
-    private string _backendDotnetVersion = "1.0.0";
+    private string _backendDotnetVersion = ".NET 1.0.0";
     private string _databaseProvider = "";
     private string _deploymentType = "";
     private List<LicenseViewModel> _licenses = [];
@@ -40,7 +41,7 @@ public partial class About : ComponentBase
     private void LoadUiInfoAsync()
     {
         _uiVersion = Configuration["AppVersion"] ?? "1.0.0";
-        _uiDotnetVersion = Environment.Version.ToString();
+        _uiDotnetVersion = $".NET {Environment.Version}";
     }
 
     private async Task LoadBackendInfoAsync(CancellationToken cancellationToken)
@@ -54,28 +55,23 @@ public partial class About : ComponentBase
             if (systemInfo is not null)
             {
                 _backendVersion = systemInfo.AppVersion.ToString();
-                _backendDotnetVersion = systemInfo.DotNetVersion;
+                _backendDotnetVersion = $".NET {systemInfo.DotNetVersion}";
 
                 _databaseProvider = systemInfo.DatabaseProvider;
                 _deploymentType = systemInfo.DeploymentType;
             }
         }
-        catch (UnauthorizedAccessException)
-        {
-            // user is no admin
-            Snackbar.Add("You are not authorized to view system information.", Severity.Warning);
-        }
         catch (Exception err)
         {
             // display error
-            Snackbar.Add($"Loading system information failed: {err.Message}", Severity.Error);
+            Snackbar.Add(string.Format(Loc[nameof(LocalizationStrings.Settings_About_Error_MessageTemplate)],
+                    err.Message),
+                Severity.Error);
         }
     }
 
     private async Task OpenLicensesDialogAsync()
     {
-        CancellationToken cancellationToken = CancellationToken.None;
-
         DialogParameters<UiLicenseDialog> parameters = new()
         {
             {
@@ -86,7 +82,7 @@ public partial class About : ComponentBase
             },
         };
 
-        IDialogReference licenseDialog = await DialogService.ShowAsync<UiLicenseDialog>("HomeBook Licenses",
+        IDialogReference licenseDialog = await DialogService.ShowAsync<UiLicenseDialog>(string.Empty,
             parameters,
             new DialogOptions()
             {

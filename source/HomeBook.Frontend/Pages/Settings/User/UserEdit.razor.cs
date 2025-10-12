@@ -4,6 +4,7 @@ using MudBlazor;
 using System.Security.Claims;
 using HomeBook.Frontend.Abstractions.Models.System;
 using HomeBook.Frontend.Core.Models.Settings.Users;
+using HomeBook.Frontend.Properties;
 
 namespace HomeBook.Frontend.Pages.Settings.User;
 
@@ -26,20 +27,36 @@ public partial class UserEdit : ComponentBase
     private string _passwordIcon = Icons.Material.Filled.VisibilityOff;
     private string _confirmPasswordIcon = Icons.Material.Filled.VisibilityOff;
 
-    private readonly List<BreadcrumbItem> _breadcrumbs = new()
+    private readonly List<BreadcrumbItem> _breadcrumbs = new();
+
+    protected override async Task OnAfterRenderAsync(bool firstRender)
     {
-        new BreadcrumbItem("Settings", href: "/Settings", icon: Icons.Material.Filled.Settings),
-        new BreadcrumbItem("Users", href: "/Settings/Users", icon: Icons.Material.Filled.People),
-        new BreadcrumbItem("Edit User", href: null, disabled: true)
-    };
+        await base.OnAfterRenderAsync(firstRender);
+
+        if (!firstRender)
+            return;
+
+        _breadcrumbs.Clear();
+        _breadcrumbs.Add(new BreadcrumbItem(Loc[nameof(LocalizationStrings.Settings_PageTitle)],
+            href: "/Settings",
+            icon: Icons.Material.Filled.Settings));
+        _breadcrumbs.Add(new BreadcrumbItem(Loc[nameof(LocalizationStrings.Settings_User_Overview_PageTitle)],
+            href: "/Settings/Users",
+            icon: Icons.Material.Filled.People));
+        _breadcrumbs.Add(new BreadcrumbItem(Loc[nameof(LocalizationStrings.Settings_User_Edit_PageTitle)],
+            href: null,
+            disabled: true));
+
+        StateHasChanged();
+    }
 
     protected override async Task OnInitializedAsync()
     {
-        await LoadCurrentUserAsync();
+        await GetCurrentUserIdAsync();
         await LoadUserAsync();
     }
 
-    private async Task LoadCurrentUserAsync()
+    private async Task GetCurrentUserIdAsync()
     {
         try
         {
@@ -53,9 +70,12 @@ public partial class UserEdit : ComponentBase
                 }
             }
         }
-        catch (Exception ex)
+        catch (Exception err)
         {
-            Snackbar.Add($"Error loading current user: {ex.Message}", Severity.Error);
+            Snackbar.Add(string.Format(
+                    Loc[nameof(LocalizationStrings.Settings_User_Edit_LoadingUserError_MessageTemplate)],
+                    err.Message),
+                Severity.Error);
         }
     }
 
@@ -75,13 +95,17 @@ public partial class UserEdit : ComponentBase
                     Username = _originalUser.UserName,
                     Password = string.Empty,
                     ConfirmPassword = string.Empty,
-                    IsAdmin = _originalUser.IsAdmin
+                    IsAdmin = _originalUser.IsAdmin,
+                    IsEnabled = !_originalUser.DisabledAt.HasValue
                 };
             }
         }
-        catch (Exception ex)
+        catch (Exception err)
         {
-            Snackbar.Add($"Error loading user: {ex.Message}", Severity.Error);
+            Snackbar.Add(string.Format(
+                    Loc[nameof(LocalizationStrings.Settings_User_Edit_GetUserIdError_MessageTemplate)],
+                    err.Message),
+                Severity.Error);
         }
         finally
         {
@@ -137,26 +161,39 @@ public partial class UserEdit : ComponentBase
         {
             if (_userModel.Password != _userModel.ConfirmPassword)
             {
-                Snackbar.Add("Passwords do not match", Severity.Error);
+                Snackbar.Add(Loc[nameof(LocalizationStrings.Settings_User_Edit_PasswordsDoNotMatchError_Message)],
+                    Severity.Error);
                 return;
             }
 
-            if (_userModel.Password.Length < 8)
+            int passwordRequiredLenght = 8;
+            if (_userModel.Password.Length < passwordRequiredLenght)
             {
-                Snackbar.Add("Password must be at least 8 characters long", Severity.Error);
+                Snackbar.Add(string.Format(
+                        Loc[nameof(LocalizationStrings.Settings_User_Edit_PasswordTooShortError_MessageTemplate)],
+                        passwordRequiredLenght),
+                    Severity.Error);
                 return;
             }
         }
 
         if (string.IsNullOrWhiteSpace(_userModel.Username))
         {
-            Snackbar.Add("Username is required", Severity.Error);
+            Snackbar.Add(Loc[nameof(LocalizationStrings.Settings_User_Edit_UsernameRequiredError_Message)],
+                Severity.Error);
             return;
         }
 
-        if (_userModel.Username.Length < 5 || _userModel.Username.Length > 20)
+        int usernameMinLenght = 5;
+        int usernameMaxLenght = 20;
+        if (_userModel.Username.Length < usernameMinLenght
+            || _userModel.Username.Length > usernameMaxLenght)
         {
-            Snackbar.Add("Username must be between 5 and 20 characters", Severity.Error);
+            Snackbar.Add(string.Format(
+                    Loc[nameof(LocalizationStrings.Settings_User_Edit_UsernameLengthError_MessageTemplate)],
+                    usernameMinLenght,
+                    usernameMaxLenght),
+                Severity.Error);
             return;
         }
 
@@ -195,20 +232,24 @@ public partial class UserEdit : ComponentBase
 
             if (updateMessages.Any())
             {
-                string message = $"User updated successfully ({string.Join(", ", updateMessages)})";
-                Snackbar.Add(message, Severity.Success);
+                Snackbar.Add(Loc[nameof(LocalizationStrings.Settings_User_Edit_UpdateSuccess_Message)],
+                    Severity.Success);
 
                 // Reload user data
                 await LoadUserAsync();
             }
             else
             {
-                Snackbar.Add("No changes to save", Severity.Info);
+                Snackbar.Add(Loc[nameof(LocalizationStrings.Settings_User_Edit_NoChanges_Message)],
+                    Severity.Info);
             }
         }
-        catch (Exception ex)
+        catch (Exception err)
         {
-            Snackbar.Add($"Error updating user: {ex.Message}", Severity.Error);
+            Snackbar.Add(string.Format(
+                    Loc[nameof(LocalizationStrings.Settings_User_Edit_UpdatingError_MessageTemplate)],
+                    err.Message),
+                Severity.Error);
         }
         finally
         {
@@ -216,7 +257,12 @@ public partial class UserEdit : ComponentBase
         }
     }
 
-    private async Task ToggleUserStatusAsync()
+    private async Task OnUserDisabledChanged(bool isEnabled)
+    {
+        await SetEnabledToAsync(isEnabled);
+    }
+
+    private async Task SetEnabledToAsync(bool isEnabled)
     {
         if (_originalUser == null || IsCurrentUser())
             return;
@@ -225,27 +271,34 @@ public partial class UserEdit : ComponentBase
         {
             _saving = true;
 
-            if (_originalUser.DisabledAt.HasValue)
+            if (isEnabled)
             {
                 // Enable user
                 await UserManagementProvider.EnableUserAsync(UserId,
                     CancellationToken.None);
-                Snackbar.Add($"User '{_originalUser.UserName}' has been enabled", Severity.Success);
+
+                Snackbar.Add(Loc[nameof(LocalizationStrings.Settings_User_Edit_UserEnabledSuccess_Message)],
+                    Severity.Success);
             }
             else
             {
                 // Disable user
                 await UserManagementProvider.DisableUserAsync(UserId,
                     CancellationToken.None);
-                Snackbar.Add($"User '{_originalUser.UserName}' has been disabled", Severity.Success);
+
+                Snackbar.Add(Loc[nameof(LocalizationStrings.Settings_User_Edit_UserDisabledSuccess_Message)],
+                    Severity.Success);
             }
 
             // Reload user data
             await LoadUserAsync();
         }
-        catch (Exception ex)
+        catch (Exception err)
         {
-            Snackbar.Add($"Error updating user status: {ex.Message}", Severity.Error);
+            Snackbar.Add(string.Format(
+                    Loc[nameof(LocalizationStrings.Settings_User_Edit_User_StatusUpdatingError_MessageTemplate)],
+                    err.Message),
+                Severity.Error);
         }
         finally
         {
@@ -259,10 +312,11 @@ public partial class UserEdit : ComponentBase
             return;
 
         bool? result = await DialogService.ShowMessageBox(
-            "Delete User",
-            $"Are you sure you want to delete user '{_originalUser.UserName}'? This action cannot be undone.",
-            yesText: "Delete",
-            cancelText: "Cancel");
+            Loc[nameof(LocalizationStrings.Settings_User_Edit_DeleteUserDialog_Title)],
+            string.Format(Loc[nameof(LocalizationStrings.Settings_User_Edit_DeleteUserDialog_MessageTemplate)],
+                _originalUser.UserName),
+            yesText: Loc[nameof(LocalizationStrings.Settings_User_Edit_DeleteUserDialog_YesText)],
+            cancelText: Loc[nameof(LocalizationStrings.Settings_User_Edit_DeleteUserDialog_CancelText)]);
 
         if (result == true)
         {
@@ -282,12 +336,17 @@ public partial class UserEdit : ComponentBase
             await UserManagementProvider.DeleteUserAsync(UserId,
                 CancellationToken.None);
 
-            Snackbar.Add($"User '{_originalUser.UserName}' has been deleted", Severity.Success);
+            Snackbar.Add(Loc[nameof(LocalizationStrings.Settings_User_Edit_UserDeleteSuccess_Message)],
+                Severity.Success);
+
             NavigateBack();
         }
-        catch (Exception ex)
+        catch (Exception err)
         {
-            Snackbar.Add($"Error deleting user: {ex.Message}", Severity.Error);
+            Snackbar.Add(string.Format(
+                    Loc[nameof(LocalizationStrings.Settings_User_Edit_User_DeletingError_MessageTemplate)],
+                    err.Message),
+                Severity.Error);
         }
         finally
         {
@@ -295,8 +354,5 @@ public partial class UserEdit : ComponentBase
         }
     }
 
-    private void NavigateBack()
-    {
-        NavigationManager.NavigateTo("/Settings/Users");
-    }
+    private void NavigateBack() => NavigationManager.NavigateTo("/Settings/Users");
 }

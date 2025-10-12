@@ -1,8 +1,8 @@
-using HomeBook.Client;
 using HomeBook.Client.Models;
 using HomeBook.Frontend.Core.Models.Setup;
 using HomeBook.Frontend.Core.Models.UserPreferences;
 using HomeBook.Frontend.Mappings;
+using HomeBook.Frontend.Properties;
 using Microsoft.AspNetCore.Components;
 using MudBlazor;
 
@@ -53,9 +53,12 @@ public partial class Localization : ComponentBase
                 }
             }
         }
-        catch (Exception ex)
+        catch (Exception err)
         {
-            Snackbar.Add($"Error loading instance configuration: {ex.Message}", Severity.Error);
+            Snackbar.Add(string.Format(
+                    Loc[nameof(LocalizationStrings.Settings_Localization_LoadPreferences_Error_MessageTemplate)],
+                    err.Message),
+                Severity.Error);
         }
     }
 
@@ -68,9 +71,12 @@ public partial class Localization : ComponentBase
             _configurationModel.Locale = locale;
             StateHasChanged();
         }
-        catch (Exception ex)
+        catch (Exception err)
         {
-            Snackbar.Add($"Error loading instance configuration: {ex.Message}", Severity.Error);
+            Snackbar.Add(string.Format(
+                    Loc[nameof(LocalizationStrings.Settings_Localization_LoadPreferences_Error_MessageTemplate)],
+                    err.Message),
+                Severity.Error);
         }
     }
 
@@ -90,11 +96,15 @@ public partial class Localization : ComponentBase
 
             await UpdateLocaleAsync(_configurationModel.Locale);
 
-            Snackbar.Add("User preferences updated", Severity.Success);
+            Snackbar.Add(Loc[nameof(LocalizationStrings.Settings_Localization_PreferencesUpdated_Success_Message)],
+                Severity.Success);
         }
-        catch (Exception ex)
+        catch (Exception err)
         {
-            Snackbar.Add($"Error updating user preferences: {ex.Message}", Severity.Error);
+            Snackbar.Add(string.Format(
+                    Loc[nameof(LocalizationStrings.Settings_Localization_PreferencesUpdated_Error_MessageTemplate)],
+                    err.Message),
+                Severity.Error);
         }
         finally
         {

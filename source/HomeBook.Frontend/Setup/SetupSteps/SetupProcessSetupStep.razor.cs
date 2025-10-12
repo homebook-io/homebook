@@ -1,5 +1,6 @@
 using HomeBook.Client.Models;
 using HomeBook.Frontend.Abstractions.Contracts;
+using HomeBook.Frontend.Properties;
 using HomeBook.Frontend.Setup.Exceptions;
 using Microsoft.AspNetCore.Components;
 using Microsoft.Kiota.Abstractions;
@@ -47,9 +48,7 @@ public partial class SetupProcessSetupStep : ComponentBase, ISetupStep
         catch (HttpRequestException)
         {
             _setupFailed = true;
-            // DE => Verbindung zum Server konnte nicht hergestellt werden. Stellen Sie sicher, dass der Server läuft und korrekt konfiguriert wurde und versuchen Sie es erneut.
-            _errorMessage =
-                "Unable to connect to the server. Make sure that the server is running and has been configured correctly, then try again.";
+            _errorMessage = Loc[nameof(LocalizationStrings.Setup_BackendConnectionFailed_Message)];
             await StepErrorAsync(cancellationToken);
         }
         catch (SetupCheckException err)
@@ -61,7 +60,9 @@ public partial class SetupProcessSetupStep : ComponentBase, ISetupStep
         catch (Exception err)
         {
             _setupFailed = true;
-            _errorMessage = "error while setup: " + err.Message;
+            _errorMessage = string.Format(
+                Loc[nameof(LocalizationStrings.Setup_Process_ProcessingError_MessageTemplate)],
+                err.Message);
             await StepErrorAsync(cancellationToken);
         }
         finally
@@ -144,27 +145,31 @@ public partial class SetupProcessSetupStep : ComponentBase, ISetupStep
             // 3. wait until the server is available again and check that the status is correct
             bool isSetupDone = await WaitForServerRestartAndGetStatusAsync(cancellationToken);
             if (!isSetupDone)
-                // display error message
-                throw new SetupCheckException("Server did not restart correctly after setup.");
+                throw new SetupCheckException(
+                    Loc[nameof(LocalizationStrings.Setup_Process_ProcessingServerRestartError_Message)]);
 
             // otherwise the setup was successful
         }
         catch (ApiException err) when (err.ResponseStatusCode == 400)
         {
             throw new SetupCheckException(
-                "Validation error for example with the database configuration, e.g. too short password, etc.");
+                Loc[nameof(LocalizationStrings.Setup_Process_ProcessingValidationError_Message)]);
         }
         catch (ApiException err) when (err.ResponseStatusCode == 422)
         {
-            throw new SetupCheckException("Licenses not accepted");
+            throw new SetupCheckException(
+                Loc[nameof(LocalizationStrings.Setup_Process_ProcessingLicenseError_Message)]);
         }
         catch (ApiException err) when (err.ResponseStatusCode == 500)
         {
-            throw new SetupCheckException("Unknown error while starting setup");
+            throw new SetupCheckException(
+                Loc[nameof(LocalizationStrings.Setup_Process_ProcessingUnknownError_Message)]);
         }
         catch (Exception err)
         {
-            throw new SetupCheckException(err.Message);
+            throw new SetupCheckException(
+                string.Format(Loc[nameof(LocalizationStrings.Setup_Process_ProcessingUnknownError_MessageTemplate)],
+                    err.Message));
         }
     }
 

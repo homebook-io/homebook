@@ -4,6 +4,7 @@ using HomeBook.Frontend.Abstractions.Models;
 using HomeBook.Frontend.Components;
 using HomeBook.Frontend.Core.Models.Setup;
 using HomeBook.Frontend.Mappings;
+using HomeBook.Frontend.Properties;
 using HomeBook.Frontend.Setup.Exceptions;
 using Microsoft.AspNetCore.Components;
 using Microsoft.Kiota.Abstractions;
@@ -52,14 +53,10 @@ public partial class LicenseAgreementSetupStep : ComponentBase, ISetupStep
             _licensesAccepted = await LicensesService.AreLicensesAcceptedAsync(cancellationToken);
             await InvokeAsync(StateHasChanged);
         }
-        catch (ApiException err) when (err.ResponseStatusCode == 500)
-        {
-            _errorMessage = "Unknown Server Error while loading Licenses: " + err.Message;
-            await StepErrorAsync(cancellationToken);
-        }
         catch (Exception err)
         {
-            _errorMessage = "error while loading licenses: " + err.Message;
+            _errorMessage = string.Format(Loc[nameof(LocalizationStrings.Setup_Licenses_LoadingError_MessageTemplate)],
+                err.Message);
             await StepErrorAsync(cancellationToken);
         }
         finally
@@ -98,7 +95,7 @@ public partial class LicenseAgreementSetupStep : ComponentBase, ISetupStep
             }
         };
 
-        IDialogReference licenseDialog = await DialogService.ShowAsync<UiLicenseDialog>("HomeBook Licenses",
+        IDialogReference licenseDialog = await DialogService.ShowAsync<UiLicenseDialog>(string.Empty,
             parameters,
             new DialogOptions()
             {

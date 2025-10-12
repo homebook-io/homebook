@@ -1,6 +1,7 @@
 @using HomeBook.Client
 @using HomeBook.Frontend.Abstractions.Contracts
 @using HomeBook.Frontend.Core.Models.Setup
+@using HomeBook.Frontend.Properties
 
 @inject ILocalizationProvider Loc
 @inject ISetupService SetupService
@@ -10,7 +11,9 @@
 
     <MudCardHeader Class="no-divider">
         <CardHeaderContent>
-            <MudText Typo="Typo.h4" Color="Color.Inherit">HomeBook Configuration</MudText>
+            <MudText Typo="Typo.h4" Color="Color.Inherit">
+                @Loc[nameof(LocalizationStrings.Setup_Configuration_Title)]
+            </MudText>
         </CardHeaderContent>
     </MudCardHeader>
 
@@ -38,11 +41,15 @@
                                       Severity="Severity.Info">
                         @if (_preConfigured)
                         {
-                            <MudText>Homebook configuration was found.</MudText>
+                            <MudText>
+                                @Loc[nameof(LocalizationStrings.Setup_Configuration_ConfigurationFound_Title)]
+                            </MudText>
                         }
                         else
                         {
-                            <MudText>Homebook configuration saved successfully.</MudText>
+                            <MudText>
+                                @Loc[nameof(LocalizationStrings.Setup_Configuration_ConfigurationSaved_Title)]
+                            </MudText>
                         }
                     </UiCountdownAlert>
                 }
@@ -65,8 +72,8 @@
                     <MudItem xs="12">
                         <MudTextField @bind-Value="_homebookConfiguration.InstanceName"
                                       Margin="Margin.Dense"
-                                      Label="HomeBook Instance Name"
-                                      HelperText="Enter the name for your homebook"
+                                      Label="@Loc[nameof(LocalizationStrings.Setup_Configuration_Form_InstanceName_Label)]"
+                                      HelperText="@Loc[nameof(LocalizationStrings.Setup_Configuration_Form_InstanceName_HelperText)]"
                                       For="@(() => _homebookConfiguration.InstanceName)"
                                       Required="true"
                                       Clearable="true"
@@ -76,10 +83,10 @@
                     <MudItem xs="12">
                         <MudSelect @bind-Value="_homebookConfiguration.InstanceDefaultLocale"
                                    Variant="Variant.Outlined"
-                                   Label="Default Language for UI"
                                    Margin="Margin.Dense"
                                    Dense="true"
-                                   HelperText="Select the default language for the app"
+                                   Label="@Loc[nameof(LocalizationStrings.Setup_Configuration_Form_InstanceDefaultLocale_Label)]"
+                                   HelperText="@Loc[nameof(LocalizationStrings.Setup_Configuration_Form_InstanceDefaultLocale_HelperText)]"
                                    For="@(() => _homebookConfiguration.InstanceDefaultLocale)"
                                    Required="true"
                                    Clearable="true">
@@ -101,7 +108,9 @@
                                Class="mt-3"
                                Disabled="@_isChecking">
 
-                        <MudText>Save Configuration</MudText>
+                        <MudText>
+                            @Loc[nameof(LocalizationStrings.Setup_Configuration_Save_Button_Text)]
+                        </MudText>
 
                     </MudButton>
 

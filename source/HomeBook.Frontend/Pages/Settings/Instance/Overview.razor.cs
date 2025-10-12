@@ -3,6 +3,7 @@ using HomeBook.Frontend.Abstractions.Enums;
 using HomeBook.Frontend.Core.Models.Configuration;
 using HomeBook.Frontend.Core.Models.Setup;
 using HomeBook.Frontend.Mappings;
+using HomeBook.Frontend.Properties;
 using Microsoft.AspNetCore.Components;
 using MudBlazor;
 
@@ -54,9 +55,12 @@ public partial class Overview : ComponentBase
                 }
             }
         }
-        catch (Exception ex)
+        catch (Exception err)
         {
-            Snackbar.Add($"Error loading instance configuration: {ex.Message}", Severity.Error);
+            Snackbar.Add(string.Format(
+                    Loc[nameof(LocalizationStrings.Settings_Instance_LoadPreferences_Error_MessageTemplate)],
+                    err.Message),
+                Severity.Error);
         }
     }
 
@@ -72,9 +76,12 @@ public partial class Overview : ComponentBase
             _configurationModel.InstanceDefaultLocale = defaultLocale;
             StateHasChanged();
         }
-        catch (Exception ex)
+        catch (Exception err)
         {
-            Snackbar.Add($"Error loading instance configuration: {ex.Message}", Severity.Error);
+            Snackbar.Add(string.Format(
+                    Loc[nameof(LocalizationStrings.Settings_Instance_LoadPreferences_Error_MessageTemplate)],
+                    err.Message),
+                Severity.Error);
         }
     }
 
@@ -90,9 +97,12 @@ public partial class Overview : ComponentBase
             _configurationModel.InstanceName = instanceName;
             StateHasChanged();
         }
-        catch (Exception ex)
+        catch (Exception err)
         {
-            Snackbar.Add($"Error loading instance configuration: {ex.Message}", Severity.Error);
+            Snackbar.Add(string.Format(
+                    Loc[nameof(LocalizationStrings.Settings_Instance_LoadPreferences_Error_MessageTemplate)],
+                    err.Message),
+                Severity.Error);
         }
     }
 
@@ -113,11 +123,15 @@ public partial class Overview : ComponentBase
             await UpdateInstanceNameAsync(_configurationModel.InstanceName);
             await UpdateInstanceDefaultLocaleAsync(_configurationModel.InstanceDefaultLocale);
 
-            Snackbar.Add("Instance name updated successfully!", Severity.Success);
+            Snackbar.Add(Loc[nameof(LocalizationStrings.Settings_Instance_PreferencesUpdated_Success_Message)],
+                Severity.Success);
         }
-        catch (Exception ex)
+        catch (Exception err)
         {
-            Snackbar.Add($"Error updating instance name: {ex.Message}", Severity.Error);
+            Snackbar.Add(string.Format(
+                    Loc[nameof(LocalizationStrings.Settings_Instance_PreferencesUpdated_Error_MessageTemplate)],
+                    err.Message),
+                Severity.Error);
         }
         finally
         {

@@ -601,6 +601,8 @@
 :root {
   --hb-settings-color-instance-name: #2563EB;
   --hb-settings-color-default-language: #16A34A;
+  --hb-settings-color-user-actions-disable: #FFA726;
+  --hb-settings-color-user-actions-delete: #E53935;
 }
 
 .mud-navmenu.mud-navmenu-first-level > .mud-nav-item > .mud-nav-link {

@@ -2,8 +2,11 @@
 
 @attribute [Authorize(Roles = "Admin")]
 @using HomeBook.Frontend.Abstractions.Contracts
+@using HomeBook.Frontend.Core.Icons
+@using HomeBook.Frontend.Properties
 @using Microsoft.AspNetCore.Components.Authorization
 
+@inject ILocalizationProvider Loc
 @inject ISnackbar Snackbar
 @inject NavigationManager NavigationManager
 @inject IDialogService DialogService
@@ -28,13 +31,19 @@
 
             @if (_loading)
             {
-                <MudProgressLinear Indeterminate="true" Class="mb-4"/>
-                <MudText Align="Align.Center">Loading user...</MudText>
+                <MudProgressLinear Color="Color.Primary"
+                                   Indeterminate="true"
+                                   Class="mb-4"/>
+                <MudText Align="Align.Center">
+                    @Loc[nameof(LocalizationStrings.Settings_User_Edit_LoadingUser_Message)]
+                </MudText>
             }
             else if (_userModel == null)
             {
                 <MudAlert Severity="Severity.Error" Class="mt-4">
-                    <MudText>User not found.</MudText>
+                    <MudText>
+                        @Loc[nameof(LocalizationStrings.Settings_User_Edit_UserNotFound_Message)]
+                    </MudText>
                 </MudAlert>
             }
             else
@@ -43,7 +52,9 @@
                 <MudCard Class="mb-4">
                     <MudCardHeader>
                         <CardHeaderContent>
-                            <MudText Typo="Typo.h5">Edit User</MudText>
+                            <MudText Typo="Typo.h5">
+                                @Loc[nameof(LocalizationStrings.Settings_User_Edit_PageTitle)]
+                            </MudText>
                         </CardHeaderContent>
                     </MudCardHeader>
 
@@ -54,21 +65,21 @@
                             <MudGrid>
                                 <MudItem xs="12">
                                     <MudTextField @bind-Value="_userModel.Username"
-                                                  Label="Username"
+                                                  Label="@Loc[nameof(LocalizationStrings.Settings_User_Edit_Form_Username_Label)]"
+                                                  HelperText="@Loc[nameof(LocalizationStrings.Settings_User_Edit_Form_Username_Caption)]"
                                                   Required="true"
                                                   Variant="Variant.Outlined"
                                                   Margin="Margin.Dense"
-                                                  HelperText="Enter a unique username"
                                                   For="@(() => _userModel.Username)"/>
                                 </MudItem>
 
                                 <MudItem xs="12" md="6">
                                     <MudTextField @bind-Value="_userModel.Password"
-                                                  Label="New Password"
+                                                  Label="@Loc[nameof(LocalizationStrings.Settings_User_Edit_Form_Password_Label)]"
+                                                  HelperText="@Loc[nameof(LocalizationStrings.Settings_User_Edit_Form_Password_Caption)]"
                                                   InputType="@_passwordInputType"
                                                   Variant="Variant.Outlined"
                                                   Margin="Margin.Dense"
-                                                  HelperText="Leave empty to keep current password"
                                                   For="@(() => _userModel.Password)"
                                                   Adornment="Adornment.End"
                                                   AdornmentIcon="@_passwordIcon"
@@ -77,11 +88,11 @@
 
                                 <MudItem xs="12" md="6">
                                     <MudTextField @bind-Value="_userModel.ConfirmPassword"
-                                                  Label="Confirm New Password"
+                                                  Label="@Loc[nameof(LocalizationStrings.Settings_User_Edit_Form_ConfirmPassword_Label)]"
+                                                  HelperText="@Loc[nameof(LocalizationStrings.Settings_User_Edit_Form_ConfirmPassword_Caption)]"
                                                   InputType="@_confirmPasswordInputType"
                                                   Variant="Variant.Outlined"
                                                   Margin="Margin.Dense"
-                                                  HelperText="Confirm your new password"
                                                   For="@(() => _userModel.ConfirmPassword)"
                                                   Adornment="Adornment.End"
                                                   AdornmentIcon="@_confirmPasswordIcon"
@@ -90,18 +101,18 @@
 
                                 <MudItem xs="12">
                                     <MudSwitch T="bool" @bind-Value="_userModel.IsAdmin"
-                                               Label="Administrator"
+                                               Label="@Loc[nameof(LocalizationStrings.Settings_User_Edit_AdministratorFlag_Label)]"
                                                Color="Color.Primary"
                                                UnCheckedColor="Color.Default"
                                                Disabled="@IsCurrentUser()"/>
                                     <MudText Typo="Typo.caption" Class="mud-text-secondary">
                                         @if (IsCurrentUser())
                                         {
-                                            <span>You cannot change your own administrator status</span>
+                                            @Loc[nameof(LocalizationStrings.Settings_User_Edit_CantChangeOwnAdministratorFlag_Caption)]
                                         }
                                         else
                                         {
-                                            <span>Administrators have full access to all features</span>
+                                            @Loc[nameof(LocalizationStrings.Settings_User_Edit_AdministratorFlag_Caption)]
                                         }
                                     </MudText>
                                 </MudItem>
@@ -110,12 +121,15 @@
                     </MudCardContent>
 
                     <MudCardActions>
+
                         <MudButton Variant="Variant.Filled"
                                    Color="Color.Default"
                                    OnClick="NavigateBack">
-                            Cancel
+                            @Loc[nameof(LocalizationStrings.Settings_User_Edit_CancelButton_Text)]
                         </MudButton>
+
                         <MudSpacer/>
+
                         <MudButton Variant="Variant.Filled"
                                    Color="Color.Primary"
                                    StartIcon="@Icons.Material.Filled.Save"
@@ -123,68 +137,82 @@
                                    OnClick="HandleValidSubmitAsync">
                             @if (_saving)
                             {
-                                <MudProgressCircular Size="Size.Small" Indeterminate="true" Class="mr-2"/>
-                                <span>Updating...</span>
+                                <MudProgressCircular Size="Size.Small"
+                                                     Indeterminate="true"
+                                                     Class="mr-2"/>
+                                <span>
+                                    @Loc[nameof(LocalizationStrings.Settings_User_Edit_Saving_Message)]
+                                </span>
                             }
                             else
                             {
-                                <span>Update User</span>
+                                <span>
+                                    @Loc[nameof(LocalizationStrings.Settings_User_Edit_SaveButton_Text)]
+                                </span>
                             }
                         </MudButton>
+
                     </MudCardActions>
+
                 </MudCard>
 
                 <!-- Actions Card -->
                 <MudCard>
                     <MudCardHeader>
                         <CardHeaderContent>
-                            <MudText Typo="Typo.h6">User Actions</MudText>
+                            <MudText Typo="Typo.h5">
+                                @Loc[nameof(LocalizationStrings.Settings_User_Edit_ActionsHeader_Text)]
+                            </MudText>
                         </CardHeaderContent>
                     </MudCardHeader>
 
-                    <MudCardContent>
-                        <MudGrid>
-                            <MudItem xs="12" md="6">
-                                <MudButton Variant="Variant.Outlined"
-                                           Color="@(_originalUser?.DisabledAt.HasValue == true ? Color.Success : Color.Warning)"
-                                           StartIcon="@(_originalUser?.DisabledAt.HasValue == true ? Icons.Material.Filled.PersonAdd : Icons.Material.Filled.PersonOff)"
-                                           Disabled="@(IsCurrentUser() || _saving)"
-                                           OnClick="ToggleUserStatusAsync">
-                                    @(_originalUser?.DisabledAt.HasValue == true ? "Enable User" : "Disable User")
-                                </MudButton>
-                                <MudText Typo="Typo.caption" Class="mud-text-secondary mt-1">
-                                    @if (IsCurrentUser())
-                                    {
-                                        <span>You cannot disable your own account</span>
-                                    }
-                                    else
-                                    {
-                                        <span>@(_originalUser?.DisabledAt.HasValue == true ? "Activate this user account" : "Deactivate this user account")</span>
-                                    }
-                                </MudText>
-                            </MudItem>
+                    <MudCardContent Class="pa-0">
 
-                            <MudItem xs="12" md="6">
-                                <MudButton Variant="Variant.Outlined"
-                                           Color="Color.Error"
-                                           StartIcon="@Icons.Material.Filled.Delete"
-                                           Disabled="@(IsCurrentUser() || _saving)"
-                                           OnClick="ShowDeleteConfirmationAsync">
-                                    Delete User
-                                </MudButton>
-                                <MudText Typo="Typo.caption" Class="mud-text-secondary mt-1">
-                                    @if (IsCurrentUser())
-                                    {
-                                        <span>You cannot delete your own account</span>
-                                    }
-                                    else
-                                    {
-                                        <span>Permanently remove this user (cannot be undone)</span>
-                                    }
-                                </MudText>
-                            </MudItem>
-                        </MudGrid>
+                        <UiSettingsItem Icon="@HomeBookIcons.Icons8.Windows11.Filled.NoUser"
+                                        IconHexColor="var(--hb-settings-color-user-actions-disable)"
+                                        Title="@Loc[nameof(LocalizationStrings.Settings_User_Edit_Actions_EnableDisable_Title)]"
+                                        Caption="@Loc[nameof(LocalizationStrings.Settings_User_Edit_Actions_EnableDisable_Caption)]">
+                            <MudSwitch T="bool"
+                                       Value="_userModel.IsEnabled"
+                                       Color="Color.Primary"
+                                       Disabled="@(IsCurrentUser() || _saving)"
+                                       ValueChanged="@(v => OnUserDisabledChanged(v))"/>
+                        </UiSettingsItem>
+
+                        @if (IsCurrentUser())
+                        {
+                            <MudAlert Dense="true"
+                                      Severity="Severity.Warning"
+                                      Class="mx-3 mb-3">
+                                @Loc[nameof(LocalizationStrings.Settings_User_Edit_Actions_Delete_CantDisableOwnUser_Message)]
+                            </MudAlert>
+                        }
+
+                        <MudDivider/>
+
+                        <UiSettingsItem Icon="@HomeBookIcons.Icons8.Windows11.Filled.Trash"
+                                        IconHexColor="var(--hb-settings-color-user-actions-delete)"
+                                        Title="@Loc[nameof(LocalizationStrings.Settings_User_Edit_Actions_Delete_Title)]"
+                                        Caption="@Loc[nameof(LocalizationStrings.Settings_User_Edit_Actions_Delete_Caption)]">
+                            <MudButton Variant="Variant.Text"
+                                       Color="Color.Error"
+                                       Disabled="@(IsCurrentUser() || _saving)"
+                                       OnClick="ShowDeleteConfirmationAsync">
+                                @Loc[nameof(LocalizationStrings.Settings_User_Edit_Actions_DeleteButton_Text)]
+                            </MudButton>
+                        </UiSettingsItem>
+
+                        @if (IsCurrentUser())
+                        {
+                            <MudAlert Dense="true"
+                                      Severity="Severity.Warning"
+                                      Class="mx-3 mb-3">
+                                @Loc[nameof(LocalizationStrings.Settings_User_Edit_Actions_Delete_CantDeleteOwnUser_Message)]
+                            </MudAlert>
+                        }
+
                     </MudCardContent>
+
                 </MudCard>
             }
 

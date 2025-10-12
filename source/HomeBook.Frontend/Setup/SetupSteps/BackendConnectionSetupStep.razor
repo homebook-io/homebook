@@ -1,5 +1,6 @@
 @using HomeBook.Client
 @using HomeBook.Frontend.Abstractions.Contracts
+@using HomeBook.Frontend.Properties
 
 @inject ILocalizationProvider Loc
 @inject IConfiguration Configuration
@@ -10,7 +11,9 @@
 
     <MudCardHeader Class="no-divider">
         <CardHeaderContent>
-            <MudText Typo="Typo.h4">Check Server Connection</MudText>
+            <MudText Typo="Typo.h4">
+                @Loc[nameof(LocalizationStrings.Setup_BackendConnection_Title)]
+            </MudText>
         </CardHeaderContent>
     </MudCardHeader>
 
@@ -33,7 +36,7 @@
                                   Duration="TimeSpan.FromSeconds(5)"
                                   OnFinished="async () => await OnCountdownFinishedAsync()"
                                   Severity="Severity.Info">
-                    Server is found and connected.
+                    @Loc[nameof(LocalizationStrings.Setup_BackendConnection_ServerFound_Text)]
                 </UiCountdownAlert>
             }
 
@@ -49,7 +52,7 @@
                            Class="mt-3"
                            StartIcon="@Icons.Material.TwoTone.Autorenew"
                            OnClick="async () => await StartAsync()">
-                    Retry
+                    @Loc[nameof(LocalizationStrings.Setup_BackendConnection_Retry_Button_Text)]
                 </MudButton>
             }
         }

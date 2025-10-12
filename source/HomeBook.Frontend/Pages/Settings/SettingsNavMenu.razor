@@ -1,5 +1,9 @@
-@using HomeBookIcons = HomeBook.Frontend.Core.Icons.HomeBookIcons
+@using HomeBook.Frontend.Abstractions.Contracts
+@using HomeBook.Frontend.Core.Icons
+@using HomeBook.Frontend.Properties
 @using Microsoft.AspNetCore.Components.Authorization
+
+@inject ILocalizationProvider Loc
 
 <MudPaper>
 
@@ -11,25 +15,25 @@
         <MudNavLink Match="NavLinkMatch.All"
                     Href="/Settings"
                     Icon="@HomeBookIcons.Icons8.LiquidGlassColor.Gear">
-            General
+            +General
         </MudNavLink>
 
         <MudNavLink Match="NavLinkMatch.All"
                     Href="/Settings/Appearance"
                     Icon="@HomeBookIcons.Icons8.LiquidGlassColor.PaintRoller">
-            Appearance
+            +Appearance
         </MudNavLink>
 
         <MudNavLink Match="NavLinkMatch.All"
                     Href="/Settings/Localization"
                     Icon="@HomeBookIcons.Icons8.LiquidGlassColor.Globe">
-            Language & Region
+            @Loc[nameof(LocalizationStrings.Settings_NavMenu_LanguageRegion_Text)]
         </MudNavLink>
 
         <MudNavLink Match="NavLinkMatch.All"
                     Href="/Settings/About"
                     Icon="@HomeBookIcons.Icons8.LiquidGlassColor.SystemInformation">
-            About
+            @Loc[nameof(LocalizationStrings.Settings_NavMenu_About_Text)]
         </MudNavLink>
 
         <MudDivider Class="my-1"/>
@@ -39,45 +43,51 @@
             <MudNavLink Match="NavLinkMatch.Prefix"
                         Href="/Settings/Users"
                         Icon="@HomeBookIcons.Icons8.LiquidGlassColor.People">
-                Users
+                @Loc[nameof(LocalizationStrings.Settings_NavMenu_Users_Text)]
             </MudNavLink>
 
             <MudNavLink Match="NavLinkMatch.Prefix"
                         Href="/Settings/Instance"
                         Icon="@HomeBookIcons.Icons8.LiquidGlassColor.LaptopSettings">
-                Homebook Configuration
+                @Loc[nameof(LocalizationStrings.Settings_NavMenu_HomebookConfiguration_Text)]
             </MudNavLink>
 
             <MudNavLink Match="NavLinkMatch.Prefix"
                         Href="/Settings/Modules"
                         Icon="@HomeBookIcons.Icons8.LiquidGlassColor.Module">
-                Homebook Modules
+                @Loc[nameof(LocalizationStrings.Settings_NavMenu_HomebookModules_Text)]
             </MudNavLink>
 
             <MudNavLink Match="NavLinkMatch.Prefix"
                         Href="/Settings/Database"
                         Icon="@HomeBookIcons.Icons8.LiquidGlassColor.Database">
-                Database
+                +Database
             </MudNavLink>
 
             <MudNavLink Match="NavLinkMatch.Prefix"
                         Href="/Settings/Ai"
                         Icon="@HomeBookIcons.Icons8.LiquidGlassColor.Ai">
-                AI Configuration
+                +AI Configuration
             </MudNavLink>
 
             <MudDivider Class="my-1"/>
 
-            <MudNavLink Match="NavLinkMatch.Prefix"
+            <MudNavLink Match="NavLinkMatch.All"
                         Href="/Settings/Developer"
                         Icon="@HomeBookIcons.Icons8.LiquidGlassColor.SourceCode">
-                Developer
+                @Loc[nameof(LocalizationStrings.Settings_NavMenu_Developer_Text)]
             </MudNavLink>
 
-            <MudNavLink Match="NavLinkMatch.Prefix"
+            <MudNavLink Match="NavLinkMatch.All"
+                        Href="/Settings/Developer/Components"
+                        Icon="@HomeBookIcons.Icons8.LiquidGlassColor.SourceCode">
+                @Loc[nameof(LocalizationStrings.Settings_NavMenu_DeveloperComponents_Text)]
+            </MudNavLink>
+
+            <MudNavLink Match="NavLinkMatch.All"
                         Href="/Settings/Developer/Icons"
                         Icon="@HomeBookIcons.Icons8.LiquidGlassColor.Image">
-                Icons
+                @Loc[nameof(LocalizationStrings.Settings_NavMenu_DeveloperIcons_Text)]
             </MudNavLink>
 
             <MudDivider Class="my-1"/>
@@ -87,7 +97,7 @@
         <MudNavLink Match="NavLinkMatch.All"
                     Href="/Settings/Feedback"
                     Icon="@HomeBookIcons.Icons8.LiquidGlassColor.Communication">
-            Feedback
+            @Loc[nameof(LocalizationStrings.Settings_NavMenu_Feedback_Text)]
         </MudNavLink>
 
     </MudNavMenu>

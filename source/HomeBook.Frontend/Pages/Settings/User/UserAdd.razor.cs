@@ -1,6 +1,8 @@
 using Microsoft.AspNetCore.Components;
 using MudBlazor;
 using System.ComponentModel.DataAnnotations;
+using HomeBook.Frontend.Core.Models.Settings.Users;
+using HomeBook.Frontend.Properties;
 
 namespace HomeBook.Frontend.Pages.Settings.User;
 
@@ -17,12 +19,28 @@ public partial class UserAdd : ComponentBase
     private string _passwordIcon = Icons.Material.Filled.VisibilityOff;
     private string _confirmPasswordIcon = Icons.Material.Filled.VisibilityOff;
 
-    private readonly List<BreadcrumbItem> _breadcrumbs = new()
+    private readonly List<BreadcrumbItem> _breadcrumbs = new();
+
+    protected override async Task OnAfterRenderAsync(bool firstRender)
     {
-        new BreadcrumbItem("Settings", href: "/Settings", icon: Icons.Material.Filled.Settings),
-        new BreadcrumbItem("Users", href: "/Settings/Users", icon: Icons.Material.Filled.People),
-        new BreadcrumbItem("Add User", href: null, disabled: true)
-    };
+        await base.OnAfterRenderAsync(firstRender);
+
+        if (!firstRender)
+            return;
+
+        _breadcrumbs.Clear();
+        _breadcrumbs.Add(new BreadcrumbItem(Loc[nameof(LocalizationStrings.Settings_PageTitle)],
+            href: "/Settings",
+            icon: Icons.Material.Filled.Settings));
+        _breadcrumbs.Add(new BreadcrumbItem(Loc[nameof(LocalizationStrings.Settings_User_Overview_PageTitle)],
+            href: "/Settings/Users",
+            icon: Icons.Material.Filled.People));
+        _breadcrumbs.Add(new BreadcrumbItem(Loc[nameof(LocalizationStrings.Settings_User_Add_PageTitle)],
+            href: null,
+            disabled: true));
+
+        StateHasChanged();
+    }
 
     private void TogglePasswordVisibility()
     {
@@ -61,31 +79,44 @@ public partial class UserAdd : ComponentBase
         // Manual validation for password confirmation
         if (_userModel.Password != _userModel.ConfirmPassword)
         {
-            Snackbar.Add("Passwords do not match", Severity.Error);
-            return;
-        }
-
-        if (string.IsNullOrWhiteSpace(_userModel.Username))
-        {
-            Snackbar.Add("Username is required", Severity.Error);
+            Snackbar.Add(Loc[nameof(LocalizationStrings.Settings_User_Add_PasswordsDoNotMatchError_Message)],
+                Severity.Error);
             return;
         }
 
         if (string.IsNullOrWhiteSpace(_userModel.Password))
         {
-            Snackbar.Add("Password is required", Severity.Error);
+            Snackbar.Add(Loc[nameof(LocalizationStrings.Settings_User_Add_PasswordRequiredError_MessageTemplate)],
+                Severity.Error);
             return;
         }
 
+        if (string.IsNullOrWhiteSpace(_userModel.Username))
+        {
+            Snackbar.Add(Loc[nameof(LocalizationStrings.Settings_User_Add_UsernameRequiredError_Message)],
+                Severity.Error);
+            return;
+        }
+
+        int usernameMinLenght = 5;
+        int usernameMaxLenght = 20;
         if (_userModel.Username.Length < 5 || _userModel.Username.Length > 20)
         {
-            Snackbar.Add("Username must be between 5 and 20 characters", Severity.Error);
+            Snackbar.Add(string.Format(
+                    Loc[nameof(LocalizationStrings.Settings_User_Add_UsernameLengthError_MessageTemplate)],
+                    usernameMinLenght,
+                    usernameMaxLenght),
+                Severity.Error);
             return;
         }
 
+        int passwordRequiredLenght = 8;
         if (_userModel.Password.Length < 8)
         {
-            Snackbar.Add("Password must be at least 8 characters long", Severity.Error);
+            Snackbar.Add(string.Format(
+                    Loc[nameof(LocalizationStrings.Settings_User_Add_PasswordTooShortError_MessageTemplate)],
+                    passwordRequiredLenght),
+                Severity.Error);
             return;
         }
 
@@ -100,16 +131,25 @@ public partial class UserAdd : ComponentBase
 
             if (createdUserId is null)
             {
-                Snackbar.Add($"User '{_userModel.Username}' could not be created", Severity.Error);
+                Snackbar.Add(string.Format(
+                        Loc[nameof(LocalizationStrings.Settings_User_Add_UserCouldNotCreatedError_MessageTemplate)],
+                        _userModel.Username),
+                    Severity.Error);
                 return;
             }
 
             NavigationManager.NavigateTo($"/Settings/Users/{createdUserId}");
-            Snackbar.Add($"User '{_userModel.Username}' created successfully", Severity.Success);
+            Snackbar.Add(string.Format(
+                    Loc[nameof(LocalizationStrings.Settings_User_Add_UserCreatedSuccess_MessageTemplate)],
+                    _userModel.Username),
+                Severity.Error);
         }
-        catch (Exception ex)
+        catch (Exception err)
         {
-            Snackbar.Add($"Error creating user: {ex.Message}", Severity.Error);
+            Snackbar.Add(string.Format(
+                    Loc[nameof(LocalizationStrings.Settings_User_Add_CreationUnknownError_MessageTemplate)],
+                    err.Message),
+                Severity.Error);
         }
         finally
         {
@@ -122,19 +162,4 @@ public partial class UserAdd : ComponentBase
         NavigationManager.NavigateTo("/Settings/Users");
     }
 
-    private class UserAddModel
-    {
-        [Required(ErrorMessage = "Username is required")]
-        [StringLength(20, MinimumLength = 5, ErrorMessage = "Username must be between 5 and 20 characters")]
-        public string Username { get; set; } = string.Empty;
-
-        [Required(ErrorMessage = "Password is required")]
-        [StringLength(100, MinimumLength = 8, ErrorMessage = "Password must be at least 8 characters")]
-        public string Password { get; set; } = string.Empty;
-
-        [Required(ErrorMessage = "Password confirmation is required")]
-        public string ConfirmPassword { get; set; } = string.Empty;
-
-        public bool IsAdmin { get; set; } = false;
-    }
 }

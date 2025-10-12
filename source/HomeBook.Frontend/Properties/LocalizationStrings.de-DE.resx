@@ -19,7 +19,7 @@
         <value>HomeBook</value>
     </data>
     <data name="Account_Login_Title" xml:space="preserve">
-        <value>Login</value>
+        <value>HomeBook Login</value>
     </data>
     <data name="AuthorLink" xml:space="preserve">
         <value>https://www.lk-code.dev/</value>
@@ -35,5 +35,53 @@
     </data>
     <data name="AccountMenu_Settings" xml:space="preserve">
         <value>Einstellungen</value>
+    </data>
+    <data name="Settings_NavMenu_LanguageRegion_Text" xml:space="preserve">
+        <value>Sprache &amp; Region</value>
+    </data>
+    <data name="Settings_NavMenu_About_Text" xml:space="preserve">
+        <value>Über HomeBook</value>
+    </data>
+    <data name="Settings_NavMenu_Users_Text" xml:space="preserve">
+        <value>Benutzer</value>
+    </data>
+    <data name="Settings_NavMenu_HomebookConfiguration_Text" xml:space="preserve">
+        <value>Homebook Einstellungen</value>
+    </data>
+    <data name="Settings_NavMenu_HomebookModules_Text" xml:space="preserve">
+        <value>Homebook Module</value>
+    </data>
+    <data name="Settings_NavMenu_DeveloperComponents_Text" xml:space="preserve">
+        <value>Dev UI</value>
+    </data>
+    <data name="Settings_NavMenu_DeveloperIcons_Text" xml:space="preserve">
+        <value>Dev Icons</value>
+    </data>
+    <data name="Settings_NavMenu_Feedback_Text" xml:space="preserve">
+        <value>Feedback</value>
+    </data>
+    <data name="Settings_Localization_PageTitle" xml:space="preserve">
+        <value>Sprache &amp; Region</value>
+    </data>
+    <data name="Settings_Localization_PageCaption" xml:space="preserve">
+        <value>Stelle ein, in welcher Sprache und mit welchen regionalen Standards HomeBook angezeigt wird.</value>
+    </data>
+    <data name="Settings_About_PageTitle" xml:space="preserve">
+        <value>Über Homebook</value>
+    </data>
+    <data name="Settings_Localization_DisplayLanguage_Title" xml:space="preserve">
+        <value>Anzeigesprache</value>
+    </data>
+    <data name="Settings_Localization_DisplayLanguage_Caption" xml:space="preserve">
+        <value>Bestimme, in welcher Sprache die Benutzeroberfläche angezeigt wird.</value>
+    </data>
+    <data name="Settings_Localization_SaveChanges_Button" xml:space="preserve">
+        <value>Änderungen speichern</value>
+    </data>
+    <data name="Settings_Localization_PreferencesUpdated_Success_Message" xml:space="preserve">
+        <value>Benutzereinstellungen aktualisiert</value>
+    </data>
+    <data name="Settings_Instance_PageTitle" xml:space="preserve">
+        <value>Homebook Einstellungen</value>
     </data>
 </root>
