@@ -1,0 +1,84 @@
+@using HomeBook.Frontend.Core.Models.Widgets
+
+@inject Microsoft.FeatureManagement.IFeatureManager FeatureManager
+
+@page "/"
+
+<UiPageTitle>Home</UiPageTitle>
+
+<MudContainer Class="mt-4">
+
+    <MudGrid Class="ui-startmenu">
+
+        @for (int i = 0; i < 6; i++)
+        {
+            <MudItem xs="12" sm="6" md="4" lg="3" xl="3" xxl="3">
+
+                <MudPaper Class="mud-theme-primary ui-startmenu-item">
+
+                </MudPaper>
+
+            </MudItem>
+        }
+
+    </MudGrid>
+
+</MudContainer>
+
+@if (_widgetMenuEnabled)
+{
+    <MudButton Variant="Variant.Filled"
+               Class="ma-5"
+               Color="Color.Primary"
+               OnClick="@(() => OpenDrawer())">Start
+    </MudButton>
+
+    <MudDropContainer T="WidgetConfiguration" DraggingClass="mud-alert-text-warning"
+                      ItemDraggingClass="mud-alert-text-warning"
+                      Items="_items" ItemsSelector="@((item, dropzone) => item.Identifier == dropzone)"
+                      NoDropClass="mud-border-error" ItemDropped="ItemUpdated" Class="d-flex flex-wrap flex-grow-1">
+        <ChildContent>
+
+            <MudDropZone T="WidgetConfiguration" Identifier="Air Zone 1"
+                         Class="rounded-lg border-2 border-dashed mud-border-lines-default pa-6 ma-8 flex-grow-1">
+                <MudText Typo="Typo.h6" Class="mb-4">Air Zone 1</MudText>
+            </MudDropZone>
+            <MudDropZone T="WidgetConfiguration" Identifier="Air Zone 2"
+                         Class="rounded-lg border-2 border-dashed mud-border-lines-default pa-6 ma-8 flex-grow-1">
+                <MudText Typo="Typo.h6" Class="mb-4">Air Zone 2</MudText>
+            </MudDropZone>
+            <MudDropZone T="WidgetConfiguration" Identifier="Danger Zone" DraggingClass="mud-alert-text-error"
+                         ItemDraggingClass="mud-alert-text-error" CanDrop="@((item) => item.Team == "RED")"
+                         Class="rounded-lg border-2 border-dashed mud-border-lines-default pa-6 ma-8">
+                <MudText Typo="Typo.h6" Class="mb-4">Danger Zone</MudText>
+            </MudDropZone>
+
+            <MudDrawer Anchor="Anchor.End"
+                       Color="Color.Default"
+                       @bind-Open="@_open"
+                       Elevation="1"
+                       Variant="@DrawerVariant.Temporary"
+                       OverlayAutoClose="true"
+                       Overlay="false"
+                       Width="var(--ui-widget-drawer-width)"
+                       Class="frosted mud-elevation-10">
+
+                <MudDrawerHeader>
+                    <MudText Typo="Typo.h6">Widgets</MudText>
+                </MudDrawerHeader>
+
+                <UiWidgetSelector/>
+
+            </MudDrawer>
+
+        </ChildContent>
+
+        <ItemRenderer>
+            <UiWidgetContainer Size="@context.Size">
+                <DynamicComponent Type="context.WidgetType"
+                                  Parameters="context.Parameters"/>
+            </UiWidgetContainer>
+        </ItemRenderer>
+
+    </MudDropContainer>
+}
