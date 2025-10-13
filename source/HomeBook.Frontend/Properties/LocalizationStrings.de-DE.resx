@@ -84,4 +84,13 @@
     <data name="Settings_Instance_PageTitle" xml:space="preserve">
         <value>Homebook Einstellungen</value>
     </data>
+    <data name="Module_Finances_StartMenuItem_Title" xml:space="preserve">
+        <value>Finanzen</value>
+    </data>
+    <data name="Module_Finances_StartMenuItem_Caption" xml:space="preserve">
+        <value>Verwalte deinen Einnahmen, Ausgaben und Budgets</value>
+    </data>
+    <data name="StartMenuItems_Open_Text" xml:space="preserve">
+        <value>Öffnen</value>
+    </data>
 </root>

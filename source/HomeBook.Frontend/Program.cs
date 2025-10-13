@@ -6,7 +6,7 @@ using HomeBook.Frontend.ModuleCore;
 using HomeBook.Frontend.Services.Extensions;
 using MudBlazor.Services;
 
-var builder = WebAssemblyHostBuilder.CreateDefault(args);
+WebAssemblyHostBuilder builder = WebAssemblyHostBuilder.CreateDefault(args);
 builder.RootComponents.Add<App>("#app");
 builder.RootComponents.Add<HeadOutlet>("head::after");
 
@@ -39,16 +39,21 @@ builder.Services.AddFrontendUiServices(builder.Configuration)
     .AddFrontendServices(builder.Configuration)
     .AddBackendClient(builder.Configuration);
 
-builder.AddModules((moduleBuilder) =>
-{
-    moduleBuilder
-        // app modules
-        .AddModule<HomeBook.Frontend.Module.Finances.Module>()
-        .AddModule<HomeBook.Frontend.Module.PlatformInfo.Module>();
-});
+builder.AddModules(
+    builder.HomeBook(),
+    (moduleBuilder) =>
+    {
+        moduleBuilder
+            // app modules
+            .AddModule<HomeBook.Frontend.Module.Finances.Module>()
+            .AddModule<HomeBook.Frontend.Module.PlatformInfo.Module>();
+    });
 
+// build app
+builder.BuildHomeBook();
 WebAssemblyHost app = builder.Build();
 
+// run app
 await app.RunModulesPostBuild();
 
 await app.RunAsync();

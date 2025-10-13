@@ -25,13 +25,11 @@ public class CustomAuthenticationStateProvider : AuthenticationStateProvider, ID
         {
             bool isAuthenticated = await _authenticationService.IsAuthenticatedAsync();
 
-            if (isAuthenticated)
-            {
-                ClaimsPrincipal user = await _authenticationService.GetCurrentUserAsync();
-                return new AuthenticationState(user);
-            }
+            if (!isAuthenticated)
+                return new AuthenticationState(new ClaimsPrincipal(new ClaimsIdentity()));
 
-            return new AuthenticationState(new ClaimsPrincipal(new ClaimsIdentity()));
+            ClaimsPrincipal user = (await _authenticationService.GetCurrentUserAsync())!;
+            return new AuthenticationState(user);
         }
         catch
         {

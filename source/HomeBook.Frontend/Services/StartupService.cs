@@ -1,11 +1,14 @@
 using System.Globalization;
+using System.Reflection;
 using HomeBook.Frontend.Abstractions.Contracts;
 using HomeBook.Frontend.Abstractions.Enums;
+using HomeBook.Frontend.Modules.Abstractions;
 
 namespace HomeBook.Frontend.Services;
 
 /// <inheritdoc />
 public class StartupService(
+    IServiceProvider serviceProvider,
     IInstanceManagementProvider instanceManagementProvider,
     IJsLocalStorageProvider jsLocalStorageProvider,
     ILocalizationService localizationService,
@@ -15,6 +18,7 @@ public class StartupService(
     public event Action<AppStatus>? ApplicationInitialized;
 
     public AppStatus Status { get; private set; } = AppStatus.Initializing;
+    private readonly HashSet<Assembly> _neededAssemblies = [];
 
     /// <inheritdoc />
     public async Task StartAsync(CancellationToken cancellationToken)
@@ -32,15 +36,32 @@ public class StartupService(
         }
 
         // 2. startup application
+        _neededAssemblies.Clear();
+
         if (Status == AppStatus.Running)
         {
             // load instance data into cache
             await LoadInstanceDataAsync(cancellationToken);
             await InitializeLocalizing(cancellationToken);
+            await LoadingModuleAssemblies(cancellationToken);
         }
 
         // Notify authentication state changed
         ApplicationInitialized?.Invoke(Status);
+    }
+
+    /// <inheritdoc />
+    public Assembly[] GetRequiredAssemblies() => _neededAssemblies.ToArray();
+
+    private async Task LoadingModuleAssemblies(CancellationToken cancellationToken)
+    {
+        IEnumerable<IModule> modules = serviceProvider.GetServices<IModule>();
+
+        foreach (IModule module in modules)
+        {
+            Assembly moduleAssembly = module.GetType().Assembly;
+            _neededAssemblies.Add(moduleAssembly);
+        }
     }
 
     private async Task InitializeLocalizing(CancellationToken cancellationToken)

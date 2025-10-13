@@ -1388,5 +1388,23 @@ namespace HomeBook.Frontend.Properties {
                 return ResourceManager.GetString("Account_Login_SignInButton_Text", resourceCulture);
             }
         }
+        
+        public static string Module_Finances_StartMenuItem_Title {
+            get {
+                return ResourceManager.GetString("Module_Finances_StartMenuItem_Title", resourceCulture);
+            }
+        }
+        
+        public static string Module_Finances_StartMenuItem_Caption {
+            get {
+                return ResourceManager.GetString("Module_Finances_StartMenuItem_Caption", resourceCulture);
+            }
+        }
+        
+        public static string StartMenuItems_Open_Text {
+            get {
+                return ResourceManager.GetString("StartMenuItems_Open_Text", resourceCulture);
+            }
+        }
     }
 }

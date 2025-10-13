@@ -21,6 +21,7 @@ public partial class UiWidgetSelector : ComponentBase
 
     private async Task LoadWidgetsAsync()
     {
+        await Task.CompletedTask;
         CancellationToken cancellationToken = CancellationToken.None;
 
         IReadOnlyList<Type> widgetTypes = WidgetFactory.GetAllWidgetTypes();

@@ -906,6 +906,43 @@
   }
 }
 
+:root {
+  --hb-startmenu-background-icon-size: 140px;
+  --hb-startmenu-background-icon-opacity: 0.075;
+  --hb-startmenu-container-background: transparent;
+  --hb-startmenu-icon-background-opacity: 75%;
+  --hb-startmenu-icon-borderradius: 8px;
+  --hb-startmenu-icon-size: 1.5em;
+}
+
+.ui-startmenu-item-link {
+  background: var(--hb-startmenu-container-background);
+}
+
+.ui-startmenu-container {
+  width: 100%;
+  overflow: hidden;
+}
+
+.ui-startmenu-item-background-icon {
+  height: var(--hb-startmenu-background-icon-size);
+  width: var(--hb-startmenu-background-icon-size);
+  opacity: var(--hb-startmenu-background-icon-opacity);
+  position: absolute;
+  z-index: -1;
+  top: -25px;
+  left: -25px;
+}
+
+.ui-startmenu-item-content .ui-startmenu-item-icon-border {
+  background-color: color-mix(in srgb, var(--startmenu-item-color), transparent var(--hb-startmenu-icon-background-opacity));
+  border-radius: var(--hb-startmenu-icon-borderradius);
+}
+.ui-startmenu-item-content .ui-startmenu-item-icon {
+  color: var(--startmenu-item-color);
+  height: var(--hb-startmenu-icon-size);
+  width: var(--hb-startmenu-icon-size);
+}
 .hb-setup-container {
   height: 100vh;
   padding-top: 120px;

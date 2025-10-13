@@ -1,3 +1,4 @@
+using System.Reflection;
 using HomeBook.Frontend.Abstractions.Enums;
 
 namespace HomeBook.Frontend.Abstractions.Contracts;
@@ -23,4 +24,10 @@ public interface IStartupService
     /// <param name="cancellationToken"></param>
     /// <returns></returns>
     Task StartAsync(CancellationToken cancellationToken);
+
+    /// <summary>
+    /// returns all assemblies that are required by the loaded modules.
+    /// </summary>
+    /// <returns></returns>
+    Assembly[] GetRequiredAssemblies();
 }
