@@ -1,6 +1,6 @@
 using Microsoft.AspNetCore.Components;
 
-namespace HomeBook.Frontend.Components;
+namespace HomeBook.Frontend.UI.Components;
 
 public partial class UiPageTitle : ComponentBase
 {

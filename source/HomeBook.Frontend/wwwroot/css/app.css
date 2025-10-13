@@ -943,6 +943,38 @@
   height: var(--hb-startmenu-icon-size);
   width: var(--hb-startmenu-icon-size);
 }
+.ui-progress-item {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+}
+.ui-progress-item .ui-progress-item-header,
+.ui-progress-item .ui-progress-item-progress,
+.ui-progress-item .ui-progress-item-footer {
+  display: flex;
+  width: 100%;
+}
+.ui-progress-item .ui-progress-item-header,
+.ui-progress-item .ui-progress-item-footer {
+  align-items: center;
+}
+.ui-progress-item .ui-progress-item-header .ui-progress-item-header-start,
+.ui-progress-item .ui-progress-item-header .ui-progress-item-footer-start,
+.ui-progress-item .ui-progress-item-footer .ui-progress-item-header-start,
+.ui-progress-item .ui-progress-item-footer .ui-progress-item-footer-start {
+  flex: 1 1 auto;
+  min-width: 0;
+}
+.ui-progress-item .ui-progress-item-header .ui-progress-item-header-end,
+.ui-progress-item .ui-progress-item-header .ui-progress-item-footer-end,
+.ui-progress-item .ui-progress-item-footer .ui-progress-item-header-end,
+.ui-progress-item .ui-progress-item-footer .ui-progress-item-footer-end {
+  flex: 0 0 auto;
+}
+.ui-progress-item .ui-progress-item-progress {
+  width: 100%;
+}
+
 .hb-setup-container {
   height: 100vh;
   padding-top: 120px;

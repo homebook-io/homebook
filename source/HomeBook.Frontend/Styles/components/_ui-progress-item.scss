@@ -1,0 +1,32 @@
+.ui-progress-item {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+
+    .ui-progress-item-header,
+    .ui-progress-item-progress,
+    .ui-progress-item-footer {
+        display: flex;
+        width: 100%;
+    }
+
+    .ui-progress-item-header,
+    .ui-progress-item-footer {
+        align-items: center;
+
+        .ui-progress-item-header-start,
+        .ui-progress-item-footer-start {
+            flex: 1 1 auto; // kann wachsen und schrumpfen, nutzt Restbreite
+            min-width: 0; // verhindert Überlauf bei langem Text
+        }
+
+        .ui-progress-item-header-end,
+        .ui-progress-item-footer-end {
+            flex: 0 0 auto; // nimmt nur Platz entsprechend dem Inhalt ein
+        }
+    }
+
+    .ui-progress-item-progress {
+        width: 100%;
+    }
+}

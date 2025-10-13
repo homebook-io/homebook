@@ -10,13 +10,12 @@
     </PropertyGroup>
 
     <ItemGroup>
-        <PackageReference Include="Microsoft.AspNetCore.Components.WebAssembly" Version="9.0.9" />
+        <PackageReference Include="Microsoft.AspNetCore.Components.WebAssembly" Version="9.0.9"/>
     </ItemGroup>
 
     <ItemGroup>
         <ProjectReference Include="..\HomeBook.Frontend.Core\HomeBook.Frontend.Core.csproj"/>
-        <ProjectReference Include="..\HomeBook.Frontend.Modules.Abstractions\HomeBook.Frontend.Modules.Abstractions.csproj"/>
-        <ProjectReference Include="..\HomeBook.Frontend.UI\HomeBook.Frontend.UI.csproj" />
+        <ProjectReference Include="..\HomeBook.Frontend.Abstractions\HomeBook.Frontend.Abstractions.csproj"/>
     </ItemGroup>
 
 </Project>
