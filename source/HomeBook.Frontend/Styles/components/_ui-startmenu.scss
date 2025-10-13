@@ -1,3 +1,19 @@
+$startmenu-background-icon-size: 140px;
+$startmenu-background-icon-opacity: 0.075;
+$startmenu-container-background: transparent;
+$startmenu-icon-background-opacity: 75%;
+$startmenu-icon-borderradius: 8px;
+$startmenu-icon-size: 1.5em;
+
+:root {
+    --#{$hb-prefix}-startmenu-background-icon-size: #{$startmenu-background-icon-size};
+    --#{$hb-prefix}-startmenu-background-icon-opacity: #{$startmenu-background-icon-opacity};
+    --#{$hb-prefix}-startmenu-container-background: #{$startmenu-container-background};
+    --#{$hb-prefix}-startmenu-icon-background-opacity: #{$startmenu-icon-background-opacity};
+    --#{$hb-prefix}-startmenu-icon-borderradius: #{$startmenu-icon-borderradius};
+    --#{$hb-prefix}-startmenu-icon-size: #{$startmenu-icon-size};
+}
+
 .ui-startmenu {
 
 }
@@ -7,7 +23,7 @@
 }
 
 .ui-startmenu-item-link {
-    background: transparent;
+    background: var(--#{$hb-prefix}-startmenu-container-background);
 }
 
 .ui-startmenu-container {
@@ -16,11 +32,11 @@
 }
 
 .ui-startmenu-item-background-icon {
-    height: 140px;
-    width: 140px;
+    height: var(--#{$hb-prefix}-startmenu-background-icon-size);
+    width: var(--#{$hb-prefix}-startmenu-background-icon-size);
+    opacity: var(--#{$hb-prefix}-startmenu-background-icon-opacity);
     position: absolute;
     z-index: -1;
-    opacity: 0.1;
     top: -25px;
     left: -25px;
 }
@@ -29,8 +45,8 @@
 
 
     .ui-startmenu-item-icon-border {
-        background-color: color-mix(in srgb, var(--startmenu-item-color), transparent 75%);
-        border-radius: 8px;
+        background-color: color-mix(in srgb, var(--startmenu-item-color), transparent var(--#{$hb-prefix}-startmenu-icon-background-opacity));
+        border-radius: var(--#{$hb-prefix}-startmenu-icon-borderradius);
     }
 
     .ui-startmenu-item-icon-container {
@@ -39,8 +55,8 @@
 
     .ui-startmenu-item-icon {
         color: var(--startmenu-item-color);
-        height: 1.5em;
-        width: 1.5em;
+        height: var(--#{$hb-prefix}-startmenu-icon-size);
+        width: var(--#{$hb-prefix}-startmenu-icon-size);
     }
 
     .ui-startmenu-item-title {

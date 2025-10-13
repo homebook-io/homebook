@@ -56,10 +56,10 @@ public class Module
             HomeBook.Frontend.Core.Icons.HomeBookIcons.Icons8.Windows11.Filled.Graph,
             "#118C4F");
 
-        builder.AddStartMenu("Module_Finances_StartMenuItem_Title",
-            "Module_Finances_StartMenuItem_Caption",
-            "/Finances",
-            HomeBook.Frontend.Core.Icons.HomeBookIcons.Icons8.Windows11.Filled.BigData,
-            "#5039c4");
+        // builder.AddStartMenu("Module_Finances_StartMenuItem_Title",
+        //     "Module_Finances_StartMenuItem_Caption",
+        //     "/Finances",
+        //     HomeBook.Frontend.Core.Icons.HomeBookIcons.Icons8.Windows11.Filled.BigData,
+        //     "#5039c4");
     }
 }
