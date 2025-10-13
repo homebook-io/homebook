@@ -1,10 +1,11 @@
 using System.Reflection;
-using HomeBook.Frontend.Abstractions.Contracts;
 using HomeBook.Frontend.Modules.Abstractions;
+using HomeBook.Frontend.Options;
 
 namespace HomeBook.Frontend.ModuleCore;
 
 public class ModuleBuilder(
+    HomeBookOptions homeBookOptions,
     IServiceCollection serviceCollection,
     IConfiguration configuration)
 {
@@ -38,9 +39,27 @@ public class ModuleBuilder(
         IWidgetBuilder widgetBuilder = new WidgetBuilder<T>();
         RegisterModuleWidgets<T>(widgetBuilder, moduleId);
 
+        // create the startmenu items
+        CreateStartMenuItems<T>(homeBookOptions.StartMenuBuilder, moduleId);
+
         _registeredWidgets.Add(moduleId, widgetBuilder);
 
         return this;
+    }
+
+    private void CreateStartMenuItems<T>(IStartMenuBuilder startMenuBuilder,
+        string moduleId) where T : class, IModule
+    {
+        // implements the Module the IModuleStartMenuRegistration interface?
+        if (!typeof(IModuleStartMenuRegistration).IsAssignableFrom(typeof(T)))
+            return;
+
+        // call the RegisterWidgets method in the module
+        MethodInfo? method = typeof(T).GetMethod(
+            nameof(IModuleStartMenuRegistration.RegisterStartMenuItems),
+            BindingFlags.Public | BindingFlags.Static
+        );
+        method?.Invoke(null, [startMenuBuilder, configuration]);
     }
 
     private void RegisterModuleWidgets<T>(IWidgetBuilder widgetBuilder,
@@ -52,7 +71,7 @@ public class ModuleBuilder(
 
         // call the RegisterWidgets method in the module
         MethodInfo? method = typeof(T).GetMethod(
-            "RegisterWidgets",
+            nameof(IModuleWidgetRegistration.RegisterWidgets),
             BindingFlags.Public | BindingFlags.Static
         );
         method?.Invoke(null, [widgetBuilder, configuration]);

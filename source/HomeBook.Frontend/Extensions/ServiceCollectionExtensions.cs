@@ -15,7 +15,8 @@ public static class ServiceCollectionExtensions
     public static IServiceCollection AddFrontendUiServices(this IServiceCollection services,
         IConfiguration configuration)
     {
-        services.AddAuthentication(configuration)
+        services
+            .AddAuthentication(configuration)
             .AddLocalization()
             .AddFeatureManagement();
 

@@ -1,6 +1,8 @@
+@using HomeBook.Frontend.Abstractions.Contracts
 @using HomeBook.Frontend.Core.Models.Widgets
 
 @inject Microsoft.FeatureManagement.IFeatureManager FeatureManager
+@inject IEnumerable<IStartMenuItem> StartMenuItems
 
 @page "/"
 
@@ -10,13 +12,16 @@
 
     <MudGrid Class="ui-startmenu">
 
-        @for (int i = 0; i < 6; i++)
+        @foreach (IStartMenuItem smi in StartMenuItems)
         {
-            <MudItem xs="12" sm="6" md="4" lg="3" xl="3" xxl="3">
+            <MudItem xs="12" sm="6" md="4" lg="3" xl="3" xxl="3"
+                     Class="ui-startmenu-item">
 
-                <MudPaper Class="mud-theme-primary ui-startmenu-item">
-
-                </MudPaper>
+                <UiStartMenuItem Title="@smi.Title"
+                                 Caption="@smi.Caption"
+                                 Url="@smi.Url"
+                                 Icon="@smi.Icon"
+                                 Color="@smi.Color"/>
 
             </MudItem>
         }

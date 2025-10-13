@@ -1,7 +1,57 @@
 .ui-startmenu {
 
-    .ui-startmenu-item {
-        width: 100%;
-        height: 140px;
+}
+
+.ui-startmenu-item {
+
+}
+
+.ui-startmenu-item-link {
+    background: transparent;
+}
+
+.ui-startmenu-container {
+    width: 100%;
+    overflow: hidden;
+}
+
+.ui-startmenu-item-background-icon {
+    height: 140px;
+    width: 140px;
+    position: absolute;
+    z-index: -1;
+    opacity: 0.1;
+    top: -25px;
+    left: -25px;
+}
+
+.ui-startmenu-item-content {
+
+
+    .ui-startmenu-item-icon-border {
+        background-color: color-mix(in srgb, var(--startmenu-item-color), transparent 75%);
+        border-radius: 8px;
+    }
+
+    .ui-startmenu-item-icon-container {
+
+    }
+
+    .ui-startmenu-item-icon {
+        color: var(--startmenu-item-color);
+        height: 1.5em;
+        width: 1.5em;
+    }
+
+    .ui-startmenu-item-title {
+
+    }
+
+    .ui-startmenu-item-caption {
+
+    }
+
+    .ui-startmenu-item-nav {
+
     }
 }

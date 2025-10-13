@@ -3,15 +3,15 @@ using Microsoft.Extensions.Configuration;
 namespace HomeBook.Frontend.Modules.Abstractions;
 
 /// <summary>
-/// defines a contract for modules that want to register widgets
+/// defines a module that can register start menu items
 /// </summary>
-public interface IModuleWidgetRegistration
+public interface IModuleStartMenuRegistration
 {
     /// <summary>
-    /// register widgets provided by the module
+    /// register start menu items
     /// </summary>
     /// <param name="builder"></param>
     /// <param name="configuration"></param>
-    static abstract void RegisterWidgets(IWidgetBuilder builder,
+    static abstract void RegisterStartMenuItems(IStartMenuBuilder builder,
         IConfiguration configuration);
 }

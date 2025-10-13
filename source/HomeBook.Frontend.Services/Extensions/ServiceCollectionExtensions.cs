@@ -1,5 +1,6 @@
 using HomeBook.Client;
 using HomeBook.Frontend.Abstractions.Contracts;
+using HomeBook.Frontend.Modules.Abstractions;
 using HomeBook.Frontend.Services.Provider;
 using HomeBook.Frontend.Services.Services;
 using Microsoft.Extensions.Configuration;

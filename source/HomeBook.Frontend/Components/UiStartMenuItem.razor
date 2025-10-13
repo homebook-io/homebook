@@ -1,0 +1,52 @@
+@using HomeBook.Frontend.Abstractions.Contracts
+@using HomeBook.Frontend.Core.Icons
+@using HomeBook.Frontend.Properties
+
+@inject ILocalizationProvider Loc
+
+<MudButton Href="@Url"
+           Variant="Variant.Text"
+           Class="mud-elevation-3 ui-startmenu-item-link pa-0"
+           style="@string.Format($"--startmenu-item-color: {Color};")">
+
+    <MudPaper Class="frosted-b1 ui-startmenu-container pt-6 pb-3 px-3">
+
+        <MudIcon Icon="@Icon"
+                 Style="color: var(--startmenu-item-color);"
+                 Class="ui-startmenu-item-background-icon"/>
+
+        <div class="ui-startmenu-item-content d-flex flex-column">
+
+            <div class="ui-startmenu-item-icon-container d-flex justify-center">
+
+                <div class="ui-startmenu-item-icon-border d-flex justify-center pa-2">
+
+                    <MudIcon Icon="@Icon"
+                             Class="ui-startmenu-item-icon"/>
+
+                </div>
+
+            </div>
+
+            <MudText Typo="Typo.h6"
+                     Class="ui-startmenu-item-title d-flex justify-center mt-5">
+                @Loc[Title]
+            </MudText>
+
+            <MudText Typo="Typo.caption"
+                     Class="ui-startmenu-item-caption d-flex justify-center mt-1">
+                @Loc[Caption]
+            </MudText>
+
+            <MudText Class="ui-startmenu-item-nav d-flex justify-center mt-3"
+                     Style="color: var(--startmenu-item-color);">
+                @Loc[nameof(LocalizationStrings.StartMenuItems_Open_Text)]
+                <MudIcon Icon="@HomeBookIcons.Icons8.Windows11.Filled.ArrowRight"
+                         Class="ms-2"/>
+            </MudText>
+
+        </div>
+
+    </MudPaper>
+
+</MudButton>
