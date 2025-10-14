@@ -176,11 +176,66 @@
 
                 <MudCardHeader>
                     <CardHeaderContent>
-                        <MudText Typo="Typo.h5">UiCountdownAlert</MudText>
+                        <MudText Typo="Typo.h5">UiProgressItem</MudText>
                     </CardHeaderContent>
                 </MudCardHeader>
 
                 <MudCardContent>
+                    <MudList T="string">
+
+                        <MudListItem Class="rounded">
+                            <UiProgressItem HeaderTextStart="HeaderTextStart"
+                                            HeaderTextEnd="HeaderTextEnd"
+                                            ProgressValue="50"
+                                            FooterTextStart="FooterTextStart"
+                                            FooterTextEnd="FooterTextEnd"
+                                            ProgressColor="Color.Error"/>
+                        </MudListItem>
+
+                        <MudListItem Class="rounded">
+                            <UiProgressItem HeaderTextStart="HeaderTextStart"
+                                            HeaderTextEnd="HeaderTextEnd"
+                                            ProgressValue="75"
+                                            FooterTextStart="FooterTextStart"
+                                            FooterTextEnd="FooterTextEnd"
+                                            ProgressColor="Color.Success"/>
+                        </MudListItem>
+
+                        <MudListItem Class="rounded">
+                            <UiProgressItem HeaderTextStart="HeaderTextStart"
+                                            HeaderTextEnd="HeaderTextEnd"
+                                            ProgressValue="25"
+                                            FooterTextStart="FooterTextStart"
+                                            FooterTextEnd="FooterTextEnd"
+                                            ProgressColor="Color.Primary"/>
+                        </MudListItem>
+
+                    </MudList>
+                </MudCardContent>
+
+            </MudCard>
+
+            <MudCard Class="mb-5">
+
+                <MudCardHeader>
+                    <CardHeaderContent>
+                        <MudText Typo="Typo.h5">UiColoredIcon</MudText>
+                    </CardHeaderContent>
+                </MudCardHeader>
+
+                <MudCardContent>
+
+                    <pre>Home #ff88ff</pre>
+                    <UiColoredIcon Icon="@HomeBookIcons.Icons8.Windows11.Filled.Home"
+                                   Color="#ff88ff"/>
+
+                    <pre>ChartCircle #ff8888</pre>
+                    <UiColoredIcon Icon="@HomeBookIcons.Icons8.Windows11.Filled.ChartCircle"
+                                   Color="#ff8888"/>
+
+                    <pre>Gear2 #004488</pre>
+                    <UiColoredIcon Icon="@HomeBookIcons.Icons8.Windows11.Filled.Gear2"
+                                   Color="#004488"/>
 
                 </MudCardContent>
 

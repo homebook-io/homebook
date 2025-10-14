@@ -704,4 +704,7 @@
     <data name="StartMenuItems_Open_Text" xml:space="preserve">
         <value>Open</value>
     </data>
+    <data name="Home_PageTitle" xml:space="preserve">
+        <value>Home</value>
+    </data>
 </root>

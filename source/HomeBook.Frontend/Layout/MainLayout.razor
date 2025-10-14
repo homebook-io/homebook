@@ -28,13 +28,17 @@
     <MudAppBar Color="Color.Primary"
                Elevation="1">
 
-        <MudIconButton Icon="@HomeBookIcons.Icons8.Windows11.Filled.Home"
-                       Href="/"
-                       Color="Color.Inherit"/>
-        <MudText Typo="Typo.h5"
-                 Class="ml-3">
-            @(_homebookInstanceName + " - " + Loc[nameof(LocalizationStrings.AppTitle)])
-        </MudText>
+        <MudHidden Breakpoint="Breakpoint.MdAndUp">
+            <MudIconButton Icon="@HomeBookIcons.Icons8.Windows11.Outline.Menu"
+                           Color="Color.Inherit"
+                           Edge="Edge.Start"
+                           OnClick="@ToggleDrawer"/>
+
+            <MudText Typo="Typo.h5"
+                     Class="ml-3">
+                @(_homebookInstanceName + " - " + Loc[nameof(LocalizationStrings.AppTitle)])
+            </MudText>
+        </MudHidden>
 
         <MudSpacer/>
 
@@ -43,7 +47,7 @@
             <Authorized>
 
                 <MudMenu Dense
-                         Icon="@HomeBookIcons.Icons8.Windows11.Filled.Profile"
+                         Icon="@HomeBookIcons.Icons8.Windows11.Outline.Profile"
                          Color="Color.Inherit">
 
                     <MudMenuItem Icon="@HomeBookIcons.Icons8.Windows11.Filled.User"
@@ -63,7 +67,7 @@
                          Variant="Variant.Text"
                          Size="Size.Medium"
                          Color="Color.Inherit"
-                         Icon="@HomeBookIcons.Icons8.Windows11.Filled.More">
+                         Icon="@HomeBookIcons.Icons8.Windows11.Outline.More">
 
                     <MudMenuItem Icon="@HomeBookIcons.Icons8.Windows11.Filled.Gear"
                                  IconColor="Color.Primary"
@@ -83,6 +87,40 @@
         </AuthorizeView>
 
     </MudAppBar>
+
+    <MudDrawer Variant="DrawerVariant.Responsive"
+               @bind-Open="_drawerOpen"
+               Color="Color.Surface"
+               Elevation="5">
+
+        <MudDrawerHeader>
+
+            <div class="d-flex flex-column">
+
+                <MudText Typo="Typo.h5" Class="d-block mt-1">
+                    @Loc[nameof(LocalizationStrings.AppTitle)]
+                </MudText>
+
+                <MudText Typo="Typo.overline" Class="d-block mt-1">
+                    @_homebookInstanceName
+                </MudText>
+
+            </div>
+
+        </MudDrawerHeader>
+
+        <MudNavMenu Color="Color.Inherit">
+
+            <MudNavLink Match="NavLinkMatch.All"
+                        Icon="@HomeBookIcons.Icons8.Windows11.Outline.Home"
+                        IconColor="Color.Inherit"
+                        Href="/">
+                @Loc[nameof(LocalizationStrings.Home_PageTitle)]
+            </MudNavLink>
+
+        </MudNavMenu>
+
+    </MudDrawer>
 
     <MudMainContent>
         @Body
@@ -108,7 +146,7 @@
 </MudLayout>
 
 @code {
-
+    private bool _drawerOpen = true;
     private string? _homebookInstanceName = null;
 
     protected override async Task OnInitializedAsync()
@@ -132,6 +170,11 @@
         {
             Snackbar.Add(Loc[nameof(LocalizationStrings.Logout_ErrorMessage)], Severity.Error);
         }
+    }
+
+    private void ToggleDrawer()
+    {
+        _drawerOpen = !_drawerOpen;
     }
 
     private void NavigateToLogin()

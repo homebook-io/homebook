@@ -1,0 +1,9 @@
+$startmenu-background-icon-size: 140px;
+$startmenu-background-icon-opacity: 0.075;
+$startmenu-container-background: transparent;
+
+:root {
+    --#{$hb-prefix}-startmenu-background-icon-size: #{$startmenu-background-icon-size};
+    --#{$hb-prefix}-startmenu-background-icon-opacity: #{$startmenu-background-icon-opacity};
+    --#{$hb-prefix}-startmenu-container-background: #{$startmenu-container-background};
+}
