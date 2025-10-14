@@ -28,6 +28,7 @@ public static class ServiceCollectionExtensions
         services.AddSingleton<IDatabaseSetupService, DatabaseSetupService>();
         services.AddSingleton<ILicensesService, LicensesService>();
         services.AddSingleton<ILocalizationService, LocalizationService>();
+        services.AddSingleton<IMenuService, MenuService>();
 
         return services;
     }

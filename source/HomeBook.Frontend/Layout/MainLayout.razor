@@ -1,5 +1,6 @@
 ﻿@using HomeBook.Frontend.Abstractions.Contracts
 @using HomeBook.Frontend.Abstractions.Enums
+@using HomeBook.Frontend.Abstractions.Models
 @using HomeBook.Frontend.Core.Icons
 @using HomeBook.Frontend.Properties
 @using HomeBook.Frontend.Themes
@@ -12,6 +13,7 @@
 @inject NavigationManager NavigationManager
 @inject ISnackbar Snackbar
 @inject IJsLocalStorageProvider JsLocalStorageProvider
+@inject IMenuService MenuService
 
 @* Required *@
 <MudThemeProvider Theme="HomebookTheme.GetTheme()"/>
@@ -112,10 +114,44 @@
         <MudNavMenu Color="Color.Inherit">
 
             <MudNavLink Match="NavLinkMatch.All"
+                        Class="rounded"
                         Icon="@HomeBookIcons.Icons8.Windows11.Outline.Home"
                         IconColor="Color.Inherit"
                         Href="/">
                 @Loc[nameof(LocalizationStrings.Home_PageTitle)]
+            </MudNavLink>
+
+        </MudNavMenu>
+
+        @if (_hasContextMenuItems)
+        {
+            <MudDivider Class="flex-grow-0 my-5"
+                        DividerType="DividerType.Middle"/>
+
+            <MudNavMenu Color="Color.Inherit">
+                @foreach (MenuItem menuItem in _contextMenuItems)
+                {
+                    <MudNavLink Match="NavLinkMatch.All"
+                                Class="rounded"
+                                IconColor="Color.Inherit"
+                                Icon="@menuItem.Icon"
+                                Href="@menuItem.Url">
+                        @menuItem.Title
+                    </MudNavLink>
+                }
+            </MudNavMenu>
+        }
+
+        <MudSpacer/>
+
+        <MudNavMenu Color="Color.Inherit">
+
+            <MudNavLink Match="NavLinkMatch.All"
+                        Class="rounded"
+                        Icon="@HomeBookIcons.Icons8.Windows11.Outline.Gear"
+                        IconColor="Color.Inherit"
+                        Href="/Settings">
+                @Loc[nameof(LocalizationStrings.AccountMenu_Settings)]
             </MudNavLink>
 
         </MudNavMenu>
@@ -148,9 +184,12 @@
 @code {
     private bool _drawerOpen = true;
     private string? _homebookInstanceName = null;
+    private bool _hasContextMenuItems = false;
+    private MenuItem[] _contextMenuItems = [];
 
     protected override async Task OnInitializedAsync()
     {
+        MenuService.OnMenuItemsChanged += MenuServiceOnOnMenuItemsChanged;
         CancellationToken cancellationToken = CancellationToken.None;
         _homebookInstanceName = await JsLocalStorageProvider.GetItemAsync(JsLocalStorageKeys.HomeBookInstanceName,
             cancellationToken);
@@ -180,6 +219,14 @@
     private void NavigateToLogin()
     {
         NavigationManager.NavigateTo("/Login");
+    }
+
+    private void MenuServiceOnOnMenuItemsChanged(object? sender, EventArgs e)
+    {
+        _contextMenuItems = MenuService.GetMenuItems();
+        _hasContextMenuItems = _contextMenuItems.Length > 0;
+
+        StateHasChanged();
     }
 
 }
