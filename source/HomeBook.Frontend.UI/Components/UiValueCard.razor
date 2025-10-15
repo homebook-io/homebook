@@ -1,5 +1,5 @@
 <div class="ui-value-card"
-     style="@string.Format($"--ui-value-card-color: {Color};")">
+     style="@string.Format($"--ui-value-card-accent-color: {Color}; --ui-value-card-caption-color: {Colors.Gray.Darken2};")">
 
     <UiDetailCard Color="@Color"
                   Icon="@Icon">
@@ -8,21 +8,15 @@
 
             <div class="ui-value-header">
 
-                <div class="ui-value-card-title">
+                <MudText Typo="Typo.caption"
+                         Class="ui-value-card-title-text">
+                    @Title
+                </MudText>
 
-                    <MudText Typo="Typo.caption">
-                        @Title
-                    </MudText>
-
-                </div>
-
-                <div class="ui-value-display">
-
-                    <MudText Typo="Typo.h6">
-                        @ValueDisplay
-                    </MudText>
-
-                </div>
+                <MudText Typo="Typo.h5"
+                         Class="ui-value-display-text">
+                    @ValueDisplay
+                </MudText>
 
             </div>
 
@@ -32,11 +26,13 @@
 
             <div class="ui-value-footer-text">
 
-                <MudText Typo="Typo.caption" Style="">
+                <MudText Typo="Typo.caption"
+                         Class="ui-value-footer-highlighted-text">
                     @FooterHighlightedText
                 </MudText>
 
-                <MudText Typo="Typo.caption">
+                <MudText Typo="Typo.caption"
+                         Class="ui-value-footer-notice-text">
                     @FooterNotice
                 </MudText>
 

@@ -581,6 +581,10 @@
   --hb-github-color: #24292e;
   --hb-docker-color: #2496ed;
   --hb-ubuntu-color: #e95420;
+  --hb-module-finances-saving-color: #9333EA;
+  --hb-module-finances-income-color: #2563EB;
+  --hb-module-finances-expenses-color: #DC2626;
+  --hb-module-finances-total-color: #16A34A;
 }
 
 .github-bg {
@@ -988,34 +992,40 @@
 }
 
 .ui-detail-card {
-  color: orchid;
+  color: inherit;
 }
 
 .ui-detail-card-container {
-  color: cornflowerblue;
+  color: inherit;
 }
 .ui-detail-card-container .ui-detail-card-content {
-  color: yellowgreen;
+  color: inherit;
 }
 .ui-detail-card-container .ui-detail-card-header {
-  color: darkorchid;
+  color: inherit;
 }
 .ui-detail-card-container .ui-detail-card-footer {
-  color: goldenrod;
+  color: inherit;
 }
 
 .ui-value-header {
-  color: hotpink;
+  color: inherit;
 }
-.ui-value-header .ui-value-card-title {
-  color: sienna;
+.ui-value-header .ui-value-card-title-text {
+  color: var(--ui-value-card-caption-color);
 }
-.ui-value-header .ui-value-display {
-  color: darkgreen;
+.ui-value-header .ui-value-display-text {
+  font-weight: 500;
 }
 
 .ui-value-footer-text {
-  color: cadetblue;
+  color: inherit;
+}
+.ui-value-footer-text .ui-value-footer-highlighted-text {
+  color: var(--ui-value-card-accent-color);
+}
+.ui-value-footer-text .ui-value-footer-notice-text {
+  color: var(--ui-value-card-caption-color);
 }
 
 .hb-setup-container {

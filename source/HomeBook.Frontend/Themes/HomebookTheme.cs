@@ -3,7 +3,6 @@ using MudBlazor.Utilities;
 
 namespace HomeBook.Frontend.Themes;
 
-
 public class HomebookTheme : MudTheme
 {
     private static MudColor Primary { get; set; } = "#382960";
@@ -14,6 +13,13 @@ public class HomebookTheme : MudTheme
 
     private static readonly MudTheme _theme = new()
     {
+        Typography = new Typography()
+        {
+            Caption = new CaptionTypography()
+            {
+                FontSize = ".8rem",
+            }
+        },
         LayoutProperties = new LayoutProperties()
         {
             DefaultBorderRadius = "20px"
