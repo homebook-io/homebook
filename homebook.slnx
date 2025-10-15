@@ -23,6 +23,7 @@
     <Project Path="source\HomeBook.Frontend.Core\HomeBook.Frontend.Core.csproj" Type="Classic C#" />
     <Project Path="source\HomeBook.Frontend.Modules.Abstractions\HomeBook.Frontend.Modules.Abstractions.csproj" Type="Classic C#" />
     <Project Path="source\HomeBook.Frontend.Services\HomeBook.Frontend.Services.csproj" Type="Classic C#" />
+    <Project Path="source\HomeBook.Frontend.UI\HomeBook.Frontend.UI.csproj" Type="Classic C#" />
     <Project Path="source\HomeBook.Frontend\HomeBook.Frontend.csproj" Type="Classic C#" />
   </Folder>
   <Folder Name="/Frontend/Modules/">

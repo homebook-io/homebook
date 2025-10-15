@@ -2,10 +2,20 @@ $github-color: #24292e;
 $docker-color: #2496ed;
 $ubuntu-color: #e95420;
 
+$module-finances-saving-color: #9333EA;
+$module-finances-income-color: #2563EB;
+$module-finances-expenses-color: #DC2626;
+$module-finances-total-color: #16A34A;
+
 :root {
     --#{$hb-prefix}-github-color: #{$github-color};
     --#{$hb-prefix}-docker-color: #{$docker-color};
     --#{$hb-prefix}-ubuntu-color: #{$ubuntu-color};
+
+    --#{$hb-prefix}-module-finances-saving-color: #{$module-finances-saving-color};
+    --#{$hb-prefix}-module-finances-income-color: #{$module-finances-income-color};
+    --#{$hb-prefix}-module-finances-expenses-color: #{$module-finances-expenses-color};
+    --#{$hb-prefix}-module-finances-total-color: #{$module-finances-total-color};
 }
 
 .github-bg {

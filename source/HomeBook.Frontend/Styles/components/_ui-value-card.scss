@@ -1,0 +1,23 @@
+.ui-value-header {
+    color: inherit;
+
+    .ui-value-card-title-text {
+        color: var(--ui-value-card-caption-color);
+    }
+
+    .ui-value-display-text {
+        font-weight: 500;
+    }
+}
+
+.ui-value-footer-text {
+    color: inherit;
+
+    .ui-value-footer-highlighted-text {
+        color: var(--ui-value-card-accent-color);
+    }
+
+    .ui-value-footer-notice-text {
+        color: var(--ui-value-card-caption-color);
+    }
+}

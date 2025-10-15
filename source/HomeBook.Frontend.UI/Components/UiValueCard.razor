@@ -1,0 +1,45 @@
+<div class="ui-value-card"
+     style="@string.Format($"--ui-value-card-accent-color: {Color}; --ui-value-card-caption-color: {Colors.Gray.Darken2};")">
+
+    <UiDetailCard Color="@Color"
+                  Icon="@Icon">
+
+        <HeaderContent>
+
+            <div class="ui-value-header">
+
+                <MudText Typo="Typo.caption"
+                         Class="ui-value-card-title-text">
+                    @Title
+                </MudText>
+
+                <MudText Typo="Typo.h5"
+                         Class="ui-value-display-text">
+                    @ValueDisplay
+                </MudText>
+
+            </div>
+
+        </HeaderContent>
+
+        <FooterContent>
+
+            <div class="ui-value-footer-text">
+
+                <MudText Typo="Typo.caption"
+                         Class="ui-value-footer-highlighted-text">
+                    @FooterHighlightedText
+                </MudText>
+
+                <MudText Typo="Typo.caption"
+                         Class="ui-value-footer-notice-text">
+                    @FooterNotice
+                </MudText>
+
+            </div>
+
+        </FooterContent>
+
+    </UiDetailCard>
+
+</div>

@@ -17,23 +17,17 @@
 
         <div class="ui-startmenu-item-content d-flex flex-column">
 
-            <div class="ui-startmenu-item-icon-container d-flex justify-center">
-
-                <div class="ui-startmenu-item-icon-border d-flex justify-center pa-2">
-
-                    <MudIcon Icon="@Icon"
-                             Class="ui-startmenu-item-icon"/>
-
-                </div>
-
-            </div>
+            <UiColoredIcon Icon="@Icon"
+                           Color="@Color"/>
 
             <MudText Typo="Typo.h6"
+                     Align="Align.Center"
                      Class="ui-startmenu-item-title d-flex justify-center mt-5">
                 @Loc[Title]
             </MudText>
 
             <MudText Typo="Typo.caption"
+                     Align="Align.Center"
                      Class="ui-startmenu-item-caption d-flex justify-center mt-1">
                 @Loc[Caption]
             </MudText>

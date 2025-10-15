@@ -1,0 +1,9 @@
+$ui-colored-icon-background-opacity: 75%;
+$ui-colored-icon-borderradius: 8px;
+$ui-colored-icon-size: 1.5em;
+
+:root {
+    --#{$hb-prefix}-ui-colored-icon-background-opacity: #{$ui-colored-icon-background-opacity};
+    --#{$hb-prefix}-ui-colored-icon-borderradius: #{$ui-colored-icon-borderradius};
+    --#{$hb-prefix}-ui-colored-icon-size: #{$ui-colored-icon-size};
+}

@@ -1,0 +1,13 @@
+.ui-colored-icon-container {
+
+    .ui-colored-icon-frame {
+        background-color: color-mix(in srgb, var(--ui-colored-icon-color), transparent var(--#{$hb-prefix}-ui-colored-icon-background-opacity));
+        border-radius: var(--#{$hb-prefix}-ui-colored-icon-borderradius);
+    }
+
+    .ui-colored-icon {
+        color: var(--ui-colored-icon-color);
+        height: var(--#{$hb-prefix}-ui-colored-icon-size);
+        width: var(--#{$hb-prefix}-ui-colored-icon-size);
+    }
+}

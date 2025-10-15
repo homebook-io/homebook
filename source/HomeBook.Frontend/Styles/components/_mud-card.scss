@@ -4,6 +4,16 @@
         border-color: var(--mud-palette-divider);
         border-width: 1px;
         border-style: solid none none none;
+        padding: 8px 12px;
+
+        .mud-card-header-actions {
+            margin: 0 !important;
+            align-self: center;
+        }
+
+        .mud-typography {
+            padding: 4px !important;
+        }
     }
 
     > .mud-card-content {

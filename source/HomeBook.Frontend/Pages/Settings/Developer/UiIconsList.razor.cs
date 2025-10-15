@@ -17,6 +17,9 @@ public partial class UiIconsList : ComponentBase
     [Parameter]
     public Type? IconClass { get; set; }
 
+    [Parameter]
+    public string? Name { get; set; }
+
     private List<IconInfo> _allIcons = new();
 
     protected override void OnInitialized()

@@ -1406,5 +1406,11 @@ namespace HomeBook.Frontend.Properties {
                 return ResourceManager.GetString("StartMenuItems_Open_Text", resourceCulture);
             }
         }
+        
+        public static string Home_PageTitle {
+            get {
+                return ResourceManager.GetString("Home_PageTitle", resourceCulture);
+            }
+        }
     }
 }

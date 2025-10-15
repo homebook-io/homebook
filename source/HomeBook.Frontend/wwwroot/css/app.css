@@ -91,6 +91,18 @@
   --hb-ui-icon-border-radius: 6px;
 }
 
+:root {
+  --hb-ui-colored-icon-background-opacity: 75%;
+  --hb-ui-colored-icon-borderradius: 8px;
+  --hb-ui-colored-icon-size: 1.5em;
+}
+
+:root {
+  --hb-startmenu-background-icon-size: 140px;
+  --hb-startmenu-background-icon-opacity: 0.075;
+  --hb-startmenu-container-background: transparent;
+}
+
 .w-0 {
   width: 0% !important;
 }
@@ -569,6 +581,10 @@
   --hb-github-color: #24292e;
   --hb-docker-color: #2496ed;
   --hb-ubuntu-color: #e95420;
+  --hb-module-finances-saving-color: #9333EA;
+  --hb-module-finances-income-color: #2563EB;
+  --hb-module-finances-expenses-color: #DC2626;
+  --hb-module-finances-total-color: #16A34A;
 }
 
 .github-bg {
@@ -665,6 +681,14 @@
   border-color: var(--mud-palette-divider);
   border-width: 1px;
   border-style: solid none none none;
+  padding: 8px 12px;
+}
+.mud-card > .mud-card-header .mud-card-header-actions {
+  margin: 0 !important;
+  align-self: center;
+}
+.mud-card > .mud-card-header .mud-typography {
+  padding: 4px !important;
 }
 .mud-card > .mud-card-content {
   border-color: var(--mud-palette-divider);
@@ -906,15 +930,6 @@
   }
 }
 
-:root {
-  --hb-startmenu-background-icon-size: 140px;
-  --hb-startmenu-background-icon-opacity: 0.075;
-  --hb-startmenu-container-background: transparent;
-  --hb-startmenu-icon-background-opacity: 75%;
-  --hb-startmenu-icon-borderradius: 8px;
-  --hb-startmenu-icon-size: 1.5em;
-}
-
 .ui-startmenu-item-link {
   background: var(--hb-startmenu-container-background);
 }
@@ -934,15 +949,85 @@
   left: -25px;
 }
 
-.ui-startmenu-item-content .ui-startmenu-item-icon-border {
-  background-color: color-mix(in srgb, var(--startmenu-item-color), transparent var(--hb-startmenu-icon-background-opacity));
-  border-radius: var(--hb-startmenu-icon-borderradius);
+.ui-progress-item {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
 }
-.ui-startmenu-item-content .ui-startmenu-item-icon {
-  color: var(--startmenu-item-color);
-  height: var(--hb-startmenu-icon-size);
-  width: var(--hb-startmenu-icon-size);
+.ui-progress-item .ui-progress-item-header,
+.ui-progress-item .ui-progress-item-progress,
+.ui-progress-item .ui-progress-item-footer {
+  display: flex;
+  width: 100%;
 }
+.ui-progress-item .ui-progress-item-header,
+.ui-progress-item .ui-progress-item-footer {
+  align-items: center;
+}
+.ui-progress-item .ui-progress-item-header .ui-progress-item-header-start,
+.ui-progress-item .ui-progress-item-header .ui-progress-item-footer-start,
+.ui-progress-item .ui-progress-item-footer .ui-progress-item-header-start,
+.ui-progress-item .ui-progress-item-footer .ui-progress-item-footer-start {
+  flex: 1 1 auto;
+  min-width: 0;
+}
+.ui-progress-item .ui-progress-item-header .ui-progress-item-header-end,
+.ui-progress-item .ui-progress-item-header .ui-progress-item-footer-end,
+.ui-progress-item .ui-progress-item-footer .ui-progress-item-header-end,
+.ui-progress-item .ui-progress-item-footer .ui-progress-item-footer-end {
+  flex: 0 0 auto;
+}
+.ui-progress-item .ui-progress-item-progress {
+  width: 100%;
+}
+
+.ui-colored-icon-container .ui-colored-icon-frame {
+  background-color: color-mix(in srgb, var(--ui-colored-icon-color), transparent var(--hb-ui-colored-icon-background-opacity));
+  border-radius: var(--hb-ui-colored-icon-borderradius);
+}
+.ui-colored-icon-container .ui-colored-icon {
+  color: var(--ui-colored-icon-color);
+  height: var(--hb-ui-colored-icon-size);
+  width: var(--hb-ui-colored-icon-size);
+}
+
+.ui-detail-card {
+  color: inherit;
+}
+
+.ui-detail-card-container {
+  color: inherit;
+}
+.ui-detail-card-container .ui-detail-card-content {
+  color: inherit;
+}
+.ui-detail-card-container .ui-detail-card-header {
+  color: inherit;
+}
+.ui-detail-card-container .ui-detail-card-footer {
+  color: inherit;
+}
+
+.ui-value-header {
+  color: inherit;
+}
+.ui-value-header .ui-value-card-title-text {
+  color: var(--ui-value-card-caption-color);
+}
+.ui-value-header .ui-value-display-text {
+  font-weight: 500;
+}
+
+.ui-value-footer-text {
+  color: inherit;
+}
+.ui-value-footer-text .ui-value-footer-highlighted-text {
+  color: var(--ui-value-card-accent-color);
+}
+.ui-value-footer-text .ui-value-footer-notice-text {
+  color: var(--ui-value-card-caption-color);
+}
+
 .hb-setup-container {
   height: 100vh;
   padding-top: 120px;
