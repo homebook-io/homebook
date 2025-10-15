@@ -1412,5 +1412,29 @@ namespace HomeBook.Frontend.Properties {
                 return ResourceManager.GetString("Home_PageTitle", resourceCulture);
             }
         }
+        
+        public static string Module_KitchenManager_StartMenuItem_Recipes_Title {
+            get {
+                return ResourceManager.GetString("Module_KitchenManager_StartMenuItem_Recipes_Title", resourceCulture);
+            }
+        }
+        
+        public static string Module_KitchenManager_StartMenuItem_Pantry_Title {
+            get {
+                return ResourceManager.GetString("Module_KitchenManager_StartMenuItem_Pantry_Title", resourceCulture);
+            }
+        }
+        
+        public static string Module_KitchenManager_StartMenuItem_Recipes_Caption {
+            get {
+                return ResourceManager.GetString("Module_KitchenManager_StartMenuItem_Recipes_Caption", resourceCulture);
+            }
+        }
+        
+        public static string Module_KitchenManager_StartMenuItem_Pantry_Caption {
+            get {
+                return ResourceManager.GetString("Module_KitchenManager_StartMenuItem_Pantry_Caption", resourceCulture);
+            }
+        }
     }
 }

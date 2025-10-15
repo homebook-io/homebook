@@ -28,6 +28,7 @@
   </Folder>
   <Folder Name="/Frontend/Modules/">
     <Project Path="source\HomeBook.Frontend.Module.Finances\HomeBook.Frontend.Module.Finances.csproj" Type="Classic C#" />
+    <Project Path="source\HomeBook.Frontend.Module.Kitchen\HomeBook.Frontend.Module.Kitchen.csproj" Type="Classic C#" />
     <Project Path="source\HomeBook.Frontend.Module.PlatformInfo\HomeBook.Frontend.Module.PlatformInfo.csproj" Type="Classic C#" />
   </Folder>
   <Folder Name="/Solution/">

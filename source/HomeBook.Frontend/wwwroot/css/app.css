@@ -932,10 +932,15 @@
 
 .ui-startmenu-item-link {
   background: var(--hb-startmenu-container-background);
+  width: 100%;
+}
+.ui-startmenu-item-link > span {
+  height: 100%;
 }
 
 .ui-startmenu-container {
   width: 100%;
+  height: inherit;
   overflow: hidden;
 }
 
@@ -947,6 +952,13 @@
   z-index: -1;
   top: -25px;
   left: -25px;
+}
+
+.ui-startmenu-item-content {
+  height: inherit;
+}
+.ui-startmenu-item-content .ui-startmenu-item-nav {
+  margin-top: auto !important;
 }
 
 .ui-progress-item {

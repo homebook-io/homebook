@@ -1,6 +1,6 @@
 using System.Text;
 
-namespace HomeBook.Frontend.Utilities;
+namespace HomeBook.Frontend.UI.Utilities;
 
 public struct HtmlArgumentBuilder
 {

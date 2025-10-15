@@ -26,8 +26,25 @@
                 <MudList T="string">
                     @foreach (IModule? module in _registeredModules)
                     {
-                        <MudListItem Text="@module.Name"
-                                     Icon="@module.Icon"/>
+                        <UiDetailListItem Icon="@module.Icon"
+                                          IconSize="Size.Large">
+
+                            <UiDetailListItemTitle>
+                                <MudText Typo="Typo.h6">
+                                    @module.Name
+                                </MudText>
+                            </UiDetailListItemTitle>
+
+                            <UiDetailListItemCaption>
+                                <MudText Typo="Typo.caption">
+                                    @module.Description
+                                </MudText>
+                                <MudText Typo="Typo.overline">
+                                    @string.Format($"({module.Author} v{module.Version})")
+                                </MudText>
+                            </UiDetailListItemCaption>
+
+                        </UiDetailListItem>
                     }
                 </MudList>
 
@@ -45,8 +62,22 @@
                     {
                         foreach (string widgetName in widgetModule.Value)
                         {
-                            <MudListItem Text="@string.Format(widgetModule.Key.Name + " - " + widgetName)"
-                                         Icon="@widgetModule.Key.Icon"/>
+                            <UiDetailListItem Icon="@widgetModule.Key.Icon"
+                                              IconSize="Size.Large">
+
+                                <UiDetailListItemTitle>
+                                    <MudText Typo="Typo.h6">
+                                        @widgetName
+                                    </MudText>
+                                </UiDetailListItemTitle>
+
+                                <UiDetailListItemCaption>
+                                    <MudText Typo="Typo.caption">
+                                        @widgetModule.Key.Name
+                                    </MudText>
+                                </UiDetailListItemCaption>
+
+                            </UiDetailListItem>
                         }
                     }
 
