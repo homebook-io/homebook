@@ -12,12 +12,12 @@
 
 <MudContainer Class="mt-4">
 
-    <MudGrid Class="ui-startmenu">
+    <MudGrid Class="ui-startmenu d-flex align-stretch flex-grow-1">
 
         @foreach (IStartMenuItem smi in StartMenuItems)
         {
             <MudItem xs="12" sm="6" md="4" lg="3" xl="3" xxl="3"
-                     Class="ui-startmenu-item">
+                     Class="ui-startmenu-item d-flex flex-1">
 
                 <UiStartMenuItem Title="@smi.Title"
                                  Caption="@smi.Caption"

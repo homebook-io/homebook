@@ -9,10 +9,15 @@
 .ui-startmenu-item-link {
     background: var(--#{$hb-prefix}-startmenu-container-background);
     width: 100%;
+
+    > span {
+        height: 100%;
+    }
 }
 
 .ui-startmenu-container {
     width: 100%;
+    height: inherit;
     overflow: hidden;
 }
 
@@ -27,6 +32,7 @@
 }
 
 .ui-startmenu-item-content {
+    height: inherit;
 
     .ui-startmenu-item-title {
 
@@ -37,6 +43,6 @@
     }
 
     .ui-startmenu-item-nav {
-
+        margin-top: auto !important;
     }
 }
