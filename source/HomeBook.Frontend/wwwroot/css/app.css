@@ -932,6 +932,7 @@
 
 .ui-startmenu-item-link {
   background: var(--hb-startmenu-container-background);
+  width: 100%;
 }
 
 .ui-startmenu-container {

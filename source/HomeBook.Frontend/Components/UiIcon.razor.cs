@@ -1,4 +1,4 @@
-using HomeBook.Frontend.Utilities;
+using HomeBook.Frontend.UI.Utilities;
 using Microsoft.AspNetCore.Components;
 using MudBlazor;
 

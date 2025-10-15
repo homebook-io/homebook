@@ -43,9 +43,10 @@ builder.AddModules(
     builder.HomeBook(),
     (moduleBuilder) =>
     {
+        // app modules
         moduleBuilder
-            // app modules
             .AddModule<HomeBook.Frontend.Module.Finances.Module>()
+            .AddModule<HomeBook.Frontend.Module.Kitchen.Module>()
             .AddModule<HomeBook.Frontend.Module.PlatformInfo.Module>();
     });
 
