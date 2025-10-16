@@ -1591,6 +1591,9 @@
 .ui-progress-item .ui-progress-item-progress {
   width: 100%;
 }
+.ui-progress-item .ui-progress-item-progress .mud-progress-linear-bar {
+  background-color: var(--ui-element-accent-color) !important;
+}
 
 .ui-colored-icon-container .ui-colored-icon-frame {
   background-color: color-mix(in srgb, var(--ui-colored-icon-color), transparent var(--hb-ui-colored-icon-background-opacity));
