@@ -7,7 +7,7 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace HomeBook.Frontend.Properties {
+namespace HomeBook.Frontend.UI.Resources {
     using System;
     
     
@@ -28,7 +28,7 @@ namespace HomeBook.Frontend.Properties {
         public static System.Resources.ResourceManager ResourceManager {
             get {
                 if (object.Equals(null, resourceMan)) {
-                    System.Resources.ResourceManager temp = new System.Resources.ResourceManager("HomeBook.Frontend.Properties.LocalizationStrings", typeof(LocalizationStrings).Assembly);
+                    System.Resources.ResourceManager temp = new System.Resources.ResourceManager("HomeBook.Frontend.UI.Resources.LocalizationStrings", typeof(LocalizationStrings).Assembly);
                     resourceMan = temp;
                 }
                 return resourceMan;

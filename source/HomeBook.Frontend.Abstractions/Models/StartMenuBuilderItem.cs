@@ -10,9 +10,11 @@ namespace HomeBook.Frontend.Abstractions.Models;
 /// <param name="Url"></param>
 /// <param name="Icon"></param>
 /// <param name="Color"></param>
+/// <param name="ModuleId"></param>
 [DebuggerDisplay("{Title}")]
-public record StartMenuItem(string Title,
+public record StartMenuBuilderItem(string Title,
     string Caption,
     string Url,
     string Icon,
-    string Color);
+    string Color,
+    string ModuleId);

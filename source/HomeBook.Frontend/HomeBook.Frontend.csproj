@@ -37,15 +37,7 @@
     </ItemGroup>
 
     <ItemGroup>
-        <Folder Include="Utilities\" />
         <Folder Include="wwwroot\img\bg\"/>
-    </ItemGroup>
-
-    <ItemGroup>
-        <EmbeddedResource Update="Properties\LocalizationStrings.resx">
-            <Generator>PublicResXFileCodeGenerator</Generator>
-            <LastGenOutput>LocalizationStrings.Designer.cs</LastGenOutput>
-        </EmbeddedResource>
     </ItemGroup>
 
     <ItemGroup>

@@ -1,7 +1,16 @@
 namespace HomeBook.Frontend.Modules.Abstractions;
 
+/// <summary>
+///
+/// </summary>
 public interface IStartMenuBuilder
 {
+    /// <summary>
+    ///
+    /// </summary>
+    /// <param name="moduleId"></param>
+    void WithModule(string moduleId);
+
     /// <summary>
     ///
     /// </summary>
@@ -11,7 +20,7 @@ public interface IStartMenuBuilder
     /// <param name="Icon"></param>
     /// <param name="Color"></param>
     /// <returns></returns>
-    IStartMenuBuilder AddStartMenu(string Title,
+    IStartMenuBuilder AddStartMenuTile(string Title,
         string Caption,
         string Url,
         string Icon,

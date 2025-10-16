@@ -1,8 +1,7 @@
+using HomeBook.Frontend.Core.Models.Settings.Users;
+using HomeBook.Frontend.UI.Resources;
 using Microsoft.AspNetCore.Components;
 using MudBlazor;
-using System.ComponentModel.DataAnnotations;
-using HomeBook.Frontend.Core.Models.Settings.Users;
-using HomeBook.Frontend.Properties;
 
 namespace HomeBook.Frontend.Pages.Settings.User;
 

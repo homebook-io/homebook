@@ -2,13 +2,14 @@
 @using HomeBook.Frontend.Abstractions.Enums
 @using HomeBook.Frontend.Abstractions.Models
 @using HomeBook.Frontend.Core.Icons
-@using HomeBook.Frontend.Properties
 @using HomeBook.Frontend.Themes
+@using HomeBook.Frontend.UI.Resources
 @using Microsoft.AspNetCore.Components.Authorization
+@using Microsoft.Extensions.Localization
 
 @inherits LayoutComponentBase
 
-@inject ILocalizationProvider Loc
+@inject IStringLocalizer<LocalizationStrings> Loc
 @inject IAuthenticationService AuthenticationService
 @inject NavigationManager NavigationManager
 @inject ISnackbar Snackbar
