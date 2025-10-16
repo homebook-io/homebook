@@ -30,4 +30,7 @@
     <data name="StartMenuItem_Overview_Caption" xml:space="preserve">
         <value>Manage your income, expenses, and budgets</value>
     </data>
+    <data name="Savings_Title" xml:space="preserve">
+        <value>Saving Goals</value>
+    </data>
 </root>

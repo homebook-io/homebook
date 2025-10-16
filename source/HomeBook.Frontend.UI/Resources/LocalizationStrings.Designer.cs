@@ -1436,5 +1436,11 @@ namespace HomeBook.Frontend.UI.Resources {
                 return ResourceManager.GetString("Module_KitchenManager_StartMenuItem_Pantry_Caption", resourceCulture);
             }
         }
+        
+        public static string Settings_NavMenu_DeveloperColors_Text {
+            get {
+                return ResourceManager.GetString("Settings_NavMenu_DeveloperColors_Text", resourceCulture);
+            }
+        }
     }
 }

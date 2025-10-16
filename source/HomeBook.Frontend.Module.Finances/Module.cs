@@ -61,6 +61,6 @@ public class Module(IStringLocalizer<Strings> Loc)
             nameof(Strings.StartMenuItem_Overview_Caption),
             "/Finances",
             HomeBookIcons.Icons8.Windows11.Filled.Graph,
-            "#118C4F");
+            "var(--hb-color-denim)");
     }
 }

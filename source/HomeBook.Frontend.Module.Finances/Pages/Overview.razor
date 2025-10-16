@@ -2,7 +2,10 @@
 
 @using HomeBook.Frontend.Abstractions.Contracts
 @using HomeBook.Frontend.Core.Icons
+@using HomeBook.Frontend.Module.Finances.Resources
+@using Microsoft.Extensions.Localization
 
+@inject IStringLocalizer<Strings> Loc
 @inject IMenuService MenuService
 
 <UiPageTitle>+Finanzen</UiPageTitle>
@@ -13,7 +16,7 @@
 
         <MudItem xs="6" sm="6" md="3" lg="3" xl="3" xxl="3">
 
-            <UiValueCard Color="var(--hb-module-finances-total-color)"
+            <UiValueCard Color="var(--hb-color-lavender)"
                          Icon="@HomeBookIcons.Icons8.Windows11.Filled.Wallet"
                          Title="+Gesamtsaldo"
                          ValueDisplay="12.547,89 €"
@@ -24,7 +27,7 @@
 
         <MudItem xs="6" sm="6" md="3" lg="3" xl="3" xxl="3">
 
-            <UiValueCard Color="var(--hb-module-finances-expenses-color)"
+            <UiValueCard Color="var(--hb-color-crimson)"
                          Icon="@HomeBookIcons.Icons8.Windows11.Filled.CardMagnetic"
                          Title="+Ausgaben"
                          ValueDisplay="12.547,89 €"
@@ -35,7 +38,7 @@
 
         <MudItem xs="6" sm="6" md="3" lg="3" xl="3" xxl="3">
 
-            <UiValueCard Color="var(--hb-module-finances-income-color)"
+            <UiValueCard Color="var(--hb-color-emerald)"
                          Icon="@HomeBookIcons.Icons8.Windows11.Filled.ChartArrowRise"
                          Title="+Einnahmen"
                          ValueDisplay="12.547,89 €"
@@ -46,7 +49,7 @@
 
         <MudItem xs="6" sm="6" md="3" lg="3" xl="3" xxl="3">
 
-            <UiValueCard Color="var(--hb-module-finances-saving-color)"
+            <UiValueCard Color="var(--hb-color-cerulean)"
                          Icon="@HomeBookIcons.Icons8.Windows11.Filled.MoneyBox"
                          Title="+Sparziele"
                          ValueDisplay="12.547,89 €"
@@ -107,7 +110,7 @@
 
                     <CardHeaderContent>
                         <MudText Typo="Typo.h6">
-                            +Sparziele
+                            @Loc[nameof(Strings.Savings_Title)]
                         </MudText>
                     </CardHeaderContent>
 

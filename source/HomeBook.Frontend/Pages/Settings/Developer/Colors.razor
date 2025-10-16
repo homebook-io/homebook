@@ -1,0 +1,62 @@
+@page "/Settings/Developer/Colors"
+
+<MudContainer Class="mt-4">
+
+    <MudGrid>
+
+        <MudItem xs="12" sm="12" md="4" lg="3" xl="3" xxl="3">
+
+            <SettingsNavMenu/>
+
+        </MudItem>
+
+        <MudItem xs="12" sm="12" md="8" lg="9" xl="9" xxl="9">
+
+            <MudPaper Class="mud-theme-primary pa-3">
+                <MudText Typo="Typo.subtitle1"
+                         Class="d-block">
+                    css variable
+                </MudText>
+                <pre>--hb-color-{color-name}</pre>
+            </MudPaper>
+
+            <MudPaper Class="mud-theme-primary pa-3 mt-3">
+                <MudText Typo="Typo.subtitle1"
+                         Class="d-block">
+                    css class
+                </MudText>
+                <pre>.ui-color-bg-{color-name}</pre>
+                <pre>.ui-color-{color-name}</pre>
+            </MudPaper>
+
+            <div class="color-grid d-flex flex-wrap gap-1 mt-3">
+                @foreach (string color in _brandColors)
+                {
+                    <div class="tile rounded @($"ui-color-bg-{color}")">
+                        <MudText Typo="Typo.overline"
+                                 Align="Align.Center"
+                                 Class="d-block">
+                            @color
+                        </MudText>
+                    </div>
+                }
+            </div>
+
+            <div class="color-grid d-flex flex-wrap gap-1 mt-3">
+                @foreach (string color in _availableColors)
+                {
+                    <div class="tile rounded @($"ui-color-bg-{color}")">
+                        <MudText Typo="Typo.overline"
+                                 Align="Align.Center"
+                                 Class="d-block">
+                            @color
+                        </MudText>
+                    </div>
+                }
+            </div>
+
+        </MudItem>
+
+    </MudGrid>
+
+</MudContainer>

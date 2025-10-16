@@ -719,4 +719,7 @@
     <data name="Module_KitchenManager_StartMenuItem_Pantry_Caption" xml:space="preserve">
         <value>Keep track of your kitchen supplies</value>
     </data>
+    <data name="Settings_NavMenu_DeveloperColors_Text" xml:space="preserve">
+        <value>Dev Colors</value>
+    </data>
 </root>

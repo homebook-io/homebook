@@ -60,12 +60,12 @@ public class Module(IStringLocalizer<Strings> Loc)
             nameof(Strings.StartMenuItem_Recipes_Caption),
             "/Kitchen/Recipes",
             HomeBookIcons.Icons8.Windows11.Filled.CookBook,
-            "#FF9800");
+            "var(--hb-color-amber)");
 
         builder.AddStartMenuTile(nameof(Strings.StartMenuItem_Pantry_Title),
             nameof(Strings.StartMenuItem_Pantry_Caption),
             "/Kitchen/Pantry",
             HomeBookIcons.Icons8.Windows11.Filled.GroceryShelf,
-            "#009688");
+            "var(--hb-color-teal)");
     }
 }

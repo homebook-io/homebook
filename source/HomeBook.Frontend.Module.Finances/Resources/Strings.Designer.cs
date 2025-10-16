@@ -68,5 +68,11 @@ namespace HomeBook.Frontend.Module.Finances.Resources {
                 return ResourceManager.GetString("StartMenuItem_Overview_Caption", resourceCulture);
             }
         }
+        
+        public static string Savings_Title {
+            get {
+                return ResourceManager.GetString("Savings_Title", resourceCulture);
+            }
+        }
     }
 }

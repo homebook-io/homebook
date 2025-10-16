@@ -20,4 +20,7 @@
     <data name="StartMenuItem_Overview_Caption" xml:space="preserve">
         <value>Verwalte deinen Einnahmen, Ausgaben und Budgets</value>
     </data>
+    <data name="Savings_Title" xml:space="preserve">
+        <value>Sparziele</value>
+    </data>
 </root>
