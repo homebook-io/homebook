@@ -47,13 +47,9 @@
                             @Loc[nameof(LocalizationStrings.AppSlogan)]
                         </MudText>
 
-                        <MudTooltip
-                            Text="@string.Format(Loc[nameof(LocalizationStrings.Settings_About_VersionToolTip_Text_Template)], _backendVersion, _uiVersion)"
-                            Placement="Placement.Bottom">
-                            <MudChip T="string" Color="Color.Primary" Size="Size.Small">
-                                @string.Format(Loc[nameof(LocalizationStrings.Settings_About_Version_Text_Template)], _uiVersion)
-                            </MudChip>
-                        </MudTooltip>
+                        <MudChip T="string" Color="Color.Primary" Size="Size.Small">
+                            @string.Format(Loc[nameof(LocalizationStrings.Settings_About_Version_Text_Template)], _backendVersion)
+                        </MudChip>
 
                     </MudStack>
 

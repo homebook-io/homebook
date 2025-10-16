@@ -31,7 +31,7 @@
 
                             <UiDetailListItemTitle>
                                 <MudText Typo="Typo.h6">
-                                    @module.Name
+                                    @string.Format($"{module.Name} v{module.Version}")
                                 </MudText>
                             </UiDetailListItemTitle>
 
@@ -40,7 +40,7 @@
                                     @module.Description
                                 </MudText>
                                 <MudText Typo="Typo.overline">
-                                    @string.Format($"({module.Author} v{module.Version})")
+                                    (by @module.Author)
                                 </MudText>
                             </UiDetailListItemCaption>
 
