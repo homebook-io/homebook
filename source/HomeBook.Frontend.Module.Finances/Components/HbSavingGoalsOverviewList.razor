@@ -1,0 +1,60 @@
+@using HomeBook.Frontend.Module.Finances.Resources
+@using Microsoft.Extensions.Localization
+@inject IStringLocalizer<Strings> Loc
+
+<MudCard>
+
+    <MudCardHeader>
+
+        <CardHeaderContent>
+            <MudText Typo="Typo.h6">
+                @Loc[nameof(Strings.Savings_Title)]
+            </MudText>
+        </CardHeaderContent>
+
+        <CardHeaderActions>
+            <MudButton Variant="Variant.Text"
+                       Href="/Finances/Savings/Add"
+                       Color="Color.Primary">
+                @Loc[nameof(Strings.Savings_Add_Title)]
+            </MudButton>
+        </CardHeaderActions>
+
+    </MudCardHeader>
+
+    <MudCardContent>
+
+        <MudList T="string">
+
+            <MudListItem Href="#" Class="rounded">
+                <UiProgressItem HeaderTextStart="Urlaub Italien"
+                                HeaderTextEnd="75%"
+                                ProgressValue="75"
+                                FooterTextStart="1.500 € von 2.000 €"
+                                FooterTextEnd="500 € verbleibend"
+                                ProgressColor="Color.Warning"/>
+            </MudListItem>
+
+            <MudListItem Href="#" Class="rounded">
+                <UiProgressItem HeaderTextStart="Neues Auto"
+                                HeaderTextEnd="42%"
+                                ProgressValue="42"
+                                FooterTextStart="8.400 € von 20.000 €"
+                                FooterTextEnd="11.600 € verbleibend"
+                                ProgressColor="Color.Success"/>
+            </MudListItem>
+
+            <MudListItem Href="#" Class="rounded">
+                <UiProgressItem HeaderTextStart="Notgroschen"
+                                HeaderTextEnd="88%"
+                                ProgressValue="88"
+                                FooterTextStart="4.400 € von 5.000 €"
+                                FooterTextEnd="600 € verbleibend"
+                                ProgressColor="Color.Primary"/>
+            </MudListItem>
+
+        </MudList>
+
+    </MudCardContent>
+
+</MudCard>

@@ -74,5 +74,11 @@ namespace HomeBook.Frontend.Module.Finances.Resources {
                 return ResourceManager.GetString("Savings_Title", resourceCulture);
             }
         }
+        
+        public static string Savings_Add_Title {
+            get {
+                return ResourceManager.GetString("Savings_Add_Title", resourceCulture);
+            }
+        }
     }
 }
