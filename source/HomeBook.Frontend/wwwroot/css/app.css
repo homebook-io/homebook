@@ -614,63 +614,42 @@
   --hb-color-brand-github: #24292e;
   --hb-color-brand-docker: #2496ed;
   --hb-color-brand-ubuntu: #e95420;
+  --hb-color-aqua: #00b4d8;
   --hb-color-amethyst: #9333EA;
+  --hb-color-denim: #2f6690;
   --hb-color-cerulean: #2563EB;
+  --hb-color-ocean: #1e6091;
+  --hb-color-azure: #4f9ef8;
+  --hb-color-lavender: #c084fc;
+  --hb-color-plum: #8e4585;
+  --hb-color-rose: #e57373;
   --hb-color-crimson: #DC2626;
   --hb-color-ruby: #16A34A;
   --hb-color-emerald: #118C4F;
-  --hb-color-amber: #FF9800;
   --hb-color-teal: #009688;
   --hb-color-petrol: #008080;
-  --hb-color-azure: #4f9ef8;
-  --hb-color-lavender: #c084fc;
-  --hb-color-sand: #e7d8b1;
-  --hb-color-beige: #f5eedc;
-  --hb-color-linen: #f0ebe3;
-  --hb-color-amber1: #ffb547;
-  --hb-color-honey: #f6be4f;
-  --hb-color-caramel: #c77a35;
-  --hb-color-clay: #b66a50;
-  --hb-color-terracotta: #e07a5f;
-  --hb-color-copper: #b87333;
-  --hb-color-bronze: #a97142;
-  --hb-color-moss: #7a8450;
-  --hb-color-olive: #9a9b5e;
-  --hb-color-sage: #a8b68a;
-  --hb-color-avocado: #709255;
-  --hb-color-forest: #355e3b;
-  --hb-color-basil: #4f7942;
+  --hb-color-wine: #722f37;
+  --hb-color-mulberry: #9b2242;
   --hb-color-fern: #628b48;
-  --hb-color-khaki: #c3b091;
+  --hb-color-honey: #f6be4f;
+  --hb-color-lemon: #FFF176;
+  --hb-color-gold: #ffb547;
+  --hb-color-amber: #FF9800;
+  --hb-color-coral: #ff7f50;
+  --hb-color-caramel: #c77a35;
   --hb-color-stone: #78716c;
   --hb-color-graphite: #3d3d3d;
-  --hb-color-sea: #2e8b8b;
-  --hb-color-ocean: #1e6091;
-  --hb-color-aqua: #00b4d8;
-  --hb-color-turquoise: #40e0d0;
-  --hb-color-mint: #aaf0d1;
-  --hb-color-sky: #8ecae6;
-  --hb-color-iceblue: #c9e9ff;
-  --hb-color-denim: #2f6690;
   --hb-color-charcoal: #4b5563;
-  --hb-color-slate: #64748b;
   --hb-color-storm: #475569;
-  --hb-color-ash: #9ca3af;
   --hb-color-smoke: #737373;
   --hb-color-shadow: #1f2937;
   --hb-color-steel: #6b7280;
-  --hb-color-pebble: #bcbcbc;
-  --hb-color-fog: #d1d5db;
-  --hb-color-cloud: #f3f4f6;
-  --hb-color-plum: #8e4585;
-  --hb-color-rose: #e57373;
-  --hb-color-coral: #ff7f50;
   --hb-color-peach: #ffbc9a;
-  --hb-color-apricot: #ffc891;
   --hb-color-sunset: #fb7185;
-  --hb-color-wine: #722f37;
-  --hb-color-mulberry: #9b2242;
-  --hb-color-magenta: #d946ef;
+  --hb-color-chartreuse: #A7F432;
+  --hb-color-spring: #00E676;
+  --hb-color-apple: #2ECC71;
+  --hb-color-jade: #00BFA5;
 }
 
 .ui-color-brand-github {
@@ -700,12 +679,30 @@
   color: #ffffff;
 }
 
+.ui-color-aqua {
+  color: var(--hb-color-aqua);
+}
+
+.ui-color-bg-aqua {
+  background-color: var(--hb-color-aqua);
+  color: #ffffff;
+}
+
 .ui-color-amethyst {
   color: var(--hb-color-amethyst);
 }
 
 .ui-color-bg-amethyst {
   background-color: var(--hb-color-amethyst);
+  color: #ffffff;
+}
+
+.ui-color-denim {
+  color: var(--hb-color-denim);
+}
+
+.ui-color-bg-denim {
+  background-color: var(--hb-color-denim);
   color: #ffffff;
 }
 
@@ -716,6 +713,51 @@
 .ui-color-bg-cerulean {
   background-color: var(--hb-color-cerulean);
   color: #ffffff;
+}
+
+.ui-color-ocean {
+  color: var(--hb-color-ocean);
+}
+
+.ui-color-bg-ocean {
+  background-color: var(--hb-color-ocean);
+  color: #ffffff;
+}
+
+.ui-color-azure {
+  color: var(--hb-color-azure);
+}
+
+.ui-color-bg-azure {
+  background-color: var(--hb-color-azure);
+  color: #000000;
+}
+
+.ui-color-lavender {
+  color: var(--hb-color-lavender);
+}
+
+.ui-color-bg-lavender {
+  background-color: var(--hb-color-lavender);
+  color: #000000;
+}
+
+.ui-color-plum {
+  color: var(--hb-color-plum);
+}
+
+.ui-color-bg-plum {
+  background-color: var(--hb-color-plum);
+  color: #ffffff;
+}
+
+.ui-color-rose {
+  color: var(--hb-color-rose);
+}
+
+.ui-color-bg-rose {
+  background-color: var(--hb-color-rose);
+  color: #000000;
 }
 
 .ui-color-crimson {
@@ -745,15 +787,6 @@
   color: #ffffff;
 }
 
-.ui-color-amber {
-  color: var(--hb-color-amber);
-}
-
-.ui-color-bg-amber {
-  background-color: var(--hb-color-amber);
-  color: #ffffff;
-}
-
 .ui-color-teal {
   color: var(--hb-color-teal);
 }
@@ -772,165 +805,21 @@
   color: #ffffff;
 }
 
-.ui-color-azure {
-  color: var(--hb-color-azure);
+.ui-color-wine {
+  color: var(--hb-color-wine);
 }
 
-.ui-color-bg-azure {
-  background-color: var(--hb-color-azure);
-  color: #000000;
-}
-
-.ui-color-lavender {
-  color: var(--hb-color-lavender);
-}
-
-.ui-color-bg-lavender {
-  background-color: var(--hb-color-lavender);
-  color: #000000;
-}
-
-.ui-color-sand {
-  color: var(--hb-color-sand);
-}
-
-.ui-color-bg-sand {
-  background-color: var(--hb-color-sand);
-  color: #000000;
-}
-
-.ui-color-beige {
-  color: var(--hb-color-beige);
-}
-
-.ui-color-bg-beige {
-  background-color: var(--hb-color-beige);
-  color: #000000;
-}
-
-.ui-color-linen {
-  color: var(--hb-color-linen);
-}
-
-.ui-color-bg-linen {
-  background-color: var(--hb-color-linen);
-  color: #000000;
-}
-
-.ui-color-amber1 {
-  color: var(--hb-color-amber1);
-}
-
-.ui-color-bg-amber1 {
-  background-color: var(--hb-color-amber1);
-  color: #000000;
-}
-
-.ui-color-honey {
-  color: var(--hb-color-honey);
-}
-
-.ui-color-bg-honey {
-  background-color: var(--hb-color-honey);
-  color: #000000;
-}
-
-.ui-color-caramel {
-  color: var(--hb-color-caramel);
-}
-
-.ui-color-bg-caramel {
-  background-color: var(--hb-color-caramel);
+.ui-color-bg-wine {
+  background-color: var(--hb-color-wine);
   color: #ffffff;
 }
 
-.ui-color-clay {
-  color: var(--hb-color-clay);
+.ui-color-mulberry {
+  color: var(--hb-color-mulberry);
 }
 
-.ui-color-bg-clay {
-  background-color: var(--hb-color-clay);
-  color: #ffffff;
-}
-
-.ui-color-terracotta {
-  color: var(--hb-color-terracotta);
-}
-
-.ui-color-bg-terracotta {
-  background-color: var(--hb-color-terracotta);
-  color: #000000;
-}
-
-.ui-color-copper {
-  color: var(--hb-color-copper);
-}
-
-.ui-color-bg-copper {
-  background-color: var(--hb-color-copper);
-  color: #ffffff;
-}
-
-.ui-color-bronze {
-  color: var(--hb-color-bronze);
-}
-
-.ui-color-bg-bronze {
-  background-color: var(--hb-color-bronze);
-  color: #ffffff;
-}
-
-.ui-color-moss {
-  color: var(--hb-color-moss);
-}
-
-.ui-color-bg-moss {
-  background-color: var(--hb-color-moss);
-  color: #ffffff;
-}
-
-.ui-color-olive {
-  color: var(--hb-color-olive);
-}
-
-.ui-color-bg-olive {
-  background-color: var(--hb-color-olive);
-  color: #ffffff;
-}
-
-.ui-color-sage {
-  color: var(--hb-color-sage);
-}
-
-.ui-color-bg-sage {
-  background-color: var(--hb-color-sage);
-  color: #000000;
-}
-
-.ui-color-avocado {
-  color: var(--hb-color-avocado);
-}
-
-.ui-color-bg-avocado {
-  background-color: var(--hb-color-avocado);
-  color: #ffffff;
-}
-
-.ui-color-forest {
-  color: var(--hb-color-forest);
-}
-
-.ui-color-bg-forest {
-  background-color: var(--hb-color-forest);
-  color: #ffffff;
-}
-
-.ui-color-basil {
-  color: var(--hb-color-basil);
-}
-
-.ui-color-bg-basil {
-  background-color: var(--hb-color-basil);
+.ui-color-bg-mulberry {
+  background-color: var(--hb-color-mulberry);
   color: #ffffff;
 }
 
@@ -943,13 +832,58 @@
   color: #ffffff;
 }
 
-.ui-color-khaki {
-  color: var(--hb-color-khaki);
+.ui-color-honey {
+  color: var(--hb-color-honey);
 }
 
-.ui-color-bg-khaki {
-  background-color: var(--hb-color-khaki);
+.ui-color-bg-honey {
+  background-color: var(--hb-color-honey);
   color: #000000;
+}
+
+.ui-color-lemon {
+  color: var(--hb-color-lemon);
+}
+
+.ui-color-bg-lemon {
+  background-color: var(--hb-color-lemon);
+  color: #000000;
+}
+
+.ui-color-gold {
+  color: var(--hb-color-gold);
+}
+
+.ui-color-bg-gold {
+  background-color: var(--hb-color-gold);
+  color: #000000;
+}
+
+.ui-color-amber {
+  color: var(--hb-color-amber);
+}
+
+.ui-color-bg-amber {
+  background-color: var(--hb-color-amber);
+  color: #ffffff;
+}
+
+.ui-color-coral {
+  color: var(--hb-color-coral);
+}
+
+.ui-color-bg-coral {
+  background-color: var(--hb-color-coral);
+  color: #000000;
+}
+
+.ui-color-caramel {
+  color: var(--hb-color-caramel);
+}
+
+.ui-color-bg-caramel {
+  background-color: var(--hb-color-caramel);
+  color: #ffffff;
 }
 
 .ui-color-stone {
@@ -970,93 +904,12 @@
   color: #ffffff;
 }
 
-.ui-color-sea {
-  color: var(--hb-color-sea);
-}
-
-.ui-color-bg-sea {
-  background-color: var(--hb-color-sea);
-  color: #ffffff;
-}
-
-.ui-color-ocean {
-  color: var(--hb-color-ocean);
-}
-
-.ui-color-bg-ocean {
-  background-color: var(--hb-color-ocean);
-  color: #ffffff;
-}
-
-.ui-color-aqua {
-  color: var(--hb-color-aqua);
-}
-
-.ui-color-bg-aqua {
-  background-color: var(--hb-color-aqua);
-  color: #ffffff;
-}
-
-.ui-color-turquoise {
-  color: var(--hb-color-turquoise);
-}
-
-.ui-color-bg-turquoise {
-  background-color: var(--hb-color-turquoise);
-  color: #ffffff;
-}
-
-.ui-color-mint {
-  color: var(--hb-color-mint);
-}
-
-.ui-color-bg-mint {
-  background-color: var(--hb-color-mint);
-  color: #000000;
-}
-
-.ui-color-sky {
-  color: var(--hb-color-sky);
-}
-
-.ui-color-bg-sky {
-  background-color: var(--hb-color-sky);
-  color: #000000;
-}
-
-.ui-color-iceblue {
-  color: var(--hb-color-iceblue);
-}
-
-.ui-color-bg-iceblue {
-  background-color: var(--hb-color-iceblue);
-  color: #000000;
-}
-
-.ui-color-denim {
-  color: var(--hb-color-denim);
-}
-
-.ui-color-bg-denim {
-  background-color: var(--hb-color-denim);
-  color: #ffffff;
-}
-
 .ui-color-charcoal {
   color: var(--hb-color-charcoal);
 }
 
 .ui-color-bg-charcoal {
   background-color: var(--hb-color-charcoal);
-  color: #ffffff;
-}
-
-.ui-color-slate {
-  color: var(--hb-color-slate);
-}
-
-.ui-color-bg-slate {
-  background-color: var(--hb-color-slate);
   color: #ffffff;
 }
 
@@ -1067,15 +920,6 @@
 .ui-color-bg-storm {
   background-color: var(--hb-color-storm);
   color: #ffffff;
-}
-
-.ui-color-ash {
-  color: var(--hb-color-ash);
-}
-
-.ui-color-bg-ash {
-  background-color: var(--hb-color-ash);
-  color: #000000;
 }
 
 .ui-color-smoke {
@@ -1105,75 +949,12 @@
   color: #ffffff;
 }
 
-.ui-color-pebble {
-  color: var(--hb-color-pebble);
-}
-
-.ui-color-bg-pebble {
-  background-color: var(--hb-color-pebble);
-  color: #000000;
-}
-
-.ui-color-fog {
-  color: var(--hb-color-fog);
-}
-
-.ui-color-bg-fog {
-  background-color: var(--hb-color-fog);
-  color: #000000;
-}
-
-.ui-color-cloud {
-  color: var(--hb-color-cloud);
-}
-
-.ui-color-bg-cloud {
-  background-color: var(--hb-color-cloud);
-  color: #000000;
-}
-
-.ui-color-plum {
-  color: var(--hb-color-plum);
-}
-
-.ui-color-bg-plum {
-  background-color: var(--hb-color-plum);
-  color: #ffffff;
-}
-
-.ui-color-rose {
-  color: var(--hb-color-rose);
-}
-
-.ui-color-bg-rose {
-  background-color: var(--hb-color-rose);
-  color: #000000;
-}
-
-.ui-color-coral {
-  color: var(--hb-color-coral);
-}
-
-.ui-color-bg-coral {
-  background-color: var(--hb-color-coral);
-  color: #000000;
-}
-
 .ui-color-peach {
   color: var(--hb-color-peach);
 }
 
 .ui-color-bg-peach {
   background-color: var(--hb-color-peach);
-  color: #000000;
-}
-
-.ui-color-apricot {
-  color: var(--hb-color-apricot);
-}
-
-.ui-color-bg-apricot {
-  background-color: var(--hb-color-apricot);
   color: #000000;
 }
 
@@ -1186,31 +967,40 @@
   color: #000000;
 }
 
-.ui-color-wine {
-  color: var(--hb-color-wine);
+.ui-color-chartreuse {
+  color: var(--hb-color-chartreuse);
 }
 
-.ui-color-bg-wine {
-  background-color: var(--hb-color-wine);
+.ui-color-bg-chartreuse {
+  background-color: var(--hb-color-chartreuse);
   color: #ffffff;
 }
 
-.ui-color-mulberry {
-  color: var(--hb-color-mulberry);
+.ui-color-spring {
+  color: var(--hb-color-spring);
 }
 
-.ui-color-bg-mulberry {
-  background-color: var(--hb-color-mulberry);
+.ui-color-bg-spring {
+  background-color: var(--hb-color-spring);
   color: #ffffff;
 }
 
-.ui-color-magenta {
-  color: var(--hb-color-magenta);
+.ui-color-apple {
+  color: var(--hb-color-apple);
 }
 
-.ui-color-bg-magenta {
-  background-color: var(--hb-color-magenta);
-  color: #000000;
+.ui-color-bg-apple {
+  background-color: var(--hb-color-apple);
+  color: #ffffff;
+}
+
+.ui-color-jade {
+  color: var(--hb-color-jade);
+}
+
+.ui-color-bg-jade {
+  background-color: var(--hb-color-jade);
+  color: #ffffff;
 }
 
 :root {
