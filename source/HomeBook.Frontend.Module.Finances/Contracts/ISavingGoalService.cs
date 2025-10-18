@@ -12,5 +12,5 @@ public interface ISavingGoalService
     /// </summary>
     /// <param name="cancellationToken"></param>
     /// <returns></returns>
-    Task<IEnumerable<SavingGoal>> GetAllSavingGoalsAsync(CancellationToken cancellationToken = default);
+    Task<IEnumerable<SavingGoalDto>> GetAllSavingGoalsAsync(CancellationToken cancellationToken = default);
 }

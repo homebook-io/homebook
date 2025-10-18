@@ -5,6 +5,7 @@ using HomeBook.Backend.Abstractions.Exceptions;
 using HomeBook.Backend.Abstractions.Models;
 using HomeBook.Backend.Core.DataProvider.Extensions;
 using HomeBook.Backend.Core.DataProvider.Validators;
+using HomeBook.Backend.Core.Finances.Extensions;
 using HomeBook.Backend.Core.HashProvider;
 using HomeBook.Backend.Core.Licenses;
 using Homebook.Backend.Core.Setup;
@@ -130,7 +131,8 @@ public static class ServiceCollectionExtensions
 
             // load common database services (repositories, etc.)
             services.AddBackendData(configuration, instanceStatus)
-                .AddBackendCoreDataProvider(configuration, instanceStatus);
+                .AddBackendCoreDataProvider(configuration, instanceStatus)
+                .AddBackendCoreFinances(configuration, instanceStatus);
         }
 
         services.AddBackendCoreDataProviderValidators(configuration, instanceStatus);

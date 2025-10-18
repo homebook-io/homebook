@@ -37,6 +37,41 @@ namespace HomeBook.Backend.Data.Sqlite.Migrations
                     b.ToTable("Configurations");
                 });
 
+            modelBuilder.Entity("HomeBook.Backend.Data.Entities.SavingGoal", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("TEXT");
+
+                    b.Property<string>("Color")
+                        .IsRequired()
+                        .HasMaxLength(7)
+                        .HasColumnType("TEXT");
+
+                    b.Property<decimal>("CurrentAmount")
+                        .HasColumnType("TEXT");
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasMaxLength(50)
+                        .HasColumnType("TEXT");
+
+                    b.Property<decimal>("TargetAmount")
+                        .HasColumnType("TEXT");
+
+                    b.Property<DateTime?>("TargetDate")
+                        .HasColumnType("TEXT");
+
+                    b.Property<Guid>("UserId")
+                        .HasColumnType("TEXT");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("UserId");
+
+                    b.ToTable("SavingGoals");
+                });
+
             modelBuilder.Entity("HomeBook.Backend.Data.Entities.User", b =>
                 {
                     b.Property<Guid>("Id")
@@ -89,6 +124,17 @@ namespace HomeBook.Backend.Data.Sqlite.Migrations
                     b.HasKey("UserId", "Key");
 
                     b.ToTable("UserPreferences");
+                });
+
+            modelBuilder.Entity("HomeBook.Backend.Data.Entities.SavingGoal", b =>
+                {
+                    b.HasOne("HomeBook.Backend.Data.Entities.User", "User")
+                        .WithMany()
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("User");
                 });
 
             modelBuilder.Entity("HomeBook.Backend.Data.Entities.UserPreference", b =>

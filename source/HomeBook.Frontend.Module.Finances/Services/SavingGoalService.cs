@@ -1,22 +1,34 @@
+using HomeBook.Client;
+using HomeBook.Client.Models;
+using HomeBook.Frontend.Abstractions.Contracts;
 using HomeBook.Frontend.Module.Finances.Contracts;
+using HomeBook.Frontend.Module.Finances.Mappings;
 using HomeBook.Frontend.Module.Finances.Models;
 
 namespace HomeBook.Frontend.Module.Finances.Services;
 
 /// <inheritdoc />
-public class SavingGoalService : ISavingGoalService
+public class SavingGoalService(
+    IAuthenticationService authenticationService,
+    BackendClient backendClient) : ISavingGoalService
 {
     /// <inheritdoc />
-    public async Task<IEnumerable<SavingGoal>> GetAllSavingGoalsAsync(CancellationToken cancellationToken = default)
+    public async Task<IEnumerable<SavingGoalDto>> GetAllSavingGoalsAsync(CancellationToken cancellationToken = default)
     {
-        await Task.CompletedTask;
+        string? token = await authenticationService.GetTokenAsync(cancellationToken);
+        GetFinanceSavingGoalsResponse? response = await backendClient.Finances.SavingGoals.GetAsync(x =>
+            {
+                x.Headers.Add("Authorization", $"Bearer {token}");
+            },
+            cancellationToken);
 
-        var result = new List<SavingGoal>
-        {
-            new(Guid.NewGuid(), "New Car", "#ff0000", 20_000, 6_550, DateTime.Now.AddMonths(12)),
-            new(Guid.NewGuid(), "Vacation", "#00ff00", 5_000, 2_315, DateTime.Now.AddMonths(6)),
-            new(Guid.NewGuid(), "Emergency Fund", "#8888ff", 10_000, 8_765, DateTime.Now.AddMonths(24))
-        }.OrderByDescending(x => x.Percentage);
+        if (response is null)
+            return [];
+
+        List<SavingGoalDto> result = (response.SavingGoals ?? [])
+            .Select(x => x.ToDto())
+            .OrderByDescending(x => x.Percentage)
+            .ToList();
 
         return result;
     }

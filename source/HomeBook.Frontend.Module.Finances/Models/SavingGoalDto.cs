@@ -1,12 +1,12 @@
 namespace HomeBook.Frontend.Module.Finances.Models;
 
-public record SavingGoal(
+public record SavingGoalDto(
     Guid Id,
     string Name,
     string Color,
     decimal TargetAmount,
     decimal CurrentAmount,
-    DateTime TargetDate)
+    DateTime? TargetDate)
 {
     public double Percentage => TargetAmount == 0 ? 0 : (double)(CurrentAmount / TargetAmount);
 }

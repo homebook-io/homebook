@@ -6,7 +6,7 @@ public class SavingGoalOverviewViewModel(
     string color,
     decimal targetAmount,
     decimal currentAmount,
-    DateTime targetDate,
+    DateTime? targetDate,
     double percentage)
 {
     public Guid Id { get; } = id;
@@ -14,7 +14,7 @@ public class SavingGoalOverviewViewModel(
     public string Color { get; } = color;
     public decimal TargetAmount { get; } = targetAmount;
     public decimal CurrentAmount { get; } = currentAmount;
-    public DateTime TargetDate { get; } = targetDate;
+    public DateTime? TargetDate { get; } = targetDate;
     public double Percentage { get; } = percentage;
     public decimal RemainingAmount => TargetAmount - CurrentAmount;
 }

@@ -28,21 +28,32 @@
 
     <MudCardContent>
 
-        <MudList T="SavingGoalOverviewViewModel">
+        @if (_isLoading)
+        {
+            <div class="d-flex justify-center">
+                <MudProgressCircular Color="Color.Primary"
+                                     Indeterminate="true"/>
+            </div>
+        }
 
-            @foreach (SavingGoalOverviewViewModel vm in _savingGoals)
-            {
-                <MudListItem Href="#"
-                             Class="rounded">
-                    <UiProgressItem HeaderTextStart="@vm.Name"
-                                    HeaderTextEnd="@string.Format($"{vm.CurrentAmount:C} / {vm.TargetAmount:C}")"
-                                    ProgressValue="@(vm.Percentage * 100)"
-                                    FooterTextStart="@string.Format($"{vm.Percentage:P0} erreicht")"
-                                    Color="@vm.Color"/>
-                </MudListItem>
-            }
+        @if (!_isLoading)
+        {
+            <MudList T="SavingGoalOverviewViewModel">
 
-        </MudList>
+                @foreach (SavingGoalOverviewViewModel vm in _savingGoals)
+                {
+                    <MudListItem Href="#"
+                                 Class="rounded">
+                        <UiProgressItem HeaderTextStart="@vm.Name"
+                                        HeaderTextEnd="@string.Format($"{vm.CurrentAmount:C} / {vm.TargetAmount:C}")"
+                                        ProgressValue="@(vm.Percentage * 100)"
+                                        FooterTextStart="@string.Format($"{vm.Percentage:P0} erreicht")"
+                                        Color="@vm.Color"/>
+                    </MudListItem>
+                }
+
+            </MudList>
+        }
 
     </MudCardContent>
 
