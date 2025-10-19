@@ -40,6 +40,16 @@
         {
             <MudList T="SavingGoalOverviewViewModel">
 
+                @if (!_savingGoals.Any())
+                {
+                    <MudAlert Severity="Severity.Info"
+                              Elevation="0"
+                              Variant="Variant.Filled"
+                              Class="m-0">
+                        @Loc[nameof(Strings.Savings_Overview_NoSavingGoals)]
+                    </MudAlert>
+                }
+
                 @foreach (SavingGoalOverviewViewModel vm in _savingGoals)
                 {
                     <MudListItem Href="#"

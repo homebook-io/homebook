@@ -1,1 +1,152 @@
 @page "/Finances/Savings/Add"
+
+@using HomeBook.Frontend.Module.Finances.Contracts
+@using HomeBook.Frontend.Module.Finances.Resources
+@using Microsoft.Extensions.Localization
+
+@inject IStringLocalizer<Strings> Loc
+@inject ISavingGoalService SavingGoalService
+@inject ISnackbar Snackbar
+
+<MudContainer Class="mt-4">
+
+    <MudPaper Class="pa-6 max-w-2xl mx-auto">
+
+        <MudStepper @bind-ActiveIndex="_stepIndex"
+                    Class="stepper-no-actions d-flex flex-column-reverse">
+
+            <MudStep Title="+Details">
+
+                <MudForm @ref="_formStepBasicData"
+                         Class="mb-5">
+
+                    <MudContainer MaxWidth="MaxWidth.Small">
+
+                        <MudText Typo="Typo.h4"
+                                 Align="Align.Center"
+                                 Class="mb-4">
+                            +Allgemeine Informationen
+                        </MudText>
+
+                        <MudText Typo="Typo.body1"
+                                 Align="Align.Center"
+                                 Class="mb-4 mud-text-secondary">
+                            +Dies ist eine Beschreibung
+                            +Dies ist eine Beschreibung
+                            +Dies ist eine Beschreibung
+                            +Dies ist eine Beschreibung
+                            +Dies ist eine Beschreibung
+                            +Dies ist eine Beschreibung
+                            +Dies ist eine Beschreibung
+                            +Dies ist eine Beschreibung
+                        </MudText>
+
+                    </MudContainer>
+
+                    <MudTextField T="string"
+                                  Label="+Name des Ziels"
+                                  @bind-Value="Model.Name"
+                                  Required="true"
+                                  Placeholder="+z. B. Neuer PC oder Urlaub"/>
+
+                    <MudNumericField T="decimal"
+                                     Label="+Ziel-Summe (€)"
+                                     @bind-Value="Model.TargetAmount"
+                                     Required="true"
+                                     Adornment="Adornment.End"
+                                     AdornmentText="€"/>
+
+                    <MudDatePicker Label="+Ziel-Datum (optional)"
+                                   @bind-Date="Model.TargetDate"
+                                   Clearable="true"
+                                   DisplayMonths="2"/>
+
+                    <MudButton Variant="Variant.Filled"
+                               Color="Color.Primary"
+                               OnClick="NextStep"
+                               Class="mt-4">
+                        +Weiter
+                        <MudIcon Icon="@Icons.Material.Filled.ArrowForward"
+                                 Class="ml-2"/>
+                    </MudButton>
+
+                </MudForm>
+
+            </MudStep>
+
+            <MudStep Title="+Darstellung">
+
+                <MudForm @ref="_formStep2"
+                         Class="mb-5">
+
+                    <MudText Typo="Typo.h5" Class="mb-4">Aussehen wählen</MudText>
+
+                    <div class="d-flex flex-wrap gap-4 align-center mb-4">
+
+                        <div class="d-flex flex-column align-center">
+                            <MudIcon Icon="@Model.IconName" Size="Size.Large" Color="Color.Primary"/>
+                            <MudText Typo="Typo.caption" Class="mt-1">Vorschau</MudText>
+                        </div>
+
+                        <MudSelect T="string" Label="Empfohlene Icons" @bind-Value="Model.IconName" Class="w-50">
+                            @foreach (var icon in SuggestedIcons)
+                            {
+                                <MudSelectItem Value="@icon">
+                                    <MudIcon Icon="@icon" Class="mr-2"/> @icon
+                                </MudSelectItem>
+                            }
+                        </MudSelect>
+
+                        <MudButton Variant="Variant.Outlined" Color="Color.Primary"
+                                   OnClick="@(() => _iconDialogOpen = !_iconDialogOpen)">
+                            <MudIcon Icon="@Icons.Material.Filled.GridView" Class="mr-1"/>
+                            Alle Icons anzeigen
+                        </MudButton>
+
+                        <MudPopover Open="@_iconDialogOpen" ClosePopoverOnOutsideClick="true">
+                            <ChildContent>
+                                <div class="p-3" style="width: 320px; max-height: 300px; overflow-y: auto;">
+                                    <MudGrid>
+                                        @foreach (var icon in AllIcons)
+                                        {
+                                            <MudItem xs="3" sm="2" md="2" Class="text-center mb-2">
+                                                <MudIconButton Icon="@icon" Color="Color.Default" Size="Size.Medium"
+                                                               OnClick="@(() => SelectIcon(icon))"/>
+                                            </MudItem>
+                                        }
+                                    </MudGrid>
+                                </div>
+                            </ChildContent>
+                        </MudPopover>
+                    </div>
+
+                    <MudColorPicker Label="Farbe wählen"
+                                    @bind-Text="Model.Color"
+                                    Mode="ColorPickerMode.Hex"
+                                    DisableAlpha="true"/>
+
+                    <div class="mt-4 d-flex justify-space-between">
+                        <MudButton Variant="Variant.Outlined" Color="Color.Default" OnClick="PrevStep">
+                            <MudIcon Icon="@Icons.Material.Filled.ArrowBack" Class="mr-2"/>
+                            Zurück
+                        </MudButton>
+
+                        <MudButton Variant="Variant.Filled" Color="Color.Success" OnClick="SaveAsync">
+                            Speichern
+                            <MudIcon Icon="@Icons.Material.Filled.Check" Class="ml-2"/>
+                        </MudButton>
+                    </div>
+
+                </MudForm>
+
+            </MudStep>
+
+            <MudStep Title="+Zusammenfassung">
+
+            </MudStep>
+
+        </MudStepper>
+
+    </MudPaper>
+
+</MudContainer>

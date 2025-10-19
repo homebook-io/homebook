@@ -1,8 +1,9 @@
 namespace HomeBook.Frontend.Module.Finances.Models;
 
 public record SavingGoalDto(
-    Guid Id,
+    Guid? Id,
     string Name,
+    string IconName,
     string Color,
     decimal TargetAmount,
     decimal CurrentAmount,

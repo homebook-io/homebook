@@ -32,4 +32,28 @@ public class SavingGoalService(
 
         return result;
     }
+
+    /// <inheritdoc />
+    public Task<SavingGoalDto?> GetSavingGoalByIdAsync(Guid id, CancellationToken cancellationToken = default)
+    {
+        throw new NotImplementedException();
+    }
+
+    /// <inheritdoc />
+    public Task<Guid> CreateSavingGoalAsync(SavingGoalDto savingGoal, CancellationToken cancellationToken = default)
+    {
+        throw new NotImplementedException();
+    }
+
+    /// <inheritdoc />
+    public Task UpdateSavingGoalAsync(SavingGoalDto savingGoal, CancellationToken cancellationToken = default)
+    {
+        throw new NotImplementedException();
+    }
+
+    /// <inheritdoc />
+    public Task DeleteSavingGoalAsync(Guid id, CancellationToken cancellationToken = default)
+    {
+        throw new NotImplementedException();
+    }
 }

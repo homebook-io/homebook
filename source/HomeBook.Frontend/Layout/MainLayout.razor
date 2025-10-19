@@ -17,7 +17,8 @@
 @inject IMenuService MenuService
 
 @* Required *@
-<MudThemeProvider Theme="HomebookTheme.GetTheme()"/>
+<MudThemeProvider @bind-IsDarkMode="@_isThemeDarkMode"
+                  Theme="HomebookTheme.GetTheme()"/>
 <MudPopoverProvider/>
 
 @* Needed for dialogs *@
@@ -181,6 +182,7 @@
 </MudLayout>
 
 @code {
+    private bool _isThemeDarkMode = false;
     private bool _drawerOpen = true;
     private string? _homebookInstanceName = null;
     private bool _hasContextMenuItems = false;

@@ -80,5 +80,23 @@ namespace HomeBook.Frontend.Module.Finances.Resources {
                 return ResourceManager.GetString("Savings_Add_Title", resourceCulture);
             }
         }
+        
+        public static string Savings_Overview_NoSavingGoals {
+            get {
+                return ResourceManager.GetString("Savings_Overview_NoSavingGoals", resourceCulture);
+            }
+        }
+        
+        public static string Savings_Edit_Title {
+            get {
+                return ResourceManager.GetString("Savings_Edit_Title", resourceCulture);
+            }
+        }
+        
+        public static string Savings_Edit_NotFound {
+            get {
+                return ResourceManager.GetString("Savings_Edit_NotFound", resourceCulture);
+            }
+        }
     }
 }

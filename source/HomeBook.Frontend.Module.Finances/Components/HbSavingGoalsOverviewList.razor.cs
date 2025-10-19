@@ -1,3 +1,4 @@
+using HomeBook.Frontend.Module.Finances.Mappings;
 using HomeBook.Frontend.Module.Finances.Models;
 using HomeBook.Frontend.Module.Finances.ViewModels;
 using Microsoft.AspNetCore.Components;
@@ -28,14 +29,7 @@ public partial class HbSavingGoalsOverviewList : ComponentBase
             StateHasChanged();
 
             IEnumerable<SavingGoalDto> savingGoals = await SavingGoalService.GetAllSavingGoalsAsync(cancellationToken);
-            _savingGoals = savingGoals.Select(sg => new SavingGoalOverviewViewModel(
-                    sg.Id,
-                    sg.Name,
-                    sg.Color,
-                    sg.TargetAmount,
-                    sg.CurrentAmount,
-                    sg.TargetDate,
-                    sg.Percentage))
+            _savingGoals = savingGoals.Select(sg => sg.ToOverviewViewModel())
                 .ToList();
             StateHasChanged();
         }

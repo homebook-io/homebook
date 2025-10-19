@@ -1,1 +1,54 @@
 @page "/Finances/Savings/{SavingGoalId:guid}"
+
+@using HomeBook.Frontend.Module.Finances.Components
+@using HomeBook.Frontend.Module.Finances.Contracts
+@using HomeBook.Frontend.Module.Finances.Resources
+@using Microsoft.Extensions.Localization
+
+@inject IStringLocalizer<Strings> Loc
+@inject ISavingGoalService SavingGoalService
+
+<MudContainer Class="mt-4">
+
+    <MudCard>
+
+        <MudCardHeader>
+            <MudText Typo="Typo.h6">
+                @Loc[nameof(Strings.Savings_Edit_Title)]
+            </MudText>
+        </MudCardHeader>
+
+        <MudCardContent>
+
+            @if (_isLoading)
+            {
+                <div class="d-flex justify-center">
+                    <MudProgressCircular Color="Color.Primary"
+                                         Indeterminate="true"/>
+                </div>
+            }
+
+            @if (!_isLoading)
+            {
+                @if (_savingGoal is null)
+                {
+                    <MudAlert Severity="Severity.Error"
+                              Elevation="0"
+                              Variant="Variant.Filled"
+                              Class="m-0">
+                        @Loc[nameof(Strings.Savings_Edit_NotFound)]
+                    </MudAlert>
+                }
+
+                @if (_savingGoal is not null)
+                {
+                    <HbSavingGoalEditForm SavingGoal="_savingGoal"
+                                          OnSave="OnSavingGoalSave"/>
+                }
+            }
+
+        </MudCardContent>
+
+    </MudCard>
+
+</MudContainer>
