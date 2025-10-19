@@ -3,8 +3,10 @@ using HomeBook.Backend.Abstractions;
 using HomeBook.Backend.Abstractions.Contracts;
 using HomeBook.Backend.Abstractions.Exceptions;
 using HomeBook.Backend.Abstractions.Models;
+using HomeBook.Backend.Core.Account.Extensions;
 using HomeBook.Backend.Core.DataProvider.Extensions;
 using HomeBook.Backend.Core.DataProvider.Validators;
+using HomeBook.Backend.Core.Extensions;
 using HomeBook.Backend.Core.Finances.Extensions;
 using HomeBook.Backend.Core.HashProvider;
 using HomeBook.Backend.Core.Licenses;
@@ -27,6 +29,27 @@ namespace HomeBook.Backend.Extensions;
 
 public static class ServiceCollectionExtensions
 {
+    public static IServiceCollection AddDependenciesForSetup(this IServiceCollection services,
+        IConfiguration configuration,
+        InstanceStatus instanceStatus)
+    {
+        services.AddBackendSetup(configuration, instanceStatus);
+
+        return services;
+    }
+
+    public static IServiceCollection AddDependenciesForRuntime(this IServiceCollection services,
+        IConfiguration configuration,
+        InstanceStatus instanceStatus)
+    {
+        services.AddBackendServices(configuration, instanceStatus);
+        services.AddBackendCore(configuration, instanceStatus);
+        services.AddBackendDatabaseProvider(configuration, instanceStatus);
+        services.AddAccountServices(configuration, instanceStatus);
+
+        return services;
+    }
+
     /// <summary>
     /// add ALL services required for setup mode
     /// </summary>

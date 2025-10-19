@@ -26,4 +26,71 @@ public class SavingGoalsProvider(
 
         return savingGoals;
     }
+
+    /// <inheritdoc />
+    public async Task<SavingGoalDto?> GetSavingGoalByIdAsync(Guid userId,
+        Guid savingGoalId,
+        CancellationToken cancellationToken) =>
+        (await savingGoalsRepository.GetSavingGoalByIdAsync(userId,
+            savingGoalId,
+            cancellationToken))?.ToDto();
+
+    /// <inheritdoc />
+    public async Task<Guid> CreateSavingGoalAsync(Guid userId,
+        string name,
+        string color,
+        decimal targetAmount,
+        decimal currentAmount,
+        DateTime? targetDate,
+        CancellationToken cancellationToken)
+    {
+        SavingGoal entity = new()
+        {
+            UserId = userId,
+            Name = name,
+            Color = color,
+            TargetAmount = targetAmount,
+            CurrentAmount = currentAmount,
+            TargetDate = targetDate
+        };
+
+        // TODO: validator
+
+        Guid savingGoalId = await savingGoalsRepository.CreateOrUpdateSavingGoalAsync(userId, entity, cancellationToken);
+        return savingGoalId;
+    }
+
+    /// <inheritdoc />
+    public async Task UpdateSavingGoalAsync(Guid userId,
+        Guid savingGoalId,
+        string name,
+        string color,
+        decimal targetAmount,
+        decimal currentAmount,
+        DateTime? targetDate,
+        CancellationToken cancellationToken)
+    {
+        SavingGoal entity = new()
+        {
+            Id = savingGoalId,
+            UserId = userId,
+            Name = name,
+            Color = color,
+            TargetAmount = targetAmount,
+            CurrentAmount = currentAmount,
+            TargetDate = targetDate
+        };
+
+        // TODO: validator
+
+        await savingGoalsRepository.CreateOrUpdateSavingGoalAsync(userId, entity, cancellationToken);
+    }
+
+    /// <inheritdoc />
+    public async Task DeleteSavingGoalAsync(Guid userId,
+        Guid savingGoalId,
+        CancellationToken cancellationToken) =>
+        await savingGoalsRepository.DeleteSavingGoalAsync(userId,
+            savingGoalId,
+            cancellationToken);
 }

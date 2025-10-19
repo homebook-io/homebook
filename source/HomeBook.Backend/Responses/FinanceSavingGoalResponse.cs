@@ -1,5 +1,8 @@
+using System.Diagnostics;
+
 namespace HomeBook.Backend.Responses;
 
+[DebuggerDisplay("{Name} ({CurrentAmount} / {TargetAmount})")]
 public record FinanceSavingGoalResponse(
     Guid Id,
     string Name,
