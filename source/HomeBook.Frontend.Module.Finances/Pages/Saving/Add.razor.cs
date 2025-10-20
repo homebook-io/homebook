@@ -6,12 +6,18 @@ namespace HomeBook.Frontend.Module.Finances.Pages.Saving;
 
 public partial class Add : ComponentBase
 {
+    private bool _useQuickAdd = false;
     private int _stepIndex = 0;
+    private MudForm? _formStepName;
+    private MudForm? _formStepGoal;
+    private bool isStepNameValid = false;
+    private bool isStepGoalValid = false;
+    private SavingGoalDetailViewModel _model { get; } = new();
+
     private MudForm? _formStepBasicData;
     private MudForm? _formStep2;
     private bool _iconDialogOpen;
 
-    protected SavingGoalDetailViewModel Model { get; } = new();
 
     protected readonly List<string> SuggestedIcons =
     [
@@ -43,16 +49,14 @@ public partial class Add : ComponentBase
 
     protected async Task NextStep()
     {
-        await _formStepBasicData!.Validate();
-        if (_formStepBasicData.IsValid)
-            _stepIndex = 1;
+        _stepIndex++;
     }
 
     protected void PrevStep() => _stepIndex = 0;
 
     protected void SelectIcon(string icon)
     {
-        Model.IconName = icon;
+        _model.IconName = icon;
         _iconDialogOpen = false;
     }
 
@@ -64,5 +68,11 @@ public partial class Add : ComponentBase
 
         // Beispiel: await SavingGoalService.CreateOrUpdateSavingGoalAsync(Model);
         Snackbar.Add("Sparziel erfolgreich erstellt!", Severity.Success);
+    }
+
+    public async Task SwitchToQuickAdd()
+    {
+        _useQuickAdd = true;
+        StateHasChanged();
     }
 }
