@@ -8,11 +8,14 @@ public partial class Add : ComponentBase
 {
     private bool _useQuickAdd = false;
     private int _stepIndex = 0;
+    private MudStepper _stepper;
     private MudForm? _formStepName;
     private MudForm? _formStepGoal;
     private bool isStepNameValid = false;
     private bool isStepGoalValid = false;
     private SavingGoalDetailViewModel _model { get; } = new();
+    private AddSummaryViewModel? _summaryVM = null;
+
 
     private MudForm? _formStepBasicData;
     private MudForm? _formStep2;
@@ -50,6 +53,20 @@ public partial class Add : ComponentBase
     protected async Task NextStep()
     {
         _stepIndex++;
+
+        int maxSteps = _stepper.Steps.Count;
+        bool isLast = (_stepIndex + 1) == maxSteps;
+
+        if (!isLast)
+            return;
+
+        _summaryVM = new AddSummaryViewModel(_model.Name,
+            _model.Color,
+            _model.IconName,
+            _model.TargetAmount,
+            _model.TargetDate
+        );
+        StateHasChanged();
     }
 
     protected void PrevStep() => _stepIndex = 0;
