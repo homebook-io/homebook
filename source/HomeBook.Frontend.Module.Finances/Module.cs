@@ -1,5 +1,6 @@
 ﻿using HomeBook.Frontend.Core.Icons;
 using HomeBook.Frontend.Module.Finances.Contracts;
+using HomeBook.Frontend.Module.Finances.Factories;
 using HomeBook.Frontend.Module.Finances.Resources;
 using HomeBook.Frontend.Module.Finances.Services;
 using HomeBook.Frontend.Modules.Abstractions;
@@ -54,6 +55,8 @@ public class Module(IStringLocalizer<Strings> Loc)
         IConfiguration configuration)
     {
         services.AddSingleton<ISavingGoalService, SavingGoalService>();
+
+        services.AddSingleton<IViewModelFactory, ViewModelFactory>();
     }
 
     /// <inheritdoc />

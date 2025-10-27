@@ -3,12 +3,14 @@
 @using System.Globalization
 @using HomeBook.Frontend.Core.Icons
 @using HomeBook.Frontend.Module.Finances.Contracts
+@using HomeBook.Frontend.Module.Finances.Enums
 @using HomeBook.Frontend.Module.Finances.Resources
 @using Microsoft.Extensions.Localization
 
 @inject IStringLocalizer<Strings> Loc
 @inject ISavingGoalService SavingGoalService
 @inject ISnackbar Snackbar
+@inject IViewModelFactory ViewModelFactory
 
 <MudContainer Class="mt-4">
 
@@ -170,6 +172,7 @@
 
                         <MudDatePicker Label="+Ziel-Datum (optional)"
                                        @bind-Date="_model.TargetDate"
+                                       MinDate="DateTime.Now"
                                        Clearable="true"
                                        Placeholder="+Datum auswählen"
                                        DisplayMonths="2"/>
@@ -193,6 +196,105 @@
                 </MudForm>
 
             </MudStep>
+
+            <MudStep Title="+Sparplan">
+
+                <MudForm @ref="_formStepPlan"
+                         Model="_model"
+                         @bind-IsValid="@isStepPlanValid">
+
+                    <MudContainer MaxWidth="MaxWidth.Small"
+                                  Class="mt-10">
+
+                        <MudImage Src="_content/HomeBook.Frontend.Module.Finances/images/example-27.svg"
+                                  Class="d-flex mx-auto mb-20 w-100"/>
+
+                    </MudContainer>
+
+                    <MudContainer MaxWidth="MaxWidth.ExtraSmall"
+                                  Class="mb-10">
+
+                        <MudText Typo="Typo.h4"
+                                 Align="Align.Center"
+                                 Class="mb-5">
+                            +Weitere Optionen
+                        </MudText>
+
+                        <MudText Typo="Typo.caption"
+                                 Color="Color.Tertiary"
+                                 Align="Align.Left"
+                                 Class="mb-3 d-inline-block">
+                            +Bekommst du auf deinem Sparkonto Zinsen?
+                        </MudText>
+
+                    </MudContainer>
+
+                    <MudContainer MaxWidth="MaxWidth.Medium"
+                                  Class="mb-10">
+
+                        <MudRadioGroup T="InterestRateOptions"
+                                       Class="d-flex align-center"
+                                       @bind-Value="_model.InterestRateOption">
+
+                            <MudRadio T="InterestRateOptions"
+                                      Color="Color.Primary"
+                                      Value="@(InterestRateOptions.NONE)">
+                                +Keine Zinsen
+                            </MudRadio>
+
+                            <MudRadio T="InterestRateOptions"
+                                      Color="Color.Primary"
+                                      Value="@(InterestRateOptions.MONTHLY)">
+                                +Monatlich
+                            </MudRadio>
+
+                            <MudRadio T="InterestRateOptions"
+                                      Color="Color.Primary"
+                                      Value="@(InterestRateOptions.YEARLY)">
+                                +Jährlich
+                            </MudRadio>
+
+                        </MudRadioGroup>
+
+                    </MudContainer>
+
+                    <MudContainer MaxWidth="MaxWidth.ExtraSmall"
+                                  Class="mb-10">
+
+                        @if (_model.IsInterestRateSelected())
+                        {
+                            <MudNumericField T="decimal?"
+                                             Label="+Zinssatz (%)"
+                                             @bind-Value="_model.InterestRate"
+                                             Variant="Variant.Outlined"
+                                             Adornment="Adornment.End"
+                                             AdornmentText="%"
+                                             Immediate="true"
+                                             Min="0"
+                                             Max="100"
+                                             Step="(decimal)0.1"/>
+                        }
+
+                        <MudStack Row="true"
+                                  Spacing="10"
+                                  Class="mt-10 d-flex justify-center">
+
+                            <MudIconButton Icon="@HomeBookIcons.Icons8.Windows11.Filled.ArrowRight"
+                                           Disabled="@(!isStepGoalValid)"
+                                           OnClick="NextStep"
+                                           ButtonType="ButtonType.Submit"
+                                           Class="pa-3 rounded-pill"
+                                           Variant="Variant.Filled"
+                                           Color="Color.Primary"
+                                           Size="Size.Large"/>
+                        </MudStack>
+
+                    </MudContainer>
+
+                </MudForm>
+
+            </MudStep>
+
             @* *@
             @* <MudStep Title="+Darstellung"> *@
             @* *@

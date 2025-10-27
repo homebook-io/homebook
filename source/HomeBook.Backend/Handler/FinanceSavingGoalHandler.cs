@@ -9,7 +9,7 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace HomeBook.Backend.Handler;
 
-public class SavingGoalHandler
+public class FinanceSavingGoalHandler
 {
     /// <summary>
     /// gets the user finance saving goals
@@ -20,7 +20,7 @@ public class SavingGoalHandler
     /// <param name="cancellationToken"></param>
     /// <returns></returns>
     public static async Task<IResult> HandleGetSavingGoals(ClaimsPrincipal user,
-        [FromServices] ILogger<SavingGoalHandler> logger,
+        [FromServices] ILogger<FinanceSavingGoalHandler> logger,
         [FromServices] ISavingGoalsProvider savingGoalsProvider,
         CancellationToken cancellationToken)
     {
@@ -54,7 +54,7 @@ public class SavingGoalHandler
     /// <returns></returns>
     public static async Task<IResult> HandleCreateSavingGoal(ClaimsPrincipal user,
         [FromBody] SavingGoalRequest request,
-        [FromServices] ILogger<SavingGoalHandler> logger,
+        [FromServices] ILogger<FinanceSavingGoalHandler> logger,
         [FromServices] ISavingGoalsProvider savingGoalsProvider,
         CancellationToken cancellationToken)
     {
@@ -94,7 +94,7 @@ public class SavingGoalHandler
     public static async Task<IResult> HandleUpdateSavingGoal(Guid savingGoalId,
         ClaimsPrincipal user,
         [FromBody] SavingGoalRequest request,
-        [FromServices] ILogger<SavingGoalHandler> logger,
+        [FromServices] ILogger<FinanceSavingGoalHandler> logger,
         [FromServices] ISavingGoalsProvider savingGoalsProvider,
         CancellationToken cancellationToken)
     {
@@ -135,7 +135,7 @@ public class SavingGoalHandler
     public static async Task<IResult> HandleDeleteSavingGoal(Guid savingGoalId,
         ClaimsPrincipal user,
         [FromBody] SavingGoalRequest request,
-        [FromServices] ILogger<SavingGoalHandler> logger,
+        [FromServices] ILogger<FinanceSavingGoalHandler> logger,
         [FromServices] ISavingGoalsProvider savingGoalsProvider,
         CancellationToken cancellationToken)
     {

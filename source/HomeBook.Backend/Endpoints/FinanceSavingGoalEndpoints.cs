@@ -4,16 +4,16 @@ using HomeBook.Backend.Responses;
 
 namespace HomeBook.Backend.Endpoints;
 
-public static class SavingGoalEndpoints
+public static class FinanceSavingGoalEndpoints
 {
-    public static IEndpointRouteBuilder MapFinancesSavingGoal(this IEndpointRouteBuilder routeBuilder)
+    public static IEndpointRouteBuilder MapFinancesSavingGoalEndpoints(this IEndpointRouteBuilder routeBuilder)
     {
         RouteGroupBuilder group = routeBuilder
             .MapGroup("/finances/saving-goals")
             .WithDescription("Endpoints for finances saving goals")
             .RequireAuthorization();
 
-        group.MapGet("/", SavingGoalHandler.HandleGetSavingGoals)
+        group.MapGet("/", FinanceSavingGoalHandler.HandleGetSavingGoals)
             .WithName("GetSavingGoals")
             .WithTags("Finances", "SavingGoals")
             .WithDescription(new Description(
@@ -29,7 +29,7 @@ public static class SavingGoalEndpoints
             .Produces(StatusCodes.Status401Unauthorized)
             .Produces<string>(StatusCodes.Status500InternalServerError);
 
-        group.MapPost("/", SavingGoalHandler.HandleCreateSavingGoal)
+        group.MapPost("/", FinanceSavingGoalHandler.HandleCreateSavingGoal)
             .WithName("CreateSavingGoal")
             .WithTags("Finances", "SavingGoals")
             .WithDescription(new Description(
@@ -47,7 +47,7 @@ public static class SavingGoalEndpoints
             .Produces(StatusCodes.Status401Unauthorized)
             .Produces<string>(StatusCodes.Status500InternalServerError);
 
-        group.MapPut("/{savingGoalId:guid}", SavingGoalHandler.HandleUpdateSavingGoal)
+        group.MapPut("/{savingGoalId:guid}", FinanceSavingGoalHandler.HandleUpdateSavingGoal)
             .WithName("UpdateSavingGoal")
             .WithTags("Finances", "SavingGoals")
             .WithDescription(new Description(
@@ -67,7 +67,7 @@ public static class SavingGoalEndpoints
             .Produces<string>(StatusCodes.Status404NotFound)
             .Produces<string>(StatusCodes.Status500InternalServerError);
 
-        group.MapDelete("/{savingGoalId:guid}", SavingGoalHandler.HandleDeleteSavingGoal)
+        group.MapDelete("/{savingGoalId:guid}", FinanceSavingGoalHandler.HandleDeleteSavingGoal)
             .WithName("DeleteSavingGoal")
             .WithTags("Finances", "SavingGoals")
             .WithDescription(new Description(

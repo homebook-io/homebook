@@ -11,10 +11,12 @@ public partial class Add : ComponentBase
     private MudStepper _stepper;
     private MudForm? _formStepName;
     private MudForm? _formStepGoal;
+    private MudForm? _formStepPlan;
     private bool isStepNameValid = false;
     private bool isStepGoalValid = false;
+    private bool isStepPlanValid = false;
     private SavingGoalDetailViewModel _model { get; } = new();
-    private AddSummaryViewModel? _summaryVM = null;
+    private AddSavingGoalSummaryViewModel? _summaryVM = null;
 
 
     private MudForm? _formStepBasicData;
@@ -60,12 +62,14 @@ public partial class Add : ComponentBase
         if (!isLast)
             return;
 
-        _summaryVM = new AddSummaryViewModel(_model.Name,
-            _model.Color,
-            _model.IconName,
-            _model.TargetAmount,
-            _model.TargetDate
-        );
+        _summaryVM = ViewModelFactory.CreateAddSavingGoalSummaryViewModel();
+        _summaryVM.Name = _model.Name;
+        _summaryVM.Color = _model.Color;
+        _summaryVM.IconName = _model.IconName;
+        _summaryVM.TargetAmount = _model.TargetAmount;
+        _summaryVM.TargetDate = _model.TargetDate;
+        _summaryVM.InterestRateOption = _model.InterestRateOption;
+        _summaryVM.InterestRate = _model.InterestRate;
         StateHasChanged();
     }
 

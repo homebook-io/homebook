@@ -15,6 +15,8 @@ public static class ServiceCollectionExtensions
         InstanceStatus instanceStatus)
     {
         services.AddScoped<ISavingGoalsProvider, SavingGoalsProvider>();
+        services.AddScoped<IFinanceCalculationsService, FinanceCalculationsService>();
+
         services.AddSingleton<IValidator<SavingGoal>, SavingGoalValidator>();
 
         return services;

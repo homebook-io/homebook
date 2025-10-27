@@ -105,7 +105,8 @@ switch (instanceStatus)
             .MapAccountEndpoints()
             .MapInfoEndpoints()
             .MapUserEndpoints()
-            .MapFinancesSavingGoal();
+            .MapFinancesCalculationEndpoints()
+            .MapFinancesSavingGoalEndpoints();
         break;
 }
 

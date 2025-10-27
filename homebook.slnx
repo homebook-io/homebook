@@ -1,6 +1,7 @@
 ﻿<Solution>
   <Folder Name="/Backend/">
     <Project Path="source\HomeBook.Backend.Abstractions\HomeBook.Backend.Abstractions.csproj" Type="Classic C#" />
+    <Project Path="source\HomeBook.Backend.DTOs\HomeBook.Backend.DTOs.csproj" Type="Classic C#" />
     <Project Path="source\HomeBook.Backend\HomeBook.Backend.csproj" Type="Classic C#" />
   </Folder>
   <Folder Name="/Backend/Core/">
