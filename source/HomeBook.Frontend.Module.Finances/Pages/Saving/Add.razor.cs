@@ -1,3 +1,5 @@
+using HomeBook.Client.Models;
+using HomeBook.Frontend.Module.Finances.Enums;
 using HomeBook.Frontend.Module.Finances.ViewModels;
 using Microsoft.AspNetCore.Components;
 using MudBlazor;
@@ -54,6 +56,7 @@ public partial class Add : ComponentBase
 
     protected async Task NextStep()
     {
+        CancellationToken cancellationToken = CancellationToken.None;
         _stepIndex++;
 
         int maxSteps = _stepper.Steps.Count;
@@ -67,9 +70,43 @@ public partial class Add : ComponentBase
         _summaryVM.Color = _model.Color;
         _summaryVM.IconName = _model.IconName;
         _summaryVM.TargetAmount = _model.TargetAmount;
-        _summaryVM.TargetDate = _model.TargetDate;
+
+        if (_model.TargetDate is null)
+            return;
+
+        // calculate with target date
+        string? token = await AuthenticationService.GetTokenAsync(cancellationToken);
+        FinanceCalculatedSavingResponse? response = await BackendClient.Finances.Calculations.Savings
+            .PostAsync(new FinanceCalculatedSavingRequest
+                {
+                    TargetAmount = Convert.ToDouble(_model.TargetAmount),
+                    TargetDate = _model.TargetDate,
+                    InterestRateOption = (int)_model.InterestRateOption,
+                    InterestRate = Convert.ToDouble(_model.InterestRate),
+                    TargetSimpleRate = true,
+                },
+                x =>
+                {
+                    x.Headers.Add("Authorization", $"Bearer {token}");
+                },
+                cancellationToken);
+
+        if (response is null)
+        {
+            // display error
+            return;
+        }
+
+        // _summaryVM.TargetDate = _model.TargetDate;
         _summaryVM.InterestRateOption = _model.InterestRateOption;
         _summaryVM.InterestRate = _model.InterestRate;
+
+        _summaryVM.TargetDate = DateTime.UtcNow.AddMonths(response.MonthsNeeded!.Value);
+        _summaryVM.AmountPerMonth = Convert.ToDecimal(response.MonthlyPayment);
+        _summaryVM.NumberOfMonths = response.MonthsNeeded!.Value;
+        _summaryVM.AmountsWithInterests = (response.Amounts ?? []).Select(x => Convert.ToDecimal(x!.Value)).ToArray();
+        _summaryVM.Interests = (response.Interests ?? []).Select(x => Convert.ToDecimal(x!.Value)).ToArray();
+
         StateHasChanged();
     }
 

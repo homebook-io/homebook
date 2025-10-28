@@ -1,6 +1,8 @@
 @page "/Finances/Savings/Add"
 
 @using System.Globalization
+@using HomeBook.Client
+@using HomeBook.Frontend.Abstractions.Contracts
 @using HomeBook.Frontend.Core.Icons
 @using HomeBook.Frontend.Module.Finances.Contracts
 @using HomeBook.Frontend.Module.Finances.Enums
@@ -11,6 +13,8 @@
 @inject ISavingGoalService SavingGoalService
 @inject ISnackbar Snackbar
 @inject IViewModelFactory ViewModelFactory
+@inject BackendClient BackendClient
+@inject IAuthenticationService AuthenticationService
 
 <MudContainer Class="mt-4">
 
@@ -396,32 +400,24 @@
                                 +Bis: @_summaryVM.TargetDate.Value.ToLongDateString()
                             </MudText>
 
-                            @if (_summaryVM.NumberOfMonths is not null)
-                            {
-                                <MudText Typo="Typo.caption"
-                                         Align="Align.Center"
-                                         Class="d-block mb-5">
-                                    +Monate: @_summaryVM.NumberOfMonths
-                                </MudText>
-                            }
+                            <MudText Typo="Typo.caption"
+                                     Align="Align.Center"
+                                     Class="d-block mb-5">
+                                +Monate: @_summaryVM.NumberOfMonths
+                            </MudText>
 
-                            @if (_summaryVM.AmountPerMonth is not null)
-                            {
-                                <MudText Typo="Typo.caption"
-                                         Align="Align.Center"
-                                         Class="d-block mb-5">
-                                    +pro Monat: @_summaryVM.AmountPerMonth.Value.ToString("C")
-                                </MudText>
-                            }
+                            <MudText Typo="Typo.caption"
+                                     Align="Align.Center"
+                                     Class="d-block mb-5">
+                                +pro Monat: @_summaryVM.AmountPerMonth.ToString("C")
+                            </MudText>
 
-                            @if (_summaryVM.AmountPerMonth is not null)
-                            {
-                                <MudText Typo="Typo.caption"
-                                         Align="Align.Center"
-                                         Class="d-block mb-5">
-                                    +Am Ende hast du: @_summaryVM.AmountHistory[^1].ToString("C")
-                                </MudText>
-                            }
+                            <MudText Typo="Typo.caption"
+                                     Align="Align.Center"
+                                     Class="d-block mb-5">
+                                +Am Ende hast du @_summaryVM.AmountsWithInterests[^1].ToString("C")
+                                und dabei Zinsen in Höhe von @_summaryVM.Interests.Sum().ToString("C") erhalten :)
+                            </MudText>
 
                             <MudChart ChartType="ChartType.Line"
                                       Width="100%"
