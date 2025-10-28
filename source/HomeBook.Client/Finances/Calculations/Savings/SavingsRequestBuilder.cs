@@ -9,63 +9,63 @@ using System.IO;
 using System.Threading.Tasks;
 using System.Threading;
 using System;
-namespace HomeBook.Client.Setup.Start
+namespace HomeBook.Client.Finances.Calculations.Savings
 {
     /// <summary>
-    /// Builds and executes requests for operations under \setup\start
+    /// Builds and executes requests for operations under \finances\calculations\savings
     /// </summary>
     [global::System.CodeDom.Compiler.GeneratedCode("Kiota", "1.0.0")]
-    public partial class StartRequestBuilder : BaseRequestBuilder
+    public partial class SavingsRequestBuilder : BaseRequestBuilder
     {
         /// <summary>
-        /// Instantiates a new <see cref="global::HomeBook.Client.Setup.Start.StartRequestBuilder"/> and sets the default values.
+        /// Instantiates a new <see cref="global::HomeBook.Client.Finances.Calculations.Savings.SavingsRequestBuilder"/> and sets the default values.
         /// </summary>
         /// <param name="pathParameters">Path parameters for the request</param>
         /// <param name="requestAdapter">The request adapter to use to execute the requests.</param>
-        public StartRequestBuilder(Dictionary<string, object> pathParameters, IRequestAdapter requestAdapter) : base(requestAdapter, "{+baseurl}/setup/start", pathParameters)
+        public SavingsRequestBuilder(Dictionary<string, object> pathParameters, IRequestAdapter requestAdapter) : base(requestAdapter, "{+baseurl}/finances/calculations/savings", pathParameters)
         {
         }
         /// <summary>
-        /// Instantiates a new <see cref="global::HomeBook.Client.Setup.Start.StartRequestBuilder"/> and sets the default values.
+        /// Instantiates a new <see cref="global::HomeBook.Client.Finances.Calculations.Savings.SavingsRequestBuilder"/> and sets the default values.
         /// </summary>
         /// <param name="rawUrl">The raw URL to use for the request builder.</param>
         /// <param name="requestAdapter">The request adapter to use to execute the requests.</param>
-        public StartRequestBuilder(string rawUrl, IRequestAdapter requestAdapter) : base(requestAdapter, "{+baseurl}/setup/start", rawUrl)
+        public SavingsRequestBuilder(string rawUrl, IRequestAdapter requestAdapter) : base(requestAdapter, "{+baseurl}/finances/calculations/savings", rawUrl)
         {
         }
         /// <summary>
-        /// start the setup process. it will save the configuration for the setup stepsHTTP 200: Setup started successfullyHTTP 400: Validation error for example with the database configuration, e.g. too short password, etc.HTTP 422: Licenses not acceptedHTTP 500: Unknown error while starting setup
+        /// returns the calculated savings based on the provided parametersHTTP 200: successfully calculated savingsHTTP 401: User is not authorizedHTTP 500: Unknown error while getting saving goals
         /// </summary>
-        /// <returns>A <see cref="Stream"/></returns>
+        /// <returns>A <see cref="global::HomeBook.Client.Models.FinanceCalculatedSavingResponse"/></returns>
         /// <param name="body">The request body</param>
         /// <param name="cancellationToken">Cancellation token to use when cancelling requests</param>
         /// <param name="requestConfiguration">Configuration for the request such as headers, query parameters, and middleware options.</param>
 #if NETSTANDARD2_1_OR_GREATER || NETCOREAPP3_1_OR_GREATER
 #nullable enable
-        public async Task<Stream?> PostAsync(global::HomeBook.Client.Models.StartSetupRequest body, Action<RequestConfiguration<DefaultQueryParameters>>? requestConfiguration = default, CancellationToken cancellationToken = default)
+        public async Task<global::HomeBook.Client.Models.FinanceCalculatedSavingResponse?> PostAsync(global::HomeBook.Client.Models.FinanceCalculatedSavingRequest body, Action<RequestConfiguration<DefaultQueryParameters>>? requestConfiguration = default, CancellationToken cancellationToken = default)
         {
 #nullable restore
 #else
-        public async Task<Stream> PostAsync(global::HomeBook.Client.Models.StartSetupRequest body, Action<RequestConfiguration<DefaultQueryParameters>> requestConfiguration = default, CancellationToken cancellationToken = default)
+        public async Task<global::HomeBook.Client.Models.FinanceCalculatedSavingResponse> PostAsync(global::HomeBook.Client.Models.FinanceCalculatedSavingRequest body, Action<RequestConfiguration<DefaultQueryParameters>> requestConfiguration = default, CancellationToken cancellationToken = default)
         {
 #endif
             if(ReferenceEquals(body, null)) throw new ArgumentNullException(nameof(body));
             var requestInfo = ToPostRequestInformation(body, requestConfiguration);
-            return await RequestAdapter.SendPrimitiveAsync<Stream>(requestInfo, default, cancellationToken).ConfigureAwait(false);
+            return await RequestAdapter.SendAsync<global::HomeBook.Client.Models.FinanceCalculatedSavingResponse>(requestInfo, global::HomeBook.Client.Models.FinanceCalculatedSavingResponse.CreateFromDiscriminatorValue, default, cancellationToken).ConfigureAwait(false);
         }
         /// <summary>
-        /// start the setup process. it will save the configuration for the setup stepsHTTP 200: Setup started successfullyHTTP 400: Validation error for example with the database configuration, e.g. too short password, etc.HTTP 422: Licenses not acceptedHTTP 500: Unknown error while starting setup
+        /// returns the calculated savings based on the provided parametersHTTP 200: successfully calculated savingsHTTP 401: User is not authorizedHTTP 500: Unknown error while getting saving goals
         /// </summary>
         /// <returns>A <see cref="RequestInformation"/></returns>
         /// <param name="body">The request body</param>
         /// <param name="requestConfiguration">Configuration for the request such as headers, query parameters, and middleware options.</param>
 #if NETSTANDARD2_1_OR_GREATER || NETCOREAPP3_1_OR_GREATER
 #nullable enable
-        public RequestInformation ToPostRequestInformation(global::HomeBook.Client.Models.StartSetupRequest body, Action<RequestConfiguration<DefaultQueryParameters>>? requestConfiguration = default)
+        public RequestInformation ToPostRequestInformation(global::HomeBook.Client.Models.FinanceCalculatedSavingRequest body, Action<RequestConfiguration<DefaultQueryParameters>>? requestConfiguration = default)
         {
 #nullable restore
 #else
-        public RequestInformation ToPostRequestInformation(global::HomeBook.Client.Models.StartSetupRequest body, Action<RequestConfiguration<DefaultQueryParameters>> requestConfiguration = default)
+        public RequestInformation ToPostRequestInformation(global::HomeBook.Client.Models.FinanceCalculatedSavingRequest body, Action<RequestConfiguration<DefaultQueryParameters>> requestConfiguration = default)
         {
 #endif
             if(ReferenceEquals(body, null)) throw new ArgumentNullException(nameof(body));
@@ -78,18 +78,18 @@ namespace HomeBook.Client.Setup.Start
         /// <summary>
         /// Returns a request builder with the provided arbitrary URL. Using this method means any other path or query parameters are ignored.
         /// </summary>
-        /// <returns>A <see cref="global::HomeBook.Client.Setup.Start.StartRequestBuilder"/></returns>
+        /// <returns>A <see cref="global::HomeBook.Client.Finances.Calculations.Savings.SavingsRequestBuilder"/></returns>
         /// <param name="rawUrl">The raw URL to use for the request builder.</param>
-        public global::HomeBook.Client.Setup.Start.StartRequestBuilder WithUrl(string rawUrl)
+        public global::HomeBook.Client.Finances.Calculations.Savings.SavingsRequestBuilder WithUrl(string rawUrl)
         {
-            return new global::HomeBook.Client.Setup.Start.StartRequestBuilder(rawUrl, RequestAdapter);
+            return new global::HomeBook.Client.Finances.Calculations.Savings.SavingsRequestBuilder(rawUrl, RequestAdapter);
         }
         /// <summary>
         /// Configuration for the request such as headers, query parameters, and middleware options.
         /// </summary>
         [Obsolete("This class is deprecated. Please use the generic RequestConfiguration class generated by the generator.")]
         [global::System.CodeDom.Compiler.GeneratedCode("Kiota", "1.0.0")]
-        public partial class StartRequestBuilderPostRequestConfiguration : RequestConfiguration<DefaultQueryParameters>
+        public partial class SavingsRequestBuilderPostRequestConfiguration : RequestConfiguration<DefaultQueryParameters>
         {
         }
     }

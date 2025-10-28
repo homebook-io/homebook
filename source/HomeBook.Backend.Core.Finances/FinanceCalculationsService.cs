@@ -1,6 +1,6 @@
+using HomeBook.Backend.Abstractions.Contracts;
 using HomeBook.Backend.Core.Finances.Contracts;
 using HomeBook.Backend.Core.Finances.Models;
-using HomeBook.Frontend.Abstractions.Contracts;
 
 namespace HomeBook.Backend.Core.Finances;
 
@@ -51,7 +51,7 @@ public class FinanceCalculationsService(IDateTimeProvider dateTimeProvider)
         if (totalMonths <= 0)
             return new SavingCalculationResult(0, 0, [], []);
 
-        var monthlyRate = interestRate / 100m;
+        var monthlyRate = (interestRate / 100m) / 12m;
 
         decimal monthlyPayment;
 
