@@ -97,43 +97,45 @@ public class FinanceCalculationsService(IDateTimeProvider dateTimeProvider)
         bool targetSimpleRate = true)
     {
         var now = dateTimeProvider.UtcNow;
-        var totalYears = targetDate.Year - now.Year;
-        if (totalYears <= 0)
+        var totalMonths = ((targetDate.Year - now.Year) * 12) + targetDate.Month - now.Month;
+        if (totalMonths <= 0)
             return new SavingCalculationResult(0, 0, [], []);
 
         var yearlyRate = interestRate / 100m;
 
-        decimal yearlyPayment;
-
-        if (yearlyRate == 0)
-        {
-            yearlyPayment = targetAmount / totalYears;
-        }
-        else
-        {
-            var divisor = ((decimal)Math.Pow((double)(1 + yearlyRate), totalYears) - 1) / yearlyRate;
-            yearlyPayment = targetAmount / divisor;
-        }
+        // Monatliche Rate ohne Zinseszins-Berechnung (lineare Aufteilung)
+        var monthlyPayment = targetAmount / totalMonths;
 
         if (targetSimpleRate)
-            yearlyPayment = Math.Ceiling(yearlyPayment / 5) * 5;
+            monthlyPayment = Math.Ceiling(monthlyPayment / 5) * 5;
 
-        var amounts = new decimal[totalYears];
-        var interests = new decimal[totalYears];
+        var amounts = new decimal[totalMonths];
+        var interests = new decimal[totalMonths];
         decimal balance = 0;
 
-        for (var i = 0; i < totalYears; i++)
+        for (var i = 0; i < totalMonths; i++)
         {
-            balance += yearlyPayment;
-            var interest = balance * yearlyRate;
-            balance += interest;
+            // Monatliche Einzahlung
+            balance += monthlyPayment;
 
-            interests[i] = Math.Round(interest, 2);
+            // Nur am Ende eines Jahres (nach 12, 24, 36, … Monaten) Zinsen berechnen
+            if ((i + 1) % 12 == 0)
+            {
+                var interest = balance * yearlyRate;
+                balance += interest;
+                interests[i] = Math.Round(interest, 2);
+            }
+            else
+            {
+                interests[i] = 0;
+            }
+
+            // Gesamtbetrag speichern (immer nach Monatsabschluss)
             amounts[i] = Math.Round(balance, 2);
         }
 
-        return new SavingCalculationResult((short)totalYears,
-            yearlyPayment,
+        return new SavingCalculationResult((short)totalMonths,
+            monthlyPayment,
             amounts,
             interests);
     }
