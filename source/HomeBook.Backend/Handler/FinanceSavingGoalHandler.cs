@@ -1,6 +1,7 @@
 using System.Security.Claims;
 using HomeBook.Backend.Core.Finances.Contracts;
 using HomeBook.Backend.Core.Finances.Models;
+using HomeBook.Backend.DTOs.Requests.Finances;
 using HomeBook.Backend.Mappings;
 using HomeBook.Backend.Requests;
 using HomeBook.Backend.Responses;
@@ -67,6 +68,7 @@ public class FinanceSavingGoalHandler
                 request.Color,
                 request.TargetAmount,
                 request.CurrentAmount,
+                request.MonthlyPayment,
                 request.TargetDate,
                 cancellationToken);
 
@@ -91,7 +93,109 @@ public class FinanceSavingGoalHandler
     /// <param name="savingGoalsProvider"></param>
     /// <param name="cancellationToken"></param>
     /// <returns></returns>
-    public static async Task<IResult> HandleUpdateSavingGoal(Guid savingGoalId,
+    public static async Task<IResult> HandleUpdateSavingGoalName(Guid savingGoalId,
+        ClaimsPrincipal user,
+        [FromBody] UpdateSavingGoalNameRequest request,
+        [FromServices] ILogger<FinanceSavingGoalHandler> logger,
+        [FromServices] ISavingGoalsProvider savingGoalsProvider,
+        CancellationToken cancellationToken)
+    {
+        try
+        {
+            Guid userId = user.GetUserId();
+
+            // TODO:
+
+            return TypedResults.Ok();
+        }
+        catch (Exception err)
+        {
+            logger.LogError(err,
+                "Error while getting saving goals for user {UserId}",
+                user.GetUserId());
+            return TypedResults.InternalServerError(err.Message);
+        }
+    }
+
+    /// <summary>
+    ///
+    /// </summary>
+    /// <param name="savingGoalId"></param>
+    /// <param name="user"></param>
+    /// <param name="request"></param>
+    /// <param name="logger"></param>
+    /// <param name="savingGoalsProvider"></param>
+    /// <param name="cancellationToken"></param>
+    /// <returns></returns>
+    public static async Task<IResult> HandleUpdateSavingGoalAppearance(Guid savingGoalId,
+        ClaimsPrincipal user,
+        [FromBody] UpdateSavingGoalAppearanceRequest request,
+        [FromServices] ILogger<FinanceSavingGoalHandler> logger,
+        [FromServices] ISavingGoalsProvider savingGoalsProvider,
+        CancellationToken cancellationToken)
+    {
+        try
+        {
+            Guid userId = user.GetUserId();
+
+            // TODO:
+
+            return TypedResults.Ok();
+        }
+        catch (Exception err)
+        {
+            logger.LogError(err,
+                "Error while getting saving goals for user {UserId}",
+                user.GetUserId());
+            return TypedResults.InternalServerError(err.Message);
+        }
+    }
+
+    /// <summary>
+    ///
+    /// </summary>
+    /// <param name="savingGoalId"></param>
+    /// <param name="user"></param>
+    /// <param name="request"></param>
+    /// <param name="logger"></param>
+    /// <param name="savingGoalsProvider"></param>
+    /// <param name="cancellationToken"></param>
+    /// <returns></returns>
+    public static async Task<IResult> HandleUpdateSavingGoalAmounts(Guid savingGoalId,
+        ClaimsPrincipal user,
+        [FromBody] UpdateSavingGoalAmountsRequest request,
+        [FromServices] ILogger<FinanceSavingGoalHandler> logger,
+        [FromServices] ISavingGoalsProvider savingGoalsProvider,
+        CancellationToken cancellationToken)
+    {
+        try
+        {
+            Guid userId = user.GetUserId();
+
+            // TODO:
+
+            return TypedResults.Ok();
+        }
+        catch (Exception err)
+        {
+            logger.LogError(err,
+                "Error while getting saving goals for user {UserId}",
+                user.GetUserId());
+            return TypedResults.InternalServerError(err.Message);
+        }
+    }
+
+    /// <summary>
+    ///
+    /// </summary>
+    /// <param name="savingGoalId"></param>
+    /// <param name="user"></param>
+    /// <param name="request"></param>
+    /// <param name="logger"></param>
+    /// <param name="savingGoalsProvider"></param>
+    /// <param name="cancellationToken"></param>
+    /// <returns></returns>
+    public static async Task<IResult> HandleUpdateSavingGoalInfo(Guid savingGoalId,
         ClaimsPrincipal user,
         [FromBody] SavingGoalRequest request,
         [FromServices] ILogger<FinanceSavingGoalHandler> logger,
@@ -102,14 +206,7 @@ public class FinanceSavingGoalHandler
         {
             Guid userId = user.GetUserId();
 
-            await savingGoalsProvider.UpdateSavingGoalAsync(userId,
-                savingGoalId,
-                request.Name,
-                request.Color,
-                request.TargetAmount,
-                request.CurrentAmount,
-                request.TargetDate,
-                cancellationToken);
+            // TODO:
 
             return TypedResults.Ok();
         }

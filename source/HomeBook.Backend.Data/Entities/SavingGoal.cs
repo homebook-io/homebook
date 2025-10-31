@@ -53,6 +53,12 @@ public class SavingGoal
     public required decimal CurrentAmount { get; set; }
 
     /// <summary>
+    /// the monthly payment towards this saving goal
+    /// </summary>
+    [Required]
+    public required decimal MonthlyPayment { get; set; }
+
+    /// <summary>
     /// the target date of this saving goal
     /// </summary>
     public DateTime? TargetDate { get; set; }

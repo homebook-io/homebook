@@ -39,6 +39,7 @@ public interface ISavingGoalsProvider
         string color,
         decimal targetAmount,
         decimal currentAmount,
+        decimal monthlyPayment,
         DateTime? targetDate,
         CancellationToken cancellationToken);
 
@@ -55,6 +56,7 @@ public interface ISavingGoalsProvider
         string color,
         decimal targetAmount,
         decimal currentAmount,
+        decimal monthlyPayment,
         DateTime? targetDate,
         CancellationToken cancellationToken);
 

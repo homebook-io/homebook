@@ -5,4 +5,5 @@ public record SavingGoalRequest(
     string Color,
     decimal TargetAmount,
     decimal CurrentAmount,
+    decimal MonthlyPayment,
     DateTime? TargetDate);

@@ -41,6 +41,7 @@ public class SavingGoalsProvider(
         string color,
         decimal targetAmount,
         decimal currentAmount,
+        decimal monthlyPayment,
         DateTime? targetDate,
         CancellationToken cancellationToken)
     {
@@ -50,6 +51,7 @@ public class SavingGoalsProvider(
             Name = name,
             Color = color,
             TargetAmount = targetAmount,
+            MonthlyPayment = monthlyPayment,
             CurrentAmount = currentAmount,
             TargetDate = targetDate
         };
@@ -67,6 +69,7 @@ public class SavingGoalsProvider(
         string color,
         decimal targetAmount,
         decimal currentAmount,
+        decimal monthlyPayment,
         DateTime? targetDate,
         CancellationToken cancellationToken)
     {
@@ -77,6 +80,7 @@ public class SavingGoalsProvider(
             Name = name,
             Color = color,
             TargetAmount = targetAmount,
+            MonthlyPayment = monthlyPayment,
             CurrentAmount = currentAmount,
             TargetDate = targetDate
         };

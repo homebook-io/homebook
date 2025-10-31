@@ -120,9 +120,19 @@ public partial class Add : ComponentBase
 
     protected async Task SaveAsync()
     {
-        await _formStep2!.Validate();
-        if (!_formStep2.IsValid)
-            return;
+        CancellationToken cancellationToken = CancellationToken.None;
+
+        string? token = await AuthenticationService.GetTokenAsync(cancellationToken);
+        await BackendClient.Finances.SavingGoals
+            .PostAsync(new SavingGoalRequest()
+                {
+                    Name = ""
+                },
+                x =>
+                {
+                    x.Headers.Add("Authorization", $"Bearer {token}");
+                },
+                cancellationToken);
 
         // Beispiel: await SavingGoalService.CreateOrUpdateSavingGoalAsync(Model);
         Snackbar.Add("Sparziel erfolgreich erstellt!", Severity.Success);
