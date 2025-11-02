@@ -1,3 +1,4 @@
+using HomeBook.Client.Models;
 using HomeBook.Frontend.Module.Finances.Models;
 using HomeBook.Frontend.Module.Finances.ViewModels;
 
@@ -46,4 +47,18 @@ public static class SavingGoalMappings
             dto.CurrentAmount,
             dto.TargetDate,
             dto.Percentage);
+
+    public static CreateSavingGoalRequest ToRequest(this AddSavingGoalSummaryViewModel vm) =>
+        new()
+        {
+            Name = vm.Name,
+            Color = vm.Color,
+            Icon = vm.IconName,
+            TargetAmount = Convert.ToDouble(vm.TargetAmount),
+            CurrentAmount = 0,
+            MonthlyPayment = Convert.ToDouble(vm.AmountPerMonth),
+            InterestRateOption = (int)vm.InterestRateOption,
+            InterestRate = Convert.ToDouble(vm.InterestRate),
+            TargetDate = vm.TargetDate
+        };
 }

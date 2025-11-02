@@ -8,6 +8,7 @@
 
     <ItemGroup>
         <ProjectReference Include="..\HomeBook.Backend.Data\HomeBook.Backend.Data.csproj"/>
+        <ProjectReference Include="..\HomeBook.Backend.DTOs\HomeBook.Backend.DTOs.csproj" />
     </ItemGroup>
 
     <ItemGroup>

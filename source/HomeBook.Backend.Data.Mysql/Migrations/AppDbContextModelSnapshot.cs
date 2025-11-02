@@ -53,6 +53,19 @@ namespace HomeBook.Backend.Data.Mysql.Migrations
                     b.Property<decimal>("CurrentAmount")
                         .HasColumnType("decimal(18,2)");
 
+                    b.Property<string>("Icon")
+                        .HasColumnType("longtext");
+
+                    b.Property<decimal?>("InterestRate")
+                        .HasColumnType("decimal(18,2)");
+
+                    b.Property<string>("InterestRateOption")
+                        .IsRequired()
+                        .HasColumnType("text");
+
+                    b.Property<decimal>("MonthlyPayment")
+                        .HasColumnType("decimal(18,2)");
+
                     b.Property<string>("Name")
                         .IsRequired()
                         .HasMaxLength(50)

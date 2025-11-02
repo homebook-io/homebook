@@ -3,6 +3,7 @@ using HomeBook.Backend.Core.Finances.Mappings;
 using HomeBook.Backend.Core.Finances.Models;
 using HomeBook.Backend.Data.Contracts;
 using HomeBook.Backend.Data.Entities;
+using HomeBook.Backend.DTOs.Enums;
 using Microsoft.Extensions.Logging;
 
 namespace HomeBook.Backend.Core.Finances;
@@ -39,9 +40,12 @@ public class SavingGoalsProvider(
     public async Task<Guid> CreateSavingGoalAsync(Guid userId,
         string name,
         string color,
+        string icon,
         decimal targetAmount,
         decimal currentAmount,
         decimal monthlyPayment,
+        InterestRateOptions? interestRateOption,
+        decimal? interestRate,
         DateTime? targetDate,
         CancellationToken cancellationToken)
     {
@@ -50,15 +54,21 @@ public class SavingGoalsProvider(
             UserId = userId,
             Name = name,
             Color = color,
+            Icon = icon,
             TargetAmount = targetAmount,
-            MonthlyPayment = monthlyPayment,
             CurrentAmount = currentAmount,
-            TargetDate = targetDate
+            MonthlyPayment = monthlyPayment,
+            InterestRateOption = (SavingGoal.InterestRateOptions)interestRateOption!,
+            InterestRate = interestRate,
+            TargetDate = targetDate?.ToUniversalTime().Date ?? null
         };
 
         // TODO: validator
 
-        Guid savingGoalId = await savingGoalsRepository.CreateOrUpdateSavingGoalAsync(userId, entity, cancellationToken);
+        Guid savingGoalId = await savingGoalsRepository
+            .CreateOrUpdateSavingGoalAsync(userId,
+                entity,
+                cancellationToken);
         return savingGoalId;
     }
 

@@ -1,5 +1,6 @@
 using HomeBook.Client.Models;
 using HomeBook.Frontend.Module.Finances.Enums;
+using HomeBook.Frontend.Module.Finances.Mappings;
 using HomeBook.Frontend.Module.Finances.ViewModels;
 using Microsoft.AspNetCore.Components;
 using MudBlazor;
@@ -67,8 +68,8 @@ public partial class Add : ComponentBase
 
         _summaryVM = ViewModelFactory.CreateAddSavingGoalSummaryViewModel();
         _summaryVM.Name = _model.Name;
-        _summaryVM.Color = _model.Color;
-        _summaryVM.IconName = _model.IconName;
+        _summaryVM.Color = _model.Color ?? "#ff5722";
+        _summaryVM.IconName = _model.IconName ?? Icons.Material.Filled.Savings;
         _summaryVM.TargetAmount = _model.TargetAmount;
 
         if (_model.TargetDate is null)
@@ -120,14 +121,15 @@ public partial class Add : ComponentBase
 
     protected async Task SaveAsync()
     {
+        if (_summaryVM is null)
+            return;
+
         CancellationToken cancellationToken = CancellationToken.None;
 
         string? token = await AuthenticationService.GetTokenAsync(cancellationToken);
         await BackendClient.Finances.SavingGoals
-            .PostAsync(new SavingGoalRequest()
-                {
-                    Name = ""
-                },
+            .PostAsync(
+                _summaryVM.ToRequest(),
                 x =>
                 {
                     x.Headers.Add("Authorization", $"Bearer {token}");
@@ -136,6 +138,8 @@ public partial class Add : ComponentBase
 
         // Beispiel: await SavingGoalService.CreateOrUpdateSavingGoalAsync(Model);
         Snackbar.Add("Sparziel erfolgreich erstellt!", Severity.Success);
+
+        NavigationManager.NavigateTo("/Finances/Savings/Overview");
     }
 
     public async Task SwitchToQuickAdd()

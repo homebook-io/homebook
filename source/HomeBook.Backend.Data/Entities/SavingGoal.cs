@@ -1,5 +1,7 @@
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace HomeBook.Backend.Data.Entities;
 
@@ -41,6 +43,11 @@ public class SavingGoal
     public required string Color { get; set; }
 
     /// <summary>
+    /// the display icon of this saving goal
+    /// </summary>
+    public string? Icon { get; set; }
+
+    /// <summary>
     /// the target amount of this saving goal
     /// </summary>
     [Required]
@@ -59,7 +66,35 @@ public class SavingGoal
     public required decimal MonthlyPayment { get; set; }
 
     /// <summary>
+    /// the interest rate option of this saving goal
+    /// </summary>
+    [Column(TypeName = "text")]
+    public InterestRateOptions InterestRateOption { get; set; } = InterestRateOptions.NONE;
+
+    /// <summary>
+    /// the interest rate of this saving goal
+    /// </summary>
+    public decimal? InterestRate { get; set; }
+
+    /// <summary>
     /// the target date of this saving goal
     /// </summary>
     public DateTime? TargetDate { get; set; }
+
+    public static void Configure(ModelConfigurationBuilder builder)
+    {
+        builder.Properties<InterestRateOptions>()
+            .HaveConversion<InterestRateOptionsConverter>();
+    }
+
+    public enum InterestRateOptions
+    {
+        NONE,
+        MONTHLY,
+        YEARLY
+    }
+
+    public class InterestRateOptionsConverter() : ValueConverter<InterestRateOptions,
+        string>(v => v.ToString(),
+        v => Enum.Parse<InterestRateOptions>(v));
 }

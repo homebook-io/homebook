@@ -3,7 +3,6 @@ using HomeBook.Backend.Core.Finances.Contracts;
 using HomeBook.Backend.Core.Finances.Models;
 using HomeBook.Backend.DTOs.Requests.Finances;
 using HomeBook.Backend.Mappings;
-using HomeBook.Backend.Requests;
 using HomeBook.Backend.Responses;
 using HomeBook.Backend.Utilities;
 using Microsoft.AspNetCore.Mvc;
@@ -66,9 +65,12 @@ public class FinanceSavingGoalHandler
             Guid savingGoalId = await savingGoalsProvider.CreateSavingGoalAsync(userId,
                 request.Name,
                 request.Color,
+                request.Icon,
                 request.TargetAmount,
                 request.CurrentAmount,
                 request.MonthlyPayment,
+                request.InterestRateOption,
+                request.InterestRate,
                 request.TargetDate,
                 cancellationToken);
 
@@ -76,9 +78,7 @@ public class FinanceSavingGoalHandler
         }
         catch (Exception err)
         {
-            logger.LogError(err,
-                "Error while getting saving goals for user {UserId}",
-                user.GetUserId());
+            logger.LogError(err, "Error while creating saving goal");
             return TypedResults.InternalServerError(err.Message);
         }
     }
@@ -111,8 +111,8 @@ public class FinanceSavingGoalHandler
         catch (Exception err)
         {
             logger.LogError(err,
-                "Error while getting saving goals for user {UserId}",
-                user.GetUserId());
+                "Error while updating saving goal name for {SavingGoalId}",
+                savingGoalId);
             return TypedResults.InternalServerError(err.Message);
         }
     }
@@ -145,8 +145,8 @@ public class FinanceSavingGoalHandler
         catch (Exception err)
         {
             logger.LogError(err,
-                "Error while getting saving goals for user {UserId}",
-                user.GetUserId());
+                "Error while updating saving goal appearance for {SavingGoalId}",
+                savingGoalId);
             return TypedResults.InternalServerError(err.Message);
         }
     }
@@ -179,8 +179,8 @@ public class FinanceSavingGoalHandler
         catch (Exception err)
         {
             logger.LogError(err,
-                "Error while getting saving goals for user {UserId}",
-                user.GetUserId());
+                "Error while updating saving goal amounts for {SavingGoalId}",
+                savingGoalId);
             return TypedResults.InternalServerError(err.Message);
         }
     }
@@ -213,8 +213,8 @@ public class FinanceSavingGoalHandler
         catch (Exception err)
         {
             logger.LogError(err,
-                "Error while getting saving goals for user {UserId}",
-                user.GetUserId());
+                "Error while updating saving goal infos for {SavingGoalId}",
+                savingGoalId);
             return TypedResults.InternalServerError(err.Message);
         }
     }
@@ -249,8 +249,8 @@ public class FinanceSavingGoalHandler
         catch (Exception err)
         {
             logger.LogError(err,
-                "Error while getting saving goals for user {UserId}",
-                user.GetUserId());
+                "Error while deleting saving goal for {SavingGoalId}",
+                savingGoalId);
             return TypedResults.InternalServerError(err.Message);
         }
     }

@@ -56,6 +56,19 @@ namespace HomeBook.Backend.Data.PostgreSql.Migrations
                     b.Property<decimal>("CurrentAmount")
                         .HasColumnType("numeric");
 
+                    b.Property<string>("Icon")
+                        .HasColumnType("text");
+
+                    b.Property<decimal?>("InterestRate")
+                        .HasColumnType("numeric");
+
+                    b.Property<string>("InterestRateOption")
+                        .IsRequired()
+                        .HasColumnType("text");
+
+                    b.Property<decimal>("MonthlyPayment")
+                        .HasColumnType("numeric");
+
                     b.Property<string>("Name")
                         .IsRequired()
                         .HasMaxLength(50)
