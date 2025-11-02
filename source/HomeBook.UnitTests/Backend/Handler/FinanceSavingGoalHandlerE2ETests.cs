@@ -4,6 +4,7 @@ using HomeBook.Backend.Abstractions.Contracts;
 using HomeBook.Backend.Core.Finances.Contracts;
 using HomeBook.Backend.Data.Sqlite;
 using HomeBook.Backend.Data.Sqlite.Extensions;
+using HomeBook.Backend.DTOs.Requests.Finances;
 using HomeBook.Backend.Extensions;
 using HomeBook.Backend.Handler;
 using HomeBook.Backend.Requests;
@@ -108,7 +109,7 @@ public class FinanceSavingGoalHandlerE2ETests
         // Act & Assert
 
         // create saving goal
-        var createRequest = new SavingGoalRequest("Test Saving Goal",
+        var createRequest = new CreateSavingGoalRequest("Test Saving Goal",
             "#ff0000",
             12_000,
             8_500,
@@ -135,7 +136,7 @@ public class FinanceSavingGoalHandlerE2ETests
         savingGoalsResponse1.Value.SavingGoals[0].CurrentAmount.ShouldBe(8_500);
 
         // // update saving goal
-        var updateRequest = new SavingGoalRequest("Updated Saving Goal",
+        var updateRequest = new CreateSavingGoalRequest("Updated Saving Goal",
             "#00ff00",
             12_000,
             9_000,

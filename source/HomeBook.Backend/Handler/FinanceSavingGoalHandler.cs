@@ -54,7 +54,7 @@ public class FinanceSavingGoalHandler
     /// <param name="cancellationToken"></param>
     /// <returns></returns>
     public static async Task<IResult> HandleCreateSavingGoal(ClaimsPrincipal user,
-        [FromBody] SavingGoalRequest request,
+        [FromBody] CreateSavingGoalRequest request,
         [FromServices] ILogger<FinanceSavingGoalHandler> logger,
         [FromServices] ISavingGoalsProvider savingGoalsProvider,
         CancellationToken cancellationToken)
@@ -197,7 +197,7 @@ public class FinanceSavingGoalHandler
     /// <returns></returns>
     public static async Task<IResult> HandleUpdateSavingGoalInfo(Guid savingGoalId,
         ClaimsPrincipal user,
-        [FromBody] SavingGoalRequest request,
+        [FromBody] UpdateSavingGoalInfoRequest request,
         [FromServices] ILogger<FinanceSavingGoalHandler> logger,
         [FromServices] ISavingGoalsProvider savingGoalsProvider,
         CancellationToken cancellationToken)
@@ -231,7 +231,7 @@ public class FinanceSavingGoalHandler
     /// <returns></returns>
     public static async Task<IResult> HandleDeleteSavingGoal(Guid savingGoalId,
         ClaimsPrincipal user,
-        [FromBody] SavingGoalRequest request,
+        [FromBody] CreateSavingGoalRequest request,
         [FromServices] ILogger<FinanceSavingGoalHandler> logger,
         [FromServices] ISavingGoalsProvider savingGoalsProvider,
         CancellationToken cancellationToken)
