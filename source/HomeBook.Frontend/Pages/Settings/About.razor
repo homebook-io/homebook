@@ -1,12 +1,12 @@
 @page "/Settings/About"
 
 @using HomeBook.Frontend.Abstractions.Contracts
-@using HomeBook.Frontend.Properties
+@using HomeBook.Frontend.UI.Resources
 @using Microsoft.AspNetCore.Components.Authorization
+@using Microsoft.Extensions.Localization
 @using HomeBookIcons = HomeBook.Frontend.Core.Icons.HomeBookIcons
 
-@inject ILocalizationProvider Loc
-@inject IConfiguration Configuration
+@inject IStringLocalizer<LocalizationStrings> Loc
 @inject IDialogService DialogService
 @inject ILicensesService LicensesService
 @inject ISnackbar Snackbar
@@ -47,13 +47,9 @@
                             @Loc[nameof(LocalizationStrings.AppSlogan)]
                         </MudText>
 
-                        <MudTooltip
-                            Text="@string.Format(Loc[nameof(LocalizationStrings.Settings_About_VersionToolTip_Text_Template)], _backendVersion, _uiVersion)"
-                            Placement="Placement.Bottom">
-                            <MudChip T="string" Color="Color.Primary" Size="Size.Small">
-                                @string.Format(Loc[nameof(LocalizationStrings.Settings_About_Version_Text_Template)], _uiVersion)
-                            </MudChip>
-                        </MudTooltip>
+                        <MudChip T="string" Color="Color.Primary" Size="Size.Small">
+                            @string.Format(Loc[nameof(LocalizationStrings.Settings_About_Version_Text_Template)], _backendVersion)
+                        </MudChip>
 
                     </MudStack>
 
@@ -188,7 +184,7 @@
                 <MudStack Row="true"
                           Class="align-center mt-5 mb-1"
                           Spacing="2">
-                    <MudFab Class="github-bg me-3"
+                    <MudFab Class="ui-color-bg-brand-github me-3"
                             StartIcon="@HomeBookIcons.Icons8.Windows11.Filled.GitHub"
                             Size="Size.Large"
                             Href="@Loc[nameof(LocalizationStrings.Settings_About_ExternalLink_GitHubProject_Href)]"

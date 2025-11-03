@@ -1,0 +1,9 @@
+.mud-stepper {
+
+    &.stepper-no-actions {
+
+        .mud-stepper-actions {
+            display: none;
+        }
+    }
+}

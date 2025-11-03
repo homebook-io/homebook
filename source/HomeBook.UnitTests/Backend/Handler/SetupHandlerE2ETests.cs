@@ -19,7 +19,6 @@ using HomeBook.Backend.Data.Sqlite;
 using HomeBook.UnitTests.TestCore.Helper;
 using Microsoft.Data.Sqlite;
 using Microsoft.Extensions.DependencyInjection;
-using NSubstitute;
 
 namespace HomeBook.UnitTests.Backend.Handler;
 

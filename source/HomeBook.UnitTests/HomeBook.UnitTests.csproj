@@ -38,6 +38,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Folder Include="Frontend\Modules\Finances\ViewModels\" />
     <Folder Include="Frontend\Services\" />
   </ItemGroup>
 

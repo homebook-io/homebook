@@ -1,0 +1,54 @@
+<MudPaper Class="pa-4" Elevation="1">
+    <MudForm @ref="Form">
+
+        <MudText Typo="Typo.h5" Class="mb-4">
+            @(IsEditMode ? "Zielsparen bearbeiten" : "Neues Sparziel anlegen")
+        </MudText>
+
+        <MudTextField @bind-Value="DetailViewModel.Name"
+                      Label="Name"
+                      For="@(() => DetailViewModel.Name)"
+                      Required="true"
+                      RequiredError="Name ist erforderlich."/>
+
+        <MudColorPicker @bind-Text="DetailViewModel.Color"
+                        Label="Farbe auswählen"
+                        Class="mt-3"/>
+
+        <MudNumericField @bind-Value="DetailViewModel.TargetAmount"
+                         Label="Zielbetrag (€)"
+                         For="@(() => DetailViewModel.TargetAmount)"
+                         Required="true"
+                         RequiredError="Bitte Zielbetrag angeben."
+                         Adornment="Adornment.End"
+                         AdornmentText="€"
+                         Class="mt-3"/>
+
+        <MudNumericField @bind-Value="DetailViewModel.CurrentAmount"
+                         Label="Aktueller Betrag (€)"
+                         For="@(() => DetailViewModel.CurrentAmount)"
+                         Adornment="Adornment.End"
+                         AdornmentText="€"
+                         Class="mt-3"/>
+
+        <MudDatePicker @bind-Date="DetailViewModel.TargetDate"
+                       Label="Zieldatum"
+                       PickerVariant="PickerVariant.Dialog"
+                       Class="mt-3"/>
+
+        <MudProgressLinear Value="DetailViewModel.Percentage"
+                           Color="Color.Success"
+                           Class="mt-4"
+                           Style="height: 8px;"/>
+
+        <MudText Typo="Typo.caption" Class="mt-1">
+            Fortschritt: @(DetailViewModel.Percentage.ToString("P1"))
+        </MudText>
+
+        <MudStack Direction="Row" Justify="Justify.FlexEnd" Spacing="2" Class="mt-5">
+            <MudButton Variant="Variant.Text" OnClick="OnCancelClicked" Color="Color.Default">Abbrechen</MudButton>
+            <MudButton Variant="Variant.Filled" OnClick="OnSaveClicked" Color="Color.Primary">Speichern</MudButton>
+        </MudStack>
+
+    </MudForm>
+</MudPaper>

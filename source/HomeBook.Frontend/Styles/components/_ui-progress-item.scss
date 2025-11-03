@@ -16,17 +16,21 @@
 
         .ui-progress-item-header-start,
         .ui-progress-item-footer-start {
-            flex: 1 1 auto; // kann wachsen und schrumpfen, nutzt Restbreite
-            min-width: 0; // verhindert Überlauf bei langem Text
+            flex: 1 1 auto;
+            min-width: 0;
         }
 
         .ui-progress-item-header-end,
         .ui-progress-item-footer-end {
-            flex: 0 0 auto; // nimmt nur Platz entsprechend dem Inhalt ein
+            flex: 0 0 auto;
         }
     }
 
     .ui-progress-item-progress {
         width: 100%;
+
+        .mud-progress-linear-bar {
+            background-color: var(--ui-element-accent-color) !important;
+        }
     }
 }

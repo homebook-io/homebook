@@ -1,17 +1,19 @@
 @page "/Setup"
-@using HomeBook.Frontend.Abstractions.Contracts
-@using HomeBook.Frontend.Properties
 
 @attribute [AllowAnonymous]
 
-<UiPageTitle>@Loc[nameof(LocalizationStrings.Setup_Title)]</UiPageTitle>
-
 @layout ContentOnlyLayout
 
-@inject ILocalizationProvider Loc
+@using HomeBook.Frontend.Abstractions.Contracts
+@using HomeBook.Frontend.UI.Resources
+@using Microsoft.Extensions.Localization
+
+@inject IStringLocalizer<LocalizationStrings> Loc
 @inject IConfiguration Configuration
 @inject ISetupService SetupService
 @inject NavigationManager NavigationManager
+
+<UiPageTitle>@Loc[nameof(LocalizationStrings.Setup_Title)]</UiPageTitle>
 
 <div class="setup-background @_setupBackgroundClass">
     <UiStripeBackground CanvasCssClass="@_uiStripeBackgroundClass"/>

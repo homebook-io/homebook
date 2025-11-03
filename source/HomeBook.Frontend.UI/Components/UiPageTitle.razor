@@ -1,10 +1,9 @@
-@using HomeBook.Frontend.Abstractions.Contracts
+@using HomeBook.Frontend.UI.Resources
 @using Microsoft.AspNetCore.Components.Web
-@* @using HomeBook.Frontend.Properties *@
+@using Microsoft.Extensions.Localization
 
-@inject ILocalizationProvider Loc
+@inject IStringLocalizer<LocalizationStrings> Loc
 
 <PageTitle>
-    @ChildContent - mit HomeBook
-    @* @ChildContent - @Loc[nameof(LocalizationStrings.AppTitle)] *@
+    @ChildContent - @Loc[nameof(LocalizationStrings.AppTitle)]
 </PageTitle>

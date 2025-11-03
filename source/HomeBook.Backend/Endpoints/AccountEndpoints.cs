@@ -11,11 +11,11 @@ public static class AccountEndpoints
     {
         RouteGroupBuilder group = routeBuilder
             .MapGroup("/account")
-            .WithTags("account")
             .WithDescription("Endpoints for Account Management");
 
         group.MapPost("/login", AccountHandler.HandleLogin)
             .WithName("Login")
+            .WithTags("Account", "Authentication")
             .WithDescription("Authenticates a user and returns access tokens")
             .WithOpenApi(operation => new(operation)
             {
@@ -30,6 +30,7 @@ public static class AccountEndpoints
 
         group.MapPost("/logout", AccountHandler.HandleLogout)
             .WithName("Logout")
+            .WithTags("Account", "Authentication")
             .WithDescription("Logs out the current user and invalidates their token")
             .RequireAuthorization()
             .WithOpenApi(operation => new(operation)

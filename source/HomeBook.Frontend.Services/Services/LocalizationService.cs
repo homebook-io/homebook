@@ -3,6 +3,7 @@ using HomeBook.Client;
 using HomeBook.Client.Models;
 using HomeBook.Frontend.Abstractions.Contracts;
 using HomeBook.Frontend.Abstractions.Enums;
+using HomeBook.Frontend.UI.Utilities;
 using Microsoft.AspNetCore.Components;
 using Microsoft.JSInterop;
 
@@ -34,36 +35,36 @@ public class LocalizationService(
     }
 
     /// <inheritdoc />
-    public async Task<CultureInfo> GetCultureAsync(CancellationToken cancellationToken = default)
+    public async Task<string> GetCultureAsync(CancellationToken cancellationToken = default)
     {
         string culture = await jsRuntime.InvokeAsync<string>("localStorage.getItem",
             cancellationToken,
             JsLocalStorageKeys.UserPreferenceLocale);
 
         if (!string.IsNullOrEmpty(culture))
-            return new CultureInfo(culture);
+            return culture;
 
-        return new CultureInfo(_defaultLocale);
+        return _defaultLocale;
     }
 
     /// <inheritdoc />
-    public async Task SetCultureAsync(string culture,
-        bool forceLoad = true,
-        CancellationToken cancellationToken = default) =>
-        await SetCultureAsync(new CultureInfo(culture), forceLoad, cancellationToken);
-
-    /// <inheritdoc />
-    public async Task SetCultureAsync(CultureInfo cultureInfo,
+    public async Task SetCultureAsync(string selectedCulture,
         bool forceLoad = true,
         CancellationToken cancellationToken = default)
     {
-        CultureInfo.DefaultThreadCurrentCulture = cultureInfo;
-        CultureInfo.DefaultThreadCurrentUICulture = cultureInfo;
+        // UI + Formatkultur → vom Benutzer gewählt
+        var uiCulture = new CultureInfo(selectedCulture);
+
+        // Ressourcen-Kultur → gemappt
+        var resourceCulture = LocalizationCultureMapper.GetResourceCulture(selectedCulture);
+
+        CultureInfo.DefaultThreadCurrentCulture = uiCulture;
+        CultureInfo.DefaultThreadCurrentUICulture = resourceCulture;
 
         await jsRuntime.InvokeVoidAsync("localStorage.setItem",
             cancellationToken,
             JsLocalStorageKeys.UserPreferenceLocale,
-            cultureInfo.IetfLanguageTag);
+            selectedCulture);
 
         if (forceLoad)
             navigationManager.NavigateTo(navigationManager.Uri, forceLoad: true);

@@ -1,12 +1,13 @@
 @page "/Settings/Users"
 
 @using HomeBook.Frontend.Abstractions.Contracts
-@using HomeBook.Frontend.Properties
+@using HomeBook.Frontend.UI.Resources
 @using Microsoft.AspNetCore.Components.Authorization
+@using Microsoft.Extensions.Localization
 
 @attribute [Authorize(Roles = "Admin")]
 
-@inject ILocalizationProvider Loc
+@inject IStringLocalizer<LocalizationStrings> Loc
 @inject AuthenticationStateProvider AuthenticationStateProvider
 @inject ISnackbar Snackbar
 @inject NavigationManager NavigationManager

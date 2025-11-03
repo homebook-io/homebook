@@ -1,13 +1,10 @@
-using HomeBook.Client.Models;
 using HomeBook.Frontend.Abstractions.Contracts;
 using HomeBook.Frontend.Abstractions.Models;
 using HomeBook.Frontend.Components;
 using HomeBook.Frontend.Core.Models.Setup;
 using HomeBook.Frontend.Mappings;
-using HomeBook.Frontend.Properties;
-using HomeBook.Frontend.Setup.Exceptions;
+using HomeBook.Frontend.UI.Resources;
 using Microsoft.AspNetCore.Components;
-using Microsoft.Kiota.Abstractions;
 using MudBlazor;
 
 namespace HomeBook.Frontend.Setup.SetupSteps;

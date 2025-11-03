@@ -1,0 +1,70 @@
+@using HomeBook.Frontend.Module.Finances.Contracts
+@using HomeBook.Frontend.Module.Finances.Resources
+@using HomeBook.Frontend.Module.Finances.ViewModels
+@using Microsoft.Extensions.Localization
+
+@inject IStringLocalizer<Strings> Loc
+@inject ISavingGoalService SavingGoalService
+
+<MudCard>
+
+    <MudCardHeader>
+
+        <CardHeaderContent>
+            <MudText Typo="Typo.h6">
+                @Loc[nameof(Strings.Savings_Title)]
+            </MudText>
+        </CardHeaderContent>
+
+        <CardHeaderActions>
+            <MudButton Variant="Variant.Text"
+                       Href="/Finances/Savings/Add"
+                       Color="Color.Primary">
+                @Loc[nameof(Strings.Savings_Add_Title)]
+            </MudButton>
+        </CardHeaderActions>
+
+    </MudCardHeader>
+
+    <MudCardContent>
+
+        @if (_isLoading)
+        {
+            <div class="d-flex justify-center">
+                <MudProgressCircular Color="Color.Primary"
+                                     Indeterminate="true"/>
+            </div>
+        }
+
+        @if (!_isLoading)
+        {
+            <MudList T="SavingGoalOverviewViewModel">
+
+                @if (!_savingGoals.Any())
+                {
+                    <MudAlert Severity="Severity.Info"
+                              Elevation="0"
+                              Variant="Variant.Filled"
+                              Class="m-0">
+                        @Loc[nameof(Strings.Savings_Overview_NoSavingGoals)]
+                    </MudAlert>
+                }
+
+                @foreach (SavingGoalOverviewViewModel vm in _savingGoals)
+                {
+                    <MudListItem Href="#"
+                                 Class="rounded">
+                        <UiProgressItem HeaderTextStart="@vm.Name"
+                                        HeaderTextEnd="@string.Format($"{vm.CurrentAmount:C} / {vm.TargetAmount:C}")"
+                                        ProgressValue="@(vm.Percentage * 100)"
+                                        FooterTextStart="@string.Format($"{vm.Percentage:P0} erreicht")"
+                                        Color="@vm.Color"/>
+                    </MudListItem>
+                }
+
+            </MudList>
+        }
+
+    </MudCardContent>
+
+</MudCard>

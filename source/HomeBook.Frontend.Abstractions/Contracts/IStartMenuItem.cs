@@ -7,4 +7,5 @@ public interface IStartMenuItem
     string Url { get; }
     string Icon { get; }
     string Color { get; }
+    string Translate(string key, params object[] args);
 }

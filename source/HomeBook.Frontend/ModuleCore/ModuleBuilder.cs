@@ -55,6 +55,7 @@ public class ModuleBuilder(
             return;
 
         // call the RegisterWidgets method in the module
+        startMenuBuilder.WithModule(moduleId);
         MethodInfo? method = typeof(T).GetMethod(
             nameof(IModuleStartMenuRegistration.RegisterStartMenuItems),
             BindingFlags.Public | BindingFlags.Static

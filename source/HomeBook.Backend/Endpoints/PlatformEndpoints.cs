@@ -9,11 +9,11 @@ public static class PlatformEndpoints
     {
         RouteGroupBuilder group = routeBuilder
             .MapGroup("/platform")
-            .WithTags("platform")
             .WithDescription("Endpoints for platform management");
 
         group.MapGet("/locales", PlatformHandler.HandleGetLocales)
             .WithName("GetLocales")
+            .WithTags("Platform")
             .WithDescription("returns all available locales")
             .WithOpenApi()
             .Produces<GetLocalesResponse>( StatusCodes.Status200OK)

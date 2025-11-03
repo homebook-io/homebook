@@ -1,8 +1,11 @@
 using HomeBook.Frontend.Abstractions.Contracts;
+using HomeBook.Frontend.Modules.Abstractions;
 
 namespace HomeBook.Frontend.ViewModels;
 
-public class StartMenuItemViewModel(string title,
+public class StartMenuItemViewModel(
+    IModule module,
+    string title,
     string caption,
     string url,
     string icon,
@@ -13,4 +16,5 @@ public class StartMenuItemViewModel(string title,
     public string Url { get; } = url;
     public string Icon { get; } = icon;
     public string Color { get; } = color;
+    string IStartMenuItem.Translate(string key, params object[] args) => module.GetTranslation(key, args);
 }

@@ -581,10 +581,6 @@
   --hb-github-color: #24292e;
   --hb-docker-color: #2496ed;
   --hb-ubuntu-color: #e95420;
-  --hb-module-finances-saving-color: #9333EA;
-  --hb-module-finances-income-color: #2563EB;
-  --hb-module-finances-expenses-color: #DC2626;
-  --hb-module-finances-total-color: #16A34A;
 }
 
 .github-bg {
@@ -612,6 +608,399 @@
 
 .ubuntu-text {
   color: #e95420 !important;
+}
+
+:root {
+  --hb-color-brand-github: #24292e;
+  --hb-color-brand-docker: #2496ed;
+  --hb-color-brand-ubuntu: #e95420;
+  --hb-color-aqua: #00b4d8;
+  --hb-color-amethyst: #9333EA;
+  --hb-color-denim: #2f6690;
+  --hb-color-cerulean: #2563EB;
+  --hb-color-ocean: #1e6091;
+  --hb-color-azure: #4f9ef8;
+  --hb-color-lavender: #c084fc;
+  --hb-color-plum: #8e4585;
+  --hb-color-rose: #e57373;
+  --hb-color-crimson: #DC2626;
+  --hb-color-ruby: #16A34A;
+  --hb-color-emerald: #118C4F;
+  --hb-color-teal: #009688;
+  --hb-color-petrol: #008080;
+  --hb-color-wine: #722f37;
+  --hb-color-mulberry: #9b2242;
+  --hb-color-fern: #628b48;
+  --hb-color-honey: #f6be4f;
+  --hb-color-lemon: #FFF176;
+  --hb-color-gold: #ffb547;
+  --hb-color-amber: #FF9800;
+  --hb-color-coral: #ff7f50;
+  --hb-color-caramel: #c77a35;
+  --hb-color-stone: #78716c;
+  --hb-color-graphite: #3d3d3d;
+  --hb-color-charcoal: #4b5563;
+  --hb-color-storm: #475569;
+  --hb-color-smoke: #737373;
+  --hb-color-shadow: #1f2937;
+  --hb-color-steel: #6b7280;
+  --hb-color-peach: #ffbc9a;
+  --hb-color-sunset: #fb7185;
+  --hb-color-chartreuse: #A7F432;
+  --hb-color-spring: #00E676;
+  --hb-color-apple: #2ECC71;
+  --hb-color-jade: #00BFA5;
+}
+
+.ui-color-brand-github {
+  color: var(--hb-color-brand-github);
+}
+
+.ui-color-bg-brand-github {
+  background-color: var(--hb-color-brand-github);
+  color: #ffffff;
+}
+
+.ui-color-brand-docker {
+  color: var(--hb-color-brand-docker);
+}
+
+.ui-color-bg-brand-docker {
+  background-color: var(--hb-color-brand-docker);
+  color: #ffffff;
+}
+
+.ui-color-brand-ubuntu {
+  color: var(--hb-color-brand-ubuntu);
+}
+
+.ui-color-bg-brand-ubuntu {
+  background-color: var(--hb-color-brand-ubuntu);
+  color: #ffffff;
+}
+
+.ui-color-aqua {
+  color: var(--hb-color-aqua);
+}
+
+.ui-color-bg-aqua {
+  background-color: var(--hb-color-aqua);
+  color: #ffffff;
+}
+
+.ui-color-amethyst {
+  color: var(--hb-color-amethyst);
+}
+
+.ui-color-bg-amethyst {
+  background-color: var(--hb-color-amethyst);
+  color: #ffffff;
+}
+
+.ui-color-denim {
+  color: var(--hb-color-denim);
+}
+
+.ui-color-bg-denim {
+  background-color: var(--hb-color-denim);
+  color: #ffffff;
+}
+
+.ui-color-cerulean {
+  color: var(--hb-color-cerulean);
+}
+
+.ui-color-bg-cerulean {
+  background-color: var(--hb-color-cerulean);
+  color: #ffffff;
+}
+
+.ui-color-ocean {
+  color: var(--hb-color-ocean);
+}
+
+.ui-color-bg-ocean {
+  background-color: var(--hb-color-ocean);
+  color: #ffffff;
+}
+
+.ui-color-azure {
+  color: var(--hb-color-azure);
+}
+
+.ui-color-bg-azure {
+  background-color: var(--hb-color-azure);
+  color: #000000;
+}
+
+.ui-color-lavender {
+  color: var(--hb-color-lavender);
+}
+
+.ui-color-bg-lavender {
+  background-color: var(--hb-color-lavender);
+  color: #000000;
+}
+
+.ui-color-plum {
+  color: var(--hb-color-plum);
+}
+
+.ui-color-bg-plum {
+  background-color: var(--hb-color-plum);
+  color: #ffffff;
+}
+
+.ui-color-rose {
+  color: var(--hb-color-rose);
+}
+
+.ui-color-bg-rose {
+  background-color: var(--hb-color-rose);
+  color: #000000;
+}
+
+.ui-color-crimson {
+  color: var(--hb-color-crimson);
+}
+
+.ui-color-bg-crimson {
+  background-color: var(--hb-color-crimson);
+  color: #ffffff;
+}
+
+.ui-color-ruby {
+  color: var(--hb-color-ruby);
+}
+
+.ui-color-bg-ruby {
+  background-color: var(--hb-color-ruby);
+  color: #ffffff;
+}
+
+.ui-color-emerald {
+  color: var(--hb-color-emerald);
+}
+
+.ui-color-bg-emerald {
+  background-color: var(--hb-color-emerald);
+  color: #ffffff;
+}
+
+.ui-color-teal {
+  color: var(--hb-color-teal);
+}
+
+.ui-color-bg-teal {
+  background-color: var(--hb-color-teal);
+  color: #ffffff;
+}
+
+.ui-color-petrol {
+  color: var(--hb-color-petrol);
+}
+
+.ui-color-bg-petrol {
+  background-color: var(--hb-color-petrol);
+  color: #ffffff;
+}
+
+.ui-color-wine {
+  color: var(--hb-color-wine);
+}
+
+.ui-color-bg-wine {
+  background-color: var(--hb-color-wine);
+  color: #ffffff;
+}
+
+.ui-color-mulberry {
+  color: var(--hb-color-mulberry);
+}
+
+.ui-color-bg-mulberry {
+  background-color: var(--hb-color-mulberry);
+  color: #ffffff;
+}
+
+.ui-color-fern {
+  color: var(--hb-color-fern);
+}
+
+.ui-color-bg-fern {
+  background-color: var(--hb-color-fern);
+  color: #ffffff;
+}
+
+.ui-color-honey {
+  color: var(--hb-color-honey);
+}
+
+.ui-color-bg-honey {
+  background-color: var(--hb-color-honey);
+  color: #000000;
+}
+
+.ui-color-lemon {
+  color: var(--hb-color-lemon);
+}
+
+.ui-color-bg-lemon {
+  background-color: var(--hb-color-lemon);
+  color: #000000;
+}
+
+.ui-color-gold {
+  color: var(--hb-color-gold);
+}
+
+.ui-color-bg-gold {
+  background-color: var(--hb-color-gold);
+  color: #000000;
+}
+
+.ui-color-amber {
+  color: var(--hb-color-amber);
+}
+
+.ui-color-bg-amber {
+  background-color: var(--hb-color-amber);
+  color: #ffffff;
+}
+
+.ui-color-coral {
+  color: var(--hb-color-coral);
+}
+
+.ui-color-bg-coral {
+  background-color: var(--hb-color-coral);
+  color: #000000;
+}
+
+.ui-color-caramel {
+  color: var(--hb-color-caramel);
+}
+
+.ui-color-bg-caramel {
+  background-color: var(--hb-color-caramel);
+  color: #ffffff;
+}
+
+.ui-color-stone {
+  color: var(--hb-color-stone);
+}
+
+.ui-color-bg-stone {
+  background-color: var(--hb-color-stone);
+  color: #ffffff;
+}
+
+.ui-color-graphite {
+  color: var(--hb-color-graphite);
+}
+
+.ui-color-bg-graphite {
+  background-color: var(--hb-color-graphite);
+  color: #ffffff;
+}
+
+.ui-color-charcoal {
+  color: var(--hb-color-charcoal);
+}
+
+.ui-color-bg-charcoal {
+  background-color: var(--hb-color-charcoal);
+  color: #ffffff;
+}
+
+.ui-color-storm {
+  color: var(--hb-color-storm);
+}
+
+.ui-color-bg-storm {
+  background-color: var(--hb-color-storm);
+  color: #ffffff;
+}
+
+.ui-color-smoke {
+  color: var(--hb-color-smoke);
+}
+
+.ui-color-bg-smoke {
+  background-color: var(--hb-color-smoke);
+  color: #ffffff;
+}
+
+.ui-color-shadow {
+  color: var(--hb-color-shadow);
+}
+
+.ui-color-bg-shadow {
+  background-color: var(--hb-color-shadow);
+  color: #ffffff;
+}
+
+.ui-color-steel {
+  color: var(--hb-color-steel);
+}
+
+.ui-color-bg-steel {
+  background-color: var(--hb-color-steel);
+  color: #ffffff;
+}
+
+.ui-color-peach {
+  color: var(--hb-color-peach);
+}
+
+.ui-color-bg-peach {
+  background-color: var(--hb-color-peach);
+  color: #000000;
+}
+
+.ui-color-sunset {
+  color: var(--hb-color-sunset);
+}
+
+.ui-color-bg-sunset {
+  background-color: var(--hb-color-sunset);
+  color: #000000;
+}
+
+.ui-color-chartreuse {
+  color: var(--hb-color-chartreuse);
+}
+
+.ui-color-bg-chartreuse {
+  background-color: var(--hb-color-chartreuse);
+  color: #ffffff;
+}
+
+.ui-color-spring {
+  color: var(--hb-color-spring);
+}
+
+.ui-color-bg-spring {
+  background-color: var(--hb-color-spring);
+  color: #ffffff;
+}
+
+.ui-color-apple {
+  color: var(--hb-color-apple);
+}
+
+.ui-color-bg-apple {
+  background-color: var(--hb-color-apple);
+  color: #ffffff;
+}
+
+.ui-color-jade {
+  color: var(--hb-color-jade);
+}
+
+.ui-color-bg-jade {
+  background-color: var(--hb-color-jade);
+  color: #ffffff;
 }
 
 :root {
@@ -702,6 +1091,10 @@
 }
 .mud-card .no-divider {
   border: none;
+}
+
+.mud-stepper.stepper-no-actions .mud-stepper-actions {
+  display: none;
 }
 
 .ui-wavebackground-container {
@@ -992,6 +1385,9 @@
 .ui-progress-item .ui-progress-item-progress {
   width: 100%;
 }
+.ui-progress-item .ui-progress-item-progress .mud-progress-linear-bar {
+  background-color: var(--ui-element-accent-color) !important;
+}
 
 .ui-colored-icon-container .ui-colored-icon-frame {
   background-color: color-mix(in srgb, var(--ui-colored-icon-color), transparent var(--hb-ui-colored-icon-background-opacity));
@@ -1053,10 +1449,6 @@
 .hb-setup-card {
   height: 100%;
   overflow-y: hidden;
-}
-
-.ui-setup-stepper .mud-stepper-actions {
-  display: none;
 }
 
 .hb-license-agreement-content {

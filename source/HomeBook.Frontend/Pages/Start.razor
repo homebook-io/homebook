@@ -1,8 +1,9 @@
 @using HomeBook.Frontend.Abstractions.Contracts
 @using HomeBook.Frontend.Core.Models.Widgets
-@using HomeBook.Frontend.Properties
+@using HomeBook.Frontend.UI.Resources
+@using Microsoft.Extensions.Localization
 
-@inject ILocalizationProvider Loc
+@inject IStringLocalizer<LocalizationStrings> Loc
 @inject Microsoft.FeatureManagement.IFeatureManager FeatureManager
 @inject IEnumerable<IStartMenuItem> StartMenuItems
 
@@ -19,8 +20,8 @@
             <MudItem xs="12" sm="6" md="4" lg="3" xl="3" xxl="3"
                      Class="ui-startmenu-item d-flex flex-1">
 
-                <UiStartMenuItem Title="@smi.Title"
-                                 Caption="@smi.Caption"
+                <UiStartMenuItem Title="@smi.Translate(smi.Title)"
+                                 Caption="@smi.Translate(smi.Caption)"
                                  Url="@smi.Url"
                                  Icon="@smi.Icon"
                                  Color="@smi.Color"/>

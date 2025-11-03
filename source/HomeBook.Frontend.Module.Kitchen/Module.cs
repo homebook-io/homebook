@@ -1,23 +1,26 @@
+using HomeBook.Frontend.Core.Icons;
+using HomeBook.Frontend.Module.Kitchen.Resources;
 using HomeBook.Frontend.Modules.Abstractions;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Localization;
 
 namespace HomeBook.Frontend.Module.Kitchen;
 
 /// <summary>
 /// the recipes and pantry module
 /// </summary>
-public class Module
+public class Module(IStringLocalizer<Strings> Loc)
     : IModule,
         IModuleWidgetRegistration,
         IModuleDependencyRegistration,
         IModuleStartMenuRegistration
 {
     /// <inheritdoc />
-    public string Name => "KitchenManager";
+    public string Name => Loc[nameof(Strings.ModuleName)];
 
     /// <inheritdoc />
-    public string Description => "Module for managing recipes, meal planning and pantry.";
+    public string Description => Loc[nameof(Strings.ModuleDescription)];
 
     /// <inheritdoc />
     public string Author { get; } = "HomeBook";
@@ -26,12 +29,15 @@ public class Module
     public Version Version => new("1.0.0");
 
     /// <inheritdoc />
-    public string Icon { get; } = HomeBook.Frontend.Core.Icons.HomeBookIcons.Icons8.GlassMorphism.Tableware;
+    public string Icon { get; } = HomeBookIcons.Icons8.GlassMorphism.Tableware;
 
     public async Task InitializeAsync()
     {
         await Task.CompletedTask;
     }
+
+    /// <inheritdoc />
+    public string GetTranslation(string key, params object[] args) => Loc[key, args];
 
     /// <inheritdoc />
     public static void RegisterWidgets(IWidgetBuilder builder,
@@ -50,16 +56,16 @@ public class Module
     public static void RegisterStartMenuItems(IStartMenuBuilder builder,
         IConfiguration configuration)
     {
-        builder.AddStartMenu("Module_KitchenManager_StartMenuItem_Recipes_Title",
-            "Module_KitchenManager_StartMenuItem_Recipes_Caption",
+        builder.AddStartMenuTile(nameof(Strings.StartMenuItem_Recipes_Title),
+            nameof(Strings.StartMenuItem_Recipes_Caption),
             "/Kitchen/Recipes",
-            HomeBook.Frontend.Core.Icons.HomeBookIcons.Icons8.Windows11.Filled.CookBook,
-            "#FF9800");
+            HomeBookIcons.Icons8.Windows11.Filled.CookBook,
+            "var(--hb-color-amber)");
 
-        builder.AddStartMenu("Module_KitchenManager_StartMenuItem_Pantry_Title",
-            "Module_KitchenManager_StartMenuItem_Pantry_Caption",
+        builder.AddStartMenuTile(nameof(Strings.StartMenuItem_Pantry_Title),
+            nameof(Strings.StartMenuItem_Pantry_Caption),
             "/Kitchen/Pantry",
-            HomeBook.Frontend.Core.Icons.HomeBookIcons.Icons8.Windows11.Filled.GroceryShelf,
-            "#009688");
+            HomeBookIcons.Icons8.Windows11.Filled.GroceryShelf,
+            "var(--hb-color-teal)");
     }
 }

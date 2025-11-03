@@ -45,13 +45,23 @@ public class UserProviderTests
         // Arrange
         string username = "testuser";
         string password = "A-s3cr3t-P@ssw0rd!";
+        Guid userId = Guid.NewGuid();
         _userRepository.ContainsUserAsync(username, _cancellationToken)
             .Returns(false);
+        _userRepository.CreateUserAsync(Arg.Any<User>(), _cancellationToken)
+            .Returns(new User
+            {
+                Id = userId,
+                Username = username,
+                PasswordHash = "passwordhash",
+                PasswordHashType = "hash"
+            });
 
         // Act
-        await _instance.CreateUserAsync(username, password, _cancellationToken);
+        Guid testUserId = await _instance.CreateUserAsync(username, password, _cancellationToken);
 
         // Assert
+        testUserId.ShouldNotBe(Guid.Empty);
         await _userRepository.Received(1)
             .CreateUserAsync(
                 Arg.Is<User>(u => u.Username == username &&

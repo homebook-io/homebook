@@ -1,7 +1,7 @@
 using HomeBook.Client.Models;
 using HomeBook.Frontend.Abstractions.Contracts;
-using HomeBook.Frontend.Properties;
 using HomeBook.Frontend.Setup.Exceptions;
+using HomeBook.Frontend.UI.Resources;
 using Microsoft.AspNetCore.Components;
 using Microsoft.Kiota.Abstractions;
 

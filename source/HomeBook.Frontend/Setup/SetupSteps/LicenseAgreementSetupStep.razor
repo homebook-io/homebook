@@ -1,7 +1,8 @@
 @using HomeBook.Frontend.Abstractions.Contracts
-@using HomeBook.Frontend.Properties
+@using HomeBook.Frontend.UI.Resources
+@using Microsoft.Extensions.Localization
 
-@inject ILocalizationProvider Loc
+@inject IStringLocalizer<LocalizationStrings> Loc
 @inject ISetupService SetupService
 @inject IDialogService DialogService
 @inject ILicensesService LicensesService

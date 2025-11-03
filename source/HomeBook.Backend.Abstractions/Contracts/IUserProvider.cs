@@ -14,7 +14,7 @@ public interface IUserProvider
     /// <param name="password"></param>
     /// <param name="cancellationToken"></param>
     /// <returns></returns>
-    Task CreateUserAsync(string username,
+    Task<Guid> CreateUserAsync(string username,
         string password,
         CancellationToken cancellationToken = default);
 

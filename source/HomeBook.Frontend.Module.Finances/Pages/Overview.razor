@@ -2,7 +2,11 @@
 
 @using HomeBook.Frontend.Abstractions.Contracts
 @using HomeBook.Frontend.Core.Icons
+@using HomeBook.Frontend.Module.Finances.Components
+@using HomeBook.Frontend.Module.Finances.Resources
+@using Microsoft.Extensions.Localization
 
+@inject IStringLocalizer<Strings> Loc
 @inject IMenuService MenuService
 
 <UiPageTitle>+Finanzen</UiPageTitle>
@@ -13,7 +17,7 @@
 
         <MudItem xs="6" sm="6" md="3" lg="3" xl="3" xxl="3">
 
-            <UiValueCard Color="var(--hb-module-finances-total-color)"
+            <UiValueCard Color="var(--hb-color-cerulean)"
                          Icon="@HomeBookIcons.Icons8.Windows11.Filled.Wallet"
                          Title="+Gesamtsaldo"
                          ValueDisplay="12.547,89 €"
@@ -24,7 +28,7 @@
 
         <MudItem xs="6" sm="6" md="3" lg="3" xl="3" xxl="3">
 
-            <UiValueCard Color="var(--hb-module-finances-expenses-color)"
+            <UiValueCard Color="var(--hb-color-crimson)"
                          Icon="@HomeBookIcons.Icons8.Windows11.Filled.CardMagnetic"
                          Title="+Ausgaben"
                          ValueDisplay="12.547,89 €"
@@ -35,7 +39,7 @@
 
         <MudItem xs="6" sm="6" md="3" lg="3" xl="3" xxl="3">
 
-            <UiValueCard Color="var(--hb-module-finances-income-color)"
+            <UiValueCard Color="var(--hb-color-emerald)"
                          Icon="@HomeBookIcons.Icons8.Windows11.Filled.ChartArrowRise"
                          Title="+Einnahmen"
                          ValueDisplay="12.547,89 €"
@@ -46,7 +50,7 @@
 
         <MudItem xs="6" sm="6" md="3" lg="3" xl="3" xxl="3">
 
-            <UiValueCard Color="var(--hb-module-finances-saving-color)"
+            <UiValueCard Color="var(--hb-color-lavender)"
                          Icon="@HomeBookIcons.Icons8.Windows11.Filled.MoneyBox"
                          Title="+Sparziele"
                          ValueDisplay="12.547,89 €"
@@ -100,63 +104,7 @@
 
         </MudItem>
         <MudItem xs="12" sm="12" md="6" lg="4" xl="4" xxl="4">
-
-            <MudCard>
-
-                <MudCardHeader>
-
-                    <CardHeaderContent>
-                        <MudText Typo="Typo.h6">
-                            +Sparziele
-                        </MudText>
-                    </CardHeaderContent>
-
-                    <CardHeaderActions>
-                        <MudButton Variant="Variant.Text"
-                                   Color="Color.Primary">
-                            +Neues Ziel
-                        </MudButton>
-                    </CardHeaderActions>
-
-                </MudCardHeader>
-
-                <MudCardContent>
-
-                    <MudList T="string">
-
-                        <MudListItem Href="#" Class="rounded">
-                            <UiProgressItem HeaderTextStart="Urlaub Italien"
-                                            HeaderTextEnd="75%"
-                                            ProgressValue="75"
-                                            FooterTextStart="1.500 € von 2.000 €"
-                                            FooterTextEnd="500 € verbleibend"
-                                            ProgressColor="Color.Warning"/>
-                        </MudListItem>
-
-                        <MudListItem Href="#" Class="rounded">
-                            <UiProgressItem HeaderTextStart="Neues Auto"
-                                            HeaderTextEnd="42%"
-                                            ProgressValue="42"
-                                            FooterTextStart="8.400 € von 20.000 €"
-                                            FooterTextEnd="11.600 € verbleibend"
-                                            ProgressColor="Color.Success"/>
-                        </MudListItem>
-
-                        <MudListItem Href="#" Class="rounded">
-                            <UiProgressItem HeaderTextStart="Notgroschen"
-                                            HeaderTextEnd="88%"
-                                            ProgressValue="88"
-                                            FooterTextStart="4.400 € von 5.000 €"
-                                            FooterTextEnd="600 € verbleibend"
-                                            ProgressColor="Color.Primary"/>
-                        </MudListItem>
-
-                    </MudList>
-
-                </MudCardContent>
-
-            </MudCard>
-
+            <HbSavingGoalsOverviewList/>
         </MudItem>
 
         <MudItem xs="12" sm="12" md="6" lg="8" xl="8" xxl="8">

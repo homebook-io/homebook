@@ -2,7 +2,6 @@ using HomeBook.Backend.Abstractions;
 using HomeBook.Backend.Endpoints;
 using HomeBook.Backend.EnvironmentHandler;
 using HomeBook.Backend.Extensions;
-using HomeBook.Backend.Core.Extensions;
 using HomeBook.Backend.Core.Account.Extensions;
 using HomeBook.Backend.Middleware;
 using Scalar.AspNetCore;
@@ -38,14 +37,13 @@ switch (instanceStatus)
 {
     // map endpoints that are only available in setup mode
     case InstanceStatus.SETUP:
-        builder.Services.AddBackendSetup(builder.Configuration, instanceStatus);
+        builder.Services.AddDependenciesForSetup(builder.Configuration,
+            instanceStatus);
         break;
     // map endpoints that are only available in running mode
     case InstanceStatus.RUNNING:
-        builder.Services.AddBackendServices(builder.Configuration, instanceStatus)
-            .AddBackendCore(builder.Configuration, instanceStatus)
-            .AddBackendDatabaseProvider(builder.Configuration, instanceStatus)
-            .AddAccountServices(builder.Configuration, instanceStatus);
+        builder.Services.AddDependenciesForRuntime(builder.Configuration,
+            instanceStatus);
         break;
 }
 
@@ -106,7 +104,9 @@ switch (instanceStatus)
             .MapUpdateEndpoints()
             .MapAccountEndpoints()
             .MapInfoEndpoints()
-            .MapUserEndpoints();
+            .MapUserEndpoints()
+            .MapFinancesCalculationEndpoints()
+            .MapFinancesSavingGoalEndpoints();
         break;
 }
 

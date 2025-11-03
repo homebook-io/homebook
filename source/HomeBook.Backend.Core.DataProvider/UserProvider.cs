@@ -15,7 +15,7 @@ public class UserProvider(
     IValidator<User> userValidator) : IUserProvider
 {
     /// <inheritdoc />
-    public async Task CreateUserAsync(string username,
+    public async Task<Guid> CreateUserAsync(string username,
         string password,
         CancellationToken cancellationToken = default)
     {
@@ -35,7 +35,8 @@ public class UserProvider(
 
         await userValidator.ValidateAndThrowAsync(user, cancellationToken);
 
-        await userRepository.CreateUserAsync(user, cancellationToken);
+        User createdUser = await userRepository.CreateUserAsync(user, cancellationToken);
+        return createdUser.Id;
     }
 
     /// <inheritdoc />
