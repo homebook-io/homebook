@@ -98,5 +98,53 @@ namespace HomeBook.Frontend.Module.Finances.Resources {
                 return ResourceManager.GetString("Savings_Edit_NotFound", resourceCulture);
             }
         }
+        
+        public static string AddSavingGoal_Intro_Title {
+            get {
+                return ResourceManager.GetString("AddSavingGoal_Intro_Title", resourceCulture);
+            }
+        }
+        
+        public static string AddSavingGoal_MudStep_Intro_Title {
+            get {
+                return ResourceManager.GetString("AddSavingGoal_MudStep_Intro_Title", resourceCulture);
+            }
+        }
+        
+        public static string AddSavingGoal_Intro_Description {
+            get {
+                return ResourceManager.GetString("AddSavingGoal_Intro_Description", resourceCulture);
+            }
+        }
+        
+        public static string AddSavingGoal_Intro_QuickAddButton_Text {
+            get {
+                return ResourceManager.GetString("AddSavingGoal_Intro_QuickAddButton_Text", resourceCulture);
+            }
+        }
+        
+        public static string AddSavingGoal_MudStep_Name_Title {
+            get {
+                return ResourceManager.GetString("AddSavingGoal_MudStep_Name_Title", resourceCulture);
+            }
+        }
+        
+        public static string AddSavingGoal_MudStep_Goal_Title {
+            get {
+                return ResourceManager.GetString("AddSavingGoal_MudStep_Goal_Title", resourceCulture);
+            }
+        }
+        
+        public static string AddSavingGoal_MudStep_Plan_Title {
+            get {
+                return ResourceManager.GetString("AddSavingGoal_MudStep_Plan_Title", resourceCulture);
+            }
+        }
+        
+        public static string AddSavingGoal_MudStep_Summary_Title {
+            get {
+                return ResourceManager.GetString("AddSavingGoal_MudStep_Summary_Title", resourceCulture);
+            }
+        }
     }
 }

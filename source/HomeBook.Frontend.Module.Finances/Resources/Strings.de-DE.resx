@@ -32,4 +32,28 @@
     <data name="Savings_Edit_NotFound" xml:space="preserve">
         <value>Sparziel konnte nicht gefunden werden!</value>
     </data>
+    <data name="AddSavingGoal_Intro_Title" xml:space="preserve">
+        <value>Neues Sparziel erstellen</value>
+    </data>
+    <data name="AddSavingGoal_MudStep_Intro_Title" xml:space="preserve">
+        <value>Neues Sparziel</value>
+    </data>
+    <data name="AddSavingGoal_Intro_Description" xml:space="preserve">
+        <value>Lege ein persönliches Sparziel an, um deine Finanzen im Blick zu behalten. Bestimme, wofür du sparen möchtest und wie viel du erreichen willst.</value>
+    </data>
+    <data name="AddSavingGoal_Intro_QuickAddButton_Text" xml:space="preserve">
+        <value>Schnellerfassung</value>
+    </data>
+    <data name="AddSavingGoal_MudStep_Name_Title" xml:space="preserve">
+        <value>Name</value>
+    </data>
+    <data name="AddSavingGoal_MudStep_Goal_Title" xml:space="preserve">
+        <value>Ziel</value>
+    </data>
+    <data name="AddSavingGoal_MudStep_Plan_Title" xml:space="preserve">
+        <value>Sparplan</value>
+    </data>
+    <data name="AddSavingGoal_MudStep_Summary_Title" xml:space="preserve">
+        <value>Zusammenfassung</value>
+    </data>
 </root>

@@ -25,7 +25,7 @@
                     @ref="_stepper"
                     Class="stepper-no-actions d-flex flex-column-reverse">
 
-            <MudStep Title="+Neues Sparziel">
+            <MudStep Title="@Loc[nameof(Strings.AddSavingGoal_MudStep_Intro_Title)]">
 
                 <MudContainer MaxWidth="MaxWidth.Small"
                               Class="my-10">
@@ -36,14 +36,13 @@
                     <MudText Typo="Typo.h4"
                              Align="Align.Center"
                              Class="mb-5">
-                        +Neues Sparziel erstellen
+                        @Loc[nameof(Strings.AddSavingGoal_Intro_Title)]
                     </MudText>
 
                     <MudText Typo="Typo.body1"
                              Align="Align.Center"
                              Class="mud-text-secondary">
-                        +Lege ein persönliches Sparziel an, um deine Finanzen im Blick zu behalten. Bestimme, wofür du
-                        sparen möchtest und wie viel du erreichen willst.
+                        @Loc[nameof(Strings.AddSavingGoal_Intro_Description)]
                     </MudText>
 
                     <MudStack Row="true"
@@ -54,7 +53,7 @@
                                    Color="Color.Primary"
                                    Class="px-5 rounded-pill"
                                    OnClick="SwitchToQuickAdd">
-                            +Schnellerfassung
+                            @Loc[nameof(Strings.AddSavingGoal_Intro_QuickAddButton_Text)]
                         </MudButton>
 
                         <MudIconButton Icon="@HomeBookIcons.Icons8.Windows11.Filled.ArrowRight"
@@ -69,7 +68,7 @@
 
             </MudStep>
 
-            <MudStep Title="+Name">
+            <MudStep Title="@Loc[nameof(Strings.AddSavingGoal_MudStep_Name_Title)]">
 
                 <MudForm @ref="_formStepName"
                          Model="_model"
@@ -127,7 +126,7 @@
 
             </MudStep>
 
-            <MudStep Title="+Ziel">
+            <MudStep Title="@Loc[nameof(Strings.AddSavingGoal_MudStep_Goal_Title)]">
 
                 <MudForm @ref="_formStepGoal"
                          Model="_model"
@@ -202,7 +201,7 @@
 
             </MudStep>
 
-            <MudStep Title="+Sparplan">
+            <MudStep Title="@Loc[nameof(Strings.AddSavingGoal_MudStep_Plan_Title)]">
 
                 <MudForm @ref="_formStepPlan"
                          Model="_model"
@@ -368,7 +367,7 @@
             @* *@
             @* </MudStep> *@
 
-            <MudStep Title="+Zusammenfassung">
+            <MudStep Title="@Loc[nameof(Strings.AddSavingGoal_MudStep_Summary_Title)]">
 
                 @if (_summaryVM is not null)
                 {
