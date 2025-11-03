@@ -80,5 +80,17 @@ namespace HomeBook.Frontend.Module.Kitchen.Resources {
                 return ResourceManager.GetString("StartMenuItem_Pantry_Caption", resourceCulture);
             }
         }
+        
+        public static string StartMenuItem_MealPlan_Title {
+            get {
+                return ResourceManager.GetString("StartMenuItem_MealPlan_Title", resourceCulture);
+            }
+        }
+        
+        public static string StartMenuItem_MealPlan_Caption {
+            get {
+                return ResourceManager.GetString("StartMenuItem_MealPlan_Caption", resourceCulture);
+            }
+        }
     }
 }

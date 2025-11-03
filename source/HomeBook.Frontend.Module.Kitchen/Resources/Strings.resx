@@ -36,4 +36,10 @@
     <data name="StartMenuItem_Pantry_Caption" xml:space="preserve">
         <value>Keep track of your kitchen supplies</value>
     </data>
+    <data name="StartMenuItem_MealPlan_Title" xml:space="preserve">
+        <value>Meal Plan</value>
+    </data>
+    <data name="StartMenuItem_MealPlan_Caption" xml:space="preserve">
+        <value>Your meals at a glance</value>
+    </data>
 </root>

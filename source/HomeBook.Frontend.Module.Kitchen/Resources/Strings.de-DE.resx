@@ -26,4 +26,10 @@
     <data name="StartMenuItem_Pantry_Caption" xml:space="preserve">
         <value>Behalten Sie den Überblick über Ihre Küchenvorräte</value>
     </data>
+    <data name="StartMenuItem_MealPlan_Title" xml:space="preserve">
+        <value>Speiseplan</value>
+    </data>
+    <data name="StartMenuItem_MealPlan_Caption" xml:space="preserve">
+        <value>Ihre Mahlzeiten auf einen Blick</value>
+    </data>
 </root>
