@@ -67,5 +67,11 @@ public class Module(IStringLocalizer<Strings> Loc)
             "/Kitchen/Pantry",
             HomeBookIcons.Icons8.Windows11.Filled.GroceryShelf,
             "var(--hb-color-teal)");
+
+        builder.AddStartMenuTile(nameof(Strings.StartMenuItem_MealPlan_Title),
+            nameof(Strings.StartMenuItem_MealPlan_Caption),
+            "/Kitchen/MealPlan",
+            HomeBook.Frontend.Core.Icons.HomeBookIcons.Icons8.Windows11.Filled.RestaurantMenu,
+            "var(--hb-color-cerulean)");
     }
 }
