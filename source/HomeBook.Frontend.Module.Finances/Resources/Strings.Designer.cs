@@ -206,5 +206,89 @@ namespace HomeBook.Frontend.Module.Finances.Resources {
                 return ResourceManager.GetString("AddSavingGoal_MudStep_Goal_TargetDateInput_Label", resourceCulture);
             }
         }
+        
+        public static string AddSavingGoal_MudStep_Options_Title_Text {
+            get {
+                return ResourceManager.GetString("AddSavingGoal_MudStep_Options_Title_Text", resourceCulture);
+            }
+        }
+        
+        public static string AddSavingGoal_MudStep_Options_Title_Caption {
+            get {
+                return ResourceManager.GetString("AddSavingGoal_MudStep_Options_Title_Caption", resourceCulture);
+            }
+        }
+        
+        public static string AddSavingGoal_MudStep_InterestRateOption_None_Option_Text {
+            get {
+                return ResourceManager.GetString("AddSavingGoal_MudStep_InterestRateOption_None_Option_Text", resourceCulture);
+            }
+        }
+        
+        public static string AddSavingGoal_MudStep_InterestRateOption_Monthly_Option_Text {
+            get {
+                return ResourceManager.GetString("AddSavingGoal_MudStep_InterestRateOption_Monthly_Option_Text", resourceCulture);
+            }
+        }
+        
+        public static string AddSavingGoal_MudStep_InterestRateOption_Yearly_Option_Text {
+            get {
+                return ResourceManager.GetString("AddSavingGoal_MudStep_InterestRateOption_Yearly_Option_Text", resourceCulture);
+            }
+        }
+        
+        public static string AddSavingGoal_MudStep_InterestRate_Input_Label {
+            get {
+                return ResourceManager.GetString("AddSavingGoal_MudStep_InterestRate_Input_Label", resourceCulture);
+            }
+        }
+        
+        public static string AddSavingGoal_MudStep_Summary_Title_Text {
+            get {
+                return ResourceManager.GetString("AddSavingGoal_MudStep_Summary_Title_Text", resourceCulture);
+            }
+        }
+        
+        public static string AddSavingGoal_MudStep_Summary_Name_Text {
+            get {
+                return ResourceManager.GetString("AddSavingGoal_MudStep_Summary_Name_Text", resourceCulture);
+            }
+        }
+        
+        public static string AddSavingGoal_MudStep_Summary_TargetDate_Text {
+            get {
+                return ResourceManager.GetString("AddSavingGoal_MudStep_Summary_TargetDate_Text", resourceCulture);
+            }
+        }
+        
+        public static string AddSavingGoal_MudStep_Summary_NumberOfMonths_Text {
+            get {
+                return ResourceManager.GetString("AddSavingGoal_MudStep_Summary_NumberOfMonths_Text", resourceCulture);
+            }
+        }
+        
+        public static string AddSavingGoal_MudStep_Summary_AmountPerMonth_Text {
+            get {
+                return ResourceManager.GetString("AddSavingGoal_MudStep_Summary_AmountPerMonth_Text", resourceCulture);
+            }
+        }
+        
+        public static string AddSavingGoal_MudStep_Summary_Result_TextTemplate {
+            get {
+                return ResourceManager.GetString("AddSavingGoal_MudStep_Summary_Result_TextTemplate", resourceCulture);
+            }
+        }
+        
+        public static string AddSavingGoalSummary_Total_Name {
+            get {
+                return ResourceManager.GetString("AddSavingGoalSummary_Total_Name", resourceCulture);
+            }
+        }
+        
+        public static string AddSavingGoalSummary_Payments_Name {
+            get {
+                return ResourceManager.GetString("AddSavingGoalSummary_Payments_Name", resourceCulture);
+            }
+        }
     }
 }

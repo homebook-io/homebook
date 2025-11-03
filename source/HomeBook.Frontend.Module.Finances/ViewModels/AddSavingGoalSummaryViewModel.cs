@@ -1,11 +1,15 @@
 using System.Globalization;
 using HomeBook.Frontend.Abstractions.Contracts;
 using HomeBook.Frontend.Module.Finances.Enums;
+using HomeBook.Frontend.Module.Finances.Resources;
+using Microsoft.Extensions.Localization;
 using MudBlazor;
 
 namespace HomeBook.Frontend.Module.Finances.ViewModels;
 
-public class AddSavingGoalSummaryViewModel(IDateTimeProvider DateTime)
+public class AddSavingGoalSummaryViewModel(
+    IStringLocalizer<Strings> Loc,
+    IDateTimeProvider DateTime)
 {
     public string Name { get; set; } = string.Empty;
     public string Color { get; set; } = string.Empty;
@@ -32,20 +36,21 @@ public class AddSavingGoalSummaryViewModel(IDateTimeProvider DateTime)
     public AxisChartOptions AxisChartOptions = new()
     {
         MatchBoundsToSize = true,
+        XAxisLabelRotation = 60
     };
 
     public ChartOptions ChartOptions = new()
     {
         YAxisToStringFunc = value => value.ToString("C"),
         ValueFormatString = "C",
-        ShowToolTips = false
+        ShowToolTips = false,
     };
 
     public List<ChartSeries> ChartSeries =>
     [
         new()
         {
-            Name = "+Gesamt",
+            Name = Loc[nameof(Strings.AddSavingGoalSummary_Total_Name)],
             LineDisplayType = LineDisplayType.Area,
             Data = TargetDate.HasValue
                 ? (AmountsWithInterests ?? [])
@@ -55,7 +60,7 @@ public class AddSavingGoalSummaryViewModel(IDateTimeProvider DateTime)
         },
         new()
         {
-            Name = "+Einzahlungen",
+            Name = Loc[nameof(Strings.AddSavingGoalSummary_Payments_Name)],
             LineDisplayType = LineDisplayType.Line,
             Data = TargetDate.HasValue
                 ? (AmountsWithoutInterests ?? [])

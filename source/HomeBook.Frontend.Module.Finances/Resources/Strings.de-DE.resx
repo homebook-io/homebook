@@ -86,4 +86,46 @@
     <data name="AddSavingGoal_MudStep_Goal_TargetDateInput_Label" xml:space="preserve">
         <value>Ziel-Datum (optional)</value>
     </data>
+    <data name="AddSavingGoal_MudStep_Options_Title_Text" xml:space="preserve">
+        <value>Weitere Optionen</value>
+    </data>
+    <data name="AddSavingGoal_MudStep_Options_Title_Caption" xml:space="preserve">
+        <value>Bekommst du auf deinem Sparkonto Zinsen?</value>
+    </data>
+    <data name="AddSavingGoal_MudStep_InterestRateOption_None_Option_Text" xml:space="preserve">
+        <value>Keine Zinsen</value>
+    </data>
+    <data name="AddSavingGoal_MudStep_InterestRateOption_Monthly_Option_Text" xml:space="preserve">
+        <value>Monatlich</value>
+    </data>
+    <data name="AddSavingGoal_MudStep_InterestRateOption_Yearly_Option_Text" xml:space="preserve">
+        <value>Jährlich</value>
+    </data>
+    <data name="AddSavingGoal_MudStep_InterestRate_Input_Label" xml:space="preserve">
+        <value>Zinssatz (%)</value>
+    </data>
+    <data name="AddSavingGoal_MudStep_Summary_Title_Text" xml:space="preserve">
+        <value>Dein Sparziel zusammengefasst</value>
+    </data>
+    <data name="AddSavingGoal_MudStep_Summary_Name_Text" xml:space="preserve">
+        <value>Dein Sparziel:</value>
+    </data>
+    <data name="AddSavingGoal_MudStep_Summary_TargetDate_Text" xml:space="preserve">
+        <value>Bis:</value>
+    </data>
+    <data name="AddSavingGoal_MudStep_Summary_NumberOfMonths_Text" xml:space="preserve">
+        <value>Monate:</value>
+    </data>
+    <data name="AddSavingGoal_MudStep_Summary_AmountPerMonth_Text" xml:space="preserve">
+        <value>Pro Monat:</value>
+    </data>
+    <data name="AddSavingGoal_MudStep_Summary_Result_TextTemplate" xml:space="preserve">
+        <value>Am Ende hast du {0} und dabei Zinsen in Höhe von {1} erhalten :)</value>
+    </data>
+    <data name="AddSavingGoalSummary_Total_Name" xml:space="preserve">
+        <value>Gesamt</value>
+    </data>
+    <data name="AddSavingGoalSummary_Payments_Name" xml:space="preserve">
+        <value>Einzahlungen</value>
+    </data>
 </root>

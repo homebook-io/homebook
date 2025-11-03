@@ -99,4 +99,46 @@
     <data name="AddSavingGoal_MudStep_Goal_TargetDateInput_Label" xml:space="preserve">
         <value />
     </data>
+    <data name="AddSavingGoal_MudStep_Options_Title_Text" xml:space="preserve">
+        <value />
+    </data>
+    <data name="AddSavingGoal_MudStep_Options_Title_Caption" xml:space="preserve">
+        <value />
+    </data>
+    <data name="AddSavingGoal_MudStep_InterestRateOption_None_Option_Text" xml:space="preserve">
+        <value />
+    </data>
+    <data name="AddSavingGoal_MudStep_InterestRateOption_Monthly_Option_Text" xml:space="preserve">
+        <value />
+    </data>
+    <data name="AddSavingGoal_MudStep_InterestRateOption_Yearly_Option_Text" xml:space="preserve">
+        <value />
+    </data>
+    <data name="AddSavingGoal_MudStep_InterestRate_Input_Label" xml:space="preserve">
+        <value />
+    </data>
+    <data name="AddSavingGoal_MudStep_Summary_Title_Text" xml:space="preserve">
+        <value />
+    </data>
+    <data name="AddSavingGoal_MudStep_Summary_Name_Text" xml:space="preserve">
+        <value />
+    </data>
+    <data name="AddSavingGoal_MudStep_Summary_TargetDate_Text" xml:space="preserve">
+        <value />
+    </data>
+    <data name="AddSavingGoal_MudStep_Summary_NumberOfMonths_Text" xml:space="preserve">
+        <value />
+    </data>
+    <data name="AddSavingGoal_MudStep_Summary_AmountPerMonth_Text" xml:space="preserve">
+        <value />
+    </data>
+    <data name="AddSavingGoal_MudStep_Summary_Result_TextTemplate" xml:space="preserve">
+        <value />
+    </data>
+    <data name="AddSavingGoalSummary_Total_Name" xml:space="preserve">
+        <value />
+    </data>
+    <data name="AddSavingGoalSummary_Payments_Name" xml:space="preserve">
+        <value />
+    </data>
 </root>
