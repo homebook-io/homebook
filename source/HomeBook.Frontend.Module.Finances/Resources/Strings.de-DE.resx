@@ -56,4 +56,34 @@
     <data name="AddSavingGoal_MudStep_Summary_Title" xml:space="preserve">
         <value>Zusammenfassung</value>
     </data>
+    <data name="AddSavingGoal_MudStep_Name_Title_Text" xml:space="preserve">
+        <value>Was möchtest du erreichen?</value>
+    </data>
+    <data name="AddSavingGoal_MudStep_Name_Title_Caption" xml:space="preserve">
+        <value>Wähle einen Namen, der beschreibt, wofür du sparen möchtest.</value>
+    </data>
+    <data name="AddSavingGoal_MudStep_Name_Input_Placeholder" xml:space="preserve">
+        <value>Name eingeben</value>
+    </data>
+    <data name="AddSavingGoal_MudStep_Goal_Title_Text" xml:space="preserve">
+        <value>Wie hoch soll dein Sparbetrag sein?</value>
+    </data>
+    <data name="AddSavingGoal_MudStep_Goal_Title_Caption" xml:space="preserve">
+        <value>Trage den Gesamtbetrag ein, den du Schritt für Schritt erreichen willst.</value>
+    </data>
+    <data name="AddSavingGoal_MudStep_Goal_Input_Placeholder" xml:space="preserve">
+        <value>Betrag eingeben</value>
+    </data>
+    <data name="AddSavingGoal_MudStep_Goal_Input_ValidationError" xml:space="preserve">
+        <value>Betrag ist zu klein</value>
+    </data>
+    <data name="AddSavingGoal_MudStep_Goal_TargetDate_Caption" xml:space="preserve">
+        <value>Gib an, bis wann du dein Ziel gerne erreichen würdest – das hilft, motiviert zu bleiben.</value>
+    </data>
+    <data name="AddSavingGoal_MudStep_Goal_TargetDateInput_Placeholder" xml:space="preserve">
+        <value>Datum auswählen</value>
+    </data>
+    <data name="AddSavingGoal_MudStep_Goal_TargetDateInput_Label" xml:space="preserve">
+        <value>Ziel-Datum (optional)</value>
+    </data>
 </root>

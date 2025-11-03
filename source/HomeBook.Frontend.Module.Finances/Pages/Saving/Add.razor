@@ -88,14 +88,14 @@
                         <MudText Typo="Typo.h4"
                                  Align="Align.Center"
                                  Class="mb-5">
-                            +Was möchtest du erreichen?
+                            @Loc[nameof(Strings.AddSavingGoal_MudStep_Name_Title_Text)]
                         </MudText>
 
                         <MudText Typo="Typo.caption"
                                  Color="Color.Tertiary"
                                  Align="Align.Left"
                                  Class="mb-3 d-inline-block">
-                            +Wähle einen Namen, der beschreibt, wofür du sparen möchtest.
+                            @Loc[nameof(Strings.AddSavingGoal_MudStep_Name_Title_Caption)]
                         </MudText>
 
                         <MudTextField T="string"
@@ -103,7 +103,7 @@
                                       @bind-Value="_model.Name"
                                       Required="true"
                                       Clearable="true"
-                                      Placeholder="+Name eingeben"
+                                      Placeholder="@Loc[nameof(Strings.AddSavingGoal_MudStep_Name_Input_Placeholder)]"
                                       Immediate="true"/>
 
                         <MudStack Row="true"
@@ -146,14 +146,14 @@
                         <MudText Typo="Typo.h4"
                                  Align="Align.Center"
                                  Class="mb-5">
-                            +Dein Sparbetrag?
+                            @Loc[nameof(Strings.AddSavingGoal_MudStep_Goal_Title_Text)]
                         </MudText>
 
                         <MudText Typo="Typo.caption"
                                  Color="Color.Tertiary"
                                  Align="Align.Left"
                                  Class="mb-3 d-inline-block">
-                            +Trage den Gesamtbetrag ein, den du Schritt für Schritt erreichen willst.
+                            @Loc[nameof(Strings.AddSavingGoal_MudStep_Goal_Title_Caption)]
                         </MudText>
 
                         <MudNumericField T="decimal"
@@ -161,24 +161,25 @@
                                          @bind-Value="_model.TargetAmount"
                                          Required="true"
                                          Step="50"
+                                         Min="0"
                                          Immediate="true"
-                                         Placeholder="+Betrag eingeben"
+                                         Placeholder="@Loc[nameof(Strings.AddSavingGoal_MudStep_Goal_Input_Placeholder)]"
                                          Adornment="Adornment.End"
-                                         Validation="@((decimal? v) => v is null or <= 0 ? "Wert muss größer als 0 sein" : null)"
+                                         Validation="@((decimal? v) => v is null or <= 0 ? Loc[nameof(Strings.AddSavingGoal_MudStep_Goal_Input_ValidationError)] : null)"
                                          AdornmentText="@CultureInfo.CurrentCulture.NumberFormat.CurrencySymbol"/>
 
                         <MudText Typo="Typo.caption"
                                  Color="Color.Tertiary"
                                  Align="Align.Left"
                                  Class="mb-3 d-inline-block">
-                            +Gib an, bis wann du dein Ziel gerne erreichen würdest – das hilft, motiviert zu bleiben.
+                            @Loc[nameof(Strings.AddSavingGoal_MudStep_Goal_TargetDate_Caption)]
                         </MudText>
 
-                        <MudDatePicker Label="+Ziel-Datum (optional)"
+                        <MudDatePicker Label="@Loc[nameof(Strings.AddSavingGoal_MudStep_Goal_TargetDateInput_Label)]"
                                        @bind-Date="_model.TargetDate"
                                        MinDate="DateTime.Now"
                                        Clearable="true"
-                                       Placeholder="+Datum auswählen"
+                                       Placeholder="@Loc[nameof(Strings.AddSavingGoal_MudStep_Goal_TargetDateInput_Placeholder)]"
                                        DisplayMonths="2"/>
 
                         <MudStack Row="true"

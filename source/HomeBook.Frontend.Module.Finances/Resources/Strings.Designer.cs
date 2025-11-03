@@ -146,5 +146,65 @@ namespace HomeBook.Frontend.Module.Finances.Resources {
                 return ResourceManager.GetString("AddSavingGoal_MudStep_Summary_Title", resourceCulture);
             }
         }
+        
+        public static string AddSavingGoal_MudStep_Name_Title_Text {
+            get {
+                return ResourceManager.GetString("AddSavingGoal_MudStep_Name_Title_Text", resourceCulture);
+            }
+        }
+        
+        public static string AddSavingGoal_MudStep_Name_Title_Caption {
+            get {
+                return ResourceManager.GetString("AddSavingGoal_MudStep_Name_Title_Caption", resourceCulture);
+            }
+        }
+        
+        public static string AddSavingGoal_MudStep_Name_Input_Placeholder {
+            get {
+                return ResourceManager.GetString("AddSavingGoal_MudStep_Name_Input_Placeholder", resourceCulture);
+            }
+        }
+        
+        public static string AddSavingGoal_MudStep_Goal_Title_Text {
+            get {
+                return ResourceManager.GetString("AddSavingGoal_MudStep_Goal_Title_Text", resourceCulture);
+            }
+        }
+        
+        public static string AddSavingGoal_MudStep_Goal_Title_Caption {
+            get {
+                return ResourceManager.GetString("AddSavingGoal_MudStep_Goal_Title_Caption", resourceCulture);
+            }
+        }
+        
+        public static string AddSavingGoal_MudStep_Goal_Input_Placeholder {
+            get {
+                return ResourceManager.GetString("AddSavingGoal_MudStep_Goal_Input_Placeholder", resourceCulture);
+            }
+        }
+        
+        public static string AddSavingGoal_MudStep_Goal_Input_ValidationError {
+            get {
+                return ResourceManager.GetString("AddSavingGoal_MudStep_Goal_Input_ValidationError", resourceCulture);
+            }
+        }
+        
+        public static string AddSavingGoal_MudStep_Goal_TargetDate_Caption {
+            get {
+                return ResourceManager.GetString("AddSavingGoal_MudStep_Goal_TargetDate_Caption", resourceCulture);
+            }
+        }
+        
+        public static string AddSavingGoal_MudStep_Goal_TargetDateInput_Placeholder {
+            get {
+                return ResourceManager.GetString("AddSavingGoal_MudStep_Goal_TargetDateInput_Placeholder", resourceCulture);
+            }
+        }
+        
+        public static string AddSavingGoal_MudStep_Goal_TargetDateInput_Label {
+            get {
+                return ResourceManager.GetString("AddSavingGoal_MudStep_Goal_TargetDateInput_Label", resourceCulture);
+            }
+        }
     }
 }
