@@ -46,6 +46,8 @@
     <File Path="docker-entrypoint.sh" />
     <File Path="generate-client.sh" />
     <File Path="update-licenses.sh" />
+    <File Path=".github\FUNDING.yml" />
+    <File Path=".github\dependabot.yml" />
   </Folder>
   <Folder Name="/Solution/assets/">
     <File Path="assets\README.md" />
