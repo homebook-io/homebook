@@ -16,7 +16,7 @@ public class SavingGoalService(
     public async Task<IEnumerable<SavingGoalDto>> GetAllSavingGoalsAsync(CancellationToken cancellationToken = default)
     {
         string? token = await authenticationService.GetTokenAsync(cancellationToken);
-        GetFinanceSavingGoalsResponse? response = await backendClient.Finances.SavingGoals.GetAsync(x =>
+        FinanceSavingGoalListResponse? response = await backendClient.Finances.SavingGoals.GetAsync(x =>
             {
                 x.Headers.Add("Authorization", $"Bearer {token}");
             },

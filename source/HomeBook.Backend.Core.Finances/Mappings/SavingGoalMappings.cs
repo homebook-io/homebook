@@ -10,8 +10,12 @@ public static class SavingGoalMappings
             savingGoal.Id,
             savingGoal.Name,
             savingGoal.Color,
+            savingGoal.Icon ?? string.Empty,
             savingGoal.TargetAmount,
             savingGoal.CurrentAmount,
+            savingGoal.MonthlyPayment,
+            (DTOs.Enums.InterestRateOptions)savingGoal.InterestRateOption,
+            savingGoal.InterestRate,
             savingGoal.TargetDate);
     }
 }

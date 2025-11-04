@@ -73,31 +73,95 @@ public class SavingGoalsProvider(
     }
 
     /// <inheritdoc />
-    public async Task UpdateSavingGoalAsync(Guid userId,
+    public async Task UpdateSavingGoalNameAsync(Guid userId,
         Guid savingGoalId,
         string name,
+        CancellationToken cancellationToken)
+    {
+        SavingGoal entity = await savingGoalsRepository.GetSavingGoalByIdAsync(userId,
+                                savingGoalId,
+                                cancellationToken)
+                            ?? throw new KeyNotFoundException(
+                                $"Saving goal with ID {savingGoalId} not found for user {userId}.");
+
+        entity.Name = name;
+
+        await savingGoalsRepository.CreateOrUpdateSavingGoalAsync(userId,
+            entity,
+            cancellationToken);
+    }
+
+    /// <inheritdoc />
+    public async Task UpdateSavingGoalAppearanceAsync(Guid userId,
+        Guid savingGoalId,
         string color,
-        decimal targetAmount,
-        decimal currentAmount,
-        decimal monthlyPayment,
+        string icon,
+        CancellationToken cancellationToken)
+    {
+        SavingGoal entity = await savingGoalsRepository.GetSavingGoalByIdAsync(userId,
+                                savingGoalId,
+                                cancellationToken)
+                            ?? throw new KeyNotFoundException(
+                                $"Saving goal with ID {savingGoalId} not found for user {userId}.");
+
+        entity.Color = color;
+        entity.Icon = icon;
+
+        await savingGoalsRepository.CreateOrUpdateSavingGoalAsync(userId,
+            entity,
+            cancellationToken);
+    }
+
+    /// <inheritdoc />
+    public async Task UpdateSavingGoalAmountsAsync(Guid userId,
+        Guid savingGoalId,
+        decimal? targetAmount,
+        decimal? currentAmount,
+        decimal? monthlyPayment,
+        InterestRateOptions? interestRateOption,
+        decimal? interestRate,
+        CancellationToken cancellationToken)
+    {
+        SavingGoal entity = await savingGoalsRepository.GetSavingGoalByIdAsync(userId,
+                                savingGoalId,
+                                cancellationToken)
+                            ?? throw new KeyNotFoundException(
+                                $"Saving goal with ID {savingGoalId} not found for user {userId}.");
+
+        if (targetAmount.HasValue)
+            entity.TargetAmount = targetAmount.Value;
+        if (currentAmount.HasValue)
+            entity.CurrentAmount = currentAmount.Value;
+        if (monthlyPayment.HasValue)
+            entity.MonthlyPayment = monthlyPayment.Value;
+        if (interestRateOption.HasValue)
+            entity.InterestRateOption = (SavingGoal.InterestRateOptions)interestRateOption.Value;
+        if (interestRate.HasValue)
+            entity.InterestRate = interestRate.Value;
+
+        await savingGoalsRepository.CreateOrUpdateSavingGoalAsync(userId,
+            entity,
+            cancellationToken);
+    }
+
+    /// <inheritdoc />
+    public async Task UpdateSavingGoalInfoAsync(Guid userId,
+        Guid savingGoalId,
         DateTime? targetDate,
         CancellationToken cancellationToken)
     {
-        SavingGoal entity = new()
-        {
-            Id = savingGoalId,
-            UserId = userId,
-            Name = name,
-            Color = color,
-            TargetAmount = targetAmount,
-            MonthlyPayment = monthlyPayment,
-            CurrentAmount = currentAmount,
-            TargetDate = targetDate
-        };
+        SavingGoal entity = await savingGoalsRepository.GetSavingGoalByIdAsync(userId,
+                                savingGoalId,
+                                cancellationToken)
+                            ?? throw new KeyNotFoundException(
+                                $"Saving goal with ID {savingGoalId} not found for user {userId}.");
 
-        // TODO: validator
+        if (targetDate.HasValue)
+            entity.TargetDate = targetDate.Value;
 
-        await savingGoalsRepository.CreateOrUpdateSavingGoalAsync(userId, entity, cancellationToken);
+        await savingGoalsRepository.CreateOrUpdateSavingGoalAsync(userId,
+            entity,
+            cancellationToken);
     }
 
     /// <inheritdoc />

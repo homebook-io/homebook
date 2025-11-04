@@ -1,3 +1,4 @@
+using HomeBook.Backend.DTOs.Responses.Finances;
 using HomeBook.Backend.Handler;
 using HomeBook.Backend.OpenApi;
 using HomeBook.Backend.Responses;
@@ -25,7 +26,7 @@ public static class FinanceSavingGoalEndpoints
             .WithOpenApi(operation => new(operation)
             {
             })
-            .Produces<GetFinanceSavingGoalsResponse>(StatusCodes.Status200OK)
+            .Produces<FinanceSavingGoalListResponse>(StatusCodes.Status200OK)
             .Produces(StatusCodes.Status401Unauthorized)
             .Produces<string>(StatusCodes.Status500InternalServerError);
 
