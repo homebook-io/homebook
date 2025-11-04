@@ -24,8 +24,22 @@ namespace HomeBook.Client.Models
 #endif
         /// <summary>The currentAmount property</summary>
         public double? CurrentAmount { get; set; }
+        /// <summary>The icon property</summary>
+#if NETSTANDARD2_1_OR_GREATER || NETCOREAPP3_1_OR_GREATER
+#nullable enable
+        public string? Icon { get; set; }
+#nullable restore
+#else
+        public string Icon { get; set; }
+#endif
         /// <summary>The id property</summary>
         public Guid? Id { get; set; }
+        /// <summary>The interestRate property</summary>
+        public double? InterestRate { get; set; }
+        /// <summary>The interestRateOption property</summary>
+        public int? InterestRateOption { get; set; }
+        /// <summary>The monthlyPayment property</summary>
+        public double? MonthlyPayment { get; set; }
         /// <summary>The name property</summary>
 #if NETSTANDARD2_1_OR_GREATER || NETCOREAPP3_1_OR_GREATER
 #nullable enable
@@ -65,7 +79,11 @@ namespace HomeBook.Client.Models
             {
                 { "color", n => { Color = n.GetStringValue(); } },
                 { "currentAmount", n => { CurrentAmount = n.GetDoubleValue(); } },
+                { "icon", n => { Icon = n.GetStringValue(); } },
                 { "id", n => { Id = n.GetGuidValue(); } },
+                { "interestRate", n => { InterestRate = n.GetDoubleValue(); } },
+                { "interestRateOption", n => { InterestRateOption = n.GetIntValue(); } },
+                { "monthlyPayment", n => { MonthlyPayment = n.GetDoubleValue(); } },
                 { "name", n => { Name = n.GetStringValue(); } },
                 { "targetAmount", n => { TargetAmount = n.GetDoubleValue(); } },
                 { "targetDate", n => { TargetDate = n.GetDateTimeOffsetValue(); } },
@@ -80,7 +98,11 @@ namespace HomeBook.Client.Models
             if(ReferenceEquals(writer, null)) throw new ArgumentNullException(nameof(writer));
             writer.WriteStringValue("color", Color);
             writer.WriteDoubleValue("currentAmount", CurrentAmount);
+            writer.WriteStringValue("icon", Icon);
             writer.WriteGuidValue("id", Id);
+            writer.WriteDoubleValue("interestRate", InterestRate);
+            writer.WriteIntValue("interestRateOption", InterestRateOption);
+            writer.WriteDoubleValue("monthlyPayment", MonthlyPayment);
             writer.WriteStringValue("name", Name);
             writer.WriteDoubleValue("targetAmount", TargetAmount);
             writer.WriteDateTimeOffsetValue("targetDate", TargetDate);

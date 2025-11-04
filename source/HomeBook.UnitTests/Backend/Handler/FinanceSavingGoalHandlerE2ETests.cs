@@ -4,7 +4,9 @@ using HomeBook.Backend.Abstractions.Contracts;
 using HomeBook.Backend.Core.Finances.Contracts;
 using HomeBook.Backend.Data.Sqlite;
 using HomeBook.Backend.Data.Sqlite.Extensions;
+using HomeBook.Backend.DTOs.Enums;
 using HomeBook.Backend.DTOs.Requests.Finances;
+using HomeBook.Backend.DTOs.Responses.Finances;
 using HomeBook.Backend.Extensions;
 using HomeBook.Backend.Handler;
 using HomeBook.Backend.Requests;
@@ -111,8 +113,12 @@ public class FinanceSavingGoalHandlerE2ETests
         // create saving goal
         var createRequest = new CreateSavingGoalRequest("Test Saving Goal",
             "#ff0000",
+            "icon-svg",
             12_000,
             8_500,
+            500,
+            InterestRateOptions.MONTHLY,
+            0,
             null);
         var createSavingGoalResult = await FinanceSavingGoalHandler.HandleCreateSavingGoal(testuser,
             createRequest,
@@ -126,7 +132,7 @@ public class FinanceSavingGoalHandlerE2ETests
             _loggerFactory.CreateLogger<FinanceSavingGoalHandler>(),
             savingGoalsProvider,
             cancellationToken);
-        var savingGoalsResponse1 = savingGoalsResult1.ShouldBeOfType<Ok<GetFinanceSavingGoalsResponse>>();
+        var savingGoalsResponse1 = savingGoalsResult1.ShouldBeOfType<Ok<FinanceSavingGoalListResponse>>();
         savingGoalsResponse1.Value.ShouldNotBeNull();
         savingGoalsResponse1.Value.SavingGoals.Length.ShouldBe(1);
         Guid createdSavingGoalId = savingGoalsResponse1.Value.SavingGoals[0].Id;
@@ -134,38 +140,70 @@ public class FinanceSavingGoalHandlerE2ETests
         savingGoalsResponse1.Value.SavingGoals[0].Name.ShouldBe("Test Saving Goal");
         savingGoalsResponse1.Value.SavingGoals[0].TargetAmount.ShouldBe(12_000);
         savingGoalsResponse1.Value.SavingGoals[0].CurrentAmount.ShouldBe(8_500);
+        savingGoalsResponse1.Value.SavingGoals[0].MonthlyPayment.ShouldBe(500);
 
-        // // update saving goal
-        var updateRequest = new CreateSavingGoalRequest("Updated Saving Goal",
-            "#00ff00",
-            12_000,
-            9_000,
-            null);
-        var updateSavingGoalResult = await FinanceSavingGoalHandler.HandleUpdateSavingGoal(createdSavingGoalId,
+        // update saving goal
+        var updateSavingGoalNameResult = await FinanceSavingGoalHandler.HandleUpdateSavingGoalName(createdSavingGoalId,
             testuser,
-            updateRequest,
+            new UpdateSavingGoalNameRequest("Updated Saving Goal"),
             _loggerFactory.CreateLogger<FinanceSavingGoalHandler>(),
             savingGoalsProvider,
             cancellationToken);
-        updateSavingGoalResult.ShouldBeOfType<Ok>();
+        updateSavingGoalNameResult.ShouldBeOfType<Ok>();
+
+        // update saving goal current amount
+        var updateSavingGoalAmountsResult = await FinanceSavingGoalHandler.HandleUpdateSavingGoalAmounts(
+            createdSavingGoalId,
+            testuser,
+            new UpdateSavingGoalAmountsRequest(null,
+                9_000,
+                null,
+                null,
+                null),
+            _loggerFactory.CreateLogger<FinanceSavingGoalHandler>(),
+            savingGoalsProvider,
+            cancellationToken);
+        updateSavingGoalAmountsResult.ShouldBeOfType<Ok>();
+
+        // update saving goal current amount
+        var dt = DateTime.UtcNow.AddYears(3);
+        var updateSavingGoalInfoResult = await FinanceSavingGoalHandler.HandleUpdateSavingGoalInfo(
+            createdSavingGoalId,
+            testuser,
+            new UpdateSavingGoalInfoRequest(new DateTime(dt.Year, dt.Month, dt.Day)),
+            _loggerFactory.CreateLogger<FinanceSavingGoalHandler>(),
+            savingGoalsProvider,
+            cancellationToken);
+        updateSavingGoalInfoResult.ShouldBeOfType<Ok>();
+
+        // update saving goal current amount
+        var updateSavingGoalAppearanceResult = await FinanceSavingGoalHandler.HandleUpdateSavingGoalAppearance(
+            createdSavingGoalId,
+            testuser,
+            new UpdateSavingGoalAppearanceRequest("#0000ff", ""),
+            _loggerFactory.CreateLogger<FinanceSavingGoalHandler>(),
+            savingGoalsProvider,
+            cancellationToken);
+        updateSavingGoalAppearanceResult.ShouldBeOfType<Ok>();
 
         // get all after update
         var savingGoalsResult2 = await FinanceSavingGoalHandler.HandleGetSavingGoals(testuser,
             _loggerFactory.CreateLogger<FinanceSavingGoalHandler>(),
             savingGoalsProvider,
             cancellationToken);
-        var savingGoalsResponse2 = savingGoalsResult2.ShouldBeOfType<Ok<GetFinanceSavingGoalsResponse>>();
+        var savingGoalsResponse2 = savingGoalsResult2.ShouldBeOfType<Ok<FinanceSavingGoalListResponse>>();
         savingGoalsResponse2.Value.ShouldNotBeNull();
         savingGoalsResponse2.Value.SavingGoals.Length.ShouldBe(1);
-        savingGoalsResponse2.Value.SavingGoals[0].Color.ShouldBe("#00ff00");
+        savingGoalsResponse2.Value.SavingGoals[0].Color.ShouldBe("#0000ff");
         savingGoalsResponse2.Value.SavingGoals[0].Name.ShouldBe("Updated Saving Goal");
         savingGoalsResponse2.Value.SavingGoals[0].TargetAmount.ShouldBe(12_000);
         savingGoalsResponse2.Value.SavingGoals[0].CurrentAmount.ShouldBe(9_000);
+        savingGoalsResponse2.Value.SavingGoals[0].MonthlyPayment.ShouldBe(500);
+        savingGoalsResponse2.Value.SavingGoals[0].TargetDate.ShouldBe(new DateTime(dt.Year, dt.Month, dt.Day));
 
-        // // delete saving goal
+        // delete saving goal
         var deleteSavingGoalResult = await FinanceSavingGoalHandler.HandleDeleteSavingGoal(createdSavingGoalId,
             testuser,
-            updateRequest,
             _loggerFactory.CreateLogger<FinanceSavingGoalHandler>(),
             savingGoalsProvider,
             cancellationToken);
@@ -176,7 +214,7 @@ public class FinanceSavingGoalHandlerE2ETests
             _loggerFactory.CreateLogger<FinanceSavingGoalHandler>(),
             savingGoalsProvider,
             cancellationToken);
-        var savingGoalsResponse3 = savingGoalsResult3.ShouldBeOfType<Ok<GetFinanceSavingGoalsResponse>>();
+        var savingGoalsResponse3 = savingGoalsResult3.ShouldBeOfType<Ok<FinanceSavingGoalListResponse>>();
         savingGoalsResponse3.Value.ShouldNotBeNull();
         savingGoalsResponse3.Value.SavingGoals.Length.ShouldBe(0);
     }

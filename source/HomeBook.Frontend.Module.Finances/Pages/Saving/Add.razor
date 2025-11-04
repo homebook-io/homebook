@@ -88,14 +88,14 @@
                         <MudText Typo="Typo.h4"
                                  Align="Align.Center"
                                  Class="mb-5">
-                            +Was möchtest du erreichen?
+                            @Loc[nameof(Strings.AddSavingGoal_MudStep_Name_Title_Text)]
                         </MudText>
 
                         <MudText Typo="Typo.caption"
                                  Color="Color.Tertiary"
                                  Align="Align.Left"
                                  Class="mb-3 d-inline-block">
-                            +Wähle einen Namen, der beschreibt, wofür du sparen möchtest.
+                            @Loc[nameof(Strings.AddSavingGoal_MudStep_Name_Title_Caption)]
                         </MudText>
 
                         <MudTextField T="string"
@@ -103,7 +103,7 @@
                                       @bind-Value="_model.Name"
                                       Required="true"
                                       Clearable="true"
-                                      Placeholder="+Name eingeben"
+                                      Placeholder="@Loc[nameof(Strings.AddSavingGoal_MudStep_Name_Input_Placeholder)]"
                                       Immediate="true"/>
 
                         <MudStack Row="true"
@@ -146,14 +146,14 @@
                         <MudText Typo="Typo.h4"
                                  Align="Align.Center"
                                  Class="mb-5">
-                            +Dein Sparbetrag?
+                            @Loc[nameof(Strings.AddSavingGoal_MudStep_Goal_Title_Text)]
                         </MudText>
 
                         <MudText Typo="Typo.caption"
                                  Color="Color.Tertiary"
                                  Align="Align.Left"
                                  Class="mb-3 d-inline-block">
-                            +Trage den Gesamtbetrag ein, den du Schritt für Schritt erreichen willst.
+                            @Loc[nameof(Strings.AddSavingGoal_MudStep_Goal_Title_Caption)]
                         </MudText>
 
                         <MudNumericField T="decimal"
@@ -161,24 +161,25 @@
                                          @bind-Value="_model.TargetAmount"
                                          Required="true"
                                          Step="50"
+                                         Min="0"
                                          Immediate="true"
-                                         Placeholder="+Betrag eingeben"
+                                         Placeholder="@Loc[nameof(Strings.AddSavingGoal_MudStep_Goal_Input_Placeholder)]"
                                          Adornment="Adornment.End"
-                                         Validation="@((decimal? v) => v is null or <= 0 ? "Wert muss größer als 0 sein" : null)"
+                                         Validation="@((decimal? v) => v is null or <= 0 ? Loc[nameof(Strings.AddSavingGoal_MudStep_Goal_Input_ValidationError)] : null)"
                                          AdornmentText="@CultureInfo.CurrentCulture.NumberFormat.CurrencySymbol"/>
 
                         <MudText Typo="Typo.caption"
                                  Color="Color.Tertiary"
                                  Align="Align.Left"
                                  Class="mb-3 d-inline-block">
-                            +Gib an, bis wann du dein Ziel gerne erreichen würdest – das hilft, motiviert zu bleiben.
+                            @Loc[nameof(Strings.AddSavingGoal_MudStep_Goal_TargetDate_Caption)]
                         </MudText>
 
-                        <MudDatePicker Label="+Ziel-Datum (optional)"
+                        <MudDatePicker Label="@Loc[nameof(Strings.AddSavingGoal_MudStep_Goal_TargetDateInput_Label)]"
                                        @bind-Date="_model.TargetDate"
                                        MinDate="DateTime.Now"
                                        Clearable="true"
-                                       Placeholder="+Datum auswählen"
+                                       Placeholder="@Loc[nameof(Strings.AddSavingGoal_MudStep_Goal_TargetDateInput_Placeholder)]"
                                        DisplayMonths="2"/>
 
                         <MudStack Row="true"
@@ -221,14 +222,14 @@
                         <MudText Typo="Typo.h4"
                                  Align="Align.Center"
                                  Class="mb-5">
-                            +Weitere Optionen
+                            @Loc[nameof(Strings.AddSavingGoal_MudStep_Options_Title_Text)]
                         </MudText>
 
                         <MudText Typo="Typo.caption"
                                  Color="Color.Tertiary"
                                  Align="Align.Left"
                                  Class="mb-3 d-inline-block">
-                            +Bekommst du auf deinem Sparkonto Zinsen?
+                            @Loc[nameof(Strings.AddSavingGoal_MudStep_Options_Title_Caption)]
                         </MudText>
 
                     </MudContainer>
@@ -243,19 +244,19 @@
                             <MudRadio T="InterestRateOptions"
                                       Color="Color.Primary"
                                       Value="@(InterestRateOptions.NONE)">
-                                +Keine Zinsen
+                                @Loc[nameof(Strings.AddSavingGoal_MudStep_InterestRateOption_None_Option_Text)]
                             </MudRadio>
 
                             <MudRadio T="InterestRateOptions"
                                       Color="Color.Primary"
                                       Value="@(InterestRateOptions.MONTHLY)">
-                                +Monatlich
+                                @Loc[nameof(Strings.AddSavingGoal_MudStep_InterestRateOption_Monthly_Option_Text)]
                             </MudRadio>
 
                             <MudRadio T="InterestRateOptions"
                                       Color="Color.Primary"
                                       Value="@(InterestRateOptions.YEARLY)">
-                                +Jährlich
+                                @Loc[nameof(Strings.AddSavingGoal_MudStep_InterestRateOption_Yearly_Option_Text)]
                             </MudRadio>
 
                         </MudRadioGroup>
@@ -268,7 +269,7 @@
                         @if (_model.IsInterestRateSelected())
                         {
                             <MudNumericField T="decimal?"
-                                             Label="+Zinssatz (%)"
+                                             Label="@Loc[nameof(Strings.AddSavingGoal_MudStep_InterestRate_Input_Label)]"
                                              @bind-Value="_model.InterestRate"
                                              Variant="Variant.Outlined"
                                              Adornment="Adornment.End"
@@ -377,7 +378,7 @@
                         <MudText Typo="Typo.h4"
                                  Align="Align.Center"
                                  Class="mb-5">
-                            +Dein Sparziel zusammengefasst
+                            @Loc[nameof(Strings.AddSavingGoal_MudStep_Summary_Title_Text)]
                         </MudText>
 
                         <MudText Typo="Typo.h6"
@@ -389,7 +390,7 @@
                         <MudText Typo="Typo.body1"
                                  Align="Align.Center"
                                  Class="mb-5">
-                            +Dein Sparziel: @_summaryVM.TargetAmount.ToString("C")
+                            @Loc[nameof(Strings.AddSavingGoal_MudStep_Summary_Name_Text)] @_summaryVM.TargetAmount.ToString("C")
                         </MudText>
 
                         @if (_summaryVM.TargetDate is not null)
@@ -397,26 +398,27 @@
                             <MudText Typo="Typo.body1"
                                      Align="Align.Center"
                                      Class="d-block mb-5">
-                                +Bis: @_summaryVM.TargetDate.Value.ToLongDateString()
+                                @Loc[nameof(Strings.AddSavingGoal_MudStep_Summary_TargetDate_Text)] @_summaryVM.TargetDate.Value.ToLongDateString()
                             </MudText>
 
                             <MudText Typo="Typo.caption"
                                      Align="Align.Center"
                                      Class="d-block mb-5">
-                                +Monate: @_summaryVM.NumberOfMonths
+                                @Loc[nameof(Strings.AddSavingGoal_MudStep_Summary_NumberOfMonths_Text)] @_summaryVM.NumberOfMonths
                             </MudText>
 
                             <MudText Typo="Typo.caption"
                                      Align="Align.Center"
                                      Class="d-block mb-5">
-                                +pro Monat: @_summaryVM.AmountPerMonth.ToString("C")
+                                @Loc[nameof(Strings.AddSavingGoal_MudStep_Summary_AmountPerMonth_Text)] @_summaryVM.AmountPerMonth.ToString("C")
                             </MudText>
 
                             <MudText Typo="Typo.caption"
                                      Align="Align.Center"
                                      Class="d-block mb-5">
-                                +Am Ende hast du @_summaryVM.AmountsWithInterests[^1].ToString("C")
-                                und dabei Zinsen in Höhe von @_summaryVM.Interests.Sum().ToString("C") erhalten :)
+                                @string.Format(Loc[nameof(Strings.AddSavingGoal_MudStep_Summary_Result_TextTemplate)],
+                                    _summaryVM.AmountsWithInterests[^1].ToString("C"),
+                                    _summaryVM.Interests.Sum().ToString("C"))
                             </MudText>
 
                             <MudChart ChartType="ChartType.Line"

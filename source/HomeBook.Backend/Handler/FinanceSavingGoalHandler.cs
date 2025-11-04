@@ -2,8 +2,8 @@ using System.Security.Claims;
 using HomeBook.Backend.Core.Finances.Contracts;
 using HomeBook.Backend.Core.Finances.Models;
 using HomeBook.Backend.DTOs.Requests.Finances;
+using HomeBook.Backend.DTOs.Responses.Finances;
 using HomeBook.Backend.Mappings;
-using HomeBook.Backend.Responses;
 using HomeBook.Backend.Utilities;
 using Microsoft.AspNetCore.Mvc;
 
@@ -32,7 +32,7 @@ public class FinanceSavingGoalHandler
                 cancellationToken);
             FinanceSavingGoalResponse[] savingGoals = savingGoalDtos.Select(sg => sg.ToResponse()).ToArray();
 
-            return TypedResults.Ok(new GetFinanceSavingGoalsResponse(savingGoals));
+            return TypedResults.Ok(new FinanceSavingGoalListResponse(savingGoals));
         }
         catch (Exception err)
         {
@@ -104,7 +104,10 @@ public class FinanceSavingGoalHandler
         {
             Guid userId = user.GetUserId();
 
-            // TODO:
+            await savingGoalsProvider.UpdateSavingGoalNameAsync(userId,
+                savingGoalId,
+                request.Name,
+                cancellationToken);
 
             return TypedResults.Ok();
         }
@@ -138,7 +141,11 @@ public class FinanceSavingGoalHandler
         {
             Guid userId = user.GetUserId();
 
-            // TODO:
+            await savingGoalsProvider.UpdateSavingGoalAppearanceAsync(userId,
+                savingGoalId,
+                request.Color,
+                request.Icon,
+                cancellationToken);
 
             return TypedResults.Ok();
         }
@@ -172,7 +179,14 @@ public class FinanceSavingGoalHandler
         {
             Guid userId = user.GetUserId();
 
-            // TODO:
+            await savingGoalsProvider.UpdateSavingGoalAmountsAsync(userId,
+                savingGoalId,
+                request.TargetAmount,
+                request.CurrentAmount,
+                request.MonthlyPayment,
+                request.InterestRateOption,
+                request.InterestRate,
+                cancellationToken);
 
             return TypedResults.Ok();
         }
@@ -206,7 +220,10 @@ public class FinanceSavingGoalHandler
         {
             Guid userId = user.GetUserId();
 
-            // TODO:
+            await savingGoalsProvider.UpdateSavingGoalInfoAsync(userId,
+                savingGoalId,
+                request.TargetDate,
+                cancellationToken);
 
             return TypedResults.Ok();
         }
@@ -224,14 +241,12 @@ public class FinanceSavingGoalHandler
     /// </summary>
     /// <param name="savingGoalId"></param>
     /// <param name="user"></param>
-    /// <param name="request"></param>
     /// <param name="logger"></param>
     /// <param name="savingGoalsProvider"></param>
     /// <param name="cancellationToken"></param>
     /// <returns></returns>
     public static async Task<IResult> HandleDeleteSavingGoal(Guid savingGoalId,
         ClaimsPrincipal user,
-        [FromBody] CreateSavingGoalRequest request,
         [FromServices] ILogger<FinanceSavingGoalHandler> logger,
         [FromServices] ISavingGoalsProvider savingGoalsProvider,
         CancellationToken cancellationToken)
