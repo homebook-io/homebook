@@ -1,11 +1,9 @@
 using HomeBook.Frontend.Abstractions.Contracts;
 using HomeBook.Frontend.ModuleCore;
-using HomeBook.Frontend.Properties;
 using HomeBook.Frontend.Provider;
 using HomeBook.Frontend.Services;
 using HomeBook.Frontend.Setup;
 using Microsoft.AspNetCore.Components.Authorization;
-using Microsoft.Extensions.Localization;
 using Microsoft.FeatureManagement;
 
 namespace HomeBook.Frontend.Extensions;
@@ -22,13 +20,6 @@ public static class ServiceCollectionExtensions
 
         services.AddSingleton<ISetupService, SetupService>();
         services.AddSingleton<IStartupService, StartupService>();
-
-        services.AddSingleton<ILocalizationProvider, LocalizationProvider>(x =>
-        {
-            Type localizerType = typeof(IStringLocalizer<>).MakeGenericType(typeof(LocalizationStrings));
-            IStringLocalizer localizer = (IStringLocalizer)x.GetRequiredService(localizerType);
-            return new LocalizationProvider(localizer);
-        });
 
         services.AddSingleton<IWidgetFactory, WidgetFactory>();
 

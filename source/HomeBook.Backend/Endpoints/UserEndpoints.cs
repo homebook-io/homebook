@@ -10,12 +10,12 @@ public static class UserEndpoints
     {
         RouteGroupBuilder group = routeBuilder
             .MapGroup("/user")
-            .WithTags("user")
             .WithDescription("Endpoints for user management")
             .RequireAuthorization();
 
         group.MapGet("/preferences/locale", UserHandler.HandleGetUserPreferenceForLocale)
             .WithName("GetUserPreferenceForLocale")
+            .WithTags("User")
             .WithDescription(new Description(
                 "returns the user preference for locale",
                 "HTTP 200: User preference was found",
@@ -31,6 +31,7 @@ public static class UserEndpoints
 
         group.MapPost("/preferences/locale", UserHandler.HandleUpdateUserPreferenceForLocale)
             .WithName("UpdateUserPreferenceForLocale")
+            .WithTags("User")
             .WithDescription(new Description("updates the user preference for locale",
                 "HTTP 200: User preference was updated",
                 "HTTP 401: User is not authorized",

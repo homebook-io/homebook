@@ -16,7 +16,7 @@ namespace HomeBook.Backend.Data.Mysql.Migrations
         {
 #pragma warning disable 612, 618
             modelBuilder
-                .HasAnnotation("ProductVersion", "9.0.9")
+                .HasAnnotation("ProductVersion", "9.0.10")
                 .HasAnnotation("Relational:MaxIdentifierLength", 64);
 
             modelBuilder.Entity("HomeBook.Backend.Data.Entities.Configuration", b =>
@@ -37,6 +37,54 @@ namespace HomeBook.Backend.Data.Mysql.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("Configurations");
+                });
+
+            modelBuilder.Entity("HomeBook.Backend.Data.Entities.SavingGoal", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("char(36)");
+
+                    b.Property<string>("Color")
+                        .IsRequired()
+                        .HasMaxLength(7)
+                        .HasColumnType("varchar(7)");
+
+                    b.Property<decimal>("CurrentAmount")
+                        .HasColumnType("decimal(18,2)");
+
+                    b.Property<string>("Icon")
+                        .HasColumnType("longtext");
+
+                    b.Property<decimal?>("InterestRate")
+                        .HasColumnType("decimal(18,2)");
+
+                    b.Property<string>("InterestRateOption")
+                        .IsRequired()
+                        .HasColumnType("text");
+
+                    b.Property<decimal>("MonthlyPayment")
+                        .HasColumnType("decimal(18,2)");
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasMaxLength(50)
+                        .HasColumnType("varchar(50)");
+
+                    b.Property<decimal>("TargetAmount")
+                        .HasColumnType("decimal(18,2)");
+
+                    b.Property<DateTime?>("TargetDate")
+                        .HasColumnType("datetime(6)");
+
+                    b.Property<Guid>("UserId")
+                        .HasColumnType("char(36)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("UserId");
+
+                    b.ToTable("SavingGoals");
                 });
 
             modelBuilder.Entity("HomeBook.Backend.Data.Entities.User", b =>
@@ -91,6 +139,17 @@ namespace HomeBook.Backend.Data.Mysql.Migrations
                     b.HasKey("UserId", "Key");
 
                     b.ToTable("UserPreferences");
+                });
+
+            modelBuilder.Entity("HomeBook.Backend.Data.Entities.SavingGoal", b =>
+                {
+                    b.HasOne("HomeBook.Backend.Data.Entities.User", "User")
+                        .WithMany()
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("User");
                 });
 
             modelBuilder.Entity("HomeBook.Backend.Data.Entities.UserPreference", b =>

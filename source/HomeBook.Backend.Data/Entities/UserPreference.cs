@@ -16,6 +16,11 @@ public class UserPreference
     public Guid UserId { get; set; }
 
     /// <summary>
+    /// navigation property to the user
+    /// </summary>
+    public virtual User? User { get; set; }
+
+    /// <summary>
     /// the key of this user preference
     /// </summary>
     [Required]
@@ -27,9 +32,4 @@ public class UserPreference
     /// </summary>
     [Required]
     public required string Value { get; set; }
-
-    /// <summary>
-    /// navigation property to the user
-    /// </summary>
-    public virtual User? User { get; set; }
 }

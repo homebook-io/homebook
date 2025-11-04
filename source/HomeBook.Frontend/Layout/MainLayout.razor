@@ -2,13 +2,14 @@
 @using HomeBook.Frontend.Abstractions.Enums
 @using HomeBook.Frontend.Abstractions.Models
 @using HomeBook.Frontend.Core.Icons
-@using HomeBook.Frontend.Properties
 @using HomeBook.Frontend.Themes
+@using HomeBook.Frontend.UI.Resources
 @using Microsoft.AspNetCore.Components.Authorization
+@using Microsoft.Extensions.Localization
 
 @inherits LayoutComponentBase
 
-@inject ILocalizationProvider Loc
+@inject IStringLocalizer<LocalizationStrings> Loc
 @inject IAuthenticationService AuthenticationService
 @inject NavigationManager NavigationManager
 @inject ISnackbar Snackbar
@@ -16,7 +17,8 @@
 @inject IMenuService MenuService
 
 @* Required *@
-<MudThemeProvider Theme="HomebookTheme.GetTheme()"/>
+<MudThemeProvider @bind-IsDarkMode="@_isThemeDarkMode"
+                  Theme="HomebookTheme.GetTheme()"/>
 <MudPopoverProvider/>
 
 @* Needed for dialogs *@
@@ -175,15 +177,12 @@
             <MudText Typo="Typo.caption">@Loc[nameof(LocalizationStrings.AuthorName)]</MudText>
         </MudLink>
 
-        <MudSpacer/>
-
-        <MudIconButton Icon="@Icons.Material.Filled.MoreVert" Color="Color.Inherit" Edge="Edge.End"/>
-
     </MudAppBar>
 
 </MudLayout>
 
 @code {
+    private bool _isThemeDarkMode = false;
     private bool _drawerOpen = true;
     private string? _homebookInstanceName = null;
     private bool _hasContextMenuItems = false;

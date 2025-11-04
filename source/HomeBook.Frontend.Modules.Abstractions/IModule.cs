@@ -34,4 +34,12 @@ public interface IModule
     /// contains the initialization logic for the module.
     /// </summary>
     Task InitializeAsync();
+
+    /// <summary>
+    ///
+    /// </summary>
+    /// <param name="key"></param>
+    /// <param name="args"></param>
+    /// <returns></returns>
+    string GetTranslation(string key, params object[] args);
 }

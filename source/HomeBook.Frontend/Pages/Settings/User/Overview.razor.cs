@@ -1,7 +1,7 @@
 using System.Security.Claims;
 using HomeBook.Frontend.Abstractions.Models;
 using HomeBook.Frontend.Abstractions.Models.System;
-using HomeBook.Frontend.Properties;
+using HomeBook.Frontend.UI.Resources;
 using Microsoft.AspNetCore.Components;
 using Microsoft.AspNetCore.Components.Authorization;
 using MudBlazor;

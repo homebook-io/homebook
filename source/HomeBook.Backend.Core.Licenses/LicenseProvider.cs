@@ -39,6 +39,10 @@ public class LicenseProvider(
             licenses.Add(new DependencyLicense(fileName, bodyInnerHtml));
         }
 
+
+
+        // <a href="https://iradesign.io">Illustrations by IRA Design</a>
+
         return licenses.ToArray();
     }
 

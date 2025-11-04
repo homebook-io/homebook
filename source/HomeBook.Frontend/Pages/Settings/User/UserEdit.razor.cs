@@ -1,10 +1,10 @@
-using Microsoft.AspNetCore.Components;
-using Microsoft.AspNetCore.Components.Authorization;
-using MudBlazor;
 using System.Security.Claims;
 using HomeBook.Frontend.Abstractions.Models.System;
 using HomeBook.Frontend.Core.Models.Settings.Users;
-using HomeBook.Frontend.Properties;
+using HomeBook.Frontend.UI.Resources;
+using Microsoft.AspNetCore.Components;
+using Microsoft.AspNetCore.Components.Authorization;
+using MudBlazor;
 
 namespace HomeBook.Frontend.Pages.Settings.User;
 

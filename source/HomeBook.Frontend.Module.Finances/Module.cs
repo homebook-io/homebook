@@ -1,23 +1,29 @@
-﻿using HomeBook.Frontend.Modules.Abstractions;
+﻿using HomeBook.Frontend.Core.Icons;
+using HomeBook.Frontend.Module.Finances.Contracts;
+using HomeBook.Frontend.Module.Finances.Factories;
+using HomeBook.Frontend.Module.Finances.Resources;
+using HomeBook.Frontend.Module.Finances.Services;
+using HomeBook.Frontend.Modules.Abstractions;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Localization;
 
 namespace HomeBook.Frontend.Module.Finances;
 
 /// <summary>
 /// the finances module
 /// </summary>
-public class Module
+public class Module(IStringLocalizer<Strings> Loc)
     : IModule,
         IModuleWidgetRegistration,
         IModuleDependencyRegistration,
         IModuleStartMenuRegistration
 {
     /// <inheritdoc />
-    public string Name => "Finances";
+    public string Name => Loc[nameof(Strings.ModuleName)];
 
     /// <inheritdoc />
-    public string Description => "Module for managing finances, including expenses and budgets.";
+    public string Description => Loc[nameof(Strings.ModuleDescription)];
 
     /// <inheritdoc />
     public string Author { get; } = "HomeBook";
@@ -26,12 +32,16 @@ public class Module
     public Version Version => new("1.0.0");
 
     /// <inheritdoc />
-    public string Icon { get; } = HomeBook.Frontend.Core.Icons.HomeBookIcons.Icons8.LiquidGlassColor.Investment;
+    public string Icon { get; } = HomeBookIcons.Icons8.LiquidGlassColor.Investment;
 
+    /// <inheritdoc />
     public async Task InitializeAsync()
     {
         await Task.CompletedTask;
     }
+
+    /// <inheritdoc />
+    public string GetTranslation(string key, params object[] args) => Loc[key, args];
 
     /// <inheritdoc />
     public static void RegisterWidgets(IWidgetBuilder builder,
@@ -44,22 +54,19 @@ public class Module
     public static void RegisterServices(IServiceCollection services,
         IConfiguration configuration)
     {
+        services.AddSingleton<ISavingGoalService, SavingGoalService>();
+
+        services.AddSingleton<IViewModelFactory, ViewModelFactory>();
     }
 
     /// <inheritdoc />
     public static void RegisterStartMenuItems(IStartMenuBuilder builder,
         IConfiguration configuration)
     {
-        builder.AddStartMenu("Module_Finances_StartMenuItem_Title",
-            "Module_Finances_StartMenuItem_Caption",
+        builder.AddStartMenuTile(nameof(Strings.StartMenuItem_Overview_Title),
+            nameof(Strings.StartMenuItem_Overview_Caption),
             "/Finances",
-            HomeBook.Frontend.Core.Icons.HomeBookIcons.Icons8.Windows11.Filled.Graph,
-            "#118C4F");
-
-        // builder.AddStartMenu("Module_Finances_StartMenuItem_Title",
-        //     "Module_Finances_StartMenuItem_Caption",
-        //     "/Finances",
-        //     HomeBook.Frontend.Core.Icons.HomeBookIcons.Icons8.Windows11.Filled.BigData,
-        //     "#5039c4");
+            HomeBookIcons.Icons8.Windows11.Filled.Graph,
+            "var(--hb-color-denim)");
     }
 }

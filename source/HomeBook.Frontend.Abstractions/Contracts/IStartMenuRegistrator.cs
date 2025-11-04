@@ -13,7 +13,7 @@ public interface IStartMenuRegistrator
     /// gets all registered start menu items
     /// </summary>
     /// <returns></returns>
-    StartMenuItem[] GetStartMenuItems();
+    StartMenuBuilderItem[] GetStartMenuItems();
 
     /// <summary>
     /// registers start menu items during service configuration

@@ -8,11 +8,11 @@ public static class VersionEndpoints
     {
         RouteGroupBuilder group = routeBuilder
             .MapGroup("/version")
-            .WithTags("version")
             .WithDescription("Endpoints for application version");
 
         group.MapGet("/", VersionHandler.HandleGetVersion)
             .WithName("GetVersion")
+            .WithTags("Version")
             .WithDescription("returns the version of the backend service")
             // .RequireAuthorization(policy => policy.RequireRole("read"))
             .WithOpenApi(operation => new(operation)

@@ -3,7 +3,7 @@ using HomeBook.Frontend.Abstractions.Enums;
 using HomeBook.Frontend.Core.Models.Configuration;
 using HomeBook.Frontend.Core.Models.Setup;
 using HomeBook.Frontend.Mappings;
-using HomeBook.Frontend.Properties;
+using HomeBook.Frontend.UI.Resources;
 using Microsoft.AspNetCore.Components;
 using MudBlazor;
 

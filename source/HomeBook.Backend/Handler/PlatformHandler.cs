@@ -13,7 +13,8 @@ public static class PlatformHandler
         {
             var availableLocales = new List<string>
             {
-                "en-EN",
+                "en-GB",
+                "en-US",
                 "de-DE",
                 "fr-FR"
             };

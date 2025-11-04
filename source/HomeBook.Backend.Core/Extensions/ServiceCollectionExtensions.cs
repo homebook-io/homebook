@@ -1,4 +1,5 @@
 using HomeBook.Backend.Abstractions;
+using HomeBook.Backend.Abstractions.Contracts;
 using HomeBook.Backend.Core.Licenses.Extensions;
 using Homebook.Backend.Core.Setup.Extensions;
 using HomeBook.Backend.Core.HashProvider.Extensions;
@@ -17,6 +18,8 @@ public static class ServiceCollectionExtensions
             .AddBackendCoreLicenses(configuration, instanceStatus)
             .AddBackendCoreHashProvider(configuration, instanceStatus)
             .AddBackendCoreValidators(configuration, instanceStatus);
+
+        services.AddSingleton<IDateTimeProvider, DateTimeProvider>();
 
         return services;
     }

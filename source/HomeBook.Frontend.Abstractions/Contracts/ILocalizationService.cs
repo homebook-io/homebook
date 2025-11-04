@@ -19,27 +19,16 @@ public interface ILocalizationService
     /// </summary>
     /// <param name="cancellationToken"></param>
     /// <returns></returns>
-    Task<CultureInfo> GetCultureAsync(CancellationToken cancellationToken = default);
+    Task<string> GetCultureAsync(CancellationToken cancellationToken = default);
 
     /// <summary>
     ///
     /// </summary>
-    /// <param name="culture"></param>
+    /// <param name="selectedCulture"></param>
     /// <param name="forceLoad"></param>
     /// <param name="cancellationToken"></param>
     /// <returns></returns>
-    Task SetCultureAsync(string culture,
-        bool forceLoad = true,
-        CancellationToken cancellationToken = default);
-
-    /// <summary>
-    ///
-    /// </summary>
-    /// <param name="cultureInfo"></param>
-    /// <param name="forceLoad"></param>
-    /// <param name="cancellationToken"></param>
-    /// <returns></returns>
-    Task SetCultureAsync(CultureInfo cultureInfo,
+    Task SetCultureAsync(string selectedCulture,
         bool forceLoad = true,
         CancellationToken cancellationToken = default);
 }

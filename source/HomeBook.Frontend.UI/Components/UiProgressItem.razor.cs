@@ -36,5 +36,5 @@ public partial class UiProgressItem : ComponentBase
     public Size ProgressSize { get; set; } = Size.Medium;
 
     [Parameter]
-    public Color ProgressColor { get; set; } = Color.Default;
+    public string? Color { get; set; }
 }

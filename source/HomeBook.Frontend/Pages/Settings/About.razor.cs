@@ -3,7 +3,7 @@ using HomeBook.Frontend.Abstractions.Models.System;
 using HomeBook.Frontend.Components;
 using HomeBook.Frontend.Core.Models.Setup;
 using HomeBook.Frontend.Mappings;
-using HomeBook.Frontend.Properties;
+using HomeBook.Frontend.UI.Resources;
 using Microsoft.AspNetCore.Components;
 using MudBlazor;
 
@@ -11,9 +11,8 @@ namespace HomeBook.Frontend.Pages.Settings;
 
 public partial class About : ComponentBase
 {
-    private string _uiVersion = "1.0.0";
     private string _uiDotnetVersion = ".NET 1.0.0";
-    private string _backendVersion = "1.0.0";
+    private string _backendVersion = string.Empty;
     private string _backendDotnetVersion = ".NET 1.0.0";
     private string _databaseProvider = "";
     private string _deploymentType = "";
@@ -40,8 +39,8 @@ public partial class About : ComponentBase
 
     private void LoadUiInfoAsync()
     {
-        _uiVersion = Configuration["AppVersion"] ?? "1.0.0";
         _uiDotnetVersion = $".NET {Environment.Version}";
+        StateHasChanged();
     }
 
     private async Task LoadBackendInfoAsync(CancellationToken cancellationToken)
@@ -59,6 +58,7 @@ public partial class About : ComponentBase
 
                 _databaseProvider = systemInfo.DatabaseProvider;
                 _deploymentType = systemInfo.DeploymentType;
+                StateHasChanged();
             }
         }
         catch (Exception err)

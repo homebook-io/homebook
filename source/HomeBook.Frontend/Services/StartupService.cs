@@ -68,7 +68,7 @@ public class StartupService(
     {
         await localizationService.InitializeAsync(cancellationToken);
 
-        CultureInfo culture = await localizationService.GetCultureAsync(cancellationToken);
+        string culture = await localizationService.GetCultureAsync(cancellationToken);
         await localizationService.SetCultureAsync(culture,
             false,
             cancellationToken);

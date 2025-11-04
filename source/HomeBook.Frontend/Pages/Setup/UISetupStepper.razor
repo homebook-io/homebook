@@ -1,7 +1,9 @@
 @using HomeBook.Frontend.Abstractions.Contracts
+@using HomeBook.Frontend.UI.Resources
 @using HomeBook.Frontend.ViewModels.Setup
+@using Microsoft.Extensions.Localization
 
-@inject ILocalizationProvider Loc
+@inject IStringLocalizer<LocalizationStrings> Loc
 @inject ISetupService SetupService
 
 <MudCard Class="frosted-b1 mud-elevation-6">
@@ -9,7 +11,7 @@
     <MudStepper @ref="_setupStepper"
                 Vertical="IsVertical"
                 ShowResetButton="false"
-                Class="ui-setup-stepper">
+                Class="ui-setup-stepper no-actions">
 
         <ChildContent>
 

@@ -15,6 +15,7 @@ public static class ServiceCollectionExtensions
         services.AddScoped<IUserRepository, UserRepository>();
         services.AddScoped<IConfigurationRepository, ConfigurationRepository>();
         services.AddScoped<IUserPreferenceRepository, UserPreferenceRepository>();
+        services.AddScoped<ISavingGoalsRepository, SavingGoalsRepository>();
 
         return services;
     }

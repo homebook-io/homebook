@@ -52,4 +52,44 @@ public static class SqliteHelper
 
         return rows;
     }
+
+
+    public static string GetContentByTableName(SqliteConnection connection, string tableName)
+    {
+        using var cmd = connection.CreateCommand();
+        cmd.CommandText = $"SELECT * FROM {tableName};";
+
+        using var reader = cmd.ExecuteReader();
+
+        if (!reader.HasRows)
+            return $"-- No rows in table {tableName}";
+
+        var sb = new StringBuilder();
+
+        // Spaltennamen
+        for (int i = 0; i < reader.FieldCount; i++)
+        {
+            sb.Append(reader.GetName(i));
+            if (i < reader.FieldCount - 1)
+                sb.Append(" | ");
+        }
+
+        sb.AppendLine();
+        sb.AppendLine(new string('-', 50));
+
+        // Inhalte
+        while (reader.Read())
+        {
+            for (int i = 0; i < reader.FieldCount; i++)
+            {
+                sb.Append(reader.IsDBNull(i) ? "NULL" : reader.GetValue(i));
+                if (i < reader.FieldCount - 1)
+                    sb.Append(" | ");
+            }
+
+            sb.AppendLine();
+        }
+
+        return sb.ToString();
+    }
 }

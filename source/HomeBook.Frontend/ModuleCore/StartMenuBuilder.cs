@@ -8,33 +8,50 @@ namespace HomeBook.Frontend.ModuleCore;
 /// <inheritdoc />
 public class StartMenuBuilder : IStartMenuBuilder, IStartMenuRegistrator
 {
-    private readonly List<StartMenuItem> _startMenuItems = new();
+    private readonly List<StartMenuBuilderItem> _startMenuItems = new();
+    private string? _currentModuleId;
+
+    public void WithModule(string moduleId) => _currentModuleId = moduleId;
 
     /// <inheritdoc />
-    public IStartMenuBuilder AddStartMenu(string Title,
+    public IStartMenuBuilder AddStartMenuTile(string Title,
         string Caption,
         string Url,
         string Icon,
         string Color)
     {
-        _startMenuItems.Add(new StartMenuItem(Title,
+        // var stack = new StackTrace();
+        // var frame = stack.GetFrame(1); // 0 = aktuelle Methode, 1 = Aufrufer
+        // var method = frame?.GetMethod();
+        // var declaringType = method?.DeclaringType;
+        //
+        // var fullName = declaringType?.FullName;
+        // var methodName = method?.Name;
+        if (string.IsNullOrEmpty(_currentModuleId))
+            throw new ArgumentNullException(nameof(_currentModuleId),
+                "You must call WithModule before adding start menu items.");
+
+        _startMenuItems.Add(new StartMenuBuilderItem(Title,
             Caption,
             Url,
             Icon,
-            Color));
+            Color,
+            _currentModuleId));
 
         return this;
     }
 
-    public StartMenuItem[] GetStartMenuItems() => _startMenuItems.ToArray();
+    public StartMenuBuilderItem[] GetStartMenuItems() => _startMenuItems.ToArray();
 
     public void RegisterStartMenuItems(IServiceCollection services,
         IConfiguration configuration)
     {
-        StartMenuItem[] menuItems = GetStartMenuItems();
-        foreach (StartMenuItem smi in menuItems)
+        StartMenuBuilderItem[] menuItems = GetStartMenuItems();
+        foreach (StartMenuBuilderItem smi in menuItems)
         {
-            services.AddSingleton<IStartMenuItem>(x => new StartMenuItemViewModel(smi.Title,
+            services.AddSingleton<IStartMenuItem>(x => new StartMenuItemViewModel(
+                x.GetRequiredKeyedService<IModule>(smi.ModuleId),
+                smi.Title,
                 smi.Caption,
                 smi.Url,
                 smi.Icon,

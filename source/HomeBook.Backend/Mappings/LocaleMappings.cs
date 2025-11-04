@@ -10,7 +10,8 @@ public static class LocaleMappings
         {
             // Code => Locale Name (English Name)
             "de-DE" => "Deutsch (German)",
-            "en-EN" => "English (English)",
+            "en-GB" => "English (British English)",
+            "en-US" => "English (US English)",
             "fr-FR" => "Français (French)",
             _ => locale // Fallback to the locale code if no display name is found
         };
