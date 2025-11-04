@@ -165,6 +165,27 @@ public class FinanceSavingGoalHandlerE2ETests
             cancellationToken);
         updateSavingGoalAmountsResult.ShouldBeOfType<Ok>();
 
+        // update saving goal current amount
+        var dt = DateTime.UtcNow.AddYears(3);
+        var updateSavingGoalInfoResult = await FinanceSavingGoalHandler.HandleUpdateSavingGoalInfo(
+            createdSavingGoalId,
+            testuser,
+            new UpdateSavingGoalInfoRequest(new DateTime(dt.Year, dt.Month, dt.Day)),
+            _loggerFactory.CreateLogger<FinanceSavingGoalHandler>(),
+            savingGoalsProvider,
+            cancellationToken);
+        updateSavingGoalInfoResult.ShouldBeOfType<Ok>();
+
+        // update saving goal current amount
+        var updateSavingGoalAppearanceResult = await FinanceSavingGoalHandler.HandleUpdateSavingGoalAppearance(
+            createdSavingGoalId,
+            testuser,
+            new UpdateSavingGoalAppearanceRequest("#0000ff", ""),
+            _loggerFactory.CreateLogger<FinanceSavingGoalHandler>(),
+            savingGoalsProvider,
+            cancellationToken);
+        updateSavingGoalAppearanceResult.ShouldBeOfType<Ok>();
+
         // get all after update
         var savingGoalsResult2 = await FinanceSavingGoalHandler.HandleGetSavingGoals(testuser,
             _loggerFactory.CreateLogger<FinanceSavingGoalHandler>(),
@@ -173,11 +194,12 @@ public class FinanceSavingGoalHandlerE2ETests
         var savingGoalsResponse2 = savingGoalsResult2.ShouldBeOfType<Ok<FinanceSavingGoalListResponse>>();
         savingGoalsResponse2.Value.ShouldNotBeNull();
         savingGoalsResponse2.Value.SavingGoals.Length.ShouldBe(1);
-        savingGoalsResponse2.Value.SavingGoals[0].Color.ShouldBe("#ff0000");
+        savingGoalsResponse2.Value.SavingGoals[0].Color.ShouldBe("#0000ff");
         savingGoalsResponse2.Value.SavingGoals[0].Name.ShouldBe("Updated Saving Goal");
         savingGoalsResponse2.Value.SavingGoals[0].TargetAmount.ShouldBe(12_000);
         savingGoalsResponse2.Value.SavingGoals[0].CurrentAmount.ShouldBe(9_000);
-        savingGoalsResponse1.Value.SavingGoals[0].MonthlyPayment.ShouldBe(500);
+        savingGoalsResponse2.Value.SavingGoals[0].MonthlyPayment.ShouldBe(500);
+        savingGoalsResponse2.Value.SavingGoals[0].TargetDate.ShouldBe(new DateTime(dt.Year, dt.Month, dt.Day));
 
         // delete saving goal
         var deleteSavingGoalResult = await FinanceSavingGoalHandler.HandleDeleteSavingGoal(createdSavingGoalId,
