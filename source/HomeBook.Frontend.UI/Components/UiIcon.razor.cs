@@ -2,7 +2,7 @@ using HomeBook.Frontend.UI.Utilities;
 using Microsoft.AspNetCore.Components;
 using MudBlazor;
 
-namespace HomeBook.Frontend.Components;
+namespace HomeBook.Frontend.UI.Components;
 
 public partial class UiIcon : ComponentBase
 {

@@ -92,5 +92,35 @@ namespace HomeBook.Frontend.Module.Kitchen.Resources {
                 return ResourceManager.GetString("StartMenuItem_MealPlan_Caption", resourceCulture);
             }
         }
+        
+        public static string DateTimeFormat_ShortDateOnlyFormat {
+            get {
+                return ResourceManager.GetString("DateTimeFormat_ShortDateOnlyFormat", resourceCulture);
+            }
+        }
+        
+        public static string PlanOverview_Header_CalendarWeek_TextTemplate {
+            get {
+                return ResourceManager.GetString("PlanOverview_Header_CalendarWeek_TextTemplate", resourceCulture);
+            }
+        }
+        
+        public static string PlanOverview_MealType_Breakfast_Text {
+            get {
+                return ResourceManager.GetString("PlanOverview_MealType_Breakfast_Text", resourceCulture);
+            }
+        }
+        
+        public static string PlanOverview_MealType_Lunch_Text {
+            get {
+                return ResourceManager.GetString("PlanOverview_MealType_Lunch_Text", resourceCulture);
+            }
+        }
+        
+        public static string PlanOverview_MealType_Dinner_Text {
+            get {
+                return ResourceManager.GetString("PlanOverview_MealType_Dinner_Text", resourceCulture);
+            }
+        }
     }
 }

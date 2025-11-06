@@ -1,40 +1,40 @@
 @page "/Kitchen/MealPlan"
+
 @using HomeBook.Frontend.Core.Icons
+@using HomeBook.Frontend.Module.Kitchen.Components
+@using HomeBook.Frontend.Module.Kitchen.Resources
 @using HomeBook.Frontend.Module.Kitchen.ViewModels
+@using Microsoft.Extensions.Localization
+
+@inject IStringLocalizer<Strings> Loc
 
 <MudContainer Class="mt-4">
 
-    <MudPaper>
+    <MudPaper Class="d-flex align-center px-5 py-3">
 
-        <MudText>
-            +03.11. - 09.11.
+        <MudText Typo="Typo.h6">
+            @_startDate.ToString(Loc[nameof(Strings.DateTimeFormat_ShortDateOnlyFormat)]) - @_endDate.ToString(Loc[nameof(Strings.DateTimeFormat_ShortDateOnlyFormat)])
         </MudText>
 
         <MudSpacer/>
 
         <MudIconButton Icon="@HomeBookIcons.Icons8.Windows11.Filled.ArrowLeft"/>
 
-        <MudText>
-            +Kalenderwoche 45
+        <MudText Typo="Typo.h6"
+                 Class="mx-3">
+            @string.Format(Loc[nameof(Strings.PlanOverview_Header_CalendarWeek_TextTemplate)], @_calendarWeek)
         </MudText>
 
         <MudIconButton Icon="@HomeBookIcons.Icons8.Windows11.Filled.ArrowRight"/>
 
     </MudPaper>
 
-    @* <MudList Dense="true" T="string"> *@
-    @*     <MudListItem T="string"> *@
-    @*         <MudText Typo="Typo.subtitle2">@meal.Name</MudText> *@
-    @*         <MudText Typo="Typo.caption">@meal.Date.ToShortDateString()</MudText> *@
-    @*     </MudListItem> *@
-    @* </MudList> *@
-
     @foreach (MealPlanItemViewModel meal in _mealPlanItems)
     {
         <MudCard Class="mt-5">
 
             <MudCardHeader Class="@string.Format($"ui-color-bg-gradient-{meal.ColorName}")">
-                <MudText Typo="Typo.h6"
+                <MudText Typo="Typo.h5"
                          Class="ms-1 me-5">
                     @meal.Date.ToString("D")
                 </MudText>
@@ -43,48 +43,24 @@
             <MudGrid Spacing="5" Class="px-5">
 
                 <MudItem md="4">
-                    <MudText Typo="Typo.subtitle1"
-                             Class="my-3">
-                        +Frühstück
-                    </MudText>
-
-                    <MudCard Class="mb-5 py-3 px-5"
-                             Style="background-color: color-mix(in srgb, var(--hb-color-apple), transparent 90%);"
-                             Elevation="0">
-                        <MudText Typo="Typo.subtitle2">@meal.Name</MudText>
-                        <MudText Typo="Typo.caption">+Avocado, Tomate, Ei, Kresse</MudText>
-                        <MudText Typo="Typo.caption">10 Min - 380 kcal</MudText>
-                    </MudCard>
+                    <UiMealCard MealTypeName="@Loc[nameof(Strings.PlanOverview_MealType_Breakfast_Text)]"
+                                MealTypeIcon="@HomeBookIcons.Icons8.Windows11.Filled.BuffetBreakfast"
+                                MealTypeColor="var(--hb-color-gold)"
+                                Meal="@meal.Breakfast"/>
                 </MudItem>
 
                 <MudItem md="4">
-                    <MudText Typo="Typo.subtitle1"
-                             Class="my-3">
-                        +Mittagessen
-                    </MudText>
-
-                    <MudCard Class="mb-5 py-3 px-5"
-                             Style="background-color: color-mix(in srgb, var(--hb-color-gold), transparent 90%);"
-                             Elevation="0">
-                        <MudText Typo="Typo.subtitle2">@meal.Name</MudText>
-                        <MudText Typo="Typo.caption">+Avocado, Tomate, Ei, Kresse</MudText>
-                        <MudText Typo="Typo.caption">10 Min - 380 kcal</MudText>
-                    </MudCard>
+                    <UiMealCard MealTypeName="@Loc[nameof(Strings.PlanOverview_MealType_Lunch_Text)]"
+                                MealTypeIcon="@HomeBookIcons.Icons8.Windows11.Filled.Summer"
+                                MealTypeColor="var(--hb-color-apple)"
+                                Meal="@meal.Lunch"/>
                 </MudItem>
 
                 <MudItem md="4">
-                    <MudText Typo="Typo.subtitle1"
-                             Class="my-3">
-                        +Abendessen
-                    </MudText>
-
-                    <MudCard Class="mb-5 py-3 px-5"
-                             Style="background-color: color-mix(in srgb, var(--hb-color-cerulean), transparent 90%);"
-                             Elevation="0">
-                        <MudText Typo="Typo.subtitle2">@meal.Name</MudText>
-                        <MudText Typo="Typo.caption">+Avocado, Tomate, Ei, Kresse</MudText>
-                        <MudText Typo="Typo.caption">10 Min - 380 kcal</MudText>
-                    </MudCard>
+                    <UiMealCard MealTypeName="@Loc[nameof(Strings.PlanOverview_MealType_Dinner_Text)]"
+                                MealTypeIcon="@HomeBookIcons.Icons8.Windows11.Filled.Moon"
+                                MealTypeColor="var(--hb-color-cerulean)"
+                                Meal="@meal.Dinner"/>
                 </MudItem>
 
             </MudGrid>
