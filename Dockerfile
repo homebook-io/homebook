@@ -1,9 +1,17 @@
 # This Dockerfile is used for a combined multi-arch build of Blazor WASM and REST API
 # Recommended to use Docker Buildx for multi-architecture builds
 
+FROM node:24-alpine AS node
+
 FROM mcr.microsoft.com/dotnet/sdk:9.0 AS build
 ARG BUILD_CONFIGURATION=Release
 WORKDIR /homebook-src
+
+COPY --from=node /usr/local/bin /usr/local/bin
+COPY --from=node /usr/local/lib/node_modules /usr/local/lib/node_modules
+RUN ln -sf /usr/local/lib/node_modules/npm/bin/npm-cli.js /usr/local/bin/npm \
+    && ln -sf /usr/local/lib/node_modules/npm/bin/npx-cli.js /usr/local/bin/npx \
+    && npm install -g sass
 
 COPY . .
 

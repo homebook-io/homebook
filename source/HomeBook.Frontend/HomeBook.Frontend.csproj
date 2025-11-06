@@ -18,6 +18,11 @@
         <PackageReference Include="MudBlazor" Version="8.13.0"/>
     </ItemGroup>
 
+    <Target Name="CompileSass" BeforeTargets="Build">
+        <Exec Command="npx sass Styles/app.scss wwwroot/css/app.css --style=expanded --source-map"/>
+        <Exec Command="npx sass Styles/app.scss wwwroot/css/app.min.css --style=compressed --source-map"/>
+    </Target>
+
     <ItemGroup>
         <Content Update="wwwroot\appsettings.json">
             <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
