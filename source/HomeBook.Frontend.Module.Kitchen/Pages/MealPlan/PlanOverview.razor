@@ -1,0 +1,95 @@
+@page "/Kitchen/MealPlan"
+@using HomeBook.Frontend.Core.Icons
+@using HomeBook.Frontend.Module.Kitchen.ViewModels
+
+<MudContainer Class="mt-4">
+
+    <MudPaper>
+
+        <MudText>
+            +03.11. - 09.11.
+        </MudText>
+
+        <MudSpacer/>
+
+        <MudIconButton Icon="@HomeBookIcons.Icons8.Windows11.Filled.ArrowLeft"/>
+
+        <MudText>
+            +Kalenderwoche 45
+        </MudText>
+
+        <MudIconButton Icon="@HomeBookIcons.Icons8.Windows11.Filled.ArrowRight"/>
+
+    </MudPaper>
+
+    @* <MudList Dense="true" T="string"> *@
+    @*     <MudListItem T="string"> *@
+    @*         <MudText Typo="Typo.subtitle2">@meal.Name</MudText> *@
+    @*         <MudText Typo="Typo.caption">@meal.Date.ToShortDateString()</MudText> *@
+    @*     </MudListItem> *@
+    @* </MudList> *@
+
+    @foreach (MealPlanItemViewModel meal in _mealPlanItems)
+    {
+        <MudCard Class="mt-5">
+
+            <MudCardHeader Class="@string.Format($"ui-color-bg-gradient-{meal.ColorName}")">
+                <MudText Typo="Typo.h6"
+                         Class="ms-1 me-5">
+                    @meal.Date.ToString("D")
+                </MudText>
+            </MudCardHeader>
+
+            <MudGrid>
+
+                <MudItem md="4">
+                    <MudText Typo="Typo.subtitle1"
+                             Class="mx-5 my-3">
+                        +Frühstück
+                    </MudText>
+
+                    <MudCard Class="mx-5 mb-5 py-3 px-5"
+                             Style="background-color: color-mix(in srgb, var(--hb-color-apple), transparent 90%);"
+                             Elevation="0">
+                        <MudText Typo="Typo.subtitle2">@meal.Name</MudText>
+                        <MudText Typo="Typo.caption">+Avocado, Tomate, Ei, Kresse</MudText>
+                        <MudText Typo="Typo.caption">10 Min - 380 kcal</MudText>
+                    </MudCard>
+                </MudItem>
+
+                <MudItem md="4">
+                    <MudText Typo="Typo.subtitle1"
+                             Class="mx-5 my-3">
+                        +Mittagessen
+                    </MudText>
+
+                    <MudCard Class="mx-5 mb-5 py-3 px-5"
+                             Style="background-color: color-mix(in srgb, var(--hb-color-gold), transparent 90%);"
+                             Elevation="0">
+                        <MudText Typo="Typo.subtitle2">@meal.Name</MudText>
+                        <MudText Typo="Typo.caption">+Avocado, Tomate, Ei, Kresse</MudText>
+                        <MudText Typo="Typo.caption">10 Min - 380 kcal</MudText>
+                    </MudCard>
+                </MudItem>
+
+                <MudItem md="4">
+                    <MudText Typo="Typo.subtitle1"
+                             Class="mx-5 my-3">
+                        +Abendessen
+                    </MudText>
+
+                    <MudCard Class="mx-5 mb-5 py-3 px-5"
+                             Style="background-color: color-mix(in srgb, var(--hb-color-cerulean), transparent 90%);"
+                             Elevation="0">
+                        <MudText Typo="Typo.subtitle2">@meal.Name</MudText>
+                        <MudText Typo="Typo.caption">+Avocado, Tomate, Ei, Kresse</MudText>
+                        <MudText Typo="Typo.caption">10 Min - 380 kcal</MudText>
+                    </MudCard>
+                </MudItem>
+
+            </MudGrid>
+
+        </MudCard>
+    }
+
+</MudContainer>

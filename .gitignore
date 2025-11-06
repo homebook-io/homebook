@@ -77,3 +77,5 @@ source/HomeBook.Backend/HomeBook.Backend.json
 
 # Reqnroll Feature Generated Files
 *.feature.cs
+
+node_modules/
