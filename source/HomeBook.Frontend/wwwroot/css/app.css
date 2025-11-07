@@ -267,6 +267,18 @@
     width: auto !important;
   }
 }
+.float-right {
+  float: right !important;
+}
+
+.float-left {
+  float: left !important;
+}
+
+.float-none {
+  float: none !important;
+}
+
 .frosted-b1 {
   position: relative;
   background: radial-gradient(ellipse 80% 30% at top center, rgba(255, 255, 255, 0.15) 0%, transparent 80%), linear-gradient(160deg, rgba(255, 255, 255, 0.05) 0%, rgba(255, 255, 255, 0.3) 100%), rgba(255, 255, 255, 0.05) !important;
@@ -611,45 +623,314 @@
 }
 
 :root {
-  --hb-color-brand-github: #24292e;
-  --hb-color-brand-docker: #2496ed;
-  --hb-color-brand-ubuntu: #e95420;
-  --hb-color-aqua: #00b4d8;
-  --hb-color-amethyst: #9333EA;
-  --hb-color-denim: #2f6690;
-  --hb-color-cerulean: #2563EB;
-  --hb-color-ocean: #1e6091;
-  --hb-color-azure: #4f9ef8;
-  --hb-color-lavender: #c084fc;
-  --hb-color-plum: #8e4585;
-  --hb-color-rose: #e57373;
-  --hb-color-crimson: #DC2626;
-  --hb-color-ruby: #16A34A;
-  --hb-color-emerald: #118C4F;
-  --hb-color-teal: #009688;
-  --hb-color-petrol: #008080;
-  --hb-color-wine: #722f37;
-  --hb-color-mulberry: #9b2242;
-  --hb-color-fern: #628b48;
-  --hb-color-honey: #f6be4f;
-  --hb-color-lemon: #FFF176;
-  --hb-color-gold: #ffb547;
-  --hb-color-amber: #FF9800;
-  --hb-color-coral: #ff7f50;
-  --hb-color-caramel: #c77a35;
-  --hb-color-stone: #78716c;
-  --hb-color-graphite: #3d3d3d;
-  --hb-color-charcoal: #4b5563;
-  --hb-color-storm: #475569;
-  --hb-color-smoke: #737373;
-  --hb-color-shadow: #1f2937;
-  --hb-color-steel: #6b7280;
-  --hb-color-peach: #ffbc9a;
-  --hb-color-sunset: #fb7185;
-  --hb-color-chartreuse: #A7F432;
-  --hb-color-spring: #00E676;
-  --hb-color-apple: #2ECC71;
-  --hb-color-jade: #00BFA5;
+  --hb-color-brand-github: rgb(36, 41, 46);
+  --hb-color-brand-github-rgb: 36, 41, 46;
+  --hb-color-brand-github-dark: rgb(28.8, 32.8, 36.8);
+  --hb-color-brand-github-dark-rgb:
+      28.8,
+      32.8,
+      36.8;
+  --hb-color-brand-docker: rgb(36, 150, 237);
+  --hb-color-brand-docker-rgb: 36, 150, 237;
+  --hb-color-brand-docker-dark: rgb(16.5873417722, 121.6405063291, 201.8126582278);
+  --hb-color-brand-docker-dark-rgb:
+      16.5873417722,
+      121.6405063291,
+      201.8126582278;
+  --hb-color-brand-ubuntu: rgb(233, 84, 32);
+  --hb-color-brand-ubuntu-rgb: 233, 84, 32;
+  --hb-color-brand-ubuntu-dark: rgb(192.9632653061, 64.0326530612, 19.0367346939);
+  --hb-color-brand-ubuntu-dark-rgb:
+      192.9632653061,
+      64.0326530612,
+      19.0367346939;
+  --hb-color-aqua: rgb(0, 180, 216);
+  --hb-color-aqua-rgb: 0, 180, 216;
+  --hb-color-aqua-dark: rgb(0, 144, 172.8);
+  --hb-color-aqua-dark-rgb:
+      0,
+      144,
+      172.8;
+  --hb-color-amethyst: rgb(147, 51, 234);
+  --hb-color-amethyst-rgb: 147, 51, 234;
+  --hb-color-amethyst-dark: rgb(118.56, 21.28, 206.72);
+  --hb-color-amethyst-dark-rgb:
+      118.56,
+      21.28,
+      206.72;
+  --hb-color-indigo: rgb(63, 81, 181);
+  --hb-color-indigo-rgb: 63, 81, 181;
+  --hb-color-indigo-dark: rgb(50.4, 64.8, 144.8);
+  --hb-color-indigo-dark-rgb:
+      50.4,
+      64.8,
+      144.8;
+  --hb-color-denim: rgb(47, 102, 144);
+  --hb-color-denim-rgb: 47, 102, 144;
+  --hb-color-denim-dark: rgb(37.6, 81.6, 115.2);
+  --hb-color-denim-dark-rgb:
+      37.6,
+      81.6,
+      115.2;
+  --hb-color-cerulean: rgb(81, 73, 211);
+  --hb-color-cerulean-rgb: 81, 73, 211;
+  --hb-color-cerulean-dark: rgb(52.2761061947, 44.2336283186, 182.9663716814);
+  --hb-color-cerulean-dark-rgb:
+      52.2761061947,
+      44.2336283186,
+      182.9663716814;
+  --hb-color-ocean: rgb(30, 96, 145);
+  --hb-color-ocean-rgb: 30, 96, 145;
+  --hb-color-ocean-dark: rgb(24, 76.8, 116);
+  --hb-color-ocean-dark-rgb:
+      24,
+      76.8,
+      116;
+  --hb-color-purple: rgb(147, 52, 234);
+  --hb-color-purple-rgb: 147, 52, 234;
+  --hb-color-purple-dark: rgb(118.4857142857, 21.45, 207.35);
+  --hb-color-purple-dark-rgb:
+      118.4857142857,
+      21.45,
+      207.35;
+  --hb-color-azure: rgb(79, 158, 248);
+  --hb-color-azure-rgb: 79, 158, 248;
+  --hb-color-azure-dark: rgb(16.1016393443, 123.3344262295, 245.4983606557);
+  --hb-color-azure-dark-rgb:
+      16.1016393443,
+      123.3344262295,
+      245.4983606557;
+  --hb-color-lavender: rgb(192, 132, 252);
+  --hb-color-lavender-rgb: 192, 132, 252;
+  --hb-color-lavender-dark: rgb(153.6, 57.0285714286, 250.1714285714);
+  --hb-color-lavender-dark-rgb:
+      153.6,
+      57.0285714286,
+      250.1714285714;
+  --hb-color-plum: rgb(142, 69, 133);
+  --hb-color-plum-rgb: 142, 69, 133;
+  --hb-color-plum-dark: rgb(113.6, 55.2, 106.4);
+  --hb-color-plum-dark-rgb:
+      113.6,
+      55.2,
+      106.4;
+  --hb-color-rose: rgb(229, 115, 115);
+  --hb-color-rose-rgb: 229, 115, 115;
+  --hb-color-rose-dark: rgb(218.2240963855, 56.9759036145, 56.9759036145);
+  --hb-color-rose-dark-rgb:
+      218.2240963855,
+      56.9759036145,
+      56.9759036145;
+  --hb-color-pink: rgb(233, 30, 99);
+  --hb-color-pink-rgb: 233, 30, 99;
+  --hb-color-pink-dark: rgb(191.6599190283, 18.7400809717, 77.5157894737);
+  --hb-color-pink-dark-rgb:
+      191.6599190283,
+      18.7400809717,
+      77.5157894737;
+  --hb-color-crimson: rgb(220, 38, 38);
+  --hb-color-crimson-rgb: 220, 38, 38;
+  --hb-color-crimson-dark: rgb(177.7333333333, 28.6666666667, 28.6666666667);
+  --hb-color-crimson-dark-rgb:
+      177.7333333333,
+      28.6666666667,
+      28.6666666667;
+  --hb-color-ruby: rgb(22, 163, 74);
+  --hb-color-ruby-rgb: 22, 163, 74;
+  --hb-color-ruby-dark: rgb(17.6, 130.4, 59.2);
+  --hb-color-ruby-dark-rgb:
+      17.6,
+      130.4,
+      59.2;
+  --hb-color-spring: rgb(0, 230, 118);
+  --hb-color-spring-rgb: 0, 230, 118;
+  --hb-color-spring-dark: rgb(0, 184, 94.4);
+  --hb-color-spring-dark-rgb:
+      0,
+      184,
+      94.4;
+  --hb-color-apple: rgb(46, 204, 113);
+  --hb-color-apple-rgb: 46, 204, 113;
+  --hb-color-apple-dark: rgb(36.8, 163.2, 90.4);
+  --hb-color-apple-dark-rgb:
+      36.8,
+      163.2,
+      90.4;
+  --hb-color-lime: rgb(203, 220, 56);
+  --hb-color-lime-rgb: 203, 220, 56;
+  --hb-color-lime-dark: rgb(171.7333333333, 187.7743589744, 33.0256410256);
+  --hb-color-lime-dark-rgb:
+      171.7333333333,
+      187.7743589744,
+      33.0256410256;
+  --hb-color-emerald: rgb(15, 184, 129);
+  --hb-color-emerald-rgb: 15, 184, 129;
+  --hb-color-emerald-dark: rgb(12, 147.2, 103.2);
+  --hb-color-emerald-dark-rgb:
+      12,
+      147.2,
+      103.2;
+  --hb-color-teal: rgb(0, 150, 136);
+  --hb-color-teal-rgb: 0, 150, 136;
+  --hb-color-teal-dark: rgb(0, 120, 108.8);
+  --hb-color-teal-dark-rgb:
+      0,
+      120,
+      108.8;
+  --hb-color-petrol: rgb(0, 128, 128);
+  --hb-color-petrol-rgb: 0, 128, 128;
+  --hb-color-petrol-dark: rgb(0, 102.4, 102.4);
+  --hb-color-petrol-dark-rgb:
+      0,
+      102.4,
+      102.4;
+  --hb-color-wine: rgb(114, 47, 55);
+  --hb-color-wine-rgb: 114, 47, 55;
+  --hb-color-wine-dark: rgb(91.2, 37.6, 44);
+  --hb-color-wine-dark-rgb:
+      91.2,
+      37.6,
+      44;
+  --hb-color-mulberry: rgb(155, 34, 66);
+  --hb-color-mulberry-rgb: 155, 34, 66;
+  --hb-color-mulberry-dark: rgb(124, 27.2, 52.8);
+  --hb-color-mulberry-dark-rgb:
+      124,
+      27.2,
+      52.8;
+  --hb-color-fern: rgb(98, 139, 72);
+  --hb-color-fern-rgb: 98, 139, 72;
+  --hb-color-fern-dark: rgb(78.4, 111.2, 57.6);
+  --hb-color-fern-dark-rgb:
+      78.4,
+      111.2,
+      57.6;
+  --hb-color-honey: rgb(246, 190, 79);
+  --hb-color-honey-rgb: 246, 190, 79;
+  --hb-color-honey-dark: rgb(242.8378378378, 167.1621621622, 17.1621621622);
+  --hb-color-honey-dark-rgb:
+      242.8378378378,
+      167.1621621622,
+      17.1621621622;
+  --hb-color-lemon: rgb(255, 241, 118);
+  --hb-color-lemon-rgb: 255, 241, 118;
+  --hb-color-lemon-dark: rgb(255, 233.3766423358, 43.4);
+  --hb-color-lemon-dark-rgb:
+      255,
+      233.3766423358,
+      43.4;
+  --hb-color-gold: rgb(255, 181, 71);
+  --hb-color-gold-rgb: 255, 181, 71;
+  --hb-color-gold-dark: rgb(255, 154.7782608696, 5.8);
+  --hb-color-gold-dark-rgb:
+      255,
+      154.7782608696,
+      5.8;
+  --hb-color-amber: rgb(255, 193, 7);
+  --hb-color-amber-rgb: 255, 193, 7;
+  --hb-color-amber-dark: rgb(209.6, 157.2, 0);
+  --hb-color-amber-dark-rgb:
+      209.6,
+      157.2,
+      0;
+  --hb-color-coral: rgb(255, 127, 80);
+  --hb-color-coral-rgb: 255, 127, 80;
+  --hb-color-coral-dark: rgb(255, 77.9942857143, 13);
+  --hb-color-coral-dark-rgb:
+      255,
+      77.9942857143,
+      13;
+  --hb-color-orange: rgb(244, 158, 11);
+  --hb-color-orange-rgb: 244, 158, 11;
+  --hb-color-orange-dark: rgb(195.2, 126.4, 8.8);
+  --hb-color-orange-dark-rgb:
+      195.2,
+      126.4,
+      8.8;
+  --hb-color-caramel: rgb(199, 122, 53);
+  --hb-color-caramel-rgb: 199, 122, 53;
+  --hb-color-caramel-dark: rgb(159.2, 97.6, 42.4);
+  --hb-color-caramel-dark-rgb:
+      159.2,
+      97.6,
+      42.4;
+  --hb-color-stone: rgb(120, 113, 108);
+  --hb-color-stone-rgb: 120, 113, 108;
+  --hb-color-stone-dark: rgb(96, 90.4, 86.4);
+  --hb-color-stone-dark-rgb:
+      96,
+      90.4,
+      86.4;
+  --hb-color-graphite: rgb(61, 61, 61);
+  --hb-color-graphite-rgb: 61, 61, 61;
+  --hb-color-graphite-dark: rgb(48.8, 48.8, 48.8);
+  --hb-color-graphite-dark-rgb:
+      48.8,
+      48.8,
+      48.8;
+  --hb-color-charcoal: rgb(75, 85, 99);
+  --hb-color-charcoal-rgb: 75, 85, 99;
+  --hb-color-charcoal-dark: rgb(60, 68, 79.2);
+  --hb-color-charcoal-dark-rgb:
+      60,
+      68,
+      79.2;
+  --hb-color-storm: rgb(71, 85, 105);
+  --hb-color-storm-rgb: 71, 85, 105;
+  --hb-color-storm-dark: rgb(56.8, 68, 84);
+  --hb-color-storm-dark-rgb:
+      56.8,
+      68,
+      84;
+  --hb-color-smoke: rgb(115, 115, 115);
+  --hb-color-smoke-rgb: 115, 115, 115;
+  --hb-color-smoke-dark: #5c5c5c;
+  --hb-color-smoke-dark-rgb:
+      92,
+      92,
+      92;
+  --hb-color-shadow: rgb(31, 41, 55);
+  --hb-color-shadow-rgb: 31, 41, 55;
+  --hb-color-shadow-dark: rgb(24.8, 32.8, 44);
+  --hb-color-shadow-dark-rgb:
+      24.8,
+      32.8,
+      44;
+  --hb-color-steel: rgb(107, 114, 128);
+  --hb-color-steel-rgb: 107, 114, 128;
+  --hb-color-steel-dark: rgb(85.6, 91.2, 102.4);
+  --hb-color-steel-dark-rgb:
+      85.6,
+      91.2,
+      102.4;
+  --hb-color-peach: rgb(255, 188, 154);
+  --hb-color-peach-rgb: 255, 188, 154;
+  --hb-color-peach-dark: rgb(255, 133.7366336634, 72.2);
+  --hb-color-peach-dark-rgb:
+      255,
+      133.7366336634,
+      72.2;
+  --hb-color-sunset: rgb(251, 113, 133);
+  --hb-color-sunset-rgb: 251, 113, 133;
+  --hb-color-sunset-dark: rgb(249.0054794521, 42.1945205479, 72.1671232877);
+  --hb-color-sunset-dark-rgb:
+      249.0054794521,
+      42.1945205479,
+      72.1671232877;
+  --hb-color-chartreuse: rgb(167, 244, 50);
+  --hb-color-chartreuse-rgb: 167, 244, 50;
+  --hb-color-chartreuse-dark: rgb(139.3777777778, 223.2222222222, 11.9777777778);
+  --hb-color-chartreuse-dark-rgb:
+      139.3777777778,
+      223.2222222222,
+      11.9777777778;
+  --hb-color-jade: rgb(0, 191, 165);
+  --hb-color-jade-rgb: 0, 191, 165;
+  --hb-color-jade-dark: rgb(0, 152.8, 132);
+  --hb-color-jade-dark-rgb:
+      0,
+      152.8,
+      132;
 }
 
 .ui-color-brand-github {
@@ -658,6 +939,11 @@
 
 .ui-color-bg-brand-github {
   background-color: var(--hb-color-brand-github);
+  color: #ffffff;
+}
+
+.ui-color-bg-gradient-brand-github {
+  background: linear-gradient(to right, var(--hb-color-brand-github), var(--hb-color-brand-github-dark));
   color: #ffffff;
 }
 
@@ -670,12 +956,22 @@
   color: #ffffff;
 }
 
+.ui-color-bg-gradient-brand-docker {
+  background: linear-gradient(to right, var(--hb-color-brand-docker), var(--hb-color-brand-docker-dark));
+  color: #ffffff;
+}
+
 .ui-color-brand-ubuntu {
   color: var(--hb-color-brand-ubuntu);
 }
 
 .ui-color-bg-brand-ubuntu {
   background-color: var(--hb-color-brand-ubuntu);
+  color: #ffffff;
+}
+
+.ui-color-bg-gradient-brand-ubuntu {
+  background: linear-gradient(to right, var(--hb-color-brand-ubuntu), var(--hb-color-brand-ubuntu-dark));
   color: #ffffff;
 }
 
@@ -688,12 +984,36 @@
   color: #ffffff;
 }
 
+.ui-color-bg-gradient-aqua {
+  background: linear-gradient(to right, var(--hb-color-aqua), var(--hb-color-aqua-dark));
+  color: #ffffff;
+}
+
 .ui-color-amethyst {
   color: var(--hb-color-amethyst);
 }
 
 .ui-color-bg-amethyst {
   background-color: var(--hb-color-amethyst);
+  color: #ffffff;
+}
+
+.ui-color-bg-gradient-amethyst {
+  background: linear-gradient(to right, var(--hb-color-amethyst), var(--hb-color-amethyst-dark));
+  color: #ffffff;
+}
+
+.ui-color-indigo {
+  color: var(--hb-color-indigo);
+}
+
+.ui-color-bg-indigo {
+  background-color: var(--hb-color-indigo);
+  color: #ffffff;
+}
+
+.ui-color-bg-gradient-indigo {
+  background: linear-gradient(to right, var(--hb-color-indigo), var(--hb-color-indigo-dark));
   color: #ffffff;
 }
 
@@ -706,12 +1026,22 @@
   color: #ffffff;
 }
 
+.ui-color-bg-gradient-denim {
+  background: linear-gradient(to right, var(--hb-color-denim), var(--hb-color-denim-dark));
+  color: #ffffff;
+}
+
 .ui-color-cerulean {
   color: var(--hb-color-cerulean);
 }
 
 .ui-color-bg-cerulean {
   background-color: var(--hb-color-cerulean);
+  color: #ffffff;
+}
+
+.ui-color-bg-gradient-cerulean {
+  background: linear-gradient(to right, var(--hb-color-cerulean), var(--hb-color-cerulean-dark));
   color: #ffffff;
 }
 
@@ -724,12 +1054,36 @@
   color: #ffffff;
 }
 
+.ui-color-bg-gradient-ocean {
+  background: linear-gradient(to right, var(--hb-color-ocean), var(--hb-color-ocean-dark));
+  color: #ffffff;
+}
+
+.ui-color-purple {
+  color: var(--hb-color-purple);
+}
+
+.ui-color-bg-purple {
+  background-color: var(--hb-color-purple);
+  color: #ffffff;
+}
+
+.ui-color-bg-gradient-purple {
+  background: linear-gradient(to right, var(--hb-color-purple), var(--hb-color-purple-dark));
+  color: #ffffff;
+}
+
 .ui-color-azure {
   color: var(--hb-color-azure);
 }
 
 .ui-color-bg-azure {
   background-color: var(--hb-color-azure);
+  color: #000000;
+}
+
+.ui-color-bg-gradient-azure {
+  background: linear-gradient(to right, var(--hb-color-azure), var(--hb-color-azure-dark));
   color: #000000;
 }
 
@@ -742,12 +1096,22 @@
   color: #000000;
 }
 
+.ui-color-bg-gradient-lavender {
+  background: linear-gradient(to right, var(--hb-color-lavender), var(--hb-color-lavender-dark));
+  color: #000000;
+}
+
 .ui-color-plum {
   color: var(--hb-color-plum);
 }
 
 .ui-color-bg-plum {
   background-color: var(--hb-color-plum);
+  color: #ffffff;
+}
+
+.ui-color-bg-gradient-plum {
+  background: linear-gradient(to right, var(--hb-color-plum), var(--hb-color-plum-dark));
   color: #ffffff;
 }
 
@@ -760,12 +1124,36 @@
   color: #000000;
 }
 
+.ui-color-bg-gradient-rose {
+  background: linear-gradient(to right, var(--hb-color-rose), var(--hb-color-rose-dark));
+  color: #000000;
+}
+
+.ui-color-pink {
+  color: var(--hb-color-pink);
+}
+
+.ui-color-bg-pink {
+  background-color: var(--hb-color-pink);
+  color: #ffffff;
+}
+
+.ui-color-bg-gradient-pink {
+  background: linear-gradient(to right, var(--hb-color-pink), var(--hb-color-pink-dark));
+  color: #ffffff;
+}
+
 .ui-color-crimson {
   color: var(--hb-color-crimson);
 }
 
 .ui-color-bg-crimson {
   background-color: var(--hb-color-crimson);
+  color: #ffffff;
+}
+
+.ui-color-bg-gradient-crimson {
+  background: linear-gradient(to right, var(--hb-color-crimson), var(--hb-color-crimson-dark));
   color: #ffffff;
 }
 
@@ -778,201 +1166,8 @@
   color: #ffffff;
 }
 
-.ui-color-emerald {
-  color: var(--hb-color-emerald);
-}
-
-.ui-color-bg-emerald {
-  background-color: var(--hb-color-emerald);
-  color: #ffffff;
-}
-
-.ui-color-teal {
-  color: var(--hb-color-teal);
-}
-
-.ui-color-bg-teal {
-  background-color: var(--hb-color-teal);
-  color: #ffffff;
-}
-
-.ui-color-petrol {
-  color: var(--hb-color-petrol);
-}
-
-.ui-color-bg-petrol {
-  background-color: var(--hb-color-petrol);
-  color: #ffffff;
-}
-
-.ui-color-wine {
-  color: var(--hb-color-wine);
-}
-
-.ui-color-bg-wine {
-  background-color: var(--hb-color-wine);
-  color: #ffffff;
-}
-
-.ui-color-mulberry {
-  color: var(--hb-color-mulberry);
-}
-
-.ui-color-bg-mulberry {
-  background-color: var(--hb-color-mulberry);
-  color: #ffffff;
-}
-
-.ui-color-fern {
-  color: var(--hb-color-fern);
-}
-
-.ui-color-bg-fern {
-  background-color: var(--hb-color-fern);
-  color: #ffffff;
-}
-
-.ui-color-honey {
-  color: var(--hb-color-honey);
-}
-
-.ui-color-bg-honey {
-  background-color: var(--hb-color-honey);
-  color: #000000;
-}
-
-.ui-color-lemon {
-  color: var(--hb-color-lemon);
-}
-
-.ui-color-bg-lemon {
-  background-color: var(--hb-color-lemon);
-  color: #000000;
-}
-
-.ui-color-gold {
-  color: var(--hb-color-gold);
-}
-
-.ui-color-bg-gold {
-  background-color: var(--hb-color-gold);
-  color: #000000;
-}
-
-.ui-color-amber {
-  color: var(--hb-color-amber);
-}
-
-.ui-color-bg-amber {
-  background-color: var(--hb-color-amber);
-  color: #ffffff;
-}
-
-.ui-color-coral {
-  color: var(--hb-color-coral);
-}
-
-.ui-color-bg-coral {
-  background-color: var(--hb-color-coral);
-  color: #000000;
-}
-
-.ui-color-caramel {
-  color: var(--hb-color-caramel);
-}
-
-.ui-color-bg-caramel {
-  background-color: var(--hb-color-caramel);
-  color: #ffffff;
-}
-
-.ui-color-stone {
-  color: var(--hb-color-stone);
-}
-
-.ui-color-bg-stone {
-  background-color: var(--hb-color-stone);
-  color: #ffffff;
-}
-
-.ui-color-graphite {
-  color: var(--hb-color-graphite);
-}
-
-.ui-color-bg-graphite {
-  background-color: var(--hb-color-graphite);
-  color: #ffffff;
-}
-
-.ui-color-charcoal {
-  color: var(--hb-color-charcoal);
-}
-
-.ui-color-bg-charcoal {
-  background-color: var(--hb-color-charcoal);
-  color: #ffffff;
-}
-
-.ui-color-storm {
-  color: var(--hb-color-storm);
-}
-
-.ui-color-bg-storm {
-  background-color: var(--hb-color-storm);
-  color: #ffffff;
-}
-
-.ui-color-smoke {
-  color: var(--hb-color-smoke);
-}
-
-.ui-color-bg-smoke {
-  background-color: var(--hb-color-smoke);
-  color: #ffffff;
-}
-
-.ui-color-shadow {
-  color: var(--hb-color-shadow);
-}
-
-.ui-color-bg-shadow {
-  background-color: var(--hb-color-shadow);
-  color: #ffffff;
-}
-
-.ui-color-steel {
-  color: var(--hb-color-steel);
-}
-
-.ui-color-bg-steel {
-  background-color: var(--hb-color-steel);
-  color: #ffffff;
-}
-
-.ui-color-peach {
-  color: var(--hb-color-peach);
-}
-
-.ui-color-bg-peach {
-  background-color: var(--hb-color-peach);
-  color: #000000;
-}
-
-.ui-color-sunset {
-  color: var(--hb-color-sunset);
-}
-
-.ui-color-bg-sunset {
-  background-color: var(--hb-color-sunset);
-  color: #000000;
-}
-
-.ui-color-chartreuse {
-  color: var(--hb-color-chartreuse);
-}
-
-.ui-color-bg-chartreuse {
-  background-color: var(--hb-color-chartreuse);
+.ui-color-bg-gradient-ruby {
+  background: linear-gradient(to right, var(--hb-color-ruby), var(--hb-color-ruby-dark));
   color: #ffffff;
 }
 
@@ -985,6 +1180,11 @@
   color: #ffffff;
 }
 
+.ui-color-bg-gradient-spring {
+  background: linear-gradient(to right, var(--hb-color-spring), var(--hb-color-spring-dark));
+  color: #ffffff;
+}
+
 .ui-color-apple {
   color: var(--hb-color-apple);
 }
@@ -994,12 +1194,358 @@
   color: #ffffff;
 }
 
+.ui-color-bg-gradient-apple {
+  background: linear-gradient(to right, var(--hb-color-apple), var(--hb-color-apple-dark));
+  color: #ffffff;
+}
+
+.ui-color-lime {
+  color: var(--hb-color-lime);
+}
+
+.ui-color-bg-lime {
+  background-color: var(--hb-color-lime);
+  color: #ffffff;
+}
+
+.ui-color-bg-gradient-lime {
+  background: linear-gradient(to right, var(--hb-color-lime), var(--hb-color-lime-dark));
+  color: #ffffff;
+}
+
+.ui-color-emerald {
+  color: var(--hb-color-emerald);
+}
+
+.ui-color-bg-emerald {
+  background-color: var(--hb-color-emerald);
+  color: #ffffff;
+}
+
+.ui-color-bg-gradient-emerald {
+  background: linear-gradient(to right, var(--hb-color-emerald), var(--hb-color-emerald-dark));
+  color: #ffffff;
+}
+
+.ui-color-teal {
+  color: var(--hb-color-teal);
+}
+
+.ui-color-bg-teal {
+  background-color: var(--hb-color-teal);
+  color: #ffffff;
+}
+
+.ui-color-bg-gradient-teal {
+  background: linear-gradient(to right, var(--hb-color-teal), var(--hb-color-teal-dark));
+  color: #ffffff;
+}
+
+.ui-color-petrol {
+  color: var(--hb-color-petrol);
+}
+
+.ui-color-bg-petrol {
+  background-color: var(--hb-color-petrol);
+  color: #ffffff;
+}
+
+.ui-color-bg-gradient-petrol {
+  background: linear-gradient(to right, var(--hb-color-petrol), var(--hb-color-petrol-dark));
+  color: #ffffff;
+}
+
+.ui-color-wine {
+  color: var(--hb-color-wine);
+}
+
+.ui-color-bg-wine {
+  background-color: var(--hb-color-wine);
+  color: #ffffff;
+}
+
+.ui-color-bg-gradient-wine {
+  background: linear-gradient(to right, var(--hb-color-wine), var(--hb-color-wine-dark));
+  color: #ffffff;
+}
+
+.ui-color-mulberry {
+  color: var(--hb-color-mulberry);
+}
+
+.ui-color-bg-mulberry {
+  background-color: var(--hb-color-mulberry);
+  color: #ffffff;
+}
+
+.ui-color-bg-gradient-mulberry {
+  background: linear-gradient(to right, var(--hb-color-mulberry), var(--hb-color-mulberry-dark));
+  color: #ffffff;
+}
+
+.ui-color-fern {
+  color: var(--hb-color-fern);
+}
+
+.ui-color-bg-fern {
+  background-color: var(--hb-color-fern);
+  color: #ffffff;
+}
+
+.ui-color-bg-gradient-fern {
+  background: linear-gradient(to right, var(--hb-color-fern), var(--hb-color-fern-dark));
+  color: #ffffff;
+}
+
+.ui-color-honey {
+  color: var(--hb-color-honey);
+}
+
+.ui-color-bg-honey {
+  background-color: var(--hb-color-honey);
+  color: #000000;
+}
+
+.ui-color-bg-gradient-honey {
+  background: linear-gradient(to right, var(--hb-color-honey), var(--hb-color-honey-dark));
+  color: #000000;
+}
+
+.ui-color-lemon {
+  color: var(--hb-color-lemon);
+}
+
+.ui-color-bg-lemon {
+  background-color: var(--hb-color-lemon);
+  color: #000000;
+}
+
+.ui-color-bg-gradient-lemon {
+  background: linear-gradient(to right, var(--hb-color-lemon), var(--hb-color-lemon-dark));
+  color: #000000;
+}
+
+.ui-color-gold {
+  color: var(--hb-color-gold);
+}
+
+.ui-color-bg-gold {
+  background-color: var(--hb-color-gold);
+  color: #000000;
+}
+
+.ui-color-bg-gradient-gold {
+  background: linear-gradient(to right, var(--hb-color-gold), var(--hb-color-gold-dark));
+  color: #000000;
+}
+
+.ui-color-amber {
+  color: var(--hb-color-amber);
+}
+
+.ui-color-bg-amber {
+  background-color: var(--hb-color-amber);
+  color: #ffffff;
+}
+
+.ui-color-bg-gradient-amber {
+  background: linear-gradient(to right, var(--hb-color-amber), var(--hb-color-amber-dark));
+  color: #ffffff;
+}
+
+.ui-color-coral {
+  color: var(--hb-color-coral);
+}
+
+.ui-color-bg-coral {
+  background-color: var(--hb-color-coral);
+  color: #000000;
+}
+
+.ui-color-bg-gradient-coral {
+  background: linear-gradient(to right, var(--hb-color-coral), var(--hb-color-coral-dark));
+  color: #000000;
+}
+
+.ui-color-orange {
+  color: var(--hb-color-orange);
+}
+
+.ui-color-bg-orange {
+  background-color: var(--hb-color-orange);
+  color: #ffffff;
+}
+
+.ui-color-bg-gradient-orange {
+  background: linear-gradient(to right, var(--hb-color-orange), var(--hb-color-orange-dark));
+  color: #ffffff;
+}
+
+.ui-color-caramel {
+  color: var(--hb-color-caramel);
+}
+
+.ui-color-bg-caramel {
+  background-color: var(--hb-color-caramel);
+  color: #ffffff;
+}
+
+.ui-color-bg-gradient-caramel {
+  background: linear-gradient(to right, var(--hb-color-caramel), var(--hb-color-caramel-dark));
+  color: #ffffff;
+}
+
+.ui-color-stone {
+  color: var(--hb-color-stone);
+}
+
+.ui-color-bg-stone {
+  background-color: var(--hb-color-stone);
+  color: #ffffff;
+}
+
+.ui-color-bg-gradient-stone {
+  background: linear-gradient(to right, var(--hb-color-stone), var(--hb-color-stone-dark));
+  color: #ffffff;
+}
+
+.ui-color-graphite {
+  color: var(--hb-color-graphite);
+}
+
+.ui-color-bg-graphite {
+  background-color: var(--hb-color-graphite);
+  color: #ffffff;
+}
+
+.ui-color-bg-gradient-graphite {
+  background: linear-gradient(to right, var(--hb-color-graphite), var(--hb-color-graphite-dark));
+  color: #ffffff;
+}
+
+.ui-color-charcoal {
+  color: var(--hb-color-charcoal);
+}
+
+.ui-color-bg-charcoal {
+  background-color: var(--hb-color-charcoal);
+  color: #ffffff;
+}
+
+.ui-color-bg-gradient-charcoal {
+  background: linear-gradient(to right, var(--hb-color-charcoal), var(--hb-color-charcoal-dark));
+  color: #ffffff;
+}
+
+.ui-color-storm {
+  color: var(--hb-color-storm);
+}
+
+.ui-color-bg-storm {
+  background-color: var(--hb-color-storm);
+  color: #ffffff;
+}
+
+.ui-color-bg-gradient-storm {
+  background: linear-gradient(to right, var(--hb-color-storm), var(--hb-color-storm-dark));
+  color: #ffffff;
+}
+
+.ui-color-smoke {
+  color: var(--hb-color-smoke);
+}
+
+.ui-color-bg-smoke {
+  background-color: var(--hb-color-smoke);
+  color: #ffffff;
+}
+
+.ui-color-bg-gradient-smoke {
+  background: linear-gradient(to right, var(--hb-color-smoke), var(--hb-color-smoke-dark));
+  color: #ffffff;
+}
+
+.ui-color-shadow {
+  color: var(--hb-color-shadow);
+}
+
+.ui-color-bg-shadow {
+  background-color: var(--hb-color-shadow);
+  color: #ffffff;
+}
+
+.ui-color-bg-gradient-shadow {
+  background: linear-gradient(to right, var(--hb-color-shadow), var(--hb-color-shadow-dark));
+  color: #ffffff;
+}
+
+.ui-color-steel {
+  color: var(--hb-color-steel);
+}
+
+.ui-color-bg-steel {
+  background-color: var(--hb-color-steel);
+  color: #ffffff;
+}
+
+.ui-color-bg-gradient-steel {
+  background: linear-gradient(to right, var(--hb-color-steel), var(--hb-color-steel-dark));
+  color: #ffffff;
+}
+
+.ui-color-peach {
+  color: var(--hb-color-peach);
+}
+
+.ui-color-bg-peach {
+  background-color: var(--hb-color-peach);
+  color: #000000;
+}
+
+.ui-color-bg-gradient-peach {
+  background: linear-gradient(to right, var(--hb-color-peach), var(--hb-color-peach-dark));
+  color: #000000;
+}
+
+.ui-color-sunset {
+  color: var(--hb-color-sunset);
+}
+
+.ui-color-bg-sunset {
+  background-color: var(--hb-color-sunset);
+  color: #000000;
+}
+
+.ui-color-bg-gradient-sunset {
+  background: linear-gradient(to right, var(--hb-color-sunset), var(--hb-color-sunset-dark));
+  color: #000000;
+}
+
+.ui-color-chartreuse {
+  color: var(--hb-color-chartreuse);
+}
+
+.ui-color-bg-chartreuse {
+  background-color: var(--hb-color-chartreuse);
+  color: #ffffff;
+}
+
+.ui-color-bg-gradient-chartreuse {
+  background: linear-gradient(to right, var(--hb-color-chartreuse), var(--hb-color-chartreuse-dark));
+  color: #ffffff;
+}
+
 .ui-color-jade {
   color: var(--hb-color-jade);
 }
 
 .ui-color-bg-jade {
   background-color: var(--hb-color-jade);
+  color: #ffffff;
+}
+
+.ui-color-bg-gradient-jade {
+  background: linear-gradient(to right, var(--hb-color-jade), var(--hb-color-jade-dark));
   color: #ffffff;
 }
 

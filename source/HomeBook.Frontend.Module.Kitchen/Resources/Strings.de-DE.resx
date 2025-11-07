@@ -32,4 +32,19 @@
     <data name="StartMenuItem_MealPlan_Caption" xml:space="preserve">
         <value>Ihre Mahlzeiten auf einen Blick</value>
     </data>
+    <data name="DateTimeFormat_ShortDateOnlyFormat" xml:space="preserve">
+        <value>dd.MM.</value>
+    </data>
+    <data name="PlanOverview_Header_CalendarWeek_TextTemplate" xml:space="preserve">
+        <value>Kalenderwoche {0}</value>
+    </data>
+    <data name="PlanOverview_MealType_Breakfast_Text" xml:space="preserve">
+        <value>Frühstück</value>
+    </data>
+    <data name="PlanOverview_MealType_Lunch_Text" xml:space="preserve">
+        <value>Mittagessen</value>
+    </data>
+    <data name="PlanOverview_MealType_Dinner_Text" xml:space="preserve">
+        <value>Abendessen</value>
+    </data>
 </root>

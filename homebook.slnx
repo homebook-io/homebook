@@ -48,6 +48,7 @@
     <File Path="update-licenses.sh" />
     <File Path=".github\FUNDING.yml" />
     <File Path=".github\dependabot.yml" />
+    <File Path="install-dev.sh" />
   </Folder>
   <Folder Name="/Solution/assets/">
     <File Path="assets\README.md" />

@@ -48,6 +48,14 @@ jobs:
                 with:
                     dotnet-version: ${{ env.DOTNET_VERSION }}
 
+            -   name: Setup Node
+                uses: actions/setup-node@v4
+                with:
+                    node-version: 22
+
+            -   name: Install NPM Sass
+                run: npm install --save-dev sass
+
             -   name: Install SonarQube Cloud scanner
                 run: |
                     dotnet tool install --global dotnet-sonarscanner

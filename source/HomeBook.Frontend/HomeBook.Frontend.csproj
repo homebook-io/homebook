@@ -9,15 +9,19 @@
     </PropertyGroup>
 
     <ItemGroup>
-        <PackageReference Include="AspNetCore.SassCompiler" Version="1.93.2"/>
-        <PackageReference Include="Microsoft.AspNetCore.Components.WebAssembly" Version="9.0.10" />
-        <PackageReference Include="Microsoft.AspNetCore.Components.WebAssembly.Authentication" Version="9.0.10" />
-        <PackageReference Include="Microsoft.AspNetCore.Components.WebAssembly.DevServer" Version="9.0.10" PrivateAssets="all" />
-        <PackageReference Include="Microsoft.AspNetCore.Components.Authorization" Version="9.0.10" />
+        <PackageReference Include="Microsoft.AspNetCore.Components.WebAssembly" Version="9.0.10"/>
+        <PackageReference Include="Microsoft.AspNetCore.Components.WebAssembly.Authentication" Version="9.0.10"/>
+        <PackageReference Include="Microsoft.AspNetCore.Components.WebAssembly.DevServer" Version="9.0.10" PrivateAssets="all"/>
+        <PackageReference Include="Microsoft.AspNetCore.Components.Authorization" Version="9.0.10"/>
         <PackageReference Include="Microsoft.AspNetCore.Localization" Version="2.3.0"/>
-        <PackageReference Include="Microsoft.FeatureManagement" Version="4.3.0" />
+        <PackageReference Include="Microsoft.FeatureManagement" Version="4.3.0"/>
         <PackageReference Include="MudBlazor" Version="8.13.0"/>
     </ItemGroup>
+
+    <Target Name="CompileSass" BeforeTargets="Build">
+        <Exec Command="npx sass Styles/app.scss wwwroot/css/app.css --style=expanded --source-map"/>
+        <Exec Command="npx sass Styles/app.scss wwwroot/css/app.min.css --style=compressed --source-map"/>
+    </Target>
 
     <ItemGroup>
         <Content Update="wwwroot\appsettings.json">
@@ -31,13 +35,9 @@
     <ItemGroup>
         <ProjectReference Include="..\HomeBook.Frontend.Core\HomeBook.Frontend.Core.csproj"/>
         <ProjectReference Include="..\HomeBook.Frontend.Module.Finances\HomeBook.Frontend.Module.Finances.csproj"/>
-        <ProjectReference Include="..\HomeBook.Frontend.Module.Kitchen\HomeBook.Frontend.Module.Kitchen.csproj" />
+        <ProjectReference Include="..\HomeBook.Frontend.Module.Kitchen\HomeBook.Frontend.Module.Kitchen.csproj"/>
         <ProjectReference Include="..\HomeBook.Frontend.Module.PlatformInfo\HomeBook.Frontend.Module.PlatformInfo.csproj"/>
         <ProjectReference Include="..\HomeBook.Frontend.Services\HomeBook.Frontend.Services.csproj"/>
-    </ItemGroup>
-
-    <ItemGroup>
-        <Folder Include="wwwroot\img\bg\"/>
     </ItemGroup>
 
     <ItemGroup>

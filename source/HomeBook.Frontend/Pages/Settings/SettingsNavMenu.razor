@@ -4,6 +4,7 @@
 @using Microsoft.Extensions.Localization
 
 @inject IStringLocalizer<LocalizationStrings> Loc
+@inject IConfiguration Configuration
 
 <MudPaper>
 
@@ -70,31 +71,34 @@
                 +AI Configuration
             </MudNavLink>
 
-            <MudDivider Class="my-1"/>
+            @if (_showDeveloperArea)
+            {
+                <MudDivider Class="my-1"/>
 
-            <MudNavLink Match="NavLinkMatch.All"
-                        Href="/Settings/Developer"
-                        Icon="@HomeBookIcons.Icons8.LiquidGlassColor.SourceCode">
-                @Loc[nameof(LocalizationStrings.Settings_NavMenu_Developer_Text)]
-            </MudNavLink>
+                <MudNavLink Match="NavLinkMatch.All"
+                            Href="/Settings/Developer"
+                            Icon="@HomeBookIcons.Icons8.LiquidGlassColor.SourceCode">
+                    @Loc[nameof(LocalizationStrings.Settings_NavMenu_Developer_Text)]
+                </MudNavLink>
 
-            <MudNavLink Match="NavLinkMatch.All"
-                        Href="/Settings/Developer/Components"
-                        Icon="@HomeBookIcons.Icons8.GlassMorphism.Web">
-                @Loc[nameof(LocalizationStrings.Settings_NavMenu_DeveloperComponents_Text)]
-            </MudNavLink>
+                <MudNavLink Match="NavLinkMatch.All"
+                            Href="/Settings/Developer/Components"
+                            Icon="@HomeBookIcons.Icons8.GlassMorphism.Web">
+                    @Loc[nameof(LocalizationStrings.Settings_NavMenu_DeveloperComponents_Text)]
+                </MudNavLink>
 
-            <MudNavLink Match="NavLinkMatch.All"
-                        Href="/Settings/Developer/Colors"
-                        Icon="@HomeBookIcons.Icons8.GlassMorphism.FillColor">
-                @Loc[nameof(LocalizationStrings.Settings_NavMenu_DeveloperColors_Text)]
-            </MudNavLink>
+                <MudNavLink Match="NavLinkMatch.All"
+                            Href="/Settings/Developer/Colors"
+                            Icon="@HomeBookIcons.Icons8.GlassMorphism.FillColor">
+                    @Loc[nameof(LocalizationStrings.Settings_NavMenu_DeveloperColors_Text)]
+                </MudNavLink>
 
-            <MudNavLink Match="NavLinkMatch.All"
-                        Href="/Settings/Developer/Icons"
-                        Icon="@HomeBookIcons.Icons8.LiquidGlassColor.Image">
-                @Loc[nameof(LocalizationStrings.Settings_NavMenu_DeveloperIcons_Text)]
-            </MudNavLink>
+                <MudNavLink Match="NavLinkMatch.All"
+                            Href="/Settings/Developer/Icons"
+                            Icon="@HomeBookIcons.Icons8.LiquidGlassColor.Image">
+                    @Loc[nameof(LocalizationStrings.Settings_NavMenu_DeveloperIcons_Text)]
+                </MudNavLink>
+            }
 
             <MudDivider Class="my-1"/>
 

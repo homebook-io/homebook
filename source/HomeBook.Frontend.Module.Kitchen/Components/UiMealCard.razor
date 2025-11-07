@@ -1,0 +1,80 @@
+@using HomeBook.Frontend.Core.Icons
+@using Humanizer
+
+<div class="@CssClass">
+
+    <div class="d-flex my-3">
+
+        <UiIcon IconStyle="UiIconStyle.Plain"
+                Class="d-flex align-center"
+                ColorValue="@MealTypeColor"
+                Size="Size.Medium"
+                Icon="@MealTypeIcon"/>
+
+        <MudText Typo="Typo.h6"
+                 Class="ms-3">
+            @MealTypeName
+        </MudText>
+
+    </div>
+
+    @if (Meal is not null)
+    {
+        <MudCard Class="flex-1"
+                 Style="@Style"
+                 Elevation="0">
+
+            <MudCardContent Class="py-3 px-5 border-0 pb-10"
+                            Style="position: relative;">
+
+                <MudIconButton Size="Size.Medium"
+                               OnClick="HandleDeleteClick"
+                               Class="rounded-xl flex-grow-1 border-0 me-n5 mt-n3 float-right"
+                               Icon="@HomeBookIcons.Icons8.Windows11.Filled.Close"/>
+
+                <MudText Typo="Typo.subtitle2">@Meal.Name</MudText>
+
+                <MudText Typo="Typo.caption"
+                         Class="d-block">@Meal.Ingredients</MudText>
+
+                <MudText Typo="Typo.overline"
+                         Class="d-block mt-28"
+                         Style="position: absolute; bottom: 0px;">
+
+                    @if (Meal.Duration is not null)
+                    {
+                        @Meal.Duration?.Humanize(2)
+                    }
+
+                    @if (Meal.Duration is not null
+                         && Meal.CaloriesKcal is not null)
+                    {
+                        <span class="mx-1">-</span>
+                    }
+
+                    @if (Meal.CaloriesKcal is not null)
+                    {
+                        @string.Format("{0} +kcal", Meal.CaloriesKcal)
+                    }
+
+                </MudText>
+            </MudCardContent>
+
+        </MudCard>
+    }
+
+    @if (Meal is null)
+    {
+        <MudCard Class="flex-1 d-flex"
+                 Style="@Style"
+                 Elevation="0">
+
+            <MudIconButton Size="Size.Large"
+                           OnClick="HandleAddClick"
+                           Class="flex-1 rounded-xl py-5"
+                           Icon="@HomeBookIcons.Icons8.Windows11.Filled.Plus"/>
+
+        </MudCard>
+    }
+
+</div>

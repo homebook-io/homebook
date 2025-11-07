@@ -21,11 +21,9 @@ public partial class Add : ComponentBase
     private SavingGoalDetailViewModel _model { get; } = new();
     private AddSavingGoalSummaryViewModel? _summaryVM = null;
 
-
     private MudForm? _formStepBasicData;
     private MudForm? _formStep2;
     private bool _iconDialogOpen;
-
 
     protected readonly List<string> SuggestedIcons =
     [
