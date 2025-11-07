@@ -1,6 +1,7 @@
+@using HomeBook.Frontend.Core.Icons
 @using Humanizer
 
-<div class="ui-meal-card">
+<div class="@CssClass">
 
     <div class="d-flex my-3">
 
@@ -19,29 +20,59 @@
 
     @if (Meal is not null)
     {
-        <MudCard Class="mb-5 py-3 px-5"
+        <MudCard Class="flex-1"
                  Style="@Style"
                  Elevation="0">
 
-            <MudText Typo="Typo.subtitle2">@Meal.Name</MudText>
+            <MudCardContent Class="py-3 px-5 border-0 pb-10"
+                            Style="position: relative;">
 
-            <MudText Typo="Typo.caption">@Meal.Ingredients</MudText>
+                <MudIconButton Size="Size.Medium"
+                               OnClick="HandleDeleteClick"
+                               Class="rounded-xl flex-grow-1 border-0 me-n5 mt-n3 float-right"
+                               Icon="@HomeBookIcons.Icons8.Windows11.Filled.Close"/>
 
-            <MudText Typo="Typo.caption">
+                <MudText Typo="Typo.subtitle2">@Meal.Name</MudText>
 
-                @if (Meal.Duration is not null)
-                {
-                    @Meal.Duration?.Humanize(2)
-                }
+                <MudText Typo="Typo.caption"
+                         Class="d-block">@Meal.Ingredients</MudText>
 
-                <span class="mx-1">-</span>
+                <MudText Typo="Typo.overline"
+                         Class="d-block mt-28"
+                         Style="position: absolute; bottom: 0px;">
 
-                @if (Meal.CaloriesKcal is not null)
-                {
-                    @string.Format("{0} +kcal", Meal.CaloriesKcal)
-                }
+                    @if (Meal.Duration is not null)
+                    {
+                        @Meal.Duration?.Humanize(2)
+                    }
 
-            </MudText>
+                    @if (Meal.Duration is not null
+                         && Meal.CaloriesKcal is not null)
+                    {
+                        <span class="mx-1">-</span>
+                    }
+
+                    @if (Meal.CaloriesKcal is not null)
+                    {
+                        @string.Format("{0} +kcal", Meal.CaloriesKcal)
+                    }
+
+                </MudText>
+            </MudCardContent>
+
+        </MudCard>
+    }
+
+    @if (Meal is null)
+    {
+        <MudCard Class="flex-1 d-flex"
+                 Style="@Style"
+                 Elevation="0">
+
+            <MudIconButton Size="Size.Large"
+                           OnClick="HandleAddClick"
+                           Class="flex-1 rounded-lg py-5"
+                           Icon="@HomeBookIcons.Icons8.Windows11.Filled.Plus"/>
 
         </MudCard>
     }

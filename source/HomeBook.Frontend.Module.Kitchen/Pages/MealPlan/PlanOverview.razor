@@ -2,6 +2,7 @@
 
 @using HomeBook.Frontend.Core.Icons
 @using HomeBook.Frontend.Module.Kitchen.Components
+@using HomeBook.Frontend.Module.Kitchen.Enums
 @using HomeBook.Frontend.Module.Kitchen.Resources
 @using HomeBook.Frontend.Module.Kitchen.ViewModels
 @using Microsoft.Extensions.Localization
@@ -40,30 +41,33 @@
                 </MudText>
             </MudCardHeader>
 
-            <MudGrid Spacing="5" Class="px-5">
+            <div class="d-flex gap-5 px-5 mt-4 mb-5">
 
-                <MudItem md="4">
-                    <UiMealCard MealTypeName="@Loc[nameof(Strings.PlanOverview_MealType_Breakfast_Text)]"
-                                MealTypeIcon="@HomeBookIcons.Icons8.Windows11.Filled.BuffetBreakfast"
-                                MealTypeColor="var(--hb-color-gold)"
-                                Meal="@meal.Breakfast"/>
-                </MudItem>
+                <UiMealCard MealTypeName="@Loc[nameof(Strings.PlanOverview_MealType_Breakfast_Text)]"
+                            MealTypeIcon="@HomeBookIcons.Icons8.Windows11.Filled.BuffetBreakfast"
+                            Class="flex-1"
+                            MealTypeColor="var(--hb-color-gold)"
+                            Meal="@meal.Breakfast"
+                            OnAdd="@(() => OnMealAdd(MealType.Breakfast, meal.Date))"
+                            OnDelete="@(() => OnMealDelete(MealType.Breakfast, meal.Date))"/>
 
-                <MudItem md="4">
-                    <UiMealCard MealTypeName="@Loc[nameof(Strings.PlanOverview_MealType_Lunch_Text)]"
-                                MealTypeIcon="@HomeBookIcons.Icons8.Windows11.Filled.Summer"
-                                MealTypeColor="var(--hb-color-apple)"
-                                Meal="@meal.Lunch"/>
-                </MudItem>
+                <UiMealCard MealTypeName="@Loc[nameof(Strings.PlanOverview_MealType_Lunch_Text)]"
+                            MealTypeIcon="@HomeBookIcons.Icons8.Windows11.Filled.Summer"
+                            Class="flex-1"
+                            MealTypeColor="var(--hb-color-apple)"
+                            Meal="@meal.Lunch"
+                            OnAdd="@(() => OnMealAdd(MealType.Lunch, meal.Date))"
+                            OnDelete="@(() => OnMealDelete(MealType.Lunch, meal.Date))"/>
 
-                <MudItem md="4">
-                    <UiMealCard MealTypeName="@Loc[nameof(Strings.PlanOverview_MealType_Dinner_Text)]"
-                                MealTypeIcon="@HomeBookIcons.Icons8.Windows11.Filled.Moon"
-                                MealTypeColor="var(--hb-color-cerulean)"
-                                Meal="@meal.Dinner"/>
-                </MudItem>
+                <UiMealCard MealTypeName="@Loc[nameof(Strings.PlanOverview_MealType_Dinner_Text)]"
+                            MealTypeIcon="@HomeBookIcons.Icons8.Windows11.Filled.Moon"
+                            Class="flex-1"
+                            MealTypeColor="var(--hb-color-cerulean)"
+                            Meal="@meal.Dinner"
+                            OnAdd="@(() => OnMealAdd(MealType.Dinner, meal.Date))"
+                            OnDelete="@(() => OnMealDelete(MealType.Dinner, meal.Date))"/>
 
-            </MudGrid>
+            </div>
 
         </MudCard>
     }

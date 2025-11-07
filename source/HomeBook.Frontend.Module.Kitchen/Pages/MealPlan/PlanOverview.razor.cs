@@ -1,3 +1,4 @@
+using HomeBook.Frontend.Module.Kitchen.Enums;
 using HomeBook.Frontend.Module.Kitchen.ViewModels;
 using Microsoft.AspNetCore.Components;
 
@@ -8,7 +9,11 @@ public partial class PlanOverview : ComponentBase
     private List<MealPlanItemViewModel> _mealPlanItems = [];
     private DateTime _startDate = DateTime.Today;
     private DateTime _endDate = DateTime.Today.AddDays(6);
-    private short _calendarWeek = (short)System.Globalization.CultureInfo.CurrentCulture.Calendar.GetWeekOfYear(DateTime.Today, System.Globalization.CalendarWeekRule.FirstFourDayWeek, DayOfWeek.Monday);
+
+    private short _calendarWeek =
+        (short)System.Globalization.CultureInfo.CurrentCulture.Calendar.GetWeekOfYear(DateTime.Today,
+            System.Globalization.CalendarWeekRule.FirstFourDayWeek,
+            DayOfWeek.Monday);
 
     protected override async Task OnAfterRenderAsync(bool firstRender)
     {
@@ -119,6 +124,29 @@ public partial class PlanOverview : ComponentBase
                 }
             }
         ];
+
+        StateHasChanged();
+    }
+
+    private async Task OnMealAdd(MealType mealType, DateTime date)
+    {
+    }
+
+    private async Task OnMealDelete(MealType mealType, DateTime date)
+    {
+        MealPlanItemViewModel? mealPlanItem = _mealPlanItems.FirstOrDefault(item => item.Date == date);
+        switch (mealType)
+        {
+            case MealType.Breakfast:
+                mealPlanItem!.Breakfast = null;
+                break;
+            case MealType.Lunch:
+                mealPlanItem!.Lunch = null;
+                break;
+            case MealType.Dinner:
+                mealPlanItem!.Dinner = null;
+                break;
+        }
 
         StateHasChanged();
     }

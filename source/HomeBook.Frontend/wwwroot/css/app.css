@@ -267,6 +267,18 @@
     width: auto !important;
   }
 }
+.float-right {
+  float: right !important;
+}
+
+.float-left {
+  float: left !important;
+}
+
+.float-none {
+  float: none !important;
+}
+
 .frosted-b1 {
   position: relative;
   background: radial-gradient(ellipse 80% 30% at top center, rgba(255, 255, 255, 0.15) 0%, transparent 80%), linear-gradient(160deg, rgba(255, 255, 255, 0.05) 0%, rgba(255, 255, 255, 0.3) 100%), rgba(255, 255, 255, 0.05) !important;
