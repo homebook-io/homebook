@@ -130,6 +130,29 @@ public partial class PlanOverview : ComponentBase
 
     private async Task OnMealAdd(MealType mealType, DateTime date)
     {
+        // open dialog to add meal
+        MealItemViewModel meal = new()
+        {
+            Name = "Roastbeef mit Gemüse",
+            Ingredients = "Kartoffeln, Gemüse, Gewürze",
+            Duration = TimeSpan.FromMinutes(30)
+        };
+
+        MealPlanItemViewModel? mealPlanItem = _mealPlanItems.FirstOrDefault(item => item.Date == date);
+        switch (mealType)
+        {
+            case MealType.Breakfast:
+                mealPlanItem!.Breakfast = meal;
+                break;
+            case MealType.Lunch:
+                mealPlanItem!.Lunch = meal;
+                break;
+            case MealType.Dinner:
+                mealPlanItem!.Dinner = meal;
+                break;
+        }
+
+        StateHasChanged();
     }
 
     private async Task OnMealDelete(MealType mealType, DateTime date)
