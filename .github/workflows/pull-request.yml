@@ -16,7 +16,6 @@ env:
     E2E_TEST_CSPROJ: "./source/HomeBook.E2ETests/HomeBook.E2ETests.csproj"
 
 jobs:
-
     pull-request-check:
         runs-on: ubuntu-latest
 
@@ -46,28 +45,22 @@ jobs:
                 run: npm install --save-dev sass
 
             -   name: Install SonarQube Cloud scanner
-                run: |
-                    dotnet tool install --global dotnet-sonarscanner
+                run: dotnet tool install --global dotnet-sonarscanner
 
             -   name: Install Kiota CLI
-                run: |
-                    dotnet tool install --global Microsoft.OpenApi.Kiota
+                run: dotnet tool install --global Microsoft.OpenApi.Kiota
 
             -   name: Install ReportGenerator
-                run: |
-                    dotnet tool install --global dotnet-reportgenerator-globaltool
+                run: dotnet tool install --global dotnet-reportgenerator-globaltool
 
             -   name: Install .NET Coverage
-                run: |
-                    dotnet tool install --global dotnet-coverage
+                run: dotnet tool install --global dotnet-coverage
 
             -   name: .NET Restore
-                run: |
-                    dotnet restore
+                run: dotnet restore
 
             -   name: .NET Build (Service for Client Generation)
-                run: |
-                    dotnet build --no-restore
+                run: dotnet build --no-restore
 
             -   name: Generate Kiota Client
                 shell: bash
@@ -77,9 +70,14 @@ jobs:
                       --class-name RestClient \
                       --namespace-name ${{ env.CLIENT_NAMESPACE }} \
                       --openapi ${{ env.OPENAPI_FILE }} \
-                      --output ${{ env.CLIENT_OUTPUT_DIR }} \
+                      --output ${{ env.CLIENT_OUTPUT_DIR }}
+
+            -   name: Skip SonarQube for Dependabot
+                if: ${{ github.actor == 'dependabot[bot]' }}
+                run: echo "Skipping SonarQube scan for Dependabot PR"
 
             -   name: Begin SonarQube
+                if: ${{ github.actor != 'dependabot[bot]' }}
                 shell: pwsh
                 env:
                     SONARTOKEN: ${{ secrets.SONAR_TOKEN }}
@@ -97,15 +95,15 @@ jobs:
 
             -   name: .NET Build
                 shell: pwsh
-                run: |
-                    dotnet build --no-restore
+                run: dotnet build --no-restore
 
-            - name: Collect Test Coverage
-              shell: pwsh
-              run: |
-                  dotnet-coverage collect "dotnet test ${{ env.UNIT_TEST_CSPROJ }} --no-build" -f xml -o "coverage.xml"
+            -   name: Collect Test Coverage
+                shell: pwsh
+                run: |
+                    dotnet-coverage collect "dotnet test ${{ env.UNIT_TEST_CSPROJ }} --no-build" -f xml -o "coverage.xml"
 
             -   name: End SonarQube
+                if: ${{ github.actor != 'dependabot[bot]' }}
                 shell: pwsh
                 env:
                     SONARTOKEN: ${{ secrets.SONAR_TOKEN }}
