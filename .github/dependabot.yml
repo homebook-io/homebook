@@ -23,4 +23,3 @@ updates:
       # - dependency-name: "coverlet.collector"
     reviewers:
       - "lk-code"
-    auto-merge: true
