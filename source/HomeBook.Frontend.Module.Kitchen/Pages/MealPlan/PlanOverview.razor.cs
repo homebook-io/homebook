@@ -1,6 +1,8 @@
+using HomeBook.Frontend.Module.Kitchen.Dialogs;
 using HomeBook.Frontend.Module.Kitchen.Enums;
 using HomeBook.Frontend.Module.Kitchen.ViewModels;
 using Microsoft.AspNetCore.Components;
+using MudBlazor;
 
 namespace HomeBook.Frontend.Module.Kitchen.Pages.MealPlan;
 
@@ -28,7 +30,7 @@ public partial class PlanOverview : ComponentBase
             new()
             {
                 Id = Guid.NewGuid(),
-                Date = DateTime.Today,
+                Date = DateOnly.FromDateTime(DateTime.Today),
                 ColorName = "cerulean",
                 Breakfast = new MealItemViewModel()
                 {
@@ -54,7 +56,7 @@ public partial class PlanOverview : ComponentBase
             new()
             {
                 Id = Guid.NewGuid(),
-                Date = DateTime.Today.AddDays(1),
+                Date = DateOnly.FromDateTime(DateTime.Today.AddDays(1)),
                 ColorName = "fern",
                 Lunch = new MealItemViewModel()
                 {
@@ -66,7 +68,7 @@ public partial class PlanOverview : ComponentBase
             new()
             {
                 Id = Guid.NewGuid(),
-                Date = DateTime.Today.AddDays(2),
+                Date = DateOnly.FromDateTime(DateTime.Today.AddDays(2)),
                 ColorName = "amber",
                 Dinner = new MealItemViewModel()
                 {
@@ -78,7 +80,7 @@ public partial class PlanOverview : ComponentBase
             new()
             {
                 Id = Guid.NewGuid(),
-                Date = DateTime.Today.AddDays(3),
+                Date = DateOnly.FromDateTime(DateTime.Today.AddDays(3)),
                 ColorName = "azure",
                 Breakfast = new MealItemViewModel()
                 {
@@ -90,7 +92,7 @@ public partial class PlanOverview : ComponentBase
             new()
             {
                 Id = Guid.NewGuid(),
-                Date = DateTime.Today.AddDays(4),
+                Date = DateOnly.FromDateTime(DateTime.Today.AddDays(4)),
                 ColorName = "chartreuse",
                 Breakfast = new MealItemViewModel()
                 {
@@ -102,7 +104,7 @@ public partial class PlanOverview : ComponentBase
             new()
             {
                 Id = Guid.NewGuid(),
-                Date = DateTime.Today.AddDays(5),
+                Date = DateOnly.FromDateTime(DateTime.Today.AddDays(5)),
                 ColorName = "jade",
                 Breakfast = new MealItemViewModel()
                 {
@@ -114,7 +116,7 @@ public partial class PlanOverview : ComponentBase
             new()
             {
                 Id = Guid.NewGuid(),
-                Date = DateTime.Today.AddDays(6),
+                Date = DateOnly.FromDateTime(DateTime.Today.AddDays(6)),
                 ColorName = "plum",
                 Breakfast = new MealItemViewModel()
                 {
@@ -128,15 +130,23 @@ public partial class PlanOverview : ComponentBase
         StateHasChanged();
     }
 
-    private async Task OnMealAdd(MealType mealType, DateTime date)
+    private async Task OnMealAdd(MealType mealType, DateOnly date)
     {
-        // open dialog to add meal
-        MealItemViewModel meal = new()
-        {
-            Name = "Roastbeef mit Gemüse",
-            Ingredients = "Kartoffeln, Gemüse, Gewürze",
-            Duration = TimeSpan.FromMinutes(30)
-        };
+        IDialogReference dialogReference = await DialogService.ShowAsync<MealSelectDialog>(
+            "+Gericht auswählen",
+            new DialogOptions()
+            {
+                MaxWidth = MaxWidth.Small,
+                FullWidth = true,
+                CloseOnEscapeKey = true,
+                CloseButton = true
+            });
+
+        DialogResult? dialogResult = await dialogReference.Result;
+        if (dialogResult is null)
+            return;
+
+        MealItemViewModel meal = (dialogResult.Data as MealItemViewModel)!;
 
         MealPlanItemViewModel? mealPlanItem = _mealPlanItems.FirstOrDefault(item => item.Date == date);
         switch (mealType)
@@ -155,7 +165,7 @@ public partial class PlanOverview : ComponentBase
         StateHasChanged();
     }
 
-    private async Task OnMealDelete(MealType mealType, DateTime date)
+    private async Task OnMealDelete(MealType mealType, DateOnly date)
     {
         MealPlanItemViewModel? mealPlanItem = _mealPlanItems.FirstOrDefault(item => item.Date == date);
         switch (mealType)

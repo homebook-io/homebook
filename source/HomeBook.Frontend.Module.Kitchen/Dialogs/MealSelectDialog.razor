@@ -1,0 +1,55 @@
+@using HomeBook.Frontend.Module.Kitchen.Contracts
+@using HomeBook.Frontend.Module.Kitchen.ViewModels
+
+@inject IMealService MealService
+
+<MudDialog>
+
+    <DialogContent>
+
+        <MudTextField Label="+Suche nach Gericht"
+                      Disabled="_isLoading"
+                      T="string"
+                      Clearable="true"
+                      Immediate="true"
+                      Variant="Variant.Outlined"
+                      Value="_text"
+                      ValueChanged="@(value => OnSearchTextFieldValueChanged(value))"
+                      Margin="Margin.Dense"/>
+
+        @if (_isLoading)
+        {
+            <MudProgressLinear Color="Color.Primary"
+                               Indeterminate="true"/>
+        }
+
+        <MudList T="MealItemViewModel">
+
+            @foreach (MealItemViewModel meal in _mealItems)
+            {
+                <MudListItem T="MealItemViewModel"
+                             OnClick="() => SelectMealAsync(meal)">
+
+                    <AvatarContent>
+                        <MudAvatar>
+                            <MudAvatar Color="Color.Tertiary">@meal.Name[0]</MudAvatar>
+                        </MudAvatar>
+                    </AvatarContent>
+
+                    <ChildContent>
+                        @meal.Name
+                    </ChildContent>
+
+                </MudListItem>
+            }
+
+        </MudList>
+
+    </DialogContent>
+
+    <DialogActions>
+        @* <MudButton OnClick="Cancel">Cancel</MudButton> *@
+        @* <MudButton Color="Color.Primary" OnClick="Submit">+</MudButton> *@
+    </DialogActions>
+
+</MudDialog>
