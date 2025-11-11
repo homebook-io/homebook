@@ -11,7 +11,8 @@ public class UserRepository(
     IDbContextFactory<AppDbContext> factory) : IUserRepository
 {
     /// <inheritdoc />
-    public async Task<User> CreateUserAsync(User user, CancellationToken cancellationToken = default)
+    public async Task<User> CreateUserAsync(User user,
+        CancellationToken cancellationToken = default)
     {
         await using AppDbContext dbContext = await factory.CreateDbContextAsync(cancellationToken);
         dbContext.Add(user);
@@ -21,21 +22,26 @@ public class UserRepository(
     }
 
     /// <inheritdoc />
-    public async Task<bool> ContainsUserAsync(string username, CancellationToken cancellationToken = default)
+    public async Task<bool> ContainsUserAsync(string username,
+        CancellationToken cancellationToken = default)
     {
         await using AppDbContext dbContext = await factory.CreateDbContextAsync(cancellationToken);
         return (await GetUserByUsernameAsync(username, cancellationToken)) is not null;
     }
 
     /// <inheritdoc />
-    public async Task<User?> GetUserByIdAsync(Guid id, CancellationToken cancellationToken = default)
+    public async Task<User?> GetUserByIdAsync(Guid id,
+        CancellationToken cancellationToken = default,
+        AppDbContext? appDbContext = null)
     {
         await using AppDbContext dbContext = await factory.CreateDbContextAsync(cancellationToken);
         return await dbContext.Set<User>().FirstOrDefaultAsync(x => x.Id == id, cancellationToken);
     }
 
     /// <inheritdoc />
-    public async Task<User?> GetUserByUsernameAsync(string username, CancellationToken cancellationToken = default)
+    public async Task<User?> GetUserByUsernameAsync(string username,
+        CancellationToken cancellationToken = default,
+        AppDbContext? appDbContext = null)
     {
         await using AppDbContext dbContext = await factory.CreateDbContextAsync(cancellationToken);
         return await dbContext.Set<User>().FirstOrDefaultAsync(x => x.Username == username, cancellationToken);
@@ -49,7 +55,8 @@ public class UserRepository(
     }
 
     /// <inheritdoc />
-    public async Task<User> UpdateUserAsync(User user, CancellationToken cancellationToken)
+    public async Task<User> UpdateUserAsync(User user,
+        CancellationToken cancellationToken)
     {
         await using AppDbContext dbContext = await factory.CreateDbContextAsync(cancellationToken);
         dbContext.Update(user);
@@ -68,10 +75,7 @@ public class UserRepository(
     {
         await using AppDbContext dbContext = await factory.CreateDbContextAsync(cancellationToken);
 
-        User? user = await dbContext.Set<User>()
-            .FirstOrDefaultAsync(x => x.Id == userId,
-                cancellationToken: cancellationToken);
-
+        User? user = await GetUserByIdAsync(userId, cancellationToken, dbContext);
         if (user is null)
             throw new KeyNotFoundException($"User with id '{userId}' not found.");
 
@@ -87,17 +91,14 @@ public class UserRepository(
     }
 
     /// <inheritdoc />
-    public async Task<bool> DeleteAsync(Guid userId, CancellationToken cancellationToken = default)
+    public async Task<bool> DeleteAsync(Guid userId,
+        CancellationToken cancellationToken = default)
     {
         await using AppDbContext dbContext = await factory.CreateDbContextAsync(cancellationToken);
 
-        User? user = await dbContext.Set<User>()
-            .FirstOrDefaultAsync(x => x.Id == userId, cancellationToken);
-
-        if (user == null)
-        {
+        User? user = await GetUserByIdAsync(userId, cancellationToken, dbContext);
+        if (user is null)
             return false;
-        }
 
         dbContext.Remove(user);
 
