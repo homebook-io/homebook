@@ -17,15 +17,17 @@ public interface ISavingGoalsRepository
         CancellationToken cancellationToken);
 
     /// <summary>
-    /// /
+    ///
     /// </summary>
     /// <param name="userId"></param>
-    /// <param name="savingGoalId"></param>
+    /// <param name="entityId"></param>
     /// <param name="cancellationToken"></param>
+    /// <param name="appDbContext"></param>
     /// <returns></returns>
-    Task<SavingGoal?> GetSavingGoalByIdAsync(Guid userId,
-        Guid savingGoalId,
-        CancellationToken cancellationToken);
+    Task<SavingGoal?> GetByIdAsync(Guid userId,
+        Guid entityId,
+        CancellationToken cancellationToken,
+        AppDbContext? appDbContext = null);
 
     /// <summary>
     ///
@@ -34,7 +36,7 @@ public interface ISavingGoalsRepository
     /// <param name="entity"></param>
     /// <param name="cancellationToken"></param>
     /// <returns></returns>
-    Task<Guid> CreateOrUpdateSavingGoalAsync(Guid userId,
+    Task<Guid> CreateOrUpdateAsync(Guid userId,
         SavingGoal entity,
         CancellationToken cancellationToken);
 
@@ -42,10 +44,10 @@ public interface ISavingGoalsRepository
     ///
     /// </summary>
     /// <param name="userId"></param>
-    /// <param name="savingGoalId"></param>
+    /// <param name="entityId"></param>
     /// <param name="cancellationToken"></param>
     /// <returns></returns>
-    Task DeleteSavingGoalAsync(Guid userId,
-        Guid savingGoalId,
+    Task DeleteAsync(Guid userId,
+        Guid entityId,
         CancellationToken cancellationToken);
 }

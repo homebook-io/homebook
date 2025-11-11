@@ -7,7 +7,6 @@ namespace HomeBook.Backend.Data.Repositories;
 
 /// <inheritdoc />
 public class UserPreferenceRepository(
-    ILogger<UserPreferenceRepository> logger,
     IDbContextFactory<AppDbContext> factory) : IUserPreferenceRepository
 {
     /// <inheritdoc />

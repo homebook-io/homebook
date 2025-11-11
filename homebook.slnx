@@ -1,4 +1,4 @@
-﻿<Solution>
+<Solution>
   <Folder Name="/Backend/">
     <Project Path="source\HomeBook.Backend.Abstractions\HomeBook.Backend.Abstractions.csproj" Type="Classic C#" />
     <Project Path="source\HomeBook.Backend.DTOs\HomeBook.Backend.DTOs.csproj" Type="Classic C#" />
@@ -8,7 +8,7 @@
     <Project Path="source\HomeBook.Backend.Core.Account\HomeBook.Backend.Core.Account.csproj" Type="Classic C#" />
     <Project Path="source\HomeBook.Backend.Core.DataProvider\HomeBook.Backend.Core.DataProvider.csproj" Type="Classic C#" />
     <Project Path="source\HomeBook.Backend.Core.Finances\HomeBook.Backend.Core.Finances.csproj" Type="Classic C#" />
-    <Project Path="source\HomeBook.Backend.Core.HashProvider\HomeBook.Backend.Core.HashProvider.csproj" Type="Classic C#" />
+    <Project Path="source\HomeBook.Backend.Core.Kitchen\HomeBook.Backend.Core.Kitchen.csproj" Type="Classic C#" />
     <Project Path="source\HomeBook.Backend.Core.Licenses\HomeBook.Backend.Core.Licenses.csproj" Type="Classic C#" />
     <Project Path="source\Homebook.Backend.Core.Setup\Homebook.Backend.Core.Setup.csproj" Type="Classic C#" />
     <Project Path="source\HomeBook.Backend.Core\HomeBook.Backend.Core.csproj" Type="Classic C#" />

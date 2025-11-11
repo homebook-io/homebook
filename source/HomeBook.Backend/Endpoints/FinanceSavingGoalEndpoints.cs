@@ -26,7 +26,7 @@ public static class FinanceSavingGoalEndpoints
             .WithOpenApi(operation => new(operation)
             {
             })
-            .Produces<FinanceSavingGoalListResponse>(StatusCodes.Status200OK)
+            .Produces<SavingGoalListResponse>(StatusCodes.Status200OK)
             .Produces(StatusCodes.Status401Unauthorized)
             .Produces<string>(StatusCodes.Status500InternalServerError);
 
@@ -128,7 +128,7 @@ public static class FinanceSavingGoalEndpoints
             .Produces<string>(StatusCodes.Status404NotFound)
             .Produces<string>(StatusCodes.Status500InternalServerError);
 
-        group.MapDelete("/{savingGoalId:guid}", FinanceSavingGoalHandler.HandleDeleteSavingGoal)
+        group.MapDelete("/{id:guid}", FinanceSavingGoalHandler.HandleDeleteSavingGoal)
             .WithName("DeleteSavingGoal")
             .WithTags("Finances", "SavingGoals")
             .WithDescription(new Description(

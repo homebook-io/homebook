@@ -3,7 +3,6 @@ using FluentDataBuilder.Microsoft.Extensions.Configuration;
 using HomeBook.Backend.Abstractions.Contracts;
 using HomeBook.Backend.Abstractions.Models;
 using HomeBook.Backend.Abstractions.Setup;
-using HomeBook.Backend.Core.DataProvider.Validators;
 using Homebook.Backend.Core.Setup;
 using Homebook.Backend.Core.Setup.Exceptions;
 using HomeBook.Backend.Data.PostgreSql;

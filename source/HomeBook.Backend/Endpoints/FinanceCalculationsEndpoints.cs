@@ -25,7 +25,7 @@ public static class FinanceCalculationsEndpoints
             .WithOpenApi(operation => new(operation)
             {
             })
-            .Produces<FinanceCalculatedSavingResponse>(StatusCodes.Status200OK)
+            .Produces<CalculatedSavingResponse>(StatusCodes.Status200OK)
             .Produces(StatusCodes.Status401Unauthorized)
             .Produces<string>(StatusCodes.Status500InternalServerError);
 

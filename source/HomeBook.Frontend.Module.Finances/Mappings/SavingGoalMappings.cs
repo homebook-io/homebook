@@ -6,7 +6,7 @@ namespace HomeBook.Frontend.Module.Finances.Mappings;
 
 public static class SavingGoalMappings
 {
-    public static SavingGoalDto ToDto(this HomeBook.Client.Models.FinanceSavingGoalResponse savingGoal) =>
+    public static SavingGoalDto ToDto(this HomeBook.Client.Models.SavingGoalResponse savingGoal) =>
         new(
             savingGoal.Id!.Value,
             savingGoal.Name!,

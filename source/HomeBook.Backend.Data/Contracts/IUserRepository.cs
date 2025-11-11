@@ -30,18 +30,22 @@ public interface IUserRepository
     /// </summary>
     /// <param name="id"></param>
     /// <param name="cancellationToken"></param>
+    /// <param name="appDbContext"></param>
     /// <returns></returns>
     Task<User?> GetUserByIdAsync(Guid id,
-        CancellationToken cancellationToken = default);
+        CancellationToken cancellationToken = default,
+        AppDbContext? appDbContext = null);
 
     /// <summary>
     /// returns the user with the given username or null if not found
     /// </summary>
     /// <param name="username"></param>
     /// <param name="cancellationToken"></param>
+    /// <param name="appDbContext"></param>
     /// <returns></returns>
     Task<User?> GetUserByUsernameAsync(string username,
-        CancellationToken cancellationToken = default);
+        CancellationToken cancellationToken = default,
+        AppDbContext? appDbContext = null);
 
     /// <summary>
     /// returns all users

@@ -3,6 +3,7 @@
 using HomeBook.Client.Account;
 using HomeBook.Client.Finances;
 using HomeBook.Client.Info;
+using HomeBook.Client.Kitchen;
 using HomeBook.Client.Platform;
 using HomeBook.Client.Setup;
 using HomeBook.Client.System;
@@ -41,6 +42,11 @@ namespace HomeBook.Client
         public global::HomeBook.Client.Info.InfoRequestBuilder Info
         {
             get => new global::HomeBook.Client.Info.InfoRequestBuilder(PathParameters, RequestAdapter);
+        }
+        /// <summary>The kitchen property</summary>
+        public global::HomeBook.Client.Kitchen.KitchenRequestBuilder Kitchen
+        {
+            get => new global::HomeBook.Client.Kitchen.KitchenRequestBuilder(PathParameters, RequestAdapter);
         }
         /// <summary>The platform property</summary>
         public global::HomeBook.Client.Platform.PlatformRequestBuilder Platform

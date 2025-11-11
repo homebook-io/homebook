@@ -1,14 +1,12 @@
 using HomeBook.Backend.Data.Contracts;
 using HomeBook.Backend.Data.Entities;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.Logging;
 
 namespace HomeBook.Backend.Data.Repositories;
 
 /// <inheritdoc />
-public class SavingGoalsRepository(
-    ILogger<SavingGoalsRepository> logger,
-    IDbContextFactory<AppDbContext> factory) : ISavingGoalsRepository
+public class SavingGoalsRepository(IDbContextFactory<AppDbContext> factory)
+    : ISavingGoalsRepository
 {
     /// <inheritdoc />
     public async Task<IEnumerable<SavingGoal>> GetAllSavingGoalsAsync(Guid userId,
@@ -16,45 +14,50 @@ public class SavingGoalsRepository(
     {
         await using AppDbContext dbContext = await factory.CreateDbContextAsync(cancellationToken);
 
-        List<SavingGoal> savingGoals = await dbContext.Set<SavingGoal>()
+        List<SavingGoal> entities = await dbContext.Set<SavingGoal>()
             .Where(sg => sg.UserId == userId)
             .ToListAsync(cancellationToken);
 
-        return savingGoals;
+        return entities;
     }
 
-    public async Task<SavingGoal?> GetSavingGoalByIdAsync(Guid userId,
-        Guid savingGoalId,
-        CancellationToken cancellationToken)
+    public async Task<SavingGoal?> GetByIdAsync(Guid userId,
+        Guid entityId,
+        CancellationToken cancellationToken,
+        AppDbContext? appDbContext = null)
     {
-        await using AppDbContext dbContext = await factory.CreateDbContextAsync(cancellationToken);
+        if (appDbContext is null)
+        {
+            await using AppDbContext newDbContext = await factory.CreateDbContextAsync(cancellationToken);
+            return await GetByIdAsync(userId, entityId, cancellationToken, newDbContext);
+        }
 
-        SavingGoal? savingGoal = await dbContext.Set<SavingGoal>()
-            .Where(sg => sg.UserId == userId
-                         && sg.Id == savingGoalId)
+        SavingGoal? entity = await appDbContext.Set<SavingGoal>()
+            .Where(e => e.UserId == userId
+                        && e.Id == entityId)
             .FirstOrDefaultAsync(cancellationToken);
 
-        return savingGoal;
+        return entity;
     }
 
-    public async Task<Guid> CreateOrUpdateSavingGoalAsync(Guid userId,
+    public async Task<Guid> CreateOrUpdateAsync(Guid userId,
         SavingGoal entity,
         CancellationToken cancellationToken)
     {
         await using AppDbContext dbContext = await factory.CreateDbContextAsync(cancellationToken);
 
-        var existing = await dbContext.SavingGoals
-            .FirstOrDefaultAsync(x => x.Id == entity.Id && x.UserId == userId, cancellationToken);
+        SavingGoal? existing = await GetByIdAsync(userId,
+            entity.Id,
+            cancellationToken,
+            dbContext);
 
         if (existing is null)
         {
-            // Neues Ziel hinzufügen
             entity.UserId = userId;
             dbContext.SavingGoals.Add(entity);
         }
         else
         {
-            // Bestehendes Ziel aktualisieren
             dbContext.Entry(existing).CurrentValues.SetValues(entity);
         }
 
@@ -62,14 +65,15 @@ public class SavingGoalsRepository(
         return entity.Id;
     }
 
-    public async Task DeleteSavingGoalAsync(Guid userId,
-        Guid savingGoalId,
+    public async Task DeleteAsync(Guid userId,
+        Guid entityId,
         CancellationToken cancellationToken)
     {
         await using AppDbContext dbContext = await factory.CreateDbContextAsync(cancellationToken);
 
         await dbContext.Set<SavingGoal>()
-            .Where(sg => sg.UserId == userId && sg.Id == savingGoalId)
+            .Where(e => e.UserId == userId
+                        && e.Id == entityId)
             .ExecuteDeleteAsync(cancellationToken);
     }
 }

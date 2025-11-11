@@ -1,5 +1,7 @@
 using HomeBook.Frontend.Core.Icons;
+using HomeBook.Frontend.Module.Kitchen.Contracts;
 using HomeBook.Frontend.Module.Kitchen.Resources;
+using HomeBook.Frontend.Module.Kitchen.Services;
 using HomeBook.Frontend.Modules.Abstractions;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -50,6 +52,7 @@ public class Module(IStringLocalizer<Strings> Loc)
     public static void RegisterServices(IServiceCollection services,
         IConfiguration configuration)
     {
+        services.AddSingleton<IMealService, MealService>();
     }
 
     /// <inheritdoc />

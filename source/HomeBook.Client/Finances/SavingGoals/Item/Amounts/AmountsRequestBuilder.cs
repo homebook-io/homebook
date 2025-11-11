@@ -12,7 +12,7 @@ using System;
 namespace HomeBook.Client.Finances.SavingGoals.Item.Amounts
 {
     /// <summary>
-    /// Builds and executes requests for operations under \finances\saving-goals\{savingGoalId}\amounts
+    /// Builds and executes requests for operations under \finances\saving-goals\{-id}\amounts
     /// </summary>
     [global::System.CodeDom.Compiler.GeneratedCode("Kiota", "1.0.0")]
     public partial class AmountsRequestBuilder : BaseRequestBuilder
@@ -22,7 +22,7 @@ namespace HomeBook.Client.Finances.SavingGoals.Item.Amounts
         /// </summary>
         /// <param name="pathParameters">Path parameters for the request</param>
         /// <param name="requestAdapter">The request adapter to use to execute the requests.</param>
-        public AmountsRequestBuilder(Dictionary<string, object> pathParameters, IRequestAdapter requestAdapter) : base(requestAdapter, "{+baseurl}/finances/saving-goals/{savingGoalId}/amounts", pathParameters)
+        public AmountsRequestBuilder(Dictionary<string, object> pathParameters, IRequestAdapter requestAdapter) : base(requestAdapter, "{+baseurl}/finances/saving-goals/{%2Did}/amounts", pathParameters)
         {
         }
         /// <summary>
@@ -30,7 +30,7 @@ namespace HomeBook.Client.Finances.SavingGoals.Item.Amounts
         /// </summary>
         /// <param name="rawUrl">The raw URL to use for the request builder.</param>
         /// <param name="requestAdapter">The request adapter to use to execute the requests.</param>
-        public AmountsRequestBuilder(string rawUrl, IRequestAdapter requestAdapter) : base(requestAdapter, "{+baseurl}/finances/saving-goals/{savingGoalId}/amounts", rawUrl)
+        public AmountsRequestBuilder(string rawUrl, IRequestAdapter requestAdapter) : base(requestAdapter, "{+baseurl}/finances/saving-goals/{%2Did}/amounts", rawUrl)
         {
         }
         /// <summary>

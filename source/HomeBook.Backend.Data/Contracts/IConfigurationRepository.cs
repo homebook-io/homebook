@@ -27,7 +27,9 @@ public interface IConfigurationRepository
     /// </summary>
     /// <param name="key"></param>
     /// <param name="cancellationToken"></param>
+    /// <param name="appDbContext"></param>
     /// <returns></returns>
     Task<Configuration?> GetConfigurationByKeyAsync(string key,
-        CancellationToken cancellationToken = default);
+        CancellationToken cancellationToken = default,
+        AppDbContext? appDbContext = null);
 }

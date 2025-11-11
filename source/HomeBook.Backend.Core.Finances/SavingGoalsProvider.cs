@@ -32,12 +32,12 @@ public class SavingGoalsProvider(
     public async Task<SavingGoalDto?> GetSavingGoalByIdAsync(Guid userId,
         Guid savingGoalId,
         CancellationToken cancellationToken) =>
-        (await savingGoalsRepository.GetSavingGoalByIdAsync(userId,
+        (await savingGoalsRepository.GetByIdAsync(userId,
             savingGoalId,
             cancellationToken))?.ToDto();
 
     /// <inheritdoc />
-    public async Task<Guid> CreateSavingGoalAsync(Guid userId,
+    public async Task<Guid> CreateAsync(Guid userId,
         string name,
         string color,
         string icon,
@@ -65,11 +65,11 @@ public class SavingGoalsProvider(
 
         // TODO: validator
 
-        Guid savingGoalId = await savingGoalsRepository
-            .CreateOrUpdateSavingGoalAsync(userId,
+        Guid entityId = await savingGoalsRepository
+            .CreateOrUpdateAsync(userId,
                 entity,
                 cancellationToken);
-        return savingGoalId;
+        return entityId;
     }
 
     /// <inheritdoc />
@@ -78,7 +78,7 @@ public class SavingGoalsProvider(
         string name,
         CancellationToken cancellationToken)
     {
-        SavingGoal entity = await savingGoalsRepository.GetSavingGoalByIdAsync(userId,
+        SavingGoal entity = await savingGoalsRepository.GetByIdAsync(userId,
                                 savingGoalId,
                                 cancellationToken)
                             ?? throw new KeyNotFoundException(
@@ -86,7 +86,7 @@ public class SavingGoalsProvider(
 
         entity.Name = name;
 
-        await savingGoalsRepository.CreateOrUpdateSavingGoalAsync(userId,
+        await savingGoalsRepository.CreateOrUpdateAsync(userId,
             entity,
             cancellationToken);
     }
@@ -98,7 +98,7 @@ public class SavingGoalsProvider(
         string icon,
         CancellationToken cancellationToken)
     {
-        SavingGoal entity = await savingGoalsRepository.GetSavingGoalByIdAsync(userId,
+        SavingGoal entity = await savingGoalsRepository.GetByIdAsync(userId,
                                 savingGoalId,
                                 cancellationToken)
                             ?? throw new KeyNotFoundException(
@@ -107,7 +107,7 @@ public class SavingGoalsProvider(
         entity.Color = color;
         entity.Icon = icon;
 
-        await savingGoalsRepository.CreateOrUpdateSavingGoalAsync(userId,
+        await savingGoalsRepository.CreateOrUpdateAsync(userId,
             entity,
             cancellationToken);
     }
@@ -122,7 +122,7 @@ public class SavingGoalsProvider(
         decimal? interestRate,
         CancellationToken cancellationToken)
     {
-        SavingGoal entity = await savingGoalsRepository.GetSavingGoalByIdAsync(userId,
+        SavingGoal entity = await savingGoalsRepository.GetByIdAsync(userId,
                                 savingGoalId,
                                 cancellationToken)
                             ?? throw new KeyNotFoundException(
@@ -139,7 +139,7 @@ public class SavingGoalsProvider(
         if (interestRate.HasValue)
             entity.InterestRate = interestRate.Value;
 
-        await savingGoalsRepository.CreateOrUpdateSavingGoalAsync(userId,
+        await savingGoalsRepository.CreateOrUpdateAsync(userId,
             entity,
             cancellationToken);
     }
@@ -150,7 +150,7 @@ public class SavingGoalsProvider(
         DateTime? targetDate,
         CancellationToken cancellationToken)
     {
-        SavingGoal entity = await savingGoalsRepository.GetSavingGoalByIdAsync(userId,
+        SavingGoal entity = await savingGoalsRepository.GetByIdAsync(userId,
                                 savingGoalId,
                                 cancellationToken)
                             ?? throw new KeyNotFoundException(
@@ -159,16 +159,16 @@ public class SavingGoalsProvider(
         if (targetDate.HasValue)
             entity.TargetDate = targetDate.Value;
 
-        await savingGoalsRepository.CreateOrUpdateSavingGoalAsync(userId,
+        await savingGoalsRepository.CreateOrUpdateAsync(userId,
             entity,
             cancellationToken);
     }
 
     /// <inheritdoc />
-    public async Task DeleteSavingGoalAsync(Guid userId,
+    public async Task DeleteAsync(Guid userId,
         Guid savingGoalId,
         CancellationToken cancellationToken) =>
-        await savingGoalsRepository.DeleteSavingGoalAsync(userId,
+        await savingGoalsRepository.DeleteAsync(userId,
             savingGoalId,
             cancellationToken);
 }

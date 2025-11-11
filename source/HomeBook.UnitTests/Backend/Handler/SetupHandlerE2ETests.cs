@@ -15,7 +15,9 @@ using Microsoft.AspNetCore.Http.HttpResults;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Logging;
 using System.Text.Json;
+using HomeBook.Backend.Abstractions;
 using HomeBook.Backend.Data.Sqlite;
+using HomeBook.Backend.Extensions;
 using HomeBook.UnitTests.TestCore.Helper;
 using Microsoft.Data.Sqlite;
 using Microsoft.Extensions.DependencyInjection;
@@ -92,6 +94,7 @@ public class SetupHandlerE2ETests
             .AddSingleton<IConfiguration>(configuration)
             .AddSingleton(configuration)
             .AddKeyedSingleton<IDatabaseMigrator, DatabaseMigrator>("SQLITE")
+            .AddBackendSetup(configuration, InstanceStatus.SETUP)
             .BuildServiceProvider();
 
         var applicationPathProvider = (IApplicationPathProvider)new TestFileService();
@@ -204,8 +207,14 @@ public class SetupHandlerE2ETests
         configurationDbEntries.Count.ShouldBe(3); // header + 2 entries
         var expected = new string[,]
         {
-            { "HOMEBOOK_CONFIGURATION_NAME", "Test Homebook" },
-            { "HOMEBOOK_CONFIGURATION_DEFAULT_LOCALE", "de-DE" }
+            {
+                "HOMEBOOK_CONFIGURATION_NAME",
+                "Test Homebook"
+            },
+            {
+                "HOMEBOOK_CONFIGURATION_DEFAULT_LOCALE",
+                "de-DE"
+            }
         };
         var actual = configurationDbEntries.Select(r => (r[1], r[2])).ToList();
         for (int i = 0; i < expected.GetLength(0); i++)
