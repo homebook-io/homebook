@@ -19,12 +19,12 @@
     </ItemGroup>
 
     <ItemGroup>
-        <PackageReference Include="Microsoft.AspNetCore.OpenApi" Version="9.0.10" />
+        <PackageReference Include="Microsoft.AspNetCore.OpenApi" Version="9.0.10"/>
         <PackageReference Include="Microsoft.Extensions.ApiDescription.Server" Version="9.0.10">
             <PrivateAssets>all</PrivateAssets>
             <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
         </PackageReference>
-        <PackageReference Include="Scalar.AspNetCore" Version="2.10.3" />
+        <PackageReference Include="Scalar.AspNetCore" Version="2.10.3"/>
         <PackageReference Include="Serilog.AspNetCore" Version="9.0.0"/>
         <PackageReference Include="Serilog.Sinks.Console" Version="6.1.1"/>
         <PackageReference Include="Serilog.Sinks.File" Version="7.0.0"/>
@@ -44,13 +44,20 @@
 
     <ItemGroup>
         <ProjectReference Include="..\HomeBook.Backend.Abstractions\HomeBook.Backend.Abstractions.csproj"/>
-        <ProjectReference Include="..\HomeBook.Backend.Core.Finances\HomeBook.Backend.Core.Finances.csproj" />
+        <ProjectReference Include="..\HomeBook.Backend.Core.Finances\HomeBook.Backend.Core.Finances.csproj"/>
+        <ProjectReference Include="..\HomeBook.Backend.Core.Kitchen\HomeBook.Backend.Core.Kitchen.csproj"/>
         <ProjectReference Include="..\HomeBook.Backend.Core\HomeBook.Backend.Core.csproj"/>
         <ProjectReference Include="..\HomeBook.Backend.Core.Account\HomeBook.Backend.Core.Account.csproj"/>
         <ProjectReference Include="..\HomeBook.Backend.Data.Mysql\HomeBook.Backend.Data.Mysql.csproj"/>
         <ProjectReference Include="..\HomeBook.Backend.Data.PostgreSql\HomeBook.Backend.Data.PostgreSql.csproj"/>
         <ProjectReference Include="..\HomeBook.Backend.Data.Sqlite\HomeBook.Backend.Data.Sqlite.csproj"/>
-        <ProjectReference Include="..\HomeBook.Backend.DTOs\HomeBook.Backend.DTOs.csproj" />
+        <ProjectReference Include="..\HomeBook.Backend.DTOs\HomeBook.Backend.DTOs.csproj"/>
+        <ProjectReference Include="..\HomeBook.Backend.Core.Account\HomeBook.Backend.Core.Account.csproj"/>
+        <ProjectReference Include="..\HomeBook.Backend.Core.DataProvider\HomeBook.Backend.Core.DataProvider.csproj"/>
+        <ProjectReference Include="..\HomeBook.Backend.Core.Finances\HomeBook.Backend.Core.Finances.csproj"/>
+        <ProjectReference Include="..\HomeBook.Backend.Core.Kitchen\HomeBook.Backend.Core.Kitchen.csproj"/>
+        <ProjectReference Include="..\HomeBook.Backend.Core.Licenses\HomeBook.Backend.Core.Licenses.csproj"/>
+        <ProjectReference Include="..\Homebook.Backend.Core.Setup\Homebook.Backend.Core.Setup.csproj"/>
     </ItemGroup>
 
     <ItemGroup>

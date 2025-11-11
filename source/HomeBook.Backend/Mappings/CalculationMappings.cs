@@ -5,7 +5,7 @@ namespace HomeBook.Backend.Mappings;
 
 public static class CalculationMappings
 {
-    public static FinanceCalculatedSavingResponse ToResponse(this SavingCalculationResult r) =>
+    public static CalculatedSavingResponse ToResponse(this SavingCalculationResult r) =>
         new(r.MonthsNeeded,
             r.MonthlyPayment,
             r.Amounts,

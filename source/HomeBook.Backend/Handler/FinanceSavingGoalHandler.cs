@@ -30,9 +30,9 @@ public class FinanceSavingGoalHandler
 
             SavingGoalDto[] savingGoalDtos = await savingGoalsProvider.GetAllSavingGoalsAsync(userId,
                 cancellationToken);
-            FinanceSavingGoalResponse[] savingGoals = savingGoalDtos.Select(sg => sg.ToResponse()).ToArray();
+            SavingGoalResponse[] savingGoals = savingGoalDtos.Select(sg => sg.ToResponse()).ToArray();
 
-            return TypedResults.Ok(new FinanceSavingGoalListResponse(savingGoals));
+            return TypedResults.Ok(new SavingGoalListResponse(savingGoals));
         }
         catch (Exception err)
         {
@@ -62,7 +62,7 @@ public class FinanceSavingGoalHandler
         {
             Guid userId = user.GetUserId();
 
-            Guid savingGoalId = await savingGoalsProvider.CreateSavingGoalAsync(userId,
+            Guid createdId = await savingGoalsProvider.CreateAsync(userId,
                 request.Name,
                 request.Color,
                 request.Icon,
@@ -239,13 +239,13 @@ public class FinanceSavingGoalHandler
     /// <summary>
     ///
     /// </summary>
-    /// <param name="savingGoalId"></param>
+    /// <param name="id"></param>
     /// <param name="user"></param>
     /// <param name="logger"></param>
     /// <param name="savingGoalsProvider"></param>
     /// <param name="cancellationToken"></param>
     /// <returns></returns>
-    public static async Task<IResult> HandleDeleteSavingGoal(Guid savingGoalId,
+    public static async Task<IResult> HandleDeleteSavingGoal(Guid id,
         ClaimsPrincipal user,
         [FromServices] ILogger<FinanceSavingGoalHandler> logger,
         [FromServices] ISavingGoalsProvider savingGoalsProvider,
@@ -255,8 +255,8 @@ public class FinanceSavingGoalHandler
         {
             Guid userId = user.GetUserId();
 
-            await savingGoalsProvider.DeleteSavingGoalAsync(userId,
-                savingGoalId,
+            await savingGoalsProvider.DeleteAsync(userId,
+                id,
                 cancellationToken);
 
             return TypedResults.Ok();
@@ -264,8 +264,8 @@ public class FinanceSavingGoalHandler
         catch (Exception err)
         {
             logger.LogError(err,
-                "Error while deleting saving goal for {SavingGoalId}",
-                savingGoalId);
+                "Error while deleting saving goal for {Id}",
+                id);
             return TypedResults.InternalServerError(err.Message);
         }
     }

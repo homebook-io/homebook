@@ -1,8 +1,10 @@
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
+using System.Diagnostics;
 
 namespace HomeBook.Backend.Data.Entities;
 
+[DebuggerDisplay("{[{nameof(Configuration)}] Key}={Value}")]
 [Table("Configurations")]
 public class Configuration
 {

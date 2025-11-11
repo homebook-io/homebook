@@ -16,7 +16,7 @@ public class FinanceCalculationsHandler
     /// <param name="financeCalculationsService"></param>
     /// <param name="cancellationToken"></param>
     /// <returns></returns>
-    public static async Task<IResult> HandleCalculateSavings([FromBody] FinanceCalculatedSavingRequest request,
+    public static async Task<IResult> HandleCalculateSavings([FromBody] CalculateSavingRequest request,
         [FromServices] ILogger<FinanceCalculationsHandler> logger,
         [FromServices] IFinanceCalculationsService financeCalculationsService,
         CancellationToken cancellationToken)

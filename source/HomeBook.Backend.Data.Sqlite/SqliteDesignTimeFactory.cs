@@ -11,6 +11,7 @@ public sealed class SqliteDesignTimeFactory : IDesignTimeDbContextFactory<AppDbC
         var filePath = "homebook.db";
         optionsBuilder.SetDbOptions(ConnectionStringBuilder.Build(filePath));
 
-        return new AppDbContext(optionsBuilder.Options);
+        return new AppDbContext(optionsBuilder.Options,
+            null);
     }
 }

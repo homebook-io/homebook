@@ -66,7 +66,7 @@ public partial class MealSelectDialog : ComponentBase
             // Check if cancelled before starting
             cancellationToken.ThrowIfCancellationRequested();
 
-            IEnumerable<Meal> meals = await MealService.GetMealsAsync(searchText,
+            IEnumerable<RecipeDto> meals = await MealService.GetMealsAsync(searchText,
                 cancellationToken);
 
             _mealItems.Clear();
@@ -82,7 +82,7 @@ public partial class MealSelectDialog : ComponentBase
         }
         catch (Exception)
         {
-            // Handle other exceptions
+            // TODO: display error message
         }
         finally
         {

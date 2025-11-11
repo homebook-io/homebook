@@ -1,13 +1,17 @@
 using HomeBook.Backend.Abstractions.Contracts;
 using HomeBook.Backend.Data.PostgreSql.Extensions;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Diagnostics;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 
 namespace HomeBook.Backend.Data.PostgreSql;
 
 /// <inheritdoc />
-public class DatabaseMigrator(IConfiguration configuration) : IDatabaseMigrator
+public class DatabaseMigrator(
+    IServiceProvider serviceProvider,
+    IConfiguration configuration,
+    IEnumerable<SaveChangesInterceptor> saveChangesInterceptors) : IDatabaseMigrator
 {
     /// <inheritdoc />
     public async Task MigrateAsync(CancellationToken cancellationToken = default)
@@ -20,9 +24,10 @@ public class DatabaseMigrator(IConfiguration configuration) : IDatabaseMigrator
     public DbContext GetDbContext()
     {
         DbContextOptionsBuilder<AppDbContext> optionsBuilder = new();
-        ServiceCollectionExtensions.CreateDbContextOptionsBuilder(configuration, optionsBuilder);
+        ServiceCollectionExtensions.CreateDbContextOptionsBuilder(configuration, serviceProvider, optionsBuilder);
 
-        AppDbContext context = new(optionsBuilder.Options);
+        AppDbContext context = new(optionsBuilder.Options,
+            saveChangesInterceptors);
         return context;
     }
 

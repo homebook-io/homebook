@@ -1,21 +1,27 @@
 using HomeBook.Backend.Data.Entities;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Diagnostics;
 
 namespace HomeBook.Backend.Data;
 
-public class AppDbContext : DbContext
+public class AppDbContext(
+    DbContextOptions<AppDbContext> options,
+    IEnumerable<SaveChangesInterceptor> saveChangesInterceptors)
+    : DbContext(options)
 {
     public DbSet<User> Users { get; set; } = null!;
     public DbSet<Configuration> Configurations { get; set; } = null!;
     public DbSet<UserPreference> UserPreferences { get; set; } = null!;
     public DbSet<SavingGoal> SavingGoals { get; set; } = null!;
+    public DbSet<Recipe> Recipes { get; set; } = null!;
+    public DbSet<Ingredient> Ingredients { get; set; } = null!;
+    public DbSet<RecipeIngredient> RecipeIngredients { get; set; } = null!;
 
-    public AppDbContext()
-    {
-    }
+    private readonly IEnumerable<SaveChangesInterceptor>? _saveChangesInterceptors = saveChangesInterceptors;
 
-    public AppDbContext(DbContextOptions<AppDbContext> options)
-        : base(options)
+    protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
     {
+        if (_saveChangesInterceptors is not null)
+            optionsBuilder.AddInterceptors(_saveChangesInterceptors);
     }
 }

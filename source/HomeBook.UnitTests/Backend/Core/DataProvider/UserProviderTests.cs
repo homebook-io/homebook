@@ -1,8 +1,8 @@
 using HomeBook.Backend.Core.DataProvider;
-using HomeBook.Backend.Core.DataProvider.Validators;
 using HomeBook.Backend.Core.HashProvider;
 using HomeBook.Backend.Data.Contracts;
 using HomeBook.Backend.Data.Entities;
+using HomeBook.Backend.Data.Validators;
 using Microsoft.Extensions.Logging;
 using NSubstitute;
 

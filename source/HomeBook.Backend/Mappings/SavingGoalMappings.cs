@@ -6,9 +6,9 @@ namespace HomeBook.Backend.Mappings;
 
 public static class SavingGoalMappings
 {
-    public static FinanceSavingGoalResponse ToResponse(this SavingGoalDto savingGoal)
+    public static SavingGoalResponse ToResponse(this SavingGoalDto savingGoal)
     {
-        return new FinanceSavingGoalResponse(
+        return new SavingGoalResponse(
             savingGoal.Id,
             savingGoal.Name,
             savingGoal.Color,

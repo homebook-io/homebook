@@ -75,8 +75,8 @@ public partial class Add : ComponentBase
 
         // calculate with target date
         string? token = await AuthenticationService.GetTokenAsync(cancellationToken);
-        FinanceCalculatedSavingResponse? response = await BackendClient.Finances.Calculations.Savings
-            .PostAsync(new FinanceCalculatedSavingRequest
+        CalculatedSavingResponse? response = await BackendClient.Finances.Calculations.Savings
+            .PostAsync(new CalculateSavingRequest
                 {
                     TargetAmount = Convert.ToDouble(_model.TargetAmount),
                     TargetDate = _model.TargetDate,

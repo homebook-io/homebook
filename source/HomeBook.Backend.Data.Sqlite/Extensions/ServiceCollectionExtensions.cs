@@ -1,5 +1,6 @@
 using HomeBook.Backend.Abstractions.Contracts;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Diagnostics;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 
@@ -21,16 +22,17 @@ public static class ServiceCollectionExtensions
         services.AddSingleton<IDatabaseManager, DatabaseManager>();
 
         // Initialize Database
-        services.AddDbContextPool<AppDbContext>(optionsBuilder =>
-            CreateDbContextOptionsBuilder(configuration, optionsBuilder));
+        services.AddDbContextPool<AppDbContext>((sp, optionsBuilder) =>
+            CreateDbContextOptionsBuilder(configuration, sp, optionsBuilder));
 
-        services.AddDbContextFactory<AppDbContext>(optionsBuilder =>
-            CreateDbContextOptionsBuilder(configuration, optionsBuilder));
+        services.AddDbContextFactory<AppDbContext>((sp, optionsBuilder) =>
+            CreateDbContextOptionsBuilder(configuration, sp, optionsBuilder));
 
         return services;
     }
 
     public static void CreateDbContextOptionsBuilder(IConfiguration configuration,
+        IServiceProvider sp,
         DbContextOptionsBuilder optionsBuilder)
     {
         bool useInMemory = configuration["Database:UseInMemory"] == "true";
@@ -41,5 +43,8 @@ public static class ServiceCollectionExtensions
             connectionString = ConnectionStringBuilder.Build(configuration["Database:File"]);
 
         optionsBuilder.SetDbOptions(connectionString);
+
+        IEnumerable<SaveChangesInterceptor> saveChangesInterceptors = sp.GetServices<SaveChangesInterceptor>();
+        optionsBuilder.AddInterceptors(saveChangesInterceptors);
     }
 }
