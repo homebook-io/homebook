@@ -55,4 +55,24 @@ public class RecipesProvider(
     public async Task DeleteAsync(Guid id, CancellationToken cancellationToken) =>
         await recipesRepository.DeleteAsync(id,
             cancellationToken);
+
+    /// <inheritdoc/>
+    public async Task UpdateNameAsync(Guid id,
+        string name,
+        CancellationToken cancellationToken)
+    {
+        Recipe entity = await recipesRepository.GetByIdAsync(id,
+                            cancellationToken)
+                        ?? throw new KeyNotFoundException(
+                            $"Recipe with id {id} not found");
+
+        entity.Name = name;
+
+        // TODO: validator
+
+        await recipesRepository
+            .CreateOrUpdateAsync(entity,
+                cancellationToken);
+        return;
+    }
 }

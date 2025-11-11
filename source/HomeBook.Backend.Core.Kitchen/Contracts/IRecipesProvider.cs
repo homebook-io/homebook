@@ -39,4 +39,15 @@ public interface IRecipesProvider
     /// <returns></returns>
     Task DeleteAsync(Guid id,
         CancellationToken cancellationToken);
+
+    /// <summary>
+    ///
+    /// </summary>
+    /// <param name="id"></param>
+    /// <param name="name"></param>
+    /// <param name="cancellationToken"></param>
+    /// <returns></returns>
+    Task UpdateNameAsync(Guid id,
+        string name,
+        CancellationToken cancellationToken);
 }

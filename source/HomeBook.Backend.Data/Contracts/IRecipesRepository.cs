@@ -18,9 +18,11 @@ public interface IRecipesRepository
     /// </summary>
     /// <param name="entityId"></param>
     /// <param name="cancellationToken"></param>
+    /// <param name="appDbContext"></param>
     /// <returns></returns>
     Task<Recipe?> GetByIdAsync(Guid entityId,
-        CancellationToken cancellationToken);
+        CancellationToken cancellationToken,
+        AppDbContext? appDbContext = null);
 
     /// <summary>
     ///

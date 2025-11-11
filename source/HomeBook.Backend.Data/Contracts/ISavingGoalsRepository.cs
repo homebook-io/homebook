@@ -22,10 +22,12 @@ public interface ISavingGoalsRepository
     /// <param name="userId"></param>
     /// <param name="entityId"></param>
     /// <param name="cancellationToken"></param>
+    /// <param name="appDbContext"></param>
     /// <returns></returns>
     Task<SavingGoal?> GetByIdAsync(Guid userId,
         Guid entityId,
-        CancellationToken cancellationToken);
+        CancellationToken cancellationToken,
+        AppDbContext? appDbContext = null);
 
     /// <summary>
     ///
