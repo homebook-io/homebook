@@ -23,11 +23,16 @@ public class SavingGoalsRepository(IDbContextFactory<AppDbContext> factory)
 
     public async Task<SavingGoal?> GetByIdAsync(Guid userId,
         Guid entityId,
-        CancellationToken cancellationToken)
+        CancellationToken cancellationToken,
+        AppDbContext? appDbContext = null)
     {
-        await using AppDbContext dbContext = await factory.CreateDbContextAsync(cancellationToken);
+        if (appDbContext is null)
+        {
+            await using AppDbContext newDbContext = await factory.CreateDbContextAsync(cancellationToken);
+            return await GetByIdAsync(userId, entityId, cancellationToken, newDbContext);
+        }
 
-        SavingGoal? entity = await dbContext.Set<SavingGoal>()
+        SavingGoal? entity = await appDbContext.Set<SavingGoal>()
             .Where(e => e.UserId == userId
                         && e.Id == entityId)
             .FirstOrDefaultAsync(cancellationToken);
@@ -41,10 +46,10 @@ public class SavingGoalsRepository(IDbContextFactory<AppDbContext> factory)
     {
         await using AppDbContext dbContext = await factory.CreateDbContextAsync(cancellationToken);
 
-        SavingGoal? existing = await dbContext.SavingGoals
-            .FirstOrDefaultAsync(x => x.Id == entity.Id
-                                      && x.UserId == userId,
-                cancellationToken);
+        SavingGoal? existing = await GetByIdAsync(userId,
+            entity.Id,
+            cancellationToken,
+            dbContext);
 
         if (existing is null)
         {

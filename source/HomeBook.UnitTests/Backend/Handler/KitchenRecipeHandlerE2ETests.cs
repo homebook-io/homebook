@@ -193,5 +193,31 @@ public class KitchenRecipeHandlerE2ETests
         recipesResponse3.Value.Recipes.ShouldContain(r => r.NormalizedName == "pasta-a-la-roma");
         recipesResponse3.Value.Recipes.ShouldContain(r => r.Name == "Rührei mit Kräutern");
         recipesResponse3.Value.Recipes.ShouldContain(r => r.NormalizedName == "ruhrei-mit-krautern");
+
+        var recipeToUpdate = recipesResponse3.Value.Recipes.First(r => r.Name == "Gyros-Pita");
+        var updateRecipeResult = await KitchenRecipeHandler.HandleUpdateRecipeName(recipeToUpdate.Id,
+            testuser,
+            new UpdateRecipeNameRequest("Gyros Wrap"),
+            _loggerFactory.CreateLogger<KitchenRecipeHandler>(),
+            recipesProvider,
+            cancellationToken);
+        updateRecipeResult.ShouldBeOfType<Ok>();
+
+        // get all recipes
+        var recipesResult4 = await KitchenRecipeHandler.HandleGetRecipes("",
+            _loggerFactory.CreateLogger<KitchenRecipeHandler>(),
+            recipesProvider,
+            cancellationToken);
+        var recipesResponse4 = recipesResult4.ShouldBeOfType<Ok<RecipesListResponse>>();
+        recipesResponse4.Value.ShouldNotBeNull();
+        recipesResponse4.Value.Recipes.Length.ShouldBe(4);
+        recipesResponse4.Value.Recipes.ShouldContain(r => r.Name == "Gyros Wrap");
+        recipesResponse4.Value.Recipes.ShouldContain(r => r.NormalizedName == "gyros-wrap");
+        recipesResponse4.Value.Recipes.ShouldContain(r => r.Name == "Nana's Italian Roulade");
+        recipesResponse4.Value.Recipes.ShouldContain(r => r.NormalizedName == "nanas-italian-roulade");
+        recipesResponse4.Value.Recipes.ShouldContain(r => r.Name == "Pasta à la Roma");
+        recipesResponse4.Value.Recipes.ShouldContain(r => r.NormalizedName == "pasta-a-la-roma");
+        recipesResponse4.Value.Recipes.ShouldContain(r => r.Name == "Rührei mit Kräutern");
+        recipesResponse4.Value.Recipes.ShouldContain(r => r.NormalizedName == "ruhrei-mit-krautern");
     }
 }

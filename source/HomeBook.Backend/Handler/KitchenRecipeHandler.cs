@@ -104,4 +104,40 @@ public class KitchenRecipeHandler
             return TypedResults.InternalServerError(err.Message);
         }
     }
+
+    /// <summary>
+    ///
+    /// </summary>
+    /// <param name="id"></param>
+    /// <param name="user"></param>
+    /// <param name="request"></param>
+    /// <param name="logger"></param>
+    /// <param name="recipesProvider"></param>
+    /// <param name="cancellationToken"></param>
+    /// <returns></returns>
+    public static async Task<IResult> HandleUpdateRecipeName(Guid id,
+        ClaimsPrincipal user,
+        [FromBody] UpdateRecipeNameRequest request,
+        [FromServices] ILogger<KitchenRecipeHandler> logger,
+        [FromServices] IRecipesProvider recipesProvider,
+        CancellationToken cancellationToken)
+    {
+        try
+        {
+            Guid userId = user.GetUserId();
+
+            await recipesProvider.UpdateNameAsync(id,
+                request.Name,
+                cancellationToken);
+
+            return TypedResults.Ok();
+        }
+        catch (Exception err)
+        {
+            logger.LogError(err,
+                "Error while updating recipe name for {Id}",
+                id);
+            return TypedResults.InternalServerError(err.Message);
+        }
+    }
 }

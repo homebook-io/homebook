@@ -30,11 +30,16 @@ public class RecipesRepository(
 
     /// <inheritdoc />
     public async Task<Recipe?> GetByIdAsync(Guid entityId,
-        CancellationToken cancellationToken)
+        CancellationToken cancellationToken,
+        AppDbContext? appDbContext = null)
     {
-        await using AppDbContext dbContext = await factory.CreateDbContextAsync(cancellationToken);
+        if (appDbContext is null)
+        {
+            await using AppDbContext newDbContext = await factory.CreateDbContextAsync(cancellationToken);
+            return await GetByIdAsync(entityId, cancellationToken, newDbContext);
+        }
 
-        Recipe? entity = await dbContext.Set<Recipe>()
+        Recipe? entity = await appDbContext.Set<Recipe>()
             .Where(e => e.Id == entityId)
             .FirstOrDefaultAsync(cancellationToken);
 
@@ -48,7 +53,8 @@ public class RecipesRepository(
         await using AppDbContext dbContext = await factory.CreateDbContextAsync(cancellationToken);
 
         Recipe? existing = await GetByIdAsync(entity.Id,
-            cancellationToken);
+            cancellationToken,
+            dbContext);
 
         if (existing is null)
         {

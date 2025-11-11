@@ -13,8 +13,9 @@ public class ConfigurationRepository(IDbContextFactory<AppDbContext> factory) : 
     {
         await using AppDbContext dbContext = await factory.CreateDbContextAsync(cancellationToken);
 
-        Configuration? existingConfiguration = await dbContext.Set<Configuration>()
-            .FirstOrDefaultAsync(c => c.Key == configuration.Key, cancellationToken);
+        Configuration? existingConfiguration = await GetConfigurationByKeyAsync(configuration.Key,
+            cancellationToken,
+            dbContext);
 
         if (existingConfiguration is null)
         {
@@ -42,7 +43,9 @@ public class ConfigurationRepository(IDbContextFactory<AppDbContext> factory) : 
     }
 
     /// <inheritdoc />
-    public async Task<Configuration?> GetConfigurationByKeyAsync(string key, CancellationToken cancellationToken = default)
+    public async Task<Configuration?> GetConfigurationByKeyAsync(string key,
+        CancellationToken cancellationToken = default,
+        AppDbContext? appDbContext = null)
     {
         await using AppDbContext dbContext = await factory.CreateDbContextAsync(cancellationToken);
 
