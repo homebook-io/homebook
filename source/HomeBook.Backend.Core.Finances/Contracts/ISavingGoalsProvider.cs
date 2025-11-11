@@ -43,7 +43,7 @@ public interface ISavingGoalsProvider
     /// <param name="targetDate"></param>
     /// <param name="cancellationToken"></param>
     /// <returns></returns>
-    Task<Guid> CreateSavingGoalAsync(Guid userId,
+    Task<Guid> CreateAsync(Guid userId,
         string name,
         string color,
         string icon,
@@ -124,7 +124,7 @@ public interface ISavingGoalsProvider
     /// <param name="savingGoalId"></param>
     /// <param name="cancellationToken"></param>
     /// <returns></returns>
-    Task DeleteSavingGoalAsync(Guid userId,
+    Task DeleteAsync(Guid userId,
         Guid savingGoalId,
         CancellationToken cancellationToken);
 }

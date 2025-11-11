@@ -1,10 +1,12 @@
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
+using System.Diagnostics;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace HomeBook.Backend.Data.Entities;
 
+[DebuggerDisplay("[{nameof(SavingGoal)}] {Name} with target {TargetAmount}")]
 [Table("SavingGoals")]
 public class SavingGoal
 {
@@ -32,7 +34,7 @@ public class SavingGoal
     /// the name of this saving goal
     /// </summary>
     [Required]
-    [StringLength(50, MinimumLength = 3, ErrorMessage = "Key must be between 3 and 50 characters long.")]
+    [StringLength(50, MinimumLength = 3, ErrorMessage = "Name must be between 3 and 50 characters long.")]
     public required string Name { get; set; }
 
     /// <summary>

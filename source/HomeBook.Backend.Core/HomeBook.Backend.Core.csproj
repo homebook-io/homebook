@@ -7,23 +7,15 @@
     </PropertyGroup>
 
     <ItemGroup>
-      <PackageReference Include="FluentValidation" Version="12.1.0" />
-      <PackageReference Include="Microsoft.Extensions.Configuration.Abstractions" Version="9.0.10" />
-      <PackageReference Include="Microsoft.Extensions.DependencyInjection.Abstractions" Version="9.0.10" />
+        <PackageReference Include="FluentValidation" Version="12.1.0"/>
+        <PackageReference Include="Isopoh.Cryptography.Argon2" Version="2.0.0"/>
+        <PackageReference Include="Microsoft.Extensions.Configuration.Abstractions" Version="9.0.10"/>
+        <PackageReference Include="Microsoft.Extensions.DependencyInjection.Abstractions" Version="9.0.10"/>
     </ItemGroup>
 
     <ItemGroup>
-      <ProjectReference Include="..\HomeBook.Backend.Abstractions\HomeBook.Backend.Abstractions.csproj" />
-      <ProjectReference Include="..\HomeBook.Backend.Core.Account\HomeBook.Backend.Core.Account.csproj" />
-      <ProjectReference Include="..\HomeBook.Backend.Core.DataProvider\HomeBook.Backend.Core.DataProvider.csproj" />
-      <ProjectReference Include="..\HomeBook.Backend.Core.HashProvider\HomeBook.Backend.Core.HashProvider.csproj" />
-      <ProjectReference Include="..\HomeBook.Backend.Core.Licenses\HomeBook.Backend.Core.Licenses.csproj" />
-      <ProjectReference Include="..\Homebook.Backend.Core.Setup\Homebook.Backend.Core.Setup.csproj" />
-    </ItemGroup>
-
-    <ItemGroup>
-      <Folder Include="Models\" />
-      <Folder Include="Validators\" />
+        <ProjectReference Include="..\HomeBook.Backend.Abstractions\HomeBook.Backend.Abstractions.csproj"/>
+        <ProjectReference Include="..\HomeBook.Backend.Data\HomeBook.Backend.Data.csproj"/>
     </ItemGroup>
 
 </Project>

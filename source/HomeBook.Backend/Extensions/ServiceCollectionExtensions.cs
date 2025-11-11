@@ -3,14 +3,18 @@ using HomeBook.Backend.Abstractions;
 using HomeBook.Backend.Abstractions.Contracts;
 using HomeBook.Backend.Abstractions.Exceptions;
 using HomeBook.Backend.Abstractions.Models;
+using HomeBook.Backend.Core;
 using HomeBook.Backend.Core.Account.Extensions;
+using HomeBook.Backend.Core.DataProvider;
 using HomeBook.Backend.Core.DataProvider.Extensions;
-using HomeBook.Backend.Core.DataProvider.Validators;
 using HomeBook.Backend.Core.Extensions;
 using HomeBook.Backend.Core.Finances.Extensions;
 using HomeBook.Backend.Core.HashProvider;
+using HomeBook.Backend.Core.Kitchen.Extensions;
 using HomeBook.Backend.Core.Licenses;
+using HomeBook.Backend.Core.Licenses.Extensions;
 using Homebook.Backend.Core.Setup;
+using Homebook.Backend.Core.Setup.Extensions;
 using Homebook.Backend.Core.Setup.Factories;
 using Homebook.Backend.Core.Setup.Models;
 using Homebook.Backend.Core.Setup.Provider;
@@ -21,6 +25,7 @@ using HomeBook.Backend.Data.Extensions;
 using HomeBook.Backend.Data.Mysql.Extensions;
 using HomeBook.Backend.Data.PostgreSql.Extensions;
 using HomeBook.Backend.Data.Sqlite.Extensions;
+using HomeBook.Backend.Data.Validators;
 using HomeBook.Backend.Factories;
 using HomeBook.Backend.Provider;
 using HomeBook.Backend.Services;
@@ -44,8 +49,13 @@ public static class ServiceCollectionExtensions
     {
         services.AddBackendServices(configuration, instanceStatus);
         services.AddBackendCore(configuration, instanceStatus);
+        services.AddBackendCoreSetup(configuration, instanceStatus);
+        services.AddBackendCoreLicenses(configuration, instanceStatus);
         services.AddBackendDatabaseProvider(configuration, instanceStatus);
         services.AddAccountServices(configuration, instanceStatus);
+
+        services.AddBackendCoreFinances(configuration, instanceStatus);
+        services.AddBackendCoreKitchen(configuration, instanceStatus);
 
         return services;
     }
@@ -62,10 +72,10 @@ public static class ServiceCollectionExtensions
         InstanceStatus instanceStatus)
     {
         // validators
+        services.AddBackendDataValidators(configuration,
+            instanceStatus);
         services.AddSingleton<IValidator<SetupConfiguration>, SetupConfigurationValidator>();
         services.AddSingleton<IValidator<EnvironmentConfiguration>, EnvironmentValidator>();
-        services.AddSingleton<IValidator<User>, UserValidator>();
-        services.AddSingleton<IValidator<Configuration>, ConfigurationValidator>();
 
         // basic dependencies
         services.AddSingleton<IFileSystemService, NativeFileService>();
@@ -73,6 +83,7 @@ public static class ServiceCollectionExtensions
         services.AddSingleton<IRuntimeConfigurationProvider, RuntimeConfigurationProvider>();
         services.AddSingleton<IHashProviderFactory, HashProviderFactory>();
         services.AddSingleton<ILicenseProvider, LicenseProvider>();
+        services.AddSingleton<IStringNormalizer, StringNormalizer>();
 
         // setup dependencies
         services.AddSingleton<ISetupInstanceManager, SetupInstanceManager>();
@@ -154,11 +165,21 @@ public static class ServiceCollectionExtensions
 
             // load common database services (repositories, etc.)
             services.AddBackendData(configuration, instanceStatus)
-                .AddBackendCoreDataProvider(configuration, instanceStatus)
-                .AddBackendCoreFinances(configuration, instanceStatus);
+                .AddBackendCoreDataProvider(configuration, instanceStatus);
         }
 
-        services.AddBackendCoreDataProviderValidators(configuration, instanceStatus);
+        services.AddBackendDataValidators(configuration, instanceStatus);
+
+        return services;
+    }
+
+    public static IServiceCollection AddBackendCoreDataProvider(this IServiceCollection services,
+        IConfiguration configuration,
+        InstanceStatus instanceStatus)
+    {
+        services.AddScoped<IUserProvider, UserProvider>();
+        services.AddScoped<IInstanceConfigurationProvider, InstanceConfigurationProvider>();
+        services.AddScoped<IUserPreferenceProvider, UserPreferenceProvider>();
 
         return services;
     }

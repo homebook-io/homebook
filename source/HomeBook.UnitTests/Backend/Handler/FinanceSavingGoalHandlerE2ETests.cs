@@ -9,8 +9,6 @@ using HomeBook.Backend.DTOs.Requests.Finances;
 using HomeBook.Backend.DTOs.Responses.Finances;
 using HomeBook.Backend.Extensions;
 using HomeBook.Backend.Handler;
-using HomeBook.Backend.Requests;
-using HomeBook.Backend.Responses;
 using HomeBook.UnitTests.TestCore.Helper;
 using Microsoft.AspNetCore.Http.HttpResults;
 using Microsoft.Data.Sqlite;
@@ -132,7 +130,7 @@ public class FinanceSavingGoalHandlerE2ETests
             _loggerFactory.CreateLogger<FinanceSavingGoalHandler>(),
             savingGoalsProvider,
             cancellationToken);
-        var savingGoalsResponse1 = savingGoalsResult1.ShouldBeOfType<Ok<FinanceSavingGoalListResponse>>();
+        var savingGoalsResponse1 = savingGoalsResult1.ShouldBeOfType<Ok<SavingGoalListResponse>>();
         savingGoalsResponse1.Value.ShouldNotBeNull();
         savingGoalsResponse1.Value.SavingGoals.Length.ShouldBe(1);
         Guid createdSavingGoalId = savingGoalsResponse1.Value.SavingGoals[0].Id;
@@ -191,7 +189,7 @@ public class FinanceSavingGoalHandlerE2ETests
             _loggerFactory.CreateLogger<FinanceSavingGoalHandler>(),
             savingGoalsProvider,
             cancellationToken);
-        var savingGoalsResponse2 = savingGoalsResult2.ShouldBeOfType<Ok<FinanceSavingGoalListResponse>>();
+        var savingGoalsResponse2 = savingGoalsResult2.ShouldBeOfType<Ok<SavingGoalListResponse>>();
         savingGoalsResponse2.Value.ShouldNotBeNull();
         savingGoalsResponse2.Value.SavingGoals.Length.ShouldBe(1);
         savingGoalsResponse2.Value.SavingGoals[0].Color.ShouldBe("#0000ff");
@@ -214,7 +212,7 @@ public class FinanceSavingGoalHandlerE2ETests
             _loggerFactory.CreateLogger<FinanceSavingGoalHandler>(),
             savingGoalsProvider,
             cancellationToken);
-        var savingGoalsResponse3 = savingGoalsResult3.ShouldBeOfType<Ok<FinanceSavingGoalListResponse>>();
+        var savingGoalsResponse3 = savingGoalsResult3.ShouldBeOfType<Ok<SavingGoalListResponse>>();
         savingGoalsResponse3.Value.ShouldNotBeNull();
         savingGoalsResponse3.Value.SavingGoals.Length.ShouldBe(0);
     }

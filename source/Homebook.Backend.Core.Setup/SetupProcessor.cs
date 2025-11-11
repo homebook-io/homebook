@@ -2,6 +2,7 @@ using HomeBook.Backend.Abstractions;
 using HomeBook.Backend.Abstractions.Contracts;
 using HomeBook.Backend.Abstractions.Models;
 using HomeBook.Backend.Core.DataProvider.Extensions;
+using HomeBook.Backend.Core.Extensions;
 using Homebook.Backend.Core.Setup.Exceptions;
 using Homebook.Backend.Core.Setup.Extensions;
 using HomeBook.Backend.Data.Extensions;
@@ -66,9 +67,10 @@ public class SetupProcessor(
 
         services.AddSingleton<ISetupInstanceManager, SetupInstanceManager>();
         services.AddBackendCoreSetupUpdateComponents(configuration, InstanceStatus.SETUP)
+            .AddBackendCore(configuration, InstanceStatus.SETUP)
             .AddBackendData(configuration, InstanceStatus.SETUP)
             .AddBackendCoreDataProvider(configuration, InstanceStatus.SETUP)
-            .AddBackendCoreDataProviderValidators(configuration, InstanceStatus.SETUP);
+            .AddBackendDataValidators(configuration, InstanceStatus.SETUP);
 
         ServiceProvider serviceProvider = services.BuildServiceProvider();
 

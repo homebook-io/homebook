@@ -6,7 +6,8 @@ public static class AppDbContextOptions
 {
     private const string HISTORY_TABLE_NAME = "__EFMigrationsHistory";
 
-    public static void SetDbOptions(this DbContextOptionsBuilder optionsBuilder, string connectionString)
+    public static void SetDbOptions(this DbContextOptionsBuilder optionsBuilder,
+        string connectionString)
     {
         string migrationAssembly = typeof(AppDbContextOptions).Namespace ?? string.Empty;
         optionsBuilder.UseMySQL(connectionString,

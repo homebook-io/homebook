@@ -1,9 +1,11 @@
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
+using System.Diagnostics;
 using Microsoft.EntityFrameworkCore;
 
 namespace HomeBook.Backend.Data.Entities;
 
+[DebuggerDisplay("[{nameof(UserPreference)}] {Key}={Value}")]
 [Table("UserPreferences")]
 [PrimaryKey(nameof(UserId), nameof(Key))]
 public class UserPreference
