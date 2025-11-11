@@ -1,0 +1,26 @@
+.hb-drawer {
+    border-radius: 12px;
+    margin: 8px;
+    height: calc(100vh - 16px) !important;
+    width: calc(var(--mud-drawer-width, var(--mud-drawer-width-left)) - 16px) !important;
+}
+
+.hb-header-appbar {
+    border-radius: 12px;
+    margin-top: 8px !important;
+    width: calc(100% - 8px - var(--mud-drawer-width-left)) !important;
+}
+
+.hb-footer-appbar {
+    border-radius: 12px;
+    margin-bottom: 8px;
+    margin-right: 8px !important;
+    width: calc(100% - 8px - var(--mud-drawer-width-left)) !important;
+}
+
+.hb-main-content {
+
+    @media (min-width: 600px) {
+        padding-top: calc(var(--mud-appbar-height) + 16px);
+    }
+}

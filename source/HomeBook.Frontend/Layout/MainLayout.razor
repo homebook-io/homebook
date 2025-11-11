@@ -29,8 +29,9 @@
 
 <MudLayout Class="pb-20">
 
-    <MudAppBar Color="Color.Primary"
-               Elevation="1">
+    <MudAppBar Color="Color.Secondary"
+               Elevation="5"
+               Class="hb-header-appbar">
 
         <MudHidden Breakpoint="Breakpoint.MdAndUp">
             <MudIconButton Icon="@HomeBookIcons.Icons8.Windows11.Outline.Menu"
@@ -43,6 +44,19 @@
                 @(_homebookInstanceName + " - " + Loc[nameof(LocalizationStrings.AppTitle)])
             </MudText>
         </MudHidden>
+
+        <MudSpacer/>
+
+        <MudTextField T="string"
+                      Margin="Margin.Dense"
+                      Placeholder="+Search for..."
+                      Clearable="true"
+                      Immediate="true"
+                      Variant="Variant.Outlined"
+                      Adornment="Adornment.Start"
+                      AdornmentIcon="@HomeBookIcons.Icons8.Windows11.Outline.Search">
+
+        </MudTextField>
 
         <MudSpacer/>
 
@@ -96,7 +110,8 @@
 
     <MudDrawer Variant="DrawerVariant.Responsive"
                @bind-Open="_drawerOpen"
-               Color="Color.Surface"
+               Color="Color.Primary"
+               Class="hb-drawer"
                Elevation="5">
 
         <MudDrawerHeader>
@@ -162,11 +177,14 @@
 
     </MudDrawer>
 
-    <MudMainContent>
+    <MudMainContent Class="hb-main-content">
         @Body
     </MudMainContent>
 
-    <MudAppBar Bottom="true" Color="Color.Tertiary" Elevation="1">
+    <MudAppBar Bottom="true"
+               Color="Color.Tertiary"
+               Elevation="5"
+               Class="hb-footer-appbar">
 
         <MudText Class="me-5" Typo="Typo.caption">@Loc[nameof(LocalizationStrings.AppTitle)]</MudText>
         <MudText Typo="Typo.caption" Class="me-1">@Loc[nameof(LocalizationStrings.AuthorMadeWithText)]</MudText>
