@@ -3,6 +3,7 @@
     margin: 8px;
     height: calc(100vh - 16px) !important;
     width: calc(var(--mud-drawer-width, var(--mud-drawer-width-left)) - 16px) !important;
+    top: 0px;
 }
 
 .hb-header-appbar {
@@ -22,5 +23,6 @@
 
     @media (min-width: 600px) {
         padding-top: calc(var(--mud-appbar-height) + 16px);
+        padding-bottom: calc(var(--mud-appbar-height) + 16px);
     }
 }
