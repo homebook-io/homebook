@@ -6,7 +6,7 @@ namespace HomeBook.Frontend.Themes;
 public class HomebookTheme : MudTheme
 {
     private static MudColor Primary { get; set; } = "#382960";
-    private static MudColor Secondary { get; set; } = "#7C6FFE";
+    private static MudColor Secondary { get; set; } = "#5A9690";
     private static MudColor Tertiary { get; set; } = "#373f31";
     private static MudColor TextPrimary { get; set; } = "#080606";
     private static MudColor TextSecondary { get; set; } = TextPrimary.ColorLighten(0.4);
@@ -35,11 +35,11 @@ public class HomebookTheme : MudTheme
             TextPrimary = TextPrimary,
             TextSecondary = TextSecondary,
 
-            AppbarBackground = "#382960",
-            AppbarText = "#000000",
+            // AppbarBackground = "#F5F5F5",
+            // AppbarText = "#000000",
 
-            DrawerBackground = "#382960",
-            DrawerText = "#FFFFFF"
+            // DrawerBackground = "#382960",
+            // DrawerText = "#FFFFFF"
         },
     };
 

@@ -1556,6 +1556,10 @@
   --hb-settings-color-user-actions-delete: #E53935;
 }
 
+.text-dark {
+  color: var(--mud-palette-text-primary);
+}
+
 .mud-navmenu.mud-navmenu-first-level > .mud-nav-item > .mud-nav-link {
   border-radius: inherit;
 }
@@ -1980,6 +1984,45 @@
 }
 .ui-value-footer-text .ui-value-footer-notice-text {
   color: var(--ui-value-card-caption-color);
+}
+
+.hb-drawer {
+  border-radius: 12px;
+  margin: 8px;
+  height: calc(100vh - 16px) !important;
+  width: calc(var(--mud-drawer-width, var(--mud-drawer-width-left)) - 16px) !important;
+  top: 0px;
+}
+
+.hb-header-appbar {
+  border-radius: 12px;
+  margin-top: 8px !important;
+  width: calc(100% - 8px - var(--mud-drawer-width-left)) !important;
+}
+
+.hb-footer-appbar {
+  border-radius: 12px;
+  margin-bottom: 8px;
+  margin-right: 8px !important;
+  width: calc(100% - 8px - var(--mud-drawer-width-left)) !important;
+}
+
+@media (min-width: 600px) {
+  .hb-main-content {
+    padding-top: calc(var(--mud-appbar-height) + 16px);
+    padding-bottom: calc(var(--mud-appbar-height) + 16px);
+  }
+}
+
+.ui-wallpaper {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  z-index: -1;
+  background-size: cover;
+  background-position: center;
 }
 
 .hb-setup-container {
