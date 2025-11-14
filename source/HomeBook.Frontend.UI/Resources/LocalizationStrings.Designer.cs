@@ -1442,5 +1442,11 @@ namespace HomeBook.Frontend.UI.Resources {
                 return ResourceManager.GetString("Settings_NavMenu_DeveloperColors_Text", resourceCulture);
             }
         }
+        
+        public static string MainLayout_SearchTextField_Placeholder {
+            get {
+                return ResourceManager.GetString("MainLayout_SearchTextField_Placeholder", resourceCulture);
+            }
+        }
     }
 }
