@@ -7,9 +7,12 @@ CLIENT_CLASS="BackendClient"
 CLIENT_NAMESPACE="HomeBook.Client"
 OPENAPI_FILE="./source/HomeBook.Backend/HomeBook.Backend.json"
 CLIENT_OUTPUT_DIR="./source/HomeBook.Client"
+CLIENT_CSPROJ="HomeBook.Client.csproj"
+
+# Clean output dir except the client csproj
+find "${CLIENT_OUTPUT_DIR}" -mindepth 1 ! -name "${CLIENT_CSPROJ}" -exec rm -rf {} +
 
 # build backend
-
 dotnet restore "${BACKEND_CSPROJ}"
 dotnet build "${BACKEND_CSPROJ}" --no-restore -c Release
 
