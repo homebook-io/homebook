@@ -13,8 +13,8 @@ CLIENT_CSPROJ="HomeBook.Client.csproj"
 find "${CLIENT_OUTPUT_DIR}" -mindepth 1 ! -name "${CLIENT_CSPROJ}" -exec rm -rf {} +
 
 # build backend
-dotnet restore "${BACKEND_CSPROJ}"
-dotnet build "${BACKEND_CSPROJ}" --no-restore -c Release
+dotnet build "${BACKEND_CSPROJ}" -c Debug
+dotnet build "${BACKEND_CSPROJ}" -c Release
 
 # install/update kiota
 dotnet tool install --global Microsoft.OpenApi.Kiota

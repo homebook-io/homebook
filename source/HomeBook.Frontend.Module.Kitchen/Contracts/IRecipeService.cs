@@ -2,7 +2,7 @@ using HomeBook.Frontend.Module.Kitchen.Models;
 
 namespace HomeBook.Frontend.Module.Kitchen.Contracts;
 
-public interface IMealService
+public interface IRecipeService
 {
     /// <summary>
     ///

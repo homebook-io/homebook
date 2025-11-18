@@ -38,12 +38,6 @@ public static class ModuleExtensions
     {
         _moduleBuilder = new ModuleBuilder(hb, sc, c);
         builderAction(_moduleBuilder);
-
-        // _moduleBuilder
-        //     .AddSystemModule<HomeModule>()
-        //     .AddSystemModule<HelpModule>();
-
-        // _modules = sp.GetServices<IModule>();
     }
 
     /// <summary>

@@ -19,7 +19,7 @@ public static class FinanceCalculationsEndpoints
                 .WithDescription("Endpoints to manage finances calculations")
                 .RequireAuthorization();
 
-            group.MapPost("/", CalculationsHandler.HandleCalculateSavings)
+            group.MapPost("/savings", CalculationsHandler.HandleCalculateSavings)
                 .WithName("CalculateSavings")
                 .WithDescription(new Description(
                     "returns the calculated savings based on the provided parameters",

@@ -8,9 +8,9 @@ using HomeBook.Frontend.Module.Kitchen.Models;
 namespace HomeBook.Frontend.Module.Kitchen.Services;
 
 /// <inheritdoc/>
-public class MealService(
+public class RecipeService(
     IAuthenticationService authenticationService,
-    BackendClient backendClient) : IMealService
+    BackendClient backendClient) : IRecipeService
 {
     /// <inheritdoc/>
     public async Task<IEnumerable<RecipeDto>> GetMealsAsync(string filter,
@@ -19,7 +19,7 @@ public class MealService(
         cancellationToken.ThrowIfCancellationRequested();
 
         string? token = await authenticationService.GetTokenAsync(cancellationToken);
-        RecipesListResponse? response = await backendClient.Kitchen.Recipes.GetAsync(x =>
+        RecipesListResponse? response = await backendClient.Modules.Kitchen.Recipes.GetAsync(x =>
             {
                 x.Headers.Add("Authorization", $"Bearer {token}");
             },

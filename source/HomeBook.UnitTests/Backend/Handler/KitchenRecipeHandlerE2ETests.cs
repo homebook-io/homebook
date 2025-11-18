@@ -9,6 +9,7 @@ using HomeBook.Backend.Module.Kitchen.Contracts;
 using HomeBook.Backend.Module.Kitchen.Handler;
 using HomeBook.Backend.Module.Kitchen.Requests;
 using HomeBook.Backend.Module.Kitchen.Responses;
+using HomeBook.UnitTests.TestCore.Backend;
 using HomeBook.UnitTests.TestCore.Helper;
 using Microsoft.AspNetCore.Http.HttpResults;
 using Microsoft.Data.Sqlite;
@@ -78,6 +79,7 @@ public class KitchenRecipeHandlerE2ETests
             .AddBackendDataSqlite(configuration)
             .AddKeyedSingleton<IDatabaseMigrator, DatabaseMigrator>("SQLITE")
             .AddDependenciesForRuntime(configuration, InstanceStatus.RUNNING)
+            .AddBackendModulesForTestEnvironment(configuration)
             .BuildServiceProvider();
 
         // apply migrations

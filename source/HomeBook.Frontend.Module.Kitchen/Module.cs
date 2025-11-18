@@ -52,7 +52,7 @@ public class Module(IStringLocalizer<Strings> Loc)
     public static void RegisterServices(IServiceCollection services,
         IConfiguration configuration)
     {
-        services.AddSingleton<IMealService, MealService>();
+        services.AddSingleton<IRecipeService, RecipeService>();
     }
 
     /// <inheritdoc />

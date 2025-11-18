@@ -9,6 +9,7 @@ using HomeBook.Backend.Module.Finances.Enums;
 using HomeBook.Backend.Module.Finances.Handler;
 using HomeBook.Backend.Module.Finances.Requests;
 using HomeBook.Backend.Module.Finances.Responses;
+using HomeBook.UnitTests.TestCore.Backend;
 using HomeBook.UnitTests.TestCore.Helper;
 using Microsoft.AspNetCore.Http.HttpResults;
 using Microsoft.Data.Sqlite;
@@ -78,6 +79,7 @@ public class FinanceSavingGoalHandlerE2ETests
             .AddBackendDataSqlite(configuration)
             .AddKeyedSingleton<IDatabaseMigrator, DatabaseMigrator>("SQLITE")
             .AddDependenciesForRuntime(configuration, InstanceStatus.SETUP)
+            .AddBackendModulesForTestEnvironment(configuration)
             .BuildServiceProvider();
 
         // apply migrations
