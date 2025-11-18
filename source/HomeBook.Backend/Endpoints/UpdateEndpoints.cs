@@ -1,5 +1,5 @@
+using HomeBook.Backend.Core.Modules.OpenApi;
 using HomeBook.Backend.Handler;
-using HomeBook.Backend.OpenApi;
 
 namespace HomeBook.Backend.Endpoints;
 

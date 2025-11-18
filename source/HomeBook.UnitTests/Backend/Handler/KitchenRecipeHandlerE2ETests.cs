@@ -1,13 +1,14 @@
 using System.Security.Claims;
 using HomeBook.Backend.Abstractions;
 using HomeBook.Backend.Abstractions.Contracts;
-using HomeBook.Backend.Core.Kitchen.Contracts;
 using HomeBook.Backend.Data.Sqlite;
 using HomeBook.Backend.Data.Sqlite.Extensions;
-using HomeBook.Backend.DTOs.Requests.Kitchen;
-using HomeBook.Backend.DTOs.Responses.Kitchen;
 using HomeBook.Backend.Extensions;
 using HomeBook.Backend.Handler;
+using HomeBook.Backend.Module.Kitchen.Contracts;
+using HomeBook.Backend.Module.Kitchen.Handler;
+using HomeBook.Backend.Module.Kitchen.Requests;
+using HomeBook.Backend.Module.Kitchen.Responses;
 using HomeBook.UnitTests.TestCore.Helper;
 using Microsoft.AspNetCore.Http.HttpResults;
 using Microsoft.Data.Sqlite;

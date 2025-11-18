@@ -1,9 +1,9 @@
 using Microsoft.AspNetCore.Mvc;
 using System.Security.Claims;
 using HomeBook.Backend.Abstractions.Contracts;
+using HomeBook.Backend.Core.Modules.Utilities;
 using HomeBook.Backend.Requests;
 using HomeBook.Backend.Responses;
-using HomeBook.Backend.Utilities;
 
 namespace HomeBook.Backend.Handler;
 

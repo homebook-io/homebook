@@ -1,6 +1,7 @@
 using System.Globalization;
 using HomeBook.Backend.Abstractions.Contracts;
 using HomeBook.Backend.Core.Finances;
+using HomeBook.Backend.Module.Finances.Services;
 using HomeBook.UnitTests.TestCore.Helper;
 using NSubstitute;
 

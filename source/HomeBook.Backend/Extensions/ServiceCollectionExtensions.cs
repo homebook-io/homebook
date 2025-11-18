@@ -6,11 +6,8 @@ using HomeBook.Backend.Abstractions.Models;
 using HomeBook.Backend.Core;
 using HomeBook.Backend.Core.Account.Extensions;
 using HomeBook.Backend.Core.DataProvider;
-using HomeBook.Backend.Core.DataProvider.Extensions;
 using HomeBook.Backend.Core.Extensions;
-using HomeBook.Backend.Core.Finances.Extensions;
 using HomeBook.Backend.Core.HashProvider;
-using HomeBook.Backend.Core.Kitchen.Extensions;
 using HomeBook.Backend.Core.Licenses;
 using HomeBook.Backend.Core.Licenses.Extensions;
 using Homebook.Backend.Core.Setup;
@@ -20,12 +17,10 @@ using Homebook.Backend.Core.Setup.Models;
 using Homebook.Backend.Core.Setup.Provider;
 using Homebook.Backend.Core.Setup.Validators;
 using HomeBook.Backend.Data;
-using HomeBook.Backend.Data.Entities;
 using HomeBook.Backend.Data.Extensions;
 using HomeBook.Backend.Data.Mysql.Extensions;
 using HomeBook.Backend.Data.PostgreSql.Extensions;
 using HomeBook.Backend.Data.Sqlite.Extensions;
-using HomeBook.Backend.Data.Validators;
 using HomeBook.Backend.Factories;
 using HomeBook.Backend.Provider;
 using HomeBook.Backend.Services;
@@ -53,9 +48,6 @@ public static class ServiceCollectionExtensions
         services.AddBackendCoreLicenses(configuration, instanceStatus);
         services.AddBackendDatabaseProvider(configuration, instanceStatus);
         services.AddAccountServices(configuration, instanceStatus);
-
-        services.AddBackendCoreFinances(configuration, instanceStatus);
-        services.AddBackendCoreKitchen(configuration, instanceStatus);
 
         return services;
     }

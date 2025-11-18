@@ -4,7 +4,6 @@
         <TargetFramework>net9.0</TargetFramework>
         <Nullable>enable</Nullable>
         <ImplicitUsings>enable</ImplicitUsings>
-        <!--    <OpenApiDocumentsDirectory>../HomeBook.Client/</OpenApiDocumentsDirectory>-->
         <OpenApiDocumentsDirectory>.</OpenApiDocumentsDirectory>
     </PropertyGroup>
 
@@ -44,8 +43,6 @@
 
     <ItemGroup>
         <ProjectReference Include="..\HomeBook.Backend.Abstractions\HomeBook.Backend.Abstractions.csproj"/>
-        <ProjectReference Include="..\HomeBook.Backend.Core.Finances\HomeBook.Backend.Core.Finances.csproj"/>
-        <ProjectReference Include="..\HomeBook.Backend.Core.Kitchen\HomeBook.Backend.Core.Kitchen.csproj"/>
         <ProjectReference Include="..\HomeBook.Backend.Core\HomeBook.Backend.Core.csproj"/>
         <ProjectReference Include="..\HomeBook.Backend.Core.Account\HomeBook.Backend.Core.Account.csproj"/>
         <ProjectReference Include="..\HomeBook.Backend.Data.Mysql\HomeBook.Backend.Data.Mysql.csproj"/>
@@ -54,10 +51,11 @@
         <ProjectReference Include="..\HomeBook.Backend.DTOs\HomeBook.Backend.DTOs.csproj"/>
         <ProjectReference Include="..\HomeBook.Backend.Core.Account\HomeBook.Backend.Core.Account.csproj"/>
         <ProjectReference Include="..\HomeBook.Backend.Core.DataProvider\HomeBook.Backend.Core.DataProvider.csproj"/>
-        <ProjectReference Include="..\HomeBook.Backend.Core.Finances\HomeBook.Backend.Core.Finances.csproj"/>
-        <ProjectReference Include="..\HomeBook.Backend.Core.Kitchen\HomeBook.Backend.Core.Kitchen.csproj"/>
         <ProjectReference Include="..\HomeBook.Backend.Core.Licenses\HomeBook.Backend.Core.Licenses.csproj"/>
         <ProjectReference Include="..\Homebook.Backend.Core.Setup\Homebook.Backend.Core.Setup.csproj"/>
+        <ProjectReference Include="..\HomeBook.Backend.Module.Finances\HomeBook.Backend.Module.Finances.csproj" />
+        <ProjectReference Include="..\HomeBook.Backend.Module.Kitchen\HomeBook.Backend.Module.Kitchen.csproj" />
+        <ProjectReference Include="..\HomeBook.Backend.Modules.Abstractions\HomeBook.Backend.Modules.Abstractions.csproj" />
     </ItemGroup>
 
     <ItemGroup>
