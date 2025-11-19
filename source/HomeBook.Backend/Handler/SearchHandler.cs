@@ -2,6 +2,7 @@ using System.Security.Claims;
 using HomeBook.Backend.Abstractions.Contracts;
 using HomeBook.Backend.Core.Modules.Utilities;
 using HomeBook.Backend.DTOs.Responses.Search;
+using HomeBook.Backend.Mappings;
 using Microsoft.AspNetCore.Mvc;
 
 namespace HomeBook.Backend.Handler;
@@ -25,17 +26,21 @@ public class SearchHandler
     {
         try
         {
-            Guid userId = user.GetUserId();
+            ISearchProvider searchProvider = searchRegistrationFactory
+                .CreateSearchProvider();
+            IEnumerable<ISearchAggregationResult> searchAggregationResults = await searchProvider
+                .SearchAsync(query,
+                    user.GetUserId(),
+                    cancellationToken);
 
-            var searchProvider = searchRegistrationFactory.CreateSearchProvider();
-            var blub = await searchProvider.SearchAsync(query, cancellationToken);
-
-            SearchResponse response = new();
+            SearchResponse response = searchAggregationResults.ToResponse();
             return TypedResults.Ok(response);
         }
         catch (Exception err)
         {
-            logger.LogError(err, "Error while getting user preference");
+            logger.LogError(err,
+                "Error while handling search request for query '{Query}'",
+                query);
             return TypedResults.InternalServerError(err.Message);
         }
     }

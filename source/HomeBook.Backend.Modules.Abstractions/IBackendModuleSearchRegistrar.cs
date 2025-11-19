@@ -21,8 +21,10 @@ public interface IBackendModuleSearchRegistrar
     ///
     /// </summary>
     /// <param name="query"></param>
+    /// <param name="userId"></param>
     /// <param name="cancellationToken"></param>
     /// <returns></returns>
     Task<SearchResult> SearchAsync(string query,
+        Guid userId,
         CancellationToken cancellationToken = default);
 }

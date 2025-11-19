@@ -42,13 +42,6 @@ public static class ModuleExtensions
         _searchRegistrationFactory = new();
         _moduleBuilder = new ModuleBuilder(hb, sc, c);
         builderAction(_moduleBuilder);
-
-        // register the search provider with modules
-        sc.AddSingleton<ISearchRegistrationFactory>(x =>
-        {
-            _searchRegistrationFactory.AddServiceProvider(x);
-            return _searchRegistrationFactory!;
-        });
     }
 
     /// <summary>
@@ -58,6 +51,17 @@ public static class ModuleExtensions
     public static async Task RunModulesPostBuild(this WebApplication host)
     {
         CancellationToken cancellationToken = CancellationToken.None;
+
+        ISearchRegistrationInitiator searchRegistrationInitiator = host.Services
+            .GetRequiredService<ISearchRegistrationInitiator>();
+        searchRegistrationInitiator.AddServiceProvider(host.Services);
+
+        // register the search provider with modules
+        // sc.AddSingleton<ISearchRegistrationFactory>(x =>
+        // {
+        //     _searchRegistrationFactory.AddServiceProvider(x);
+        //     return _searchRegistrationFactory!;
+        // });
 
         await host.RunModulesPostBuild(host.Services,
             host.Configuration);

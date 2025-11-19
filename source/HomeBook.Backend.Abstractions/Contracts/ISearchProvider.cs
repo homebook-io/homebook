@@ -1,8 +1,19 @@
-using HomeBook.Backend.Modules.Abstractions;
-
 namespace HomeBook.Backend.Abstractions.Contracts;
 
+/// <summary>
+///
+/// </summary>
 public interface ISearchProvider
 {
-    Task<IEnumerable<ISearchAggregationResult>> SearchAsync(string query, CancellationToken cancellationToken = default);
+    /// <summary>
+    ///
+    /// </summary>
+    /// <param name="query"></param>
+    /// <param name="userId"></param>
+    /// <param name="cancellationToken"></param>
+    /// <returns></returns>
+    Task<IReadOnlyList<ISearchAggregationResult>>
+        SearchAsync(string query,
+            Guid userId,
+            CancellationToken cancellationToken = default);
 }

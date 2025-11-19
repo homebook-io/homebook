@@ -5,14 +5,17 @@ using Microsoft.Extensions.Logging;
 
 namespace HomeBook.Backend.Core.Search;
 
+/// <inheritdoc/>
 public class SearchProvider(
     ILogger<SearchProvider> logger,
     IEnumerable<IBackendModuleSearchRegistrar> modules) : ISearchProvider
 {
-    public async Task<IEnumerable<ISearchAggregationResult>> SearchAsync(string query,
+    /// <inheritdoc/>
+    public async Task<IReadOnlyList<ISearchAggregationResult>> SearchAsync(string query,
+        Guid userId,
         CancellationToken cancellationToken = default)
     {
-        IEnumerable<Task<SearchResult>> moduleSearchTasks = modules
+        IEnumerable<Task<SearchAggregationResult>> moduleSearchTasks = modules
             .Select(async module =>
             {
                 try
@@ -21,14 +24,19 @@ public class SearchProvider(
                         module.Name,
                         query);
 
-                    SearchResult result = await module.SearchAsync(query, cancellationToken);
+                    SearchResult result = await module.SearchAsync(query,
+                        userId,
+                        cancellationToken);
 
                     logger.LogDebug("Module {Module} returned search result with {Count} items for query '{Query}'",
                         module.Name,
                         result.Items.Count(),
                         query);
 
-                    return result;
+                    SearchAggregationResult moduleSearchResult = new(module.Key,
+                        result.TotalCount,
+                        result.Items);
+                    return moduleSearchResult;
                 }
                 catch (OperationCanceledException)
                 {
@@ -47,8 +55,7 @@ public class SearchProvider(
             })
             .Where(result => result is not null)!;
 
-        IEnumerable<SearchResult> searchResults = await Task.WhenAll(moduleSearchTasks.ToArray());
-        var blub = new List<SearchAggregationResult>();
-        return blub;
+        IReadOnlyList<SearchAggregationResult> searchResults = await Task.WhenAll(moduleSearchTasks.ToArray());
+        return searchResults;
     }
 }

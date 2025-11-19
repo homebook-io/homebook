@@ -8,6 +8,7 @@
 
     <ItemGroup>
       <ProjectReference Include="..\HomeBook.Backend.Abstractions\HomeBook.Backend.Abstractions.csproj" />
+      <ProjectReference Include="..\HomeBook.Backend.Modules.Abstractions\HomeBook.Backend.Modules.Abstractions.csproj" />
     </ItemGroup>
 
 </Project>
