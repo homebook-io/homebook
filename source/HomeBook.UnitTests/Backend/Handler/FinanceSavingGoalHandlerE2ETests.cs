@@ -1,9 +1,11 @@
 using System.Security.Claims;
 using HomeBook.Backend.Abstractions;
 using HomeBook.Backend.Abstractions.Contracts;
+using HomeBook.Backend.Core.Search;
 using HomeBook.Backend.Data.Sqlite;
 using HomeBook.Backend.Data.Sqlite.Extensions;
 using HomeBook.Backend.Extensions;
+using HomeBook.Backend.Factories;
 using HomeBook.Backend.Module.Finances.Contracts;
 using HomeBook.Backend.Module.Finances.Enums;
 using HomeBook.Backend.Module.Finances.Handler;
@@ -72,6 +74,7 @@ public class FinanceSavingGoalHandlerE2ETests
             ["Database:UseInMemory"] = "true",
             ["Database:Provider"] = "SQLITE"
         });
+        SearchRegistrationFactory srf = new();
         IServiceProvider serviceProvider = new ServiceCollection()
             .AddLogging()
             .AddSingleton<IConfiguration>(configuration)
@@ -79,7 +82,7 @@ public class FinanceSavingGoalHandlerE2ETests
             .AddBackendDataSqlite(configuration)
             .AddKeyedSingleton<IDatabaseMigrator, DatabaseMigrator>("SQLITE")
             .AddDependenciesForRuntime(configuration, InstanceStatus.SETUP)
-            .AddBackendModulesForTestEnvironment(configuration)
+            .AddBackendModulesForTestEnvironment(configuration, srf)
             .BuildServiceProvider();
 
         // apply migrations

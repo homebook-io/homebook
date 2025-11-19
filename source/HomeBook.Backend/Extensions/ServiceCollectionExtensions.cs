@@ -10,6 +10,7 @@ using HomeBook.Backend.Core.Extensions;
 using HomeBook.Backend.Core.HashProvider;
 using HomeBook.Backend.Core.Licenses;
 using HomeBook.Backend.Core.Licenses.Extensions;
+using HomeBook.Backend.Core.Search.Extensions;
 using Homebook.Backend.Core.Setup;
 using Homebook.Backend.Core.Setup.Extensions;
 using Homebook.Backend.Core.Setup.Factories;
@@ -42,12 +43,13 @@ public static class ServiceCollectionExtensions
         IConfiguration configuration,
         InstanceStatus instanceStatus)
     {
-        services.AddBackendServices(configuration, instanceStatus);
-        services.AddBackendCore(configuration, instanceStatus);
-        services.AddBackendCoreSetup(configuration, instanceStatus);
-        services.AddBackendCoreLicenses(configuration, instanceStatus);
-        services.AddBackendDatabaseProvider(configuration, instanceStatus);
-        services.AddAccountServices(configuration, instanceStatus);
+        services.AddBackendServices(configuration, instanceStatus)
+            .AddBackendCore(configuration, instanceStatus)
+            .AddBackendCoreSetup(configuration, instanceStatus)
+            .AddBackendCoreLicenses(configuration, instanceStatus)
+            .AddBackendCoreSearch(configuration, instanceStatus)
+            .AddBackendDatabaseProvider(configuration, instanceStatus)
+            .AddAccountServices(configuration, instanceStatus);
 
         return services;
     }

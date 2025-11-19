@@ -9,7 +9,8 @@ namespace HomeBook.Backend.Module.Kitchen;
 
 public class Module : IModule,
     IBackendModuleEndpointRegistrar,
-    IBackendModuleServiceRegistrar
+    IBackendModuleServiceRegistrar,
+    IBackendModuleSearchRegistrar
 {
     public string Name { get; } = "Kitchen Module";
     public string Description { get; } = "Provides kitchen and recipe management features";
@@ -30,5 +31,12 @@ public class Module : IModule,
     public static void RegisterServices(IServiceCollection services, IConfiguration configuration)
     {
         services.AddScoped<IRecipesProvider, RecipesProvider>();
+    }
+
+    public async Task<SearchResult> SearchAsync(string query, CancellationToken cancellationToken = default)
+    {
+        await Task.Delay(3500, cancellationToken); // Simulate some search delay
+
+        return null;
     }
 }

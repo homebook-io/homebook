@@ -1,3 +1,5 @@
+using HomeBook.Backend.Core.Search;
+using HomeBook.Backend.Factories;
 using HomeBook.Backend.ModuleCore;
 using HomeBook.Backend.Options;
 using Microsoft.Extensions.Configuration;
@@ -8,7 +10,8 @@ namespace HomeBook.UnitTests.TestCore.Backend;
 public static class TestModulesExtensions
 {
     public static IServiceCollection AddBackendModulesForTestEnvironment(this IServiceCollection sc,
-        IConfiguration c)
+        IConfiguration c,
+        SearchRegistrationFactory srf)
     {
         HomeBookOptions hb = new();
         ModuleBuilder moduleBuilder = new(hb, sc, c);
@@ -16,6 +19,8 @@ public static class TestModulesExtensions
         moduleBuilder
             .AddModule<HomeBook.Backend.Module.Finances.Module>()
             .AddModule<HomeBook.Backend.Module.Kitchen.Module>();
+
+        moduleBuilder.RegisterModulesInSearchFactory(srf);
 
         return sc;
     }

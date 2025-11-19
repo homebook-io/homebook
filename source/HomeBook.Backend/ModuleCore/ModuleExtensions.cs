@@ -1,4 +1,6 @@
 using HomeBook.Backend.Abstractions.Contracts;
+using HomeBook.Backend.Core.Search;
+using HomeBook.Backend.Factories;
 using HomeBook.Backend.Modules.Abstractions;
 using HomeBook.Backend.Options;
 
@@ -7,6 +9,7 @@ namespace HomeBook.Backend.ModuleCore;
 public static class ModuleExtensions
 {
     private static ModuleBuilder? _moduleBuilder = null;
+    private static SearchRegistrationFactory? _searchRegistrationFactory = null;
 
     /// <summary>
     /// use in Blazor Server
@@ -36,8 +39,16 @@ public static class ModuleExtensions
         IConfiguration c,
         Action<ModuleBuilder> builderAction)
     {
+        _searchRegistrationFactory = new();
         _moduleBuilder = new ModuleBuilder(hb, sc, c);
         builderAction(_moduleBuilder);
+
+        // register the search provider with modules
+        sc.AddSingleton<ISearchRegistrationFactory>(x =>
+        {
+            _searchRegistrationFactory.AddServiceProvider(x);
+            return _searchRegistrationFactory!;
+        });
     }
 
     /// <summary>
@@ -64,14 +75,19 @@ public static class ModuleExtensions
         IServiceProvider sp,
         IConfiguration c)
     {
+        if (_moduleBuilder is null)
+            return;
+
+        // register search enabled modules in search registration factory
+        ISearchRegistrationInitiator searchRegistrationInitiator = sp
+            .GetRequiredService<ISearchRegistrationInitiator>();
+        _moduleBuilder.RegisterModulesInSearchFactory(searchRegistrationInitiator);
+
         IEnumerable<IModule> modules = sp.GetServices<IModule>();
 
         // initialize all modules
         foreach (IModule module in modules)
         {
-            if (_moduleBuilder is null)
-                return;
-
             // register endpoints
             try
             {

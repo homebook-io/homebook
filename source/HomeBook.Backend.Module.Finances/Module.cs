@@ -13,7 +13,8 @@ namespace HomeBook.Backend.Module.Finances;
 
 public class Module : IModule,
     IBackendModuleEndpointRegistrar,
-    IBackendModuleServiceRegistrar
+    IBackendModuleServiceRegistrar,
+    IBackendModuleSearchRegistrar
 {
     public string Name { get; } = "Finances Module";
     public string Description { get; } = "Provides financial management features";
@@ -38,5 +39,12 @@ public class Module : IModule,
         services.AddScoped<IFinanceCalculationsService, FinanceCalculationsService>();
 
         services.AddSingleton<IValidator<SavingGoal>, SavingGoalValidator>();
+    }
+
+    public async Task<SearchResult> SearchAsync(string query, CancellationToken cancellationToken = default)
+    {
+        await Task.Delay(5000, cancellationToken); // Simulate some search delay
+
+        return null;
     }
 }

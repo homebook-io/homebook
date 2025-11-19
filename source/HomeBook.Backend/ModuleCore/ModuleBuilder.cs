@@ -9,6 +9,10 @@ public class ModuleBuilder(
     IServiceCollection serviceCollection,
     IConfiguration configuration)
 {
+    private readonly List<string> _searchEnabledModules = [];
+
+    public IReadOnlyList<string> SearchEnabledModules => _searchEnabledModules.AsReadOnly();
+
     /// <summary>
     /// adds a module to the service collection if the module is enabled.
     /// </summary>
@@ -33,14 +37,16 @@ public class ModuleBuilder(
         serviceCollection.AddKeyedSingleton<IModule, T>(moduleId);
 
         // implements the Module the IBackendModuleServiceRegistrar interface?
-        if (!typeof(IBackendModuleServiceRegistrar).IsAssignableFrom(typeof(T)))
-            return;
+        if (typeof(IBackendModuleServiceRegistrar).IsAssignableFrom(typeof(T)))
+        {
+            MethodInfo? method = typeof(T).GetMethod(
+                "RegisterServices",
+                BindingFlags.Public | BindingFlags.Static
+            );
+            method?.Invoke(null, [serviceCollection, configuration]);
+        }
 
-        // call the RegisterServices method in the module
-        MethodInfo? method = typeof(T).GetMethod(
-            "RegisterServices",
-            BindingFlags.Public | BindingFlags.Static
-        );
-        method?.Invoke(null, [serviceCollection, configuration]);
+        if (typeof(IBackendModuleSearchRegistrar).IsAssignableFrom(typeof(T)))
+            _searchEnabledModules.Add(moduleId);
     }
 }

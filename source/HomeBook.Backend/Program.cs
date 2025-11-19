@@ -52,7 +52,6 @@ switch (instanceStatus)
 builder.Services.AddJwtAuthentication(builder.Configuration, instanceStatus);
 
 if (builder.Environment.IsDevelopment())
-{
     builder.Services.AddCors(options =>
     {
         options.AddDefaultPolicy(policy =>
@@ -62,17 +61,17 @@ if (builder.Environment.IsDevelopment())
                 .AllowAnyMethod();
         });
     });
-}
 
-builder.AddModules(
-    builder.HomeBook(),
-    (moduleBuilder) =>
-    {
-        // app modules
-        moduleBuilder
-            .AddModule<HomeBook.Backend.Module.Finances.Module>()
-            .AddModule<HomeBook.Backend.Module.Kitchen.Module>();
-    });
+if (instanceStatus == InstanceStatus.RUNNING)
+    builder.AddModules(
+        builder.HomeBook(),
+        (moduleBuilder) =>
+        {
+            // app modules
+            moduleBuilder
+                .AddModule<HomeBook.Backend.Module.Finances.Module>()
+                .AddModule<HomeBook.Backend.Module.Kitchen.Module>();
+        });
 
 WebApplication app = builder.Build();
 
@@ -116,7 +115,8 @@ switch (instanceStatus)
             .MapUpdateEndpoints()
             .MapAccountEndpoints()
             .MapInfoEndpoints()
-            .MapUserEndpoints();
+            .MapUserEndpoints()
+            .MapSearchEndpoints();
         break;
 }
 
