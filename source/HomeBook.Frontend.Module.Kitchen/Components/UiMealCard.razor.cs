@@ -31,7 +31,7 @@ public partial class UiMealCard : ComponentBase
     public string Class { get; set; } = string.Empty;
 
     [Parameter]
-    public MealItemViewModel? Meal { get; set; } = null;
+    public RecipeViewModel? Meal { get; set; } = null;
 
     [Parameter]
     public EventCallback OnAdd { get; set; }

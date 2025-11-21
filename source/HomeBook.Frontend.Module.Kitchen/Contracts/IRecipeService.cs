@@ -10,6 +10,9 @@ public interface IRecipeService
     /// <param name="filter"></param>
     /// <param name="cancellationToken"></param>
     /// <returns></returns>
-    Task<IEnumerable<RecipeDto>> GetMealsAsync(string filter,
+    Task<IEnumerable<RecipeDto>> GetRecipesAsync(string filter,
+        CancellationToken cancellationToken = default);
+
+    Task CreateRecipeAsync(string name,
         CancellationToken cancellationToken = default);
 }

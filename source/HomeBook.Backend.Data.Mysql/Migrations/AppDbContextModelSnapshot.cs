@@ -72,6 +72,9 @@ namespace HomeBook.Backend.Data.Mysql.Migrations
                     b.Property<int?>("CaloriesKcal")
                         .HasColumnType("int");
 
+                    b.Property<string>("Description")
+                        .HasColumnType("longtext");
+
                     b.Property<int?>("DurationMinutes")
                         .HasColumnType("int");
 
@@ -84,6 +87,9 @@ namespace HomeBook.Backend.Data.Mysql.Migrations
                         .IsRequired()
                         .HasMaxLength(50)
                         .HasColumnType("varchar(50)");
+
+                    b.Property<int?>("Servings")
+                        .HasColumnType("int");
 
                     b.HasKey("Id");
 

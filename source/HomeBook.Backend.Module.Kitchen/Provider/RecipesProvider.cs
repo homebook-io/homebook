@@ -36,11 +36,19 @@ public class RecipesProvider(
 
     /// <inheritdoc/>
     public async Task<Guid> CreateAsync(string name,
+        string? description,
+        TimeSpan? duration,
+        int? caloriesKcal,
+        int? servings,
         CancellationToken cancellationToken)
     {
         Recipe entity = new()
         {
-            Name = name
+            Name = name,
+            Description = description,
+            Duration = duration,
+            CaloriesKcal = caloriesKcal,
+            Servings = servings
         };
 
         // TODO: validator

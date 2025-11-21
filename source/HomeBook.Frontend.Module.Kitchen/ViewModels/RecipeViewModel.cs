@@ -1,6 +1,6 @@
 namespace HomeBook.Frontend.Module.Kitchen.ViewModels;
 
-public class MealItemViewModel
+public class RecipeViewModel
 {
     public string Name { get; set; }
     public string Ingredients { get; set; }

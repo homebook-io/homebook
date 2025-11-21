@@ -21,6 +21,8 @@ public class Recipe : INormalizable
     [MaxLength(50)]
     public string NormalizedName { get; set; } = null!;
 
+    public string? Description { get; set; }
+
     public int? DurationMinutes { get; set; }
 
     [NotMapped]
@@ -38,6 +40,8 @@ public class Recipe : INormalizable
     }
 
     public int? CaloriesKcal { get; set; }
+
+    public int? Servings { get; set; }
 
     public void Normalize(IStringNormalizer normalizer)
     {

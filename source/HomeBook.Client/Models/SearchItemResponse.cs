@@ -9,13 +9,19 @@ namespace HomeBook.Client.Models
 {
     [global::System.CodeDom.Compiler.GeneratedCode("Kiota", "1.0.0")]
     #pragma warning disable CS1591
-    public partial class CreateRecipeRequest : IAdditionalDataHolder, IParsable
+    public partial class SearchItemResponse : IAdditionalDataHolder, IParsable
     #pragma warning restore CS1591
     {
         /// <summary>Stores additional data not described in the OpenAPI description found when deserializing. Can be used for serialization as well.</summary>
         public IDictionary<string, object> AdditionalData { get; set; }
-        /// <summary>The caloriesKcal property</summary>
-        public int? CaloriesKcal { get; set; }
+        /// <summary>The color property</summary>
+#if NETSTANDARD2_1_OR_GREATER || NETCOREAPP3_1_OR_GREATER
+#nullable enable
+        public string? Color { get; set; }
+#nullable restore
+#else
+        public string Color { get; set; }
+#endif
         /// <summary>The description property</summary>
 #if NETSTANDARD2_1_OR_GREATER || NETCOREAPP3_1_OR_GREATER
 #nullable enable
@@ -24,40 +30,46 @@ namespace HomeBook.Client.Models
 #else
         public string Description { get; set; }
 #endif
-        /// <summary>The duration property</summary>
+        /// <summary>The icon property</summary>
 #if NETSTANDARD2_1_OR_GREATER || NETCOREAPP3_1_OR_GREATER
 #nullable enable
-        public string? Duration { get; set; }
+        public string? Icon { get; set; }
 #nullable restore
 #else
-        public string Duration { get; set; }
+        public string Icon { get; set; }
 #endif
-        /// <summary>The name property</summary>
+        /// <summary>The title property</summary>
 #if NETSTANDARD2_1_OR_GREATER || NETCOREAPP3_1_OR_GREATER
 #nullable enable
-        public string? Name { get; set; }
+        public string? Title { get; set; }
 #nullable restore
 #else
-        public string Name { get; set; }
+        public string Title { get; set; }
 #endif
-        /// <summary>The servings property</summary>
-        public int? Servings { get; set; }
+        /// <summary>The url property</summary>
+#if NETSTANDARD2_1_OR_GREATER || NETCOREAPP3_1_OR_GREATER
+#nullable enable
+        public string? Url { get; set; }
+#nullable restore
+#else
+        public string Url { get; set; }
+#endif
         /// <summary>
-        /// Instantiates a new <see cref="global::HomeBook.Client.Models.CreateRecipeRequest"/> and sets the default values.
+        /// Instantiates a new <see cref="global::HomeBook.Client.Models.SearchItemResponse"/> and sets the default values.
         /// </summary>
-        public CreateRecipeRequest()
+        public SearchItemResponse()
         {
             AdditionalData = new Dictionary<string, object>();
         }
         /// <summary>
         /// Creates a new instance of the appropriate class based on discriminator value
         /// </summary>
-        /// <returns>A <see cref="global::HomeBook.Client.Models.CreateRecipeRequest"/></returns>
+        /// <returns>A <see cref="global::HomeBook.Client.Models.SearchItemResponse"/></returns>
         /// <param name="parseNode">The parse node to use to read the discriminator value and create the object</param>
-        public static global::HomeBook.Client.Models.CreateRecipeRequest CreateFromDiscriminatorValue(IParseNode parseNode)
+        public static global::HomeBook.Client.Models.SearchItemResponse CreateFromDiscriminatorValue(IParseNode parseNode)
         {
             if(ReferenceEquals(parseNode, null)) throw new ArgumentNullException(nameof(parseNode));
-            return new global::HomeBook.Client.Models.CreateRecipeRequest();
+            return new global::HomeBook.Client.Models.SearchItemResponse();
         }
         /// <summary>
         /// The deserialization information for the current model
@@ -67,11 +79,11 @@ namespace HomeBook.Client.Models
         {
             return new Dictionary<string, Action<IParseNode>>
             {
-                { "caloriesKcal", n => { CaloriesKcal = n.GetIntValue(); } },
+                { "color", n => { Color = n.GetStringValue(); } },
                 { "description", n => { Description = n.GetStringValue(); } },
-                { "duration", n => { Duration = n.GetStringValue(); } },
-                { "name", n => { Name = n.GetStringValue(); } },
-                { "servings", n => { Servings = n.GetIntValue(); } },
+                { "icon", n => { Icon = n.GetStringValue(); } },
+                { "title", n => { Title = n.GetStringValue(); } },
+                { "url", n => { Url = n.GetStringValue(); } },
             };
         }
         /// <summary>
@@ -81,11 +93,11 @@ namespace HomeBook.Client.Models
         public virtual void Serialize(ISerializationWriter writer)
         {
             if(ReferenceEquals(writer, null)) throw new ArgumentNullException(nameof(writer));
-            writer.WriteIntValue("caloriesKcal", CaloriesKcal);
+            writer.WriteStringValue("color", Color);
             writer.WriteStringValue("description", Description);
-            writer.WriteStringValue("duration", Duration);
-            writer.WriteStringValue("name", Name);
-            writer.WriteIntValue("servings", Servings);
+            writer.WriteStringValue("icon", Icon);
+            writer.WriteStringValue("title", Title);
+            writer.WriteStringValue("url", Url);
             writer.WriteAdditionalData(AdditionalData);
         }
     }

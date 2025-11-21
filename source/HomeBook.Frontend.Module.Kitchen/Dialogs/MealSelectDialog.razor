@@ -23,11 +23,11 @@
                                Indeterminate="true"/>
         }
 
-        <MudList T="MealItemViewModel">
+        <MudList T="RecipeViewModel">
 
-            @foreach (MealItemViewModel meal in _mealItems)
+            @foreach (RecipeViewModel meal in _mealItems)
             {
-                <MudListItem T="MealItemViewModel"
+                <MudListItem T="RecipeViewModel"
                              OnClick="() => SelectMealAsync(meal)">
 
                     <AvatarContent>

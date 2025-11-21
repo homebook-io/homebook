@@ -63,6 +63,10 @@ public class KitchenRecipeHandler
             Guid userId = user.GetUserId();
 
             Guid createdId = await recipesProvider.CreateAsync(request.Name,
+                request.Description,
+                request.Duration,
+                request.CaloriesKcal,
+                request.Servings,
                 cancellationToken);
 
             return TypedResults.Ok();

@@ -75,6 +75,9 @@ namespace HomeBook.Backend.Data.PostgreSql.Migrations
                     b.Property<int?>("CaloriesKcal")
                         .HasColumnType("integer");
 
+                    b.Property<string>("Description")
+                        .HasColumnType("text");
+
                     b.Property<int?>("DurationMinutes")
                         .HasColumnType("integer");
 
@@ -87,6 +90,9 @@ namespace HomeBook.Backend.Data.PostgreSql.Migrations
                         .IsRequired()
                         .HasMaxLength(50)
                         .HasColumnType("character varying(50)");
+
+                    b.Property<int?>("Servings")
+                        .HasColumnType("integer");
 
                     b.HasKey("Id");
 

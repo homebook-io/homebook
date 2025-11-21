@@ -32,21 +32,21 @@ public partial class PlanOverview : ComponentBase
                 Id = Guid.NewGuid(),
                 Date = DateOnly.FromDateTime(DateTime.Today),
                 ColorName = "cerulean",
-                Breakfast = new MealItemViewModel()
+                Breakfast = new RecipeViewModel()
                 {
                     Name = "Omelette mit Speck",
                     Ingredients = "Eier, Speck, Milch, Gewürze",
                     Duration = TimeSpan.FromMinutes(15),
                     CaloriesKcal = 350
                 },
-                Lunch = new MealItemViewModel()
+                Lunch = new RecipeViewModel()
                 {
                     Name = "Würstchen mit Kartoffelsalat",
                     Ingredients = "Würstchen, Kartoffeln, Mayonnaise, Zwiebeln, Gurken",
                     Duration = TimeSpan.FromMinutes(135),
                     CaloriesKcal = 800
                 },
-                Dinner = new MealItemViewModel()
+                Dinner = new RecipeViewModel()
                 {
                     Name = "Bratkartoffeln mit Spiegelei",
                     Ingredients = "Kartoffeln, Eier, Zwiebeln, Gewürze",
@@ -58,7 +58,7 @@ public partial class PlanOverview : ComponentBase
                 Id = Guid.NewGuid(),
                 Date = DateOnly.FromDateTime(DateTime.Today.AddDays(1)),
                 ColorName = "fern",
-                Lunch = new MealItemViewModel()
+                Lunch = new RecipeViewModel()
                 {
                     Name = "Würstchen mit Kartoffelsalat",
                     Ingredients = "Würstchen, Kartoffeln, Mayonnaise, Zwiebeln, Gurken",
@@ -70,7 +70,7 @@ public partial class PlanOverview : ComponentBase
                 Id = Guid.NewGuid(),
                 Date = DateOnly.FromDateTime(DateTime.Today.AddDays(2)),
                 ColorName = "amber",
-                Dinner = new MealItemViewModel()
+                Dinner = new RecipeViewModel()
                 {
                     Name = "Bratkartoffeln mit Spiegelei",
                     Ingredients = "Kartoffeln, Eier, Zwiebeln, Gewürze",
@@ -82,7 +82,7 @@ public partial class PlanOverview : ComponentBase
                 Id = Guid.NewGuid(),
                 Date = DateOnly.FromDateTime(DateTime.Today.AddDays(3)),
                 ColorName = "azure",
-                Breakfast = new MealItemViewModel()
+                Breakfast = new RecipeViewModel()
                 {
                     Name = "Fischstäbchen mit Kartoffelpüree",
                     Ingredients = "Fischstäbchen, Kartoffeln, Butter, Milch",
@@ -94,7 +94,7 @@ public partial class PlanOverview : ComponentBase
                 Id = Guid.NewGuid(),
                 Date = DateOnly.FromDateTime(DateTime.Today.AddDays(4)),
                 ColorName = "chartreuse",
-                Breakfast = new MealItemViewModel()
+                Breakfast = new RecipeViewModel()
                 {
                     Name = "Eintopf mit Würstchen",
                     Ingredients = "Würstchen, Kartoffeln, Gemüse, Gewürze",
@@ -106,7 +106,7 @@ public partial class PlanOverview : ComponentBase
                 Id = Guid.NewGuid(),
                 Date = DateOnly.FromDateTime(DateTime.Today.AddDays(5)),
                 ColorName = "jade",
-                Breakfast = new MealItemViewModel()
+                Breakfast = new RecipeViewModel()
                 {
                     Name = "Hähnchenschenkel mit Reis",
                     Ingredients = "Hähnchenschenkel, Reis, Gewürze",
@@ -118,7 +118,7 @@ public partial class PlanOverview : ComponentBase
                 Id = Guid.NewGuid(),
                 Date = DateOnly.FromDateTime(DateTime.Today.AddDays(6)),
                 ColorName = "plum",
-                Breakfast = new MealItemViewModel()
+                Breakfast = new RecipeViewModel()
                 {
                     Name = "Roastbeef mit Gemüse",
                     Ingredients = "Kartoffeln, Gemüse, Gewürze",
@@ -146,7 +146,7 @@ public partial class PlanOverview : ComponentBase
         if (dialogResult is null)
             return;
 
-        MealItemViewModel meal = (dialogResult.Data as MealItemViewModel)!;
+        RecipeViewModel meal = (dialogResult.Data as RecipeViewModel)!;
 
         MealPlanItemViewModel? mealPlanItem = _mealPlanItems.FirstOrDefault(item => item.Date == date);
         switch (mealType)

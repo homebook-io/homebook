@@ -13,7 +13,7 @@ public class RecipeService(
     BackendClient backendClient) : IRecipeService
 {
     /// <inheritdoc/>
-    public async Task<IEnumerable<RecipeDto>> GetMealsAsync(string filter,
+    public async Task<IEnumerable<RecipeDto>> GetRecipesAsync(string filter,
         CancellationToken cancellationToken = default)
     {
         cancellationToken.ThrowIfCancellationRequested();
@@ -35,5 +35,22 @@ public class RecipeService(
             .ToList();
 
         return result;
+    }
+
+    public async Task CreateRecipeAsync(string name,
+        CancellationToken cancellationToken = default)
+    {
+        cancellationToken.ThrowIfCancellationRequested();
+
+        string? token = await authenticationService.GetTokenAsync(cancellationToken);
+        CreateRecipeRequest request = new();
+        request.Name = name;
+
+        await backendClient.Modules.Kitchen.Recipes.PostAsync(request,
+            x =>
+            {
+                x.Headers.Add("Authorization", $"Bearer {token}");
+            },
+            cancellationToken);
     }
 }

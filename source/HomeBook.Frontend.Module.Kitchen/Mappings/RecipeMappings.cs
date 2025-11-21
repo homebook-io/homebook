@@ -3,11 +3,11 @@ using HomeBook.Frontend.Module.Kitchen.ViewModels;
 
 namespace HomeBook.Frontend.Module.Kitchen.Mappings;
 
-public static class MealMappings
+public static class RecipeMappings
 {
-    public static MealItemViewModel ToViewModel(this RecipeDto recipe)
+    public static RecipeViewModel ToViewModel(this RecipeDto recipe)
     {
-        return new MealItemViewModel
+        return new RecipeViewModel
         {
             Name = recipe.Name,
             Ingredients = recipe.Ingredients,

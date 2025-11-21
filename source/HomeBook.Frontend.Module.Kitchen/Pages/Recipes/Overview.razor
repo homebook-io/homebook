@@ -1,5 +1,16 @@
 @page "/Kitchen/Recipes"
 
-<MudContainer>
+@using HomeBook.Frontend.Module.Kitchen.Contracts
 
-</MudContainer>
+@inject IRecipeService RecipeService
+
+@foreach (var blub in _recipes)
+{
+    <MudText>
+        @blub.Name
+    </MudText>
+}
+
+<MudButton OnClick="CreateRecipeAsync">
+    +Create Test Recipe
+</MudButton>

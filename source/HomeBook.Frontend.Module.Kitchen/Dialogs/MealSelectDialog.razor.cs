@@ -11,7 +11,7 @@ public partial class MealSelectDialog : ComponentBase
     [CascadingParameter]
     private IMudDialogInstance MudDialog { get; set; }
 
-    private List<MealItemViewModel> _mealItems = [];
+    private List<RecipeViewModel> _mealItems = [];
     private bool _isLoading { get; set; }
     private CancellationTokenSource _cancellationTokenSource = new();
     private Timer? _searchDebounceTimer;
@@ -66,7 +66,7 @@ public partial class MealSelectDialog : ComponentBase
             // Check if cancelled before starting
             cancellationToken.ThrowIfCancellationRequested();
 
-            IEnumerable<RecipeDto> meals = await RecipeService.GetMealsAsync(searchText,
+            IEnumerable<RecipeDto> meals = await RecipeService.GetRecipesAsync(searchText,
                 cancellationToken);
 
             _mealItems.Clear();
@@ -95,7 +95,7 @@ public partial class MealSelectDialog : ComponentBase
         }
     }
 
-    private async Task SelectMealAsync(MealItemViewModel meal)
+    private async Task SelectMealAsync(RecipeViewModel meal)
     {
         await ShutdownAsync();
 
