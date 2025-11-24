@@ -1,4 +1,5 @@
 using System.Security.Claims;
+using HomeBook.Backend.Abstractions.Contracts;
 using HomeBook.Backend.Core.Modules.Utilities;
 using HomeBook.Backend.Module.Kitchen.Contracts;
 using HomeBook.Backend.Module.Kitchen.Mappings;
@@ -19,22 +20,30 @@ public class KitchenRecipeHandler
     /// <param name="searchFilter"></param>
     /// <param name="logger"></param>
     /// <param name="recipesProvider"></param>
+    /// <param name="userProvider"></param>
     /// <param name="cancellationToken"></param>
     /// <returns></returns>
     public static async Task<IResult> HandleGetRecipes(string searchFilter,
         [FromServices] ILogger<KitchenRecipeHandler> logger,
         [FromServices] IRecipesProvider recipesProvider,
+        [FromServices] IUserProvider userProvider,
         CancellationToken cancellationToken)
     {
         try
         {
             RecipeDto[] recipeDtos = await recipesProvider.GetRecipesAsync(searchFilter,
                 cancellationToken);
-            RecipeResponse[] recipes = recipeDtos
-                .Select(sg => sg.ToResponse())
-                .ToArray();
 
-            return TypedResults.Ok(new RecipesListResponse(recipes));
+            List<RecipeResponse> recipes = [];
+            foreach (RecipeDto recipeDto in recipeDtos)
+            {
+                RecipeResponse recipeResponse = await recipeDto.ToResponseAsync(async userId =>
+                    await userProvider.GetUserByIdAsync(userId, cancellationToken)
+                );
+                recipes.Add(recipeResponse);
+            }
+
+            return TypedResults.Ok(new RecipesListResponse(recipes.ToArray()));
         }
         catch (Exception err)
         {
@@ -63,8 +72,9 @@ public class KitchenRecipeHandler
             Guid userId = user.GetUserId();
 
             Guid createdId = await recipesProvider.CreateAsync(request.Name,
+                userId,
                 request.Description,
-                request.Duration,
+                request.DurationInMinutes,
                 request.CaloriesKcal,
                 request.Servings,
                 cancellationToken);

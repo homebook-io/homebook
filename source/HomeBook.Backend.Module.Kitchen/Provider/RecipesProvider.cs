@@ -36,17 +36,19 @@ public class RecipesProvider(
 
     /// <inheritdoc/>
     public async Task<Guid> CreateAsync(string name,
+        Guid userId,
         string? description,
-        TimeSpan? duration,
+        int? durationInMinutes,
         int? caloriesKcal,
         int? servings,
         CancellationToken cancellationToken)
     {
         Recipe entity = new()
         {
+            UserId = userId,
             Name = name,
             Description = description,
-            Duration = duration,
+            DurationMinutes = durationInMinutes,
             CaloriesKcal = caloriesKcal,
             Servings = servings
         };

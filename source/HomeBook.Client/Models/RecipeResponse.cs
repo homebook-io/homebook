@@ -14,6 +14,18 @@ namespace HomeBook.Client.Models
     {
         /// <summary>Stores additional data not described in the OpenAPI description found when deserializing. Can be used for serialization as well.</summary>
         public IDictionary<string, object> AdditionalData { get; set; }
+        /// <summary>The caloriesKcal property</summary>
+        public int? CaloriesKcal { get; set; }
+        /// <summary>The description property</summary>
+#if NETSTANDARD2_1_OR_GREATER || NETCOREAPP3_1_OR_GREATER
+#nullable enable
+        public string? Description { get; set; }
+#nullable restore
+#else
+        public string Description { get; set; }
+#endif
+        /// <summary>The durationMinutes property</summary>
+        public int? DurationMinutes { get; set; }
         /// <summary>The id property</summary>
         public Guid? Id { get; set; }
         /// <summary>The name property</summary>
@@ -31,6 +43,16 @@ namespace HomeBook.Client.Models
 #nullable restore
 #else
         public string NormalizedName { get; set; }
+#endif
+        /// <summary>The servings property</summary>
+        public int? Servings { get; set; }
+        /// <summary>The username property</summary>
+#if NETSTANDARD2_1_OR_GREATER || NETCOREAPP3_1_OR_GREATER
+#nullable enable
+        public string? Username { get; set; }
+#nullable restore
+#else
+        public string Username { get; set; }
 #endif
         /// <summary>
         /// Instantiates a new <see cref="global::HomeBook.Client.Models.RecipeResponse"/> and sets the default values.
@@ -57,9 +79,14 @@ namespace HomeBook.Client.Models
         {
             return new Dictionary<string, Action<IParseNode>>
             {
+                { "caloriesKcal", n => { CaloriesKcal = n.GetIntValue(); } },
+                { "description", n => { Description = n.GetStringValue(); } },
+                { "durationMinutes", n => { DurationMinutes = n.GetIntValue(); } },
                 { "id", n => { Id = n.GetGuidValue(); } },
                 { "name", n => { Name = n.GetStringValue(); } },
                 { "normalizedName", n => { NormalizedName = n.GetStringValue(); } },
+                { "servings", n => { Servings = n.GetIntValue(); } },
+                { "username", n => { Username = n.GetStringValue(); } },
             };
         }
         /// <summary>
@@ -69,9 +96,14 @@ namespace HomeBook.Client.Models
         public virtual void Serialize(ISerializationWriter writer)
         {
             if(ReferenceEquals(writer, null)) throw new ArgumentNullException(nameof(writer));
+            writer.WriteIntValue("caloriesKcal", CaloriesKcal);
+            writer.WriteStringValue("description", Description);
+            writer.WriteIntValue("durationMinutes", DurationMinutes);
             writer.WriteGuidValue("id", Id);
             writer.WriteStringValue("name", Name);
             writer.WriteStringValue("normalizedName", NormalizedName);
+            writer.WriteIntValue("servings", Servings);
+            writer.WriteStringValue("username", Username);
             writer.WriteAdditionalData(AdditionalData);
         }
     }

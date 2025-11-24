@@ -47,6 +47,16 @@ public partial class Overview : ComponentBase
     private async Task CreateRecipeAsync()
     {
         string recipeName = "Cheeseburger";
-        await RecipeService.CreateRecipeAsync(recipeName);
+        string description =
+            "Ein leckerer Cheeseburger mit saftigem Rindfleisch, geschmolzenem Käse, frischem Salat, Tomaten und Zwiebeln, serviert in einem weichen Brötchen.";
+        int durationInMinutes = 45;
+        int caloriesKcal = 3250;
+        int servings = 2;
+
+        await RecipeService.CreateRecipeAsync(recipeName,
+            description,
+            durationInMinutes,
+            caloriesKcal,
+            servings);
     }
 }

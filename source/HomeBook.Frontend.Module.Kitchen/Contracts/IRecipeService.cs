@@ -13,6 +13,20 @@ public interface IRecipeService
     Task<IEnumerable<RecipeDto>> GetRecipesAsync(string filter,
         CancellationToken cancellationToken = default);
 
+    /// <summary>
+    ///
+    /// </summary>
+    /// <param name="name"></param>
+    /// <param name="description"></param>
+    /// <param name="durationInMinutes"></param>
+    /// <param name="caloriesKcal"></param>
+    /// <param name="servings"></param>
+    /// <param name="cancellationToken"></param>
+    /// <returns></returns>
     Task CreateRecipeAsync(string name,
+        string? description = null,
+        int? durationInMinutes = null,
+        int? caloriesKcal = null,
+        int? servings = null,
         CancellationToken cancellationToken = default);
 }

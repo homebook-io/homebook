@@ -25,23 +25,14 @@ public class Recipe : INormalizable
 
     public int? DurationMinutes { get; set; }
 
-    [NotMapped]
-    public TimeSpan? Duration
-    {
-        get =>
-            DurationMinutes.HasValue
-                ? TimeSpan.FromMinutes(DurationMinutes.Value)
-                : null;
-
-        set =>
-            DurationMinutes = value.HasValue
-                ? (int)value.Value.TotalMinutes
-                : null;
-    }
-
     public int? CaloriesKcal { get; set; }
 
     public int? Servings { get; set; }
+
+    [ForeignKey(nameof(User))]
+    public Guid? UserId { get; set; }
+
+    public virtual User? User { get; set; }
 
     public void Normalize(IStringNormalizer normalizer)
     {

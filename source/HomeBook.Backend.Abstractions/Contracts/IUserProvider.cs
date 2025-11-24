@@ -52,4 +52,13 @@ public interface IUserProvider
     Task UpdateAdminFlag(Guid userId,
         bool isAdmin,
         CancellationToken cancellationToken);
+
+    /// <summary>
+    ///
+    /// </summary>
+    /// <param name="userId"></param>
+    /// <param name="cancellationToken"></param>
+    /// <returns></returns>
+    Task<UserInfo?> GetUserByIdAsync(Guid userId,
+        CancellationToken cancellationToken);
 }

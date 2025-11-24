@@ -24,14 +24,8 @@ namespace HomeBook.Client.Models
 #else
         public string Description { get; set; }
 #endif
-        /// <summary>The duration property</summary>
-#if NETSTANDARD2_1_OR_GREATER || NETCOREAPP3_1_OR_GREATER
-#nullable enable
-        public string? Duration { get; set; }
-#nullable restore
-#else
-        public string Duration { get; set; }
-#endif
+        /// <summary>The durationInMinutes property</summary>
+        public int? DurationInMinutes { get; set; }
         /// <summary>The name property</summary>
 #if NETSTANDARD2_1_OR_GREATER || NETCOREAPP3_1_OR_GREATER
 #nullable enable
@@ -69,7 +63,7 @@ namespace HomeBook.Client.Models
             {
                 { "caloriesKcal", n => { CaloriesKcal = n.GetIntValue(); } },
                 { "description", n => { Description = n.GetStringValue(); } },
-                { "duration", n => { Duration = n.GetStringValue(); } },
+                { "durationInMinutes", n => { DurationInMinutes = n.GetIntValue(); } },
                 { "name", n => { Name = n.GetStringValue(); } },
                 { "servings", n => { Servings = n.GetIntValue(); } },
             };
@@ -83,7 +77,7 @@ namespace HomeBook.Client.Models
             if(ReferenceEquals(writer, null)) throw new ArgumentNullException(nameof(writer));
             writer.WriteIntValue("caloriesKcal", CaloriesKcal);
             writer.WriteStringValue("description", Description);
-            writer.WriteStringValue("duration", Duration);
+            writer.WriteIntValue("durationInMinutes", DurationInMinutes);
             writer.WriteStringValue("name", Name);
             writer.WriteIntValue("servings", Servings);
             writer.WriteAdditionalData(AdditionalData);

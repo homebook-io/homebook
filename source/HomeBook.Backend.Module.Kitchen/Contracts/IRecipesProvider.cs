@@ -26,15 +26,17 @@ public interface IRecipesProvider
     ///
     /// </summary>
     /// <param name="name"></param>
+    /// <param name="userId"></param>
     /// <param name="description"></param>
-    /// <param name="duration"></param>
+    /// <param name="durationInMinutes"></param>
     /// <param name="caloriesKcal"></param>
     /// <param name="servings"></param>
     /// <param name="cancellationToken"></param>
     /// <returns></returns>
     Task<Guid> CreateAsync(string name,
+        Guid userId,
         string? description,
-        TimeSpan? duration,
+        int? durationInMinutes,
         int? caloriesKcal,
         int? servings,
         CancellationToken cancellationToken);

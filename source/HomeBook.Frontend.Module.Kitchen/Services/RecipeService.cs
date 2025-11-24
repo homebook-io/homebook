@@ -38,6 +38,10 @@ public class RecipeService(
     }
 
     public async Task CreateRecipeAsync(string name,
+        string? description = null,
+        int? durationInMinutes = null,
+        int? caloriesKcal = null,
+        int? servings = null,
         CancellationToken cancellationToken = default)
     {
         cancellationToken.ThrowIfCancellationRequested();
@@ -45,6 +49,11 @@ public class RecipeService(
         string? token = await authenticationService.GetTokenAsync(cancellationToken);
         CreateRecipeRequest request = new();
         request.Name = name;
+        request.Description = description;
+        request.DurationInMinutes = durationInMinutes;
+        request.CaloriesKcal = caloriesKcal;
+        request.Servings = servings;
+
 
         await backendClient.Modules.Kitchen.Recipes.PostAsync(request,
             x =>
