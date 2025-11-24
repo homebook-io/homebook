@@ -119,6 +119,7 @@ public class KitchenRecipeHandlerE2ETests
         var recipesResult1 = await KitchenRecipeHandler.HandleGetRecipes("",
             _loggerFactory.CreateLogger<KitchenRecipeHandler>(),
             recipesProvider,
+            userProvider,
             cancellationToken);
         var recipesResponse1 = recipesResult1.ShouldBeOfType<Ok<RecipesListResponse>>();
         recipesResponse1.Value.ShouldNotBeNull();
@@ -126,31 +127,31 @@ public class KitchenRecipeHandlerE2ETests
 
         // create recipes
         var createRecipeResult1 = await KitchenRecipeHandler.HandleCreateRecipe(testuser,
-            new CreateRecipeRequest("Gyros-Pita"),
+            new CreateRecipeRequest("Gyros-Pita", null, null, null, null),
             _loggerFactory.CreateLogger<KitchenRecipeHandler>(),
             recipesProvider,
             cancellationToken);
         createRecipeResult1.ShouldBeOfType<Ok>();
         var createRecipeResult2 = await KitchenRecipeHandler.HandleCreateRecipe(testuser,
-            new CreateRecipeRequest("Nana's Italian Roulade"),
+            new CreateRecipeRequest("Nana's Italian Roulade", null, null, null, null),
             _loggerFactory.CreateLogger<KitchenRecipeHandler>(),
             recipesProvider,
             cancellationToken);
         createRecipeResult2.ShouldBeOfType<Ok>();
         var createRecipeResult3 = await KitchenRecipeHandler.HandleCreateRecipe(testuser,
-            new CreateRecipeRequest("Pancakes"),
+            new CreateRecipeRequest("Pancakes", null, null, null, null),
             _loggerFactory.CreateLogger<KitchenRecipeHandler>(),
             recipesProvider,
             cancellationToken);
         createRecipeResult3.ShouldBeOfType<Ok>();
         var createRecipeResult4 = await KitchenRecipeHandler.HandleCreateRecipe(testuser,
-            new CreateRecipeRequest("Pasta à la Roma"),
+            new CreateRecipeRequest("Pasta à la Roma", null, null, null, null),
             _loggerFactory.CreateLogger<KitchenRecipeHandler>(),
             recipesProvider,
             cancellationToken);
         createRecipeResult4.ShouldBeOfType<Ok>();
         var createRecipeResult5 = await KitchenRecipeHandler.HandleCreateRecipe(testuser,
-            new CreateRecipeRequest("Rührei mit Kräutern"),
+            new CreateRecipeRequest("Rührei mit Kräutern", null, null, null, null),
             _loggerFactory.CreateLogger<KitchenRecipeHandler>(),
             recipesProvider,
             cancellationToken);
@@ -160,6 +161,7 @@ public class KitchenRecipeHandlerE2ETests
         var recipesResult2 = await KitchenRecipeHandler.HandleGetRecipes("",
             _loggerFactory.CreateLogger<KitchenRecipeHandler>(),
             recipesProvider,
+            userProvider,
             cancellationToken);
         var recipesResponse2 = recipesResult2.ShouldBeOfType<Ok<RecipesListResponse>>();
         recipesResponse2.Value.ShouldNotBeNull();
@@ -187,6 +189,7 @@ public class KitchenRecipeHandlerE2ETests
         var recipesResult3 = await KitchenRecipeHandler.HandleGetRecipes("",
             _loggerFactory.CreateLogger<KitchenRecipeHandler>(),
             recipesProvider,
+            userProvider,
             cancellationToken);
         var recipesResponse3 = recipesResult3.ShouldBeOfType<Ok<RecipesListResponse>>();
         recipesResponse3.Value.ShouldNotBeNull();
@@ -213,6 +216,7 @@ public class KitchenRecipeHandlerE2ETests
         var recipesResult4 = await KitchenRecipeHandler.HandleGetRecipes("",
             _loggerFactory.CreateLogger<KitchenRecipeHandler>(),
             recipesProvider,
+            userProvider,
             cancellationToken);
         var recipesResponse4 = recipesResult4.ShouldBeOfType<Ok<RecipesListResponse>>();
         recipesResponse4.Value.ShouldNotBeNull();
