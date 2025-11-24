@@ -10,4 +10,5 @@ public class RecipeViewModel
     public int? CaloriesKcal { get; set; }
     public TimeSpan? Duration { get; set; }
     public string Ingredients { get; set; }
+    public string Image { get; set; }
 }
