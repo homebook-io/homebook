@@ -15,7 +15,7 @@ namespace HomeBook.Backend.Data.Sqlite.Migrations
         protected override void BuildModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
-            modelBuilder.HasAnnotation("ProductVersion", "9.0.10");
+            modelBuilder.HasAnnotation("ProductVersion", "9.0.11");
 
             modelBuilder.Entity("HomeBook.Backend.Data.Entities.Configuration", b =>
                 {
@@ -89,7 +89,12 @@ namespace HomeBook.Backend.Data.Sqlite.Migrations
                     b.Property<int?>("Servings")
                         .HasColumnType("INTEGER");
 
+                    b.Property<Guid?>("UserId")
+                        .HasColumnType("TEXT");
+
                     b.HasKey("Id");
+
+                    b.HasIndex("UserId");
 
                     b.ToTable("Recipes");
                 });
@@ -216,6 +221,15 @@ namespace HomeBook.Backend.Data.Sqlite.Migrations
                     b.HasKey("UserId", "Key");
 
                     b.ToTable("UserPreferences");
+                });
+
+            modelBuilder.Entity("HomeBook.Backend.Data.Entities.Recipe", b =>
+                {
+                    b.HasOne("HomeBook.Backend.Data.Entities.User", "User")
+                        .WithMany()
+                        .HasForeignKey("UserId");
+
+                    b.Navigation("User");
                 });
 
             modelBuilder.Entity("HomeBook.Backend.Data.Entities.RecipeIngredient", b =>
