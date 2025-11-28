@@ -29,9 +29,11 @@
 
             <MudStack Spacing="4">
 
-                <MudPaper Class="pa-6" Elevation="2">
+                <MudPaper Class="pa-6 frosted-b2"
+                          Elevation="2">
 
-                    <MudStack Class="align-center" Spacing="3">
+                    <MudStack Class="align-center"
+                              Spacing="3">
 
                         <MudImage Src="/logo.svg"
                                   Alt="@Loc[nameof(LocalizationStrings.AppTitle)]"
@@ -42,7 +44,7 @@
                                  Align="Align.Center">
                             @Loc[nameof(LocalizationStrings.AppTitle)]
                         </MudText>
-                        <MudText Typo="Typo.subtitle1" Color="Color.Secondary"
+                        <MudText Typo="Typo.subtitle1" Color="Color.Primary"
                                  Align="Align.Center">
                             @Loc[nameof(LocalizationStrings.AppSlogan)]
                         </MudText>
@@ -58,7 +60,8 @@
                 <AuthorizeView Roles="Admin">
 
                     <!-- Application Information -->
-                    <MudPaper Class="pa-6" Elevation="2">
+                    <MudPaper Class="pa-6 frosted-b8"
+                              Elevation="2">
 
                         <MudStack Row="true"
                                   Class="align-center mb-1"
@@ -67,7 +70,7 @@
                                      Size="Size.Large"
                                      Class="mr-2"/>
                             <MudText Typo="Typo.h5"
-                                     Color="Color.Secondary">
+                                     Color="Color.Primary">
                                 @Loc[nameof(LocalizationStrings.Settings_About_ApplicationArea_Title)]
                             </MudText>
                         </MudStack>
@@ -83,7 +86,7 @@
                                     <MudStack Row="true" Class="align-center">
                                         <MudIcon Icon="@HomeBookIcons.Icons8.Windows11.Filled.SourceCode"
                                                  Size="Size.Small"
-                                                 Color="Color.Secondary"/>
+                                                 Color="Color.Primary"/>
                                         <MudText Typo="Typo.body2">
                                             <strong>@Loc[nameof(LocalizationStrings.Settings_About_ApplicationArea_Backend_Text)]</strong>
                                             <span>@_backendDotnetVersion</span>
@@ -93,7 +96,7 @@
                                     <MudStack Row="true" Class="align-center">
                                         <MudIcon Icon="@HomeBookIcons.Icons8.Windows11.Filled.Storage"
                                                  Size="Size.Small"
-                                                 Color="Color.Secondary"/>
+                                                 Color="Color.Primary"/>
                                         <MudText Typo="Typo.body2">
                                             <strong>@Loc[nameof(LocalizationStrings.Settings_About_ApplicationArea_Database_Text)]</strong>
                                             <span>@_databaseProvider</span>
@@ -111,7 +114,7 @@
                                     <MudStack Row="true" Class="align-center">
                                         <MudIcon Icon="@HomeBookIcons.Icons8.Windows11.Filled.SourceCode"
                                                  Size="Size.Small"
-                                                 Color="Color.Secondary"/>
+                                                 Color="Color.Primary"/>
                                         <MudText Typo="Typo.body2">
                                             <strong>@Loc[nameof(LocalizationStrings.Settings_About_ApplicationArea_UI_Text)]</strong>
                                             <span>@_uiDotnetVersion</span>
@@ -121,7 +124,7 @@
                                     <MudStack Row="true" Class="align-center">
                                         <MudIcon Icon="@HomeBookIcons.Icons8.Windows11.Filled.ContainerTruck"
                                                  Size="Size.Small"
-                                                 Color="Color.Secondary"/>
+                                                 Color="Color.Primary"/>
                                         <MudText Typo="Typo.body2">
                                             <strong>@Loc[nameof(LocalizationStrings.Settings_About_ApplicationArea_Deployment_Text)]</strong>
                                             <span>@_deploymentType</span>
@@ -139,7 +142,7 @@
                 </AuthorizeView>
 
                 <!-- License and Legal -->
-                <MudPaper Class="pa-6"
+                <MudPaper Class="pa-6 frosted-b8"
                           Elevation="2">
 
                     <MudStack Row="true"
@@ -149,7 +152,7 @@
                                  Size="Size.Large"
                                  Class="mr-2"/>
                         <MudText Typo="Typo.h5"
-                                 Color="Color.Secondary">
+                                 Color="Color.Primary">
                             @Loc[nameof(LocalizationStrings.Settings_About_LicensesArea_Title)]
                         </MudText>
                     </MudStack>
@@ -169,8 +172,8 @@
                         <MudStack Row="true"
                                   Class="justify-space-between align-center">
 
-                            <MudText Typo="Typo.body2"
-                                     Color="Color.Secondary">
+                            <MudText Typo="Typo.caption"
+                                     Color="Color.Primary">
                                 @((MarkupString)(string.Format(Loc[nameof(LocalizationStrings.Settings_About_LicensesArea_Copyright_TextTemplate)], DateTime.Now.Year)))
                             </MudText>
 

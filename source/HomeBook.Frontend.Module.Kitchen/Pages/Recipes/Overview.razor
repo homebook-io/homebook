@@ -7,7 +7,6 @@
 
 @inject IRecipeService RecipeService
 
-
 <MudContainer>
 
     <MudPaper Class="frosted-b6 text-dark mb-5 pa-3 rounded-pill">
@@ -24,58 +23,76 @@
 
 <MudContainer>
 
-    <MudGrid>
+    @if (_isLoading)
+    {
+        <div class="d-flex justify-center">
+            <MudProgressCircular Color="Color.Primary"
+                                 Indeterminate="true"/>
+        </div>
+    }
 
-        @foreach (RecipeViewModel recipe in _recipes)
-        {
-            <MudItem xs="12" sm="6" md="6" lg="4" xl="4" xxl="4">
+    @if (!_isLoading)
+    {
+        <MudGrid>
 
-                <MudCard>
+            @foreach (RecipeViewModel recipe in _recipes)
+            {
+                <MudItem xs="12" sm="6" md="6" lg="4" xl="4" xxl="4">
 
-                    <MudCardMedia Image="@recipe.Image"
-                                  Height="200"/>
+                    <MudButton Href="@string.Format("/Kitchen/Recipes/{0}/Edit", recipe.Id)"
+                               FullWidth="true"
+                               Class="pa-0"
+                               Variant="Variant.Text">
 
-                    <MudCardContent>
-                        <MudText Typo="Typo.h6">@recipe.Name</MudText>
-                        @if (!string.IsNullOrEmpty(recipe.Description))
-                        {
-                            <MudText Typo="Typo.body2">@recipe.Description</MudText>
-                        }
-                    </MudCardContent>
+                        <MudCard Class="mud-width-full">
 
-                    <MudCardActions Class="d-flex align-center">
+                            <MudCardMedia Image="@recipe.Image"
+                                          Height="200"/>
 
-                        @if (recipe.Duration is not null)
-                        {
-                            <UiIcon IconStyle="UiIconStyle.Plain"
-                                    Size="Size.Small"
-                                    Class="d-flex me-1"
-                                    ColorValue="var(--hb-color-spring)"
-                                    Icon="@HomeBookIcons.Icons8.Windows11.Filled.Clock"/>
-                            <MudText Class="d-flex me-5">
-                                @recipe.Duration.Value.Humanize()
-                            </MudText>
-                        }
+                            <MudCardContent>
+                                <MudText Typo="Typo.h6">@recipe.Name</MudText>
+                                @if (!string.IsNullOrEmpty(recipe.Description))
+                                {
+                                    <MudText Typo="Typo.body2">@recipe.Description</MudText>
+                                }
+                            </MudCardContent>
 
-                        @if (recipe.Servings is not null)
-                        {
-                            <UiIcon IconStyle="UiIconStyle.Plain"
-                                    Size="Size.Small"
-                                    Class="d-flex me-1"
-                                    ColorValue="var(--hb-color-jade)"
-                                    Icon="@HomeBookIcons.Icons8.Windows11.Filled.People"/>
-                            <MudText Class="d-flex me-5">
-                                @recipe.Servings +servingins
-                            </MudText>
-                        }
+                            <MudCardActions Class="d-flex align-center">
 
-                    </MudCardActions>
+                                @if (recipe.Duration is not null)
+                                {
+                                    <UiIcon IconStyle="UiIconStyle.Plain"
+                                            Size="Size.Small"
+                                            Class="d-flex me-1"
+                                            ColorValue="var(--hb-color-spring)"
+                                            Icon="@HomeBookIcons.Icons8.Windows11.Filled.Clock"/>
+                                    <MudText Class="d-flex me-5">
+                                        @recipe.Duration.Value.Humanize()
+                                    </MudText>
+                                }
 
-                </MudCard>
+                                @if (recipe.Servings is not null)
+                                {
+                                    <UiIcon IconStyle="UiIconStyle.Plain"
+                                            Size="Size.Small"
+                                            Class="d-flex me-1"
+                                            ColorValue="var(--hb-color-jade)"
+                                            Icon="@HomeBookIcons.Icons8.Windows11.Filled.People"/>
+                                    <MudText Class="d-flex me-5">
+                                        @recipe.Servings +servingins
+                                    </MudText>
+                                }
 
-            </MudItem>
-        }
+                            </MudCardActions>
 
-    </MudGrid>
+                        </MudCard>
+
+                    </MudButton>
+
+                </MudItem>
+            }
+
+        </MudGrid>
+    }
 
 </MudContainer>

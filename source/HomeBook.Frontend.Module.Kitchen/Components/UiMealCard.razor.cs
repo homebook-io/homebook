@@ -9,7 +9,7 @@ public partial class UiMealCard : ComponentBase
 {
     protected string Style =>
         new HtmlArgumentBuilder("")
-            .AddClass($"background-color: color-mix(in srgb, {MealTypeColor}, transparent 90%);")
+            .AddClass($"background-color: color-mix(in srgb, {MealTypeColor}, transparent 75%)")
             .Build();
 
     protected string CssClass =>

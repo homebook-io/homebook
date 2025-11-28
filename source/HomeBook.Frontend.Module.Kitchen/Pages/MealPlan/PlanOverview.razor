@@ -12,65 +12,33 @@
 
 <MudContainer>
 
-    <MudPaper Class="d-flex align-center px-5 py-3">
+    <MudPaper Class="frosted-b6 text-dark mb-5 pa-3 rounded-pill">
 
-        <MudText Typo="Typo.h6">
-            @_startDate.ToString(Loc[nameof(Strings.DateTimeFormat_ShortDateOnlyFormat)]) - @_endDate.ToString(Loc[nameof(Strings.DateTimeFormat_ShortDateOnlyFormat)])
-        </MudText>
+        <MudToolBar Dense="true"
+                    Class="d-flex align-center px-0 py-3">
 
-        <MudSpacer/>
+            <MudText Typo="Typo.h6">
+                @_startDate.ToString(Loc[nameof(Strings.DateTimeFormat_ShortDateOnlyFormat)]) - @_endDate.ToString(Loc[nameof(Strings.DateTimeFormat_ShortDateOnlyFormat)])
+            </MudText>
 
-        <MudIconButton Icon="@HomeBookIcons.Icons8.Windows11.Filled.ArrowLeft"/>
+            <MudSpacer/>
 
-        <MudText Typo="Typo.h6"
-                 Class="mx-3">
-            @string.Format(Loc[nameof(Strings.PlanOverview_Header_CalendarWeek_TextTemplate)], @_calendarWeek)
-        </MudText>
+            <MudIconButton Icon="@HomeBookIcons.Icons8.Windows11.Filled.ArrowLeft"/>
 
-        <MudIconButton Icon="@HomeBookIcons.Icons8.Windows11.Filled.ArrowRight"/>
+            <MudText Typo="Typo.h6"
+                     Class="mx-3">
+                @string.Format(Loc[nameof(Strings.PlanOverview_Header_CalendarWeek_TextTemplate)], @_calendarWeek)
+            </MudText>
+
+            <MudIconButton Icon="@HomeBookIcons.Icons8.Windows11.Filled.ArrowRight"/>
+
+        </MudToolBar>
 
     </MudPaper>
 
-    @foreach (MealPlanItemViewModel meal in _mealPlanItems)
+    @foreach (MealPlanItemViewModel mealPlanItem in _mealPlanItems)
     {
-        <MudCard Class="mt-5">
-
-            <MudCardHeader Class="@string.Format($"ui-color-bg-gradient-{meal.ColorName}")">
-                <MudText Typo="Typo.h5"
-                         Class="ms-1 me-5">
-                    @meal.Date.ToString("D")
-                </MudText>
-            </MudCardHeader>
-
-            <div class="d-flex gap-5 px-5 mt-4 mb-5">
-
-                <UiMealCard MealTypeName="@Loc[nameof(Strings.PlanOverview_MealType_Breakfast_Text)]"
-                            MealTypeIcon="@HomeBookIcons.Icons8.Windows11.Filled.BuffetBreakfast"
-                            Class="flex-1"
-                            MealTypeColor="var(--hb-color-gold)"
-                            Meal="@meal.Breakfast"
-                            OnAdd="@(() => OnMealAdd(MealType.Breakfast, meal.Date))"
-                            OnDelete="@(() => OnMealDelete(MealType.Breakfast, meal.Date))"/>
-
-                <UiMealCard MealTypeName="@Loc[nameof(Strings.PlanOverview_MealType_Lunch_Text)]"
-                            MealTypeIcon="@HomeBookIcons.Icons8.Windows11.Filled.Summer"
-                            Class="flex-1"
-                            MealTypeColor="var(--hb-color-apple)"
-                            Meal="@meal.Lunch"
-                            OnAdd="@(() => OnMealAdd(MealType.Lunch, meal.Date))"
-                            OnDelete="@(() => OnMealDelete(MealType.Lunch, meal.Date))"/>
-
-                <UiMealCard MealTypeName="@Loc[nameof(Strings.PlanOverview_MealType_Dinner_Text)]"
-                            MealTypeIcon="@HomeBookIcons.Icons8.Windows11.Filled.Moon"
-                            Class="flex-1"
-                            MealTypeColor="var(--hb-color-cerulean)"
-                            Meal="@meal.Dinner"
-                            OnAdd="@(() => OnMealAdd(MealType.Dinner, meal.Date))"
-                            OnDelete="@(() => OnMealDelete(MealType.Dinner, meal.Date))"/>
-
-            </div>
-
-        </MudCard>
+        <UiMealDay MealPlanItem="mealPlanItem"/>
     }
 
 </MudContainer>

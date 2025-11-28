@@ -8,6 +8,7 @@ namespace HomeBook.Frontend.Module.Kitchen.Pages.Recipes;
 public partial class Overview : ComponentBase
 {
     private List<RecipeViewModel> _recipes = [];
+    private bool _isLoading = false;
 
     protected override async Task OnAfterRenderAsync(bool firstRender)
     {
@@ -23,6 +24,8 @@ public partial class Overview : ComponentBase
     private async Task LoadRecipesAsync()
     {
         CancellationToken cancellationToken = CancellationToken.None;
+        _isLoading = true;
+        StateHasChanged();
 
         try
         {
@@ -40,6 +43,7 @@ public partial class Overview : ComponentBase
         }
         finally
         {
+            _isLoading = false;
             StateHasChanged();
         }
     }
