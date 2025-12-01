@@ -29,3 +29,6 @@ kiota generate \
 
 echo "Client generation completed successfully!"
 echo "Output directory: ${CLIENT_OUTPUT_DIR}"
+
+# nuget restore client
+dotnet restore "${CLIENT_OUTPUT_DIR}/${CLIENT_CSPROJ}"

@@ -17,7 +17,6 @@ public partial class Overview : ComponentBase
         if (!firstRender)
             return;
 
-        // TODO: load data
         await LoadRecipesAsync();
     }
 

@@ -40,7 +40,7 @@ public static class RecipeEndpoints
                     "HTTP 401: User is not authorized",
                     "HTTP 500: Unknown error while getting recipes"))
                 .RequireAuthorization()
-                .Produces<RecipesListResponse>(StatusCodes.Status200OK)
+                .Produces<RecipeDetailResponse>(StatusCodes.Status200OK)
                 .Produces(StatusCodes.Status404NotFound)
                 .Produces(StatusCodes.Status401Unauthorized)
                 .Produces<string>(StatusCodes.Status500InternalServerError);

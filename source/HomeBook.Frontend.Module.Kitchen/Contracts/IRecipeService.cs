@@ -16,6 +16,15 @@ public interface IRecipeService
     /// <summary>
     ///
     /// </summary>
+    /// <param name="id"></param>
+    /// <param name="cancellationToken"></param>
+    /// <returns></returns>
+    Task<RecipeDetailDto?> GetRecipeByIdAsync(Guid id,
+        CancellationToken cancellationToken = default);
+
+    /// <summary>
+    ///
+    /// </summary>
     /// <param name="name"></param>
     /// <param name="description"></param>
     /// <param name="durationInMinutes"></param>

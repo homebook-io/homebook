@@ -40,6 +40,22 @@ public class RecipeService(
         return result;
     }
 
+    /// <inheritdoc/>
+    public async Task<RecipeDetailDto?> GetRecipeByIdAsync(Guid id,
+        CancellationToken cancellationToken = default)
+    {
+        string? token = await authenticationService.GetTokenAsync(cancellationToken);
+        RecipeDetailResponse? response = await backendClient.Modules.Kitchen.Recipes[id]
+            .GetAsync(x =>
+                {
+                    x.Headers.Add("Authorization", $"Bearer {token}");
+                },
+                cancellationToken);
+
+        return response?.ToDto();
+    }
+
+    /// <inheritdoc/>
     public async Task CreateRecipeAsync(string name,
         string? description = null,
         int? durationInMinutes = null,
@@ -67,6 +83,7 @@ public class RecipeService(
             cancellationToken);
     }
 
+    /// <inheritdoc/>
     public async Task CreateRecipeAsync(string name,
         CancellationToken cancellationToken = default) =>
         await CreateRecipeAsync(name,
@@ -76,6 +93,7 @@ public class RecipeService(
             null,
             cancellationToken);
 
+    /// <inheritdoc/>
     public async Task DeleteRecipeAsync(Guid recipeId,
         CancellationToken cancellationToken = default)
     {
