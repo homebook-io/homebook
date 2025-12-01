@@ -75,4 +75,18 @@ public class RecipeService(
             null,
             null,
             cancellationToken);
+
+    public async Task DeleteRecipeAsync(Guid recipeId,
+        CancellationToken cancellationToken = default)
+    {
+        cancellationToken.ThrowIfCancellationRequested();
+
+        string? token = await authenticationService.GetTokenAsync(cancellationToken);
+        await backendClient.Modules.Kitchen.Recipes[recipeId]
+            .DeleteAsync(x =>
+                {
+                    x.Headers.Add("Authorization", $"Bearer {token}");
+                },
+                cancellationToken);
+    }
 }

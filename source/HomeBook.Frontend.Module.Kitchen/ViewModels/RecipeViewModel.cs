@@ -11,4 +11,6 @@ public class RecipeViewModel
     public TimeSpan? Duration { get; set; }
     public string Ingredients { get; set; }
     public string Image { get; set; }
+
+    public bool HasAnnotations => Duration.HasValue || Servings.HasValue;
 }

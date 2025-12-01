@@ -38,4 +38,13 @@ public interface IRecipeService
     /// <returns></returns>
     Task CreateRecipeAsync(string name,
         CancellationToken cancellationToken = default);
+
+    /// <summary>
+    ///
+    /// </summary>
+    /// <param name="recipeId"></param>
+    /// <param name="cancellationToken"></param>
+    /// <returns></returns>
+    Task DeleteRecipeAsync(Guid recipeId,
+        CancellationToken cancellationToken = default);
 }
