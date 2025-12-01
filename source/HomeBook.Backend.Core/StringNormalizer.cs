@@ -9,7 +9,6 @@ public class StringNormalizer : IStringNormalizer
         if (string.IsNullOrWhiteSpace(input))
             return string.Empty;
 
-
         string normalized = input.Trim().ToLowerInvariant();
 
         // Replace common diacritics with their base characters
