@@ -31,6 +31,20 @@ public static class RecipeEndpoints
                 .Produces(StatusCodes.Status401Unauthorized)
                 .Produces<string>(StatusCodes.Status500InternalServerError);
 
+            group.MapGet("/{id:guid}", KitchenRecipeHandler.HandleGetRecipeById)
+                .WithName("GetRecipeById")
+                .WithDescription(new Description(
+                    "returns recipe by id",
+                    "HTTP 200: Recipes were found",
+                    "HTTP 404: Recipe not found",
+                    "HTTP 401: User is not authorized",
+                    "HTTP 500: Unknown error while getting recipes"))
+                .RequireAuthorization()
+                .Produces<RecipesListResponse>(StatusCodes.Status200OK)
+                .Produces(StatusCodes.Status404NotFound)
+                .Produces(StatusCodes.Status401Unauthorized)
+                .Produces<string>(StatusCodes.Status500InternalServerError);
+
             group.MapPost("/", KitchenRecipeHandler.HandleCreateRecipe)
                 .WithName("CreateRecipe")
                 .WithDescription(new Description(

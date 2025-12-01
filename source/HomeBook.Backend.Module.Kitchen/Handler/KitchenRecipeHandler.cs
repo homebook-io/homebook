@@ -53,6 +53,41 @@ public class KitchenRecipeHandler
     }
 
     /// <summary>
+    /// returns recipe by id
+    /// </summary>
+    /// <param name="id"></param>
+    /// <param name="logger"></param>
+    /// <param name="recipesProvider"></param>
+    /// <param name="userProvider"></param>
+    /// <param name="cancellationToken"></param>
+    /// <returns></returns>
+    public static async Task<IResult> HandleGetRecipeById(Guid id,
+        [FromServices] ILogger<KitchenRecipeHandler> logger,
+        [FromServices] IRecipesProvider recipesProvider,
+        [FromServices] IUserProvider userProvider,
+        CancellationToken cancellationToken)
+    {
+        try
+        {
+            RecipeDto? recipeDto = await recipesProvider.GetRecipeByIdAsync(id,
+                cancellationToken);
+
+            if (recipeDto is null)
+                return TypedResults.NotFound();
+
+            RecipeDetailResponse response = await recipeDto.ToDetailResponseAsync(async userId =>
+                await userProvider.GetUserByIdAsync(userId, cancellationToken)
+            );
+            return TypedResults.Ok(response);
+        }
+        catch (Exception err)
+        {
+            logger.LogError(err, "Error while getting recipes");
+            return TypedResults.InternalServerError(err.Message);
+        }
+    }
+
+    /// <summary>
     ///
     /// </summary>
     /// <param name="user"></param>

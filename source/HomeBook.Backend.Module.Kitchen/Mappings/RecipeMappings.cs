@@ -38,4 +38,24 @@ public static class RecipeMappings
             recipe.CaloriesKcal,
             recipe.Servings);
     }
+
+    public static async Task<RecipeDetailResponse> ToDetailResponseAsync(this RecipeDto recipe,
+        Func<Guid, Task<UserInfo?>> getUserInfoAsync)
+    {
+        string? username = null;
+        if (recipe.UserId.HasValue)
+        {
+            UserInfo? userInfo = await getUserInfoAsync(recipe.UserId.Value);
+            username = userInfo?.Username;
+        }
+
+        return new RecipeDetailResponse(recipe.Id,
+            username,
+            recipe.Name,
+            recipe.NormalizedName,
+            recipe.Description,
+            recipe.DurationMinutes,
+            recipe.CaloriesKcal,
+            recipe.Servings);
+    }
 }

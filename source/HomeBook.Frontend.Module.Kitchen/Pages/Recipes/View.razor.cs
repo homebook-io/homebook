@@ -23,8 +23,5 @@ public partial class View : ComponentBase
         {
             Snackbar.Add("+Recipe could not be deleted. " + err.Message, Severity.Error);
         }
-        finally
-        {
-        }
     }
 }
