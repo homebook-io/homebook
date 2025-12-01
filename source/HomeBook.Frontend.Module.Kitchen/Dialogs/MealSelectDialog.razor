@@ -1,3 +1,4 @@
+@using HomeBook.Frontend.Core.Icons
 @using HomeBook.Frontend.Module.Kitchen.Contracts
 @using HomeBook.Frontend.Module.Kitchen.ViewModels
 
@@ -7,15 +8,26 @@
 
     <DialogContent>
 
-        <MudTextField Label="+Suche nach Gericht"
-                      Disabled="_isLoading"
-                      T="string"
-                      Clearable="true"
-                      Immediate="true"
-                      Variant="Variant.Outlined"
-                      Value="_text"
-                      ValueChanged="@(value => OnSearchTextFieldValueChanged(value))"
-                      Margin="Margin.Dense"/>
+        <div class="d-flex align-center gap-3 mb-4">
+            <MudTextField Label="+Suche nach Gericht"
+                          @ref="_searchTextField"
+                          T="string"
+                          Clearable="true"
+                          Immediate="true"
+                          Variant="Variant.Outlined"
+                          Value="_searchText"
+                          ValueChanged="@(value => OnSearchTextFieldValueChanged(value))"
+                          Margin="Margin.Dense"/>
+
+            <MudTooltip Text="+Als neues Gericht anlegen"
+                        Color="Color.Primary">
+                <MudIconButton Icon="@HomeBookIcons.Icons8.Windows11.Filled.PlusCircle"
+                               Disabled="string.IsNullOrWhiteSpace(_searchText) || _isLoading"
+                               Variant="Variant.Text"
+                               OnClick="CreateAsNewMeal"
+                               Color="Color.Primary"/>
+            </MudTooltip>
+        </div>
 
         @if (_isLoading)
         {
@@ -46,15 +58,5 @@
         </MudList>
 
     </DialogContent>
-
-    <DialogActions>
-
-        <MudButton Color="Color.Secondary"
-                   FullWidth="true"
-                   Class="mt-5">
-            +Neues Gericht anlegen
-        </MudButton>
-        
-    </DialogActions>
 
 </MudDialog>

@@ -13,7 +13,7 @@ public class RecipeService(
     BackendClient backendClient) : IRecipeService
 {
     /// <inheritdoc/>
-    public async Task<IEnumerable<RecipeDto>> GetRecipesAsync(string filter,
+    public async Task<IEnumerable<RecipeDto>> GetRecipesAsync(string? filter,
         CancellationToken cancellationToken = default)
     {
         cancellationToken.ThrowIfCancellationRequested();
@@ -22,6 +22,9 @@ public class RecipeService(
         RecipesListResponse? response = await backendClient.Modules.Kitchen.Recipes.GetAsync(x =>
             {
                 x.Headers.Add("Authorization", $"Bearer {token}");
+
+                if (!string.IsNullOrWhiteSpace(filter))
+                    x.QueryParameters.SearchFilter = filter;
             },
             cancellationToken);
 
@@ -47,13 +50,14 @@ public class RecipeService(
         cancellationToken.ThrowIfCancellationRequested();
 
         string? token = await authenticationService.GetTokenAsync(cancellationToken);
-        CreateRecipeRequest request = new();
-        request.Name = name;
-        request.Description = description;
-        request.DurationInMinutes = durationInMinutes;
-        request.CaloriesKcal = caloriesKcal;
-        request.Servings = servings;
-
+        CreateRecipeRequest request = new()
+        {
+            Name = name,
+            Description = description,
+            DurationInMinutes = durationInMinutes,
+            CaloriesKcal = caloriesKcal,
+            Servings = servings
+        };
 
         await backendClient.Modules.Kitchen.Recipes.PostAsync(request,
             x =>
@@ -62,4 +66,13 @@ public class RecipeService(
             },
             cancellationToken);
     }
+
+    public async Task CreateRecipeAsync(string name,
+        CancellationToken cancellationToken = default) =>
+        await CreateRecipeAsync(name,
+            null,
+            null,
+            null,
+            null,
+            cancellationToken);
 }
