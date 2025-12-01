@@ -1,5 +1,4 @@
 using HomeBook.Frontend.Module.Kitchen.ViewModels;
-using HomeBook.Frontend.UI.Components;
 using HomeBook.Frontend.UI.Utilities;
 using Microsoft.AspNetCore.Components;
 
@@ -39,13 +38,13 @@ public partial class UiMealCard : ComponentBase
     [Parameter]
     public EventCallback OnDelete { get; set; }
 
-    private async Task HandleAddClick()
+    public async Task HandleAddClick()
     {
         if (OnAdd.HasDelegate)
             await OnAdd.InvokeAsync(null);
     }
 
-    private async Task HandleDeleteClick()
+    protected async Task HandleDeleteClick()
     {
         if (OnDelete.HasDelegate)
             await OnDelete.InvokeAsync(null);

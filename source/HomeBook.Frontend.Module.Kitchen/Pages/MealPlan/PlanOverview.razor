@@ -3,6 +3,7 @@
 @using HomeBook.Frontend.Core.Icons
 @using HomeBook.Frontend.Module.Kitchen.Components
 @using HomeBook.Frontend.Module.Kitchen.Enums
+@using HomeBook.Frontend.Module.Kitchen.Models
 @using HomeBook.Frontend.Module.Kitchen.Resources
 @using HomeBook.Frontend.Module.Kitchen.ViewModels
 @using Microsoft.Extensions.Localization
@@ -38,7 +39,8 @@
 
     @foreach (MealPlanItemViewModel mealPlanItem in _mealPlanItems)
     {
-        <UiMealDay MealPlanItem="mealPlanItem"/>
+        <UiMealDay MealPlanItem="mealPlanItem"
+                   OnMealPlanItemChanged="OnMealPlanItemChanged"/>
     }
 
 </MudContainer>
