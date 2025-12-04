@@ -83,6 +83,47 @@
 
         </MudPaper>
 
+        <MudPaper Class="frosted-b8 text-dark mb-5">
+
+            <MudList T="string">
+
+                @code{
+
+                    string[] entries = new string[]
+                    {
+                        "1 Tasse Mehl",
+                        "2 Eier",
+                        "200ml Milch"
+                    };
+
+                }
+
+                @foreach (var entry in entries)
+                {
+                    <MudListItem T="string"
+                                 Dense="true">
+
+                        <div class="d-flex align-center justify-space-between flex-grow-1 gap-3">
+
+                            <MudIconButton Icon="@HomeBookIcons.Icons8.Windows11.Outline.Multiply"/>
+
+                            <div class="d-flex flex-column flex-grow-1">
+                                <MudText Class="flex-grow-1" Typo="Typo.h6">@entry</MudText>
+                                <MudText Class="flex-grow-1" Typo="Typo.caption">@entry</MudText>
+                            </div>
+
+                            <MudIconButton Icon="@HomeBookIcons.Icons8.Windows11.Outline.EditPencil"/>
+                            <MudIconButton Icon="@HomeBookIcons.Icons8.Windows11.Outline.Menu"/>
+
+                        </div>
+
+                    </MudListItem>
+                }
+
+            </MudList>
+
+        </MudPaper>
+
         <MudButton Color="Color.Primary"
                    Variant="Variant.Filled"
                    OnClick="SaveRecipe">
