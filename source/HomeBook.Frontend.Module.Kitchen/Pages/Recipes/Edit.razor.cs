@@ -68,4 +68,11 @@ public partial class Edit : ComponentBase
             Snackbar.Add("+Recipe could not be deleted. " + err.Message, Severity.Error);
         }
     }
+
+    private void SaveRecipe()
+    {
+        var servings = _recipe.Servings;
+
+        int i = 0;
+    }
 }

@@ -43,6 +43,52 @@
 
         </MudPaper>
 
+        <MudPaper Class="frosted-b8 text-dark mb-5 pa-3">
+
+            <MudTextField T="string"
+                          Value="@_recipe.Description"
+                          Label="+Beschreibung"
+                          Variant="Variant.Outlined"
+                          Lines="5"/>
+
+            <MudPaper Class="frosted-b1 text-dark mt-5 pa-3">
+
+                <MudToolBar Dense="true"
+                            Class="px-0">
+
+                    @switch (_recipe.Servings)
+                    {
+                        case 1:
+                            <MudText Typo="Typo.body1">
+                                +Für 1 Portion
+                            </MudText>
+                            break;
+                        default:
+                            <MudText Typo="Typo.body1">
+                                +Für <b>@_recipe.Servings</b> Portionen
+                            </MudText>
+                            break;
+                    }
+
+
+                    <MudSpacer/>
+
+                    <UiNumericGroup @bind-Value="@_recipe.Servings"
+                                    Min="1"
+                                    Step="1"/>
+
+                </MudToolBar>
+
+            </MudPaper>
+
+        </MudPaper>
+
+        <MudButton Color="Color.Primary"
+                   Variant="Variant.Filled"
+                   OnClick="SaveRecipe">
+            +save
+        </MudButton>
+
     </MudContainer>
 }
 
