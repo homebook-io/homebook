@@ -2,6 +2,7 @@
 
 @using HomeBook.Frontend.Core.Icons
 @using HomeBook.Frontend.Module.Kitchen.Contracts
+@using Microsoft.AspNetCore.Components.Forms
 
 @inject IRecipeService RecipeService
 @inject NavigationManager NavigationManager
@@ -85,42 +86,424 @@
 
         <MudPaper Class="frosted-b8 text-dark mb-5">
 
+            <MudText Typo="Typo.h5"
+                     Class="mx-5 my-3">
+                +Zutaten
+            </MudText>
+
             <MudList T="string">
 
                 @code{
 
-                    string[] entries = new string[]
+                    string[] ingredients = new string[]
                     {
-                        "1 Tasse Mehl",
-                        "2 Eier",
-                        "200ml Milch"
+                        "1 Scheibe Schinken, gekochter, oder anderer Belag, z.B. Putenbrust oder Salami",
+                        "1  Ei, gekochtes",
+                        "1 Scheibe Käse, am besten Emmentaler , Ihr könnt aber auch anderen nehmen",
+                        "1  Salatblatt",
+                        "1/2 Tomate",
+                        "Salz und Pfeffer, Grillgewürz",
+                        "3 EL Mayonaise",
+                        "2 Scheiben Sandwich Toast",
+                        "4  Zahnstocher, o.ä."
                     };
 
                 }
 
-                @foreach (var entry in entries)
+                @foreach (var ingredient in ingredients)
                 {
                     <MudListItem T="string"
+                                 Class="py-0 px-3"
                                  Dense="true">
 
                         <div class="d-flex align-center justify-space-between flex-grow-1 gap-3">
 
-                            <MudIconButton Icon="@HomeBookIcons.Icons8.Windows11.Outline.Multiply"/>
+                            <MudIconButton Icon="@HomeBookIcons.Icons8.Windows11.Outline.Multiply"
+                                           Size="Size.Small"/>
 
                             <div class="d-flex flex-column flex-grow-1">
-                                <MudText Class="flex-grow-1" Typo="Typo.h6">@entry</MudText>
-                                <MudText Class="flex-grow-1" Typo="Typo.caption">@entry</MudText>
+                                <MudText Class="flex-grow-1" Typo="Typo.h6">@ingredient</MudText>
+                                <MudText Class="flex-grow-1" Typo="Typo.caption">@ingredient</MudText>
                             </div>
 
-                            <MudIconButton Icon="@HomeBookIcons.Icons8.Windows11.Outline.EditPencil"/>
-                            <MudIconButton Icon="@HomeBookIcons.Icons8.Windows11.Outline.Menu"/>
+                            <MudIconButton Icon="@HomeBookIcons.Icons8.Windows11.Outline.EditPencil"
+                                           Size="Size.Small"/>
+                            <MudIconButton Icon="@HomeBookIcons.Icons8.Windows11.Outline.Menu"
+                                           Size="Size.Small"/>
 
                         </div>
 
                     </MudListItem>
                 }
 
+                <MudListItem T="string"
+                             Dense="true">
+
+                    <div class="d-flex align-center gap-3">
+
+                        <MudTextField T="string"
+                                      Placeholder="+z.B “200 g Quark (fettreduziert)“"
+                                      Margin="Margin.Dense"
+                                      Variant="Variant.Outlined"/>
+
+                        <MudIconButton Variant="Variant.Outlined"
+                                       Icon="@HomeBookIcons.Icons8.Windows11.Filled.Plus"
+                                       Color="Color.Secondary"/>
+
+                    </div>
+
+                </MudListItem>
+
             </MudList>
+
+        </MudPaper>
+
+        <MudPaper Class="frosted-b8 text-dark mb-5">
+
+            <MudText Typo="Typo.h5"
+                     Class="mx-5 my-3">
+                +Zubereitung
+            </MudText>
+
+            <MudList T="string"
+                     Class="d-flex flex-column gap-3">
+
+                @code{
+
+                    string[] steps = new string[]
+                    {
+                        "Eier hart kochen und anschließend in Scheiben schneiden. Tomaten waschen und schneiden. Salat waschen und in einzelne Blätter teilen.",
+                        "Beide Scheiben Toast einseitig mit Mayonaise ca. 2mm beschmieren. Den Rest Mayonaise benötigen wir noch später. Über den Toast ein bischen Salz,Pfeffer und bei Bedarf auch Grillgewürz streuen. Das Grillgewürz verleiht dem Ganzem einen \"neuen\" Geschmack. ",
+                        "Auf die eine Scheibe Toast die Scheibe Käse legen und auf die andere Scheibe den Schinken. Alternativ zu Schinken geht z.b. auch Putenbrust oder Salami.",
+                        "Auf den Schinken kommen nun das in Scheiben geschnittene Ei und darüber die restliche Mayonaise. ",
+                        "Die in Scheiben geschnittenen Tomaten und ein Salatblatt drauflegen. ",
+                        "Am besten für den Halt und für die Optik 4 Zahnstocher o.ä. in das Sandwich stecken. ",
+                        "Zum Abschluss einmal von Spitze zu Spitze durchschneiden und servieren. Für ein bisschen Deko kann man auch Schnittlauch oder Radieschen dazulegen.\nIch empfehle einen kühlen Nudelsalat als Beilage."
+                    };
+
+                }
+
+                @foreach (var (step, index) in steps.Select((item, index) => (item, index)))
+                {
+                    <MudListItem T="string"
+                                 Dense="true">
+
+                        <div class="d-flex flex-column flex-grow-1">
+                            <MudText Class="flex-grow-1" Typo="Typo.h6">+Schritt @(index + 1)</MudText>
+
+                            <div class="d-flex align-center justify-space-between flex-grow-1 gap-3">
+
+                                <MudIconButton Icon="@HomeBookIcons.Icons8.Windows11.Outline.Multiply"
+                                               Size="Size.Small"/>
+
+                                <div class="d-flex flex-column flex-grow-1">
+                                    <MudText Class="flex-grow-1" Typo="Typo.body1">@step</MudText>
+                                </div>
+
+                                <MudIconButton Icon="@HomeBookIcons.Icons8.Windows11.Outline.EditPencil"
+                                               Size="Size.Small"/>
+                                <MudIconButton Icon="@HomeBookIcons.Icons8.Windows11.Outline.Menu"
+                                               Size="Size.Small"/>
+
+                            </div>
+
+                        </div>
+
+                    </MudListItem>
+                }
+
+                <MudListItem T="string"
+                             Dense="true">
+
+                    <div class="d-flex flex-column flex-grow-1">
+                        <MudText Class="flex-grow-1" Typo="Typo.h6">+Schritt @(steps.Length + 1)</MudText>
+
+                        <div class="d-flex align-center gap-3">
+
+                            <MudTextField T="string"
+                                          Placeholder="Was passiert in diesem Schritt?"
+                                          Margin="Margin.Dense"
+                                          Variant="Variant.Outlined"/>
+
+                            <MudIconButton Variant="Variant.Outlined"
+                                           Icon="@HomeBookIcons.Icons8.Windows11.Filled.Plus"
+                                           Color="Color.Secondary"/>
+
+                        </div>
+
+                    </div>
+
+                </MudListItem>
+
+            </MudList>
+
+        </MudPaper>
+
+        <MudPaper Class="frosted-b4 text-dark mb-5">
+
+            <MudText Typo="Typo.h5"
+                     Class="mx-5 my-3">
+                +Rezeptbild
+            </MudText>
+
+            <MudText Typo="Typo.caption"
+                     Class="mx-5 my-3">
+                +Füge jetzt oder später bis zu zehn Bilder von deinem Rezept hinzu (Empfohlene Breite mind. 1024px, nur
+                JPG- oder PNG-Dateien). Das erste Bild ist dein Vorschaubild.
+            </MudText>
+
+            <MudStack Style="width: 100%">
+
+                <MudFileUpload T="IReadOnlyList<IBrowserFile>"
+                               @ref="@_fileUpload"
+                               OnFilesChanged="OnInputFileChanged"
+                               AppendMultipleFiles
+                               Hidden="@false"
+                               InputClass="html-fileupload-hidden"
+                               tabindex="-1"
+                               ondrop="@ClearDragClass"
+                               ondragenter="@SetDragClass"
+                               ondragleave="@ClearDragClass"
+                               ondragend="@ClearDragClass">
+
+                    <ActivatorContent>
+
+                        <MudPaper Height="140px"
+                                  Outlined="true"
+                                  Class="@_dragClass">
+
+                            <MudText Typo="Typo.h6">
+                                Drag and drop files here or click
+                            </MudText>
+
+                            @foreach (var file in _fileNames)
+                            {
+                                <MudChip T="string"
+                                         Color="Color.Dark"
+                                         Text="@file"
+                                         tabindex="-1"/>
+                            }
+
+                        </MudPaper>
+
+                    </ActivatorContent>
+
+                </MudFileUpload>
+
+                <MudToolBar Gutters="@false"
+                            Class="relative d-flex justify-end gap-3 mx-3">
+
+                    <MudButton Color="Color.Primary"
+                               OnClick="@OpenFilePickerAsync"
+                               Variant="Variant.Filled">
+                        +Open file picker
+                    </MudButton>
+
+                    <MudButton Color="Color.Primary"
+                               Disabled="@(!_fileNames.Any())"
+                               OnClick="@Upload"
+                               Variant="Variant.Filled">
+                        ---Upload---
+                    </MudButton>
+
+                    <MudButton Color="Color.Error"
+                               Disabled="@(!_fileNames.Any())"
+                               OnClick="@ClearAsync"
+                               Variant="Variant.Filled">
+                        +Clear
+                    </MudButton>
+
+                </MudToolBar>
+
+            </MudStack>
+
+            @code {
+    #nullable enable
+                private const string DefaultDragClass = "relative rounded-xl border-2 border-dashed pa-3 mt-3 mx-3 frosted-bg-b1 mud-height-full";
+                private string _dragClass = DefaultDragClass;
+                private readonly List<string> _fileNames = new();
+                private MudFileUpload<IReadOnlyList<IBrowserFile>>? _fileUpload;
+
+                private async Task ClearAsync()
+                {
+                    await (_fileUpload?.ClearAsync() ?? Task.CompletedTask);
+                    _fileNames.Clear();
+                    ClearDragClass();
+                }
+
+                private Task OpenFilePickerAsync()
+                    => _fileUpload?.OpenFilePickerAsync() ?? Task.CompletedTask;
+
+                private void OnInputFileChanged(InputFileChangeEventArgs e)
+                {
+                    ClearDragClass();
+                    var files = e.GetMultipleFiles();
+                    foreach (var file in files)
+                    {
+                        _fileNames.Add(file.Name);
+                    }
+                }
+
+                private void Upload()
+                {
+                    // Upload the files here
+                    Snackbar.Configuration.PositionClass = Defaults.Classes.Position.TopCenter;
+                    Snackbar.Add("TODO: Upload your files!");
+                }
+
+                private void SetDragClass()
+                    => _dragClass = $"{DefaultDragClass} mud-border-primary";
+
+                private void ClearDragClass()
+                    => _dragClass = DefaultDragClass;
+
+            }
+
+        </MudPaper>
+
+        <MudPaper Class="frosted-b4 text-dark mb-5">
+
+            <MudText Typo="Typo.h5"
+                     Class="mx-5 my-3">
+                +Dauer & weitere Angaben
+            </MudText>
+
+            <MudPaper Class="frosted-b4 text-dark mx-3 mb-5">
+
+                <MudGrid Class="mb-3">
+
+                    <MudItem sm="12" md="6">
+
+                        <MudText Typo="Typo.h6"
+                                 Class="mx-3">
+                            +Arbeitszeit
+                        </MudText>
+
+                        <div class="d-flex align-center justify-space-between flex-grow-1 gap-3 mx-3">
+                            <MudNumericField T="int"
+                                             Margin="Margin.Dense"
+                                             Variant="Variant.Outlined"
+                                             Step="1"
+                                             Min="0"
+                                             Adornment="Adornment.End"
+                                             AdornmentText="+h"
+                                             AdornmentColor="Color.Primary"/>
+                            <MudNumericField T="int"
+                                             Margin="Margin.Dense"
+                                             Variant="Variant.Outlined"
+                                             Step="1"
+                                             Min="0"
+                                             Max="59"
+                                             Adornment="Adornment.End"
+                                             AdornmentText="+m"
+                                             AdornmentColor="Color.Primary"/>
+                        </div>
+
+                    </MudItem>
+
+                    <MudItem sm="12" md="6">
+
+                        <MudText Typo="Typo.h6"
+                                 Class="mx-3">
+                            +Koch/Backzeit
+                        </MudText>
+
+                        <div class="d-flex align-center justify-space-between flex-grow-1 gap-3 mx-3">
+                            <MudNumericField T="int"
+                                             Margin="Margin.Dense"
+                                             Variant="Variant.Outlined"
+                                             Step="1"
+                                             Min="0"
+                                             Adornment="Adornment.End"
+                                             AdornmentText="+h"
+                                             AdornmentColor="Color.Primary"/>
+                            <MudNumericField T="int"
+                                             Margin="Margin.Dense"
+                                             Variant="Variant.Outlined"
+                                             Step="1"
+                                             Min="0"
+                                             Max="59"
+                                             Adornment="Adornment.End"
+                                             AdornmentText="+m"
+                                             AdornmentColor="Color.Primary"/>
+                        </div>
+                    </MudItem>
+
+                    <MudItem sm="12" md="6">
+
+                        <MudText Typo="Typo.h6"
+                                 Class="mx-3">
+                            +Ruhezeit
+                        </MudText>
+
+                        <div class="d-flex align-center justify-space-between flex-grow-1 gap-3 mx-3">
+                            <MudNumericField T="int"
+                                             Margin="Margin.Dense"
+                                             Variant="Variant.Outlined"
+                                             Step="1"
+                                             Min="0"
+                                             Adornment="Adornment.End"
+                                             AdornmentText="+h"
+                                             AdornmentColor="Color.Primary"/>
+                            <MudNumericField T="int"
+                                             Margin="Margin.Dense"
+                                             Variant="Variant.Outlined"
+                                             Step="1"
+                                             Min="0"
+                                             Max="59"
+                                             Adornment="Adornment.End"
+                                             AdornmentText="+m"
+                                             AdornmentColor="Color.Primary"/>
+                        </div>
+                    </MudItem>
+
+                    <MudItem sm="12" md="6">
+
+                        <MudText Typo="Typo.h6"
+                                 Class="mx-3">
+                            +Kalorien/Portion
+                        </MudText>
+
+                        <div class="d-flex align-center justify-space-between flex-grow-1 gap-3 mx-3">
+                            <MudNumericField T="int"
+                                             Margin="Margin.Dense"
+                                             Variant="Variant.Outlined"
+                                             Step="1"
+                                             Min="0"
+                                             Adornment="Adornment.End"
+                                             AdornmentText="+Kcal"
+                                             AdornmentColor="Color.Primary"/>
+                        </div>
+                    </MudItem>
+
+                </MudGrid>
+
+            </MudPaper>
+
+            <MudPaper Class="frosted-b4 text-dark mx-3 mb-5">
+
+                <MudText Typo="Typo.h6"
+                         Class="mx-3">
+                    +Kommentar
+                </MudText>
+
+                <MudTextField T="string"
+                              Class="mx-3"
+                              Lines="5"
+                              Margin="Margin.Dense"
+                              Variant="Variant.Outlined"/>
+
+                <MudText Typo="Typo.h6"
+                         Class="mx-3">
+                    +Quelle
+                </MudText>
+
+                <MudTextField T="string"
+                              Class="mx-3 mb-3"
+                              Margin="Margin.Dense"
+                              Variant="Variant.Outlined"/>
+
+            </MudPaper>
 
         </MudPaper>
 
