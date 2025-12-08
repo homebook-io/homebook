@@ -9,7 +9,8 @@ public class RecipeDetailViewModel
     public int? Servings { get; set; }
     public int? CaloriesKcal { get; set; }
     public TimeSpan? Duration { get; set; }
-    public string Ingredients { get; set; }
+    public IEnumerable<IngredientViewModel> Ingredients { get; set; }
+    public IEnumerable<StepViewModel> Steps { get; set; }
     public string Image { get; set; }
 
     public bool HasAnnotations => Duration.HasValue || Servings.HasValue;

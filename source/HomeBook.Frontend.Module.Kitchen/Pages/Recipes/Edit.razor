@@ -2,6 +2,7 @@
 
 @using HomeBook.Frontend.Core.Icons
 @using HomeBook.Frontend.Module.Kitchen.Contracts
+@using HomeBook.Frontend.Module.Kitchen.ViewModels
 @using Microsoft.AspNetCore.Components.Forms
 
 @inject IRecipeService RecipeService
@@ -47,7 +48,7 @@
         <MudPaper Class="frosted-b8 text-dark mb-5 pa-3">
 
             <MudTextField T="string"
-                          Value="@_recipe.Description"
+                          @bind-Value="@_recipe.Description"
                           Label="+Beschreibung"
                           Variant="Variant.Outlined"
                           Lines="5"/>
@@ -71,7 +72,6 @@
                             break;
                     }
 
-
                     <MudSpacer/>
 
                     <UiNumericGroup @bind-Value="@_recipe.Servings"
@@ -93,24 +93,7 @@
 
             <MudList T="string">
 
-                @code{
-
-                    string[] ingredients = new string[]
-                    {
-                        "1 Scheibe Schinken, gekochter, oder anderer Belag, z.B. Putenbrust oder Salami",
-                        "1  Ei, gekochtes",
-                        "1 Scheibe Käse, am besten Emmentaler , Ihr könnt aber auch anderen nehmen",
-                        "1  Salatblatt",
-                        "1/2 Tomate",
-                        "Salz und Pfeffer, Grillgewürz",
-                        "3 EL Mayonaise",
-                        "2 Scheiben Sandwich Toast",
-                        "4  Zahnstocher, o.ä."
-                    };
-
-                }
-
-                @foreach (var ingredient in ingredients)
+                @foreach (IngredientViewModel ingredient in _recipe.Ingredients)
                 {
                     <MudListItem T="string"
                                  Class="py-0 px-3"
@@ -122,8 +105,17 @@
                                            Size="Size.Small"/>
 
                             <div class="d-flex flex-column flex-grow-1">
-                                <MudText Class="flex-grow-1" Typo="Typo.h6">@ingredient</MudText>
-                                <MudText Class="flex-grow-1" Typo="Typo.caption">@ingredient</MudText>
+
+                                <MudText Class="flex-grow-1" Typo="Typo.h6">
+                                    @ingredient.DisplayText
+                                </MudText>
+
+                                @if (!string.IsNullOrWhiteSpace(ingredient.AdditionalText))
+                                {
+                                    <MudText Class="flex-grow-1"
+                                             Typo="Typo.caption">@ingredient.AdditionalText</MudText>
+                                }
+
                             </div>
 
                             <MudIconButton Icon="@HomeBookIcons.Icons8.Windows11.Outline.EditPencil"
@@ -168,22 +160,7 @@
             <MudList T="string"
                      Class="d-flex flex-column gap-3">
 
-                @code{
-
-                    string[] steps = new string[]
-                    {
-                        "Eier hart kochen und anschließend in Scheiben schneiden. Tomaten waschen und schneiden. Salat waschen und in einzelne Blätter teilen.",
-                        "Beide Scheiben Toast einseitig mit Mayonaise ca. 2mm beschmieren. Den Rest Mayonaise benötigen wir noch später. Über den Toast ein bischen Salz,Pfeffer und bei Bedarf auch Grillgewürz streuen. Das Grillgewürz verleiht dem Ganzem einen \"neuen\" Geschmack. ",
-                        "Auf die eine Scheibe Toast die Scheibe Käse legen und auf die andere Scheibe den Schinken. Alternativ zu Schinken geht z.b. auch Putenbrust oder Salami.",
-                        "Auf den Schinken kommen nun das in Scheiben geschnittene Ei und darüber die restliche Mayonaise. ",
-                        "Die in Scheiben geschnittenen Tomaten und ein Salatblatt drauflegen. ",
-                        "Am besten für den Halt und für die Optik 4 Zahnstocher o.ä. in das Sandwich stecken. ",
-                        "Zum Abschluss einmal von Spitze zu Spitze durchschneiden und servieren. Für ein bisschen Deko kann man auch Schnittlauch oder Radieschen dazulegen.\nIch empfehle einen kühlen Nudelsalat als Beilage."
-                    };
-
-                }
-
-                @foreach (var (step, index) in steps.Select((item, index) => (item, index)))
+                @foreach (var (step, index) in _recipe.Steps.Select((item, index) => (item, index)))
                 {
                     <MudListItem T="string"
                                  Dense="true">
@@ -216,7 +193,7 @@
                              Dense="true">
 
                     <div class="d-flex flex-column flex-grow-1">
-                        <MudText Class="flex-grow-1" Typo="Typo.h6">+Schritt @(steps.Length + 1)</MudText>
+                        <MudText Class="flex-grow-1" Typo="Typo.h6">+Schritt @(_recipe.Steps.Count() + 1)</MudText>
 
                         <div class="d-flex align-center gap-3">
 
@@ -228,7 +205,31 @@
                             <MudIconButton Variant="Variant.Outlined"
                                            Icon="@HomeBookIcons.Icons8.Windows11.Filled.Plus"
                                            Color="Color.Secondary"/>
+                        </div>
 
+                        <MudText Typo="Typo.h6"
+                                 Class="mx-3">
+                            +Timer für diesen Schritt
+                        </MudText>
+
+                        <div class="d-flex align-center justify-space-between flex-grow-1 gap-3 mx-3">
+                            <MudNumericField T="int"
+                                             Margin="Margin.Dense"
+                                             Variant="Variant.Outlined"
+                                             Step="1"
+                                             Min="0"
+                                             Adornment="Adornment.End"
+                                             AdornmentText="+h"
+                                             AdornmentColor="Color.Primary"/>
+                            <MudNumericField T="int"
+                                             Margin="Margin.Dense"
+                                             Variant="Variant.Outlined"
+                                             Step="1"
+                                             Min="0"
+                                             Max="59"
+                                             Adornment="Adornment.End"
+                                             AdornmentText="+m"
+                                             AdornmentColor="Color.Primary"/>
                         </div>
 
                     </div>

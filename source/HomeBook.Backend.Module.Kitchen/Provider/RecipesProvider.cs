@@ -48,7 +48,7 @@ public class RecipesProvider(
             UserId = userId,
             Name = name,
             Description = description,
-            DurationMinutes = durationInMinutes,
+            DurationWorkingMinutes = durationInMinutes,
             CaloriesKcal = caloriesKcal,
             Servings = servings
         };

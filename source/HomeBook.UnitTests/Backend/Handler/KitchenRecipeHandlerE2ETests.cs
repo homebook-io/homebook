@@ -116,8 +116,8 @@ public class KitchenRecipeHandlerE2ETests
         // Act & Assert
 
         // get all recipes
-        var recipesResult1 = await KitchenRecipeHandler.HandleGetRecipes("",
-            _loggerFactory.CreateLogger<KitchenRecipeHandler>(),
+        var recipesResult1 = await RecipeHandler.HandleGetRecipes("",
+            _loggerFactory.CreateLogger<RecipeHandler>(),
             recipesProvider,
             userProvider,
             cancellationToken);
@@ -126,40 +126,40 @@ public class KitchenRecipeHandlerE2ETests
         recipesResponse1.Value.Recipes.Length.ShouldBe(0);
 
         // create recipes
-        var createRecipeResult1 = await KitchenRecipeHandler.HandleCreateRecipe(testuser,
+        var createRecipeResult1 = await RecipeHandler.HandleCreateRecipe(testuser,
             new CreateRecipeRequest("Gyros-Pita", null, null, null, null),
-            _loggerFactory.CreateLogger<KitchenRecipeHandler>(),
+            _loggerFactory.CreateLogger<RecipeHandler>(),
             recipesProvider,
             cancellationToken);
         createRecipeResult1.ShouldBeOfType<Ok>();
-        var createRecipeResult2 = await KitchenRecipeHandler.HandleCreateRecipe(testuser,
+        var createRecipeResult2 = await RecipeHandler.HandleCreateRecipe(testuser,
             new CreateRecipeRequest("Nana's Italian Roulade", null, null, null, null),
-            _loggerFactory.CreateLogger<KitchenRecipeHandler>(),
+            _loggerFactory.CreateLogger<RecipeHandler>(),
             recipesProvider,
             cancellationToken);
         createRecipeResult2.ShouldBeOfType<Ok>();
-        var createRecipeResult3 = await KitchenRecipeHandler.HandleCreateRecipe(testuser,
+        var createRecipeResult3 = await RecipeHandler.HandleCreateRecipe(testuser,
             new CreateRecipeRequest("Pancakes", null, null, null, null),
-            _loggerFactory.CreateLogger<KitchenRecipeHandler>(),
+            _loggerFactory.CreateLogger<RecipeHandler>(),
             recipesProvider,
             cancellationToken);
         createRecipeResult3.ShouldBeOfType<Ok>();
-        var createRecipeResult4 = await KitchenRecipeHandler.HandleCreateRecipe(testuser,
+        var createRecipeResult4 = await RecipeHandler.HandleCreateRecipe(testuser,
             new CreateRecipeRequest("Pasta à la Roma", null, null, null, null),
-            _loggerFactory.CreateLogger<KitchenRecipeHandler>(),
+            _loggerFactory.CreateLogger<RecipeHandler>(),
             recipesProvider,
             cancellationToken);
         createRecipeResult4.ShouldBeOfType<Ok>();
-        var createRecipeResult5 = await KitchenRecipeHandler.HandleCreateRecipe(testuser,
+        var createRecipeResult5 = await RecipeHandler.HandleCreateRecipe(testuser,
             new CreateRecipeRequest("Rührei mit Kräutern", null, null, null, null),
-            _loggerFactory.CreateLogger<KitchenRecipeHandler>(),
+            _loggerFactory.CreateLogger<RecipeHandler>(),
             recipesProvider,
             cancellationToken);
         createRecipeResult5.ShouldBeOfType<Ok>();
 
         // get all recipes
-        var recipesResult2 = await KitchenRecipeHandler.HandleGetRecipes("",
-            _loggerFactory.CreateLogger<KitchenRecipeHandler>(),
+        var recipesResult2 = await RecipeHandler.HandleGetRecipes("",
+            _loggerFactory.CreateLogger<RecipeHandler>(),
             recipesProvider,
             userProvider,
             cancellationToken);
@@ -178,16 +178,16 @@ public class KitchenRecipeHandlerE2ETests
         recipesResponse2.Value.Recipes.ShouldContain(r => r.NormalizedName == "ruhrei-mit-krautern");
 
         var recipeToDelete = recipesResponse2.Value.Recipes.First(r => r.Name == "Pancakes");
-        var deleteRecipeResult = await KitchenRecipeHandler.HandleDeleteRecipe(recipeToDelete.Id,
+        var deleteRecipeResult = await RecipeHandler.HandleDeleteRecipe(recipeToDelete.Id,
             testuser,
-            _loggerFactory.CreateLogger<KitchenRecipeHandler>(),
+            _loggerFactory.CreateLogger<RecipeHandler>(),
             recipesProvider,
             cancellationToken);
         deleteRecipeResult.ShouldBeOfType<Ok>();
 
         // get all recipes
-        var recipesResult3 = await KitchenRecipeHandler.HandleGetRecipes("",
-            _loggerFactory.CreateLogger<KitchenRecipeHandler>(),
+        var recipesResult3 = await RecipeHandler.HandleGetRecipes("",
+            _loggerFactory.CreateLogger<RecipeHandler>(),
             recipesProvider,
             userProvider,
             cancellationToken);
@@ -204,17 +204,17 @@ public class KitchenRecipeHandlerE2ETests
         recipesResponse3.Value.Recipes.ShouldContain(r => r.NormalizedName == "ruhrei-mit-krautern");
 
         var recipeToUpdate = recipesResponse3.Value.Recipes.First(r => r.Name == "Gyros-Pita");
-        var updateRecipeResult = await KitchenRecipeHandler.HandleUpdateRecipeName(recipeToUpdate.Id,
+        var updateRecipeResult = await RecipeHandler.HandleUpdateRecipeName(recipeToUpdate.Id,
             testuser,
             new UpdateRecipeNameRequest("Gyros Wrap"),
-            _loggerFactory.CreateLogger<KitchenRecipeHandler>(),
+            _loggerFactory.CreateLogger<RecipeHandler>(),
             recipesProvider,
             cancellationToken);
         updateRecipeResult.ShouldBeOfType<Ok>();
 
         // get all recipes
-        var recipesResult4 = await KitchenRecipeHandler.HandleGetRecipes("",
-            _loggerFactory.CreateLogger<KitchenRecipeHandler>(),
+        var recipesResult4 = await RecipeHandler.HandleGetRecipes("",
+            _loggerFactory.CreateLogger<RecipeHandler>(),
             recipesProvider,
             userProvider,
             cancellationToken);

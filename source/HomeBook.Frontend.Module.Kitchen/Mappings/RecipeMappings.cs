@@ -1,3 +1,5 @@
+using HomeBook.Frontend.Module.Kitchen.ViewModels;
+
 using HomeBook.Frontend.Module.Kitchen.Models;
 using HomeBook.Frontend.Module.Kitchen.ViewModels;
 
@@ -20,7 +22,7 @@ public static class RecipeMappings
             Servings = recipe.Servings,
             CaloriesKcal = recipe.CaloriesKcal,
             Duration = duration,
-            Ingredients = recipe.Ingredients,
+            // Ingredients = recipe.Ingredients,
             Image = PlaceholderImage
         };
     }

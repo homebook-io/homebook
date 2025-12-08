@@ -6,6 +6,10 @@ public record RecipeDto(
     string Name,
     string NormalizedName,
     string? Description,
-    int? DurationMinutes,
+    int? Servings,
+    int? DurationWorkingMinutes,
+    int? DurationCookingMinutes,
+    int? DurationRestingMinutes,
     int? CaloriesKcal,
-    int? Servings);
+    string? Comments,
+    string? Source);

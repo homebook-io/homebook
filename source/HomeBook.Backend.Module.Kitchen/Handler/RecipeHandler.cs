@@ -12,7 +12,7 @@ using Microsoft.Extensions.Logging;
 
 namespace HomeBook.Backend.Module.Kitchen.Handler;
 
-public class KitchenRecipeHandler
+public class RecipeHandler
 {
     /// <summary>
     /// returns recipes matching the search filter
@@ -24,7 +24,7 @@ public class KitchenRecipeHandler
     /// <param name="cancellationToken"></param>
     /// <returns></returns>
     public static async Task<IResult> HandleGetRecipes(string searchFilter,
-        [FromServices] ILogger<KitchenRecipeHandler> logger,
+        [FromServices] ILogger<RecipeHandler> logger,
         [FromServices] IRecipesProvider recipesProvider,
         [FromServices] IUserProvider userProvider,
         CancellationToken cancellationToken)
@@ -62,7 +62,7 @@ public class KitchenRecipeHandler
     /// <param name="cancellationToken"></param>
     /// <returns></returns>
     public static async Task<IResult> HandleGetRecipeById(Guid id,
-        [FromServices] ILogger<KitchenRecipeHandler> logger,
+        [FromServices] ILogger<RecipeHandler> logger,
         [FromServices] IRecipesProvider recipesProvider,
         [FromServices] IUserProvider userProvider,
         CancellationToken cancellationToken)
@@ -98,7 +98,7 @@ public class KitchenRecipeHandler
     /// <returns></returns>
     public static async Task<IResult> HandleCreateRecipe(ClaimsPrincipal user,
         [FromBody] CreateRecipeRequest request,
-        [FromServices] ILogger<KitchenRecipeHandler> logger,
+        [FromServices] ILogger<RecipeHandler> logger,
         [FromServices] IRecipesProvider recipesProvider,
         CancellationToken cancellationToken)
     {
@@ -134,7 +134,7 @@ public class KitchenRecipeHandler
     /// <returns></returns>
     public static async Task<IResult> HandleDeleteRecipe(Guid id,
         ClaimsPrincipal user,
-        [FromServices] ILogger<KitchenRecipeHandler> logger,
+        [FromServices] ILogger<RecipeHandler> logger,
         [FromServices] IRecipesProvider recipesProvider,
         CancellationToken cancellationToken)
     {
@@ -169,7 +169,7 @@ public class KitchenRecipeHandler
     public static async Task<IResult> HandleUpdateRecipeName(Guid id,
         ClaimsPrincipal user,
         [FromBody] UpdateRecipeNameRequest request,
-        [FromServices] ILogger<KitchenRecipeHandler> logger,
+        [FromServices] ILogger<RecipeHandler> logger,
         [FromServices] IRecipesProvider recipesProvider,
         CancellationToken cancellationToken)
     {

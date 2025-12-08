@@ -19,7 +19,7 @@ public static class RecipeEndpoints
                 .WithDescription("Endpoints to manage recipes informations")
                 .RequireAuthorization();
 
-            group.MapGet("/", KitchenRecipeHandler.HandleGetRecipes)
+            group.MapGet("/", RecipeHandler.HandleGetRecipes)
                 .WithName("GetRecipes")
                 .WithDescription(new Description(
                     "returns recipes matching the search filter",
@@ -31,7 +31,7 @@ public static class RecipeEndpoints
                 .Produces(StatusCodes.Status401Unauthorized)
                 .Produces<string>(StatusCodes.Status500InternalServerError);
 
-            group.MapGet("/{id:guid}", KitchenRecipeHandler.HandleGetRecipeById)
+            group.MapGet("/{id:guid}", RecipeHandler.HandleGetRecipeById)
                 .WithName("GetRecipeById")
                 .WithDescription(new Description(
                     "returns recipe by id",
@@ -45,7 +45,7 @@ public static class RecipeEndpoints
                 .Produces(StatusCodes.Status401Unauthorized)
                 .Produces<string>(StatusCodes.Status500InternalServerError);
 
-            group.MapPost("/", KitchenRecipeHandler.HandleCreateRecipe)
+            group.MapPost("/", RecipeHandler.HandleCreateRecipe)
                 .WithName("CreateRecipe")
                 .WithDescription(new Description(
                     "creates a new recipe",
@@ -59,7 +59,7 @@ public static class RecipeEndpoints
                 .Produces(StatusCodes.Status401Unauthorized)
                 .Produces<string>(StatusCodes.Status500InternalServerError);
 
-            group.MapDelete("/{id:guid}", KitchenRecipeHandler.HandleDeleteRecipe)
+            group.MapDelete("/{id:guid}", RecipeHandler.HandleDeleteRecipe)
                 .WithName("DeleteRecipe")
                 .WithDescription(new Description(
                     "deletes an existing recipe",
