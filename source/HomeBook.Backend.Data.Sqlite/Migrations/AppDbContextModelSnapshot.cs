@@ -70,10 +70,19 @@ namespace HomeBook.Backend.Data.Sqlite.Migrations
                     b.Property<int?>("CaloriesKcal")
                         .HasColumnType("INTEGER");
 
+                    b.Property<string>("Comments")
+                        .HasColumnType("TEXT");
+
                     b.Property<string>("Description")
                         .HasColumnType("TEXT");
 
-                    b.Property<int?>("DurationMinutes")
+                    b.Property<int?>("DurationCookingMinutes")
+                        .HasColumnType("INTEGER");
+
+                    b.Property<int?>("DurationRestingMinutes")
+                        .HasColumnType("INTEGER");
+
+                    b.Property<int?>("DurationWorkingMinutes")
                         .HasColumnType("INTEGER");
 
                     b.Property<string>("Name")
@@ -88,6 +97,9 @@ namespace HomeBook.Backend.Data.Sqlite.Migrations
 
                     b.Property<int?>("Servings")
                         .HasColumnType("INTEGER");
+
+                    b.Property<string>("Source")
+                        .HasColumnType("TEXT");
 
                     b.Property<Guid?>("UserId")
                         .HasColumnType("TEXT");

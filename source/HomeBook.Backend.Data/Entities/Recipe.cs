@@ -23,11 +23,19 @@ public class Recipe : INormalizable
 
     public string? Description { get; set; }
 
-    public int? DurationMinutes { get; set; }
+    public int? DurationWorkingMinutes { get; set; }
+
+    public int? DurationCookingMinutes { get; set; }
+
+    public int? DurationRestingMinutes { get; set; }
 
     public int? CaloriesKcal { get; set; }
 
     public int? Servings { get; set; }
+
+    public string? Comments { get; set; }
+
+    public string? Source { get; set; }
 
     [ForeignKey(nameof(User))]
     public Guid? UserId { get; set; }

@@ -72,10 +72,19 @@ namespace HomeBook.Backend.Data.Mysql.Migrations
                     b.Property<int?>("CaloriesKcal")
                         .HasColumnType("int");
 
+                    b.Property<string>("Comments")
+                        .HasColumnType("longtext");
+
                     b.Property<string>("Description")
                         .HasColumnType("longtext");
 
-                    b.Property<int?>("DurationMinutes")
+                    b.Property<int?>("DurationCookingMinutes")
+                        .HasColumnType("int");
+
+                    b.Property<int?>("DurationRestingMinutes")
+                        .HasColumnType("int");
+
+                    b.Property<int?>("DurationWorkingMinutes")
                         .HasColumnType("int");
 
                     b.Property<string>("Name")
@@ -90,6 +99,9 @@ namespace HomeBook.Backend.Data.Mysql.Migrations
 
                     b.Property<int?>("Servings")
                         .HasColumnType("int");
+
+                    b.Property<string>("Source")
+                        .HasColumnType("longtext");
 
                     b.Property<Guid?>("UserId")
                         .HasColumnType("char(36)");
