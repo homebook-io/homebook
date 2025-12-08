@@ -40,8 +40,10 @@ public class RecipesRepository(
         }
 
         Recipe? entity = await appDbContext.Set<Recipe>()
-            .Where(e => e.Id == entityId)
-            .FirstOrDefaultAsync(cancellationToken);
+            .Include(r => r.Recipe2RecipeIngredient)
+            .ThenInclude(ri => ri.RecipeIngredient)
+            .Include(r => r.Steps)
+            .FirstOrDefaultAsync(r => r.Id == entityId, cancellationToken);
 
         return entity;
     }

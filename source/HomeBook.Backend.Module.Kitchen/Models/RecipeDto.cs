@@ -12,4 +12,6 @@ public record RecipeDto(
     int? DurationRestingMinutes,
     int? CaloriesKcal,
     string? Comments,
-    string? Source);
+    string? Source,
+    RecipeIngredientDto[] Ingredients,
+    RecipeStepDto[] Steps);

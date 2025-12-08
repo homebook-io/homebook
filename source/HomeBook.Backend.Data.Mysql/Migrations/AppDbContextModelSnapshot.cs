@@ -39,30 +39,6 @@ namespace HomeBook.Backend.Data.Mysql.Migrations
                     b.ToTable("Configurations");
                 });
 
-            modelBuilder.Entity("HomeBook.Backend.Data.Entities.Ingredient", b =>
-                {
-                    b.Property<Guid>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("char(36)");
-
-                    b.Property<string>("Name")
-                        .IsRequired()
-                        .HasMaxLength(100)
-                        .HasColumnType("varchar(100)");
-
-                    b.Property<string>("NormalizedName")
-                        .IsRequired()
-                        .HasMaxLength(100)
-                        .HasColumnType("varchar(100)");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("NormalizedName")
-                        .IsUnique();
-
-                    b.ToTable("Ingredients");
-                });
-
             modelBuilder.Entity("HomeBook.Backend.Data.Entities.Recipe", b =>
                 {
                     b.Property<Guid>("Id")
@@ -113,7 +89,7 @@ namespace HomeBook.Backend.Data.Mysql.Migrations
                     b.ToTable("Recipes");
                 });
 
-            modelBuilder.Entity("HomeBook.Backend.Data.Entities.RecipeIngredient", b =>
+            modelBuilder.Entity("HomeBook.Backend.Data.Entities.Recipe2RecipeIngredient", b =>
                 {
                     b.Property<Guid>("RecipeId")
                         .HasColumnType("char(36)");
@@ -121,9 +97,11 @@ namespace HomeBook.Backend.Data.Mysql.Migrations
                     b.Property<Guid>("IngredientId")
                         .HasColumnType("char(36)");
 
-                    b.Property<string>("Quantity")
-                        .HasMaxLength(50)
-                        .HasColumnType("varchar(50)");
+                    b.Property<double?>("Quantity")
+                        .HasColumnType("double");
+
+                    b.Property<Guid>("RecipeIngredientId")
+                        .HasColumnType("char(36)");
 
                     b.Property<string>("Unit")
                         .HasMaxLength(20)
@@ -131,9 +109,57 @@ namespace HomeBook.Backend.Data.Mysql.Migrations
 
                     b.HasKey("RecipeId", "IngredientId");
 
-                    b.HasIndex("IngredientId");
+                    b.HasIndex("RecipeIngredientId");
+
+                    b.ToTable("Recipe2RecipeIngredient");
+                });
+
+            modelBuilder.Entity("HomeBook.Backend.Data.Entities.RecipeIngredient", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("char(36)");
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasMaxLength(100)
+                        .HasColumnType("varchar(100)");
+
+                    b.Property<string>("NormalizedName")
+                        .IsRequired()
+                        .HasMaxLength(100)
+                        .HasColumnType("varchar(100)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("NormalizedName")
+                        .IsUnique();
 
                     b.ToTable("RecipeIngredients");
+                });
+
+            modelBuilder.Entity("HomeBook.Backend.Data.Entities.RecipeStep", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("char(36)");
+
+                    b.Property<string>("Description")
+                        .IsRequired()
+                        .HasMaxLength(500)
+                        .HasColumnType("varchar(500)");
+
+                    b.Property<Guid>("RecipeId")
+                        .HasColumnType("char(36)");
+
+                    b.Property<int?>("TimerDurationInSeconds")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("RecipeId");
+
+                    b.ToTable("RecipeSteps");
                 });
 
             modelBuilder.Entity("HomeBook.Backend.Data.Entities.SavingGoal", b =>
@@ -247,21 +273,32 @@ namespace HomeBook.Backend.Data.Mysql.Migrations
                     b.Navigation("User");
                 });
 
-            modelBuilder.Entity("HomeBook.Backend.Data.Entities.RecipeIngredient", b =>
+            modelBuilder.Entity("HomeBook.Backend.Data.Entities.Recipe2RecipeIngredient", b =>
                 {
-                    b.HasOne("HomeBook.Backend.Data.Entities.Ingredient", "Ingredient")
-                        .WithMany("RecipeIngredients")
-                        .HasForeignKey("IngredientId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
                     b.HasOne("HomeBook.Backend.Data.Entities.Recipe", "Recipe")
-                        .WithMany()
+                        .WithMany("Recipe2RecipeIngredient")
                         .HasForeignKey("RecipeId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.Navigation("Ingredient");
+                    b.HasOne("HomeBook.Backend.Data.Entities.RecipeIngredient", "RecipeIngredient")
+                        .WithMany("Recipe2RecipeIngredients")
+                        .HasForeignKey("RecipeIngredientId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Recipe");
+
+                    b.Navigation("RecipeIngredient");
+                });
+
+            modelBuilder.Entity("HomeBook.Backend.Data.Entities.RecipeStep", b =>
+                {
+                    b.HasOne("HomeBook.Backend.Data.Entities.Recipe", "Recipe")
+                        .WithMany("Steps")
+                        .HasForeignKey("RecipeId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
                     b.Navigation("Recipe");
                 });
@@ -288,9 +325,16 @@ namespace HomeBook.Backend.Data.Mysql.Migrations
                     b.Navigation("User");
                 });
 
-            modelBuilder.Entity("HomeBook.Backend.Data.Entities.Ingredient", b =>
+            modelBuilder.Entity("HomeBook.Backend.Data.Entities.Recipe", b =>
                 {
-                    b.Navigation("RecipeIngredients");
+                    b.Navigation("Recipe2RecipeIngredient");
+
+                    b.Navigation("Steps");
+                });
+
+            modelBuilder.Entity("HomeBook.Backend.Data.Entities.RecipeIngredient", b =>
+                {
+                    b.Navigation("Recipe2RecipeIngredients");
                 });
 #pragma warning restore 612, 618
         }

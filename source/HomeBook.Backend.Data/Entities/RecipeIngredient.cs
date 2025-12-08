@@ -1,22 +1,32 @@
 using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
+using HomeBook.Backend.Abstractions.Contracts;
 using Microsoft.EntityFrameworkCore;
 
 namespace HomeBook.Backend.Data.Entities;
 
-[PrimaryKey(nameof(RecipeId), nameof(IngredientId))]
-public class RecipeIngredient
+[Index(nameof(NormalizedName), IsUnique = true)]
+[Table("RecipeIngredients")]
+public class RecipeIngredient : INormalizable
 {
+    [Key]
+    [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
     [Required]
-    public Guid RecipeId { get; set; }
-    public virtual Recipe Recipe { get; set; } = null!;
+    public Guid Id { get; set; }
 
     [Required]
-    public Guid IngredientId { get; set; }
-    public virtual Ingredient Ingredient { get; set; } = null!;
+    [MaxLength(100)]
+    public string Name { get; set; } = null!;
 
-    [MaxLength(50)]
-    public string? Quantity { get; set; }
+    [Required]
+    [MaxLength(100)]
+    public string NormalizedName { get; set; } = null!;
 
-    [MaxLength(20)]
-    public string? Unit { get; set; }
+    public virtual ICollection<Recipe2RecipeIngredient> Recipe2RecipeIngredients { get; set; } = new List<Recipe2RecipeIngredient>();
+
+
+    public void Normalize(IStringNormalizer normalizer)
+    {
+        NormalizedName = normalizer.Normalize(Name);
+    }
 }

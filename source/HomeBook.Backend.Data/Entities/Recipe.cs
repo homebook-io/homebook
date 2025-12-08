@@ -6,6 +6,7 @@ using HomeBook.Backend.Abstractions.Contracts;
 namespace HomeBook.Backend.Data.Entities;
 
 [DebuggerDisplay("[{nameof(Recipe)}] {Name}")]
+[Table("Recipes")]
 public class Recipe : INormalizable
 {
     [Key]
@@ -41,6 +42,10 @@ public class Recipe : INormalizable
     public Guid? UserId { get; set; }
 
     public virtual User? User { get; set; }
+
+    public virtual ICollection<Recipe2RecipeIngredient> Recipe2RecipeIngredient { get; set; } = new List<Recipe2RecipeIngredient>();
+
+    public virtual ICollection<RecipeStep> Steps { get; set; } = new List<RecipeStep>();
 
     public void Normalize(IStringNormalizer normalizer)
     {
