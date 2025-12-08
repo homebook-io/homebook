@@ -507,11 +507,26 @@
 
         </MudPaper>
 
-        <MudButton Color="Color.Primary"
-                   Variant="Variant.Filled"
-                   OnClick="SaveRecipe">
-            +save
-        </MudButton>
+        <MudPaper Class="frosted-b4 text-dark mb-5 pa-3">
+
+            <div class="d-flex align-center justify-space-between flex-grow-1 gap-3">
+
+                <MudButton Color="Color.Secondary"
+                           Variant="Variant.Text"
+                           OnClick="AbortEditingRecipe">
+                    +Abort
+                </MudButton>
+
+                <MudSpacer/>
+
+                <MudButton Color="Color.Primary"
+                           Variant="Variant.Filled"
+                           OnClick="SaveRecipe">
+                    +Save Recipe
+                </MudButton>
+
+            </div>
+        </MudPaper>
 
     </MudContainer>
 }

@@ -75,4 +75,9 @@ public partial class Edit : ComponentBase
 
         int i = 0;
     }
+
+    private void AbortEditingRecipe()
+    {
+        NavigationManager.NavigateTo("/Kitchen/Recipes");
+    }
 }
