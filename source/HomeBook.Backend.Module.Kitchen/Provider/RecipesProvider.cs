@@ -10,7 +10,8 @@ namespace HomeBook.Backend.Module.Kitchen.Provider;
 /// <inheritdoc/>
 public class RecipesProvider(
     ILogger<RecipesProvider> logger,
-    IRecipesRepository recipesRepository) : IRecipesProvider
+    IRecipesRepository recipesRepository,
+    IIngredientRepository ingredientRepository) : IRecipesProvider
 {
     /// <inheritdoc/>
     public async Task<RecipeDto[]> GetRecipesAsync(string searchFilter,
@@ -38,19 +39,28 @@ public class RecipesProvider(
     public async Task<Guid> CreateAsync(string name,
         Guid userId,
         string? description,
-        int? durationInMinutes,
-        int? caloriesKcal,
         int? servings,
+        int? durationWorkingMinutes,
+        int? durationCookingMinutes,
+        int? durationRestingMinutes,
+        int? caloriesKcal,
+        string? comments,
+        string? source,
         CancellationToken cancellationToken)
     {
         Recipe entity = new()
         {
             UserId = userId,
             Name = name,
+            NormalizedName = name,
             Description = description,
-            DurationWorkingMinutes = durationInMinutes,
+            DurationWorkingMinutes = durationWorkingMinutes,
+            DurationCookingMinutes = durationCookingMinutes,
+            DurationRestingMinutes = durationRestingMinutes,
             CaloriesKcal = caloriesKcal,
-            Servings = servings
+            Servings = servings,
+            Comments = comments,
+            Source = source
         };
 
         // TODO: validator
@@ -59,6 +69,79 @@ public class RecipesProvider(
             .CreateOrUpdateAsync(entity,
                 cancellationToken);
         return entityId;
+    }
+
+    /// <inheritdoc/>
+    public async Task<Recipe2RecipeIngredient> AddIngredientToRecipeAsync(Guid recipeId,
+        string name,
+        double? quantity,
+        string? unit,
+        CancellationToken cancellationToken)
+    {
+        string normalizedName = name; // TODO: normalize
+        RecipeIngredient? ingredient = await GetIngredientByNameAsync(name,
+            cancellationToken);
+
+        Guid? ingredientId = ingredient?.Id ?? await CreateIngredientAsync(name,
+            cancellationToken);
+
+        Recipe2RecipeIngredient entity = new()
+        {
+            RecipeId = recipeId,
+            IngredientId = ingredientId!.Value,
+            Quantity = quantity,
+            Unit = unit
+        };
+
+        // TODO: validator
+
+        Recipe2RecipeIngredient updatedEntity = await recipesRepository
+            .CreateOrUpdateAsync(entity,
+                cancellationToken);
+        return updatedEntity;
+    }
+
+    /// <inheritdoc/>
+    public async Task<RecipeIngredient?> GetIngredientByNameAsync(string name,
+        CancellationToken cancellationToken) =>
+        await ingredientRepository.GetByName(name,
+            cancellationToken);
+
+    /// <inheritdoc/>
+    public async Task<Guid> CreateIngredientAsync(string name,
+        CancellationToken cancellationToken)
+    {
+        RecipeIngredient entity = new()
+        {
+            Name = name
+        };
+
+        Guid entityId = await ingredientRepository.CreateOrUpdateAsync(entity,
+            cancellationToken);
+
+        return entityId;
+    }
+
+    /// <inheritdoc/>
+    public async Task<RecipeStep> AddStepToRecipeAsync(Guid recipeId,
+        int position,
+        string description,
+        int? timerDurationInSeconds,
+        CancellationToken cancellationToken)
+    {
+        RecipeStep entity = new()
+        {
+            RecipeId = recipeId,
+            Description = description,
+            Position = position,
+            TimerDurationInSeconds = timerDurationInSeconds
+        };
+
+        // TODO: validator
+
+        RecipeStep recipeStep = await recipesRepository.CreateRecipeStepAsync(entity,
+            cancellationToken);
+        return recipeStep;
     }
 
     /// <inheritdoc/>

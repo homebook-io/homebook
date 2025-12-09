@@ -37,7 +37,8 @@ public static class RecipeMappings
     public static RecipeStepDto ToDto(this Data.Entities.RecipeStep rs)
     {
         return new RecipeStepDto(
-            rs.Id,
+            rs.RecipeId,
+            rs.Position,
             rs.Description,
             rs.TimerDurationInSeconds);
     }
@@ -128,7 +129,8 @@ public static class RecipeMappings
     public static RecipeStepResponse ToResponse(this RecipeStepDto rs)
     {
         return new RecipeStepResponse(
-            rs.Id,
+            rs.RecipeId,
+            rs.Position,
             rs.Description,
             rs.TimerDurationInSeconds);
     }

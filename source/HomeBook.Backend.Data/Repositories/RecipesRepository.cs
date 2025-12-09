@@ -81,4 +81,62 @@ public class RecipesRepository(
             .Where(e => e.Id == entityId)
             .ExecuteDeleteAsync(cancellationToken);
     }
+
+    /// <inheritdoc />
+    public async Task<Recipe2RecipeIngredient> CreateOrUpdateAsync(Recipe2RecipeIngredient entity,
+        CancellationToken cancellationToken)
+    {
+        await using AppDbContext dbContext = await factory.CreateDbContextAsync(cancellationToken);
+
+        Recipe2RecipeIngredient? existing = await GetAsync(entity.RecipeId,
+            entity.IngredientId,
+            cancellationToken,
+            dbContext);
+
+        if (existing is null)
+        {
+            dbContext.Recipe2RecipeIngredients.Add(entity);
+        }
+        else
+        {
+            dbContext.Entry(existing).CurrentValues.SetValues(entity);
+        }
+
+        await dbContext.SaveChangesAsync(cancellationToken);
+        return entity;
+    }
+
+    /// <inheritdoc />
+    public async Task<Recipe2RecipeIngredient?> GetAsync(Guid recipeId,
+        Guid ingredientId,
+        CancellationToken cancellationToken,
+        AppDbContext? appDbContext = null)
+    {
+        if (appDbContext is null)
+        {
+            await using AppDbContext newDbContext = await factory.CreateDbContextAsync(cancellationToken);
+            return await GetAsync(recipeId, ingredientId, cancellationToken, newDbContext);
+        }
+
+        Recipe2RecipeIngredient? entity = await appDbContext.Set<Recipe2RecipeIngredient>()
+            .Include(r2ri => r2ri.RecipeIngredient)
+            .Include(r2ri => r2ri.Recipe)
+            .FirstOrDefaultAsync(r2ri => r2ri.RecipeId == recipeId
+                                         && r2ri.IngredientId == ingredientId,
+                cancellationToken);
+
+        return entity;
+    }
+
+    /// <inheritdoc />
+    public async Task<RecipeStep> CreateRecipeStepAsync(RecipeStep entity,
+        CancellationToken cancellationToken)
+    {
+        await using AppDbContext dbContext = await factory.CreateDbContextAsync(cancellationToken);
+
+        dbContext.RecipeSteps.Add(entity);
+
+        await dbContext.SaveChangesAsync(cancellationToken);
+        return entity;
+    }
 }

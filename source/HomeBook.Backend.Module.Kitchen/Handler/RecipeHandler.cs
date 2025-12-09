@@ -1,6 +1,7 @@
 using System.Security.Claims;
 using HomeBook.Backend.Abstractions.Contracts;
 using HomeBook.Backend.Core.Modules.Utilities;
+using HomeBook.Backend.Data.Entities;
 using HomeBook.Backend.Module.Kitchen.Contracts;
 using HomeBook.Backend.Module.Kitchen.Mappings;
 using HomeBook.Backend.Module.Kitchen.Models;
@@ -106,13 +107,39 @@ public class RecipeHandler
         {
             Guid userId = user.GetUserId();
 
-            Guid createdId = await recipesProvider.CreateAsync(request.Name,
+            Guid createdRecipeId = await recipesProvider.CreateAsync(request.Name,
                 userId,
                 request.Description,
-                request.DurationInMinutes,
-                request.CaloriesKcal,
                 request.Servings,
+                request.DurationWorkingMinutes,
+                request.DurationCookingMinutes,
+                request.DurationRestingMinutes,
+                request.CaloriesKcal,
+                request.Comments,
+                request.Source,
                 cancellationToken);
+
+            if (request.Ingredients is not null
+                && request.Ingredients.Length != 0)
+                foreach (CreateRecipeIngredientRequest ingredient in request.Ingredients)
+                {
+                    await recipesProvider.AddIngredientToRecipeAsync(createdRecipeId,
+                        ingredient.Name,
+                        ingredient.Quantity,
+                        ingredient.Unit,
+                        cancellationToken);
+                }
+
+            if (request.Steps is not null
+                && request.Steps.Length != 0)
+                foreach (CreateRecipeStepRequest si in request.Steps)
+                {
+                    await recipesProvider.AddStepToRecipeAsync(createdRecipeId,
+                        si.Position,
+                        si.Description,
+                        si.TimerDurationInSeconds,
+                        cancellationToken);
+                }
 
             return TypedResults.Ok();
         }

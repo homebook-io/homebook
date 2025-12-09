@@ -95,12 +95,10 @@ public class KitchenRecipeHandlerE2ETests
             .Where(line => !string.IsNullOrWhiteSpace(line))
             .ToList();
         tables.ShouldContain("__EFMigrationsHistory");
-        tables.ShouldContain("Users");
-        tables.ShouldContain("Configurations");
-        tables.ShouldContain("UserPreferences");
+        tables.ShouldContain("RecipeSteps");
+        tables.ShouldContain("RecipeIngredients");
+        tables.ShouldContain("Recipe2RecipeIngredient");
         tables.ShouldContain("Recipes");
-        tables.ShouldContain("Recipes");
-        tables.ShouldContain("Ingredients");
 
         // create user
         IUserProvider userProvider = serviceProvider.GetRequiredService<IUserProvider>();
@@ -127,31 +125,31 @@ public class KitchenRecipeHandlerE2ETests
 
         // create recipes
         var createRecipeResult1 = await RecipeHandler.HandleCreateRecipe(testuser,
-            new CreateRecipeRequest("Gyros-Pita", null, null, null, null),
+            new CreateRecipeRequest("Gyros-Pita", null, null, null, null, null, null, null, null, null, null),
             _loggerFactory.CreateLogger<RecipeHandler>(),
             recipesProvider,
             cancellationToken);
         createRecipeResult1.ShouldBeOfType<Ok>();
         var createRecipeResult2 = await RecipeHandler.HandleCreateRecipe(testuser,
-            new CreateRecipeRequest("Nana's Italian Roulade", null, null, null, null),
+            new CreateRecipeRequest("Nana's Italian Roulade", null, null, null, null, null, null, null, null, null, null),
             _loggerFactory.CreateLogger<RecipeHandler>(),
             recipesProvider,
             cancellationToken);
         createRecipeResult2.ShouldBeOfType<Ok>();
         var createRecipeResult3 = await RecipeHandler.HandleCreateRecipe(testuser,
-            new CreateRecipeRequest("Pancakes", null, null, null, null),
+            new CreateRecipeRequest("Pancakes", null, null, null, null, null, null, null, null, null, null),
             _loggerFactory.CreateLogger<RecipeHandler>(),
             recipesProvider,
             cancellationToken);
         createRecipeResult3.ShouldBeOfType<Ok>();
         var createRecipeResult4 = await RecipeHandler.HandleCreateRecipe(testuser,
-            new CreateRecipeRequest("Pasta à la Roma", null, null, null, null),
+            new CreateRecipeRequest("Pasta à la Roma", null, null, null, null, null, null, null, null, null, null),
             _loggerFactory.CreateLogger<RecipeHandler>(),
             recipesProvider,
             cancellationToken);
         createRecipeResult4.ShouldBeOfType<Ok>();
         var createRecipeResult5 = await RecipeHandler.HandleCreateRecipe(testuser,
-            new CreateRecipeRequest("Rührei mit Kräutern", null, null, null, null),
+            new CreateRecipeRequest("Rührei mit Kräutern", null, null, null, null, null, null, null, null, null, null),
             _loggerFactory.CreateLogger<RecipeHandler>(),
             recipesProvider,
             cancellationToken);

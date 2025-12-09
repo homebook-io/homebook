@@ -1,6 +1,7 @@
 namespace HomeBook.Backend.Module.Kitchen.Models;
 
 public record RecipeStepDto(
-    Guid Id,
+    Guid RecipeId,
+    int Position,
     string Description,
     int? TimerDurationInSeconds);
