@@ -143,24 +143,21 @@ namespace HomeBook.Backend.Data.PostgreSql.Migrations
 
             modelBuilder.Entity("HomeBook.Backend.Data.Entities.RecipeStep", b =>
                 {
-                    b.Property<Guid>("Id")
-                        .ValueGeneratedOnAdd()
+                    b.Property<Guid>("RecipeId")
                         .HasColumnType("uuid");
+
+                    b.Property<int>("Position")
+                        .HasColumnType("integer");
 
                     b.Property<string>("Description")
                         .IsRequired()
                         .HasMaxLength(500)
                         .HasColumnType("character varying(500)");
 
-                    b.Property<Guid>("RecipeId")
-                        .HasColumnType("uuid");
-
                     b.Property<int?>("TimerDurationInSeconds")
                         .HasColumnType("integer");
 
-                    b.HasKey("Id");
-
-                    b.HasIndex("RecipeId");
+                    b.HasKey("RecipeId", "Position");
 
                     b.ToTable("RecipeSteps");
                 });

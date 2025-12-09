@@ -138,24 +138,21 @@ namespace HomeBook.Backend.Data.Sqlite.Migrations
 
             modelBuilder.Entity("HomeBook.Backend.Data.Entities.RecipeStep", b =>
                 {
-                    b.Property<Guid>("Id")
-                        .ValueGeneratedOnAdd()
+                    b.Property<Guid>("RecipeId")
                         .HasColumnType("TEXT");
+
+                    b.Property<int>("Position")
+                        .HasColumnType("INTEGER");
 
                     b.Property<string>("Description")
                         .IsRequired()
                         .HasMaxLength(500)
                         .HasColumnType("TEXT");
 
-                    b.Property<Guid>("RecipeId")
-                        .HasColumnType("TEXT");
-
                     b.Property<int?>("TimerDurationInSeconds")
                         .HasColumnType("INTEGER");
 
-                    b.HasKey("Id");
-
-                    b.HasIndex("RecipeId");
+                    b.HasKey("RecipeId", "Position");
 
                     b.ToTable("RecipeSteps");
                 });

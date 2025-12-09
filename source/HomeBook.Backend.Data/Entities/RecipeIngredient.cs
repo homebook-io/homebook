@@ -22,7 +22,8 @@ public class RecipeIngredient : INormalizable
     [MaxLength(100)]
     public string NormalizedName { get; set; } = null!;
 
-    public virtual ICollection<Recipe2RecipeIngredient> Recipe2RecipeIngredients { get; set; } = new List<Recipe2RecipeIngredient>();
+    public virtual ICollection<Recipe2RecipeIngredient> Recipe2RecipeIngredients { get; set; } =
+        new List<Recipe2RecipeIngredient>();
 
 
     public void Normalize(IStringNormalizer normalizer)
