@@ -98,16 +98,13 @@ namespace HomeBook.Backend.Data.Sqlite.Migrations
                     b.Property<double?>("Quantity")
                         .HasColumnType("REAL");
 
-                    b.Property<Guid>("RecipeIngredientId")
-                        .HasColumnType("TEXT");
-
                     b.Property<string>("Unit")
                         .HasMaxLength(20)
                         .HasColumnType("TEXT");
 
                     b.HasKey("RecipeId", "IngredientId");
 
-                    b.HasIndex("RecipeIngredientId");
+                    b.HasIndex("IngredientId");
 
                     b.ToTable("Recipe2RecipeIngredient");
                 });
@@ -269,15 +266,15 @@ namespace HomeBook.Backend.Data.Sqlite.Migrations
 
             modelBuilder.Entity("HomeBook.Backend.Data.Entities.Recipe2RecipeIngredient", b =>
                 {
-                    b.HasOne("HomeBook.Backend.Data.Entities.Recipe", "Recipe")
-                        .WithMany("Recipe2RecipeIngredient")
-                        .HasForeignKey("RecipeId")
+                    b.HasOne("HomeBook.Backend.Data.Entities.RecipeIngredient", "RecipeIngredient")
+                        .WithMany("Recipe2RecipeIngredients")
+                        .HasForeignKey("IngredientId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("HomeBook.Backend.Data.Entities.RecipeIngredient", "RecipeIngredient")
-                        .WithMany("Recipe2RecipeIngredients")
-                        .HasForeignKey("RecipeIngredientId")
+                    b.HasOne("HomeBook.Backend.Data.Entities.Recipe", "Recipe")
+                        .WithMany("Recipe2RecipeIngredient")
+                        .HasForeignKey("RecipeId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 

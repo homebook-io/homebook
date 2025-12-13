@@ -1,7 +1,9 @@
+using System.Linq.Expressions;
 using HomeBook.Backend.Abstractions.Contracts;
 using HomeBook.Backend.Data.Contracts;
 using HomeBook.Backend.Data.Entities;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Query;
 
 namespace HomeBook.Backend.Data.Repositories;
 
@@ -60,15 +62,35 @@ public class RecipesRepository(
 
         if (existing is null)
         {
-            dbContext.Recipes.Add(entity);
+            dbContext.Add(entity);
         }
         else
         {
-            dbContext.Entry(existing).CurrentValues.SetValues(entity);
+            await dbContext.Recipes
+                .Where(u => u.Id == entity.Id)
+                .ExecuteUpdateAsync(UpdateEntityProperties(entity),
+                    cancellationToken: cancellationToken);
         }
 
         await dbContext.SaveChangesAsync(cancellationToken);
         return entity.Id;
+    }
+
+    private static Expression<Func<SetPropertyCalls<Recipe>, SetPropertyCalls<Recipe>>>
+        UpdateEntityProperties(Recipe entity)
+    {
+        return s => s
+            .SetProperty(u => u.Name, entity.Name)
+            .SetProperty(u => u.NormalizedName, entity.NormalizedName)
+            .SetProperty(u => u.Description, entity.Description)
+            .SetProperty(u => u.DurationWorkingMinutes, entity.DurationWorkingMinutes)
+            .SetProperty(u => u.DurationCookingMinutes, entity.DurationCookingMinutes)
+            .SetProperty(u => u.DurationRestingMinutes, entity.DurationRestingMinutes)
+            .SetProperty(u => u.CaloriesKcal, entity.CaloriesKcal)
+            .SetProperty(u => u.Servings, entity.Servings)
+            .SetProperty(u => u.Comments, entity.Comments)
+            .SetProperty(u => u.Source, entity.Source)
+            .SetProperty(u => u.NormalizedName, entity.NormalizedName);
     }
 
     /// <inheritdoc />
@@ -95,15 +117,28 @@ public class RecipesRepository(
 
         if (existing is null)
         {
-            dbContext.Recipe2RecipeIngredients.Add(entity);
+            dbContext.Add(entity);
         }
         else
         {
-            dbContext.Entry(existing).CurrentValues.SetValues(entity);
+            await dbContext.Recipe2RecipeIngredients
+                .Where(u => u.RecipeId == entity.RecipeId
+                            && u.IngredientId == entity.IngredientId)
+                .ExecuteUpdateAsync(UpdateEntityProperties(entity),
+                    cancellationToken: cancellationToken);
         }
 
         await dbContext.SaveChangesAsync(cancellationToken);
         return entity;
+    }
+
+    private static Expression<
+            Func<SetPropertyCalls<Recipe2RecipeIngredient>, SetPropertyCalls<Recipe2RecipeIngredient>>>
+        UpdateEntityProperties(Recipe2RecipeIngredient entity)
+    {
+        return s => s
+            .SetProperty(u => u.Quantity, entity.Quantity)
+            .SetProperty(u => u.Unit, entity.Unit);
     }
 
     /// <inheritdoc />

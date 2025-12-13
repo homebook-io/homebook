@@ -21,9 +21,9 @@ public interface IUserPreferenceRepository
     /// <summary>
     /// sets the preference value for a specific user by key
     /// </summary>
-    /// <param name="preference"></param>
+    /// <param name="entity"></param>
     /// <param name="cancellationToken"></param>
     /// <returns></returns>
-    Task SetPreferenceForUserByKeyAsync(UserPreference preference,
+    Task SetPreferenceForUserByKeyAsync(UserPreference entity,
         CancellationToken cancellationToken);
 }

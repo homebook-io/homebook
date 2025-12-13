@@ -1,7 +1,9 @@
+using System.Linq.Expressions;
 using HomeBook.Backend.Abstractions.Contracts;
 using HomeBook.Backend.Data.Contracts;
 using HomeBook.Backend.Data.Entities;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Query;
 
 namespace HomeBook.Backend.Data.Repositories;
 
@@ -24,15 +26,26 @@ public class IngredientRepository(
 
         if (existing is null)
         {
-            dbContext.RecipeIngredients.Add(entity);
+            dbContext.Add(entity);
         }
         else
         {
-            dbContext.Entry(existing).CurrentValues.SetValues(entity);
+            await dbContext.RecipeIngredients
+                .Where(u => u.Id == entity.Id)
+                .ExecuteUpdateAsync(UpdateEntityProperties(entity),
+                    cancellationToken: cancellationToken);
         }
 
         await dbContext.SaveChangesAsync(cancellationToken);
         return entity.Id;
+    }
+
+    private static Expression<Func<SetPropertyCalls<RecipeIngredient>, SetPropertyCalls<RecipeIngredient>>>
+        UpdateEntityProperties(RecipeIngredient entity)
+    {
+        return s => s
+            .SetProperty(u => u.Name, entity.Name)
+            .SetProperty(u => u.NormalizedName, entity.NormalizedName);
     }
 
     /// <inheritdoc />

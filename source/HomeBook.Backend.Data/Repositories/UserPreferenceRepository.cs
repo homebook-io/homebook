@@ -23,24 +23,24 @@ public class UserPreferenceRepository(
     }
 
     /// <inheritdoc />
-    public async Task SetPreferenceForUserByKeyAsync(UserPreference preference,
+    public async Task SetPreferenceForUserByKeyAsync(UserPreference entity,
         CancellationToken cancellationToken)
     {
         await using AppDbContext dbContext = await factory.CreateDbContextAsync(cancellationToken);
 
-        UserPreference? existingPreference = await dbContext.Set<UserPreference>()
-            .FirstOrDefaultAsync(c => c.UserId == preference.UserId
-                                      && c.Key == preference.Key,
+        UserPreference? existingEntity = await dbContext.Set<UserPreference>()
+            .FirstOrDefaultAsync(c => c.UserId == entity.UserId
+                                      && c.Key == entity.Key,
                 cancellationToken);
 
-        if (existingPreference is null)
+        if (existingEntity is null)
         {
-            dbContext.Add(preference);
+            dbContext.Add(entity);
         }
         else
         {
-            existingPreference.Value = preference.Value;
-            dbContext.Update(existingPreference);
+            existingEntity.Value = entity.Value;
+            dbContext.Update(existingEntity);
         }
 
         await dbContext.SaveChangesAsync(cancellationToken);

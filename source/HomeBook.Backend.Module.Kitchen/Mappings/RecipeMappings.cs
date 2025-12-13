@@ -58,9 +58,14 @@ public static class RecipeMappings
             r.Name,
             r.NormalizedName,
             r.Description,
+            r.Servings,
+
             r.DurationWorkingMinutes,
+            r.DurationCookingMinutes,
+            r.DurationRestingMinutes,
             r.CaloriesKcal,
-            r.Servings);
+            r.Comments,
+            r.Source);
     }
 
     public static async Task<RecipeDetailResponse> ToDetailResponseAsync(this RecipeDto recipe,

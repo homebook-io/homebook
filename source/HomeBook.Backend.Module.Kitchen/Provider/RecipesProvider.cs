@@ -95,6 +95,10 @@ public class RecipesProvider(
 
         // TODO: validator
 
+        logger.LogInformation("Adding ingredient {IngredientName} to recipe {RecipeId}",
+            name,
+            recipeId);
+
         Recipe2RecipeIngredient updatedEntity = await recipesRepository
             .CreateOrUpdateAsync(entity,
                 cancellationToken);

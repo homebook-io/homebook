@@ -10,11 +10,15 @@ public class Recipe2RecipeIngredient
 {
     [Required]
     public Guid RecipeId { get; set; }
-    public virtual Recipe Recipe { get; set; } = null!;
+
+    [ForeignKey(nameof(RecipeId))]
+    public Recipe Recipe { get; set; } = null!;
 
     [Required]
     public Guid IngredientId { get; set; }
-    public virtual RecipeIngredient RecipeIngredient { get; set; } = null!;
+
+    [ForeignKey(nameof(IngredientId))]
+    public RecipeIngredient RecipeIngredient { get; set; } = null!;
 
     public double? Quantity { get; set; }
 
