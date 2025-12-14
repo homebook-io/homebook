@@ -158,18 +158,17 @@ public class RecipesProvider(
         string name,
         CancellationToken cancellationToken)
     {
-        Recipe entity = await recipesRepository.GetByIdAsync(id,
-                            cancellationToken)
-                        ?? throw new KeyNotFoundException(
-                            $"Recipe with id {id} not found");
-
-        entity.Name = name;
+        // Recipe entity = await recipesRepository.GetByIdAsync(id,
+        //                     cancellationToken)
+        //                 ?? throw new KeyNotFoundException(
+        //                     $"Recipe with id {id} not found");
+        //
+        // entity.Name = name;
 
         // TODO: validator
 
-        await recipesRepository
-            .CreateOrUpdateAsync(entity,
-                cancellationToken);
-        return;
+        await recipesRepository.UpdateRecipeNameAsync(id,
+            name,
+            cancellationToken);
     }
 }

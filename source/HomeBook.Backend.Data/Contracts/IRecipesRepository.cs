@@ -72,4 +72,15 @@ public interface IRecipesRepository
     /// <returns></returns>
     Task<RecipeStep> CreateRecipeStepAsync(RecipeStep entity,
         CancellationToken cancellationToken);
+
+    /// <summary>
+    ///
+    /// </summary>
+    /// <param name="id"></param>
+    /// <param name="name"></param>
+    /// <param name="cancellationToken"></param>
+    /// <returns></returns>
+    Task UpdateRecipeNameAsync(Guid id,
+        string name,
+        CancellationToken cancellationToken);
 }
