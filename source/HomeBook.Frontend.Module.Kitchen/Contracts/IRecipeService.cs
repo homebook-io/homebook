@@ -27,16 +27,28 @@ public interface IRecipeService
     /// </summary>
     /// <param name="name"></param>
     /// <param name="description"></param>
-    /// <param name="durationInMinutes"></param>
-    /// <param name="caloriesKcal"></param>
     /// <param name="servings"></param>
+    /// <param name="steps"></param>
+    /// <param name="ingredients"></param>
+    /// <param name="durationWorkingMinutes"></param>
+    /// <param name="durationCookingMinutes"></param>
+    /// <param name="durationRestingMinutes"></param>
+    /// <param name="caloriesKcal"></param>
+    /// <param name="comments"></param>
+    /// <param name="source"></param>
     /// <param name="cancellationToken"></param>
     /// <returns></returns>
     Task CreateRecipeAsync(string name,
         string? description = null,
-        int? durationInMinutes = null,
-        int? caloriesKcal = null,
         int? servings = null,
+        RecipeStepDto[]? steps = null,
+        RecipeIngredientDto[]? ingredients = null,
+        int? durationWorkingMinutes = null,
+        int? durationCookingMinutes = null,
+        int? durationRestingMinutes = null,
+        int? caloriesKcal = null,
+        string? comments = null,
+        string? source = null,
         CancellationToken cancellationToken = default);
 
     /// <summary>

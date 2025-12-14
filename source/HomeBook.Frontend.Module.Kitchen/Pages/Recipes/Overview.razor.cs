@@ -52,14 +52,28 @@ public partial class Overview : ComponentBase
         string recipeName = "Cheeseburger";
         string description =
             "Ein leckerer Cheeseburger mit saftigem Rindfleisch, geschmolzenem Käse, frischem Salat, Tomaten und Zwiebeln, serviert in einem weichen Brötchen.";
-        int durationInMinutes = 45;
-        int caloriesKcal = 3250;
         int servings = 2;
+        var steps = new List<RecipeStepDto>();
+        var ingredients = new List<RecipeIngredientDto>();
+        int durationWorkingMinutes = 45;
+        int durationCookingMinutes = 45;
+        int durationRestingMinutes = 45;
+        int caloriesKcal = 3250;
+        string comments = "3250";
+        string source = "3250";
+        CancellationToken cancellationToken = CancellationToken.None;
 
         await RecipeService.CreateRecipeAsync(recipeName,
             description,
-            durationInMinutes,
+            servings,
+            steps.ToArray(),
+            ingredients.ToArray(),
+            durationWorkingMinutes,
+            durationCookingMinutes,
+            durationRestingMinutes,
             caloriesKcal,
-            servings);
+            comments,
+            source,
+            cancellationToken);
     }
 }

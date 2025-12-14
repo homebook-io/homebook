@@ -58,9 +58,15 @@ public class RecipeService(
     /// <inheritdoc/>
     public async Task CreateRecipeAsync(string name,
         string? description = null,
-        int? durationInMinutes = null,
-        int? caloriesKcal = null,
         int? servings = null,
+        RecipeStepDto[]? steps = null,
+        RecipeIngredientDto[]? ingredients = null,
+        int? durationWorkingMinutes = null,
+        int? durationCookingMinutes = null,
+        int? durationRestingMinutes = null,
+        int? caloriesKcal = null,
+        string? comments = null,
+        string? source = null,
         CancellationToken cancellationToken = default)
     {
         cancellationToken.ThrowIfCancellationRequested();
@@ -70,9 +76,15 @@ public class RecipeService(
         {
             Name = name,
             Description = description,
-            DurationInMinutes = durationInMinutes,
+            Servings = servings,
+            Ingredients = (ingredients ?? []).Select(x => x.ToRequest()).ToList(),
+            Steps = (steps ?? []).Select(x => x.ToRequest()).ToList(),
+            DurationWorkingMinutes = durationWorkingMinutes,
+            DurationCookingMinutes = durationCookingMinutes,
+            DurationRestingMinutes = durationRestingMinutes,
             CaloriesKcal = caloriesKcal,
-            Servings = servings
+            Comments = comments,
+            Source = source
         };
 
         await backendClient.Modules.Kitchen.Recipes.PostAsync(request,
@@ -87,6 +99,12 @@ public class RecipeService(
     public async Task CreateRecipeAsync(string name,
         CancellationToken cancellationToken = default) =>
         await CreateRecipeAsync(name,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
             null,
             null,
             null,
