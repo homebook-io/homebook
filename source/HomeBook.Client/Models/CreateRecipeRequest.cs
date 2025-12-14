@@ -16,6 +16,14 @@ namespace HomeBook.Client.Models
         public IDictionary<string, object> AdditionalData { get; set; }
         /// <summary>The caloriesKcal property</summary>
         public int? CaloriesKcal { get; set; }
+        /// <summary>The comments property</summary>
+#if NETSTANDARD2_1_OR_GREATER || NETCOREAPP3_1_OR_GREATER
+#nullable enable
+        public string? Comments { get; set; }
+#nullable restore
+#else
+        public string Comments { get; set; }
+#endif
         /// <summary>The description property</summary>
 #if NETSTANDARD2_1_OR_GREATER || NETCOREAPP3_1_OR_GREATER
 #nullable enable
@@ -24,8 +32,20 @@ namespace HomeBook.Client.Models
 #else
         public string Description { get; set; }
 #endif
-        /// <summary>The durationInMinutes property</summary>
-        public int? DurationInMinutes { get; set; }
+        /// <summary>The durationCookingMinutes property</summary>
+        public int? DurationCookingMinutes { get; set; }
+        /// <summary>The durationRestingMinutes property</summary>
+        public int? DurationRestingMinutes { get; set; }
+        /// <summary>The durationWorkingMinutes property</summary>
+        public int? DurationWorkingMinutes { get; set; }
+        /// <summary>The ingredients property</summary>
+#if NETSTANDARD2_1_OR_GREATER || NETCOREAPP3_1_OR_GREATER
+#nullable enable
+        public List<global::HomeBook.Client.Models.CreateRecipeIngredientRequest>? Ingredients { get; set; }
+#nullable restore
+#else
+        public List<global::HomeBook.Client.Models.CreateRecipeIngredientRequest> Ingredients { get; set; }
+#endif
         /// <summary>The name property</summary>
 #if NETSTANDARD2_1_OR_GREATER || NETCOREAPP3_1_OR_GREATER
 #nullable enable
@@ -36,6 +56,22 @@ namespace HomeBook.Client.Models
 #endif
         /// <summary>The servings property</summary>
         public int? Servings { get; set; }
+        /// <summary>The source property</summary>
+#if NETSTANDARD2_1_OR_GREATER || NETCOREAPP3_1_OR_GREATER
+#nullable enable
+        public string? Source { get; set; }
+#nullable restore
+#else
+        public string Source { get; set; }
+#endif
+        /// <summary>The steps property</summary>
+#if NETSTANDARD2_1_OR_GREATER || NETCOREAPP3_1_OR_GREATER
+#nullable enable
+        public List<global::HomeBook.Client.Models.CreateRecipeStepRequest>? Steps { get; set; }
+#nullable restore
+#else
+        public List<global::HomeBook.Client.Models.CreateRecipeStepRequest> Steps { get; set; }
+#endif
         /// <summary>
         /// Instantiates a new <see cref="global::HomeBook.Client.Models.CreateRecipeRequest"/> and sets the default values.
         /// </summary>
@@ -62,10 +98,16 @@ namespace HomeBook.Client.Models
             return new Dictionary<string, Action<IParseNode>>
             {
                 { "caloriesKcal", n => { CaloriesKcal = n.GetIntValue(); } },
+                { "comments", n => { Comments = n.GetStringValue(); } },
                 { "description", n => { Description = n.GetStringValue(); } },
-                { "durationInMinutes", n => { DurationInMinutes = n.GetIntValue(); } },
+                { "durationCookingMinutes", n => { DurationCookingMinutes = n.GetIntValue(); } },
+                { "durationRestingMinutes", n => { DurationRestingMinutes = n.GetIntValue(); } },
+                { "durationWorkingMinutes", n => { DurationWorkingMinutes = n.GetIntValue(); } },
+                { "ingredients", n => { Ingredients = n.GetCollectionOfObjectValues<global::HomeBook.Client.Models.CreateRecipeIngredientRequest>(global::HomeBook.Client.Models.CreateRecipeIngredientRequest.CreateFromDiscriminatorValue)?.AsList(); } },
                 { "name", n => { Name = n.GetStringValue(); } },
                 { "servings", n => { Servings = n.GetIntValue(); } },
+                { "source", n => { Source = n.GetStringValue(); } },
+                { "steps", n => { Steps = n.GetCollectionOfObjectValues<global::HomeBook.Client.Models.CreateRecipeStepRequest>(global::HomeBook.Client.Models.CreateRecipeStepRequest.CreateFromDiscriminatorValue)?.AsList(); } },
             };
         }
         /// <summary>
@@ -76,10 +118,16 @@ namespace HomeBook.Client.Models
         {
             if(ReferenceEquals(writer, null)) throw new ArgumentNullException(nameof(writer));
             writer.WriteIntValue("caloriesKcal", CaloriesKcal);
+            writer.WriteStringValue("comments", Comments);
             writer.WriteStringValue("description", Description);
-            writer.WriteIntValue("durationInMinutes", DurationInMinutes);
+            writer.WriteIntValue("durationCookingMinutes", DurationCookingMinutes);
+            writer.WriteIntValue("durationRestingMinutes", DurationRestingMinutes);
+            writer.WriteIntValue("durationWorkingMinutes", DurationWorkingMinutes);
+            writer.WriteCollectionOfObjectValues<global::HomeBook.Client.Models.CreateRecipeIngredientRequest>("ingredients", Ingredients);
             writer.WriteStringValue("name", Name);
             writer.WriteIntValue("servings", Servings);
+            writer.WriteStringValue("source", Source);
+            writer.WriteCollectionOfObjectValues<global::HomeBook.Client.Models.CreateRecipeStepRequest>("steps", Steps);
             writer.WriteAdditionalData(AdditionalData);
         }
     }

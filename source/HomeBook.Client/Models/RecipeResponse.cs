@@ -16,6 +16,14 @@ namespace HomeBook.Client.Models
         public IDictionary<string, object> AdditionalData { get; set; }
         /// <summary>The caloriesKcal property</summary>
         public int? CaloriesKcal { get; set; }
+        /// <summary>The comments property</summary>
+#if NETSTANDARD2_1_OR_GREATER || NETCOREAPP3_1_OR_GREATER
+#nullable enable
+        public string? Comments { get; set; }
+#nullable restore
+#else
+        public string Comments { get; set; }
+#endif
         /// <summary>The description property</summary>
 #if NETSTANDARD2_1_OR_GREATER || NETCOREAPP3_1_OR_GREATER
 #nullable enable
@@ -24,8 +32,12 @@ namespace HomeBook.Client.Models
 #else
         public string Description { get; set; }
 #endif
-        /// <summary>The durationMinutes property</summary>
-        public int? DurationMinutes { get; set; }
+        /// <summary>The durationCookingMinutes property</summary>
+        public int? DurationCookingMinutes { get; set; }
+        /// <summary>The durationRestingMinutes property</summary>
+        public int? DurationRestingMinutes { get; set; }
+        /// <summary>The durationWorkingMinutes property</summary>
+        public int? DurationWorkingMinutes { get; set; }
         /// <summary>The id property</summary>
         public Guid? Id { get; set; }
         /// <summary>The name property</summary>
@@ -46,6 +58,14 @@ namespace HomeBook.Client.Models
 #endif
         /// <summary>The servings property</summary>
         public int? Servings { get; set; }
+        /// <summary>The source property</summary>
+#if NETSTANDARD2_1_OR_GREATER || NETCOREAPP3_1_OR_GREATER
+#nullable enable
+        public string? Source { get; set; }
+#nullable restore
+#else
+        public string Source { get; set; }
+#endif
         /// <summary>The username property</summary>
 #if NETSTANDARD2_1_OR_GREATER || NETCOREAPP3_1_OR_GREATER
 #nullable enable
@@ -80,12 +100,16 @@ namespace HomeBook.Client.Models
             return new Dictionary<string, Action<IParseNode>>
             {
                 { "caloriesKcal", n => { CaloriesKcal = n.GetIntValue(); } },
+                { "comments", n => { Comments = n.GetStringValue(); } },
                 { "description", n => { Description = n.GetStringValue(); } },
-                { "durationMinutes", n => { DurationMinutes = n.GetIntValue(); } },
+                { "durationCookingMinutes", n => { DurationCookingMinutes = n.GetIntValue(); } },
+                { "durationRestingMinutes", n => { DurationRestingMinutes = n.GetIntValue(); } },
+                { "durationWorkingMinutes", n => { DurationWorkingMinutes = n.GetIntValue(); } },
                 { "id", n => { Id = n.GetGuidValue(); } },
                 { "name", n => { Name = n.GetStringValue(); } },
                 { "normalizedName", n => { NormalizedName = n.GetStringValue(); } },
                 { "servings", n => { Servings = n.GetIntValue(); } },
+                { "source", n => { Source = n.GetStringValue(); } },
                 { "username", n => { Username = n.GetStringValue(); } },
             };
         }
@@ -97,12 +121,16 @@ namespace HomeBook.Client.Models
         {
             if(ReferenceEquals(writer, null)) throw new ArgumentNullException(nameof(writer));
             writer.WriteIntValue("caloriesKcal", CaloriesKcal);
+            writer.WriteStringValue("comments", Comments);
             writer.WriteStringValue("description", Description);
-            writer.WriteIntValue("durationMinutes", DurationMinutes);
+            writer.WriteIntValue("durationCookingMinutes", DurationCookingMinutes);
+            writer.WriteIntValue("durationRestingMinutes", DurationRestingMinutes);
+            writer.WriteIntValue("durationWorkingMinutes", DurationWorkingMinutes);
             writer.WriteGuidValue("id", Id);
             writer.WriteStringValue("name", Name);
             writer.WriteStringValue("normalizedName", NormalizedName);
             writer.WriteIntValue("servings", Servings);
+            writer.WriteStringValue("source", Source);
             writer.WriteStringValue("username", Username);
             writer.WriteAdditionalData(AdditionalData);
         }
