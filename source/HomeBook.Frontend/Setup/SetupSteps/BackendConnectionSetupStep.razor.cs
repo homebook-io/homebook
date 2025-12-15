@@ -85,11 +85,6 @@ public partial class BackendConnectionSetupStep : ComponentBase, ISetupStep
             throw new SetupCheckException(
                 Loc[nameof(LocalizationStrings.Setup_BackendConnection_Check_VersionError_Message)]);
 
-        string appVersion = Configuration.GetSection("Version").Value ?? "";
-        if (appVersion != versionResponse)
-            throw new SetupCheckException(
-                Loc[nameof(LocalizationStrings.Setup_BackendConnection_Check_VersionMatchError_Message)]);
-
         try
         {
             await BackendClient.Setup.Availability.GetAsync(x =>
