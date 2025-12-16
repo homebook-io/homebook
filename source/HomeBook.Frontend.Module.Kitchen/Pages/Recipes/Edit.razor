@@ -48,39 +48,39 @@
 
         <MudPaper Class="frosted-b8 text-dark mb-5 pa-3">
 
-            <UiRecipeDescriptionServings NumberOfServings="@_recipe.Servings"
+            <UiRecipeDescriptionServings @bind-NumberOfServings="@_recipe.NumberOfServings"
                                          Description="@_recipe.Description"/>
 
         </MudPaper>
 
-        <MudPaper Class="frosted-b8 text-dark mb-5">
-
-            <UiRecipeIngredientsList Ingredients="@_recipe.Ingredients"/>
-
-        </MudPaper>
-
-        <MudPaper Class="frosted-b8 text-dark mb-5">
-
-            <UiRecipeIngredientsList Steps="@_recipe.Steps"/>
-
-        </MudPaper>
-
-        <MudPaper Class="frosted-b4 text-dark mb-5">
-
-            <UiRecipeImageUpload/>
-
-        </MudPaper>
-
-        <MudPaper Class="frosted-b4 text-dark mb-5">
-
-            <UiRecipeMetaEdit Source="@_recipe.Source"
-                              Comment="@_recipe.Comment"
-                              CaloriesKcal="@_recipe.CaloriesKcal"
-                              DurationWorkingMinutes="@_recipe.DurationWorkingMinutes"
-                              DurationCookingMinutes="@_recipe.DurationCookingMinutes"
-                              DurationRestingMinutes="@_recipe.DurationRestingMinutes"/>
-
-        </MudPaper>
+        @* <MudPaper Class="frosted-b8 text-dark mb-5"> *@
+        @* *@
+        @*     <UiRecipeIngredientsList Ingredients="@_recipe.Ingredients"/> *@
+        @* *@
+        @* </MudPaper> *@
+        @* *@
+        @* <MudPaper Class="frosted-b8 text-dark mb-5"> *@
+        @* *@
+        @*     <UiRecipeIngredientsList Steps="@_recipe.Steps"/> *@
+        @* *@
+        @* </MudPaper> *@
+        @* *@
+        @* <MudPaper Class="frosted-b4 text-dark mb-5"> *@
+        @* *@
+        @*     <UiRecipeImageUpload/> *@
+        @* *@
+        @* </MudPaper> *@
+        @* *@
+        @* <MudPaper Class="frosted-b4 text-dark mb-5"> *@
+        @* *@
+        @*     <UiRecipeMetaEdit Source="@_recipe.Source" *@
+        @*                       Comment="@_recipe.Comment" *@
+        @*                       CaloriesKcal="@_recipe.CaloriesKcal" *@
+        @*                       DurationWorkingMinutes="@_recipe.DurationWorkingMinutes" *@
+        @*                       DurationCookingMinutes="@_recipe.DurationCookingMinutes" *@
+        @*                       DurationRestingMinutes="@_recipe.DurationRestingMinutes"/> *@
+        @* *@
+        @* </MudPaper> *@
 
         <MudPaper Class="frosted-b4 text-dark mb-5 pa-3">
 

@@ -9,7 +9,7 @@
     <MudToolBar Dense="true"
                 Class="px-0">
 
-        @switch (Servings)
+        @switch (NumberOfServings)
         {
             case 1:
                 <MudText Typo="Typo.body1">
@@ -18,15 +18,16 @@
                 break;
             default:
                 <MudText Typo="Typo.body1">
-                    +Für <b>@Servings</b> Portionen
+                    +Für <b>@NumberOfServings</b> Portionen
                 </MudText>
                 break;
         }
 
         <MudSpacer/>
 
-        <UiNumericGroup @bind-Value="@Servings"
+        <UiNumericGroup @bind-Value="@NumberOfServings"
                         Min="1"
+                        Max="int.MaxValue"
                         Step="1"/>
 
     </MudToolBar>

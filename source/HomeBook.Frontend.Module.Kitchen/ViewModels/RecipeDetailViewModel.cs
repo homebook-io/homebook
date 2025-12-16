@@ -18,5 +18,12 @@ public class RecipeDetailViewModel
     public string Source { get; set; }
     public string Comment { get; set; }
 
+    public int NumberOfServings { get; set; }
+
     public bool HasAnnotations => Duration.HasValue || Servings.HasValue;
+
+    public RecipeDetailViewModel()
+    {
+        NumberOfServings = Servings ?? 1;
+    }
 }
