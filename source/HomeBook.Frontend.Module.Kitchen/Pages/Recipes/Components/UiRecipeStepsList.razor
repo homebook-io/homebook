@@ -1,3 +1,4 @@
+@using HomeBook.Frontend.Core.Icons
 <MudText Typo="Typo.h5"
          Class="mx-5 my-3">
     +Zubereitung
@@ -6,7 +7,7 @@
 <MudList T="string"
          Class="d-flex flex-column gap-3">
 
-    @foreach (var (step, index) in _recipe.Steps.Select((item, index) => (item, index)))
+    @foreach (var (step, index) in Steps.Select((item, index) => (item, index)))
     {
         <MudListItem T="string"
                      Dense="true">
@@ -39,7 +40,7 @@
                  Dense="true">
 
         <div class="d-flex flex-column flex-grow-1">
-            <MudText Class="flex-grow-1" Typo="Typo.h6">+Schritt @(_recipe.Steps.Count() + 1)</MudText>
+            <MudText Class="flex-grow-1" Typo="Typo.h6">+Schritt @(Steps.Count() + 1)</MudText>
 
             <div class="d-flex align-center gap-3">
 
