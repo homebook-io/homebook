@@ -1,0 +1,141 @@
+<MudText Typo="Typo.h5"
+         Class="mx-5 my-3">
+    +Dauer & weitere Angaben
+</MudText>
+
+<MudPaper Class="frosted-b4 text-dark mx-3 mb-5">
+
+    <MudGrid Class="mb-3">
+
+        <MudItem sm="12" md="6">
+
+            <MudText Typo="Typo.h6"
+                     Class="mx-3">
+                +Arbeitszeit
+            </MudText>
+
+            <div class="d-flex align-center justify-space-between flex-grow-1 gap-3 mx-3">
+                <MudNumericField T="int"
+                                 Margin="Margin.Dense"
+                                 Variant="Variant.Outlined"
+                                 Step="1"
+                                 Min="0"
+                                 Adornment="Adornment.End"
+                                 AdornmentText="+h"
+                                 AdornmentColor="Color.Primary"/>
+                <MudNumericField T="int"
+                                 Margin="Margin.Dense"
+                                 Variant="Variant.Outlined"
+                                 Step="1"
+                                 Min="0"
+                                 Max="59"
+                                 Adornment="Adornment.End"
+                                 AdornmentText="+m"
+                                 AdornmentColor="Color.Primary"/>
+            </div>
+
+        </MudItem>
+
+        <MudItem sm="12" md="6">
+
+            <MudText Typo="Typo.h6"
+                     Class="mx-3">
+                +Koch/Backzeit
+            </MudText>
+
+            <div class="d-flex align-center justify-space-between flex-grow-1 gap-3 mx-3">
+                <MudNumericField T="int"
+                                 Margin="Margin.Dense"
+                                 Variant="Variant.Outlined"
+                                 Step="1"
+                                 Min="0"
+                                 Adornment="Adornment.End"
+                                 AdornmentText="+h"
+                                 AdornmentColor="Color.Primary"/>
+                <MudNumericField T="int"
+                                 Margin="Margin.Dense"
+                                 Variant="Variant.Outlined"
+                                 Step="1"
+                                 Min="0"
+                                 Max="59"
+                                 Adornment="Adornment.End"
+                                 AdornmentText="+m"
+                                 AdornmentColor="Color.Primary"/>
+            </div>
+        </MudItem>
+
+        <MudItem sm="12" md="6">
+
+            <MudText Typo="Typo.h6"
+                     Class="mx-3">
+                +Ruhezeit
+            </MudText>
+
+            <div class="d-flex align-center justify-space-between flex-grow-1 gap-3 mx-3">
+                <MudNumericField T="int"
+                                 Margin="Margin.Dense"
+                                 Variant="Variant.Outlined"
+                                 Step="1"
+                                 Min="0"
+                                 Adornment="Adornment.End"
+                                 AdornmentText="+h"
+                                 AdornmentColor="Color.Primary"/>
+                <MudNumericField T="int"
+                                 Margin="Margin.Dense"
+                                 Variant="Variant.Outlined"
+                                 Step="1"
+                                 Min="0"
+                                 Max="59"
+                                 Adornment="Adornment.End"
+                                 AdornmentText="+m"
+                                 AdornmentColor="Color.Primary"/>
+            </div>
+        </MudItem>
+
+        <MudItem sm="12" md="6">
+
+            <MudText Typo="Typo.h6"
+                     Class="mx-3">
+                +Kalorien/Portion
+            </MudText>
+
+            <div class="d-flex align-center justify-space-between flex-grow-1 gap-3 mx-3">
+                <MudNumericField T="int"
+                                 Margin="Margin.Dense"
+                                 Variant="Variant.Outlined"
+                                 Step="1"
+                                 Min="0"
+                                 Adornment="Adornment.End"
+                                 AdornmentText="+Kcal"
+                                 AdornmentColor="Color.Primary"/>
+            </div>
+        </MudItem>
+
+    </MudGrid>
+
+</MudPaper>
+
+<MudPaper Class="frosted-b4 text-dark mx-3 mb-5">
+
+    <MudText Typo="Typo.h6"
+             Class="mx-3">
+        +Kommentar
+    </MudText>
+
+    <MudTextField T="string"
+                  Class="mx-3"
+                  Lines="5"
+                  Margin="Margin.Dense"
+                  Variant="Variant.Outlined"/>
+
+    <MudText Typo="Typo.h6"
+             Class="mx-3">
+        +Quelle
+    </MudText>
+
+    <MudTextField T="string"
+                  Class="mx-3 mb-3"
+                  Margin="Margin.Dense"
+                  Variant="Variant.Outlined"/>
+
+</MudPaper>

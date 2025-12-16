@@ -1,0 +1,61 @@
+<MudText Typo="Typo.h5"
+         Class="mx-5 my-3">
+    +Zutaten
+</MudText>
+
+<MudList T="string">
+
+    @foreach (IngredientViewModel ingredient in _recipe.Ingredients)
+    {
+        <MudListItem T="string"
+                     Class="py-0 px-3"
+                     Dense="true">
+
+            <div class="d-flex align-center justify-space-between flex-grow-1 gap-3">
+
+                <MudIconButton Icon="@HomeBookIcons.Icons8.Windows11.Outline.Multiply"
+                               Size="Size.Small"/>
+
+                <div class="d-flex flex-column flex-grow-1">
+
+                    <MudText Class="flex-grow-1" Typo="Typo.h6">
+                        @ingredient.DisplayText
+                    </MudText>
+
+                    @if (!string.IsNullOrWhiteSpace(ingredient.AdditionalText))
+                    {
+                        <MudText Class="flex-grow-1"
+                                 Typo="Typo.caption">@ingredient.AdditionalText</MudText>
+                    }
+
+                </div>
+
+                <MudIconButton Icon="@HomeBookIcons.Icons8.Windows11.Outline.EditPencil"
+                               Size="Size.Small"/>
+                <MudIconButton Icon="@HomeBookIcons.Icons8.Windows11.Outline.Menu"
+                               Size="Size.Small"/>
+
+            </div>
+
+        </MudListItem>
+    }
+
+    <MudListItem T="string"
+                 Dense="true">
+
+        <div class="d-flex align-center gap-3">
+
+            <MudTextField T="string"
+                          Placeholder="+z.B “200 g Quark (fettreduziert)“"
+                          Margin="Margin.Dense"
+                          Variant="Variant.Outlined"/>
+
+            <MudIconButton Variant="Variant.Outlined"
+                           Icon="@HomeBookIcons.Icons8.Windows11.Filled.Plus"
+                           Color="Color.Secondary"/>
+
+        </div>
+
+    </MudListItem>
+
+</MudList>
