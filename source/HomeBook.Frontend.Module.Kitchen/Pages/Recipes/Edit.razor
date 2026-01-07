@@ -2,13 +2,13 @@
 
 @using HomeBook.Frontend.Core.Icons
 @using HomeBook.Frontend.Module.Kitchen.Contracts
-@using HomeBook.Frontend.Module.Kitchen.Pages.Recipes.Components
-@using HomeBook.Frontend.Module.Kitchen.ViewModels
-@using Microsoft.AspNetCore.Components.Forms
+@using HomeBook.Frontend.Module.Kitchen.Resources
+@using Microsoft.Extensions.Localization
 
 @inject IRecipeService RecipeService
 @inject NavigationManager NavigationManager
 @inject ISnackbar Snackbar
+@inject IStringLocalizer<Strings> Loc
 
 @if (!_isLoading
      && _recipe != null)
@@ -48,8 +48,42 @@
 
         <MudPaper Class="frosted-b8 text-dark mb-5 pa-3">
 
-            <UiRecipeDescriptionServings @bind-NumberOfServings="@_recipe.NumberOfServings"
-                                         Description="@_recipe.Description"/>
+            <MudTextField T="string"
+                          @bind-Value="@_recipe.Description"
+                          Label="+Beschreibung"
+                          Variant="Variant.Outlined"
+                          Lines="5"/>
+
+            <MudPaper Class="frosted-b1 text-dark mt-5 pa-3">
+
+                <MudToolBar Dense="true"
+                            Class="px-0">
+
+                    @switch (_recipe.NumberOfServings)
+                    {
+                        case 1:
+                            <MudText Typo="Typo.body1">
+                                +Für 1 Portion
+                            </MudText>
+                            break;
+                        default:
+                            <MudText Typo="Typo.body1">
+                                +Für <b>@_recipe.NumberOfServings</b> Portionen
+                            </MudText>
+                            break;
+                    }
+
+                    <MudSpacer/>
+
+                    <UiNumericGroup @bind-Value="@_recipe.NumberOfServings"
+                                    Min="1"
+                                    Max="int.MaxValue"
+                                    Step="1"/>
+
+                </MudToolBar>
+
+            </MudPaper>
+
 
         </MudPaper>
 
@@ -96,7 +130,7 @@
 
                 <MudButton Color="Color.Primary"
                            Variant="Variant.Filled"
-                           OnClick="SaveRecipe">
+                           OnClick="SaveRecipeAsync">
                     +Save Recipe
                 </MudButton>
 

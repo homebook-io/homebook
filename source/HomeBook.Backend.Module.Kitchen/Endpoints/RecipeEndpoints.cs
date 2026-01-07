@@ -59,6 +59,22 @@ public static class RecipeEndpoints
                 .Produces(StatusCodes.Status401Unauthorized)
                 .Produces<string>(StatusCodes.Status500InternalServerError);
 
+            group.MapPatch("/{id:guid}", RecipeHandler.HandleUpdateRecipe)
+                .WithName("UpdateRecipe")
+                .WithDescription(new Description(
+                    "updates an existing recipe",
+                    "HTTP 200: Recipe was updated",
+                    "HTTP 400: Invalid request data",
+                    "HTTP 401: User is not authorized",
+                    "HTTP 404: Recipe not found",
+                    "HTTP 500: Unknown error while updating recipe"))
+                .RequireAuthorization()
+                .Produces(StatusCodes.Status200OK)
+                .Produces<string>(StatusCodes.Status400BadRequest)
+                .Produces(StatusCodes.Status401Unauthorized)
+                .Produces(StatusCodes.Status404NotFound)
+                .Produces<string>(StatusCodes.Status500InternalServerError);
+
             group.MapDelete("/{id:guid}", RecipeHandler.HandleDeleteRecipe)
                 .WithName("DeleteRecipe")
                 .WithDescription(new Description(

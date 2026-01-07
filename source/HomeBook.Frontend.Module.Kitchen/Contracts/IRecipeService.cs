@@ -60,6 +60,9 @@ public interface IRecipeService
     Task CreateRecipeAsync(string name,
         CancellationToken cancellationToken = default);
 
+    Task CreateOrUpdateRecipeAsync(string name,
+        CancellationToken cancellationToken = default);
+
     /// <summary>
     ///
     /// </summary>

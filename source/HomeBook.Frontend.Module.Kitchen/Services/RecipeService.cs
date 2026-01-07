@@ -72,7 +72,7 @@ public class RecipeService(
         cancellationToken.ThrowIfCancellationRequested();
 
         string? token = await authenticationService.GetTokenAsync(cancellationToken);
-        CreateRecipeRequest request = new()
+        RecipeRequest request = new()
         {
             Name = name,
             Description = description,
@@ -110,6 +110,11 @@ public class RecipeService(
             null,
             null,
             cancellationToken);
+
+    public Task CreateOrUpdateRecipeAsync(string name, CancellationToken cancellationToken = default)
+    {
+        throw new NotImplementedException();
+    }
 
     /// <inheritdoc/>
     public async Task DeleteRecipeAsync(Guid recipeId,

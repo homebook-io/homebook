@@ -26,6 +26,7 @@ public interface IRecipesProvider
     /// <summary>
     ///
     /// </summary>
+    /// <param name="id"></param>
     /// <param name="name"></param>
     /// <param name="userId"></param>
     /// <param name="description"></param>
@@ -38,7 +39,8 @@ public interface IRecipesProvider
     /// <param name="source"></param>
     /// <param name="cancellationToken"></param>
     /// <returns></returns>
-    Task<Guid> CreateAsync(string name,
+    Task<Guid> CreateOrUpdateAsync(Guid? id,
+        string name,
         Guid userId,
         string? description,
         int? servings,

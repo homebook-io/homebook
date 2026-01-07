@@ -36,7 +36,8 @@ public class RecipesProvider(
             cancellationToken))?.ToDto();
 
     /// <inheritdoc/>
-    public async Task<Guid> CreateAsync(string name,
+    public async Task<Guid> CreateOrUpdateAsync(Guid? id,
+        string name,
         Guid userId,
         string? description,
         int? servings,
@@ -48,7 +49,11 @@ public class RecipesProvider(
         string? source,
         CancellationToken cancellationToken)
     {
-        Recipe entity = new()
+        Recipe? existing = null;
+        if (id.HasValue)
+            existing = await recipesRepository.GetByIdAsync(id.Value, cancellationToken);
+
+        Recipe entity = existing ?? new Recipe
         {
             UserId = userId,
             Name = name,

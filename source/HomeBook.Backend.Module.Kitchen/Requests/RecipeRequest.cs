@@ -1,6 +1,6 @@
 namespace HomeBook.Backend.Module.Kitchen.Requests;
 
-public record CreateRecipeRequest(
+public record RecipeRequest(
     string Name,
     string? Description,
     int? Servings,
