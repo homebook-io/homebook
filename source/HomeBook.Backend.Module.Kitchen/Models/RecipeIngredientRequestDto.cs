@@ -1,8 +1,6 @@
 namespace HomeBook.Backend.Module.Kitchen.Models;
 
-public record RecipeIngredientDto(
-    Guid Id,
+public record RecipeIngredientRequestDto(
     string Name,
-    string NormalizedName,
     double? Quantity,
     string? Unit);

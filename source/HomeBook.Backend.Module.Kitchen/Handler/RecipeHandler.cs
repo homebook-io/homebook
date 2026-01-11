@@ -31,11 +31,11 @@ public class RecipeHandler
     {
         try
         {
-            RecipeDto[] recipeDtos = await recipesProvider.GetRecipesAsync(searchFilter,
+            RecipeResultDto[] recipeDtos = await recipesProvider.GetRecipesAsync(searchFilter,
                 cancellationToken);
 
             List<RecipeResponse> recipes = [];
-            foreach (RecipeDto recipeDto in recipeDtos)
+            foreach (RecipeResultDto recipeDto in recipeDtos)
             {
                 RecipeResponse recipeResponse = await recipeDto.ToResponseAsync(async userId =>
                     await userProvider.GetUserByIdAsync(userId, cancellationToken)
@@ -69,7 +69,7 @@ public class RecipeHandler
     {
         try
         {
-            RecipeDto? recipeDto = await recipesProvider.GetRecipeByIdAsync(id,
+            RecipeResultDto? recipeDto = await recipesProvider.GetRecipeByIdAsync(id,
                 cancellationToken);
 
             if (recipeDto is null)
@@ -155,40 +155,10 @@ public class RecipeHandler
         IRecipesProvider recipesProvider,
         CancellationToken cancellationToken)
     {
-        Guid createdRecipeId = await recipesProvider.CreateOrUpdateAsync(id,
-            request.Name,
-            userId,
-            request.Description,
-            request.Servings,
-            request.DurationWorkingMinutes,
-            request.DurationCookingMinutes,
-            request.DurationRestingMinutes,
-            request.CaloriesKcal,
-            request.Comments,
-            request.Source,
+        RecipeRequestDto recipeResultDto = request.ToDto(id, userId);
+
+        await recipesProvider.CreateOrUpdateAsync(recipeResultDto,
             cancellationToken);
-
-        if (request.Ingredients is not null
-            && request.Ingredients.Length != 0)
-            foreach (CreateRecipeIngredientRequest ingredient in request.Ingredients)
-            {
-                await recipesProvider.AddIngredientToRecipeAsync(createdRecipeId,
-                    ingredient.Name,
-                    ingredient.Quantity,
-                    ingredient.Unit,
-                    cancellationToken);
-            }
-
-        if (request.Steps is not null
-            && request.Steps.Length != 0)
-            foreach (CreateRecipeStepRequest si in request.Steps)
-            {
-                await recipesProvider.AddStepToRecipeAsync(createdRecipeId,
-                    si.Position,
-                    si.Description,
-                    si.TimerDurationInSeconds,
-                    cancellationToken);
-            }
 
         return TypedResults.Ok();
     }

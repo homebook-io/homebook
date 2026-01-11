@@ -65,6 +65,7 @@ public class RecipesRepository(
         }
         else
         {
+            // 1. update Recipe
             await dbContext.Recipes
                 .Where(u => u.Id == entity.Id)
                 .ExecuteUpdateAsync(x => x
@@ -78,8 +79,22 @@ public class RecipesRepository(
                         .SetProperty(u => u.Servings, entity.Servings)
                         .SetProperty(u => u.Comments, entity.Comments)
                         .SetProperty(u => u.Source, entity.Source)
-                        .SetProperty(u => u.NormalizedName, entity.NormalizedName),
+                        .SetProperty(u => u.UserId, entity.UserId),
                     cancellationToken: cancellationToken);
+
+            // 2. update Steps and Ingredients
+            // remove all existing Steps and Ingredients
+            await dbContext.Recipe2RecipeIngredients.Where(x => x.RecipeId == entity.Id)
+                .ExecuteDeleteAsync(cancellationToken);
+            await dbContext.RecipeSteps.Where(x => x.RecipeId == entity.Id)
+                .ExecuteDeleteAsync(cancellationToken);
+
+            // insert new Steps and Ingredients
+            dbContext.Recipe2RecipeIngredients.AddRange(entity.Recipe2RecipeIngredient);
+            dbContext.RecipeSteps.AddRange(entity.Steps);
+
+            // 3. save changes
+            await dbContext.SaveChangesAsync(cancellationToken);
         }
 
         return entity.Id;

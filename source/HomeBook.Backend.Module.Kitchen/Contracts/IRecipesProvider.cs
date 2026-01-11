@@ -11,7 +11,7 @@ public interface IRecipesProvider
     /// <param name="searchFilter"></param>
     /// <param name="cancellationToken"></param>
     /// <returns></returns>
-    Task<RecipeDto[]> GetRecipesAsync(string searchFilter,
+    Task<RecipeResultDto[]> GetRecipesAsync(string searchFilter,
         CancellationToken cancellationToken);
 
     /// <summary>
@@ -20,51 +20,16 @@ public interface IRecipesProvider
     /// <param name="id"></param>
     /// <param name="cancellationToken"></param>
     /// <returns></returns>
-    Task<RecipeDto?> GetRecipeByIdAsync(Guid id,
+    Task<RecipeResultDto?> GetRecipeByIdAsync(Guid id,
         CancellationToken cancellationToken);
 
     /// <summary>
     ///
     /// </summary>
-    /// <param name="id"></param>
-    /// <param name="name"></param>
-    /// <param name="userId"></param>
-    /// <param name="description"></param>
-    /// <param name="servings"></param>
-    /// <param name="durationWorkingMinutes"></param>
-    /// <param name="durationCookingMinutes"></param>
-    /// <param name="durationRestingMinutes"></param>
-    /// <param name="caloriesKcal"></param>
-    /// <param name="comments"></param>
-    /// <param name="source"></param>
+    /// <param name="requestDto"></param>
     /// <param name="cancellationToken"></param>
     /// <returns></returns>
-    Task<Guid> CreateOrUpdateAsync(Guid? id,
-        string name,
-        Guid userId,
-        string? description,
-        int? servings,
-        int? durationWorkingMinutes,
-        int? durationCookingMinutes,
-        int? durationRestingMinutes,
-        int? caloriesKcal,
-        string? comments,
-        string? source,
-        CancellationToken cancellationToken);
-
-    /// <summary>
-    ///
-    /// </summary>
-    /// <param name="recipeId"></param>
-    /// <param name="name"></param>
-    /// <param name="quantity"></param>
-    /// <param name="unit"></param>
-    /// <param name="cancellationToken"></param>
-    /// <returns></returns>
-    Task<Recipe2RecipeIngredient> AddIngredientToRecipeAsync(Guid recipeId,
-        string name,
-        double? quantity,
-        string? unit,
+    Task<Guid> CreateOrUpdateAsync(RecipeRequestDto requestDto,
         CancellationToken cancellationToken);
 
     /// <summary>
@@ -83,21 +48,6 @@ public interface IRecipesProvider
     /// <param name="cancellationToken"></param>
     /// <returns></returns>
     Task<Guid> CreateIngredientAsync(string name,
-        CancellationToken cancellationToken);
-
-    /// <summary>
-    ///
-    /// </summary>
-    /// <param name="recipeId"></param>
-    /// <param name="position"></param>
-    /// <param name="description"></param>
-    /// <param name="timerDurationInSeconds"></param>
-    /// <param name="cancellationToken"></param>
-    /// <returns></returns>
-    Task<RecipeStep> AddStepToRecipeAsync(Guid recipeId,
-        int position,
-        string description,
-        int? timerDurationInSeconds,
         CancellationToken cancellationToken);
 
     /// <summary>

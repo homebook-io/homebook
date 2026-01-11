@@ -1,14 +1,16 @@
 using HomeBook.Backend.Abstractions.Models.UserManagement;
+using HomeBook.Backend.Data.Entities;
 using HomeBook.Backend.Module.Kitchen.Models;
+using HomeBook.Backend.Module.Kitchen.Requests;
 using HomeBook.Backend.Module.Kitchen.Responses;
 
 namespace HomeBook.Backend.Module.Kitchen.Mappings;
 
 public static class RecipeMappings
 {
-    public static RecipeDto ToDto(this Data.Entities.Recipe recipe)
+    public static RecipeResultDto ToDto(this Data.Entities.Recipe recipe)
     {
-        return new RecipeDto(
+        return new RecipeResultDto(
             recipe.Id,
             recipe.UserId,
             recipe.Name,
@@ -43,7 +45,7 @@ public static class RecipeMappings
             rs.TimerDurationInSeconds);
     }
 
-    public static async Task<RecipeResponse> ToResponseAsync(this RecipeDto r,
+    public static async Task<RecipeResponse> ToResponseAsync(this RecipeResultDto r,
         Func<Guid, Task<UserInfo?>> getUserInfoAsync)
     {
         string? username = null;
@@ -59,7 +61,6 @@ public static class RecipeMappings
             r.NormalizedName,
             r.Description,
             r.Servings,
-
             r.DurationWorkingMinutes,
             r.DurationCookingMinutes,
             r.DurationRestingMinutes,
@@ -68,58 +69,30 @@ public static class RecipeMappings
             r.Source);
     }
 
-    public static async Task<RecipeDetailResponse> ToDetailResponseAsync(this RecipeDto recipe,
+    public static async Task<RecipeDetailResponse> ToDetailResponseAsync(this RecipeResultDto recipeResult,
         Func<Guid, Task<UserInfo?>> getUserInfoAsync)
     {
         string? username = null;
-        if (recipe.UserId.HasValue)
+        if (recipeResult.UserId.HasValue)
         {
-            UserInfo? userInfo = await getUserInfoAsync(recipe.UserId.Value);
+            UserInfo? userInfo = await getUserInfoAsync(recipeResult.UserId.Value);
             username = userInfo?.Username;
         }
 
-        // var ingredients = new List<IngredientResponse>
-        // {
-        //     new(Guid.NewGuid(),
-        //         1,
-        //         "Scheibe",
-        //         "Schinken",
-        //         "gekochter, oder anderer Belag, z.B. Putenbrust oder Salami"),
-        //     new(Guid.NewGuid(), 1, null, "Ei", "gekocht"),
-        //     new(Guid.NewGuid(), 1, "Scheibe", "Käse", "am besten Emmentaler , Ihr könnt aber auch anderen nehmen"),
-        //     new(Guid.NewGuid(), 1, null, "Salatblatt", null),
-        //     new(Guid.NewGuid(), 0.5, null, "Tomate", null),
-        //     new(Guid.NewGuid(), null, null, "Salz und Pfeffer, Grillgewürz", null),
-        //     new(Guid.NewGuid(), 3, "EL", "Mayonaise", null),
-        //     new(Guid.NewGuid(), 2, "Scheiben", "Sandwich Toast", null),
-        //     new(Guid.NewGuid(), 4, "x", "Zahnstocher", "o.ä. zum Fixieren")
-        // };
-        //
-        // var steps = new List<StepResponse>
-        // {
-        //     new(Guid.NewGuid(),
-        //         "Tomaten waschen und schneiden. Salat waschen und in einzelne Blätter teilen."),
-        //     new(Guid.NewGuid(),
-        //         "Eier hart kochen und anschließend in Scheiben schneiden.",
-        //         600),
-        //     new(Guid.NewGuid(),
-        //         "Beide Scheiben Toast einseitig mit Mayonaise ca. 2mm beschmieren. Den Rest Mayonaise benötigen wir noch später. Über den Toast ein bischen Salz,Pfeffer und bei Bedarf auch Grillgewürz streuen. Das Grillgewürz verleiht dem Ganzem einen \"neuen\" Geschmack."),
-        // };
-
-        return new RecipeDetailResponse(recipe.Id,
+        return new RecipeDetailResponse(recipeResult.Id,
             username,
-            recipe.Name,
-            recipe.NormalizedName,
-            recipe.Description,
-            recipe.Servings,
-            recipe.Ingredients.Select(x => x.ToResponse()).ToArray(),
-            recipe.Steps.Select(x => x.ToResponse()).ToArray(),
-            recipe.DurationWorkingMinutes,
-            recipe.DurationCookingMinutes,
-            recipe.DurationRestingMinutes,
-            recipe.CaloriesKcal,
-            recipe.Comments,
-            recipe.Source);
+            recipeResult.Name,
+            recipeResult.NormalizedName,
+            recipeResult.Description,
+            recipeResult.Servings,
+            recipeResult.Ingredients.Select(x => x.ToResponse()).ToArray(),
+            recipeResult.Steps.Select(x => x.ToResponse()).ToArray(),
+            recipeResult.DurationWorkingMinutes,
+            recipeResult.DurationCookingMinutes,
+            recipeResult.DurationRestingMinutes,
+            recipeResult.CaloriesKcal,
+            recipeResult.Comments,
+            recipeResult.Source);
     }
 
     public static RecipeIngredientResponse ToResponse(this RecipeIngredientDto ri)
@@ -138,5 +111,94 @@ public static class RecipeMappings
             rs.Position,
             rs.Description,
             rs.TimerDurationInSeconds);
+    }
+
+    public static RecipeRequestDto ToDto(this RecipeRequest r,
+        Guid? recipeId,
+        Guid userId)
+    {
+        RecipeRequestDto dto = new(recipeId,
+            userId,
+            r.Name,
+            r.Description,
+            r.Servings,
+            (r.Ingredients ?? []).Select(i => i.ToDto()).ToArray(),
+            (r.Steps ?? []).Select(i => i.ToDto()).ToArray(),
+            r.DurationWorkingMinutes,
+            r.DurationCookingMinutes,
+            r.DurationRestingMinutes,
+            r.CaloriesKcal,
+            r.Comments,
+            r.Source
+        );
+
+        return dto;
+    }
+
+    public static RecipeIngredientRequestDto ToDto(this CreateRecipeIngredientRequest r)
+    {
+        RecipeIngredientRequestDto dto = new(r.Name,
+            r.Quantity,
+            r.Unit
+        );
+
+        return dto;
+    }
+
+    public static RecipeStepRequestDto ToDto(this CreateRecipeStepRequest r)
+    {
+        RecipeStepRequestDto dto = new(r.Description,
+            r.Position,
+            r.TimerDurationInSeconds
+        );
+
+        return dto;
+    }
+
+    public static Recipe ToEntity(this RecipeRequestDto dto)
+    {
+        Recipe entity = new()
+        {
+            Name = dto.Name,
+            Description = dto.Description,
+            DurationWorkingMinutes = dto.DurationWorkingMinutes,
+            DurationCookingMinutes = dto.DurationCookingMinutes,
+            DurationRestingMinutes = dto.DurationRestingMinutes,
+            CaloriesKcal = dto.CaloriesKcal,
+            Servings = dto.Servings,
+            Comments = dto.Comments,
+            Source = dto.Source,
+            UserId = dto.UserId,
+            Recipe2RecipeIngredient = (dto.Ingredients ?? []).Select(i => i.ToEntity()).ToArray(),
+            Steps = (dto.Steps ?? []).Select(i => i.ToEntity()).ToArray(),
+        };
+
+        if (dto.Id.HasValue)
+            entity.Id = dto.Id.Value;
+
+        return entity;
+    }
+
+    public static Recipe2RecipeIngredient ToEntity(this RecipeIngredientRequestDto dto)
+    {
+        return new Recipe2RecipeIngredient
+        {
+            RecipeIngredient = new RecipeIngredient
+            {
+                Name = dto.Name
+            },
+            Quantity = dto.Quantity,
+            Unit = dto.Unit
+        };
+    }
+
+    public static RecipeStep ToEntity(this RecipeStepRequestDto dto)
+    {
+        return new RecipeStep
+        {
+            Position = dto.Position,
+            Description = dto.Description,
+            TimerDurationInSeconds = dto.TimerDurationInSeconds
+        };
     }
 }

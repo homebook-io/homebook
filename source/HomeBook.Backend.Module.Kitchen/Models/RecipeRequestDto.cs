@@ -1,17 +1,16 @@
 namespace HomeBook.Backend.Module.Kitchen.Models;
 
-public record RecipeDto(
-    Guid Id,
-    Guid? UserId,
+public record RecipeRequestDto(
+    Guid? Id,
+    Guid UserId,
     string Name,
-    string NormalizedName,
     string? Description,
     int? Servings,
+    RecipeIngredientRequestDto[] Ingredients,
+    RecipeStepRequestDto[] Steps,
     int? DurationWorkingMinutes,
     int? DurationCookingMinutes,
     int? DurationRestingMinutes,
     int? CaloriesKcal,
     string? Comments,
-    string? Source,
-    RecipeIngredientDto[] Ingredients,
-    RecipeStepDto[] Steps);
+    string? Source);
