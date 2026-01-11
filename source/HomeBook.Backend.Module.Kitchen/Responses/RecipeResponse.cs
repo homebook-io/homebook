@@ -10,7 +10,6 @@ public record RecipeResponse(
     string NormalizedName,
     string? Description,
     int? Servings,
-
     int? DurationWorkingMinutes,
     int? DurationCookingMinutes,
     int? DurationRestingMinutes,

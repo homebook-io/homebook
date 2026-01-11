@@ -408,13 +408,13 @@ public class KitchenRecipeHandlerE2ETests : TestBase
         recipesResponse3.Value.Recipes.ShouldContain(r => r.NormalizedName == "ruhrei-mit-krautern");
 
         var recipeToUpdate = recipesResponse3.Value.Recipes.First(r => r.Name == "Gyros-Pita");
-        // var updateRecipeResult = await RecipeHandler.HandleUpdateRecipeName(recipeToUpdate.Id,
-        //     testuser,
-        //     new UpdateRecipeNameRequest("Gyros Wrap"),
-        //     _loggerFactory.CreateLogger<RecipeHandler>(),
-        //     recipesProvider,
-        //     cancellationToken);
-        // updateRecipeResult.ShouldBeOfType<Ok>();
+        var updateRecipeResult = await RecipeHandler.HandleUpdateRecipeName(recipeToUpdate.Id,
+            testuser,
+            new RecipeRenameRequest("Gyros Wrap"),
+            _loggerFactory.CreateLogger<RecipeHandler>(),
+            recipesProvider,
+            cancellationToken);
+        updateRecipeResult.ShouldBeOfType<Ok>();
 
         // get all recipes
         var recipesResult4 = await RecipeHandler.HandleGetRecipes("",
@@ -433,5 +433,180 @@ public class KitchenRecipeHandlerE2ETests : TestBase
         recipesResponse4.Value.Recipes.ShouldContain(r => r.NormalizedName == "pasta-a-la-roma");
         recipesResponse4.Value.Recipes.ShouldContain(r => r.Name == "Rührei mit Kräutern");
         recipesResponse4.Value.Recipes.ShouldContain(r => r.NormalizedName == "ruhrei-mit-krautern");
+    }
+
+    [Test]
+    public async Task RunRecipesWithStepsAndIngredientsWithFullUpdate_Returns()
+    {
+        // Arrange
+        CancellationToken cancellationToken = CancellationToken.None;
+        string testUserName = "testuser";
+        string testUserPassword = "s3cr3tP@ssw0rd!";
+
+        // create configuration and service provider
+        SearchRegistrationFactory srf = new();
+        IConfigurationRoot configuration = CreateTestConfiguration();
+        IServiceCollection serviceCollection = CreateTestServiceProvider(configuration);
+
+        IServiceProvider serviceProvider = serviceCollection
+            .AddBackendDataSqlite(configuration)
+            .AddKeyedSingleton<IDatabaseMigrator, DatabaseMigrator>("SQLITE")
+            .AddDependenciesForRuntime(configuration, InstanceStatus.RUNNING)
+            .AddBackendModulesForTestEnvironment(configuration, srf)
+            .BuildServiceProvider();
+
+        // apply migrations
+        var databaseMigrator = serviceProvider.GetKeyedService<IDatabaseMigrator>("SQLITE");
+        await databaseMigrator.MigrateAsync(cancellationToken);
+
+        // verify that migrations were applied
+        var tables = SqliteHelper.GetAllTableNames(_keepAlive)
+            .Split(Environment.NewLine)
+            .Where(line => !string.IsNullOrWhiteSpace(line))
+            .ToList();
+        tables.ShouldContain("__EFMigrationsHistory");
+        tables.ShouldContain("RecipeSteps");
+        tables.ShouldContain("RecipeIngredients");
+        tables.ShouldContain("Recipe2RecipeIngredient");
+        tables.ShouldContain("Recipes");
+
+        // create user
+        IUserProvider userProvider = serviceProvider.GetRequiredService<IUserProvider>();
+        Guid testUserId = await userProvider.CreateUserAsync(testUserName,
+            testUserPassword,
+            cancellationToken);
+        ClaimsPrincipal testuser = UserHelper.CreateTestUser(testUserId,
+            testUserName);
+
+        // create instances for tests
+        IRecipesProvider recipesProvider = serviceProvider.GetRequiredService<IRecipesProvider>();
+
+        // Act & Assert
+
+        // get all recipes
+        var recipesResult1 = await RecipeHandler.HandleGetRecipes("",
+            _loggerFactory.CreateLogger<RecipeHandler>(),
+            recipesProvider,
+            userProvider,
+            cancellationToken);
+        var recipesResponse1 = recipesResult1.ShouldBeOfType<Ok<RecipesListResponse>>();
+        recipesResponse1.Value.ShouldNotBeNull();
+        recipesResponse1.Value.Recipes.Length.ShouldBe(0);
+
+        // create recipes
+        var createRecipeResult1 = await RecipeHandler.HandleCreateRecipe(testuser,
+            new RecipeRequest("Gyros-Pita", null, null, null, null, null, null, null, null, null, null),
+            _loggerFactory.CreateLogger<RecipeHandler>(),
+            recipesProvider,
+            cancellationToken);
+        createRecipeResult1.ShouldBeOfType<Ok>();
+
+        // get all recipes
+        var recipesResult2 = await RecipeHandler.HandleGetRecipes("",
+            _loggerFactory.CreateLogger<RecipeHandler>(),
+            recipesProvider,
+            userProvider,
+            cancellationToken);
+        var recipesResponse2 = recipesResult2.ShouldBeOfType<Ok<RecipesListResponse>>();
+        recipesResponse2.Value.ShouldNotBeNull();
+        recipesResponse2.Value.Recipes.Length.ShouldBe(1);
+        recipesResponse2.Value.Recipes.ShouldContain(r => r.Name == "Gyros-Pita"
+                                                          && r.NormalizedName == "gyros-pita");
+
+        // update complete recipe
+        var recipeId = recipesResponse2.Value.Recipes.First().Id;
+        var updateRequest = new RecipeRequest("Awesome Gyros Wrap",
+            "Delicious homemade gyros wrap with fresh ingredients",
+            4,
+            [
+                new CreateRecipeIngredientRequest("Gyros", 500, "Gramm"),
+                new CreateRecipeIngredientRequest("Pita Bread", 4, "Stück"),
+                new CreateRecipeIngredientRequest("Tzatziki Sauce", 200, "Gramm"),
+            ],
+            [
+                new CreateRecipeStepRequest("Prepare the gyros meat.", 0, null),
+                new CreateRecipeStepRequest("Warm the pita bread.", 1, 360),
+                new CreateRecipeStepRequest("Assemble the wrap with meat and sauce.", 2, null),
+                new CreateRecipeStepRequest("Serve and enjoy!", 3, null)
+            ],
+            25,
+            45,
+            10,
+            1200,
+            "Best served warm with a side of fries",
+            "https://www.a-random-recipe-source.com/awesome-gyros-wrap"
+        );
+        var updateResult1 = await RecipeHandler.HandleUpdateRecipe(recipeId,
+            testuser,
+            updateRequest,
+            _loggerFactory.CreateLogger<RecipeHandler>(),
+            recipesProvider,
+            cancellationToken);
+        var updateResponse1 = updateResult1.ShouldBeOfType<Ok>();
+
+        // get all recipes
+        var recipesResult3 = await RecipeHandler.HandleGetRecipes("",
+            _loggerFactory.CreateLogger<RecipeHandler>(),
+            recipesProvider,
+            userProvider,
+            cancellationToken);
+        var recipesResponse3 = recipesResult3.ShouldBeOfType<Ok<RecipesListResponse>>();
+        recipesResponse3.Value.ShouldNotBeNull();
+        recipesResponse3.Value.Recipes.Length.ShouldBe(1);
+        recipesResponse3.Value.Recipes.ShouldContain(r => r.Name == "Awesome Gyros Wrap"
+                                                          && r.NormalizedName == "awesome-gyros-wrap"
+                                                          && r.Description == "Delicious homemade gyros wrap with fresh ingredients"
+                                                          && r.Servings == 4
+                                                          && r.DurationWorkingMinutes == 25
+                                                          && r.DurationCookingMinutes == 45
+                                                          && r.DurationRestingMinutes == 10
+                                                          && r.CaloriesKcal == 1200
+                                                          && r.Comments == "Best served warm with a side of fries"
+                                                          && r.Source == "https://www.a-random-recipe-source.com/awesome-gyros-wrap");
+
+        var recipeDetailsResult = await RecipeHandler.HandleGetRecipeById(recipeId,
+            _loggerFactory.CreateLogger<RecipeHandler>(),
+            recipesProvider,
+            userProvider,
+            cancellationToken);
+        var recipeDetailsResponse = recipeDetailsResult.ShouldBeOfType<Ok<RecipeDetailResponse>>();
+        recipeDetailsResponse.Value.ShouldNotBeNull();
+        recipeDetailsResponse.Value.Id.ShouldBe(recipeId);
+        recipeDetailsResponse.Value.Name.ShouldBe("Awesome Gyros Wrap");
+        recipeDetailsResponse.Value.NormalizedName.ShouldBe("awesome-gyros-wrap");
+        recipeDetailsResponse.Value.Description.ShouldBe("Delicious homemade gyros wrap with fresh ingredients");
+        recipeDetailsResponse.Value.Servings.ShouldBe(4);
+        recipeDetailsResponse.Value.DurationWorkingMinutes.ShouldBe(25);
+        recipeDetailsResponse.Value.DurationCookingMinutes.ShouldBe(45);
+        recipeDetailsResponse.Value.DurationRestingMinutes.ShouldBe(10);
+        recipeDetailsResponse.Value.CaloriesKcal.ShouldBe(1200);
+        recipeDetailsResponse.Value.Comments.ShouldBe("Best served warm with a side of fries");
+        recipeDetailsResponse.Value.Source.ShouldBe("https://www.a-random-recipe-source.com/awesome-gyros-wrap");
+        recipeDetailsResponse.Value.Ingredients.Length.ShouldBe(3);
+        recipeDetailsResponse.Value.Ingredients.ShouldContain(i => i.Name == "Gyros"
+                                                                  && i.NormalizedName == "gyros"
+                                                                  && i.Quantity == 500
+                                                                  && i.Unit == "Gramm");
+        recipeDetailsResponse.Value.Ingredients.ShouldContain(i => i.Name == "Pita Bread"
+                                                                  && i.NormalizedName == "pita-bread"
+                                                                  && i.Quantity == 4
+                                                                  && i.Unit == "Stück");
+        recipeDetailsResponse.Value.Ingredients.ShouldContain(i => i.Name == "Tzatziki Sauce"
+                                                                  && i.NormalizedName == "tzatziki-sauce"
+                                                                  && i.Quantity == 200
+                                                                  && i.Unit == "Gramm");
+        recipeDetailsResponse.Value.Steps.Length.ShouldBe(4);
+        recipeDetailsResponse.Value.Steps.ShouldContain(s => s.Position == 0
+                                                            && s.Description == "Prepare the gyros meat."
+                                                            && s.TimerDurationInSeconds == null);
+        recipeDetailsResponse.Value.Steps.ShouldContain(s => s.Position == 1
+                                                            && s.Description == "Warm the pita bread."
+                                                            && s.TimerDurationInSeconds == 360);
+        recipeDetailsResponse.Value.Steps.ShouldContain(s => s.Position == 2
+                                                            && s.Description == "Assemble the wrap with meat and sauce."
+                                                            && s.TimerDurationInSeconds == null);
+        recipeDetailsResponse.Value.Steps.ShouldContain(s => s.Position == 3
+                                                            && s.Description == "Serve and enjoy!"
+                                                            && s.TimerDurationInSeconds == null);
     }
 }

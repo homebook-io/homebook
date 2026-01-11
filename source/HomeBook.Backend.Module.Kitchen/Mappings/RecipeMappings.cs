@@ -169,8 +169,8 @@ public static class RecipeMappings
             Comments = dto.Comments,
             Source = dto.Source,
             UserId = dto.UserId,
-            Recipe2RecipeIngredient = (dto.Ingredients ?? []).Select(i => i.ToEntity()).ToArray(),
-            Steps = (dto.Steps ?? []).Select(i => i.ToEntity()).ToArray(),
+            Recipe2RecipeIngredient = (dto.Ingredients ?? []).Select(i => i.ToEntity(dto.Id)).ToArray(),
+            Steps = (dto.Steps ?? []).Select(i => i.ToEntity(dto.Id)).ToArray(),
         };
 
         if (dto.Id.HasValue)
@@ -179,9 +179,9 @@ public static class RecipeMappings
         return entity;
     }
 
-    public static Recipe2RecipeIngredient ToEntity(this RecipeIngredientRequestDto dto)
+    public static Recipe2RecipeIngredient ToEntity(this RecipeIngredientRequestDto dto, Guid? recipeId)
     {
-        return new Recipe2RecipeIngredient
+        Recipe2RecipeIngredient entity = new()
         {
             RecipeIngredient = new RecipeIngredient
             {
@@ -190,15 +190,25 @@ public static class RecipeMappings
             Quantity = dto.Quantity,
             Unit = dto.Unit
         };
+
+        if(recipeId.HasValue)
+            entity.RecipeId = recipeId.Value;
+
+        return entity;
     }
 
-    public static RecipeStep ToEntity(this RecipeStepRequestDto dto)
+    public static RecipeStep ToEntity(this RecipeStepRequestDto dto, Guid? recipeId)
     {
-        return new RecipeStep
+        RecipeStep entity = new()
         {
             Position = dto.Position,
             Description = dto.Description,
             TimerDurationInSeconds = dto.TimerDurationInSeconds
         };
+
+        if(recipeId.HasValue)
+            entity.RecipeId = recipeId.Value;
+
+        return entity;
     }
 }
