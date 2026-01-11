@@ -104,6 +104,8 @@ public class RecipeHandler
     {
         try
         {
+            Guid userId = user.GetUserId();
+
             return await HandleRecipeEditAsync(user.GetUserId(),
                 null,
                 request,
@@ -120,15 +122,15 @@ public class RecipeHandler
     /// <summary>
     ///
     /// </summary>
-    /// <param name="user"></param>
     /// <param name="id"></param>
+    /// <param name="user"></param>
     /// <param name="request"></param>
     /// <param name="logger"></param>
     /// <param name="recipesProvider"></param>
     /// <param name="cancellationToken"></param>
     /// <returns></returns>
-    public static async Task<IResult> HandleUpdateRecipe(ClaimsPrincipal user,
-        Guid id,
+    public static async Task<IResult> HandleUpdateRecipe(Guid id,
+        ClaimsPrincipal user,
         [FromBody] RecipeRequest request,
         [FromServices] ILogger<RecipeHandler> logger,
         [FromServices] IRecipesProvider recipesProvider,
@@ -136,6 +138,8 @@ public class RecipeHandler
     {
         try
         {
+            Guid userId = user.GetUserId();
+
             return await HandleRecipeEditAsync(user.GetUserId(),
                 id,
                 request,
@@ -144,11 +148,20 @@ public class RecipeHandler
         }
         catch (Exception err)
         {
-            logger.LogError(err, "Error while updating recipe");
+            logger.LogError(err, "Error while creating recipe");
             return TypedResults.InternalServerError(err.Message);
         }
     }
 
+    /// <summary>
+    ///
+    /// </summary>
+    /// <param name="userId"></param>
+    /// <param name="id"></param>
+    /// <param name="request"></param>
+    /// <param name="recipesProvider"></param>
+    /// <param name="cancellationToken"></param>
+    /// <returns></returns>
     private static async Task<IResult> HandleRecipeEditAsync(Guid userId,
         Guid? id,
         RecipeRequest request,
@@ -161,6 +174,40 @@ public class RecipeHandler
             cancellationToken);
 
         return TypedResults.Ok();
+    }
+
+    /// <summary>
+    ///
+    /// </summary>
+    /// <param name="id"></param>
+    /// <param name="user"></param>
+    /// <param name="request"></param>
+    /// <param name="logger"></param>
+    /// <param name="recipesProvider"></param>
+    /// <param name="cancellationToken"></param>
+    /// <returns></returns>
+    public static async Task<IResult> HandleUpdateRecipeName(Guid id,
+        ClaimsPrincipal user,
+        [FromBody] RecipeRenameRequest request,
+        [FromServices] ILogger<RecipeHandler> logger,
+        [FromServices] IRecipesProvider recipesProvider,
+        CancellationToken cancellationToken)
+    {
+        try
+        {
+            Guid userId = user.GetUserId();
+
+            await recipesProvider.UpdateNameAsync(id,
+                request.Name,
+                cancellationToken);
+
+            return TypedResults.Ok();
+        }
+        catch (Exception err)
+        {
+            logger.LogError(err, "Error while creating recipe");
+            return TypedResults.InternalServerError(err.Message);
+        }
     }
 
     /// <summary>

@@ -202,13 +202,13 @@ public class KitchenRecipeHandlerE2ETests : TestBase
                                                           && r.NormalizedName == "ruhrei-mit-krautern");
 
         var recipeToUpdate = recipesResponse3.Value.Recipes.First(r => r.Name == "Gyros-Pita");
-        // var updateRecipeResult = await RecipeHandler.HandleUpdateRecipeName(recipeToUpdate.Id,
-        //     testuser,
-        //     new UpdateRecipeNameRequest("Gyros Wrap"),
-        //     _loggerFactory.CreateLogger<RecipeHandler>(),
-        //     recipesProvider,
-        //     cancellationToken);
-        // updateRecipeResult.ShouldBeOfType<Ok>();
+        var updateRecipeResult = await RecipeHandler.HandleUpdateRecipeName(recipeToUpdate.Id,
+            testuser,
+            new RecipeRenameRequest("Gyros Wrap"),
+            _loggerFactory.CreateLogger<RecipeHandler>(),
+            recipesProvider,
+            cancellationToken);
+        updateRecipeResult.ShouldBeOfType<Ok>();
 
         // get all recipes
         var recipesResult4 = await RecipeHandler.HandleGetRecipes("",
