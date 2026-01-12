@@ -56,7 +56,8 @@ public class RecipeService(
     }
 
     /// <inheritdoc/>
-    public async Task CreateRecipeAsync(string name,
+    public async Task CreateOrUpdateRecipeAsync(Guid? id,
+        string name,
         string? description = null,
         int? servings = null,
         RecipeStepDto[]? steps = null,
@@ -76,29 +77,45 @@ public class RecipeService(
         {
             Name = name,
             Description = description,
-            Servings = servings,
-            Ingredients = (ingredients ?? []).Select(x => x.ToRequest()).ToList(),
-            Steps = (steps ?? []).Select(x => x.ToRequest()).ToList(),
             DurationWorkingMinutes = durationWorkingMinutes,
             DurationCookingMinutes = durationCookingMinutes,
             DurationRestingMinutes = durationRestingMinutes,
             CaloriesKcal = caloriesKcal,
+            Servings = servings,
             Comments = comments,
-            Source = source
+            Source = source,
+            Ingredients = (ingredients ?? []).Select(x => x.ToRequest()).ToList(),
+            Steps = (steps ?? []).Select(x => x.ToRequest()).ToList()
         };
 
-        await backendClient.Modules.Kitchen.Recipes.PostAsync(request,
-            x =>
-            {
-                x.Headers.Add("Authorization", $"Bearer {token}");
-            },
-            cancellationToken);
+        if (id.HasValue)
+        {
+            // Update existing recipe
+            await backendClient.Modules.Kitchen.Recipes[id.Value]
+                .PutAsync(request,
+                    x =>
+                    {
+                        x.Headers.Add("Authorization", $"Bearer {token}");
+                    },
+                    cancellationToken);
+        }
+        else
+        {
+            // Create new recipe
+            await backendClient.Modules.Kitchen.Recipes.PostAsync(request,
+                x =>
+                {
+                    x.Headers.Add("Authorization", $"Bearer {token}");
+                },
+                cancellationToken);
+        }
     }
 
     /// <inheritdoc/>
     public async Task CreateRecipeAsync(string name,
         CancellationToken cancellationToken = default) =>
-        await CreateRecipeAsync(name,
+        await CreateOrUpdateRecipeAsync(null,
+            name,
             null,
             null,
             null,
@@ -110,11 +127,6 @@ public class RecipeService(
             null,
             null,
             cancellationToken);
-
-    public Task CreateOrUpdateRecipeAsync(string name, CancellationToken cancellationToken = default)
-    {
-        throw new NotImplementedException();
-    }
 
     /// <inheritdoc/>
     public async Task DeleteRecipeAsync(Guid recipeId,
@@ -125,6 +137,27 @@ public class RecipeService(
         string? token = await authenticationService.GetTokenAsync(cancellationToken);
         await backendClient.Modules.Kitchen.Recipes[recipeId]
             .DeleteAsync(x =>
+                {
+                    x.Headers.Add("Authorization", $"Bearer {token}");
+                },
+                cancellationToken);
+    }
+
+    /// <inheritdoc/>
+    public async Task UpdateRecipeNameAsync(Guid recipeId,
+        string name,
+        CancellationToken cancellationToken = default)
+    {
+        cancellationToken.ThrowIfCancellationRequested();
+
+        string? token = await authenticationService.GetTokenAsync(cancellationToken);
+        await backendClient.Modules.Kitchen.Recipes[recipeId]
+            .PatchAsync(
+                new RecipeRenameRequest
+                {
+                    Name = name
+                },
+                x =>
                 {
                     x.Headers.Add("Authorization", $"Bearer {token}");
                 },

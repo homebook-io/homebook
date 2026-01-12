@@ -63,7 +63,8 @@ public partial class Overview : ComponentBase
         string source = "3250";
         CancellationToken cancellationToken = CancellationToken.None;
 
-        await RecipeService.CreateRecipeAsync(recipeName,
+        await RecipeService.CreateOrUpdateRecipeAsync(null,
+            recipeName,
             description,
             servings,
             steps.ToArray(),

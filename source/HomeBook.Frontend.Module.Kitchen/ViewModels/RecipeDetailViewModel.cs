@@ -16,7 +16,7 @@ public class RecipeDetailViewModel
     public IEnumerable<StepViewModel> Steps { get; set; }
     public string Image { get; set; }
     public string Source { get; set; }
-    public string Comment { get; set; }
+    public string Comments { get; set; }
 
     public int NumberOfServings { get; set; }
 

@@ -25,6 +25,7 @@ public interface IRecipeService
     /// <summary>
     ///
     /// </summary>
+    /// <param name="id"></param>
     /// <param name="name"></param>
     /// <param name="description"></param>
     /// <param name="servings"></param>
@@ -38,7 +39,8 @@ public interface IRecipeService
     /// <param name="source"></param>
     /// <param name="cancellationToken"></param>
     /// <returns></returns>
-    Task CreateRecipeAsync(string name,
+    Task CreateOrUpdateRecipeAsync(Guid? id,
+        string name,
         string? description = null,
         int? servings = null,
         RecipeStepDto[]? steps = null,
@@ -60,9 +62,6 @@ public interface IRecipeService
     Task CreateRecipeAsync(string name,
         CancellationToken cancellationToken = default);
 
-    Task CreateOrUpdateRecipeAsync(string name,
-        CancellationToken cancellationToken = default);
-
     /// <summary>
     ///
     /// </summary>
@@ -70,5 +69,16 @@ public interface IRecipeService
     /// <param name="cancellationToken"></param>
     /// <returns></returns>
     Task DeleteRecipeAsync(Guid recipeId,
+        CancellationToken cancellationToken = default);
+
+    /// <summary>
+    ///
+    /// </summary>
+    /// <param name="recipeId"></param>
+    /// <param name="name"></param>
+    /// <param name="cancellationToken"></param>
+    /// <returns></returns>
+    Task UpdateRecipeNameAsync(Guid recipeId,
+        string name,
         CancellationToken cancellationToken = default);
 }

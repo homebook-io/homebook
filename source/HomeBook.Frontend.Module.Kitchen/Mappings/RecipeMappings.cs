@@ -69,6 +69,14 @@ public static class RecipeMappings
             r.DurationCookingMinutes,
             "");
 
+    public static CreateRecipeIngredientRequest ToRequest(this RecipeIngredientDto dto) =>
+        new()
+        {
+            Name = dto.Name,
+            Quantity = dto.Quantity,
+            Unit = dto.Unit,
+        };
+
     public static CreateRecipeStepRequest ToRequest(this RecipeStepDto dto) =>
         new()
         {
@@ -77,11 +85,14 @@ public static class RecipeMappings
             TimerDurationInSeconds = dto.TimerDurationInSeconds
         };
 
-    public static CreateRecipeIngredientRequest ToRequest(this RecipeIngredientDto dto) =>
-        new()
-        {
-            Name = dto.Name,
-            Quantity = dto.Quantity,
-            Unit = dto.Unit,
-        };
+    public static RecipeIngredientDto ToDto(this IngredientViewModel dto) =>
+        new(dto.Name,
+            Convert.ToDouble(dto.Quantity),
+            dto.Unit);
+
+    public static RecipeStepDto ToDto(this StepViewModel dto,
+        int position) =>
+        new(dto.Description,
+            position,
+            dto.TimerDurationInSeconds);
 }

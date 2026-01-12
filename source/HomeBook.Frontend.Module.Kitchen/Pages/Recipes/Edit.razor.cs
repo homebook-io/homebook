@@ -71,11 +71,18 @@ public partial class Edit : ComponentBase
 
     private async Task SaveRecipeAsync()
     {
-        var servings = _recipe.Servings;
-
-        int i = 0;
-
-        // await RecipeService.CreateOrUpdateRecipeAsync();
+        await RecipeService.CreateOrUpdateRecipeAsync(RecipeId,
+            _recipe!.Name,
+            _recipe.Description,
+            _recipe.Servings,
+            _recipe.Steps?.Select((s, i) => s.ToDto(i)).ToArray(),
+            _recipe.Ingredients?.Select(i => i.ToDto()).ToArray(),
+            Convert.ToInt32(_recipe.DurationWorkingMinutes?.TotalSeconds),
+            Convert.ToInt32(_recipe.DurationCookingMinutes?.TotalSeconds),
+            Convert.ToInt32(_recipe.DurationRestingMinutes?.TotalSeconds),
+            _recipe.CaloriesKcal,
+            _recipe.Comments,
+            _recipe.Source);
     }
 
     private void AbortEditingRecipe()
