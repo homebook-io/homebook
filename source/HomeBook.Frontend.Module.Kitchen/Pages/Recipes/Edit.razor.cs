@@ -13,6 +13,8 @@ public partial class Edit : ComponentBase
 
     private bool _isLoading = false;
     private RecipeDetailViewModel? _recipe = null;
+    private bool _nameEditMode = false;
+    private bool _nameEditUpdate = false;
 
     protected override async Task OnAfterRenderAsync(bool firstRender)
     {
@@ -74,7 +76,7 @@ public partial class Edit : ComponentBase
         await RecipeService.CreateOrUpdateRecipeAsync(RecipeId,
             _recipe!.Name,
             _recipe.Description,
-            _recipe.Servings,
+            _recipe.NumberOfServings,
             _recipe.Steps?.Select((s, i) => s.ToDto(i)).ToArray(),
             _recipe.Ingredients?.Select(i => i.ToDto()).ToArray(),
             Convert.ToInt32(_recipe.DurationWorkingMinutes?.TotalSeconds),
@@ -88,5 +90,40 @@ public partial class Edit : ComponentBase
     private void AbortEditingRecipe()
     {
         NavigationManager.NavigateTo("/Kitchen/Recipes");
+    }
+
+
+    private async Task EditRecipeNameAsync()
+    {
+        _nameEditMode = true;
+        StateHasChanged();
+    }
+
+    private async Task UpdateRecipeNameAsync()
+    {
+        try
+        {
+            _nameEditMode = false;
+            _nameEditUpdate = true;
+            StateHasChanged();
+
+            CancellationToken cancellationToken = CancellationToken.None;
+            string newName = _recipe?.Name ?? string.Empty;
+            await RecipeService.UpdateRecipeNameAsync(RecipeId,
+                newName,
+                cancellationToken);
+
+            await Task.Delay(5000, cancellationToken); // simulate delay
+        }
+        catch (Exception err)
+        {
+            Snackbar.Add("+Recipe name could not be updated. " + err.Message,
+                Severity.Error);
+        }
+        finally
+        {
+            _nameEditUpdate = false;
+            StateHasChanged();
+        }
     }
 }
