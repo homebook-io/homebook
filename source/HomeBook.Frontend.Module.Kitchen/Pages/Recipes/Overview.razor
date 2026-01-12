@@ -2,10 +2,13 @@
 
 @using HomeBook.Frontend.Core.Icons
 @using HomeBook.Frontend.Module.Kitchen.Contracts
+@using HomeBook.Frontend.Module.Kitchen.Resources
 @using HomeBook.Frontend.Module.Kitchen.ViewModels
 @using Humanizer
+@using Microsoft.Extensions.Localization
 
 @inject IRecipeService RecipeService
+@inject IStringLocalizer<Strings> Loc
 
 <MudContainer>
 
@@ -61,7 +64,7 @@
                             {
                                 <MudCardActions Class="d-flex align-center frosted-b2 border-0">
 
-                                    @if (recipe.Duration is not null)
+                                    @if (recipe.Duration is { TotalSeconds: > 0 })
                                     {
                                         <UiIcon IconStyle="UiIconStyle.Plain"
                                                 Size="Size.Small"
@@ -73,7 +76,7 @@
                                         </MudText>
                                     }
 
-                                    @if (recipe.Servings is not null)
+                                    @if (recipe.Servings is > 0)
                                     {
                                         <UiIcon IconStyle="UiIconStyle.Plain"
                                                 Size="Size.Small"
@@ -81,7 +84,7 @@
                                                 ColorValue="var(--hb-color-jade)"
                                                 Icon="@HomeBookIcons.Icons8.Windows11.Filled.People"/>
                                         <MudText Class="d-flex me-5">
-                                            @recipe.Servings +servingins
+                                            @string.Format(@Loc[nameof(Strings.RecipeOverview_AnnotationServings_TextTemplate)], recipe.Servings)
                                         </MudText>
                                     }
 

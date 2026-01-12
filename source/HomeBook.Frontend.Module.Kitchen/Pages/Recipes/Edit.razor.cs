@@ -44,6 +44,7 @@ public partial class Edit : ComponentBase
             }
 
             _recipe = recipeDto.ToViewModel();
+            int i = 0;
         }
         catch (Exception err)
         {
@@ -91,7 +92,6 @@ public partial class Edit : ComponentBase
     {
         NavigationManager.NavigateTo("/Kitchen/Recipes");
     }
-
 
     private async Task EditRecipeNameAsync()
     {

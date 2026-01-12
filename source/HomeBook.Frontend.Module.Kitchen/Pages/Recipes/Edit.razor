@@ -24,6 +24,8 @@
                 <MudTooltip Color="Color.Primary"
                             Text="+View Recipe">
                     <MudIconButton Icon="@HomeBookIcons.Icons8.Windows11.Outline.RestaurantMenu"
+                                   Variant="Variant.Filled"
+                                   Class="pa-3 rounded-pill"
                                    Href="@string.Format("/Kitchen/Recipes/{0}/View", RecipeId)"
                                    Color="Color.Primary"/>
                 </MudTooltip>
@@ -35,19 +37,25 @@
                     <MudText Typo="Typo.h5">
                         @_recipe.Name
                     </MudText>
-                    <MudIconButton Icon="@HomeBookIcons.Icons8.Windows11.Outline.Edit"
-                                   Color="Color.Primary"
-                                   OnClick="EditRecipeNameAsync"
-                                   Class="ms-3"/>
+                    <MudTooltip Color="Color.Primary"
+                                Text="+Edit Recipe Name">
+                        <MudIconButton Icon="@HomeBookIcons.Icons8.Windows11.Outline.Edit"
+                                       Color="Color.Primary"
+                                       OnClick="EditRecipeNameAsync"
+                                       Class="ms-3"/>
+                    </MudTooltip>
                 }
                 else
                 {
                     <MudTextField T="string"
                                   @bind-Value="@_recipe.Name"/>
-                    <MudIconButton Icon="@HomeBookIcons.Icons8.Windows11.Outline.Save"
-                                   Color="Color.Primary"
-                                   OnClick="UpdateRecipeNameAsync"
-                                   Class="ms-3"/>
+                    <MudTooltip Color="Color.Primary"
+                                Text="+Save Recipe Name">
+                        <MudIconButton Icon="@HomeBookIcons.Icons8.Windows11.Outline.Save"
+                                       Color="Color.Primary"
+                                       OnClick="UpdateRecipeNameAsync"
+                                       Class="ms-3"/>
+                    </MudTooltip>
                 }
 
                 <MudSpacer/>
@@ -251,6 +259,7 @@
                 <MudTextField T="string"
                               Class="mx-3"
                               Lines="5"
+                              @bind-Value="@_recipe.Comments"
                               Margin="Margin.Dense"
                               Variant="Variant.Outlined"/>
 
@@ -261,6 +270,7 @@
 
                 <MudTextField T="string"
                               Class="mx-3 mb-3"
+                              @bind-Value="@_recipe.Source"
                               Margin="Margin.Dense"
                               Variant="Variant.Outlined"/>
 

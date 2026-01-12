@@ -122,5 +122,11 @@ namespace HomeBook.Frontend.Module.Kitchen.Resources {
                 return ResourceManager.GetString("PlanOverview_MealType_Dinner_Text", resourceCulture);
             }
         }
+        
+        public static string RecipeOverview_AnnotationServings_TextTemplate {
+            get {
+                return ResourceManager.GetString("RecipeOverview_AnnotationServings_TextTemplate", resourceCulture);
+            }
+        }
     }
 }

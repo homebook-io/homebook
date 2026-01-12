@@ -47,4 +47,7 @@
     <data name="PlanOverview_MealType_Dinner_Text" xml:space="preserve">
         <value>Abendessen</value>
     </data>
+    <data name="RecipeOverview_AnnotationServings_TextTemplate" xml:space="preserve">
+        <value>{0} Portionen</value>
+    </data>
 </root>

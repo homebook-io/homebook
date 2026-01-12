@@ -9,8 +9,11 @@ public static class RecipeMappings
 {
     public static RecipeDetailViewModel ToViewModel(this RecipeDetailDto recipe)
     {
-        TimeSpan? duration = recipe.DurationInMinutes.HasValue
-            ? TimeSpan.FromMinutes(recipe.DurationInMinutes.Value)
+        int? durationInMinutes = recipe.DurationWorkingMinutes
+                                 + recipe.DurationCookingMinutes
+                                 + recipe.DurationRestingMinutes;
+        TimeSpan? duration = durationInMinutes.HasValue
+            ? TimeSpan.FromMinutes(durationInMinutes.Value)
             : null;
 
         return new RecipeDetailViewModel
@@ -20,10 +23,17 @@ public static class RecipeMappings
             Name = recipe.Name,
             Description = recipe.Description,
             Servings = recipe.Servings,
+            NumberOfServings = recipe.Servings ?? 1,
             CaloriesKcal = recipe.CaloriesKcal,
             Duration = duration,
+            DurationWorkingMinutes = TimeSpan.FromSeconds(recipe.DurationWorkingMinutes ?? 0),
+            DurationCookingMinutes = TimeSpan.FromSeconds(recipe.DurationCookingMinutes ?? 0),
+            DurationRestingMinutes = TimeSpan.FromSeconds(recipe.DurationRestingMinutes ?? 0),
             // Ingredients = recipe.Ingredients,
-            Image = TestImageMappings.PlaceholderImage
+            // Steps = recipe.Steps,
+            Image = TestImageMappings.PlaceholderImage,
+            Source = recipe.Source,
+            Comments = recipe.Comments
         };
     }
 
@@ -63,11 +73,27 @@ public static class RecipeMappings
             r.Id!.Value,
             r.Username!,
             r.Name!,
+            r.NormalizedName!,
             r.Description!,
             r.Servings,
-            r.CaloriesKcal,
+            (r.Ingredients ?? []).Select(x => x.ToDto()).ToArray(),
+            (r.Steps ?? []).Select(x => x.ToDto()).ToArray(),
+            r.DurationWorkingMinutes,
             r.DurationCookingMinutes,
-            "");
+            r.DurationRestingMinutes,
+            r.CaloriesKcal,
+            r.Comments!,
+            r.Source!);
+
+    public static RecipeIngredientDto ToDto(this RecipeIngredientResponse r) =>
+        new(r.Name!,
+            r.Quantity,
+            r.Unit);
+
+    public static RecipeStepDto ToDto(this RecipeStepResponse r) =>
+        new(r.Description!,
+            r.Position!.Value,
+            r.TimerDurationInSeconds);
 
     public static CreateRecipeIngredientRequest ToRequest(this RecipeIngredientDto dto) =>
         new()

@@ -4,8 +4,14 @@ public record RecipeDetailDto(
     Guid Id,
     string Username,
     string Name,
+    string NormalizedName,
     string Description,
     int? Servings,
+    RecipeIngredientDto[] Ingredients,
+    RecipeStepDto[] Steps,
+    int? DurationWorkingMinutes,
+    int? DurationCookingMinutes,
+    int? DurationRestingMinutes,
     int? CaloriesKcal,
-    int? DurationInMinutes,
-    string Ingredients);
+    string Comments,
+    string Source);
