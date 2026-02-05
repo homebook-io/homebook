@@ -1,5 +1,4 @@
 using HomeBook.Client.Models;
-using HomeBook.Frontend.Module.Kitchen.ViewModels;
 using HomeBook.Frontend.Module.Kitchen.Models;
 using HomeBook.Frontend.Module.Kitchen.ViewModels;
 
@@ -26,11 +25,32 @@ public static class RecipeMappings
             NumberOfServings = recipe.Servings ?? 1,
             CaloriesKcal = recipe.CaloriesKcal,
             Duration = duration,
-            DurationWorkingMinutes = TimeSpan.FromSeconds(recipe.DurationWorkingMinutes ?? 0),
-            DurationCookingMinutes = TimeSpan.FromSeconds(recipe.DurationCookingMinutes ?? 0),
-            DurationRestingMinutes = TimeSpan.FromSeconds(recipe.DurationRestingMinutes ?? 0),
-            // Ingredients = recipe.Ingredients,
-            // Steps = recipe.Steps,
+            DurationWorkingMinutes = recipe.DurationWorkingMinutes.HasValue
+                ? TimeSpan.FromMinutes(recipe.DurationWorkingMinutes.Value)
+                : null,
+            DurationCookingMinutes = recipe.DurationCookingMinutes.HasValue
+                ? TimeSpan.FromMinutes(recipe.DurationCookingMinutes.Value)
+                : null,
+            DurationRestingMinutes = recipe.DurationRestingMinutes.HasValue
+                ? TimeSpan.FromMinutes(recipe.DurationRestingMinutes.Value)
+                : null,
+            Ingredients = recipe.Ingredients
+                .Select(x => new IngredientViewModel
+                {
+                    Name = x.Name,
+                    Quantity = x.Quantity.HasValue ? Convert.ToDecimal(x.Quantity.Value) : null,
+                    Unit = x.Unit,
+                    AdditionalText = null
+                })
+                .ToList(),
+            Steps = recipe.Steps
+                .OrderBy(x => x.Position)
+                .Select(x => new StepViewModel
+                {
+                    Description = x.Description,
+                    TimerDurationInSeconds = x.TimerDurationInSeconds
+                })
+                .ToList(),
             Image = TestImageMappings.PlaceholderImage,
             Source = recipe.Source,
             Comments = recipe.Comments
@@ -113,7 +133,7 @@ public static class RecipeMappings
 
     public static RecipeIngredientDto ToDto(this IngredientViewModel dto) =>
         new(dto.Name,
-            Convert.ToDouble(dto.Quantity),
+            dto.Quantity.HasValue ? Convert.ToDouble(dto.Quantity.Value) : null,
             dto.Unit);
 
     public static RecipeStepDto ToDto(this StepViewModel dto,

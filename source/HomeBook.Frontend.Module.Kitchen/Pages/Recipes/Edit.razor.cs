@@ -34,6 +34,18 @@ public partial class Edit : ComponentBase
 
         try
         {
+            if (RecipeId == Guid.Empty)
+            {
+                _recipe = new RecipeDetailViewModel
+                {
+                    Name = string.Empty,
+                    Description = string.Empty,
+                    NumberOfServings = 1
+                };
+                _nameEditMode = true;
+                return;
+            }
+
             RecipeDetailDto? recipeDto = await RecipeService.GetRecipeByIdAsync(RecipeId,
                 cancellationToken);
             if (recipeDto is null)
@@ -74,18 +86,22 @@ public partial class Edit : ComponentBase
 
     private async Task SaveRecipeAsync()
     {
-        await RecipeService.CreateOrUpdateRecipeAsync(RecipeId,
+        Guid? recipeId = RecipeId == Guid.Empty ? null : RecipeId;
+        await RecipeService.CreateOrUpdateRecipeAsync(recipeId,
             _recipe!.Name,
             _recipe.Description,
             _recipe.NumberOfServings,
             _recipe.Steps?.Select((s, i) => s.ToDto(i)).ToArray(),
             _recipe.Ingredients?.Select(i => i.ToDto()).ToArray(),
-            Convert.ToInt32(_recipe.DurationWorkingMinutes?.TotalSeconds),
-            Convert.ToInt32(_recipe.DurationCookingMinutes?.TotalSeconds),
-            Convert.ToInt32(_recipe.DurationRestingMinutes?.TotalSeconds),
+            ToMinutes(_recipe.DurationWorkingMinutes),
+            ToMinutes(_recipe.DurationCookingMinutes),
+            ToMinutes(_recipe.DurationRestingMinutes),
             _recipe.CaloriesKcal,
             _recipe.Comments,
             _recipe.Source);
+
+        if (recipeId is null)
+            NavigationManager.NavigateTo("/Kitchen/Recipes");
     }
 
     private void AbortEditingRecipe()
@@ -125,5 +141,60 @@ public partial class Edit : ComponentBase
             _nameEditUpdate = false;
             StateHasChanged();
         }
+    }
+
+    private static int GetDurationHours(TimeSpan? duration) =>
+        duration.HasValue ? (int)duration.Value.TotalHours : 0;
+
+    private static int GetDurationMinutes(TimeSpan? duration) =>
+        duration.HasValue ? duration.Value.Minutes : 0;
+
+    private void SetWorkingHours(int hours)
+    {
+        _recipe!.DurationWorkingMinutes = BuildDuration(hours, GetDurationMinutes(_recipe.DurationWorkingMinutes));
+    }
+
+    private void SetWorkingMinutes(int minutes)
+    {
+        _recipe!.DurationWorkingMinutes = BuildDuration(GetDurationHours(_recipe.DurationWorkingMinutes), minutes);
+    }
+
+    private void SetCookingHours(int hours)
+    {
+        _recipe!.DurationCookingMinutes = BuildDuration(hours, GetDurationMinutes(_recipe.DurationCookingMinutes));
+    }
+
+    private void SetCookingMinutes(int minutes)
+    {
+        _recipe!.DurationCookingMinutes = BuildDuration(GetDurationHours(_recipe.DurationCookingMinutes), minutes);
+    }
+
+    private void SetRestingHours(int hours)
+    {
+        _recipe!.DurationRestingMinutes = BuildDuration(hours, GetDurationMinutes(_recipe.DurationRestingMinutes));
+    }
+
+    private void SetRestingMinutes(int minutes)
+    {
+        _recipe!.DurationRestingMinutes = BuildDuration(GetDurationHours(_recipe.DurationRestingMinutes), minutes);
+    }
+
+    private static TimeSpan? BuildDuration(int hours,
+        int minutes)
+    {
+        int safeHours = Math.Max(0, hours);
+        int safeMinutes = Math.Max(0, minutes);
+        if (safeHours == 0 && safeMinutes == 0)
+            return null;
+
+        return new TimeSpan(safeHours, safeMinutes, 0);
+    }
+
+    private static int? ToMinutes(TimeSpan? duration)
+    {
+        if (duration is null)
+            return null;
+
+        return (int)Math.Round(duration.Value.TotalMinutes);
     }
 }

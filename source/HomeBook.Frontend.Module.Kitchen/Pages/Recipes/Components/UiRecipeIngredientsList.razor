@@ -16,49 +16,101 @@
 
             <div class="d-flex align-center justify-space-between flex-grow-1 gap-3">
 
-                <MudIconButton Icon="@HomeBookIcons.Icons8.Windows11.Outline.Multiply"
-                               Size="Size.Small"/>
+                @if (!ReadOnly)
+                {
+                    <MudIconButton Icon="@HomeBookIcons.Icons8.Windows11.Outline.Multiply"
+                                   Size="Size.Small"
+                                   OnClick="@(() => RemoveIngredient(ingredient))"/>
+                }
 
                 <div class="d-flex flex-column flex-grow-1">
-
-                    <MudText Class="flex-grow-1" Typo="Typo.h6">
-                        @ingredient.DisplayText
-                    </MudText>
-
-                    @if (!string.IsNullOrWhiteSpace(ingredient.AdditionalText))
+                    @if (ReadOnly)
                     {
-                        <MudText Class="flex-grow-1"
-                                 Typo="Typo.caption">@ingredient.AdditionalText</MudText>
+                        <MudText Class="flex-grow-1" Typo="Typo.h6">
+                            @ingredient.DisplayText
+                        </MudText>
+
+                        @if (!string.IsNullOrWhiteSpace(ingredient.AdditionalText))
+                        {
+                            <MudText Class="flex-grow-1"
+                                     Typo="Typo.caption">@ingredient.AdditionalText</MudText>
+                        }
                     }
-
+                    else
+                    {
+                        <div class="d-flex flex-column gap-2">
+                            <div class="d-flex align-center gap-3">
+                                <MudNumericField T="decimal?"
+                                                 @bind-Value="ingredient.Quantity"
+                                                 Margin="Margin.Dense"
+                                                 Variant="Variant.Outlined"
+                                                 Placeholder="+Menge"
+                                                 Step="0.1m"
+                                                 Min="0m"/>
+                                <MudTextField T="string"
+                                              @bind-Value="ingredient.Unit"
+                                              Margin="Margin.Dense"
+                                              Variant="Variant.Outlined"
+                                              Placeholder="+Einheit"/>
+                                <MudTextField T="string"
+                                              @bind-Value="ingredient.Name"
+                                              Margin="Margin.Dense"
+                                              Variant="Variant.Outlined"
+                                              Placeholder="+Zutat"/>
+                            </div>
+                            <MudTextField T="string"
+                                          @bind-Value="ingredient.AdditionalText"
+                                          Margin="Margin.Dense"
+                                          Variant="Variant.Outlined"
+                                          Placeholder="+Zusatz (optional)"/>
+                        </div>
+                    }
                 </div>
-
-                <MudIconButton Icon="@HomeBookIcons.Icons8.Windows11.Outline.EditPencil"
-                               Size="Size.Small"/>
-                <MudIconButton Icon="@HomeBookIcons.Icons8.Windows11.Outline.Menu"
-                               Size="Size.Small"/>
 
             </div>
 
         </MudListItem>
     }
 
-    <MudListItem T="string"
-                 Dense="true">
+    @if (!ReadOnly)
+    {
+        <MudListItem T="string"
+                     Dense="true">
 
-        <div class="d-flex align-center gap-3">
+            <div class="d-flex flex-column gap-2">
+                <div class="d-flex align-center gap-3">
+                    <MudNumericField T="decimal?"
+                                     @bind-Value="_newQuantity"
+                                     Margin="Margin.Dense"
+                                     Variant="Variant.Outlined"
+                                     Step="0.1m"
+                                     Min="0m"/>
+                    <MudTextField T="string"
+                                  @bind-Value="_newUnit"
+                                  Margin="Margin.Dense"
+                                  Variant="Variant.Outlined"
+                                  Placeholder="+Einheit"/>
+                    <MudTextField T="string"
+                                  @bind-Value="_newName"
+                                  Margin="Margin.Dense"
+                                  Variant="Variant.Outlined"
+                                  Placeholder="+Zutat"/>
+                </div>
+                <div class="d-flex align-center gap-3">
+                    <MudTextField T="string"
+                                  @bind-Value="_newAdditionalText"
+                                  Margin="Margin.Dense"
+                                  Variant="Variant.Outlined"
+                                  Placeholder="+Zusatz (optional)"/>
 
-            <MudTextField T="string"
-                          Placeholder="+z.B “200 g Quark (fettreduziert)“"
-                          Margin="Margin.Dense"
-                          Variant="Variant.Outlined"/>
+                    <MudIconButton Variant="Variant.Outlined"
+                                   Icon="@HomeBookIcons.Icons8.Windows11.Filled.Plus"
+                                   Color="Color.Secondary"
+                                   OnClick="AddIngredient"/>
+                </div>
+            </div>
 
-            <MudIconButton Variant="Variant.Outlined"
-                           Icon="@HomeBookIcons.Icons8.Windows11.Filled.Plus"
-                           Color="Color.Secondary"/>
-
-        </div>
-
-    </MudListItem>
+        </MudListItem>
+    }
 
 </MudList>
