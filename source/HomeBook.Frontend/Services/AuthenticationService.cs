@@ -96,7 +96,8 @@ public class AuthenticationService(
                 // TODO: add jwt token to kiota
                 // request.Headers.Authorization = new AuthenticationHeaderValue("Bearer", token);
 
-                string? response = await backendClient.Account.Logout.PostAsync(x =>
+                string? response = await backendClient.Account.Logout.PostAsync(
+                    x =>
                     {
                     },
                     cancellationToken);
@@ -134,7 +135,7 @@ public class AuthenticationService(
 
         if (string.IsNullOrEmpty(expiresAtString)
             || !DateTime.TryParse(expiresAtString, out DateTime expiresAt))
-            return true;
+            return false;
 
         if (DateTime.UtcNow < expiresAt)
             return true;
@@ -173,7 +174,7 @@ public class AuthenticationService(
             // Parse JWT token to extract claims
             string[] tokenParts = token.Split('.');
             if (tokenParts.Length != 3)
-                return null;
+                throw new FormatException("Invalid JWT token format");
 
             // Decode payload
             string payload = tokenParts[1];
@@ -219,13 +220,12 @@ public class AuthenticationService(
     /// <inheritdoc />
     public async Task<bool> IsCurrentUserAdminAsync(CancellationToken cancellationToken = default)
     {
-        ClaimsPrincipal user = await GetCurrentUserAsync(cancellationToken);
-        Claim? isAdminClaim = user.FindFirst("IsAdmin");
+        ClaimsPrincipal? user = await GetCurrentUserAsync(cancellationToken);
+        Claim? isAdminClaim = user?.FindFirst("IsAdmin");
 
-        if (isAdminClaim != null && bool.TryParse(isAdminClaim.Value, out bool isAdmin))
-        {
+        if (isAdminClaim is not null
+            && bool.TryParse(isAdminClaim.Value, out bool isAdmin))
             return isAdmin;
-        }
 
         return false;
     }

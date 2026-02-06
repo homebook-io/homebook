@@ -11,10 +11,12 @@ public partial class MealSelectDialog : ComponentBase
     [CascadingParameter]
     private IMudDialogInstance MudDialog { get; set; }
 
-    private List<MealItemViewModel> _mealItems = [];
+    private List<RecipeViewModel> _mealItems = [];
     private bool _isLoading { get; set; }
     private CancellationTokenSource _cancellationTokenSource = new();
-    private Timer? _searchDebounceTimer;
+    private Timer? _searchInputDebounceTimer;
+
+    private MudTextField<string>? _searchTextField;
 
     protected override async Task OnAfterRenderAsync(bool firstRender)
     {
@@ -23,38 +25,37 @@ public partial class MealSelectDialog : ComponentBase
         if (!firstRender)
             return;
 
-        // TODO: load available meals from service
-        await SearchAsync(string.Empty);
+        await SearchAsync();
     }
 
-    private string? _text;
+    private string? _searchText;
 
     private void OnSearchTextFieldValueChanged(string? value)
     {
-        _text = value;
+        _searchText = value;
 
         // Reset existing timer if any
-        _searchDebounceTimer?.Dispose();
+        _searchInputDebounceTimer?.Dispose();
 
         // Create new timer with 3 seconds delay
         long delayMilliseconds = 1000;
-        _searchDebounceTimer = new Timer(TimerCallback,
+        _searchInputDebounceTimer = new Timer(SearchInputDebounceTimerCallback,
             null,
             TimeSpan.FromMilliseconds(delayMilliseconds),
             Timeout.InfiniteTimeSpan);
     }
 
-    private async void TimerCallback(object? state)
+    private async void SearchInputDebounceTimerCallback(object? state)
     {
         await InvokeAsync(async () =>
         {
-            _searchDebounceTimer = null;
+            _searchInputDebounceTimer = null;
 
-            await SearchAsync(_text ?? string.Empty);
+            await SearchAsync(_searchText ?? string.Empty);
         });
     }
 
-    private async Task SearchAsync(string searchText)
+    private async Task SearchAsync(string? searchText = null)
     {
         CancellationToken cancellationToken = _cancellationTokenSource.Token;
 
@@ -66,7 +67,7 @@ public partial class MealSelectDialog : ComponentBase
             // Check if cancelled before starting
             cancellationToken.ThrowIfCancellationRequested();
 
-            IEnumerable<RecipeDto> meals = await MealService.GetMealsAsync(searchText,
+            IEnumerable<RecipeDto> meals = await RecipeService.GetRecipesAsync(searchText,
                 cancellationToken);
 
             _mealItems.Clear();
@@ -92,10 +93,14 @@ public partial class MealSelectDialog : ComponentBase
                 _isLoading = false;
                 StateHasChanged();
             }
+
+            if (_searchTextField is not null)
+                await _searchTextField.FocusAsync();
+            StateHasChanged();
         }
     }
 
-    private async Task SelectMealAsync(MealItemViewModel meal)
+    private async Task SelectMealAsync(RecipeViewModel meal)
     {
         await ShutdownAsync();
 
@@ -115,7 +120,22 @@ public partial class MealSelectDialog : ComponentBase
         _cancellationTokenSource.Dispose();
 
         // Cleanup timer
-        if (_searchDebounceTimer is not null)
-            await _searchDebounceTimer.DisposeAsync();
+        if (_searchInputDebounceTimer is not null)
+            await _searchInputDebounceTimer.DisposeAsync();
+    }
+
+    private async Task CreateAsNewMeal()
+    {
+        string? mealName = _searchText?.Trim();
+
+        if (string.IsNullOrWhiteSpace(mealName))
+            return;
+
+        CancellationToken cancellationToken = _cancellationTokenSource.Token;
+        await RecipeService.CreateRecipeAsync(mealName,
+            cancellationToken);
+
+        // reload
+        await SearchAsync(mealName);
     }
 }

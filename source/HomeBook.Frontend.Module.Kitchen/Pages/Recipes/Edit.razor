@@ -1,0 +1,345 @@
+@page "/Kitchen/Recipes/{RecipeId:guid}/Edit"
+@page "/Kitchen/Recipes/New"
+
+@using HomeBook.Frontend.Core.Icons
+@using HomeBook.Frontend.Module.Kitchen.Contracts
+@using HomeBook.Frontend.Module.Kitchen.Pages.Recipes.Components
+@using HomeBook.Frontend.Module.Kitchen.Resources
+@using Microsoft.Extensions.Localization
+
+@inject IRecipeService RecipeService
+@inject NavigationManager NavigationManager
+@inject ISnackbar Snackbar
+@inject IStringLocalizer<Strings> Loc
+
+@if (!_isLoading
+     && _recipe != null)
+{
+    <MudContainer>
+
+        <MudPaper Class="frosted-b6 text-dark mb-5 pa-3 rounded-pill">
+
+            <MudToolBar Dense="true"
+                        Class="px-0">
+
+                @if (RecipeId != Guid.Empty)
+                {
+                    <MudTooltip Color="Color.Primary"
+                                Text="+View Recipe">
+                        <MudIconButton Icon="@HomeBookIcons.Icons8.Windows11.Outline.RestaurantMenu"
+                                       Variant="Variant.Filled"
+                                       Class="pa-3 rounded-pill"
+                                       Href="@string.Format("/Kitchen/Recipes/{0}/View", RecipeId)"
+                                       Color="Color.Primary"/>
+                    </MudTooltip>
+                }
+
+                <MudSpacer/>
+
+                @if (RecipeId == Guid.Empty)
+                {
+                    <MudTextField T="string"
+                                  @bind-Value="@_recipe.Name"
+                                  Placeholder="+Rezeptname"/>
+                }
+                else if (!_nameEditMode)
+                {
+                    <MudText Typo="Typo.h5">
+                        @_recipe.Name
+                    </MudText>
+                    <MudTooltip Color="Color.Primary"
+                                Text="+Edit Recipe Name">
+                        <MudIconButton Icon="@HomeBookIcons.Icons8.Windows11.Outline.Edit"
+                                       Color="Color.Primary"
+                                       OnClick="EditRecipeNameAsync"
+                                       Class="ms-3"/>
+                    </MudTooltip>
+                }
+                else
+                {
+                    <MudTextField T="string"
+                                  @bind-Value="@_recipe.Name"/>
+                    <MudTooltip Color="Color.Primary"
+                                Text="+Save Recipe Name">
+                        <MudIconButton Icon="@HomeBookIcons.Icons8.Windows11.Outline.Save"
+                                       Color="Color.Primary"
+                                       OnClick="UpdateRecipeNameAsync"
+                                       Class="ms-3"/>
+                    </MudTooltip>
+                }
+
+                <MudSpacer/>
+
+                @if (RecipeId != Guid.Empty)
+                {
+                    <MudTooltip Color="Color.Error"
+                                Text="+Delete Recipe">
+                        <MudIconButton Icon="@HomeBookIcons.Icons8.Windows11.Outline.Trash"
+                                       OnClick="DeleteRecipe"
+                                       Color="Color.Error"/>
+                    </MudTooltip>
+                }
+
+            </MudToolBar>
+
+        </MudPaper>
+
+        <MudPaper Class="frosted-b8 text-dark mb-5 pa-3">
+
+            <MudTextField T="string"
+                          @bind-Value="@_recipe.Description"
+                          Label="+Beschreibung"
+                          Variant="Variant.Outlined"
+                          Lines="5"/>
+
+            <MudPaper Class="frosted-b1 text-dark mt-5 pa-3">
+
+                <MudToolBar Dense="true"
+                            Class="px-0">
+
+                    @switch (_recipe.NumberOfServings)
+                    {
+                        case 1:
+                            <MudText Typo="Typo.body1">
+                                +Für 1 Portion
+                            </MudText>
+                            break;
+                        default:
+                            <MudText Typo="Typo.body1">
+                                +Für <b>@_recipe.NumberOfServings</b> Portionen
+                            </MudText>
+                            break;
+                    }
+
+                    <MudSpacer/>
+
+                    <UiNumericGroup @bind-Value="@_recipe.NumberOfServings"
+                                    Min="1"
+                                    Max="int.MaxValue"
+                                    Step="1"/>
+
+                </MudToolBar>
+
+            </MudPaper>
+
+
+        </MudPaper>
+
+        <MudPaper Class="frosted-b8 text-dark mb-5">
+
+            <UiRecipeIngredientsList @bind-Ingredients="@_recipe.Ingredients"/>
+
+        </MudPaper>
+
+        <MudPaper Class="frosted-b8 text-dark mb-5">
+
+            <UiRecipeStepsList @bind-Steps="@_recipe.Steps"/>
+
+        </MudPaper>
+
+        <MudPaper Class="frosted-b4 text-dark mb-5">
+
+            <UiRecipeImageUpload/>
+
+        </MudPaper>
+
+        <MudPaper Class="frosted-b4 text-dark mb-5">
+
+            <MudText Typo="Typo.h5"
+                     Class="mx-5 my-3">
+                +Dauer & weitere Angaben
+            </MudText>
+
+            <MudPaper Class="frosted-b4 text-dark mx-3 mb-5">
+
+                <MudGrid Class="mb-3">
+
+                    <MudItem sm="12" md="6">
+
+                        <MudText Typo="Typo.h6"
+                                 Class="mx-3">
+                            +Arbeitszeit
+                        </MudText>
+
+                        <div class="d-flex align-center justify-space-between flex-grow-1 gap-3 mx-3">
+                            <MudNumericField T="int"
+                                             Margin="Margin.Dense"
+                                             Variant="Variant.Outlined"
+                                             Step="1"
+                                             Min="0"
+                                             Value="@GetDurationHours(_recipe.DurationWorkingMinutes)"
+                                             ValueChanged="SetWorkingHours"
+                                             Adornment="Adornment.End"
+                                             AdornmentText="+h"
+                                             AdornmentColor="Color.Primary"/>
+                            <MudNumericField T="int"
+                                             Margin="Margin.Dense"
+                                             Variant="Variant.Outlined"
+                                             Step="1"
+                                             Min="0"
+                                             Max="59"
+                                             Value="@GetDurationMinutes(_recipe.DurationWorkingMinutes)"
+                                             ValueChanged="SetWorkingMinutes"
+                                             Adornment="Adornment.End"
+                                             AdornmentText="+m"
+                                             AdornmentColor="Color.Primary"/>
+                        </div>
+
+                    </MudItem>
+
+                    <MudItem sm="12" md="6">
+
+                        <MudText Typo="Typo.h6"
+                                 Class="mx-3">
+                            +Koch/Backzeit
+                        </MudText>
+
+                        <div class="d-flex align-center justify-space-between flex-grow-1 gap-3 mx-3">
+                            <MudNumericField T="int"
+                                             Margin="Margin.Dense"
+                                             Variant="Variant.Outlined"
+                                             Step="1"
+                                             Min="0"
+                                             Value="@GetDurationHours(_recipe.DurationCookingMinutes)"
+                                             ValueChanged="SetCookingHours"
+                                             Adornment="Adornment.End"
+                                             AdornmentText="+h"
+                                             AdornmentColor="Color.Primary"/>
+                            <MudNumericField T="int"
+                                             Margin="Margin.Dense"
+                                             Variant="Variant.Outlined"
+                                             Step="1"
+                                             Min="0"
+                                             Max="59"
+                                             Value="@GetDurationMinutes(_recipe.DurationCookingMinutes)"
+                                             ValueChanged="SetCookingMinutes"
+                                             Adornment="Adornment.End"
+                                             AdornmentText="+m"
+                                             AdornmentColor="Color.Primary"/>
+                        </div>
+                    </MudItem>
+
+                    <MudItem sm="12" md="6">
+
+                        <MudText Typo="Typo.h6"
+                                 Class="mx-3">
+                            +Ruhezeit
+                        </MudText>
+
+                        <div class="d-flex align-center justify-space-between flex-grow-1 gap-3 mx-3">
+                            <MudNumericField T="int"
+                                             Margin="Margin.Dense"
+                                             Variant="Variant.Outlined"
+                                             Step="1"
+                                             Min="0"
+                                             Value="@GetDurationHours(_recipe.DurationRestingMinutes)"
+                                             ValueChanged="SetRestingHours"
+                                             Adornment="Adornment.End"
+                                             AdornmentText="+h"
+                                             AdornmentColor="Color.Primary"/>
+                            <MudNumericField T="int"
+                                             Margin="Margin.Dense"
+                                             Variant="Variant.Outlined"
+                                             Step="1"
+                                             Min="0"
+                                             Max="59"
+                                             Value="@GetDurationMinutes(_recipe.DurationRestingMinutes)"
+                                             ValueChanged="SetRestingMinutes"
+                                             Adornment="Adornment.End"
+                                             AdornmentText="+m"
+                                             AdornmentColor="Color.Primary"/>
+                        </div>
+                    </MudItem>
+
+                    <MudItem sm="12" md="6">
+
+                        <MudText Typo="Typo.h6"
+                                 Class="mx-3">
+                            +Kalorien/Portion
+                        </MudText>
+
+                        <div class="d-flex align-center justify-space-between flex-grow-1 gap-3 mx-3">
+                            <MudNumericField T="int?"
+                                             Margin="Margin.Dense"
+                                             Variant="Variant.Outlined"
+                                             Step="1"
+                                             Min="0"
+                                             @bind-Value="@_recipe.CaloriesKcal"
+                                             Adornment="Adornment.End"
+                                             AdornmentText="+Kcal"
+                                             AdornmentColor="Color.Primary"/>
+                        </div>
+                    </MudItem>
+
+                </MudGrid>
+
+            </MudPaper>
+
+            <MudPaper Class="frosted-b4 text-dark mx-3 mb-5">
+
+                <MudText Typo="Typo.h6"
+                         Class="mx-3">
+                    +Kommentar
+                </MudText>
+
+                <MudTextField T="string"
+                              Class="mx-3"
+                              Lines="5"
+                              @bind-Value="@_recipe.Comments"
+                              Margin="Margin.Dense"
+                              Variant="Variant.Outlined"/>
+
+                <MudText Typo="Typo.h6"
+                         Class="mx-3">
+                    +Quelle
+                </MudText>
+
+                <MudTextField T="string"
+                              Class="mx-3 mb-3"
+                              @bind-Value="@_recipe.Source"
+                              Margin="Margin.Dense"
+                              Variant="Variant.Outlined"/>
+
+            </MudPaper>
+
+        </MudPaper>
+
+        <MudPaper Class="frosted-b4 text-dark mb-5 pa-3">
+
+            <div class="d-flex align-center justify-space-between flex-grow-1 gap-3">
+
+                <MudButton Color="Color.Secondary"
+                           Variant="Variant.Text"
+                           OnClick="AbortEditingRecipe">
+                    +Abort
+                </MudButton>
+
+                <MudSpacer/>
+
+                <MudButton Color="Color.Primary"
+                           Variant="Variant.Filled"
+                           OnClick="SaveRecipeAsync">
+                    +Save Recipe
+                </MudButton>
+
+            </div>
+        </MudPaper>
+
+    </MudContainer>
+}
+
+<MudContainer>
+
+    @if (_isLoading)
+    {
+        <div class="d-flex justify-center">
+            <MudProgressCircular Color="Color.Primary"
+                                 Indeterminate="true"/>
+        </div>
+    }
+
+    @if (!_isLoading)
+    {
+    }
+
+</MudContainer>

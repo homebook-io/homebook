@@ -1,0 +1,140 @@
+@using HomeBook.Frontend.Core.Icons
+<MudText Typo="Typo.h5"
+         Class="mx-5 my-3">
+    +Zubereitung
+</MudText>
+
+<MudList T="string"
+         Class="d-flex flex-column gap-3">
+
+    @foreach (var (step, index) in Steps.Select((item, index) => (item, index)))
+    {
+        <MudListItem T="string"
+                     Dense="true">
+
+            <div class="d-flex flex-column flex-grow-1">
+                <MudText Class="flex-grow-1" Typo="Typo.h6">+Schritt @(index + 1)</MudText>
+
+                <div class="d-flex align-center justify-space-between flex-grow-1 gap-3">
+
+                    @if (!ReadOnly)
+                    {
+                        <MudIconButton Icon="@HomeBookIcons.Icons8.Windows11.Outline.Multiply"
+                                       Size="Size.Small"
+                                       OnClick="@(() => RemoveStep(step))"/>
+                    }
+
+                    <div class="d-flex flex-column flex-grow-1">
+                        @if (ReadOnly)
+                        {
+                            <MudText Class="flex-grow-1" Typo="Typo.body1">@step.Description</MudText>
+                            @if (step.TimerDurationInSeconds is > 0)
+                            {
+                                <MudText Typo="Typo.caption">
+                                    +Timer: @FormatStepTimer(step.TimerDurationInSeconds)
+                                </MudText>
+                            }
+                        }
+                        else
+                        {
+                            <MudTextField T="string"
+                                          @bind-Value="step.Description"
+                                          Margin="Margin.Dense"
+                                          Variant="Variant.Outlined"/>
+                        }
+                    </div>
+
+                </div>
+
+                @if (!ReadOnly)
+                {
+                    <MudText Typo="Typo.h6"
+                             Class="mx-3">
+                        +Timer für diesen Schritt
+                    </MudText>
+
+                    <div class="d-flex align-center justify-space-between flex-grow-1 gap-3 mx-3">
+                        <MudNumericField T="int"
+                                         Margin="Margin.Dense"
+                                         Variant="Variant.Outlined"
+                                         Step="1"
+                                         Min="0"
+                                         Value="@GetStepHours(step)"
+                                         ValueChanged="@(value => SetStepHours(step, value))"
+                                         Adornment="Adornment.End"
+                                         AdornmentText="+h"
+                                         AdornmentColor="Color.Primary"/>
+                        <MudNumericField T="int"
+                                         Margin="Margin.Dense"
+                                         Variant="Variant.Outlined"
+                                         Step="1"
+                                         Min="0"
+                                         Max="59"
+                                         Value="@GetStepMinutes(step)"
+                                         ValueChanged="@(value => SetStepMinutes(step, value))"
+                                         Adornment="Adornment.End"
+                                         AdornmentText="+m"
+                                         AdornmentColor="Color.Primary"/>
+                    </div>
+                }
+
+            </div>
+
+        </MudListItem>
+    }
+
+    @if (!ReadOnly)
+    {
+        <MudListItem T="string"
+                     Dense="true">
+
+            <div class="d-flex flex-column flex-grow-1">
+                <MudText Class="flex-grow-1" Typo="Typo.h6">+Schritt @(Steps.Count + 1)</MudText>
+
+                <div class="d-flex align-center gap-3">
+
+                    <MudTextField T="string"
+                                  @bind-Value="_newStepDescription"
+                                  Placeholder="Was passiert in diesem Schritt?"
+                                  Margin="Margin.Dense"
+                                  Variant="Variant.Outlined"/>
+
+                    <MudIconButton Variant="Variant.Outlined"
+                                   Icon="@HomeBookIcons.Icons8.Windows11.Filled.Plus"
+                                   Color="Color.Secondary"
+                                   OnClick="AddStep"/>
+                </div>
+
+                <MudText Typo="Typo.h6"
+                         Class="mx-3">
+                    +Timer für diesen Schritt
+                </MudText>
+
+                <div class="d-flex align-center justify-space-between flex-grow-1 gap-3 mx-3">
+                    <MudNumericField T="int"
+                                     Margin="Margin.Dense"
+                                     Variant="Variant.Outlined"
+                                     Step="1"
+                                     Min="0"
+                                     @bind-Value="_newStepHours"
+                                     Adornment="Adornment.End"
+                                     AdornmentText="+h"
+                                     AdornmentColor="Color.Primary"/>
+                    <MudNumericField T="int"
+                                     Margin="Margin.Dense"
+                                     Variant="Variant.Outlined"
+                                     Step="1"
+                                     Min="0"
+                                     Max="59"
+                                     @bind-Value="_newStepMinutes"
+                                     Adornment="Adornment.End"
+                                     AdornmentText="+m"
+                                     AdornmentColor="Color.Primary"/>
+                </div>
+
+            </div>
+
+        </MudListItem>
+    }
+
+</MudList>

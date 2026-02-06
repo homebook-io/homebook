@@ -8,11 +8,10 @@
 
     <ItemGroup>
         <ProjectReference Include="..\HomeBook.Backend.Data\HomeBook.Backend.Data.csproj"/>
-        <ProjectReference Include="..\HomeBook.Frontend.Abstractions\HomeBook.Frontend.Abstractions.csproj"/>
     </ItemGroup>
 
     <ItemGroup>
-      <PackageReference Include="FluentValidation" Version="12.1.0" />
+      <PackageReference Include="FluentValidation" Version="12.1.1" />
     </ItemGroup>
 
 </Project>

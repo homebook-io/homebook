@@ -1,0 +1,46 @@
+@using HomeBook.Frontend.Core.Icons
+@using HomeBook.Frontend.Module.Kitchen.Enums
+@using HomeBook.Frontend.Module.Kitchen.Resources
+@using Microsoft.Extensions.Localization
+
+@inject IStringLocalizer<Strings> Loc
+@inject IDialogService DialogService
+
+<MudCard Class="mt-5 frosted-b8 text-dark border-0">
+
+    <MudCardHeader Class="@HeaderCssClass">
+        <MudText Typo="Typo.h5"
+                 Class="ms-1 me-5">
+            @MealPlanItem.Date.ToString("D")
+        </MudText>
+    </MudCardHeader>
+
+    <div class="d-flex gap-5 px-5 mt-4 mb-5">
+
+        <UiMealCard MealTypeName="@Loc[nameof(Strings.PlanOverview_MealType_Breakfast_Text)]"
+                    MealTypeIcon="@HomeBookIcons.Icons8.Windows11.Filled.BuffetBreakfast"
+                    Class="flex-1"
+                    MealTypeColor="var(--hb-color-gold)"
+                    Meal="@MealPlanItem.Breakfast"
+                    OnAdd="@(() => OnMealAdd(MealType.Breakfast, MealPlanItem.Date))"
+                    OnDelete="@(() => OnMealDelete(MealType.Breakfast, MealPlanItem.Date))"/>
+
+        <UiMealCard MealTypeName="@Loc[nameof(Strings.PlanOverview_MealType_Lunch_Text)]"
+                    MealTypeIcon="@HomeBookIcons.Icons8.Windows11.Filled.Summer"
+                    Class="flex-1"
+                    MealTypeColor="var(--hb-color-apple)"
+                    Meal="@MealPlanItem.Lunch"
+                    OnAdd="@(() => OnMealAdd(MealType.Lunch, MealPlanItem.Date))"
+                    OnDelete="@(() => OnMealDelete(MealType.Lunch, MealPlanItem.Date))"/>
+
+        <UiMealCard MealTypeName="@Loc[nameof(Strings.PlanOverview_MealType_Dinner_Text)]"
+                    MealTypeIcon="@HomeBookIcons.Icons8.Windows11.Filled.Moon"
+                    Class="flex-1"
+                    MealTypeColor="var(--hb-color-cerulean)"
+                    Meal="@MealPlanItem.Dinner"
+                    OnAdd="@(() => OnMealAdd(MealType.Dinner, MealPlanItem.Date))"
+                    OnDelete="@(() => OnMealDelete(MealType.Dinner, MealPlanItem.Date))"/>
+
+    </div>
+
+</MudCard>

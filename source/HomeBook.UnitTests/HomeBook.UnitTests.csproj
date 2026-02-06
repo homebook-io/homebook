@@ -22,7 +22,7 @@
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
     </PackageReference>
     <PackageReference Include="Shouldly" Version="4.3.0" />
-    <PackageReference Include="NUnit3TestAdapter" Version="5.2.0" />
+    <PackageReference Include="NUnit3TestAdapter" Version="6.0.0" />
   </ItemGroup>
 
   <ItemGroup>
@@ -39,7 +39,6 @@
 
   <ItemGroup>
     <Folder Include="Frontend\Modules\Finances\ViewModels\" />
-    <Folder Include="Frontend\Services\" />
   </ItemGroup>
 
 </Project>

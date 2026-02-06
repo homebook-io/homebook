@@ -1,4 +1,4 @@
-using HomeBook.Backend.OpenApi;
+using HomeBook.Backend.Core.Modules.OpenApi;
 
 namespace HomeBook.UnitTests.Backend.OpenApi;
 

@@ -14,16 +14,20 @@ namespace HomeBook.Backend.Core.Account;
 /// </summary>
 public class JwtService(IConfiguration configuration) : IJwtService
 {
-    private readonly string _secretKey = configuration["Jwt:SecretKey"] ?? throw new InvalidOperationException("JWT SecretKey is required");
-    private readonly string _issuer = configuration["Jwt:Issuer"] ?? "HomeBook";
-    private readonly string _audience = configuration["Jwt:Audience"] ?? "HomeBook";
-    private readonly int _expirationMinutes = int.Parse(configuration["Jwt:ExpirationMinutes"] ?? "60");
+    private readonly string _secretKey = configuration["Jwt:SecretKey"]
+                                         ?? throw new InvalidOperationException("JWT SecretKey is required");
+
+    private readonly string _issuer = configuration["Jwt:Issuer"]
+                                      ?? "HomeBook";
+
+    private readonly string _audience = configuration["Jwt:Audience"]
+                                        ?? "HomeBook";
+
+    private readonly int _expirationMinutes = int.Parse(configuration["Jwt:ExpirationMinutes"]
+                                                        ?? "60");
 
     /// <inheritdoc />
-    public JwtTokenResult GenerateToken(Guid userId, string username)
-    {
-        return GenerateToken(userId, username, false);
-    }
+    public JwtTokenResult GenerateToken(Guid userId, string username) => GenerateToken(userId, username, false);
 
     /// <inheritdoc />
     public JwtTokenResult GenerateToken(Guid userId, string username, bool isAdmin)
@@ -36,13 +40,17 @@ public class JwtService(IConfiguration configuration) : IJwtService
         [
             new(ClaimTypes.NameIdentifier, userId.ToString()),
             new(ClaimTypes.Name, username),
-            new(ClaimTypes.Role, isAdmin ? "Admin" : "User"),
-            new("IsAdmin", isAdmin.ToString(), ClaimValueTypes.Boolean),
             new(JwtRegisteredClaimNames.Jti, Guid.NewGuid().ToString()),
             new(JwtRegisteredClaimNames.Iat,
                 new DateTimeOffset(DateTime.UtcNow).ToUnixTimeSeconds().ToString(),
                 ClaimValueTypes.Integer64)
         ];
+
+        if (isAdmin)
+        {
+            claims = claims.Append(new Claim(ClaimTypes.Role, isAdmin ? "Admin" : "User")).ToArray();
+            claims = claims.Append(new Claim("IsAdmin", isAdmin.ToString(), ClaimValueTypes.Boolean)).ToArray();
+        }
 
         JwtSecurityToken token = new(
             issuer: _issuer,
@@ -71,8 +79,8 @@ public class JwtService(IConfiguration configuration) : IJwtService
     {
         try
         {
-            var tokenHandler = new JwtSecurityTokenHandler();
-            var key = Encoding.UTF8.GetBytes(_secretKey);
+            JwtSecurityTokenHandler tokenHandler = new();
+            byte[] key = Encoding.UTF8.GetBytes(_secretKey);
 
             tokenHandler.ValidateToken(token,
                 new TokenValidationParameters
@@ -101,10 +109,10 @@ public class JwtService(IConfiguration configuration) : IJwtService
     {
         try
         {
-            var tokenHandler = new JwtSecurityTokenHandler();
-            var key = Encoding.UTF8.GetBytes(_secretKey);
+            JwtSecurityTokenHandler tokenHandler = new();
+            byte[] key = Encoding.UTF8.GetBytes(_secretKey);
 
-            var principal = tokenHandler.ValidateToken(token,
+            ClaimsPrincipal? principal = tokenHandler.ValidateToken(token,
                 new TokenValidationParameters
                 {
                     ValidateIssuerSigningKey = true,
@@ -118,7 +126,7 @@ public class JwtService(IConfiguration configuration) : IJwtService
                 },
                 out SecurityToken validatedToken);
 
-            var userIdClaim = principal.FindFirst(ClaimTypes.NameIdentifier);
+            Claim? userIdClaim = principal.FindFirst(ClaimTypes.NameIdentifier);
             if (userIdClaim != null && Guid.TryParse(userIdClaim.Value, out Guid userId))
             {
                 return userId;

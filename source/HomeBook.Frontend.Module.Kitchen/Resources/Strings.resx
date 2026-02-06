@@ -57,4 +57,7 @@
     <data name="PlanOverview_MealType_Dinner_Text" xml:space="preserve">
         <value>Dinner</value>
     </data>
+    <data name="RecipeOverview_AnnotationServings_TextTemplate" xml:space="preserve">
+        <value>{0} Servings</value>
+    </data>
 </root>

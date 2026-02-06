@@ -1,0 +1,214 @@
+using HomeBook.Backend.Abstractions.Models.UserManagement;
+using HomeBook.Backend.Data.Entities;
+using HomeBook.Backend.Module.Kitchen.Models;
+using HomeBook.Backend.Module.Kitchen.Requests;
+using HomeBook.Backend.Module.Kitchen.Responses;
+
+namespace HomeBook.Backend.Module.Kitchen.Mappings;
+
+public static class RecipeMappings
+{
+    public static RecipeResultDto ToDto(this Data.Entities.Recipe recipe)
+    {
+        return new RecipeResultDto(
+            recipe.Id,
+            recipe.UserId,
+            recipe.Name,
+            recipe.NormalizedName,
+            recipe.Description,
+            recipe.Servings,
+            recipe.DurationWorkingMinutes,
+            recipe.DurationCookingMinutes,
+            recipe.DurationRestingMinutes,
+            recipe.CaloriesKcal,
+            recipe.Comments,
+            recipe.Source,
+            recipe.Recipe2RecipeIngredient.Select(i => i.ToDto()).ToArray(),
+            recipe.Steps.Select(s => s.ToDto()).ToArray());
+    }
+
+    public static RecipeIngredientDto ToDto(this Data.Entities.Recipe2RecipeIngredient r2ri)
+    {
+        return new RecipeIngredientDto(r2ri.IngredientId,
+            r2ri.RecipeIngredient.Name,
+            r2ri.RecipeIngredient.NormalizedName,
+            r2ri.Quantity,
+            r2ri.Unit);
+    }
+
+    public static RecipeStepDto ToDto(this Data.Entities.RecipeStep rs)
+    {
+        return new RecipeStepDto(
+            rs.RecipeId,
+            rs.Position,
+            rs.Description,
+            rs.TimerDurationInSeconds);
+    }
+
+    public static async Task<RecipeResponse> ToResponseAsync(this RecipeResultDto r,
+        Func<Guid, Task<UserInfo?>> getUserInfoAsync)
+    {
+        string? username = null;
+        if (r.UserId.HasValue)
+        {
+            UserInfo? userInfo = await getUserInfoAsync(r.UserId.Value);
+            username = userInfo?.Username;
+        }
+
+        return new RecipeResponse(r.Id,
+            username,
+            r.Name,
+            r.NormalizedName,
+            r.Description,
+            r.Servings,
+            r.DurationWorkingMinutes,
+            r.DurationCookingMinutes,
+            r.DurationRestingMinutes,
+            r.CaloriesKcal,
+            r.Comments,
+            r.Source);
+    }
+
+    public static async Task<RecipeDetailResponse> ToDetailResponseAsync(this RecipeResultDto recipeResult,
+        Func<Guid, Task<UserInfo?>> getUserInfoAsync)
+    {
+        string? username = null;
+        if (recipeResult.UserId.HasValue)
+        {
+            UserInfo? userInfo = await getUserInfoAsync(recipeResult.UserId.Value);
+            username = userInfo?.Username;
+        }
+
+        return new RecipeDetailResponse(recipeResult.Id,
+            username,
+            recipeResult.Name,
+            recipeResult.NormalizedName,
+            recipeResult.Description,
+            recipeResult.Servings,
+            recipeResult.Ingredients.Select(x => x.ToResponse()).ToArray(),
+            recipeResult.Steps.Select(x => x.ToResponse()).ToArray(),
+            recipeResult.DurationWorkingMinutes,
+            recipeResult.DurationCookingMinutes,
+            recipeResult.DurationRestingMinutes,
+            recipeResult.CaloriesKcal,
+            recipeResult.Comments,
+            recipeResult.Source);
+    }
+
+    public static RecipeIngredientResponse ToResponse(this RecipeIngredientDto ri)
+    {
+        return new RecipeIngredientResponse(ri.Id,
+            ri.Name,
+            ri.NormalizedName,
+            ri.Quantity,
+            ri.Unit);
+    }
+
+    public static RecipeStepResponse ToResponse(this RecipeStepDto rs)
+    {
+        return new RecipeStepResponse(
+            rs.RecipeId,
+            rs.Position,
+            rs.Description,
+            rs.TimerDurationInSeconds);
+    }
+
+    public static RecipeRequestDto ToDto(this RecipeRequest r,
+        Guid? recipeId,
+        Guid userId)
+    {
+        RecipeRequestDto dto = new(recipeId,
+            userId,
+            r.Name,
+            r.Description,
+            r.Servings,
+            (r.Ingredients ?? []).Select(i => i.ToDto()).ToArray(),
+            (r.Steps ?? []).Select(i => i.ToDto()).ToArray(),
+            r.DurationWorkingMinutes,
+            r.DurationCookingMinutes,
+            r.DurationRestingMinutes,
+            r.CaloriesKcal,
+            r.Comments,
+            r.Source
+        );
+
+        return dto;
+    }
+
+    public static RecipeIngredientRequestDto ToDto(this CreateRecipeIngredientRequest r)
+    {
+        RecipeIngredientRequestDto dto = new(r.Name,
+            r.Quantity,
+            r.Unit
+        );
+
+        return dto;
+    }
+
+    public static RecipeStepRequestDto ToDto(this CreateRecipeStepRequest r)
+    {
+        RecipeStepRequestDto dto = new(r.Description,
+            r.Position,
+            r.TimerDurationInSeconds
+        );
+
+        return dto;
+    }
+
+    public static Recipe ToEntity(this RecipeRequestDto dto)
+    {
+        Recipe entity = new()
+        {
+            Name = dto.Name,
+            Description = dto.Description,
+            DurationWorkingMinutes = dto.DurationWorkingMinutes,
+            DurationCookingMinutes = dto.DurationCookingMinutes,
+            DurationRestingMinutes = dto.DurationRestingMinutes,
+            CaloriesKcal = dto.CaloriesKcal,
+            Servings = dto.Servings,
+            Comments = dto.Comments,
+            Source = dto.Source,
+            UserId = dto.UserId,
+            Recipe2RecipeIngredient = (dto.Ingredients ?? []).Select(i => i.ToEntity(dto.Id)).ToArray(),
+            Steps = (dto.Steps ?? []).Select(i => i.ToEntity(dto.Id)).ToArray(),
+        };
+
+        if (dto.Id.HasValue)
+            entity.Id = dto.Id.Value;
+
+        return entity;
+    }
+
+    public static Recipe2RecipeIngredient ToEntity(this RecipeIngredientRequestDto dto, Guid? recipeId)
+    {
+        Recipe2RecipeIngredient entity = new()
+        {
+            RecipeIngredient = new RecipeIngredient
+            {
+                Name = dto.Name
+            },
+            Quantity = dto.Quantity,
+            Unit = dto.Unit
+        };
+
+        if(recipeId.HasValue)
+            entity.RecipeId = recipeId.Value;
+
+        return entity;
+    }
+
+    public static RecipeStep ToEntity(this RecipeStepRequestDto dto, Guid? recipeId)
+    {
+        RecipeStep entity = new()
+        {
+            Position = dto.Position,
+            Description = dto.Description,
+            TimerDurationInSeconds = dto.TimerDurationInSeconds
+        };
+
+        if(recipeId.HasValue)
+            entity.RecipeId = recipeId.Value;
+
+        return entity;
+    }
+}

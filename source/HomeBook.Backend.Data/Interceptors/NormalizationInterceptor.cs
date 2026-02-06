@@ -14,7 +14,8 @@ public class NormalizationInterceptor(
     {
         DbContext dbContext = eventData.Context!;
 
-        IEnumerable<INormalizable> entries = dbContext.ChangeTracker.Entries()
+        var allEntries = dbContext.ChangeTracker.Entries();
+        IEnumerable<INormalizable> entries = allEntries
             .Where(e => e.State is EntityState.Added or EntityState.Modified)
             .Select(e => e.Entity)
             .OfType<INormalizable>();
@@ -31,7 +32,8 @@ public class NormalizationInterceptor(
     {
         DbContext dbContext = eventData.Context!;
 
-        IEnumerable<INormalizable> entries = dbContext.ChangeTracker.Entries()
+        var allEntries = dbContext.ChangeTracker.Entries();
+        IEnumerable<INormalizable> entries = allEntries
             .Where(e => e.State is EntityState.Added or EntityState.Modified)
             .Select(e => e.Entity)
             .OfType<INormalizable>();

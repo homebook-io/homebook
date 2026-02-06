@@ -6,6 +6,7 @@ using HomeBook.Backend.Abstractions.Contracts;
 namespace HomeBook.Backend.Data.Entities;
 
 [DebuggerDisplay("[{nameof(Recipe)}] {Name}")]
+[Table("Recipes")]
 public class Recipe : INormalizable
 {
     [Key]
@@ -21,23 +22,30 @@ public class Recipe : INormalizable
     [MaxLength(50)]
     public string NormalizedName { get; set; } = null!;
 
-    public int? DurationMinutes { get; set; }
+    public string? Description { get; set; }
 
-    [NotMapped]
-    public TimeSpan? Duration
-    {
-        get =>
-            DurationMinutes.HasValue
-                ? TimeSpan.FromMinutes(DurationMinutes.Value)
-                : null;
+    public int? DurationWorkingMinutes { get; set; }
 
-        set =>
-            DurationMinutes = value.HasValue
-                ? (int)value.Value.TotalMinutes
-                : null;
-    }
+    public int? DurationCookingMinutes { get; set; }
+
+    public int? DurationRestingMinutes { get; set; }
 
     public int? CaloriesKcal { get; set; }
+
+    public int? Servings { get; set; }
+
+    public string? Comments { get; set; }
+
+    public string? Source { get; set; }
+
+    [ForeignKey(nameof(User))]
+    public Guid? UserId { get; set; }
+
+    public virtual User? User { get; set; }
+
+    public virtual ICollection<Recipe2RecipeIngredient> Recipe2RecipeIngredient { get; set; } = new List<Recipe2RecipeIngredient>();
+
+    public virtual ICollection<RecipeStep> Steps { get; set; } = new List<RecipeStep>();
 
     public void Normalize(IStringNormalizer normalizer)
     {

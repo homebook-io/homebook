@@ -1,0 +1,159 @@
+@page "/Kitchen/Recipes/{RecipeId:guid}/View"
+
+@using HomeBook.Frontend.Core.Icons
+@using HomeBook.Frontend.Module.Kitchen.Contracts
+@using HomeBook.Frontend.Module.Kitchen.Pages.Recipes.Components
+@using Humanizer
+
+@inject IRecipeService RecipeService
+@inject NavigationManager NavigationManager
+@inject ISnackbar Snackbar
+
+@if (!_isLoading
+     && _recipe != null)
+{
+    <MudContainer>
+
+        <MudPaper Class="frosted-b6 text-dark mb-5 pa-3 rounded-pill">
+
+            <MudToolBar Dense="true"
+                        Class="px-0">
+
+                <MudTooltip Color="Color.Primary"
+                            Text="+Edit Recipe">
+                    <MudIconButton Icon="@HomeBookIcons.Icons8.Windows11.Outline.Edit"
+                                   Href="@string.Format("/Kitchen/Recipes/{0}/Edit", RecipeId)"
+                                   Color="Color.Primary"/>
+                </MudTooltip>
+
+                <MudSpacer/>
+
+                <MudText Typo="Typo.h5">
+                    @_recipe.Name
+                </MudText>
+
+                <MudSpacer/>
+
+                <MudTooltip Color="Color.Error"
+                            Text="+Delete Recipe">
+                    <MudIconButton Icon="@HomeBookIcons.Icons8.Windows11.Outline.Trash"
+                                   OnClick="DeleteRecipe"
+                                   Color="Color.Error"/>
+                </MudTooltip>
+
+            </MudToolBar>
+
+        </MudPaper>
+
+        <MudGrid Class="mb-5">
+
+            <MudItem xs="12" md="5">
+                <MudCard Class="frosted-b1 border-0">
+                    <MudCardMedia Image="@_recipe.Image"
+                                  Height="260"/>
+                </MudCard>
+            </MudItem>
+
+            <MudItem xs="12" md="7">
+                <MudPaper Class="frosted-b8 text-dark pa-3">
+                    @if (!string.IsNullOrWhiteSpace(_recipe.Description))
+                    {
+                        <MudText Typo="Typo.body1">@_recipe.Description</MudText>
+                    }
+
+                    <MudGrid Class="mt-3">
+                        @if (_recipe.Duration is not null)
+                        {
+                            <MudItem xs="12" sm="6">
+                                <MudText Typo="Typo.h6">+Gesamtdauer</MudText>
+                                <MudText Typo="Typo.body2">@_recipe.Duration.Value.Humanize()</MudText>
+                            </MudItem>
+                        }
+                        @if (_recipe.NumberOfServings > 0)
+                        {
+                            <MudItem xs="12" sm="6">
+                                <MudText Typo="Typo.h6">+Portionen</MudText>
+                                <MudText Typo="Typo.body2">@_recipe.NumberOfServings</MudText>
+                            </MudItem>
+                        }
+                        @if (_recipe.CaloriesKcal is > 0)
+                        {
+                            <MudItem xs="12" sm="6">
+                                <MudText Typo="Typo.h6">+Kalorien/Portion</MudText>
+                                <MudText Typo="Typo.body2">@_recipe.CaloriesKcal</MudText>
+                            </MudItem>
+                        }
+                    </MudGrid>
+
+                    <MudGrid Class="mt-3">
+                        @if (_recipe.DurationWorkingMinutes is not null)
+                        {
+                            <MudItem xs="12" sm="6">
+                                <MudText Typo="Typo.h6">+Arbeitszeit</MudText>
+                                <MudText Typo="Typo.body2">@_recipe.DurationWorkingMinutes.Value.Humanize()</MudText>
+                            </MudItem>
+                        }
+                        @if (_recipe.DurationCookingMinutes is not null)
+                        {
+                            <MudItem xs="12" sm="6">
+                                <MudText Typo="Typo.h6">+Koch/Backzeit</MudText>
+                                <MudText Typo="Typo.body2">@_recipe.DurationCookingMinutes.Value.Humanize()</MudText>
+                            </MudItem>
+                        }
+                        @if (_recipe.DurationRestingMinutes is not null)
+                        {
+                            <MudItem xs="12" sm="6">
+                                <MudText Typo="Typo.h6">+Ruhezeit</MudText>
+                                <MudText Typo="Typo.body2">@_recipe.DurationRestingMinutes.Value.Humanize()</MudText>
+                            </MudItem>
+                        }
+                    </MudGrid>
+                </MudPaper>
+            </MudItem>
+        </MudGrid>
+
+        <MudPaper Class="frosted-b8 text-dark mb-5">
+            <UiRecipeIngredientsList Ingredients="@_recipe.Ingredients"
+                                     ReadOnly="true"/>
+        </MudPaper>
+
+        <MudPaper Class="frosted-b8 text-dark mb-5">
+            <UiRecipeStepsList Steps="@_recipe.Steps"
+                               ReadOnly="true"/>
+        </MudPaper>
+
+        @if (!string.IsNullOrWhiteSpace(_recipe.Comments)
+             || !string.IsNullOrWhiteSpace(_recipe.Source))
+        {
+            <MudPaper Class="frosted-b4 text-dark mb-5 pa-3">
+                @if (!string.IsNullOrWhiteSpace(_recipe.Comments))
+                {
+                    <MudText Typo="Typo.h6">+Kommentar</MudText>
+                    <MudText Typo="Typo.body2" Class="mb-3">@_recipe.Comments</MudText>
+                }
+                @if (!string.IsNullOrWhiteSpace(_recipe.Source))
+                {
+                    <MudText Typo="Typo.h6">+Quelle</MudText>
+                    <MudText Typo="Typo.body2">@_recipe.Source</MudText>
+                }
+            </MudPaper>
+        }
+
+    </MudContainer>
+}
+
+<MudContainer>
+
+    @if (_isLoading)
+    {
+        <div class="d-flex justify-center">
+            <MudProgressCircular Color="Color.Primary"
+                                 Indeterminate="true"/>
+        </div>
+    }
+
+    @if (!_isLoading)
+    {
+    }
+
+</MudContainer>

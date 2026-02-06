@@ -1,5 +1,4 @@
 using HomeBook.Frontend.Module.Kitchen.ViewModels;
-using HomeBook.Frontend.UI.Components;
 using HomeBook.Frontend.UI.Utilities;
 using Microsoft.AspNetCore.Components;
 
@@ -9,7 +8,7 @@ public partial class UiMealCard : ComponentBase
 {
     protected string Style =>
         new HtmlArgumentBuilder("")
-            .AddClass($"background-color: color-mix(in srgb, {MealTypeColor}, transparent 90%);")
+            .AddClass($"background-color: color-mix(in srgb, {MealTypeColor}, transparent 75%)")
             .Build();
 
     protected string CssClass =>
@@ -31,7 +30,7 @@ public partial class UiMealCard : ComponentBase
     public string Class { get; set; } = string.Empty;
 
     [Parameter]
-    public MealItemViewModel? Meal { get; set; } = null;
+    public RecipeViewModel? Meal { get; set; } = null;
 
     [Parameter]
     public EventCallback OnAdd { get; set; }
@@ -39,13 +38,13 @@ public partial class UiMealCard : ComponentBase
     [Parameter]
     public EventCallback OnDelete { get; set; }
 
-    private async Task HandleAddClick()
+    public async Task HandleAddClick()
     {
         if (OnAdd.HasDelegate)
             await OnAdd.InvokeAsync(null);
     }
 
-    private async Task HandleDeleteClick()
+    protected async Task HandleDeleteClick()
     {
         if (OnDelete.HasDelegate)
             await OnDelete.InvokeAsync(null);

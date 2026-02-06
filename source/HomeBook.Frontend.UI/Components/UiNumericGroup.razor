@@ -1,0 +1,28 @@
+@using HomeBook.Frontend.Core.Icons
+
+@typeparam T
+
+<div class="d-flex align-center gap-3">
+
+    <MudIconButton Variant="Variant.Outlined"
+                   Icon="@HomeBookIcons.Icons8.Windows11.Filled.Minus"
+                   OnClick="@Decrement"
+                   Color="Color.Secondary"/>
+
+    <MudNumericField T="T"
+                     @ref="_numericInput"
+                     Value="@Value"
+                     ValueChanged="OnValueChanged"
+                     Min="@Min"
+                     Max="@Max"
+                     Step="@Step"
+                     HideSpinButtons="true"
+                     Margin="Margin.Dense"
+                     Variant="Variant.Outlined"/>
+
+    <MudIconButton Variant="Variant.Outlined"
+                   Icon="@HomeBookIcons.Icons8.Windows11.Filled.Plus"
+                   OnClick="@Increment"
+                   Color="Color.Secondary"/>
+
+</div>

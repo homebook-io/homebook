@@ -21,7 +21,7 @@ public static class InfoHandler
                 (instanceDefaultName ?? string.Empty));
             return TypedResults.Ok(response);
         }
-        catch (Exception)
+        catch (Exception err)
         {
             return TypedResults.Problem("An error occurred while retrieving instance information.", statusCode: 500);
         }

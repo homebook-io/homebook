@@ -111,4 +111,7 @@
     <data name="Settings_NavMenu_DeveloperColors_Text" xml:space="preserve">
         <value>Dev Colors</value>
     </data>
+    <data name="MainLayout_SearchTextField_Placeholder" xml:space="preserve">
+        <value>Suche nach...</value>
+    </data>
 </root>

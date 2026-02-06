@@ -82,4 +82,10 @@ public class UserProvider(
             },
             cancellationToken);
     }
+
+    /// <inheritdoc />
+    public async Task<UserInfo?> GetUserByIdAsync(Guid userId,
+        CancellationToken cancellationToken) =>
+        (await userRepository.GetUserByIdAsync(userId,
+            cancellationToken))?.ToUserInfo();
 }

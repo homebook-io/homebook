@@ -2,7 +2,10 @@ namespace HomeBook.Frontend.Module.Kitchen.Models;
 
 public record RecipeDto(
     Guid Id,
+    string Username,
     string Name,
-    string Ingredients,
-    TimeSpan? Duration,
-    int? CaloriesKcal);
+    string Description,
+    int? Servings,
+    int? CaloriesKcal,
+    int? DurationInMinutes,
+    string Ingredients);

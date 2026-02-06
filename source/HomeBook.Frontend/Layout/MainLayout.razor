@@ -49,11 +49,16 @@
             </MudText>
         </MudHidden>
 
+        <MudIconButton Icon="@HomeBookIcons.Icons8.Windows11.Outline.Home"
+                       Color="Color.Inherit"
+                       Edge="Edge.Start"
+                       Href="/"/>
+
         <MudSpacer/>
 
         <MudTextField T="string"
                       Margin="Margin.Dense"
-                      Placeholder="+Search for..."
+                      Placeholder="@Loc[nameof(LocalizationStrings.MainLayout_SearchTextField_Placeholder)]"
                       Clearable="true"
                       Immediate="true"
                       Variant="Variant.Outlined"

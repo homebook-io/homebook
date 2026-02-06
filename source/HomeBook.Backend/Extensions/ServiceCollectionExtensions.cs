@@ -6,13 +6,11 @@ using HomeBook.Backend.Abstractions.Models;
 using HomeBook.Backend.Core;
 using HomeBook.Backend.Core.Account.Extensions;
 using HomeBook.Backend.Core.DataProvider;
-using HomeBook.Backend.Core.DataProvider.Extensions;
 using HomeBook.Backend.Core.Extensions;
-using HomeBook.Backend.Core.Finances.Extensions;
 using HomeBook.Backend.Core.HashProvider;
-using HomeBook.Backend.Core.Kitchen.Extensions;
 using HomeBook.Backend.Core.Licenses;
 using HomeBook.Backend.Core.Licenses.Extensions;
+using HomeBook.Backend.Core.Search.Extensions;
 using Homebook.Backend.Core.Setup;
 using Homebook.Backend.Core.Setup.Extensions;
 using Homebook.Backend.Core.Setup.Factories;
@@ -20,12 +18,10 @@ using Homebook.Backend.Core.Setup.Models;
 using Homebook.Backend.Core.Setup.Provider;
 using Homebook.Backend.Core.Setup.Validators;
 using HomeBook.Backend.Data;
-using HomeBook.Backend.Data.Entities;
 using HomeBook.Backend.Data.Extensions;
 using HomeBook.Backend.Data.Mysql.Extensions;
 using HomeBook.Backend.Data.PostgreSql.Extensions;
 using HomeBook.Backend.Data.Sqlite.Extensions;
-using HomeBook.Backend.Data.Validators;
 using HomeBook.Backend.Factories;
 using HomeBook.Backend.Provider;
 using HomeBook.Backend.Services;
@@ -47,15 +43,13 @@ public static class ServiceCollectionExtensions
         IConfiguration configuration,
         InstanceStatus instanceStatus)
     {
-        services.AddBackendServices(configuration, instanceStatus);
-        services.AddBackendCore(configuration, instanceStatus);
-        services.AddBackendCoreSetup(configuration, instanceStatus);
-        services.AddBackendCoreLicenses(configuration, instanceStatus);
-        services.AddBackendDatabaseProvider(configuration, instanceStatus);
-        services.AddAccountServices(configuration, instanceStatus);
-
-        services.AddBackendCoreFinances(configuration, instanceStatus);
-        services.AddBackendCoreKitchen(configuration, instanceStatus);
+        services.AddBackendServices(configuration, instanceStatus)
+            .AddBackendCore(configuration, instanceStatus)
+            .AddBackendCoreSetup(configuration, instanceStatus)
+            .AddBackendCoreLicenses(configuration, instanceStatus)
+            .AddBackendCoreSearch(configuration, instanceStatus)
+            .AddBackendDatabaseProvider(configuration, instanceStatus)
+            .AddAccountServices(configuration, instanceStatus);
 
         return services;
     }

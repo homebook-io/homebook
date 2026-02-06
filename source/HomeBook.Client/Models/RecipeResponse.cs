@@ -14,6 +14,30 @@ namespace HomeBook.Client.Models
     {
         /// <summary>Stores additional data not described in the OpenAPI description found when deserializing. Can be used for serialization as well.</summary>
         public IDictionary<string, object> AdditionalData { get; set; }
+        /// <summary>The caloriesKcal property</summary>
+        public int? CaloriesKcal { get; set; }
+        /// <summary>The comments property</summary>
+#if NETSTANDARD2_1_OR_GREATER || NETCOREAPP3_1_OR_GREATER
+#nullable enable
+        public string? Comments { get; set; }
+#nullable restore
+#else
+        public string Comments { get; set; }
+#endif
+        /// <summary>The description property</summary>
+#if NETSTANDARD2_1_OR_GREATER || NETCOREAPP3_1_OR_GREATER
+#nullable enable
+        public string? Description { get; set; }
+#nullable restore
+#else
+        public string Description { get; set; }
+#endif
+        /// <summary>The durationCookingMinutes property</summary>
+        public int? DurationCookingMinutes { get; set; }
+        /// <summary>The durationRestingMinutes property</summary>
+        public int? DurationRestingMinutes { get; set; }
+        /// <summary>The durationWorkingMinutes property</summary>
+        public int? DurationWorkingMinutes { get; set; }
         /// <summary>The id property</summary>
         public Guid? Id { get; set; }
         /// <summary>The name property</summary>
@@ -31,6 +55,24 @@ namespace HomeBook.Client.Models
 #nullable restore
 #else
         public string NormalizedName { get; set; }
+#endif
+        /// <summary>The servings property</summary>
+        public int? Servings { get; set; }
+        /// <summary>The source property</summary>
+#if NETSTANDARD2_1_OR_GREATER || NETCOREAPP3_1_OR_GREATER
+#nullable enable
+        public string? Source { get; set; }
+#nullable restore
+#else
+        public string Source { get; set; }
+#endif
+        /// <summary>The username property</summary>
+#if NETSTANDARD2_1_OR_GREATER || NETCOREAPP3_1_OR_GREATER
+#nullable enable
+        public string? Username { get; set; }
+#nullable restore
+#else
+        public string Username { get; set; }
 #endif
         /// <summary>
         /// Instantiates a new <see cref="global::HomeBook.Client.Models.RecipeResponse"/> and sets the default values.
@@ -57,9 +99,18 @@ namespace HomeBook.Client.Models
         {
             return new Dictionary<string, Action<IParseNode>>
             {
+                { "caloriesKcal", n => { CaloriesKcal = n.GetIntValue(); } },
+                { "comments", n => { Comments = n.GetStringValue(); } },
+                { "description", n => { Description = n.GetStringValue(); } },
+                { "durationCookingMinutes", n => { DurationCookingMinutes = n.GetIntValue(); } },
+                { "durationRestingMinutes", n => { DurationRestingMinutes = n.GetIntValue(); } },
+                { "durationWorkingMinutes", n => { DurationWorkingMinutes = n.GetIntValue(); } },
                 { "id", n => { Id = n.GetGuidValue(); } },
                 { "name", n => { Name = n.GetStringValue(); } },
                 { "normalizedName", n => { NormalizedName = n.GetStringValue(); } },
+                { "servings", n => { Servings = n.GetIntValue(); } },
+                { "source", n => { Source = n.GetStringValue(); } },
+                { "username", n => { Username = n.GetStringValue(); } },
             };
         }
         /// <summary>
@@ -69,9 +120,18 @@ namespace HomeBook.Client.Models
         public virtual void Serialize(ISerializationWriter writer)
         {
             if(ReferenceEquals(writer, null)) throw new ArgumentNullException(nameof(writer));
+            writer.WriteIntValue("caloriesKcal", CaloriesKcal);
+            writer.WriteStringValue("comments", Comments);
+            writer.WriteStringValue("description", Description);
+            writer.WriteIntValue("durationCookingMinutes", DurationCookingMinutes);
+            writer.WriteIntValue("durationRestingMinutes", DurationRestingMinutes);
+            writer.WriteIntValue("durationWorkingMinutes", DurationWorkingMinutes);
             writer.WriteGuidValue("id", Id);
             writer.WriteStringValue("name", Name);
             writer.WriteStringValue("normalizedName", NormalizedName);
+            writer.WriteIntValue("servings", Servings);
+            writer.WriteStringValue("source", Source);
+            writer.WriteStringValue("username", Username);
             writer.WriteAdditionalData(AdditionalData);
         }
     }

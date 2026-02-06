@@ -1,9 +1,11 @@
+using HomeBook.Backend;
 using HomeBook.Backend.Abstractions;
 using HomeBook.Backend.Endpoints;
 using HomeBook.Backend.EnvironmentHandler;
 using HomeBook.Backend.Extensions;
 using HomeBook.Backend.Core.Account.Extensions;
 using HomeBook.Backend.Middleware;
+using HomeBook.Backend.ModuleCore;
 using Scalar.AspNetCore;
 using Serilog;
 
@@ -12,7 +14,7 @@ string developmentEnvFile = Path.Combine("env", "Development.env");
 EnvironmentLoader.LoadEnvFile(developmentEnvFile);
 #endif
 
-var builder = WebApplication.CreateBuilder(args);
+WebApplicationBuilder builder = WebApplication.CreateBuilder(args);
 builder.Configuration.Sources.Clear();
 builder.Configuration
     .AddJsonFile("appsettings.json", optional: false, reloadOnChange: true)
@@ -50,7 +52,6 @@ switch (instanceStatus)
 builder.Services.AddJwtAuthentication(builder.Configuration, instanceStatus);
 
 if (builder.Environment.IsDevelopment())
-{
     builder.Services.AddCors(options =>
     {
         options.AddDefaultPolicy(policy =>
@@ -60,9 +61,19 @@ if (builder.Environment.IsDevelopment())
                 .AllowAnyMethod();
         });
     });
-}
 
-var app = builder.Build();
+if (instanceStatus == InstanceStatus.RUNNING)
+    builder.AddModules(
+        builder.HomeBook(),
+        (moduleBuilder) =>
+        {
+            // app modules
+            moduleBuilder
+                .AddModule<HomeBook.Backend.Module.Finances.Module>()
+                .AddModule<HomeBook.Backend.Module.Kitchen.Module>();
+        });
+
+WebApplication app = builder.Build();
 
 Log.Information("HomeBook Backend application starting up - Version: {Version}",
     app.Configuration["Version"] ?? "Unknown");
@@ -105,12 +116,13 @@ switch (instanceStatus)
             .MapAccountEndpoints()
             .MapInfoEndpoints()
             .MapUserEndpoints()
-            .MapFinancesCalculationEndpoints()
-            .MapFinancesSavingGoalEndpoints()
-            .MapKitchenRecipeEndpoints();
+            .MapSearchEndpoints();
         break;
 }
 
 #endregion
+
+if (instanceStatus == InstanceStatus.RUNNING)
+    await app.RunModulesPostBuild();
 
 app.Run();

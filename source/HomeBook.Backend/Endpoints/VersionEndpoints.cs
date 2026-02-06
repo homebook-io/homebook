@@ -15,9 +15,6 @@ public static class VersionEndpoints
             .WithTags("Version")
             .WithDescription("returns the version of the backend service")
             // .RequireAuthorization(policy => policy.RequireRole("read"))
-            .WithOpenApi(operation => new(operation)
-            {
-            })
             .Produces<string>(StatusCodes.Status200OK)
             .Produces<string>(StatusCodes.Status500InternalServerError);
 

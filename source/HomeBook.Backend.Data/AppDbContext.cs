@@ -14,8 +14,9 @@ public class AppDbContext(
     public DbSet<UserPreference> UserPreferences { get; set; } = null!;
     public DbSet<SavingGoal> SavingGoals { get; set; } = null!;
     public DbSet<Recipe> Recipes { get; set; } = null!;
-    public DbSet<Ingredient> Ingredients { get; set; } = null!;
+    public DbSet<Recipe2RecipeIngredient> Recipe2RecipeIngredients { get; set; } = null!;
     public DbSet<RecipeIngredient> RecipeIngredients { get; set; } = null!;
+    public DbSet<RecipeStep> RecipeSteps { get; set; } = null!;
 
     private readonly IEnumerable<SaveChangesInterceptor>? _saveChangesInterceptors = saveChangesInterceptors;
 

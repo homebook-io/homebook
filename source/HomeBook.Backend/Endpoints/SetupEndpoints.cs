@@ -1,5 +1,5 @@
+using HomeBook.Backend.Core.Modules.OpenApi;
 using HomeBook.Backend.Handler;
-using HomeBook.Backend.OpenApi;
 using HomeBook.Backend.Requests;
 using HomeBook.Backend.Responses;
 

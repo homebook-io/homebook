@@ -1,0 +1,86 @@
+using System.Linq.Expressions;
+using HomeBook.Backend.Abstractions.Contracts;
+using HomeBook.Backend.Data.Contracts;
+using HomeBook.Backend.Data.Entities;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Query;
+
+namespace HomeBook.Backend.Data.Repositories;
+
+/// <inheritdoc />
+public class IngredientRepository(
+    IDbContextFactory<AppDbContext> factory,
+    IStringNormalizer stringNormalizer) : IIngredientRepository
+{
+    /// <inheritdoc />
+    public async Task<Guid> CreateOrUpdateAsync(RecipeIngredient entity,
+        CancellationToken cancellationToken)
+    {
+        await using AppDbContext dbContext = await factory.CreateDbContextAsync(cancellationToken);
+
+        entity.Normalize(stringNormalizer);
+
+        RecipeIngredient? existing = await GetByName(entity.Name,
+            cancellationToken,
+            dbContext);
+
+        if (existing is null)
+        {
+            dbContext.Add(entity);
+        }
+        else
+        {
+            await dbContext.RecipeIngredients
+                .Where(u => u.Id == entity.Id)
+                .ExecuteUpdateAsync(UpdateEntityProperties(entity),
+                    cancellationToken: cancellationToken);
+        }
+
+        await dbContext.SaveChangesAsync(cancellationToken);
+        return entity.Id;
+    }
+
+    private static Expression<Func<SetPropertyCalls<RecipeIngredient>, SetPropertyCalls<RecipeIngredient>>>
+        UpdateEntityProperties(RecipeIngredient entity)
+    {
+        return s => s
+            .SetProperty(u => u.Name, entity.Name)
+            .SetProperty(u => u.NormalizedName, entity.NormalizedName);
+    }
+
+    /// <inheritdoc />
+    public async Task<RecipeIngredient?> GetByIdAsync(Guid entityId,
+        CancellationToken cancellationToken,
+        AppDbContext? appDbContext = null)
+    {
+        if (appDbContext is null)
+        {
+            await using AppDbContext newDbContext = await factory.CreateDbContextAsync(cancellationToken);
+            return await GetByIdAsync(entityId, cancellationToken, newDbContext);
+        }
+
+        RecipeIngredient? entity = await appDbContext.Set<RecipeIngredient>()
+            .FirstOrDefaultAsync(ri => ri.Id == entityId, cancellationToken);
+
+        return entity;
+    }
+
+    /// <inheritdoc />
+    public async Task<RecipeIngredient?> GetByName(string name,
+        CancellationToken cancellationToken,
+        AppDbContext? appDbContext = null)
+    {
+        if (appDbContext is null)
+        {
+            await using AppDbContext newDbContext = await factory.CreateDbContextAsync(cancellationToken);
+            return await GetByName(name, cancellationToken, newDbContext);
+        }
+
+        string normalizedName = stringNormalizer.Normalize(name);
+
+        RecipeIngredient? entity = await appDbContext.Set<RecipeIngredient>()
+            .FirstOrDefaultAsync(ri => ri.NormalizedName == normalizedName, cancellationToken);
+
+        return entity;
+    }
+}
