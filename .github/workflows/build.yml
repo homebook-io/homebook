@@ -352,6 +352,8 @@ jobs:
                     tags: ${{ steps.meta.outputs.tags }}
                     labels: ${{ steps.meta.outputs.labels }}
                     platforms: ${{ env.DOCKER_PLATFORMS }}
+                    cache-from: type=gha
+                    cache-to: type=gha,mode=max
                     build-args: |
                         FRONTEND_APPSETTINGS_FILE=${{ env.FRONTEND_APPSETTINGS_FILE }}
                         BACKEND_APPSETTINGS_FILE=${{ env.BACKEND_APPSETTINGS_FILE }}
