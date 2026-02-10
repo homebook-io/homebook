@@ -8,12 +8,12 @@ via Docker.
 
 ---
 
-[![Docker](https://img.shields.io/badge/Docker-alpha-blue)](https://hub.docker.com/r/lkcode/homebook)
-![License](https://img.shields.io/github/license/lk-code/homebook)
+[![Docker](https://img.shields.io/badge/Docker-alpha-blue)](https://hub.docker.com/u/homebookio)
+![License](https://img.shields.io/github/license/homebook-io/homebook)
 
-[![Version](https://img.shields.io/docker/v/lkcode/homebook)](https://img.shields.io/docker/v/lkcode/homebook)
-[![Docker Pulls](https://img.shields.io/docker/pulls/lkcode/homebook)](https://hub.docker.com/r/lkcode/homebook)
-[![Docker Star](https://img.shields.io/docker/stars/lkcode/homebook)](https://hub.docker.com/r/lkcode/homebook)
+[![Version](https://img.shields.io/docker/v/homebookio/app)](https://hub.docker.com/u/homebookio)
+[![Docker Pulls](https://img.shields.io/docker/pulls/homebookio/app)](https://hub.docker.com/u/homebookio)
+[![Docker Star](https://img.shields.io/docker/stars/homebookio/app)](https://hub.docker.com/u/homebookio)
 
 [![Lines of Code](https://sonarcloud.io/api/project_badges/measure?project=lk-code_homebook&metric=ncloc)](https://sonarcloud.io/summary/new_code?id=lk-code_homebook)
 [![Vulnerabilities](https://sonarcloud.io/api/project_badges/measure?project=lk-code_homebook&metric=vulnerabilities)](https://sonarcloud.io/summary/new_code?id=lk-code_homebook)
@@ -46,7 +46,7 @@ via Docker.
 ```yaml
 services:
   homebook:
-    image: lkcode/homebook:latest
+    image: homebookio/app:latest
     container_name: homebook
     restart: unless-stopped
     volumes:
@@ -69,15 +69,18 @@ volumes:
 
 open your domain and you should see the HomeBook Setup.
 
+### Installation via UmbrelOS
+
+**coming soon...**
+
 ### Installation via CasaOS
 
 **coming soon...**
 
 ### Supported Databases
 
-- SQLite
-- PostgreSQL (with external server)
-- MySQL (with external server) - (Notice: MariaDB can be used, but is not officially tested)
+- PostgreSQL
+- MySQL - (Notice: MariaDB can be used, but is not officially tested)
 
 ### Setup
 
