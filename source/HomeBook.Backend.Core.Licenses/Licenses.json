@@ -1,28 +1,22 @@
 [
   {
     "PackageId": "AngleSharp",
-    "PackageVersion": "1.3.0",
+    "PackageVersion": "1.4.0",
     "PackageProjectUrl": "https://anglesharp.github.io/",
     "Copyright": "Copyright 2013-2025, AngleSharp.",
     "Authors": "AngleSharp",
-    "License": "MIT",
-    "LicenseUrl": "https://licenses.nuget.org/MIT",
-    "LicenseInformationOrigin": 0
-  },
-  {
-    "PackageId": "AspNetCore.SassCompiler",
-    "PackageVersion": "1.93.2",
-    "Authors": "koenvzeijl,sleeuwen,Michaelvs97",
+    "Description": "AngleSharp is the ultimate angle brackets parser library. It parses HTML5, CSS3, and XML to construct a DOM based on the official W3C specification.",
     "License": "MIT",
     "LicenseUrl": "https://licenses.nuget.org/MIT",
     "LicenseInformationOrigin": 0
   },
   {
     "PackageId": "BouncyCastle.Cryptography",
-    "PackageVersion": "2.5.1",
+    "PackageVersion": "2.6.2",
     "PackageProjectUrl": "https://www.bouncycastle.org/stable/nuget/csharp/website",
-    "Copyright": "Copyright \u00A9 Legion of the Bouncy Castle Inc. 2000-2024",
+    "Copyright": "Copyright \u00A9 Legion of the Bouncy Castle Inc. 2000-2025",
     "Authors": "Legion of the Bouncy Castle Inc.",
+    "Description": "BouncyCastle.NET is a popular cryptography library for .NET",
     "License": "MIT",
     "LicenseUrl": "https://licenses.nuget.org/MIT",
     "LicenseInformationOrigin": 0
@@ -33,6 +27,7 @@
     "PackageProjectUrl": "http://www.castleproject.org/",
     "Copyright": "Copyright (c) 2004-2022 Castle Project - http://www.castleproject.org/",
     "Authors": "Castle Project Contributors",
+    "Description": "Castle Core, including DynamicProxy, Logging Abstractions and DictionaryAdapter",
     "License": "Apache-2.0",
     "LicenseUrl": "https://licenses.nuget.org/Apache-2.0",
     "LicenseInformationOrigin": 0
@@ -42,6 +37,7 @@
     "PackageVersion": "6.0.4",
     "PackageProjectUrl": "https://github.com/coverlet-coverage/coverlet",
     "Authors": "tonerdo",
+    "Description": "Coverlet is a cross platform code coverage library for .NET, with support for line, branch and method coverage.",
     "License": "MIT",
     "LicenseUrl": "https://licenses.nuget.org/MIT",
     "LicenseInformationOrigin": 0
@@ -52,6 +48,7 @@
     "PackageProjectUrl": "https://github.com/VerifyTests/DiffEngine",
     "Copyright": "Copyright 2023. All rights reserved",
     "Authors": "https://github.com/VerifyTests/DiffEngine/graphs/contributors",
+    "Description": "Launches diff tools based on file extensions. Designed to be consumed by snapshot testing libraries.",
     "License": "MIT",
     "LicenseUrl": "https://licenses.nuget.org/MIT",
     "LicenseInformationOrigin": 0
@@ -62,58 +59,75 @@
     "PackageProjectUrl": "https://github.com/SimonCropp/EmptyFiles",
     "Copyright": "Copyright 2023. All rights reserved",
     "Authors": "https://github.com/SimonCropp/EmptyFiles/graphs/contributors",
+    "Description": "A collection of minimal binary files.",
     "License": "MIT",
     "LicenseUrl": "https://licenses.nuget.org/MIT",
     "LicenseInformationOrigin": 0
   },
   {
     "PackageId": "FluentDataBuilder",
-    "PackageVersion": "8.0.114",
+    "PackageVersion": "8.0.130",
     "PackageProjectUrl": "https://github.com/lk-code/fluent-data-builder",
     "Copyright": "MIT",
     "Authors": "lk-code",
+    "Description": "fluent data builder for json and xml",
     "License": "MIT",
     "LicenseUrl": "https://licenses.nuget.org/MIT",
     "LicenseInformationOrigin": 0
   },
   {
     "PackageId": "FluentDataBuilder.Json",
-    "PackageVersion": "8.0.114",
+    "PackageVersion": "8.0.130",
     "PackageProjectUrl": "https://github.com/lk-code/fluent-data-builder",
     "Copyright": "MIT",
     "Authors": "lk-code",
+    "Description": "fluent data builder for json (System.Text.Json)",
     "License": "MIT",
     "LicenseUrl": "https://licenses.nuget.org/MIT",
     "LicenseInformationOrigin": 0
   },
   {
     "PackageId": "FluentDataBuilder.Microsoft.Extensions.Configuration",
-    "PackageVersion": "8.0.114",
+    "PackageVersion": "8.0.130",
     "PackageProjectUrl": "https://github.com/lk-code/fluent-data-builder",
     "Copyright": "MIT",
     "Authors": "lk-code",
+    "Description": "fluent data builder for json and xml",
     "License": "MIT",
     "LicenseUrl": "https://licenses.nuget.org/MIT",
     "LicenseInformationOrigin": 0
   },
   {
     "PackageId": "FluentValidation",
-    "PackageVersion": "12.0.0",
+    "PackageVersion": "12.1.1",
     "PackageProjectUrl": "https://fluentvalidation.net/",
     "Copyright": "Copyright (c) Jeremy Skinner, .NET Foundation, and contributors 2008-2025",
     "Authors": "Jeremy Skinner",
+    "Description": "A validation library for .NET that uses a fluent interface to construct strongly-typed validation rules.",
     "License": "Apache-2.0",
     "LicenseUrl": "https://licenses.nuget.org/Apache-2.0",
     "LicenseInformationOrigin": 0
   },
   {
     "PackageId": "Google.Protobuf",
-    "PackageVersion": "3.30.0",
+    "PackageVersion": "3.32.0",
     "PackageProjectUrl": "https://github.com/protocolbuffers/protobuf",
     "Copyright": "Copyright 2015, Google Inc.",
     "Authors": "Google Inc.",
+    "Description": "C# runtime library for Protocol Buffers - Google\u0027s data interchange format.",
     "License": "BSD-3-Clause",
     "LicenseUrl": "https://licenses.nuget.org/BSD-3-Clause",
+    "LicenseInformationOrigin": 0
+  },
+  {
+    "PackageId": "Humanizer",
+    "PackageVersion": "3.0.1",
+    "PackageProjectUrl": "https://github.com/Humanizr/Humanizer",
+    "Copyright": "Copyright (c) .NET Foundation and Contributors",
+    "Authors": "Claire Novotny, Mehdi Khalili",
+    "Description": "Humanizer meets all your .NET needs for manipulating and displaying strings, enums, dates, times, timespans, numbers and quantities",
+    "License": "MIT",
+    "LicenseUrl": "https://licenses.nuget.org/MIT",
     "LicenseInformationOrigin": 0
   },
   {
@@ -122,6 +136,579 @@
     "PackageProjectUrl": "https://github.com/Humanizr/Humanizer",
     "Copyright": "Copyright (c) .NET Foundation and Contributors",
     "Authors": "Mehdi Khalili, Claire Novotny",
+    "Description": "Humanizer core package that contains the library and the neutral language (English) resources",
+    "License": "MIT",
+    "LicenseUrl": "https://licenses.nuget.org/MIT",
+    "LicenseInformationOrigin": 0
+  },
+  {
+    "PackageId": "Humanizer.Core",
+    "PackageVersion": "3.0.1",
+    "PackageProjectUrl": "https://github.com/Humanizr/Humanizer",
+    "Copyright": "Copyright (c) .NET Foundation and Contributors",
+    "Authors": "Claire Novotny, Mehdi Khalili",
+    "Description": "Humanizer core package that contains the library and the neutral language (English) resources",
+    "License": "MIT",
+    "LicenseUrl": "https://licenses.nuget.org/MIT",
+    "LicenseInformationOrigin": 0
+  },
+  {
+    "PackageId": "Humanizer.Core.af",
+    "PackageVersion": "3.0.1",
+    "PackageProjectUrl": "https://github.com/Humanizr/Humanizer",
+    "Copyright": "Copyright (c) .NET Foundation and Contributors",
+    "Authors": "Claire Novotny, Mehdi Khalili",
+    "Description": "Humanizer Locale Afrikaans (af)",
+    "License": "MIT",
+    "LicenseUrl": "https://licenses.nuget.org/MIT",
+    "LicenseInformationOrigin": 0
+  },
+  {
+    "PackageId": "Humanizer.Core.ar",
+    "PackageVersion": "3.0.1",
+    "PackageProjectUrl": "https://github.com/Humanizr/Humanizer",
+    "Copyright": "Copyright (c) .NET Foundation and Contributors",
+    "Authors": "Claire Novotny, Mehdi Khalili",
+    "Description": "Humanizer Locale Arabic (ar)",
+    "License": "MIT",
+    "LicenseUrl": "https://licenses.nuget.org/MIT",
+    "LicenseInformationOrigin": 0
+  },
+  {
+    "PackageId": "Humanizer.Core.az",
+    "PackageVersion": "3.0.1",
+    "PackageProjectUrl": "https://github.com/Humanizr/Humanizer",
+    "Copyright": "Copyright (c) .NET Foundation and Contributors",
+    "Authors": "Claire Novotny, Mehdi Khalili",
+    "Description": "Humanizer Locale Azerbaijani (az)",
+    "License": "MIT",
+    "LicenseUrl": "https://licenses.nuget.org/MIT",
+    "LicenseInformationOrigin": 0
+  },
+  {
+    "PackageId": "Humanizer.Core.bg",
+    "PackageVersion": "3.0.1",
+    "PackageProjectUrl": "https://github.com/Humanizr/Humanizer",
+    "Copyright": "Copyright (c) .NET Foundation and Contributors",
+    "Authors": "Claire Novotny, Mehdi Khalili",
+    "Description": "Humanizer Locale Bulgarian (bg)",
+    "License": "MIT",
+    "LicenseUrl": "https://licenses.nuget.org/MIT",
+    "LicenseInformationOrigin": 0
+  },
+  {
+    "PackageId": "Humanizer.Core.bn",
+    "PackageVersion": "3.0.1",
+    "PackageProjectUrl": "https://github.com/Humanizr/Humanizer",
+    "Copyright": "Copyright (c) .NET Foundation and Contributors",
+    "Authors": "Claire Novotny, Mehdi Khalili",
+    "Description": "Humanizer Locale Bangla (Bangladesh) (bn)",
+    "License": "MIT",
+    "LicenseUrl": "https://licenses.nuget.org/MIT",
+    "LicenseInformationOrigin": 0
+  },
+  {
+    "PackageId": "Humanizer.Core.ca",
+    "PackageVersion": "3.0.1",
+    "PackageProjectUrl": "https://github.com/Humanizr/Humanizer",
+    "Copyright": "Copyright (c) .NET Foundation and Contributors",
+    "Authors": "Claire Novotny, Mehdi Khalili",
+    "Description": "Humanizer Locale Catalan (ca)",
+    "License": "MIT",
+    "LicenseUrl": "https://licenses.nuget.org/MIT",
+    "LicenseInformationOrigin": 0
+  },
+  {
+    "PackageId": "Humanizer.Core.cs",
+    "PackageVersion": "3.0.1",
+    "PackageProjectUrl": "https://github.com/Humanizr/Humanizer",
+    "Copyright": "Copyright (c) .NET Foundation and Contributors",
+    "Authors": "Claire Novotny, Mehdi Khalili",
+    "Description": "Humanizer Locale Czech (cs)",
+    "License": "MIT",
+    "LicenseUrl": "https://licenses.nuget.org/MIT",
+    "LicenseInformationOrigin": 0
+  },
+  {
+    "PackageId": "Humanizer.Core.da",
+    "PackageVersion": "3.0.1",
+    "PackageProjectUrl": "https://github.com/Humanizr/Humanizer",
+    "Copyright": "Copyright (c) .NET Foundation and Contributors",
+    "Authors": "Claire Novotny, Mehdi Khalili",
+    "Description": "Humanizer Locale Danish (da)",
+    "License": "MIT",
+    "LicenseUrl": "https://licenses.nuget.org/MIT",
+    "LicenseInformationOrigin": 0
+  },
+  {
+    "PackageId": "Humanizer.Core.de",
+    "PackageVersion": "3.0.1",
+    "PackageProjectUrl": "https://github.com/Humanizr/Humanizer",
+    "Copyright": "Copyright (c) .NET Foundation and Contributors",
+    "Authors": "Claire Novotny, Mehdi Khalili",
+    "Description": "Humanizer Locale German (de)",
+    "License": "MIT",
+    "LicenseUrl": "https://licenses.nuget.org/MIT",
+    "LicenseInformationOrigin": 0
+  },
+  {
+    "PackageId": "Humanizer.Core.el",
+    "PackageVersion": "3.0.1",
+    "PackageProjectUrl": "https://github.com/Humanizr/Humanizer",
+    "Copyright": "Copyright (c) .NET Foundation and Contributors",
+    "Authors": "Claire Novotny, Mehdi Khalili",
+    "Description": "Humanizer Locale Greek (el)",
+    "License": "MIT",
+    "LicenseUrl": "https://licenses.nuget.org/MIT",
+    "LicenseInformationOrigin": 0
+  },
+  {
+    "PackageId": "Humanizer.Core.es",
+    "PackageVersion": "3.0.1",
+    "PackageProjectUrl": "https://github.com/Humanizr/Humanizer",
+    "Copyright": "Copyright (c) .NET Foundation and Contributors",
+    "Authors": "Claire Novotny, Mehdi Khalili",
+    "Description": "Humanizer Locale Spanish (es)",
+    "License": "MIT",
+    "LicenseUrl": "https://licenses.nuget.org/MIT",
+    "LicenseInformationOrigin": 0
+  },
+  {
+    "PackageId": "Humanizer.Core.fa",
+    "PackageVersion": "3.0.1",
+    "PackageProjectUrl": "https://github.com/Humanizr/Humanizer",
+    "Copyright": "Copyright (c) .NET Foundation and Contributors",
+    "Authors": "Claire Novotny, Mehdi Khalili",
+    "Description": "Humanizer Locale Persian (fa)",
+    "License": "MIT",
+    "LicenseUrl": "https://licenses.nuget.org/MIT",
+    "LicenseInformationOrigin": 0
+  },
+  {
+    "PackageId": "Humanizer.Core.fi",
+    "PackageVersion": "3.0.1",
+    "PackageProjectUrl": "https://github.com/Humanizr/Humanizer",
+    "Copyright": "Copyright (c) .NET Foundation and Contributors",
+    "Authors": "Claire Novotny, Mehdi Khalili",
+    "Description": "Humanizer Locale Finnish (Finland) (fi)",
+    "License": "MIT",
+    "LicenseUrl": "https://licenses.nuget.org/MIT",
+    "LicenseInformationOrigin": 0
+  },
+  {
+    "PackageId": "Humanizer.Core.fil",
+    "PackageVersion": "3.0.1",
+    "PackageProjectUrl": "https://github.com/Humanizr/Humanizer",
+    "Copyright": "Copyright (c) .NET Foundation and Contributors",
+    "Authors": "Claire Novotny, Mehdi Khalili",
+    "Description": "Humanizer Locale Filipino (Philippines) (fil)",
+    "License": "MIT",
+    "LicenseUrl": "https://licenses.nuget.org/MIT",
+    "LicenseInformationOrigin": 0
+  },
+  {
+    "PackageId": "Humanizer.Core.fr",
+    "PackageVersion": "3.0.1",
+    "PackageProjectUrl": "https://github.com/Humanizr/Humanizer",
+    "Copyright": "Copyright (c) .NET Foundation and Contributors",
+    "Authors": "Claire Novotny, Mehdi Khalili",
+    "Description": "Humanizer Locale French (fr)",
+    "License": "MIT",
+    "LicenseUrl": "https://licenses.nuget.org/MIT",
+    "LicenseInformationOrigin": 0
+  },
+  {
+    "PackageId": "Humanizer.Core.he",
+    "PackageVersion": "3.0.1",
+    "PackageProjectUrl": "https://github.com/Humanizr/Humanizer",
+    "Copyright": "Copyright (c) .NET Foundation and Contributors",
+    "Authors": "Claire Novotny, Mehdi Khalili",
+    "Description": "Humanizer Locale Hebrew (he)",
+    "License": "MIT",
+    "LicenseUrl": "https://licenses.nuget.org/MIT",
+    "LicenseInformationOrigin": 0
+  },
+  {
+    "PackageId": "Humanizer.Core.hr",
+    "PackageVersion": "3.0.1",
+    "PackageProjectUrl": "https://github.com/Humanizr/Humanizer",
+    "Copyright": "Copyright (c) .NET Foundation and Contributors",
+    "Authors": "Claire Novotny, Mehdi Khalili",
+    "Description": "Humanizer Locale Croatian (hr)",
+    "License": "MIT",
+    "LicenseUrl": "https://licenses.nuget.org/MIT",
+    "LicenseInformationOrigin": 0
+  },
+  {
+    "PackageId": "Humanizer.Core.hu",
+    "PackageVersion": "3.0.1",
+    "PackageProjectUrl": "https://github.com/Humanizr/Humanizer",
+    "Copyright": "Copyright (c) .NET Foundation and Contributors",
+    "Authors": "Claire Novotny, Mehdi Khalili",
+    "Description": "Humanizer Locale Hungarian (hu)",
+    "License": "MIT",
+    "LicenseUrl": "https://licenses.nuget.org/MIT",
+    "LicenseInformationOrigin": 0
+  },
+  {
+    "PackageId": "Humanizer.Core.hy",
+    "PackageVersion": "3.0.1",
+    "PackageProjectUrl": "https://github.com/Humanizr/Humanizer",
+    "Copyright": "Copyright (c) .NET Foundation and Contributors",
+    "Authors": "Claire Novotny, Mehdi Khalili",
+    "Description": "Humanizer Locale Armenian (hy)",
+    "License": "MIT",
+    "LicenseUrl": "https://licenses.nuget.org/MIT",
+    "LicenseInformationOrigin": 0
+  },
+  {
+    "PackageId": "Humanizer.Core.id",
+    "PackageVersion": "3.0.1",
+    "PackageProjectUrl": "https://github.com/Humanizr/Humanizer",
+    "Copyright": "Copyright (c) .NET Foundation and Contributors",
+    "Authors": "Claire Novotny, Mehdi Khalili",
+    "Description": "Humanizer Locale Indonesian (id)",
+    "License": "MIT",
+    "LicenseUrl": "https://licenses.nuget.org/MIT",
+    "LicenseInformationOrigin": 0
+  },
+  {
+    "PackageId": "Humanizer.Core.is",
+    "PackageVersion": "3.0.1",
+    "PackageProjectUrl": "https://github.com/Humanizr/Humanizer",
+    "Copyright": "Copyright (c) .NET Foundation and Contributors",
+    "Authors": "Claire Novotny, Mehdi Khalili",
+    "Description": "Humanizer Locale Icelandic (is)",
+    "License": "MIT",
+    "LicenseUrl": "https://licenses.nuget.org/MIT",
+    "LicenseInformationOrigin": 0
+  },
+  {
+    "PackageId": "Humanizer.Core.it",
+    "PackageVersion": "3.0.1",
+    "PackageProjectUrl": "https://github.com/Humanizr/Humanizer",
+    "Copyright": "Copyright (c) .NET Foundation and Contributors",
+    "Authors": "Claire Novotny, Mehdi Khalili",
+    "Description": "Humanizer Locale Italian (it)",
+    "License": "MIT",
+    "LicenseUrl": "https://licenses.nuget.org/MIT",
+    "LicenseInformationOrigin": 0
+  },
+  {
+    "PackageId": "Humanizer.Core.ja",
+    "PackageVersion": "3.0.1",
+    "PackageProjectUrl": "https://github.com/Humanizr/Humanizer",
+    "Copyright": "Copyright (c) .NET Foundation and Contributors",
+    "Authors": "Claire Novotny, Mehdi Khalili",
+    "Description": "Humanizer Locale Japanese (ja)",
+    "License": "MIT",
+    "LicenseUrl": "https://licenses.nuget.org/MIT",
+    "LicenseInformationOrigin": 0
+  },
+  {
+    "PackageId": "Humanizer.Core.ko",
+    "PackageVersion": "3.0.1",
+    "PackageProjectUrl": "https://github.com/Humanizr/Humanizer",
+    "Copyright": "Copyright (c) .NET Foundation and Contributors",
+    "Authors": "Claire Novotny, Mehdi Khalili",
+    "Description": "Humanizer Locale Korean (South Korea) (ko)",
+    "License": "MIT",
+    "LicenseUrl": "https://licenses.nuget.org/MIT",
+    "LicenseInformationOrigin": 0
+  },
+  {
+    "PackageId": "Humanizer.Core.ku",
+    "PackageVersion": "3.0.1",
+    "PackageProjectUrl": "https://github.com/Humanizr/Humanizer",
+    "Copyright": "Copyright (c) .NET Foundation and Contributors",
+    "Authors": "Claire Novotny, Mehdi Khalili",
+    "Description": "Humanizer Locale Central Kurdish (ku)",
+    "License": "MIT",
+    "LicenseUrl": "https://licenses.nuget.org/MIT",
+    "LicenseInformationOrigin": 0
+  },
+  {
+    "PackageId": "Humanizer.Core.lb",
+    "PackageVersion": "3.0.1",
+    "PackageProjectUrl": "https://github.com/Humanizr/Humanizer",
+    "Copyright": "Copyright (c) .NET Foundation and Contributors",
+    "Authors": "Claire Novotny, Mehdi Khalili",
+    "Description": "Humanizer Locale Luxembourgish (lb)",
+    "License": "MIT",
+    "LicenseUrl": "https://licenses.nuget.org/MIT",
+    "LicenseInformationOrigin": 0
+  },
+  {
+    "PackageId": "Humanizer.Core.lt",
+    "PackageVersion": "3.0.1",
+    "PackageProjectUrl": "https://github.com/Humanizr/Humanizer",
+    "Copyright": "Copyright (c) .NET Foundation and Contributors",
+    "Authors": "Claire Novotny, Mehdi Khalili",
+    "Description": "Humanizer Locale Lithuanian (lt)",
+    "License": "MIT",
+    "LicenseUrl": "https://licenses.nuget.org/MIT",
+    "LicenseInformationOrigin": 0
+  },
+  {
+    "PackageId": "Humanizer.Core.lv",
+    "PackageVersion": "3.0.1",
+    "PackageProjectUrl": "https://github.com/Humanizr/Humanizer",
+    "Copyright": "Copyright (c) .NET Foundation and Contributors",
+    "Authors": "Claire Novotny, Mehdi Khalili",
+    "Description": "Humanizer Locale Latvian (lv)",
+    "License": "MIT",
+    "LicenseUrl": "https://licenses.nuget.org/MIT",
+    "LicenseInformationOrigin": 0
+  },
+  {
+    "PackageId": "Humanizer.Core.ms",
+    "PackageVersion": "3.0.1",
+    "PackageProjectUrl": "https://github.com/Humanizr/Humanizer",
+    "Copyright": "Copyright (c) .NET Foundation and Contributors",
+    "Authors": "Claire Novotny, Mehdi Khalili",
+    "Description": "Humanizer Locale Malay (Malaysia) (ms)",
+    "License": "MIT",
+    "LicenseUrl": "https://licenses.nuget.org/MIT",
+    "LicenseInformationOrigin": 0
+  },
+  {
+    "PackageId": "Humanizer.Core.mt",
+    "PackageVersion": "3.0.1",
+    "PackageProjectUrl": "https://github.com/Humanizr/Humanizer",
+    "Copyright": "Copyright (c) .NET Foundation and Contributors",
+    "Authors": "Claire Novotny, Mehdi Khalili",
+    "Description": "Humanizer Locale Maltese (mt)",
+    "License": "MIT",
+    "LicenseUrl": "https://licenses.nuget.org/MIT",
+    "LicenseInformationOrigin": 0
+  },
+  {
+    "PackageId": "Humanizer.Core.nb",
+    "PackageVersion": "3.0.1",
+    "PackageProjectUrl": "https://github.com/Humanizr/Humanizer",
+    "Copyright": "Copyright (c) .NET Foundation and Contributors",
+    "Authors": "Claire Novotny, Mehdi Khalili",
+    "Description": "Humanizer Locale Norwegian Bokm\u00E5l (nb)",
+    "License": "MIT",
+    "LicenseUrl": "https://licenses.nuget.org/MIT",
+    "LicenseInformationOrigin": 0
+  },
+  {
+    "PackageId": "Humanizer.Core.nl",
+    "PackageVersion": "3.0.1",
+    "PackageProjectUrl": "https://github.com/Humanizr/Humanizer",
+    "Copyright": "Copyright (c) .NET Foundation and Contributors",
+    "Authors": "Claire Novotny, Mehdi Khalili",
+    "Description": "Humanizer Locale Dutch (nl)",
+    "License": "MIT",
+    "LicenseUrl": "https://licenses.nuget.org/MIT",
+    "LicenseInformationOrigin": 0
+  },
+  {
+    "PackageId": "Humanizer.Core.pl",
+    "PackageVersion": "3.0.1",
+    "PackageProjectUrl": "https://github.com/Humanizr/Humanizer",
+    "Copyright": "Copyright (c) .NET Foundation and Contributors",
+    "Authors": "Claire Novotny, Mehdi Khalili",
+    "Description": "Humanizer Locale Polish (pl)",
+    "License": "MIT",
+    "LicenseUrl": "https://licenses.nuget.org/MIT",
+    "LicenseInformationOrigin": 0
+  },
+  {
+    "PackageId": "Humanizer.Core.pt",
+    "PackageVersion": "3.0.1",
+    "PackageProjectUrl": "https://github.com/Humanizr/Humanizer",
+    "Copyright": "Copyright (c) .NET Foundation and Contributors",
+    "Authors": "Claire Novotny, Mehdi Khalili",
+    "Description": "Humanizer Locale Portuguese (pt)",
+    "License": "MIT",
+    "LicenseUrl": "https://licenses.nuget.org/MIT",
+    "LicenseInformationOrigin": 0
+  },
+  {
+    "PackageId": "Humanizer.Core.pt-BR",
+    "PackageVersion": "3.0.1",
+    "PackageProjectUrl": "https://github.com/Humanizr/Humanizer",
+    "Copyright": "Copyright (c) .NET Foundation and Contributors",
+    "Authors": "Claire Novotny, Mehdi Khalili",
+    "Description": "Humanizer Locale Portuguese, Brazil (pt-BR)",
+    "License": "MIT",
+    "LicenseUrl": "https://licenses.nuget.org/MIT",
+    "LicenseInformationOrigin": 0
+  },
+  {
+    "PackageId": "Humanizer.Core.ro",
+    "PackageVersion": "3.0.1",
+    "PackageProjectUrl": "https://github.com/Humanizr/Humanizer",
+    "Copyright": "Copyright (c) .NET Foundation and Contributors",
+    "Authors": "Claire Novotny, Mehdi Khalili",
+    "Description": "Humanizer Locale Romanian (ro)",
+    "License": "MIT",
+    "LicenseUrl": "https://licenses.nuget.org/MIT",
+    "LicenseInformationOrigin": 0
+  },
+  {
+    "PackageId": "Humanizer.Core.ru",
+    "PackageVersion": "3.0.1",
+    "PackageProjectUrl": "https://github.com/Humanizr/Humanizer",
+    "Copyright": "Copyright (c) .NET Foundation and Contributors",
+    "Authors": "Claire Novotny, Mehdi Khalili",
+    "Description": "Humanizer Locale Russian (ru)",
+    "License": "MIT",
+    "LicenseUrl": "https://licenses.nuget.org/MIT",
+    "LicenseInformationOrigin": 0
+  },
+  {
+    "PackageId": "Humanizer.Core.sk",
+    "PackageVersion": "3.0.1",
+    "PackageProjectUrl": "https://github.com/Humanizr/Humanizer",
+    "Copyright": "Copyright (c) .NET Foundation and Contributors",
+    "Authors": "Claire Novotny, Mehdi Khalili",
+    "Description": "Humanizer Locale Slovak (sk)",
+    "License": "MIT",
+    "LicenseUrl": "https://licenses.nuget.org/MIT",
+    "LicenseInformationOrigin": 0
+  },
+  {
+    "PackageId": "Humanizer.Core.sl",
+    "PackageVersion": "3.0.1",
+    "PackageProjectUrl": "https://github.com/Humanizr/Humanizer",
+    "Copyright": "Copyright (c) .NET Foundation and Contributors",
+    "Authors": "Claire Novotny, Mehdi Khalili",
+    "Description": "Humanizer Locale Slovenian (sl)",
+    "License": "MIT",
+    "LicenseUrl": "https://licenses.nuget.org/MIT",
+    "LicenseInformationOrigin": 0
+  },
+  {
+    "PackageId": "Humanizer.Core.sr",
+    "PackageVersion": "3.0.1",
+    "PackageProjectUrl": "https://github.com/Humanizr/Humanizer",
+    "Copyright": "Copyright (c) .NET Foundation and Contributors",
+    "Authors": "Claire Novotny, Mehdi Khalili",
+    "Description": "Humanizer Locale Serbian (sr)",
+    "License": "MIT",
+    "LicenseUrl": "https://licenses.nuget.org/MIT",
+    "LicenseInformationOrigin": 0
+  },
+  {
+    "PackageId": "Humanizer.Core.sr-Latn",
+    "PackageVersion": "3.0.1",
+    "PackageProjectUrl": "https://github.com/Humanizr/Humanizer",
+    "Copyright": "Copyright (c) .NET Foundation and Contributors",
+    "Authors": "Claire Novotny, Mehdi Khalili",
+    "Description": "Humanizer Locale Serbian (sr-Latn)",
+    "License": "MIT",
+    "LicenseUrl": "https://licenses.nuget.org/MIT",
+    "LicenseInformationOrigin": 0
+  },
+  {
+    "PackageId": "Humanizer.Core.sv",
+    "PackageVersion": "3.0.1",
+    "PackageProjectUrl": "https://github.com/Humanizr/Humanizer",
+    "Copyright": "Copyright (c) .NET Foundation and Contributors",
+    "Authors": "Claire Novotny, Mehdi Khalili",
+    "Description": "Humanizer Locale Swedish (sv)",
+    "License": "MIT",
+    "LicenseUrl": "https://licenses.nuget.org/MIT",
+    "LicenseInformationOrigin": 0
+  },
+  {
+    "PackageId": "Humanizer.Core.th",
+    "PackageVersion": "3.0.1",
+    "PackageProjectUrl": "https://github.com/Humanizr/Humanizer",
+    "Copyright": "Copyright (c) .NET Foundation and Contributors",
+    "Authors": "Claire Novotny, Mehdi Khalili",
+    "Description": "Humanizer Locale Thai (Thailand) (th)",
+    "License": "MIT",
+    "LicenseUrl": "https://licenses.nuget.org/MIT",
+    "LicenseInformationOrigin": 0
+  },
+  {
+    "PackageId": "Humanizer.Core.tr",
+    "PackageVersion": "3.0.1",
+    "PackageProjectUrl": "https://github.com/Humanizr/Humanizer",
+    "Copyright": "Copyright (c) .NET Foundation and Contributors",
+    "Authors": "Claire Novotny, Mehdi Khalili",
+    "Description": "Humanizer Locale Turkish (tr)",
+    "License": "MIT",
+    "LicenseUrl": "https://licenses.nuget.org/MIT",
+    "LicenseInformationOrigin": 0
+  },
+  {
+    "PackageId": "Humanizer.Core.uk",
+    "PackageVersion": "3.0.1",
+    "PackageProjectUrl": "https://github.com/Humanizr/Humanizer",
+    "Copyright": "Copyright (c) .NET Foundation and Contributors",
+    "Authors": "Claire Novotny, Mehdi Khalili",
+    "Description": "Humanizer Locale Ukrainian (uk)",
+    "License": "MIT",
+    "LicenseUrl": "https://licenses.nuget.org/MIT",
+    "LicenseInformationOrigin": 0
+  },
+  {
+    "PackageId": "Humanizer.Core.uz-Cyrl-UZ",
+    "PackageVersion": "3.0.1",
+    "PackageProjectUrl": "https://github.com/Humanizr/Humanizer",
+    "Copyright": "Copyright (c) .NET Foundation and Contributors",
+    "Authors": "Claire Novotny, Mehdi Khalili",
+    "Description": "Humanizer Locale Uzbek (Cyrillic, Uzbekistan) (uz-Cyrl-UZ)",
+    "License": "MIT",
+    "LicenseUrl": "https://licenses.nuget.org/MIT",
+    "LicenseInformationOrigin": 0
+  },
+  {
+    "PackageId": "Humanizer.Core.uz-Latn-UZ",
+    "PackageVersion": "3.0.1",
+    "PackageProjectUrl": "https://github.com/Humanizr/Humanizer",
+    "Copyright": "Copyright (c) .NET Foundation and Contributors",
+    "Authors": "Claire Novotny, Mehdi Khalili",
+    "Description": "Humanizer Locale Uzbek (Latin, Uzbekistan) (uz-Latn-UZ)",
+    "License": "MIT",
+    "LicenseUrl": "https://licenses.nuget.org/MIT",
+    "LicenseInformationOrigin": 0
+  },
+  {
+    "PackageId": "Humanizer.Core.vi",
+    "PackageVersion": "3.0.1",
+    "PackageProjectUrl": "https://github.com/Humanizr/Humanizer",
+    "Copyright": "Copyright (c) .NET Foundation and Contributors",
+    "Authors": "Claire Novotny, Mehdi Khalili",
+    "Description": "Humanizer Locale Vietnamese (vi)",
+    "License": "MIT",
+    "LicenseUrl": "https://licenses.nuget.org/MIT",
+    "LicenseInformationOrigin": 0
+  },
+  {
+    "PackageId": "Humanizer.Core.zh-CN",
+    "PackageVersion": "3.0.1",
+    "PackageProjectUrl": "https://github.com/Humanizr/Humanizer",
+    "Copyright": "Copyright (c) .NET Foundation and Contributors",
+    "Authors": "Claire Novotny, Mehdi Khalili",
+    "Description": "Humanizer Locale Chinese (China) (zh-CN)",
+    "License": "MIT",
+    "LicenseUrl": "https://licenses.nuget.org/MIT",
+    "LicenseInformationOrigin": 0
+  },
+  {
+    "PackageId": "Humanizer.Core.zh-Hans",
+    "PackageVersion": "3.0.1",
+    "PackageProjectUrl": "https://github.com/Humanizr/Humanizer",
+    "Copyright": "Copyright (c) .NET Foundation and Contributors",
+    "Authors": "Claire Novotny, Mehdi Khalili",
+    "Description": "Humanizer Locale Chinese (zh-Hans)",
+    "License": "MIT",
+    "LicenseUrl": "https://licenses.nuget.org/MIT",
+    "LicenseInformationOrigin": 0
+  },
+  {
+    "PackageId": "Humanizer.Core.zh-Hant",
+    "PackageVersion": "3.0.1",
+    "PackageProjectUrl": "https://github.com/Humanizr/Humanizer",
+    "Copyright": "Copyright (c) .NET Foundation and Contributors",
+    "Authors": "Claire Novotny, Mehdi Khalili",
+    "Description": "Humanizer Locale Chinese (zh-Hant)",
     "License": "MIT",
     "LicenseUrl": "https://licenses.nuget.org/MIT",
     "LicenseInformationOrigin": 0
@@ -132,26 +719,23 @@
     "PackageProjectUrl": "https://github.com/mheyman/Isopoh.Cryptography.Argon2",
     "Copyright": "Michael Heyman 2022",
     "Authors": "Michael Heyman",
+    "Description": "Argon2 Password Hasher written in C#. Uses\n            Isopoh.Cryptography.Blake2 for hashing and\n            Isopoh.Cryptography.SecureArray to protect sensitive data.",
     "ValidationErrors": [
       {
         "Error": "Unable to determine license from the given license file",
-        "Context": "/Volumes/Daten SSD/Repos/lk-code/homebook/source/HomeBook.Backend/HomeBook.Backend.csproj"
+        "Context": "/Volumes/Daten SSD/Repos/homebook/source/HomeBook.Backend/HomeBook.Backend.csproj"
       },
       {
         "Error": "Unable to determine license from the given license file",
-        "Context": "/Volumes/Daten SSD/Repos/lk-code/homebook/source/HomeBook.Backend.Core.HashProvider/HomeBook.Backend.Core.HashProvider.csproj"
+        "Context": "/Volumes/Daten SSD/Repos/homebook/source/Homebook.Backend.Core.Setup/Homebook.Backend.Core.Setup.csproj"
       },
       {
         "Error": "Unable to determine license from the given license file",
-        "Context": "/Volumes/Daten SSD/Repos/lk-code/homebook/source/Homebook.Backend.Core.Setup/Homebook.Backend.Core.Setup.csproj"
+        "Context": "/Volumes/Daten SSD/Repos/homebook/source/HomeBook.Backend.Core/HomeBook.Backend.Core.csproj"
       },
       {
         "Error": "Unable to determine license from the given license file",
-        "Context": "/Volumes/Daten SSD/Repos/lk-code/homebook/source/HomeBook.Backend.Core/HomeBook.Backend.Core.csproj"
-      },
-      {
-        "Error": "Unable to determine license from the given license file",
-        "Context": "/Volumes/Daten SSD/Repos/lk-code/homebook/source/HomeBook.UnitTests/HomeBook.UnitTests.csproj"
+        "Context": "/Volumes/Daten SSD/Repos/homebook/source/HomeBook.UnitTests/HomeBook.UnitTests.csproj"
       }
     ],
     "License": "Isopoh.Cryptography.Argon2 by Michael Heyman is licensed \nunder a Creative Commons Attributeion 4.0 International \nLicense, http://creativecommons.org/licenses/by/4.0/.",
@@ -164,26 +748,23 @@
     "PackageProjectUrl": "https://github.com/mheyman/Isopoh.Cryptography.Argon2",
     "Copyright": "Michael Heyman 2022",
     "Authors": "Michael Heyman",
+    "Description": "Blake2 hash for sensitive data. Uses\n          Isopoh.Cryptography.SecureArray to assure sensitive data gets wiped\n          from RAM and, if the operating system allows, never gets written to\n          disk.",
     "ValidationErrors": [
       {
         "Error": "Unable to determine license from the given license file",
-        "Context": "/Volumes/Daten SSD/Repos/lk-code/homebook/source/HomeBook.Backend/HomeBook.Backend.csproj"
+        "Context": "/Volumes/Daten SSD/Repos/homebook/source/HomeBook.Backend/HomeBook.Backend.csproj"
       },
       {
         "Error": "Unable to determine license from the given license file",
-        "Context": "/Volumes/Daten SSD/Repos/lk-code/homebook/source/HomeBook.Backend.Core.HashProvider/HomeBook.Backend.Core.HashProvider.csproj"
+        "Context": "/Volumes/Daten SSD/Repos/homebook/source/Homebook.Backend.Core.Setup/Homebook.Backend.Core.Setup.csproj"
       },
       {
         "Error": "Unable to determine license from the given license file",
-        "Context": "/Volumes/Daten SSD/Repos/lk-code/homebook/source/Homebook.Backend.Core.Setup/Homebook.Backend.Core.Setup.csproj"
+        "Context": "/Volumes/Daten SSD/Repos/homebook/source/HomeBook.Backend.Core/HomeBook.Backend.Core.csproj"
       },
       {
         "Error": "Unable to determine license from the given license file",
-        "Context": "/Volumes/Daten SSD/Repos/lk-code/homebook/source/HomeBook.Backend.Core/HomeBook.Backend.Core.csproj"
-      },
-      {
-        "Error": "Unable to determine license from the given license file",
-        "Context": "/Volumes/Daten SSD/Repos/lk-code/homebook/source/HomeBook.UnitTests/HomeBook.UnitTests.csproj"
+        "Context": "/Volumes/Daten SSD/Repos/homebook/source/HomeBook.UnitTests/HomeBook.UnitTests.csproj"
       }
     ],
     "License": "Isopoh.Cryptography.Argon2 by Michael Heyman is licensed \nunder a Creative Commons Attributeion 4.0 International \nLicense, http://creativecommons.org/licenses/by/4.0/.",
@@ -196,26 +777,23 @@
     "PackageProjectUrl": "https://github.com/mheyman/Isopoh.Cryptography.Argon2",
     "Copyright": "Michael Heyman 2022",
     "Authors": "Michael Heyman",
+    "Description": "A managed class that can hold an array in RAM and zero it\n      on disposal. The code has the capability to throw if it cannot lock\n      the array in RAM or gracefully degrade to merely pinning the memory\n      to prevent the CLR from moving it and risking exposure to other part\n      of the executable.",
     "ValidationErrors": [
       {
         "Error": "Unable to determine license from the given license file",
-        "Context": "/Volumes/Daten SSD/Repos/lk-code/homebook/source/HomeBook.Backend/HomeBook.Backend.csproj"
+        "Context": "/Volumes/Daten SSD/Repos/homebook/source/HomeBook.Backend/HomeBook.Backend.csproj"
       },
       {
         "Error": "Unable to determine license from the given license file",
-        "Context": "/Volumes/Daten SSD/Repos/lk-code/homebook/source/HomeBook.Backend.Core.HashProvider/HomeBook.Backend.Core.HashProvider.csproj"
+        "Context": "/Volumes/Daten SSD/Repos/homebook/source/Homebook.Backend.Core.Setup/Homebook.Backend.Core.Setup.csproj"
       },
       {
         "Error": "Unable to determine license from the given license file",
-        "Context": "/Volumes/Daten SSD/Repos/lk-code/homebook/source/Homebook.Backend.Core.Setup/Homebook.Backend.Core.Setup.csproj"
+        "Context": "/Volumes/Daten SSD/Repos/homebook/source/HomeBook.Backend.Core/HomeBook.Backend.Core.csproj"
       },
       {
         "Error": "Unable to determine license from the given license file",
-        "Context": "/Volumes/Daten SSD/Repos/lk-code/homebook/source/HomeBook.Backend.Core/HomeBook.Backend.Core.csproj"
-      },
-      {
-        "Error": "Unable to determine license from the given license file",
-        "Context": "/Volumes/Daten SSD/Repos/lk-code/homebook/source/HomeBook.UnitTests/HomeBook.UnitTests.csproj"
+        "Context": "/Volumes/Daten SSD/Repos/homebook/source/HomeBook.UnitTests/HomeBook.UnitTests.csproj"
       }
     ],
     "License": "Isopoh.Cryptography.Argon2 by Michael Heyman is licensed \nunder a Creative Commons Attributeion 4.0 International \nLicense, http://creativecommons.org/licenses/by/4.0/.",
@@ -228,6 +806,7 @@
     "PackageProjectUrl": "https://github.com/MiloszKrajewski/K4os.Compression.LZ4",
     "Copyright": "Milosz Krajewski",
     "Authors": "Milosz Krajewski",
+    "Description": "Port of LZ4 compression algorithm for .NET",
     "License": "https://github.com/MiloszKrajewski/K4os.Compression.LZ4/blob/master/LICENSE?raw=true",
     "LicenseUrl": "https://github.com/MiloszKrajewski/K4os.Compression.LZ4/blob/master/LICENSE?raw=true",
     "LicenseInformationOrigin": 1
@@ -238,6 +817,7 @@
     "PackageProjectUrl": "https://github.com/MiloszKrajewski/K4os.Compression.LZ4",
     "Copyright": "Milosz Krajewski",
     "Authors": "Milosz Krajewski",
+    "Description": "Port of LZ4 compression algorithm for .NET",
     "License": "https://github.com/MiloszKrajewski/K4os.Compression.LZ4/blob/master/LICENSE?raw=true",
     "LicenseUrl": "https://github.com/MiloszKrajewski/K4os.Compression.LZ4/blob/master/LICENSE?raw=true",
     "LicenseInformationOrigin": 1
@@ -248,6 +828,7 @@
     "PackageProjectUrl": "https://github.com/MiloszKrajewski/K4os.Hash.xxHash",
     "Copyright": "Milosz Krajewski",
     "Authors": "Milosz Krajewski",
+    "Description": "xxHash hash implementation for .NET",
     "License": "https://raw.githubusercontent.com/MiloszKrajewski/K4os.Hash.xxHash/master/LICENSE",
     "LicenseUrl": "https://raw.githubusercontent.com/MiloszKrajewski/K4os.Hash.xxHash/master/LICENSE",
     "LicenseInformationOrigin": 1
@@ -258,106 +839,128 @@
     "PackageProjectUrl": "https://go.microsoft.com/fwlink/?LinkId=392727",
     "Copyright": "\u00A9 Microsoft Corporation. All rights reserved.",
     "Authors": "Microsoft",
+    "Description": "Application Insights Base API. This package provides core functionality for transmission of all Application Insights Telemetry Types and is a dependent package for all other Application Insights packages. Please install the platform specific package for the best experience. Privacy statement: https://go.microsoft.com/fwlink/?LinkId=512156",
     "License": "MIT",
     "LicenseUrl": "https://licenses.nuget.org/MIT",
     "LicenseInformationOrigin": 0
   },
   {
     "PackageId": "Microsoft.AspNetCore.Authentication.JwtBearer",
-    "PackageVersion": "9.0.10",
+    "PackageVersion": "10.0.2",
     "PackageProjectUrl": "https://asp.net/",
     "Copyright": "\u00A9 Microsoft Corporation. All rights reserved.",
     "Authors": "Microsoft",
+    "Description": "ASP.NET Core middleware that enables an application to receive an OpenID Connect bearer token.\n\nThis package was built from the source code at https://github.com/dotnet/dotnet/tree/44525024595742ebe09023abe709df51de65009b",
     "License": "MIT",
     "LicenseUrl": "https://licenses.nuget.org/MIT",
     "LicenseInformationOrigin": 0
   },
   {
     "PackageId": "Microsoft.AspNetCore.Authorization",
-    "PackageVersion": "9.0.10",
+    "PackageVersion": "9.0.11",
     "PackageProjectUrl": "https://asp.net/",
     "Copyright": "\u00A9 Microsoft Corporation. All rights reserved.",
     "Authors": "Microsoft",
+    "Description": "ASP.NET Core authorization classes.\nCommonly used types:\nMicrosoft.AspNetCore.Authorization.AllowAnonymousAttribute\nMicrosoft.AspNetCore.Authorization.AuthorizeAttribute\n\nThis package was built from the source code at https://github.com/dotnet/aspnetcore/tree/d3aba8fe1a0d0f5c145506f292b72ea9d28406fc",
+    "License": "MIT",
+    "LicenseUrl": "https://licenses.nuget.org/MIT",
+    "LicenseInformationOrigin": 0
+  },
+  {
+    "PackageId": "Microsoft.AspNetCore.Authorization",
+    "PackageVersion": "10.0.2",
+    "PackageProjectUrl": "https://asp.net/",
+    "Copyright": "\u00A9 Microsoft Corporation. All rights reserved.",
+    "Authors": "Microsoft",
+    "Description": "ASP.NET Core authorization classes.\nCommonly used types:\nMicrosoft.AspNetCore.Authorization.AllowAnonymousAttribute\nMicrosoft.AspNetCore.Authorization.AuthorizeAttribute\n\nThis package was built from the source code at https://github.com/dotnet/dotnet/tree/44525024595742ebe09023abe709df51de65009b",
     "License": "MIT",
     "LicenseUrl": "https://licenses.nuget.org/MIT",
     "LicenseInformationOrigin": 0
   },
   {
     "PackageId": "Microsoft.AspNetCore.Components",
-    "PackageVersion": "9.0.10",
+    "PackageVersion": "9.0.11",
     "PackageProjectUrl": "https://asp.net/",
     "Copyright": "\u00A9 Microsoft Corporation. All rights reserved.",
     "Authors": "Microsoft",
+    "Description": "Components feature for ASP.NET Core.\n\nThis package was built from the source code at https://github.com/dotnet/aspnetcore/tree/d3aba8fe1a0d0f5c145506f292b72ea9d28406fc",
     "License": "MIT",
     "LicenseUrl": "https://licenses.nuget.org/MIT",
     "LicenseInformationOrigin": 0
   },
   {
     "PackageId": "Microsoft.AspNetCore.Components.Analyzers",
-    "PackageVersion": "9.0.10",
+    "PackageVersion": "9.0.11",
     "PackageProjectUrl": "https://asp.net/",
     "Copyright": "\u00A9 Microsoft Corporation. All rights reserved.",
     "Authors": "Microsoft",
+    "Description": "Roslyn analyzers for ASP.NET Core Components.\n\nThis package was built from the source code at https://github.com/dotnet/aspnetcore/tree/d3aba8fe1a0d0f5c145506f292b72ea9d28406fc",
     "License": "MIT",
     "LicenseUrl": "https://licenses.nuget.org/MIT",
     "LicenseInformationOrigin": 0
   },
   {
     "PackageId": "Microsoft.AspNetCore.Components.Authorization",
-    "PackageVersion": "9.0.10",
+    "PackageVersion": "9.0.11",
     "PackageProjectUrl": "https://asp.net/",
     "Copyright": "\u00A9 Microsoft Corporation. All rights reserved.",
     "Authors": "Microsoft",
+    "Description": "Authentication and authorization support for Blazor applications.\n\nThis package was built from the source code at https://github.com/dotnet/aspnetcore/tree/d3aba8fe1a0d0f5c145506f292b72ea9d28406fc",
     "License": "MIT",
     "LicenseUrl": "https://licenses.nuget.org/MIT",
     "LicenseInformationOrigin": 0
   },
   {
     "PackageId": "Microsoft.AspNetCore.Components.Forms",
-    "PackageVersion": "9.0.10",
+    "PackageVersion": "9.0.11",
     "PackageProjectUrl": "https://asp.net/",
     "Copyright": "\u00A9 Microsoft Corporation. All rights reserved.",
     "Authors": "Microsoft",
+    "Description": "Forms and validation support for Blazor applications.\n\nThis package was built from the source code at https://github.com/dotnet/aspnetcore/tree/d3aba8fe1a0d0f5c145506f292b72ea9d28406fc",
     "License": "MIT",
     "LicenseUrl": "https://licenses.nuget.org/MIT",
     "LicenseInformationOrigin": 0
   },
   {
     "PackageId": "Microsoft.AspNetCore.Components.Web",
-    "PackageVersion": "9.0.10",
+    "PackageVersion": "9.0.11",
     "PackageProjectUrl": "https://asp.net/",
     "Copyright": "\u00A9 Microsoft Corporation. All rights reserved.",
     "Authors": "Microsoft",
+    "Description": "Support for rendering ASP.NET Core components for browsers.\n\nThis package was built from the source code at https://github.com/dotnet/aspnetcore/tree/d3aba8fe1a0d0f5c145506f292b72ea9d28406fc",
     "License": "MIT",
     "LicenseUrl": "https://licenses.nuget.org/MIT",
     "LicenseInformationOrigin": 0
   },
   {
     "PackageId": "Microsoft.AspNetCore.Components.WebAssembly",
-    "PackageVersion": "9.0.10",
+    "PackageVersion": "9.0.11",
     "PackageProjectUrl": "https://asp.net/",
     "Copyright": "\u00A9 Microsoft Corporation. All rights reserved.",
     "Authors": "Microsoft",
+    "Description": "Build client-side single-page applications (SPAs) with Blazor running under WebAssembly.\n\nThis package was built from the source code at https://github.com/dotnet/aspnetcore/tree/d3aba8fe1a0d0f5c145506f292b72ea9d28406fc",
     "License": "MIT",
     "LicenseUrl": "https://licenses.nuget.org/MIT",
     "LicenseInformationOrigin": 0
   },
   {
     "PackageId": "Microsoft.AspNetCore.Components.WebAssembly.Authentication",
-    "PackageVersion": "9.0.10",
+    "PackageVersion": "9.0.11",
     "PackageProjectUrl": "https://asp.net/",
     "Copyright": "\u00A9 Microsoft Corporation. All rights reserved.",
     "Authors": "Microsoft",
+    "Description": "Build client-side authentication for single-page applications (SPAs).\n\nThis package was built from the source code at https://github.com/dotnet/aspnetcore/tree/d3aba8fe1a0d0f5c145506f292b72ea9d28406fc",
     "License": "MIT",
     "LicenseUrl": "https://licenses.nuget.org/MIT",
     "LicenseInformationOrigin": 0
   },
   {
     "PackageId": "Microsoft.AspNetCore.Components.WebAssembly.DevServer",
-    "PackageVersion": "9.0.10",
+    "PackageVersion": "9.0.11",
     "PackageProjectUrl": "https://asp.net/",
     "Copyright": "\u00A9 Microsoft Corporation. All rights reserved.",
     "Authors": "Microsoft",
+    "Description": "Development server for use when building Blazor applications.\n\nThis package was built from the source code at https://github.com/dotnet/aspnetcore/tree/d3aba8fe1a0d0f5c145506f292b72ea9d28406fc",
     "License": "MIT",
     "LicenseUrl": "https://licenses.nuget.org/MIT",
     "LicenseInformationOrigin": 0
@@ -368,6 +971,7 @@
     "PackageProjectUrl": "https://asp.net/",
     "Copyright": "\u00A9 Microsoft Corporation. All rights reserved.",
     "Authors": "Microsoft",
+    "Description": "ASP.NET Core HTTP object model for HTTP requests and responses and also common extension methods for registering middleware in an IApplicationBuilder.\nCommonly used types:\nMicrosoft.AspNetCore.Builder.IApplicationBuilder\nMicrosoft.AspNetCore.Http.HttpContext\nMicrosoft.AspNetCore.Http.HttpRequest\nMicrosoft.AspNetCore.Http.HttpResponse",
     "License": "https://raw.githubusercontent.com/aspnet/AspNetCore/2.0.0/LICENSE.txt",
     "LicenseUrl": "https://raw.githubusercontent.com/aspnet/AspNetCore/2.0.0/LICENSE.txt",
     "LicenseInformationOrigin": 1
@@ -378,6 +982,7 @@
     "PackageProjectUrl": "https://asp.net/",
     "Copyright": "\u00A9 Microsoft Corporation. All rights reserved.",
     "Authors": "Microsoft",
+    "Description": "ASP.NET Core common extension methods for HTTP abstractions, HTTP headers, HTTP request/response, and session state.",
     "License": "https://raw.githubusercontent.com/aspnet/AspNetCore/2.0.0/LICENSE.txt",
     "LicenseUrl": "https://raw.githubusercontent.com/aspnet/AspNetCore/2.0.0/LICENSE.txt",
     "LicenseInformationOrigin": 1
@@ -388,36 +993,40 @@
     "PackageProjectUrl": "https://asp.net/",
     "Copyright": "\u00A9 Microsoft Corporation. All rights reserved.",
     "Authors": "Microsoft",
+    "Description": "ASP.NET Core HTTP feature interface definitions.",
     "License": "https://raw.githubusercontent.com/aspnet/AspNetCore/2.0.0/LICENSE.txt",
     "LicenseUrl": "https://raw.githubusercontent.com/aspnet/AspNetCore/2.0.0/LICENSE.txt",
     "LicenseInformationOrigin": 1
   },
   {
     "PackageId": "Microsoft.AspNetCore.Localization",
-    "PackageVersion": "2.3.0",
+    "PackageVersion": "2.3.9",
     "PackageProjectUrl": "https://asp.net/",
     "Copyright": "\u00A9 Microsoft Corporation. All rights reserved.",
     "Authors": "Microsoft",
+    "Description": "ASP.NET Core middleware for automatically applying culture information to HTTP requests. Culture information can be specified in the HTTP header, query string, cookie, or custom source.",
     "License": "https://raw.githubusercontent.com/aspnet/AspNetCore/2.0.0/LICENSE.txt",
     "LicenseUrl": "https://raw.githubusercontent.com/aspnet/AspNetCore/2.0.0/LICENSE.txt",
     "LicenseInformationOrigin": 1
   },
   {
     "PackageId": "Microsoft.AspNetCore.Metadata",
-    "PackageVersion": "9.0.10",
+    "PackageVersion": "9.0.11",
     "PackageProjectUrl": "https://asp.net/",
     "Copyright": "\u00A9 Microsoft Corporation. All rights reserved.",
     "Authors": "Microsoft",
+    "Description": "ASP.NET Core metadata.\n\nThis package was built from the source code at https://github.com/dotnet/aspnetcore/tree/d3aba8fe1a0d0f5c145506f292b72ea9d28406fc",
     "License": "MIT",
     "LicenseUrl": "https://licenses.nuget.org/MIT",
     "LicenseInformationOrigin": 0
   },
   {
     "PackageId": "Microsoft.AspNetCore.OpenApi",
-    "PackageVersion": "9.0.10",
+    "PackageVersion": "10.0.2",
     "PackageProjectUrl": "https://asp.net/",
     "Copyright": "\u00A9 Microsoft Corporation. All rights reserved.",
     "Authors": "Microsoft",
+    "Description": "Provides APIs for annotating route handler endpoints in ASP.NET Core with OpenAPI annotations.\n\nThis package was built from the source code at https://github.com/dotnet/dotnet/tree/44525024595742ebe09023abe709df51de65009b",
     "License": "MIT",
     "LicenseUrl": "https://licenses.nuget.org/MIT",
     "LicenseInformationOrigin": 0
@@ -428,6 +1037,7 @@
     "PackageProjectUrl": "https://dot.net/",
     "Copyright": "\u00A9 Microsoft Corporation. All rights reserved.",
     "Authors": "Microsoft",
+    "Description": "Provides the IAsyncEnumerable\u003CT\u003E and IAsyncDisposable interfaces and helper types for .NET Standard 2.0. This package is not required starting with .NET Standard 2.1 and .NET Core 3.0.\n\nCommonly Used Types:\nSystem.IAsyncDisposable\nSystem.Collections.Generic.IAsyncEnumerable\nSystem.Collections.Generic.IAsyncEnumerator",
     "License": "MIT",
     "LicenseUrl": "https://licenses.nuget.org/MIT",
     "LicenseInformationOrigin": 0
@@ -438,6 +1048,7 @@
     "PackageProjectUrl": "https://dot.net/",
     "Copyright": "\u00A9 Microsoft Corporation. All rights reserved.",
     "Authors": "Microsoft",
+    "Description": "Provides support for system time abstraction primitives for .NET Framework and .NET Standard.\n\nCommonly Used Types:\nSystem.TimeProvider\nSystem.ITimer",
     "License": "MIT",
     "LicenseUrl": "https://licenses.nuget.org/MIT",
     "LicenseInformationOrigin": 0
@@ -448,6 +1059,7 @@
     "PackageProjectUrl": "http://go.microsoft.com/fwlink/?LinkId=624683",
     "Copyright": "\u00A9 Microsoft Corporation. All rights reserved.",
     "Authors": "Microsoft",
+    "Description": "This package contains the Microsoft.Build.Framework assembly which is a common assembly used by other MSBuild assemblies.",
     "License": "MIT",
     "LicenseUrl": "https://licenses.nuget.org/MIT",
     "LicenseInformationOrigin": 0
@@ -458,6 +1070,7 @@
     "PackageProjectUrl": "https://github.com/microsoft/MSBuildLocator",
     "Copyright": "\u00A9 Microsoft Corporation. All rights reserved.",
     "Authors": "Microsoft",
+    "Description": "Package that assists in locating and using a copy of MSBuild installed as part of Visual Studio 2017 or higher or .NET Core SDK 2.1 or higher.",
     "License": "MIT",
     "LicenseUrl": "https://licenses.nuget.org/MIT",
     "LicenseInformationOrigin": 0
@@ -468,6 +1081,7 @@
     "PackageProjectUrl": "https://github.com/dotnet/roslyn-analyzers",
     "Copyright": "\u00A9 Microsoft Corporation. All rights reserved.",
     "Authors": "Microsoft",
+    "Description": "Analyzers for consumers of Microsoft.CodeAnalysis NuGet package, i.e. extensions and applications built on top of .NET Compiler Platform (Roslyn). This package is included as a development dependency of Microsoft.CodeAnalysis NuGet package and does not need to be installed separately if you are referencing Microsoft.CodeAnalysis NuGet package.",
     "License": "MIT",
     "LicenseUrl": "https://licenses.nuget.org/MIT",
     "LicenseInformationOrigin": 0
@@ -478,6 +1092,7 @@
     "PackageProjectUrl": "https://github.com/dotnet/roslyn",
     "Copyright": "\u00A9 Microsoft Corporation. All rights reserved.",
     "Authors": "Microsoft",
+    "Description": "A shared package used by the Microsoft .NET Compiler Platform (\u0022Roslyn\u0022).\n      Do not install this package manually, it will be added as a prerequisite by other packages that require it.\n    \n      More details at https://aka.ms/roslyn-packages\n      This package was built from the source at https://github.com/dotnet/roslyn/commit/e091728607ca0fc9efca55ccfb3e59259c6b5a0a.",
     "License": "MIT",
     "LicenseUrl": "https://licenses.nuget.org/MIT",
     "LicenseInformationOrigin": 0
@@ -488,6 +1103,7 @@
     "PackageProjectUrl": "https://github.com/dotnet/roslyn",
     "Copyright": "\u00A9 Microsoft Corporation. All rights reserved.",
     "Authors": "Microsoft",
+    "Description": ".NET Compiler Platform (\u0022Roslyn\u0022) support for C#, Microsoft.CodeAnalysis.CSharp.dll.\n    \n      More details at https://aka.ms/roslyn-packages\n      This package was built from the source at https://github.com/dotnet/roslyn/commit/e091728607ca0fc9efca55ccfb3e59259c6b5a0a.",
     "License": "MIT",
     "LicenseUrl": "https://licenses.nuget.org/MIT",
     "LicenseInformationOrigin": 0
@@ -498,6 +1114,7 @@
     "PackageProjectUrl": "https://github.com/dotnet/roslyn",
     "Copyright": "\u00A9 Microsoft Corporation. All rights reserved.",
     "Authors": "Microsoft",
+    "Description": ".NET Compiler Platform (\u0022Roslyn\u0022) support for analyzing C# projects and solutions.\n    \n      More details at https://aka.ms/roslyn-packages\n      This package was built from the source at https://github.com/dotnet/roslyn/commit/e091728607ca0fc9efca55ccfb3e59259c6b5a0a.",
     "License": "MIT",
     "LicenseUrl": "https://licenses.nuget.org/MIT",
     "LicenseInformationOrigin": 0
@@ -508,6 +1125,7 @@
     "PackageProjectUrl": "https://github.com/dotnet/roslyn",
     "Copyright": "\u00A9 Microsoft Corporation. All rights reserved.",
     "Authors": "Microsoft",
+    "Description": "A shared package used by the .NET Compiler Platform (\u0022Roslyn\u0022) including support for analyzing projects and solutions.\n      Do not install this package manually, it will be added as a prerequisite by other packages that require it.\n    \n      More details at https://aka.ms/roslyn-packages\n      This package was built from the source at https://github.com/dotnet/roslyn/commit/e091728607ca0fc9efca55ccfb3e59259c6b5a0a.",
     "License": "MIT",
     "LicenseUrl": "https://licenses.nuget.org/MIT",
     "LicenseInformationOrigin": 0
@@ -518,116 +1136,128 @@
     "PackageProjectUrl": "https://github.com/dotnet/roslyn",
     "Copyright": "\u00A9 Microsoft Corporation. All rights reserved.",
     "Authors": "Microsoft",
+    "Description": ".NET Compiler Platform (\u0022Roslyn\u0022) support for analyzing MSBuild projects and solutions. This should be used with at least one\n      of the following packages to add the appropriate language support:\n      - Microsoft.CodeAnalysis.CSharp.Workspaces\n      - Microsoft.CodeAnalysis.VisualBasic.Workspaces\n    \n      More details at https://aka.ms/roslyn-packages\n      This package was built from the source at https://github.com/dotnet/roslyn/commit/e091728607ca0fc9efca55ccfb3e59259c6b5a0a.",
     "License": "MIT",
     "LicenseUrl": "https://licenses.nuget.org/MIT",
     "LicenseInformationOrigin": 0
   },
   {
     "PackageId": "Microsoft.CodeCoverage",
-    "PackageVersion": "18.0.0",
+    "PackageVersion": "18.0.1",
     "PackageProjectUrl": "https://github.com/microsoft/vstest",
     "Copyright": "\u00A9 Microsoft Corporation. All rights reserved.",
     "Authors": "Microsoft",
+    "Description": "Microsoft.CodeCoverage package brings infra for collecting code coverage from vstest.console.exe and \u0022dotnet test\u0022.",
     "License": "MIT",
     "LicenseUrl": "https://licenses.nuget.org/MIT",
     "LicenseInformationOrigin": 0
   },
   {
     "PackageId": "Microsoft.Data.Sqlite.Core",
-    "PackageVersion": "9.0.10",
+    "PackageVersion": "9.0.11",
     "PackageProjectUrl": "https://docs.microsoft.com/dotnet/standard/data/sqlite/",
     "Copyright": "\u00A9 Microsoft Corporation. All rights reserved.",
     "Authors": "Microsoft",
+    "Description": "Microsoft.Data.Sqlite is a lightweight ADO.NET provider for SQLite. This package does not include a copy of the native SQLite library.\n\nCommonly Used Types:\nMicrosoft.Data.Sqlite.SqliteCommand\nMicrosoft.Data.Sqlite.SqliteConnection\nMicrosoft.Data.Sqlite.SqliteConnectionStringBuilder\nMicrosoft.Data.Sqlite.SqliteDataReader\nMicrosoft.Data.Sqlite.SqliteException\nMicrosoft.Data.Sqlite.SqliteFactory\nMicrosoft.Data.Sqlite.SqliteParameter\nMicrosoft.Data.Sqlite.SqliteTransaction",
     "License": "MIT",
     "LicenseUrl": "https://licenses.nuget.org/MIT",
     "LicenseInformationOrigin": 0
   },
   {
     "PackageId": "Microsoft.EntityFrameworkCore",
-    "PackageVersion": "9.0.10",
+    "PackageVersion": "9.0.11",
     "PackageProjectUrl": "https://docs.microsoft.com/ef/core/",
     "Copyright": "\u00A9 Microsoft Corporation. All rights reserved.",
     "Authors": "Microsoft",
+    "Description": "Entity Framework Core is a modern object-database mapper for .NET. It supports LINQ queries, change tracking, updates, and schema migrations. EF Core works with SQL Server, Azure SQL Database, SQLite, Azure Cosmos DB, MySQL, PostgreSQL, and other databases through a provider plugin API.\n\nCommonly Used Types:\nMicrosoft.EntityFrameworkCore.DbContext\nMicrosoft.EntityFrameworkCore.DbSet",
     "License": "MIT",
     "LicenseUrl": "https://licenses.nuget.org/MIT",
     "LicenseInformationOrigin": 0
   },
   {
     "PackageId": "Microsoft.EntityFrameworkCore.Abstractions",
-    "PackageVersion": "9.0.10",
+    "PackageVersion": "9.0.11",
     "PackageProjectUrl": "https://docs.microsoft.com/ef/core/",
     "Copyright": "\u00A9 Microsoft Corporation. All rights reserved.",
     "Authors": "Microsoft",
+    "Description": "Provides abstractions and attributes that are used to configure Entity Framework Core",
     "License": "MIT",
     "LicenseUrl": "https://licenses.nuget.org/MIT",
     "LicenseInformationOrigin": 0
   },
   {
     "PackageId": "Microsoft.EntityFrameworkCore.Analyzers",
-    "PackageVersion": "9.0.10",
+    "PackageVersion": "9.0.11",
     "PackageProjectUrl": "https://docs.microsoft.com/ef/core/",
     "Copyright": "\u00A9 Microsoft Corporation. All rights reserved.",
     "Authors": "Microsoft",
+    "Description": "CSharp Analyzers for Entity Framework Core.",
     "License": "MIT",
     "LicenseUrl": "https://licenses.nuget.org/MIT",
     "LicenseInformationOrigin": 0
   },
   {
     "PackageId": "Microsoft.EntityFrameworkCore.Design",
-    "PackageVersion": "9.0.10",
+    "PackageVersion": "9.0.11",
     "PackageProjectUrl": "https://docs.microsoft.com/ef/core/",
     "Copyright": "\u00A9 Microsoft Corporation. All rights reserved.",
     "Authors": "Microsoft",
+    "Description": "Shared design-time components for Entity Framework Core tools.",
     "License": "MIT",
     "LicenseUrl": "https://licenses.nuget.org/MIT",
     "LicenseInformationOrigin": 0
   },
   {
     "PackageId": "Microsoft.EntityFrameworkCore.Relational",
-    "PackageVersion": "9.0.10",
+    "PackageVersion": "9.0.11",
     "PackageProjectUrl": "https://docs.microsoft.com/ef/core/",
     "Copyright": "\u00A9 Microsoft Corporation. All rights reserved.",
     "Authors": "Microsoft",
+    "Description": "Shared Entity Framework Core components for relational database providers.",
     "License": "MIT",
     "LicenseUrl": "https://licenses.nuget.org/MIT",
     "LicenseInformationOrigin": 0
   },
   {
     "PackageId": "Microsoft.EntityFrameworkCore.Sqlite",
-    "PackageVersion": "9.0.10",
+    "PackageVersion": "9.0.11",
     "PackageProjectUrl": "https://docs.microsoft.com/ef/core/",
     "Copyright": "\u00A9 Microsoft Corporation. All rights reserved.",
     "Authors": "Microsoft",
+    "Description": "SQLite database provider for Entity Framework Core.",
     "License": "MIT",
     "LicenseUrl": "https://licenses.nuget.org/MIT",
     "LicenseInformationOrigin": 0
   },
   {
     "PackageId": "Microsoft.EntityFrameworkCore.Sqlite.Core",
-    "PackageVersion": "9.0.10",
+    "PackageVersion": "9.0.11",
     "PackageProjectUrl": "https://docs.microsoft.com/ef/core/",
     "Copyright": "\u00A9 Microsoft Corporation. All rights reserved.",
     "Authors": "Microsoft",
+    "Description": "SQLite database provider for Entity Framework Core. This package does not include a copy of the native SQLite library.",
     "License": "MIT",
     "LicenseUrl": "https://licenses.nuget.org/MIT",
     "LicenseInformationOrigin": 0
   },
   {
     "PackageId": "Microsoft.EntityFrameworkCore.Tools",
-    "PackageVersion": "9.0.10",
+    "PackageVersion": "9.0.11",
     "PackageProjectUrl": "https://docs.microsoft.com/ef/core/",
     "Copyright": "\u00A9 Microsoft Corporation. All rights reserved.",
     "Authors": "Microsoft",
+    "Description": "Entity Framework Core Tools for the NuGet Package Manager Console in Visual Studio.\n\nEnables these commonly used commands:\nAdd-Migration\nBundle-Migration\nDrop-Database\nGet-DbContext\nGet-Migration\nOptimize-DbContext\nRemove-Migration\nScaffold-DbContext\nScript-Migration\nUpdate-Database",
     "License": "MIT",
     "LicenseUrl": "https://licenses.nuget.org/MIT",
     "LicenseInformationOrigin": 0
   },
   {
     "PackageId": "Microsoft.Extensions.ApiDescription.Server",
-    "PackageVersion": "9.0.10",
+    "PackageVersion": "10.0.2",
     "PackageProjectUrl": "https://asp.net/",
     "Copyright": "\u00A9 Microsoft Corporation. All rights reserved.",
     "Authors": "Microsoft",
+    "Description": "MSBuild tasks and targets for build-time Swagger and OpenApi document generation\n\nThis package was built from the source code at https://github.com/dotnet/dotnet/tree/44525024595742ebe09023abe709df51de65009b",
     "License": "MIT",
     "LicenseUrl": "https://licenses.nuget.org/MIT",
     "LicenseInformationOrigin": 0
@@ -638,16 +1268,18 @@
     "PackageProjectUrl": "https://dot.net/",
     "Copyright": "\u00A9 Microsoft Corporation. All rights reserved.",
     "Authors": "Microsoft",
+    "Description": "Caching abstractions for in-memory cache and distributed cache.\n\nCommonly Used Types:\nMicrosoft.Extensions.Caching.Distributed.IDistributedCache\nMicrosoft.Extensions.Caching.Memory.IMemoryCache",
     "License": "MIT",
     "LicenseUrl": "https://licenses.nuget.org/MIT",
     "LicenseInformationOrigin": 0
   },
   {
     "PackageId": "Microsoft.Extensions.Caching.Abstractions",
-    "PackageVersion": "9.0.10",
+    "PackageVersion": "9.0.11",
     "PackageProjectUrl": "https://dot.net/",
     "Copyright": "\u00A9 Microsoft Corporation. All rights reserved.",
     "Authors": "Microsoft",
+    "Description": "Caching abstractions for in-memory cache and distributed cache.\n\nCommonly Used Types:\nMicrosoft.Extensions.Caching.Distributed.IDistributedCache\nMicrosoft.Extensions.Caching.Memory.IMemoryCache",
     "License": "MIT",
     "LicenseUrl": "https://licenses.nuget.org/MIT",
     "LicenseInformationOrigin": 0
@@ -658,156 +1290,271 @@
     "PackageProjectUrl": "https://dot.net/",
     "Copyright": "\u00A9 Microsoft Corporation. All rights reserved.",
     "Authors": "Microsoft",
+    "Description": "In-memory cache implementation of Microsoft.Extensions.Caching.Memory.IMemoryCache.",
     "License": "MIT",
     "LicenseUrl": "https://licenses.nuget.org/MIT",
     "LicenseInformationOrigin": 0
   },
   {
     "PackageId": "Microsoft.Extensions.Caching.Memory",
-    "PackageVersion": "9.0.10",
+    "PackageVersion": "9.0.11",
     "PackageProjectUrl": "https://dot.net/",
     "Copyright": "\u00A9 Microsoft Corporation. All rights reserved.",
     "Authors": "Microsoft",
+    "Description": "In-memory cache implementation of Microsoft.Extensions.Caching.Memory.IMemoryCache.",
     "License": "MIT",
     "LicenseUrl": "https://licenses.nuget.org/MIT",
     "LicenseInformationOrigin": 0
   },
   {
     "PackageId": "Microsoft.Extensions.Configuration",
-    "PackageVersion": "9.0.10",
+    "PackageVersion": "9.0.11",
     "PackageProjectUrl": "https://dot.net/",
     "Copyright": "\u00A9 Microsoft Corporation. All rights reserved.",
     "Authors": "Microsoft",
+    "Description": "Implementation of key-value pair based configuration for Microsoft.Extensions.Configuration. Includes the memory configuration provider.",
+    "License": "MIT",
+    "LicenseUrl": "https://licenses.nuget.org/MIT",
+    "LicenseInformationOrigin": 0
+  },
+  {
+    "PackageId": "Microsoft.Extensions.Configuration",
+    "PackageVersion": "10.0.2",
+    "PackageProjectUrl": "https://dot.net/",
+    "Copyright": "\u00A9 Microsoft Corporation. All rights reserved.",
+    "Authors": "Microsoft",
+    "Description": "Implementation of key-value pair based configuration for Microsoft.Extensions.Configuration. Includes the memory configuration provider.",
     "License": "MIT",
     "LicenseUrl": "https://licenses.nuget.org/MIT",
     "LicenseInformationOrigin": 0
   },
   {
     "PackageId": "Microsoft.Extensions.Configuration.Abstractions",
-    "PackageVersion": "9.0.10",
+    "PackageVersion": "10.0.2",
     "PackageProjectUrl": "https://dot.net/",
     "Copyright": "\u00A9 Microsoft Corporation. All rights reserved.",
     "Authors": "Microsoft",
+    "Description": "Provides abstractions of key-value pair based configuration. Interfaces defined in this package are implemented by classes in Microsoft.Extensions.Configuration and other configuration packages.",
     "License": "MIT",
     "LicenseUrl": "https://licenses.nuget.org/MIT",
     "LicenseInformationOrigin": 0
   },
   {
     "PackageId": "Microsoft.Extensions.Configuration.Binder",
-    "PackageVersion": "9.0.10",
+    "PackageVersion": "9.0.11",
     "PackageProjectUrl": "https://dot.net/",
     "Copyright": "\u00A9 Microsoft Corporation. All rights reserved.",
     "Authors": "Microsoft",
+    "Description": "Provides the functionality to bind an object to data in configuration providers for Microsoft.Extensions.Configuration. This package enables you to represent the configuration data as strongly-typed classes defined in the application code. To bind a configuration, use the Microsoft.Extensions.Configuration.ConfigurationBinder.Get extension method on the IConfiguration object. To use this package, you also need to install a package for the configuration provider, for example, Microsoft.Extensions.Configuration.Json for the JSON provider.",
+    "License": "MIT",
+    "LicenseUrl": "https://licenses.nuget.org/MIT",
+    "LicenseInformationOrigin": 0
+  },
+  {
+    "PackageId": "Microsoft.Extensions.Configuration.Binder",
+    "PackageVersion": "10.0.0",
+    "PackageProjectUrl": "https://dot.net/",
+    "Copyright": "\u00A9 Microsoft Corporation. All rights reserved.",
+    "Authors": "Microsoft",
+    "Description": "Provides the functionality to bind an object to data in configuration providers for Microsoft.Extensions.Configuration. This package enables you to represent the configuration data as strongly-typed classes defined in the application code. To bind a configuration, use the Microsoft.Extensions.Configuration.ConfigurationBinder.Get extension method on the IConfiguration object. To use this package, you also need to install a package for the configuration provider, for example, Microsoft.Extensions.Configuration.Json for the JSON provider.",
     "License": "MIT",
     "LicenseUrl": "https://licenses.nuget.org/MIT",
     "LicenseInformationOrigin": 0
   },
   {
     "PackageId": "Microsoft.Extensions.Configuration.FileExtensions",
-    "PackageVersion": "9.0.10",
+    "PackageVersion": "9.0.11",
     "PackageProjectUrl": "https://dot.net/",
     "Copyright": "\u00A9 Microsoft Corporation. All rights reserved.",
     "Authors": "Microsoft",
+    "Description": "Provides a base class for file-based configuration providers used with Microsoft.Extensions.Configuration and extension methods for configuring them.",
+    "License": "MIT",
+    "LicenseUrl": "https://licenses.nuget.org/MIT",
+    "LicenseInformationOrigin": 0
+  },
+  {
+    "PackageId": "Microsoft.Extensions.Configuration.FileExtensions",
+    "PackageVersion": "10.0.2",
+    "PackageProjectUrl": "https://dot.net/",
+    "Copyright": "\u00A9 Microsoft Corporation. All rights reserved.",
+    "Authors": "Microsoft",
+    "Description": "Provides a base class for file-based configuration providers used with Microsoft.Extensions.Configuration and extension methods for configuring them.",
     "License": "MIT",
     "LicenseUrl": "https://licenses.nuget.org/MIT",
     "LicenseInformationOrigin": 0
   },
   {
     "PackageId": "Microsoft.Extensions.Configuration.Json",
-    "PackageVersion": "9.0.10",
+    "PackageVersion": "9.0.11",
     "PackageProjectUrl": "https://dot.net/",
     "Copyright": "\u00A9 Microsoft Corporation. All rights reserved.",
     "Authors": "Microsoft",
+    "Description": "JSON configuration provider implementation for Microsoft.Extensions.Configuration. This package enables you to read your application\u0027s settings from a JSON file. You can use JsonConfigurationExtensions.AddJsonFile extension method on IConfigurationBuilder to add the JSON configuration provider to the configuration builder.",
+    "License": "MIT",
+    "LicenseUrl": "https://licenses.nuget.org/MIT",
+    "LicenseInformationOrigin": 0
+  },
+  {
+    "PackageId": "Microsoft.Extensions.Configuration.Json",
+    "PackageVersion": "10.0.2",
+    "PackageProjectUrl": "https://dot.net/",
+    "Copyright": "\u00A9 Microsoft Corporation. All rights reserved.",
+    "Authors": "Microsoft",
+    "Description": "JSON configuration provider implementation for Microsoft.Extensions.Configuration. This package enables you to read your application\u0027s settings from a JSON file. You can use JsonConfigurationExtensions.AddJsonFile extension method on IConfigurationBuilder to add the JSON configuration provider to the configuration builder.",
     "License": "MIT",
     "LicenseUrl": "https://licenses.nuget.org/MIT",
     "LicenseInformationOrigin": 0
   },
   {
     "PackageId": "Microsoft.Extensions.DependencyInjection",
-    "PackageVersion": "9.0.10",
+    "PackageVersion": "9.0.11",
     "PackageProjectUrl": "https://dot.net/",
     "Copyright": "\u00A9 Microsoft Corporation. All rights reserved.",
     "Authors": "Microsoft",
+    "Description": "Default implementation of dependency injection for Microsoft.Extensions.DependencyInjection.",
+    "License": "MIT",
+    "LicenseUrl": "https://licenses.nuget.org/MIT",
+    "LicenseInformationOrigin": 0
+  },
+  {
+    "PackageId": "Microsoft.Extensions.DependencyInjection",
+    "PackageVersion": "10.0.0",
+    "PackageProjectUrl": "https://dot.net/",
+    "Copyright": "\u00A9 Microsoft Corporation. All rights reserved.",
+    "Authors": "Microsoft",
+    "Description": "Default implementation of dependency injection for Microsoft.Extensions.DependencyInjection.",
     "License": "MIT",
     "LicenseUrl": "https://licenses.nuget.org/MIT",
     "LicenseInformationOrigin": 0
   },
   {
     "PackageId": "Microsoft.Extensions.DependencyInjection.Abstractions",
-    "PackageVersion": "9.0.10",
+    "PackageVersion": "9.0.11",
     "PackageProjectUrl": "https://dot.net/",
     "Copyright": "\u00A9 Microsoft Corporation. All rights reserved.",
     "Authors": "Microsoft",
+    "Description": "Abstractions for dependency injection.\n\nCommonly Used Types:\nMicrosoft.Extensions.DependencyInjection.IServiceCollection",
+    "License": "MIT",
+    "LicenseUrl": "https://licenses.nuget.org/MIT",
+    "LicenseInformationOrigin": 0
+  },
+  {
+    "PackageId": "Microsoft.Extensions.DependencyInjection.Abstractions",
+    "PackageVersion": "10.0.2",
+    "PackageProjectUrl": "https://dot.net/",
+    "Copyright": "\u00A9 Microsoft Corporation. All rights reserved.",
+    "Authors": "Microsoft",
+    "Description": "Abstractions for dependency injection.\n\nCommonly Used Types:\nMicrosoft.Extensions.DependencyInjection.IServiceCollection",
     "License": "MIT",
     "LicenseUrl": "https://licenses.nuget.org/MIT",
     "LicenseInformationOrigin": 0
   },
   {
     "PackageId": "Microsoft.Extensions.DependencyModel",
-    "PackageVersion": "9.0.10",
+    "PackageVersion": "9.0.11",
     "PackageProjectUrl": "https://dot.net/",
     "Copyright": "\u00A9 Microsoft Corporation. All rights reserved.",
     "Authors": "Microsoft",
+    "Description": "Provides abstractions for reading \u0060.deps\u0060 files. When a .NET application is compiled, the SDK generates a JSON manifest file (\u0060\u003CApplicationName\u003E.deps.json\u0060) that contains information about application dependencies. You can use \u0060Microsoft.Extensions.DependencyModel\u0060 to read information from this manifest at run time. This is useful when you want to dynamically compile code (for example, using Roslyn Emit API) referencing the same dependencies as your main application.\n\nBy default, the dependency manifest contains information about the application\u0027s target framework and runtime dependencies. Set the PreserveCompilationContext project property to \u0060true\u0060 to additionally include information about reference assemblies used during compilation.",
+    "License": "MIT",
+    "LicenseUrl": "https://licenses.nuget.org/MIT",
+    "LicenseInformationOrigin": 0
+  },
+  {
+    "PackageId": "Microsoft.Extensions.DependencyModel",
+    "PackageVersion": "10.0.0",
+    "PackageProjectUrl": "https://dot.net/",
+    "Copyright": "\u00A9 Microsoft Corporation. All rights reserved.",
+    "Authors": "Microsoft",
+    "Description": "Provides abstractions for reading \u0060.deps\u0060 files. When a .NET application is compiled, the SDK generates a JSON manifest file (\u0060\u003CApplicationName\u003E.deps.json\u0060) that contains information about application dependencies. You can use \u0060Microsoft.Extensions.DependencyModel\u0060 to read information from this manifest at run time. This is useful when you want to dynamically compile code (for example, using Roslyn Emit API) referencing the same dependencies as your main application.\n\nBy default, the dependency manifest contains information about the application\u0027s target framework and runtime dependencies. Set the PreserveCompilationContext project property to \u0060true\u0060 to additionally include information about reference assemblies used during compilation.",
     "License": "MIT",
     "LicenseUrl": "https://licenses.nuget.org/MIT",
     "LicenseInformationOrigin": 0
   },
   {
     "PackageId": "Microsoft.Extensions.Diagnostics.Abstractions",
-    "PackageVersion": "9.0.0",
+    "PackageVersion": "10.0.0",
     "PackageProjectUrl": "https://dot.net/",
     "Copyright": "\u00A9 Microsoft Corporation. All rights reserved.",
     "Authors": "Microsoft",
+    "Description": "Diagnostic abstractions for Microsoft.Extensions.Diagnostics.\n\nCommonly Used Types:\nMicrosoft.Extensions.Diagnostics.Metrics.IMetricsBuilder\nMicrosoft.Extensions.Diagnostics.Metrics.IMetricsListener\nMicrosoft.Extensions.Diagnostics.Metrics.InstrumentRule\nMicrosoft.Extensions.Diagnostics.Metrics.MeterScope\nMicrosoft.Extensions.Diagnostics.Metrics.MetricsBuilderExtensions\nMicrosoft.Extensions.Diagnostics.Metrics.MetricsOptions",
     "License": "MIT",
     "LicenseUrl": "https://licenses.nuget.org/MIT",
     "LicenseInformationOrigin": 0
   },
   {
     "PackageId": "Microsoft.Extensions.FileProviders.Abstractions",
-    "PackageVersion": "9.0.10",
+    "PackageVersion": "9.0.11",
     "PackageProjectUrl": "https://dot.net/",
     "Copyright": "\u00A9 Microsoft Corporation. All rights reserved.",
     "Authors": "Microsoft",
+    "Description": "Abstractions of files and directories.\n\nCommonly Used Types:\nMicrosoft.Extensions.FileProviders.IDirectoryContents\nMicrosoft.Extensions.FileProviders.IFileInfo\nMicrosoft.Extensions.FileProviders.IFileProvider",
+    "License": "MIT",
+    "LicenseUrl": "https://licenses.nuget.org/MIT",
+    "LicenseInformationOrigin": 0
+  },
+  {
+    "PackageId": "Microsoft.Extensions.FileProviders.Abstractions",
+    "PackageVersion": "10.0.2",
+    "PackageProjectUrl": "https://dot.net/",
+    "Copyright": "\u00A9 Microsoft Corporation. All rights reserved.",
+    "Authors": "Microsoft",
+    "Description": "Abstractions of files and directories.\n\nCommonly Used Types:\nMicrosoft.Extensions.FileProviders.IDirectoryContents\nMicrosoft.Extensions.FileProviders.IFileInfo\nMicrosoft.Extensions.FileProviders.IFileProvider",
     "License": "MIT",
     "LicenseUrl": "https://licenses.nuget.org/MIT",
     "LicenseInformationOrigin": 0
   },
   {
     "PackageId": "Microsoft.Extensions.FileProviders.Physical",
-    "PackageVersion": "9.0.10",
+    "PackageVersion": "9.0.11",
     "PackageProjectUrl": "https://dot.net/",
     "Copyright": "\u00A9 Microsoft Corporation. All rights reserved.",
     "Authors": "Microsoft",
+    "Description": "File provider for physical files for Microsoft.Extensions.FileProviders.",
+    "License": "MIT",
+    "LicenseUrl": "https://licenses.nuget.org/MIT",
+    "LicenseInformationOrigin": 0
+  },
+  {
+    "PackageId": "Microsoft.Extensions.FileProviders.Physical",
+    "PackageVersion": "10.0.2",
+    "PackageProjectUrl": "https://dot.net/",
+    "Copyright": "\u00A9 Microsoft Corporation. All rights reserved.",
+    "Authors": "Microsoft",
+    "Description": "File provider for physical files for Microsoft.Extensions.FileProviders.",
     "License": "MIT",
     "LicenseUrl": "https://licenses.nuget.org/MIT",
     "LicenseInformationOrigin": 0
   },
   {
     "PackageId": "Microsoft.Extensions.FileSystemGlobbing",
-    "PackageVersion": "9.0.10",
+    "PackageVersion": "9.0.11",
     "PackageProjectUrl": "https://dot.net/",
     "Copyright": "\u00A9 Microsoft Corporation. All rights reserved.",
     "Authors": "Microsoft",
+    "Description": "File system globbing to find files matching a specified pattern.",
+    "License": "MIT",
+    "LicenseUrl": "https://licenses.nuget.org/MIT",
+    "LicenseInformationOrigin": 0
+  },
+  {
+    "PackageId": "Microsoft.Extensions.FileSystemGlobbing",
+    "PackageVersion": "10.0.2",
+    "PackageProjectUrl": "https://dot.net/",
+    "Copyright": "\u00A9 Microsoft Corporation. All rights reserved.",
+    "Authors": "Microsoft",
+    "Description": "File system globbing to find files matching a specified pattern.",
     "License": "MIT",
     "LicenseUrl": "https://licenses.nuget.org/MIT",
     "LicenseInformationOrigin": 0
   },
   {
     "PackageId": "Microsoft.Extensions.Hosting.Abstractions",
-    "PackageVersion": "3.1.0",
-    "PackageProjectUrl": "https://asp.net/",
-    "Copyright": "\u00A9 Microsoft Corporation. All rights reserved.",
-    "Authors": "Microsoft",
-    "License": "Apache-2.0",
-    "LicenseUrl": "https://licenses.nuget.org/Apache-2.0",
-    "LicenseInformationOrigin": 0
-  },
-  {
-    "PackageId": "Microsoft.Extensions.Hosting.Abstractions",
-    "PackageVersion": "9.0.0",
+    "PackageVersion": "10.0.0",
     "PackageProjectUrl": "https://dot.net/",
     "Copyright": "\u00A9 Microsoft Corporation. All rights reserved.",
     "Authors": "Microsoft",
+    "Description": "Hosting and startup abstractions for applications.",
     "License": "MIT",
     "LicenseUrl": "https://licenses.nuget.org/MIT",
     "LicenseInformationOrigin": 0
@@ -818,6 +1565,7 @@
     "PackageProjectUrl": "https://asp.net/",
     "Copyright": "\u00A9 Microsoft Corporation. All rights reserved.",
     "Authors": "Microsoft",
+    "Description": "Application localization services and default implementation based on ResourceManager to load localized assembly resources.\n\nThis package was built from the source code at https://github.com/dotnet/aspnetcore/tree/4442a188f9200a57635373dcd640893c0e8dcc78",
     "License": "MIT",
     "LicenseUrl": "https://licenses.nuget.org/MIT",
     "LicenseInformationOrigin": 0
@@ -828,86 +1576,139 @@
     "PackageProjectUrl": "https://asp.net/",
     "Copyright": "\u00A9 Microsoft Corporation. All rights reserved.",
     "Authors": "Microsoft",
+    "Description": "Abstractions of application localization services.\nCommonly used types:\nMicrosoft.Extensions.Localization.IStringLocalizer\nMicrosoft.Extensions.Localization.IStringLocalizer\u003CT\u003E\n\nThis package was built from the source code at https://github.com/dotnet/aspnetcore/tree/4442a188f9200a57635373dcd640893c0e8dcc78",
     "License": "MIT",
     "LicenseUrl": "https://licenses.nuget.org/MIT",
     "LicenseInformationOrigin": 0
   },
   {
     "PackageId": "Microsoft.Extensions.Logging",
-    "PackageVersion": "9.0.10",
+    "PackageVersion": "9.0.11",
     "PackageProjectUrl": "https://dot.net/",
     "Copyright": "\u00A9 Microsoft Corporation. All rights reserved.",
     "Authors": "Microsoft",
+    "Description": "Logging infrastructure default implementation for Microsoft.Extensions.Logging.",
+    "License": "MIT",
+    "LicenseUrl": "https://licenses.nuget.org/MIT",
+    "LicenseInformationOrigin": 0
+  },
+  {
+    "PackageId": "Microsoft.Extensions.Logging",
+    "PackageVersion": "10.0.0",
+    "PackageProjectUrl": "https://dot.net/",
+    "Copyright": "\u00A9 Microsoft Corporation. All rights reserved.",
+    "Authors": "Microsoft",
+    "Description": "Logging infrastructure default implementation for Microsoft.Extensions.Logging.",
     "License": "MIT",
     "LicenseUrl": "https://licenses.nuget.org/MIT",
     "LicenseInformationOrigin": 0
   },
   {
     "PackageId": "Microsoft.Extensions.Logging.Abstractions",
-    "PackageVersion": "9.0.10",
+    "PackageVersion": "9.0.11",
     "PackageProjectUrl": "https://dot.net/",
     "Copyright": "\u00A9 Microsoft Corporation. All rights reserved.",
     "Authors": "Microsoft",
+    "Description": "Logging abstractions for Microsoft.Extensions.Logging.\n\nCommonly Used Types:\nMicrosoft.Extensions.Logging.ILogger\nMicrosoft.Extensions.Logging.ILoggerFactory\nMicrosoft.Extensions.Logging.ILogger\u003CTCategoryName\u003E\nMicrosoft.Extensions.Logging.LogLevel\nMicrosoft.Extensions.Logging.Logger\u003CT\u003E\nMicrosoft.Extensions.Logging.LoggerMessage\nMicrosoft.Extensions.Logging.Abstractions.NullLogger",
+    "License": "MIT",
+    "LicenseUrl": "https://licenses.nuget.org/MIT",
+    "LicenseInformationOrigin": 0
+  },
+  {
+    "PackageId": "Microsoft.Extensions.Logging.Abstractions",
+    "PackageVersion": "10.0.0",
+    "PackageProjectUrl": "https://dot.net/",
+    "Copyright": "\u00A9 Microsoft Corporation. All rights reserved.",
+    "Authors": "Microsoft",
+    "Description": "Logging abstractions for Microsoft.Extensions.Logging.\n\nCommonly Used Types:\nMicrosoft.Extensions.Logging.ILogger\nMicrosoft.Extensions.Logging.ILoggerFactory\nMicrosoft.Extensions.Logging.ILogger\u003CTCategoryName\u003E\nMicrosoft.Extensions.Logging.LogLevel\nMicrosoft.Extensions.Logging.Logger\u003CT\u003E\nMicrosoft.Extensions.Logging.LoggerMessage\nMicrosoft.Extensions.Logging.Abstractions.NullLogger",
+    "License": "MIT",
+    "LicenseUrl": "https://licenses.nuget.org/MIT",
+    "LicenseInformationOrigin": 0
+  },
+  {
+    "PackageId": "Microsoft.Extensions.Logging.Abstractions",
+    "PackageVersion": "10.0.2",
+    "PackageProjectUrl": "https://dot.net/",
+    "Copyright": "\u00A9 Microsoft Corporation. All rights reserved.",
+    "Authors": "Microsoft",
+    "Description": "Logging abstractions for Microsoft.Extensions.Logging.\n\nCommonly Used Types:\nMicrosoft.Extensions.Logging.ILogger\nMicrosoft.Extensions.Logging.ILoggerFactory\nMicrosoft.Extensions.Logging.ILogger\u003CTCategoryName\u003E\nMicrosoft.Extensions.Logging.LogLevel\nMicrosoft.Extensions.Logging.Logger\u003CT\u003E\nMicrosoft.Extensions.Logging.LoggerMessage\nMicrosoft.Extensions.Logging.Abstractions.NullLogger",
     "License": "MIT",
     "LicenseUrl": "https://licenses.nuget.org/MIT",
     "LicenseInformationOrigin": 0
   },
   {
     "PackageId": "Microsoft.Extensions.Options",
-    "PackageVersion": "9.0.10",
+    "PackageVersion": "9.0.11",
     "PackageProjectUrl": "https://dot.net/",
     "Copyright": "\u00A9 Microsoft Corporation. All rights reserved.",
     "Authors": "Microsoft",
+    "Description": "Provides a strongly typed way of specifying and accessing settings using dependency injection.",
+    "License": "MIT",
+    "LicenseUrl": "https://licenses.nuget.org/MIT",
+    "LicenseInformationOrigin": 0
+  },
+  {
+    "PackageId": "Microsoft.Extensions.Options",
+    "PackageVersion": "10.0.0",
+    "PackageProjectUrl": "https://dot.net/",
+    "Copyright": "\u00A9 Microsoft Corporation. All rights reserved.",
+    "Authors": "Microsoft",
+    "Description": "Provides a strongly typed way of specifying and accessing settings using dependency injection.",
     "License": "MIT",
     "LicenseUrl": "https://licenses.nuget.org/MIT",
     "LicenseInformationOrigin": 0
   },
   {
     "PackageId": "Microsoft.Extensions.Primitives",
-    "PackageVersion": "9.0.10",
+    "PackageVersion": "10.0.2",
     "PackageProjectUrl": "https://dot.net/",
     "Copyright": "\u00A9 Microsoft Corporation. All rights reserved.",
     "Authors": "Microsoft",
+    "Description": "Primitives shared by framework extensions. Commonly used types include:\n\nCommonly Used Types:\nMicrosoft.Extensions.Primitives.IChangeToken\nMicrosoft.Extensions.Primitives.StringValues\nMicrosoft.Extensions.Primitives.StringSegment",
     "License": "MIT",
     "LicenseUrl": "https://licenses.nuget.org/MIT",
     "LicenseInformationOrigin": 0
   },
   {
     "PackageId": "Microsoft.FeatureManagement",
-    "PackageVersion": "4.3.0",
+    "PackageVersion": "4.4.0",
     "PackageProjectUrl": "https://github.com/microsoft/FeatureManagement-Dotnet",
     "Copyright": "\u00A9 Microsoft Corporation. All rights reserved.",
     "Authors": "Microsoft",
+    "Description": "Microsoft.FeatureManagement provides a way to develop and expose application functionality based on features. Many applications have special requirements when a new feature is developed such as when the feature should be enabled and under what conditions. This library provides a way to define these relationships, and also integrates into common .NET code patterns to make exposing these features possible.",
     "License": "MIT",
     "LicenseUrl": "https://licenses.nuget.org/MIT",
     "LicenseInformationOrigin": 0
   },
   {
     "PackageId": "Microsoft.IdentityModel.Abstractions",
-    "PackageVersion": "8.14.0",
+    "PackageVersion": "8.15.0",
     "PackageProjectUrl": "https://github.com/AzureAD/azure-activedirectory-identitymodel-extensions-for-dotnet",
     "Copyright": "\u00A9 Microsoft Corporation. All rights reserved.",
     "Authors": "Microsoft",
+    "Description": "A package containing thin abstractions for Microsoft.IdentityModel.",
     "License": "MIT",
     "LicenseUrl": "https://licenses.nuget.org/MIT",
     "LicenseInformationOrigin": 0
   },
   {
     "PackageId": "Microsoft.IdentityModel.JsonWebTokens",
-    "PackageVersion": "8.14.0",
+    "PackageVersion": "8.15.0",
     "PackageProjectUrl": "https://github.com/AzureAD/azure-activedirectory-identitymodel-extensions-for-dotnet",
     "Copyright": "\u00A9 Microsoft Corporation. All rights reserved.",
     "Authors": "Microsoft",
+    "Description": "Includes types that provide support for creating, serializing and validating JSON Web Tokens. This is a newer, faster version of System.IdentityModel.Tokens.Jwt that has additional functionality.",
     "License": "MIT",
     "LicenseUrl": "https://licenses.nuget.org/MIT",
     "LicenseInformationOrigin": 0
   },
   {
     "PackageId": "Microsoft.IdentityModel.Logging",
-    "PackageVersion": "8.14.0",
+    "PackageVersion": "8.15.0",
     "PackageProjectUrl": "https://github.com/AzureAD/azure-activedirectory-identitymodel-extensions-for-dotnet",
     "Copyright": "\u00A9 Microsoft Corporation. All rights reserved.",
     "Authors": "Microsoft",
+    "Description": "Includes Event Source based logging support.",
     "License": "MIT",
     "LicenseUrl": "https://licenses.nuget.org/MIT",
     "LicenseInformationOrigin": 0
@@ -918,6 +1719,7 @@
     "PackageProjectUrl": "https://github.com/AzureAD/azure-activedirectory-identitymodel-extensions-for-dotnet",
     "Copyright": "\u00A9 Microsoft Corporation. All rights reserved.",
     "Authors": "Microsoft",
+    "Description": "Provides base protocol support for OpenIdConnect and WsFederation.",
     "License": "MIT",
     "LicenseUrl": "https://licenses.nuget.org/MIT",
     "LicenseInformationOrigin": 0
@@ -928,106 +1730,128 @@
     "PackageProjectUrl": "https://github.com/AzureAD/azure-activedirectory-identitymodel-extensions-for-dotnet",
     "Copyright": "\u00A9 Microsoft Corporation. All rights reserved.",
     "Authors": "Microsoft",
+    "Description": "Includes types that provide support for OpenIdConnect protocol.",
     "License": "MIT",
     "LicenseUrl": "https://licenses.nuget.org/MIT",
     "LicenseInformationOrigin": 0
   },
   {
     "PackageId": "Microsoft.IdentityModel.Tokens",
-    "PackageVersion": "8.14.0",
+    "PackageVersion": "8.15.0",
     "PackageProjectUrl": "https://github.com/AzureAD/azure-activedirectory-identitymodel-extensions-for-dotnet",
     "Copyright": "\u00A9 Microsoft Corporation. All rights reserved.",
     "Authors": "Microsoft",
+    "Description": "Includes types that provide support for SecurityTokens, Cryptographic operations: Signing, Verifying Signatures, Encryption.",
+    "License": "MIT",
+    "LicenseUrl": "https://licenses.nuget.org/MIT",
+    "LicenseInformationOrigin": 0
+  },
+  {
+    "PackageId": "Microsoft.IO.RecyclableMemoryStream",
+    "PackageVersion": "3.0.1",
+    "PackageProjectUrl": "https://github.com/Microsoft/Microsoft.IO.RecyclableMemoryStream",
+    "Copyright": "\u00A9 Microsoft Corporation. All rights reserved.",
+    "Authors": "Microsoft",
+    "Description": "A pooled MemoryStream allocator to decrease GC load and improve performance on highly scalable systems.",
     "License": "MIT",
     "LicenseUrl": "https://licenses.nuget.org/MIT",
     "LicenseInformationOrigin": 0
   },
   {
     "PackageId": "Microsoft.JSInterop",
-    "PackageVersion": "9.0.10",
+    "PackageVersion": "9.0.11",
     "PackageProjectUrl": "https://asp.net/",
     "Copyright": "\u00A9 Microsoft Corporation. All rights reserved.",
     "Authors": "Microsoft",
+    "Description": "Abstractions and features for interop between .NET and JavaScript code.\n\nThis package was built from the source code at https://github.com/dotnet/aspnetcore/tree/d3aba8fe1a0d0f5c145506f292b72ea9d28406fc",
     "License": "MIT",
     "LicenseUrl": "https://licenses.nuget.org/MIT",
     "LicenseInformationOrigin": 0
   },
   {
     "PackageId": "Microsoft.JSInterop.WebAssembly",
-    "PackageVersion": "9.0.10",
+    "PackageVersion": "9.0.11",
     "PackageProjectUrl": "https://asp.net/",
     "Copyright": "\u00A9 Microsoft Corporation. All rights reserved.",
     "Authors": "Microsoft",
+    "Description": "Abstractions and features for interop between .NET WebAssembly and JavaScript code.\n\nThis package was built from the source code at https://github.com/dotnet/aspnetcore/tree/d3aba8fe1a0d0f5c145506f292b72ea9d28406fc",
     "License": "MIT",
     "LicenseUrl": "https://licenses.nuget.org/MIT",
     "LicenseInformationOrigin": 0
   },
   {
     "PackageId": "Microsoft.Kiota.Abstractions",
-    "PackageVersion": "1.20.1",
+    "PackageVersion": "1.21.3",
     "PackageProjectUrl": "https://aka.ms/kiota/docs",
     "Copyright": "\u00A9 Microsoft Corporation. All rights reserved.",
     "Authors": "Microsoft",
+    "Description": "Abstractions library for the Kiota generated SDKs in dotnet.",
     "License": "MIT",
     "LicenseUrl": "https://licenses.nuget.org/MIT",
     "LicenseInformationOrigin": 0
   },
   {
     "PackageId": "Microsoft.Kiota.Bundle",
-    "PackageVersion": "1.20.1",
+    "PackageVersion": "1.21.3",
     "PackageProjectUrl": "https://aka.ms/kiota/docs",
     "Copyright": "\u00A9 Microsoft Corporation. All rights reserved.",
     "Authors": "Microsoft",
+    "Description": "Kiota Bundle package providing default implementations for client setup.",
     "License": "MIT",
     "LicenseUrl": "https://licenses.nuget.org/MIT",
     "LicenseInformationOrigin": 0
   },
   {
     "PackageId": "Microsoft.Kiota.Http.HttpClientLibrary",
-    "PackageVersion": "1.20.1",
+    "PackageVersion": "1.21.3",
     "PackageProjectUrl": "https://aka.ms/kiota/docs",
     "Copyright": "\u00A9 Microsoft Corporation. All rights reserved.",
     "Authors": "Microsoft",
+    "Description": "Kiota Http provider implementation for dotnet with HttpClient.",
     "License": "MIT",
     "LicenseUrl": "https://licenses.nuget.org/MIT",
     "LicenseInformationOrigin": 0
   },
   {
     "PackageId": "Microsoft.Kiota.Serialization.Form",
-    "PackageVersion": "1.20.1",
+    "PackageVersion": "1.21.3",
     "PackageProjectUrl": "https://aka.ms/kiota/docs",
     "Copyright": "\u00A9 Microsoft Corporation. All rights reserved.",
     "Authors": "Microsoft",
+    "Description": "Kiota URI form encoded serialization provider.",
     "License": "MIT",
     "LicenseUrl": "https://licenses.nuget.org/MIT",
     "LicenseInformationOrigin": 0
   },
   {
     "PackageId": "Microsoft.Kiota.Serialization.Json",
-    "PackageVersion": "1.20.1",
+    "PackageVersion": "1.21.3",
     "PackageProjectUrl": "https://aka.ms/kiota/docs",
     "Copyright": "\u00A9 Microsoft Corporation. All rights reserved.",
     "Authors": "Microsoft",
+    "Description": "Kiota JSON serialization provider implementation with System.Text.Json.",
     "License": "MIT",
     "LicenseUrl": "https://licenses.nuget.org/MIT",
     "LicenseInformationOrigin": 0
   },
   {
     "PackageId": "Microsoft.Kiota.Serialization.Multipart",
-    "PackageVersion": "1.20.1",
+    "PackageVersion": "1.21.3",
     "PackageProjectUrl": "https://aka.ms/kiota/docs",
     "Copyright": "\u00A9 Microsoft Corporation. All rights reserved.",
     "Authors": "Microsoft",
+    "Description": "Kiota Multipart serialization provider implementation.",
     "License": "MIT",
     "LicenseUrl": "https://licenses.nuget.org/MIT",
     "LicenseInformationOrigin": 0
   },
   {
     "PackageId": "Microsoft.Kiota.Serialization.Text",
-    "PackageVersion": "1.20.1",
+    "PackageVersion": "1.21.3",
     "PackageProjectUrl": "https://aka.ms/kiota/docs",
     "Copyright": "\u00A9 Microsoft Corporation. All rights reserved.",
     "Authors": "Microsoft",
+    "Description": "Text/plain serialization provider implementation for Kiota based SDKs.",
     "License": "MIT",
     "LicenseUrl": "https://licenses.nuget.org/MIT",
     "LicenseInformationOrigin": 0
@@ -1038,146 +1862,139 @@
     "PackageProjectUrl": "https://asp.net/",
     "Copyright": "\u00A9 Microsoft Corporation. All rights reserved.",
     "Authors": "Microsoft",
+    "Description": "HTTP header parser implementations.",
     "License": "https://raw.githubusercontent.com/aspnet/AspNetCore/2.0.0/LICENSE.txt",
     "LicenseUrl": "https://raw.githubusercontent.com/aspnet/AspNetCore/2.0.0/LICENSE.txt",
     "LicenseInformationOrigin": 1
   },
   {
     "PackageId": "Microsoft.NET.ILLink.Tasks",
-    "PackageVersion": "9.0.5",
+    "PackageVersion": "9.0.11",
     "PackageProjectUrl": "https://dot.net/",
     "Copyright": "\u00A9 Microsoft Corporation. All rights reserved.",
     "Authors": "Microsoft",
+    "Description": "MSBuild tasks for running the IL Linker",
     "License": "MIT",
     "LicenseUrl": "https://licenses.nuget.org/MIT",
     "LicenseInformationOrigin": 0
   },
   {
     "PackageId": "Microsoft.NET.Sdk.WebAssembly.Pack",
-    "PackageVersion": "9.0.7",
+    "PackageVersion": "10.0.1",
     "PackageProjectUrl": "https://dot.net/",
     "Copyright": "\u00A9 Microsoft Corporation. All rights reserved.",
     "Authors": "Microsoft",
+    "Description": "SDK for building and publishing WebAssembly applications.",
     "License": "MIT",
     "LicenseUrl": "https://licenses.nuget.org/MIT",
     "LicenseInformationOrigin": 0
   },
   {
     "PackageId": "Microsoft.NET.Test.Sdk",
-    "PackageVersion": "18.0.0",
+    "PackageVersion": "18.0.1",
     "PackageProjectUrl": "https://github.com/microsoft/vstest",
     "Copyright": "\u00A9 Microsoft Corporation. All rights reserved.",
     "Authors": "Microsoft",
+    "Description": "The MSbuild targets and properties for building .NET test projects.",
     "License": "MIT",
     "LicenseUrl": "https://licenses.nuget.org/MIT",
     "LicenseInformationOrigin": 0
   },
   {
-    "PackageId": "Microsoft.NETCore.Platforms",
-    "PackageVersion": "1.1.0",
-    "PackageProjectUrl": "https://dot.net/",
-    "Copyright": "\u00A9 Microsoft Corporation.  All rights reserved.",
-    "Authors": "Microsoft",
-    "License": "http://go.microsoft.com/fwlink/?LinkId=329770",
-    "LicenseUrl": "http://go.microsoft.com/fwlink/?LinkId=329770",
-    "LicenseInformationOrigin": 1
-  },
-  {
-    "PackageId": "Microsoft.NETCore.Targets",
-    "PackageVersion": "1.1.0",
-    "PackageProjectUrl": "https://dot.net/",
-    "Copyright": "\u00A9 Microsoft Corporation.  All rights reserved.",
-    "Authors": "Microsoft",
-    "License": "http://go.microsoft.com/fwlink/?LinkId=329770",
-    "LicenseUrl": "http://go.microsoft.com/fwlink/?LinkId=329770",
-    "LicenseInformationOrigin": 1
-  },
-  {
     "PackageId": "Microsoft.OpenApi",
-    "PackageVersion": "1.6.17",
+    "PackageVersion": "2.0.0",
     "PackageProjectUrl": "https://github.com/Microsoft/OpenAPI.NET",
     "Copyright": "\u00A9 Microsoft Corporation. All rights reserved.",
     "Authors": "Microsoft",
+    "Description": ".NET models with JSON and YAML writers for OpenAPI specification",
     "License": "MIT",
     "LicenseUrl": "https://licenses.nuget.org/MIT",
     "LicenseInformationOrigin": 0
   },
   {
     "PackageId": "Microsoft.Testing.Extensions.Telemetry",
-    "PackageVersion": "1.9.0",
+    "PackageVersion": "2.0.2",
     "PackageProjectUrl": "https://github.com/microsoft/testfx",
     "Copyright": "\u00A9 Microsoft Corporation. All rights reserved.",
     "Authors": "Microsoft",
+    "Description": "Microsoft Testing is a set of platform, framework and protocol intended to make it possible to run any test on any target or device.\n\nThis package provides telemetry for the platform.",
     "License": "MIT",
     "LicenseUrl": "https://licenses.nuget.org/MIT",
     "LicenseInformationOrigin": 0
   },
   {
     "PackageId": "Microsoft.Testing.Extensions.TrxReport.Abstractions",
-    "PackageVersion": "1.9.0",
+    "PackageVersion": "2.0.2",
     "PackageProjectUrl": "https://github.com/microsoft/testfx",
     "Copyright": "\u00A9 Microsoft Corporation. All rights reserved.",
     "Authors": "Microsoft",
+    "Description": "Package Description",
     "License": "MIT",
     "LicenseUrl": "https://licenses.nuget.org/MIT",
     "LicenseInformationOrigin": 0
   },
   {
     "PackageId": "Microsoft.Testing.Extensions.VSTestBridge",
-    "PackageVersion": "1.9.0",
+    "PackageVersion": "2.0.2",
     "PackageProjectUrl": "https://github.com/microsoft/testfx",
     "Copyright": "\u00A9 Microsoft Corporation. All rights reserved.",
     "Authors": "Microsoft",
+    "Description": "Microsoft Testing is a set of platform, framework and protocol intended to make it possible to run any test on any target or device.\n\nThis package provides a bridge integration for test adapters wanting to target both VSTest and Microsoft.Testing.Platform test platforms.",
     "License": "MIT",
     "LicenseUrl": "https://licenses.nuget.org/MIT",
     "LicenseInformationOrigin": 0
   },
   {
     "PackageId": "Microsoft.Testing.Platform",
-    "PackageVersion": "1.9.0",
+    "PackageVersion": "2.0.2",
     "PackageProjectUrl": "https://github.com/microsoft/testfx",
     "Copyright": "\u00A9 Microsoft Corporation. All rights reserved.",
     "Authors": "Microsoft",
+    "Description": "Microsoft Testing is a set of platform, framework and protocol intended to make it possible to run any test on any target or device.\n\nThis package provides the core platform and the .NET implementation of the protocol.",
     "License": "MIT",
     "LicenseUrl": "https://licenses.nuget.org/MIT",
     "LicenseInformationOrigin": 0
   },
   {
     "PackageId": "Microsoft.Testing.Platform.MSBuild",
-    "PackageVersion": "1.9.0",
+    "PackageVersion": "2.0.2",
     "PackageProjectUrl": "https://github.com/microsoft/testfx",
     "Copyright": "\u00A9 Microsoft Corporation. All rights reserved.",
     "Authors": "Microsoft",
+    "Description": "Microsoft Testing is a set of platform, framework and protocol intended to make it possible to run any test on any target or device.\n\nThis package provides MSBuild integration of the platform, its extensions and configuration files.",
     "License": "MIT",
     "LicenseUrl": "https://licenses.nuget.org/MIT",
     "LicenseInformationOrigin": 0
   },
   {
     "PackageId": "Microsoft.TestPlatform.AdapterUtilities",
-    "PackageVersion": "17.13.0",
+    "PackageVersion": "18.0.1",
     "PackageProjectUrl": "https://github.com/microsoft/vstest",
     "Copyright": "\u00A9 Microsoft Corporation. All rights reserved.",
     "Authors": "Microsoft",
+    "Description": "Includes helpers for the Test Platform\u0027s modern functionality such as standardized fully qualified names and hierarchical test case names.",
     "License": "MIT",
     "LicenseUrl": "https://licenses.nuget.org/MIT",
     "LicenseInformationOrigin": 0
   },
   {
     "PackageId": "Microsoft.TestPlatform.ObjectModel",
-    "PackageVersion": "18.0.0",
+    "PackageVersion": "18.0.1",
     "PackageProjectUrl": "https://github.com/microsoft/vstest",
     "Copyright": "\u00A9 Microsoft Corporation. All rights reserved.",
     "Authors": "Microsoft",
+    "Description": "The Microsoft Test Platform Object Model.",
     "License": "MIT",
     "LicenseUrl": "https://licenses.nuget.org/MIT",
     "LicenseInformationOrigin": 0
   },
   {
     "PackageId": "Microsoft.TestPlatform.TestHost",
-    "PackageVersion": "18.0.0",
+    "PackageVersion": "18.0.1",
     "PackageProjectUrl": "https://github.com/microsoft/vstest",
     "Copyright": "\u00A9 Microsoft Corporation. All rights reserved.",
     "Authors": "Microsoft",
+    "Description": "Testplatform host executes the test using specified adapter.",
     "License": "MIT",
     "LicenseUrl": "https://licenses.nuget.org/MIT",
     "LicenseInformationOrigin": 0
@@ -1187,36 +2004,40 @@
     "PackageVersion": "3.0.0",
     "PackageProjectUrl": "https://github.com/mono/t4",
     "Authors": "Mikayla Hutchinson",
+    "Description": "Embeddable engine for the T4 templating language, a general-purpose way to generate text or code files using C#",
     "License": "MIT",
     "LicenseUrl": "https://licenses.nuget.org/MIT",
     "LicenseInformationOrigin": 0
   },
   {
     "PackageId": "MudBlazor",
-    "PackageVersion": "8.13.0",
+    "PackageVersion": "8.15.0",
     "PackageProjectUrl": "https://mudblazor.com/",
     "Copyright": "Copyright 2024 MudBlazor",
     "Authors": "Garderoben, Henon and Contributors",
+    "Description": "Blazor Component Library based on Material Design principles with an emphasis on ease of use and extensibility",
     "License": "MIT",
     "LicenseUrl": "https://licenses.nuget.org/MIT",
     "LicenseInformationOrigin": 0
   },
   {
     "PackageId": "MySql.Data",
-    "PackageVersion": "9.4.0",
+    "PackageVersion": "9.5.0",
     "PackageProjectUrl": "https://dev.mysql.com/downloads/",
     "Copyright": "Copyright \u00A9 2004, 2025, Oracle and/or its affiliates.",
     "Authors": "Oracle Corporation",
+    "Description": "MySql.Data.MySqlClient .Net Core Class Library",
     "License": "GPL-2.0-only WITH Universal-FOSS-exception-1.0",
     "LicenseUrl": "https://licenses.nuget.org/GPL-2.0-only%20WITH%20Universal-FOSS-exception-1.0",
     "LicenseInformationOrigin": 0
   },
   {
     "PackageId": "MySql.EntityFrameworkCore",
-    "PackageVersion": "9.0.6",
+    "PackageVersion": "9.0.9",
     "PackageProjectUrl": "https://github.com/mysql/mysql-connector-net",
     "Copyright": "Copyright \u00A9 2021, 2025, Oracle and/or its affiliates.",
     "Authors": "Oracle Corporation",
+    "Description": "MySql.EntityFrameworkCore adds support for Microsoft Entity Framework Core.",
     "License": "GPL-2.0-only WITH Universal-FOSS-exception-1.0",
     "LicenseUrl": "https://licenses.nuget.org/GPL-2.0-only%20WITH%20Universal-FOSS-exception-1.0",
     "LicenseInformationOrigin": 0
@@ -1227,6 +2048,7 @@
     "PackageProjectUrl": "https://www.newtonsoft.com/json",
     "Copyright": "Copyright \u00A9 James Newton-King 2008",
     "Authors": "James Newton-King",
+    "Description": "Json.NET is a popular high-performance JSON framework for .NET",
     "License": "MIT",
     "LicenseUrl": "https://licenses.nuget.org/MIT",
     "LicenseInformationOrigin": 0
@@ -1237,6 +2059,7 @@
     "PackageProjectUrl": "https://github.com/npgsql/npgsql",
     "Copyright": "Copyright 2024 \u00A9 The Npgsql Development Team",
     "Authors": "Shay Rojansky,Nikita Kazmin,Brar Piening,Nino Floris,Yoh Deadfall,Austin Drenski,Emil Lenngren,Francisco Figueiredo Jr.,Kenji Uno",
+    "Description": "Npgsql is the open source .NET data provider for PostgreSQL.",
     "License": "PostgreSQL",
     "LicenseUrl": "https://licenses.nuget.org/PostgreSQL",
     "LicenseInformationOrigin": 0
@@ -1247,6 +2070,7 @@
     "PackageProjectUrl": "https://github.com/npgsql/efcore.pg",
     "Copyright": "Copyright 2024 \u00A9 The Npgsql Development Team",
     "Authors": "Shay Rojansky,Austin Drenski,Yoh Deadfall",
+    "Description": "PostgreSQL/Npgsql provider for Entity Framework Core.",
     "License": "PostgreSQL",
     "LicenseUrl": "https://licenses.nuget.org/PostgreSQL",
     "LicenseInformationOrigin": 0
@@ -1256,6 +2080,7 @@
     "PackageVersion": "5.3.0",
     "PackageProjectUrl": "https://nsubstitute.github.io/",
     "Authors": "Anthony Egerton,David Tchepak,Alexandr Nikitin,Oleksandr Povar",
+    "Description": "NSubstitute is a friendly substitute for .NET mocking libraries. It has a simple, succinct syntax to help developers write clearer tests. NSubstitute is designed for Arrange-Act-Assert (AAA) testing and with Test Driven Development (TDD) in mind.",
     "License": "BSD-3-Clause",
     "LicenseUrl": "https://licenses.nuget.org/BSD-3-Clause",
     "LicenseInformationOrigin": 0
@@ -1266,72 +2091,83 @@
     "PackageProjectUrl": "https://nunit.org/",
     "Copyright": "Copyright (c) Charlie Poole, Rob Prouse and Contributors. MIT License.",
     "Authors": "Charlie Poole, Rob Prouse",
+    "Description": "NUnit is a unit-testing framework for all .NET languages.\n            It can run on macOS, Linux and Windows operating systems.\n            NUnit can be used for a wide range of testing, from unit testing with TDD to full-fledged system and integration testing.\n            It is a non-opinionated, broad and deep framework with multiple different ways to assert that your code behaves as expected. Many aspects of NUnit can be extended to suit your specific purposes.\n\n            The latest version, version 4, is an upgrade from the groundbreaking NUnit 3 framework. It is a modernized version, aimed at taking advantage of the latest .NET features and C# language constructs.\n\n            If you are upgrading from NUnit 3, be aware of the breaking changes (https://docs.nunit.org/articles/nunit/release-notes/breaking-changes.html#nunit-40). Please see the NUnit 4 Migration Guide (https://docs.nunit.org/articles/nunit/release-notes/Nunit4.0-MigrationGuide.html) and take care to prepare your NUnit 3 code before you do the upgrade.\n\n            Supported platforms:\n            - .NET Framework 4.6.2\u002B\n            - .NET 6.0\u002B\n            - .NET 8.0\u002B",
+    "Summary": "NUnit is a unit-testing framework for all .NET languages with a strong TDD focus.",
     "License": "MIT",
     "LicenseUrl": "https://licenses.nuget.org/MIT",
     "LicenseInformationOrigin": 0
   },
   {
     "PackageId": "NUnit.Analyzers",
-    "PackageVersion": "4.10.0",
+    "PackageVersion": "4.11.2",
     "PackageProjectUrl": "https://github.com/nunit/nunit.analyzers",
     "Copyright": "Copyright (c) 2018-2025 NUnit project",
     "Authors": "NUnit",
+    "Description": "This package includes analyzers and code fixes for test projects using NUnit 3\u002B. The analyzers will mark wrong usages when writing tests, and the code fixes can be used to used to correct these usages. They will also aid in the transition from NUnit 3 to NUnit 4.\n\nVersion 3.0 and upwards works in Visual Studio 2019 (version 16.3) or newer and also enables supression of compiler errors such as errors arising from nullable reference types. For Visual Studio 2017 one must use versions below 3.0 - note that these versions are no longer updated, so version 2.10.0 is the last version that works in Visual Studio 2017.",
+    "Summary": "Code analyzers and fixes for NUnit 3\u002B",
     "License": "MIT",
     "LicenseUrl": "https://licenses.nuget.org/MIT",
     "LicenseInformationOrigin": 0
   },
   {
     "PackageId": "NUnit3TestAdapter",
-    "PackageVersion": "5.2.0",
+    "PackageVersion": "6.1.0",
     "PackageProjectUrl": "https://docs.nunit.org/articles/vs-test-adapter/Index.html",
-    "Copyright": "Copyright (c) 2011-2021 Charlie Poole, 2014-2025 Terje Sandstrom",
+    "Copyright": "Copyright (c) 2011-2021 Charlie Poole, 2014-2026 Terje Sandstrom",
     "Authors": "Charlie Poole, Terje Sandstrom",
+    "Description": "The NUnit3 TestAdapter for Visual Studio, all versions from 2012 and onwards, and DotNet (incl. .Net core), versions .net framework 4.6.2 or higher, .net 8 or higher.\n\n      Note that this package ONLY contains the adapter, not the NUnit framework.\n      For VS 2017 and forward, you should add this package to every test project in your solution. (Earlier versions only require a single adapter package per solution.)",
+    "Summary": "NUnit3 adapter for running tests in Visual Studio and DotNet.",
     "License": "MIT",
     "LicenseUrl": "https://licenses.nuget.org/MIT",
     "LicenseInformationOrigin": 0
   },
   {
     "PackageId": "Scalar.AspNetCore",
-    "PackageVersion": "2.9.0",
+    "PackageVersion": "2.12.36",
     "PackageProjectUrl": "https://scalar.com/",
     "Authors": "Scalar",
+    "Description": "Generate beautiful interactive API documentation from OpenAPI/Swagger documents.",
     "License": "MIT",
     "LicenseUrl": "https://licenses.nuget.org/MIT",
     "LicenseInformationOrigin": 0
   },
   {
     "PackageId": "Serilog",
-    "PackageVersion": "4.2.0",
+    "PackageVersion": "4.3.0",
     "PackageProjectUrl": "https://serilog.net/",
     "Copyright": "Copyright \u00A9 Serilog Contributors",
     "Authors": "Serilog Contributors",
+    "Description": "Simple .NET logging with fully-structured events",
     "License": "Apache-2.0",
     "LicenseUrl": "https://licenses.nuget.org/Apache-2.0",
     "LicenseInformationOrigin": 0
   },
   {
     "PackageId": "Serilog.AspNetCore",
-    "PackageVersion": "9.0.0",
+    "PackageVersion": "10.0.0",
     "PackageProjectUrl": "https://github.com/serilog/serilog-aspnetcore",
     "Authors": "Microsoft,Serilog Contributors",
+    "Description": "Serilog support for ASP.NET Core logging",
     "License": "Apache-2.0",
     "LicenseUrl": "https://licenses.nuget.org/Apache-2.0",
     "LicenseInformationOrigin": 0
   },
   {
     "PackageId": "Serilog.Extensions.Hosting",
-    "PackageVersion": "9.0.0",
+    "PackageVersion": "10.0.0",
     "PackageProjectUrl": "https://github.com/serilog/serilog-extensions-hosting",
     "Authors": "Microsoft,Serilog Contributors",
+    "Description": "Serilog support for .NET Core logging in hosted services",
     "License": "Apache-2.0",
     "LicenseUrl": "https://licenses.nuget.org/Apache-2.0",
     "LicenseInformationOrigin": 0
   },
   {
     "PackageId": "Serilog.Extensions.Logging",
-    "PackageVersion": "9.0.0",
+    "PackageVersion": "10.0.0",
     "PackageProjectUrl": "https://github.com/serilog/serilog-extensions-logging",
     "Authors": "Microsoft,Serilog Contributors",
+    "Description": "Low-level Serilog provider for Microsoft.Extensions.Logging",
     "License": "Apache-2.0",
     "LicenseUrl": "https://licenses.nuget.org/Apache-2.0",
     "LicenseInformationOrigin": 0
@@ -1341,24 +2177,27 @@
     "PackageVersion": "3.0.0",
     "PackageProjectUrl": "https://github.com/serilog/serilog-formatting-compact",
     "Authors": "Serilog Contributors",
+    "Description": "A simple, compact JSON-based event format for Serilog.",
     "License": "Apache-2.0",
     "LicenseUrl": "https://licenses.nuget.org/Apache-2.0",
     "LicenseInformationOrigin": 0
   },
   {
     "PackageId": "Serilog.Settings.Configuration",
-    "PackageVersion": "9.0.0",
+    "PackageVersion": "10.0.0",
     "PackageProjectUrl": "https://github.com/serilog/serilog-settings-configuration",
     "Authors": "Serilog Contributors",
+    "Description": "Microsoft.Extensions.Configuration (appsettings.json) support for Serilog.",
     "License": "Apache-2.0",
     "LicenseUrl": "https://licenses.nuget.org/Apache-2.0",
     "LicenseInformationOrigin": 0
   },
   {
     "PackageId": "Serilog.Sinks.Console",
-    "PackageVersion": "6.0.0",
+    "PackageVersion": "6.1.1",
     "PackageProjectUrl": "https://github.com/serilog/serilog-sinks-console",
     "Authors": "Serilog Contributors",
+    "Description": "A Serilog sink that writes log events to the console/terminal.",
     "License": "Apache-2.0",
     "LicenseUrl": "https://licenses.nuget.org/Apache-2.0",
     "LicenseInformationOrigin": 0
@@ -1368,6 +2207,7 @@
     "PackageVersion": "3.0.0",
     "PackageProjectUrl": "https://github.com/serilog/serilog-sinks-debug",
     "Authors": "Serilog Contributors",
+    "Description": "A Serilog sink that writes log events to the debug output window.",
     "License": "Apache-2.0",
     "LicenseUrl": "https://licenses.nuget.org/Apache-2.0",
     "LicenseInformationOrigin": 0
@@ -1377,6 +2217,7 @@
     "PackageVersion": "7.0.0",
     "PackageProjectUrl": "https://github.com/serilog/serilog-sinks-file",
     "Authors": "Serilog Contributors",
+    "Description": "Write Serilog events to text files in plain or JSON format.",
     "License": "Apache-2.0",
     "LicenseUrl": "https://licenses.nuget.org/Apache-2.0",
     "LicenseInformationOrigin": 0
@@ -1386,6 +2227,7 @@
     "PackageVersion": "4.3.0",
     "PackageProjectUrl": "https://docs.shouldly.org/",
     "Authors": "Jake Ginnivan, Joseph Woodward, Simon Cropp",
+    "Description": "Shouldly - Assertion framework for .NET. The way asserting *Should* be",
     "License": "BSD-3-Clause",
     "LicenseUrl": "https://licenses.nuget.org/BSD-3-Clause",
     "LicenseInformationOrigin": 0
@@ -1395,6 +2237,7 @@
     "PackageVersion": "2.1.10",
     "Copyright": "Copyright 2014-2024 SourceGear, LLC",
     "Authors": "Eric Sink",
+    "Description": "This \u0027batteries-included\u0027 bundle brings in SQLitePCLRaw.core and the necessary stuff for certain common use cases.  Call SQLitePCL.Batteries.Init().  Policy of this bundle: e_sqlite3 included",
     "License": "Apache-2.0",
     "LicenseUrl": "https://licenses.nuget.org/Apache-2.0",
     "LicenseInformationOrigin": 0
@@ -1404,6 +2247,7 @@
     "PackageVersion": "2.1.10",
     "Copyright": "Copyright 2014-2024 SourceGear, LLC",
     "Authors": "Eric Sink",
+    "Description": "SQLitePCL.raw is a Portable Class Library (PCL) for low-level (raw) access to SQLite.  This package does not provide an API which is friendly to app developers.  Rather, it provides an API which handles platform and configuration issues, upon which a friendlier API can be built.  In order to use this package, you will need to also add one of the SQLitePCLRaw.provider.* packages and call raw.SetProvider().  Convenience packages are named SQLitePCLRaw.bundle_*.",
     "License": "Apache-2.0",
     "LicenseUrl": "https://licenses.nuget.org/Apache-2.0",
     "LicenseInformationOrigin": 0
@@ -1413,6 +2257,8 @@
     "PackageVersion": "2.1.10",
     "Copyright": "Copyright 2014-2024 SourceGear, LLC",
     "Authors": "Eric Sink",
+    "Description": "This package contains platform-specific native code builds of SQLite for use with SQLitePCLRaw.  To use this, you need SQLitePCLRaw.core as well as one of the SQLitePCLRaw.provider.* packages.  Convenience packages are named SQLitePCLRaw.bundle_*.",
+    "Summary": "SQLitePCLRaw is a Portable Class Library (PCL) for low-level (raw) access to SQLite",
     "License": "Apache-2.0",
     "LicenseUrl": "https://licenses.nuget.org/Apache-2.0",
     "LicenseInformationOrigin": 0
@@ -1422,27 +2268,19 @@
     "PackageVersion": "2.1.10",
     "Copyright": "Copyright 2014-2024 SourceGear, LLC",
     "Authors": "Eric Sink",
+    "Description": "SQLitePCLRaw is a Portable Class Library (PCL) for low-level (raw) access to SQLite.  Packages named \u0027SQLitePCLRaw.provider.*\u0027 (like this one) are \u0027plugins\u0027 that allow SQLitePCLRaw.core to access the native SQLite library.  This provider does DllImport of \u0027e_sqlite3\u0027, the SQLite builds provided with SQLitePCLRaw.",
     "License": "Apache-2.0",
     "LicenseUrl": "https://licenses.nuget.org/Apache-2.0",
     "LicenseInformationOrigin": 0
   },
   {
     "PackageId": "Std.UriTemplate",
-    "PackageVersion": "2.0.5",
+    "PackageVersion": "2.0.8",
     "Authors": "Std.UriTemplate",
+    "Description": "Std.Uritemplate for .NET - Implementation of RFC 6570 (Level 4)",
     "License": "Apache-2.0",
     "LicenseUrl": "https://licenses.nuget.org/Apache-2.0",
     "LicenseInformationOrigin": 0
-  },
-  {
-    "PackageId": "System.Buffers",
-    "PackageVersion": "4.5.1",
-    "PackageProjectUrl": "https://dot.net/",
-    "Copyright": "\u00A9 Microsoft Corporation. All rights reserved.",
-    "Authors": "Microsoft",
-    "License": "MIT",
-    "LicenseUrl": "https://github.com/dotnet/corefx/blob/master/LICENSE.TXT",
-    "LicenseInformationOrigin": 1
   },
   {
     "PackageId": "System.Buffers",
@@ -1450,6 +2288,7 @@
     "PackageProjectUrl": "https://github.com/dotnet/maintenance-packages",
     "Copyright": "\u00A9 Microsoft Corporation. All rights reserved.",
     "Authors": "Microsoft",
+    "Description": "System.Buffers",
     "License": "MIT",
     "LicenseUrl": "https://licenses.nuget.org/MIT",
     "LicenseInformationOrigin": 0
@@ -1460,26 +2299,7 @@
     "PackageProjectUrl": "https://dot.net/",
     "Copyright": "\u00A9 Microsoft Corporation. All rights reserved.",
     "Authors": "Microsoft",
-    "License": "MIT",
-    "LicenseUrl": "https://licenses.nuget.org/MIT",
-    "LicenseInformationOrigin": 0
-  },
-  {
-    "PackageId": "System.Collections.Immutable",
-    "PackageVersion": "7.0.0",
-    "PackageProjectUrl": "https://dot.net/",
-    "Copyright": "\u00A9 Microsoft Corporation. All rights reserved.",
-    "Authors": "Microsoft",
-    "License": "MIT",
-    "LicenseUrl": "https://licenses.nuget.org/MIT",
-    "LicenseInformationOrigin": 0
-  },
-  {
-    "PackageId": "System.Collections.Immutable",
-    "PackageVersion": "8.0.0",
-    "PackageProjectUrl": "https://dot.net/",
-    "Copyright": "\u00A9 Microsoft Corporation. All rights reserved.",
-    "Authors": "Microsoft",
+    "Description": "Provides types that can be used to model the structure of a source code document and to output source code for that model in a supported language.\n\nCommonly Used Types:\nSystem.CodeDom.CodeObject\nSystem.CodeDom.Compiler.CodeDomProvider\nMicrosoft.CSharp.CSharpCodeProvider\nMicrosoft.VisualBasic.VBCodeProvider",
     "License": "MIT",
     "LicenseUrl": "https://licenses.nuget.org/MIT",
     "LicenseInformationOrigin": 0
@@ -1490,6 +2310,7 @@
     "PackageProjectUrl": "https://dot.net/",
     "Copyright": "\u00A9 Microsoft Corporation. All rights reserved.",
     "Authors": "Microsoft",
+    "Description": "This package provides a version of the Managed Extensibility Framework (MEF) that is lightweight and specifically optimized for high throughput scenarios, such as the web.\n\nCommonly Used Types:\nSystem.Composition.ExportAttribute\nSystem.Composition.ImportAttribute\nSystem.Composition.Convention.ConventionBuilder\nSystem.Composition.Hosting.CompositionHost\nSystem.Composition.CompositionContext\nSystem.Composition.CompositionContextExtensions",
     "License": "MIT",
     "LicenseUrl": "https://licenses.nuget.org/MIT",
     "LicenseInformationOrigin": 0
@@ -1500,6 +2321,7 @@
     "PackageProjectUrl": "https://dot.net/",
     "Copyright": "\u00A9 Microsoft Corporation. All rights reserved.",
     "Authors": "Microsoft",
+    "Description": "Provides common attributes used by System.Composition types.\n\nCommonly Used Types:\nSystem.Composition.ExportAttribute\nSystem.Composition.ImportAttribute\nSystem.Composition.Convention.AttributedModelProvider",
     "License": "MIT",
     "LicenseUrl": "https://licenses.nuget.org/MIT",
     "LicenseInformationOrigin": 0
@@ -1510,6 +2332,7 @@
     "PackageProjectUrl": "https://dot.net/",
     "Copyright": "\u00A9 Microsoft Corporation. All rights reserved.",
     "Authors": "Microsoft",
+    "Description": "Provides types that support using Managed Extensibility Framework with a convention-based configuration model.\n\nCommonly Used Types:\nSystem.Composition.Convention.ConventionBuilder\nSystem.Composition.Convention.ExportConventionBuilder\nSystem.Composition.Convention.ImportConventionBuilder\nSystem.Composition.Convention.PartConventionBuilder\nSystem.Composition.Convention.ParameterImportConventionBuilder",
     "License": "MIT",
     "LicenseUrl": "https://licenses.nuget.org/MIT",
     "LicenseInformationOrigin": 0
@@ -1520,6 +2343,7 @@
     "PackageProjectUrl": "https://dot.net/",
     "Copyright": "\u00A9 Microsoft Corporation. All rights reserved.",
     "Authors": "Microsoft",
+    "Description": "Provides Managed Extensibility Framework types that are useful to developers of extensible applications, or hosts.\n\nCommonly Used Types:\nSystem.Composition.Hosting.CompositionHost",
     "License": "MIT",
     "LicenseUrl": "https://licenses.nuget.org/MIT",
     "LicenseInformationOrigin": 0
@@ -1530,6 +2354,7 @@
     "PackageProjectUrl": "https://dot.net/",
     "Copyright": "\u00A9 Microsoft Corporation. All rights reserved.",
     "Authors": "Microsoft",
+    "Description": "Contains runtime components of the Managed Extensibility Framework.\n\nCommonly Used Types:\nSystem.Composition.CompositionContext",
     "License": "MIT",
     "LicenseUrl": "https://licenses.nuget.org/MIT",
     "LicenseInformationOrigin": 0
@@ -1540,6 +2365,7 @@
     "PackageProjectUrl": "https://dot.net/",
     "Copyright": "\u00A9 Microsoft Corporation. All rights reserved.",
     "Authors": "Microsoft",
+    "Description": "Provides some extension methods for the Managed Extensibility Framework.\n\nCommonly Used Types:\nSystem.Composition.CompositionContextExtensions\nSystem.Composition.Hosting.ContainerConfiguration",
     "License": "MIT",
     "LicenseUrl": "https://licenses.nuget.org/MIT",
     "LicenseInformationOrigin": 0
@@ -1550,16 +2376,18 @@
     "PackageProjectUrl": "https://dot.net/",
     "Copyright": "\u00A9 Microsoft Corporation. All rights reserved.",
     "Authors": "Microsoft",
+    "Description": "Provides types that support using XML configuration files (app.config). This package exists only to support migrating existing .NET Framework code that already uses System.Configuration. When writing new code, use another configuration system instead, such as Microsoft.Extensions.Configuration.",
     "License": "MIT",
     "LicenseUrl": "https://licenses.nuget.org/MIT",
     "LicenseInformationOrigin": 0
   },
   {
     "PackageId": "System.Diagnostics.DiagnosticSource",
-    "PackageVersion": "8.0.1",
+    "PackageVersion": "10.0.2",
     "PackageProjectUrl": "https://dot.net/",
     "Copyright": "\u00A9 Microsoft Corporation. All rights reserved.",
     "Authors": "Microsoft",
+    "Description": "Provides Classes that allow you to decouple code logging rich (unserializable) diagnostics/telemetry (e.g. framework) from code that consumes it (e.g. tools)\n\nCommonly Used Types:\nSystem.Diagnostics.DiagnosticListener\nSystem.Diagnostics.DiagnosticSource",
     "License": "MIT",
     "LicenseUrl": "https://licenses.nuget.org/MIT",
     "LicenseInformationOrigin": 0
@@ -1570,46 +2398,18 @@
     "PackageProjectUrl": "https://dot.net/",
     "Copyright": "\u00A9 Microsoft Corporation. All rights reserved.",
     "Authors": "Microsoft",
+    "Description": "Provides the System.Diagnostics.EventLog class, which allows the applications to use the Windows event log service.\n\nCommonly Used Types:\nSystem.Diagnostics.EventLog",
     "License": "MIT",
     "LicenseUrl": "https://licenses.nuget.org/MIT",
     "LicenseInformationOrigin": 0
   },
   {
     "PackageId": "System.IdentityModel.Tokens.Jwt",
-    "PackageVersion": "8.14.0",
+    "PackageVersion": "8.15.0",
     "PackageProjectUrl": "https://github.com/AzureAD/azure-activedirectory-identitymodel-extensions-for-dotnet",
     "Copyright": "\u00A9 Microsoft Corporation. All rights reserved.",
     "Authors": "Microsoft",
-    "License": "MIT",
-    "LicenseUrl": "https://licenses.nuget.org/MIT",
-    "LicenseInformationOrigin": 0
-  },
-  {
-    "PackageId": "System.IO",
-    "PackageVersion": "4.3.0",
-    "PackageProjectUrl": "https://dot.net/",
-    "Copyright": "\u00A9 Microsoft Corporation.  All rights reserved.",
-    "Authors": "Microsoft",
-    "License": "http://go.microsoft.com/fwlink/?LinkId=329770",
-    "LicenseUrl": "http://go.microsoft.com/fwlink/?LinkId=329770",
-    "LicenseInformationOrigin": 1
-  },
-  {
-    "PackageId": "System.IO.Pipelines",
-    "PackageVersion": "6.0.3",
-    "PackageProjectUrl": "https://dot.net/",
-    "Copyright": "\u00A9 Microsoft Corporation. All rights reserved.",
-    "Authors": "Microsoft",
-    "License": "MIT",
-    "LicenseUrl": "https://licenses.nuget.org/MIT",
-    "LicenseInformationOrigin": 0
-  },
-  {
-    "PackageId": "System.IO.Pipelines",
-    "PackageVersion": "7.0.0",
-    "PackageProjectUrl": "https://dot.net/",
-    "Copyright": "\u00A9 Microsoft Corporation. All rights reserved.",
-    "Authors": "Microsoft",
+    "Description": "Includes types that provide support for creating, serializing and validating JSON Web Tokens. As of IdentityModel 7x, this is a legacy tool that should be replaced with Microsoft.IdentityModel.JsonWebTokens.",
     "License": "MIT",
     "LicenseUrl": "https://licenses.nuget.org/MIT",
     "LicenseInformationOrigin": 0
@@ -1620,89 +2420,10 @@
     "PackageProjectUrl": "https://dot.net/",
     "Copyright": "\u00A9 Microsoft Corporation. All rights reserved.",
     "Authors": "Microsoft",
+    "Description": "Provides access to a rich set of management information and management events about the system, devices, and applications instrumented to the Windows Management Instrumentation (WMI) infrastructure.\n\nCommonly Used Types:\nSystem.Management.ManagementClass\nSystem.Management.ManagementObject\nSystem.Management.SelectQuery",
     "License": "MIT",
     "LicenseUrl": "https://licenses.nuget.org/MIT",
     "LicenseInformationOrigin": 0
-  },
-  {
-    "PackageId": "System.Memory",
-    "PackageVersion": "4.5.3",
-    "PackageProjectUrl": "https://dot.net/",
-    "Copyright": "\u00A9 Microsoft Corporation. All rights reserved.",
-    "Authors": "Microsoft",
-    "License": "MIT",
-    "LicenseUrl": "https://github.com/dotnet/corefx/blob/master/LICENSE.TXT",
-    "LicenseInformationOrigin": 1
-  },
-  {
-    "PackageId": "System.Reflection",
-    "PackageVersion": "4.3.0",
-    "PackageProjectUrl": "https://dot.net/",
-    "Copyright": "\u00A9 Microsoft Corporation.  All rights reserved.",
-    "Authors": "Microsoft",
-    "License": "http://go.microsoft.com/fwlink/?LinkId=329770",
-    "LicenseUrl": "http://go.microsoft.com/fwlink/?LinkId=329770",
-    "LicenseInformationOrigin": 1
-  },
-  {
-    "PackageId": "System.Reflection.Metadata",
-    "PackageVersion": "7.0.0",
-    "PackageProjectUrl": "https://dot.net/",
-    "Copyright": "\u00A9 Microsoft Corporation. All rights reserved.",
-    "Authors": "Microsoft",
-    "License": "MIT",
-    "LicenseUrl": "https://licenses.nuget.org/MIT",
-    "LicenseInformationOrigin": 0
-  },
-  {
-    "PackageId": "System.Reflection.Metadata",
-    "PackageVersion": "8.0.0",
-    "PackageProjectUrl": "https://dot.net/",
-    "Copyright": "\u00A9 Microsoft Corporation. All rights reserved.",
-    "Authors": "Microsoft",
-    "License": "MIT",
-    "LicenseUrl": "https://licenses.nuget.org/MIT",
-    "LicenseInformationOrigin": 0
-  },
-  {
-    "PackageId": "System.Reflection.Primitives",
-    "PackageVersion": "4.3.0",
-    "PackageProjectUrl": "https://dot.net/",
-    "Copyright": "\u00A9 Microsoft Corporation.  All rights reserved.",
-    "Authors": "Microsoft",
-    "License": "http://go.microsoft.com/fwlink/?LinkId=329770",
-    "LicenseUrl": "http://go.microsoft.com/fwlink/?LinkId=329770",
-    "LicenseInformationOrigin": 1
-  },
-  {
-    "PackageId": "System.Runtime",
-    "PackageVersion": "4.3.0",
-    "PackageProjectUrl": "https://dot.net/",
-    "Copyright": "\u00A9 Microsoft Corporation.  All rights reserved.",
-    "Authors": "Microsoft",
-    "License": "http://go.microsoft.com/fwlink/?LinkId=329770",
-    "LicenseUrl": "http://go.microsoft.com/fwlink/?LinkId=329770",
-    "LicenseInformationOrigin": 1
-  },
-  {
-    "PackageId": "System.Runtime.CompilerServices.Unsafe",
-    "PackageVersion": "6.0.0",
-    "PackageProjectUrl": "https://dot.net/",
-    "Copyright": "\u00A9 Microsoft Corporation. All rights reserved.",
-    "Authors": "Microsoft",
-    "License": "MIT",
-    "LicenseUrl": "https://licenses.nuget.org/MIT",
-    "LicenseInformationOrigin": 0
-  },
-  {
-    "PackageId": "System.Runtime.Loader",
-    "PackageVersion": "4.3.0",
-    "PackageProjectUrl": "https://dot.net/",
-    "Copyright": "\u00A9 Microsoft Corporation.  All rights reserved.",
-    "Authors": "Microsoft",
-    "License": "http://go.microsoft.com/fwlink/?LinkId=329770",
-    "LicenseUrl": "http://go.microsoft.com/fwlink/?LinkId=329770",
-    "LicenseInformationOrigin": 1
   },
   {
     "PackageId": "System.Security.Cryptography.ProtectedData",
@@ -1710,6 +2431,7 @@
     "PackageProjectUrl": "https://dot.net/",
     "Copyright": "\u00A9 Microsoft Corporation. All rights reserved.",
     "Authors": "Microsoft",
+    "Description": "Provides access to Windows Data Protection Api.\n\nCommonly Used Types:\nSystem.Security.Cryptography.DataProtectionScope\nSystem.Security.Cryptography.ProtectedData",
     "License": "MIT",
     "LicenseUrl": "https://licenses.nuget.org/MIT",
     "LicenseInformationOrigin": 0
@@ -1720,26 +2442,7 @@
     "PackageProjectUrl": "https://dot.net/",
     "Copyright": "\u00A9 Microsoft Corporation. All rights reserved.",
     "Authors": "Microsoft",
-    "License": "MIT",
-    "LicenseUrl": "https://licenses.nuget.org/MIT",
-    "LicenseInformationOrigin": 0
-  },
-  {
-    "PackageId": "System.Text.Encoding",
-    "PackageVersion": "4.3.0",
-    "PackageProjectUrl": "https://dot.net/",
-    "Copyright": "\u00A9 Microsoft Corporation.  All rights reserved.",
-    "Authors": "Microsoft",
-    "License": "http://go.microsoft.com/fwlink/?LinkId=329770",
-    "LicenseUrl": "http://go.microsoft.com/fwlink/?LinkId=329770",
-    "LicenseInformationOrigin": 1
-  },
-  {
-    "PackageId": "System.Text.Encoding.CodePages",
-    "PackageVersion": "8.0.0",
-    "PackageProjectUrl": "https://dot.net/",
-    "Copyright": "\u00A9 Microsoft Corporation. All rights reserved.",
-    "Authors": "Microsoft",
+    "Description": "Provides types supporting Code Access Security (CAS).",
     "License": "MIT",
     "LicenseUrl": "https://licenses.nuget.org/MIT",
     "LicenseInformationOrigin": 0
@@ -1750,49 +2453,10 @@
     "PackageProjectUrl": "https://dot.net/",
     "Copyright": "\u00A9 Microsoft Corporation. All rights reserved.",
     "Authors": "Microsoft",
+    "Description": "Provides types for encoding and escaping strings for use in JavaScript, HyperText Markup Language (HTML), and uniform resource locators (URL).\n\nCommonly Used Types:\nSystem.Text.Encodings.Web.HtmlEncoder\nSystem.Text.Encodings.Web.UrlEncoder\nSystem.Text.Encodings.Web.JavaScriptEncoder",
     "License": "MIT",
     "LicenseUrl": "https://licenses.nuget.org/MIT",
     "LicenseInformationOrigin": 0
-  },
-  {
-    "PackageId": "System.Text.Json",
-    "PackageVersion": "9.0.10",
-    "PackageProjectUrl": "https://dot.net/",
-    "Copyright": "\u00A9 Microsoft Corporation. All rights reserved.",
-    "Authors": "Microsoft",
-    "License": "MIT",
-    "LicenseUrl": "https://licenses.nuget.org/MIT",
-    "LicenseInformationOrigin": 0
-  },
-  {
-    "PackageId": "System.Threading.Channels",
-    "PackageVersion": "7.0.0",
-    "PackageProjectUrl": "https://dot.net/",
-    "Copyright": "\u00A9 Microsoft Corporation. All rights reserved.",
-    "Authors": "Microsoft",
-    "License": "MIT",
-    "LicenseUrl": "https://licenses.nuget.org/MIT",
-    "LicenseInformationOrigin": 0
-  },
-  {
-    "PackageId": "System.Threading.Tasks",
-    "PackageVersion": "4.3.0",
-    "PackageProjectUrl": "https://dot.net/",
-    "Copyright": "\u00A9 Microsoft Corporation.  All rights reserved.",
-    "Authors": "Microsoft",
-    "License": "http://go.microsoft.com/fwlink/?LinkId=329770",
-    "LicenseUrl": "http://go.microsoft.com/fwlink/?LinkId=329770",
-    "LicenseInformationOrigin": 1
-  },
-  {
-    "PackageId": "System.Threading.Tasks.Extensions",
-    "PackageVersion": "4.5.4",
-    "PackageProjectUrl": "https://dot.net/",
-    "Copyright": "\u00A9 Microsoft Corporation. All rights reserved.",
-    "Authors": "Microsoft",
-    "License": "MIT",
-    "LicenseUrl": "https://github.com/dotnet/corefx/blob/master/LICENSE.TXT",
-    "LicenseInformationOrigin": 1
   },
   {
     "PackageId": "System.Windows.Extensions",
@@ -1800,16 +2464,18 @@
     "PackageProjectUrl": "https://dot.net/",
     "Copyright": "\u00A9 Microsoft Corporation. All rights reserved.",
     "Authors": "Microsoft",
+    "Description": "Provides miscellaneous Windows-specific types\n\nCommonly Used Types:\nSystem.Security.Cryptography.X509Certificates.X509Certificate2UI\nSystem.Security.Cryptography.X509Certificates.X509SelectionFlag",
     "License": "MIT",
     "LicenseUrl": "https://licenses.nuget.org/MIT",
     "LicenseInformationOrigin": 0
   },
   {
     "PackageId": "ZstdSharp.Port",
-    "PackageVersion": "0.8.5",
+    "PackageVersion": "0.8.6",
     "PackageProjectUrl": "https://github.com/oleg-st/ZstdSharp",
     "Copyright": "Copyright Oleg Stepanischev 2025",
     "Authors": "Oleg Stepanischev",
+    "Description": "Port of zstd compression library to c#",
     "License": "MIT",
     "LicenseUrl": "https://licenses.nuget.org/MIT",
     "LicenseInformationOrigin": 0

@@ -6,5 +6,5 @@ public record UpdateSavingGoalAmountsRequest(
     decimal? TargetAmount,
     decimal? CurrentAmount,
     decimal? MonthlyPayment,
-    InterestRateOptions? InterestRateOption,
+    int? InterestRateOption,
     decimal? InterestRate);

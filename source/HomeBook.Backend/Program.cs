@@ -6,8 +6,10 @@ using HomeBook.Backend.Extensions;
 using HomeBook.Backend.Core.Account.Extensions;
 using HomeBook.Backend.Middleware;
 using HomeBook.Backend.ModuleCore;
+using Microsoft.OpenApi;
 using Scalar.AspNetCore;
 using Serilog;
+using System.Text.Json.Serialization;
 
 #if DEBUG
 string developmentEnvFile = Path.Combine("env", "Development.env");
@@ -28,7 +30,14 @@ builder.Host.UseSerilog((ctx, services, cfg) =>
         .ReadFrom.Services(services)
         .Enrich.FromLogContext());
 
-builder.Services.AddOpenApi();
+builder.Services.AddOpenApi(options =>
+{
+    options.OpenApiVersion = OpenApiSpecVersion.OpenApi3_0;
+});
+builder.Services.ConfigureHttpJsonOptions(options =>
+{
+    options.SerializerOptions.NumberHandling = JsonNumberHandling.Strict;
+});
 
 builder.Services.AddAuthorization();
 builder.Services.AddHttpContextAccessor();

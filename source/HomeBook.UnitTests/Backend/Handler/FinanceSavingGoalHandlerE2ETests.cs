@@ -120,7 +120,7 @@ public class FinanceSavingGoalHandlerE2ETests
             12_000,
             8_500,
             500,
-            InterestRateOptions.MONTHLY,
+            (int)InterestRateOptions.MONTHLY,
             0,
             null);
         var createSavingGoalResult = await SavingGoalHandler.HandleCreateSavingGoal(testuser,

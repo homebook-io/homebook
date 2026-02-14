@@ -1,6 +1,7 @@
 using System.Security.Claims;
 using HomeBook.Backend.Core.Modules.Utilities;
 using HomeBook.Backend.Module.Finances.Contracts;
+using HomeBook.Backend.Module.Finances.Enums;
 using HomeBook.Backend.Module.Finances.Mappings;
 using HomeBook.Backend.Module.Finances.Models;
 using HomeBook.Backend.Module.Finances.Requests;
@@ -71,7 +72,7 @@ public class SavingGoalHandler
                 request.TargetAmount,
                 request.CurrentAmount,
                 request.MonthlyPayment,
-                request.InterestRateOption,
+                (InterestRateOptions?)request.InterestRateOption,
                 request.InterestRate,
                 request.TargetDate,
                 cancellationToken);
@@ -186,7 +187,7 @@ public class SavingGoalHandler
                 request.TargetAmount,
                 request.CurrentAmount,
                 request.MonthlyPayment,
-                request.InterestRateOption,
+                (InterestRateOptions?)request.InterestRateOption,
                 request.InterestRate,
                 cancellationToken);
 
