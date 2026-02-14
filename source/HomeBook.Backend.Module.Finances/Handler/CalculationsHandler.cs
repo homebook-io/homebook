@@ -28,19 +28,19 @@ public class CalculationsHandler
         {
             SavingCalculationResult result = request.InterestRateOption switch
             {
-                InterestRateOptions.MONTHLY => financeCalculationsService.CalculateMonthlySavings(
+                (int)InterestRateOptions.MONTHLY => financeCalculationsService.CalculateMonthlySavings(
                     request.TargetAmount,
                     request.TargetDate,
                     request.InterestRate,
                     request.TargetSimpleRate),
 
-                InterestRateOptions.YEARLY => financeCalculationsService.CalculateYearlySavings(
+                (int)InterestRateOptions.YEARLY => financeCalculationsService.CalculateYearlySavings(
                     request.TargetAmount,
                     request.TargetDate,
                     request.InterestRate,
                     request.TargetSimpleRate),
 
-                InterestRateOptions.NONE => financeCalculationsService.CalculateSavings(
+                (int)InterestRateOptions.NONE => financeCalculationsService.CalculateSavings(
                     request.TargetAmount,
                     request.TargetDate),
 

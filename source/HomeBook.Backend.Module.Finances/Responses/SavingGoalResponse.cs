@@ -12,6 +12,6 @@ public record SavingGoalResponse(
     decimal TargetAmount,
     decimal CurrentAmount,
     decimal MonthlyPayment,
-    InterestRateOptions InterestRateOption,
+    int InterestRateOption,
     decimal? InterestRate,
     DateTime? TargetDate);

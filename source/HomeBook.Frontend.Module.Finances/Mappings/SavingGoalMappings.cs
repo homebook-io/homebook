@@ -57,6 +57,7 @@ public static class SavingGoalMappings
             TargetAmount = Convert.ToDouble(vm.TargetAmount),
             CurrentAmount = 0,
             MonthlyPayment = Convert.ToDouble(vm.AmountPerMonth),
+            // InterestRateOption = (HomeBook.Client.Models.InterestRateOptions?)(int)vm.InterestRateOption,
             InterestRateOption = (int)vm.InterestRateOption,
             InterestRate = Convert.ToDouble(vm.InterestRate),
             TargetDate = vm.TargetDate

@@ -31,7 +31,7 @@ public static class SavingGoalMappings
             savingGoal.TargetAmount,
             savingGoal.CurrentAmount,
             savingGoal.MonthlyPayment,
-            (InterestRateOptions)savingGoal.InterestRateOption,
+            (int)savingGoal.InterestRateOption,
             savingGoal.InterestRate,
             savingGoal.TargetDate);
     }
