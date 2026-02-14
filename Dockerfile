@@ -1,3 +1,4 @@
+# syntax=docker/dockerfile:1.5
 # This Dockerfile is used for a combined multi-arch build of Blazor WASM and REST API
 # Recommended to use Docker Buildx for multi-architecture builds
 
@@ -14,17 +15,17 @@ RUN apt-get update && \
 
 COPY . .
 
-# Restore dependencies
+# Restore dependencies (use cache for NuGet packages)
 #RUN dotnet tool install --global Microsoft.OpenApi.Kiota
 #ENV PATH="$PATH:/root/.dotnet/tools"
-RUN dotnet restore "source/HomeBook.Backend/HomeBook.Backend.csproj"
-RUN dotnet restore "source/HomeBook.Frontend/HomeBook.Frontend.csproj"
+RUN --mount=type=cache,target=/root/.nuget/packages \
+    dotnet restore "homebook.slnx"
 
 # Publish Blazor frontend
-RUN dotnet publish "source/HomeBook.Frontend/HomeBook.Frontend.csproj" -c "$BUILD_CONFIGURATION" -o /frontend_dist
+RUN dotnet publish "source/HomeBook.Frontend/HomeBook.Frontend.csproj" -c "$BUILD_CONFIGURATION" -o /frontend_dist --no-restore
 
 # Publish backend
-RUN dotnet publish "source/HomeBook.Backend/HomeBook.Backend.csproj" -c "$BUILD_CONFIGURATION" -o /backend_dist /p:UseAppHost=false
+RUN dotnet publish "source/HomeBook.Backend/HomeBook.Backend.csproj" -c "$BUILD_CONFIGURATION" -o /backend_dist /p:UseAppHost=false --no-restore
 
 FROM mcr.microsoft.com/dotnet/aspnet:10.0 AS final
 ARG APP_UID=21001
